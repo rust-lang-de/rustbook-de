@@ -10,8 +10,8 @@ kontrollieren kannst, sind `if`-Ausdrücke und Schleifen.
 
 Ein `if`-Ausdruck erlaubt es dir, deinen Code abhängig von Bedingungen zu
 verzweigen. Du gibst eine Bedingung an und legst dann fest: „Wenn diese
-Bedingung erfüllt ist, führe diesen Codeblock aus. Wenn die Bedingung nicht
-erfüllt ist, darf dieser Codeblock nicht ausgeführt werden.“
+Bedingung erfüllt ist, führe diesen Listing aus. Wenn die Bedingung nicht
+erfüllt ist, darf dieser Listing nicht ausgeführt werden.“
 
 Erstelle in deinem _projects_-Verzeichnis ein neues Projekt namens _branches_,
 um den `if`-Ausdruck zu erforschen. Gibt in der Datei _src/main.rs_ folgendes
@@ -33,7 +33,7 @@ fn main() {
 
 Alle `if`-Ausdrücke beginnen mit dem Schlüsselwort `if`, gefolgt von einer
 Bedingung. In diesem Fall prüft die Bedingung, ob die Variable `number` einen
-Wert kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen,
+Wert kleiner als 5 hat oder nicht. Der Listing, den wir ausführen wollen,
 wenn die Bedingung `true` ist, wird unmittelbar nach der Bedingung in
 geschweifte Klammern gesetzt. Codeblöcke, die mit den Bedingungen in
 `if`-Ausdrücken verbunden sind, werden manchmal auch als _Zweige_ (arms)
@@ -43,7 +43,7 @@ Geheimzahl“][comparing-the-guess-to-the-secret-number] in Kapitel 2 besprochen
 haben.
 
 Optional können wir auch einen `else`-Ausdruck angeben, was wir hier gemacht
-haben, um dem Programm einen alternativen Codeblock zur Ausführung zu geben,
+haben, um dem Programm einen alternativen Listing zur Ausführung zu geben,
 falls die Bedingung zu `false` ausgewertet wird. Wenn du keinen `else`-Ausdruck
 angibst und die Bedingung `false` ist, überspringt das Programm einfach den
 `if`-Block und geht zum nächsten Codeteil über.
@@ -119,7 +119,7 @@ Der Fehler gibt an, dass Rust ein `bool` erwartet, aber eine ganze Zahl
 erhalten hat. Im Gegensatz zu Sprachen wie Ruby und JavaScript wird Rust nicht
 automatisch versuchen, nicht-boolsche Typen in ein Boolean zu konvertieren. Du
 musst explizit sein und immer `if` mit einer Booleschen Bedingung versehen.
-Wenn wir beispielsweise wollen, dass der `if`-Codeblock nur ausgeführt wird,
+Wenn wir beispielsweise wollen, dass der `if`-Listing nur ausgeführt wird,
 wenn eine Zahl ungleich `0` ist, können wir den `if`-Ausdruck wie folgt ändern:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -188,7 +188,7 @@ Rust-Verzweigungskonstrukt namens `match` für solche Fälle.
 
 Weil `if` ein Ausdruck ist, können wir ihn auf der rechten Seite einer
 `let`-Anweisung verwenden, um das Ergebnis einer Variablen zuzuordnen, wie in
-Codeblock 3-2.
+Listing 3-2.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -201,7 +201,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 3-2: Zuweisen des Ergebnisses eines
+<span class="caption">Listing 3-2: Zuweisen des Ergebnisses eines
 `if`-Ausdrucks an eine Variable</span>
 
 Die Variable `number` wird an einen Wert gebunden, der auf dem Ergebnis des
@@ -217,9 +217,9 @@ Der Wert der Zahl ist: 5
 
 Denke daran, dass Codeblöcke bis zum letzten Ausdruck in ihnen ausgewertet
 werden, und auch Zahlen an sich sind Ausdrücke. In diesem Fall hängt der Wert
-des gesamten `if`-Ausdrucks davon ab, welcher Codeblock ausgeführt wird. Dies
+des gesamten `if`-Ausdrucks davon ab, welcher Listing ausgeführt wird. Dies
 bedeutet, dass die Werte, die potentielle Ergebnisse eines `if`-Zweigs sein
-können, vom gleichen Typ sein müssen; in Codeblock 3-2 waren die Ergebnisse
+können, vom gleichen Typ sein müssen; in Listing 3-2 waren die Ergebnisse
 sowohl des `if`-Zweigs als auch des `else`-Zweigs `i32`-Ganzzahlen. Wenn die
 Typen nicht übereinstimmen, wie im folgenden Beispiel, erhalten wir einen
 Fehler:
@@ -267,7 +267,7 @@ Variable verfolgen müsste.
 
 ### Wiederholung mit Schleifen
 
-Es ist oft hilfreich, einen Codeblock mehr als einmal auszuführen. Für diese
+Es ist oft hilfreich, einen Listing mehr als einmal auszuführen. Für diese
 Aufgabe stellt Rust mehrere _Schleifen_ (loops) zur Verfügung, die den Code
 innerhalb des Schleifenrumpfs bis zum Ende durchläuft und dann sofort wieder am
 Anfang beginnt. Um mit Schleifen zu experimentieren, machen wir ein neues
@@ -278,7 +278,7 @@ jede einzelne aus.
 
 #### Wiederholen von Code mit `loop`
 
-Das Schlüsselwort `loop` weist Rust an, einen Codeblock immer und immer wieder
+Das Schlüsselwort `loop` weist Rust an, einen Listing immer und immer wieder
 auszuführen, und zwar für immer oder bis du ihm explizit sagst, dass er
 aufhören soll.
 
@@ -437,7 +437,7 @@ die Schleife. Es ist möglich, derartiges Verhalten mittels einer Kombination
 von `loop`, `if`, `else` und `break` zu implementieren; du kannst das jetzt in
 einem Programm versuchen, wenn du möchtest. Dieses Muster ist jedoch so weit
 verbreitet, dass Rust ein eingebautes Sprachkonstrukt dafür hat, die sogenannte
-`while`-Schleife. In Codeblock 3-3 wird `while` verwendet: Das Programm
+`while`-Schleife. In Listing 3-3 wird `while` verwendet: Das Programm
 durchläuft dreimal eine Schleife, in der es jedes Mal abwärts zählt, und dann
 nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.
 
@@ -457,7 +457,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 3-3: Verwenden einer `while`-Schleife, um Code
+<span class="caption">Listing 3-3: Verwenden einer `while`-Schleife, um Code
 auszuführen, solange eine Bedingung wahr ist</span>
 
 Dieses Konstrukt eliminiert eine Menge von Verschachtelungen, die notwendig
@@ -468,7 +468,7 @@ andernfalls wird die Schleife verlassen.
 #### Durchlaufen einer Kollektion mit `for`
 
 Du kannst das `while`-Konstrukt verwenden, um die Elemente einer Kollektion,
-z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4
+z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Listing 3-4
 gibt zum Beispiel jedes Element im Array `a` aus.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -486,7 +486,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 3-4: Wiederholen anhand aller Elemente einer
+<span class="caption">Listing 3-4: Wiederholen anhand aller Elemente einer
 Kollektion unter Verwendung einer `while`-Schleife</span>
 
 Hier zählt der Code die Elemente im Array aufwärts. Er beginnt bei Index `0`
@@ -520,7 +520,7 @@ Schleifeniteration durchführt.
 
 Als prägnantere Alternative kannst du eine `for`-Schleife verwenden und für
 jedes Element einer Kollektion etwas Code ausführen. Eine `for`-Schleife sieht
-wie der Code in Codeblock 3-5 aus.
+wie der Code in Listing 3-5 aus.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -534,10 +534,10 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 3-5: Wiederholen anhand aller Elemente einer
+<span class="caption">Listing 3-5: Wiederholen anhand aller Elemente einer
 Kollektion unter Verwendung einer `for`-Schleife</span>
 
-Wenn wir diesen Code ausführen, werden wir die gleiche Ausgabe wie in Codeblock
+Wenn wir diesen Code ausführen, werden wir die gleiche Ausgabe wie in Listing
 3-4 sehen. Noch wichtiger ist, dass wir jetzt die Sicherheit des Codes erhöht
 und die Möglichkeit von Fehlern eliminiert haben, die dadurch entstehen
 könnten, dass wir über das Ende des Arrays hinausgehen oder nicht weit genug
@@ -548,12 +548,12 @@ Iteration mit der Länge des Arrays verglichen werden muss.
 
 Wenn du die `for`-Schleife verwendest, brauchst du nicht daran zu denken,
 irgendeinen anderen Code zu ändern, wenn du die Anzahl der Werte im Array
-änderst, wie bei der Methode in Codeblock 3-4 verwendet.
+änderst, wie bei der Methode in Listing 3-4 verwendet.
 
 Die Sicherheit und Prägnanz der `for`-Schleifen machen sie zum am häufigsten
 verwendeten Schleifenkonstrukt in Rust. Sogar in Situationen, in denen du einen
 Code bestimmt oft laufen lassen willst, wie im Countdown-Beispiel, das in
-Codeblock 3-3 eine `while`-Schleife verwendet hat, würden die meisten
+Listing 3-3 eine `while`-Schleife verwendet hat, würden die meisten
 Rust-Entwickler eine `for`-Schleife verwenden. Der Weg, dies zu erreichen, wäre
 das Verwenden eines `Range`, der von der Standardbibliothek zur Verfügung
 gestellt wird und alle Zahlen in Folge generiert, beginnend mit einer Zahl und

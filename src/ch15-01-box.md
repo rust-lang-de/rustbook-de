@@ -39,7 +39,7 @@ Bevor wir den Heap-Anwendungsfall für `Box<T>` besprechen, werden wir die
 Syntax und die Interaktion mit Werten behandeln, die in einer `Box<T>`
 gespeichert sind.
 
-Codeblock 15-1 zeigt, wie man mit einer Box einen `i32`-Wert auf dem
+Listing 15-1 zeigt, wie man mit einer Box einen `i32`-Wert auf dem
 Heap speichert:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -51,7 +51,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-1: Speichern eines `i32`-Wertes in einer Box
+<span class="caption">Listing 15-1: Speichern eines `i32`-Wertes in einer Box
 im Heap</span>
 
 Wir definieren die Variable `b` so, dass sie den Wert einer `Box` hat, die
@@ -118,7 +118,7 @@ Wenn wir jedoch mit der Cons-Liste beginnen, können wir untersuchen, wie Boxen
 es uns ermöglichen, ohne grosse Ablenkung einen rekursiven Datentyp zu
 definieren.
 
-Codeblock 15-2 enthält eine Aufzählungsdefinition (enum) für eine Cons-Liste.
+Listing 15-2 enthält eine Aufzählungsdefinition (enum) für eine Cons-Liste.
 Beachte, dass dieser Code nicht kompiliert werden kann, da der Typ `List` keine
 bekannte Größe hat, wie wir nachfolgend sehen werden.
 
@@ -133,7 +133,7 @@ enum List {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 15-2: Der erste Versuch eine Aufzählung zu
+<span class="caption">Listing 15-2: Der erste Versuch eine Aufzählung zu
 definieren, um eine Datenstruktur der Cons-Liste von `i32`-Werten
 darzustellen</span>
 
@@ -143,7 +143,7 @@ darzustellen</span>
 > erstellen, in der Werte eines beliebigen Typs gespeichert werden können.
 
 Die Verwendung des Typs `List`, um die Liste `1, 2, 3` zu speichern, würde wie
-in Codeblock 15-3 aussehen.
+in Listing 15-3 aussehen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -162,7 +162,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-3: Verwendung der `List`-Aufzählung um die 
+<span class="caption">Listing 15-3: Verwendung der `List`-Aufzählung um die 
 Liste `1, 2, 3` zu speichern</span>
 
 Der erste `Cons`-Wert enthält `1` und einen anderen `List`-Wert. Dieser
@@ -171,8 +171,8 @@ enthält. Dieser `List`-Wert ist wiederum ein `Cons`-Wert, der `3` enthält und
 ein `List`, das schließlich `Nil` ist &ndash; die nicht-rekursive Variante, die
 das Ende der Liste signalisiert.
 
-Wenn wir versuchen den Programmcode in Codeblock 15-3 zu kompilieren,
-erhalten wir den Fehler der in Codeblock 15-4 gezeigt wird.
+Wenn wir versuchen den Programmcode in Listing 15-3 zu kompilieren,
+erhalten wir den Fehler der in Listing 15-4 gezeigt wird.
 
 <span class="filename">Dateiname: output.txt</span>
 
@@ -207,7 +207,7 @@ For more information about an error, try `rustc --explain E0072`.
 error: could not compile `cons-list` (bin "cons-list") due to 2 previous errors
 ```
 
-<span class="caption">Codeblock 15-4: Der Fehler den wir erhalten wenn wir
+<span class="caption">Listing 15-4: Der Fehler den wir erhalten wenn wir
 versuchen eine rekursive Aufzählung zu definieren</span>
 
 Der Fehler zeigt, dass dieser Typ „unendlich groß“ ist. Der Grund dafür ist,
@@ -220,7 +220,7 @@ nicht-rekursiven Typs benötigt wird.
 
 #### Die Größe eines nicht-rekursiven Typs berechnen
 
-Erinnere dich an die in Codeblock 6-2 definierte `Message`-Aufzählung, als wir
+Erinnere dich an die in Listing 6-2 definierte `Message`-Aufzählung, als wir
 die Definition von Aufzählungen in Kapitel 6 besprochen haben:
 
 ```rust
@@ -242,7 +242,7 @@ Speicherbedarf, den ein `Message`-Wert benötigt, gleich dem Speicherplatz, der
 zum Speichern der größten Variante benötigt wird.
 
 Übertrage das auf den Fall, bei dem Rust zu bestimmen versucht, wie viel
-Speicherplatz ein rekursiver Typ wie die Aufzählung `List` in Codeblock 15-2
+Speicherplatz ein rekursiver Typ wie die Aufzählung `List` in Listing 15-2
 benötigt. Der Compiler betrachtet zunächst die Variante `Cons`, die einen Typ
 `i32` und einen Wert vom Typ `List` enthält. Daher benötigt `Cons`
 Speicherplatz, der der Größe eines `i32` plus der Größe einer `List`
@@ -283,8 +283,8 @@ die mit Listen erstellt wurde, die andere Listen enthalten. Diese
 Implementierung ähnelt nun eher dem Platzieren der Elemente nebeneinander als
 ineinander.
 
-Wir können die Definition der Liste `List` in Codeblock 15-2 und die Verwendung
-von `List` in Codeblock 15-3 in den Programmcode von Codeblock 15-5 ändern, der
+Wir können die Definition der Liste `List` in Listing 15-2 und die Verwendung
+von `List` in Listing 15-3 in den Programmcode von Listing 15-5 ändern, der
 kompilieren wird.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -302,7 +302,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-5: Definition von `List`, die `Box<T>`
+<span class="caption">Listing 15-5: Definition von `List`, die `Box<T>`
 benutzt, um eine bekannte Größe zu haben</span>
 
 Die `Cons`-Variante benötigt die Größe eines `i32` plus Platz zum Speichern der

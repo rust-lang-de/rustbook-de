@@ -28,7 +28,7 @@ Trait `Drop` muss man eine Methode `drop` implementieren, die eine veränderbare
 Referenz auf `self` enthält. Um zu sehen, wann Rust `drop` aufruft,
 implementieren wir `drop` zunächst mit `println!`-Anweisungen.
 
-Codeblock 15-14 zeigt eine Struktur (struct) `CustomSmartPointer`, deren einzige
+Listing 15-14 zeigt eine Struktur (struct) `CustomSmartPointer`, deren einzige
 benutzerdefinierte Funktionalität darin besteht, `CustomSmartPointer mit Daten
 aufräumen` auszugegeben, sobald die Instanz den Gültigkeitsbereich verlässt.
 
@@ -56,7 +56,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-14: Eine Struktur `CustomSmartPointer`, die
+<span class="caption">Listing 15-14: Eine Struktur `CustomSmartPointer`, die
 das Trait `Drop` implementiert, wo wir unseren Programmcode für das Aufräumen
 platzieren würden</span>
 
@@ -107,7 +107,7 @@ bereitgestellte Funktion `std::mem::drop` aufrufen, wenn man das Aufräumen eine
 Werts vor dem Ende seines Gültigkeitsbereichs erzwingen möchte.
 
 Der Versuch, die Methode `drop` des Traits `Drop` manuell aufzurufen, indem wir
-die Funktion `main` aus Codeblock 15-14 ändern, wird nicht klappen. Codeblock
+die Funktion `main` aus Listing 15-14 ändern, wird nicht klappen. Listing
 15-15 zeigt das.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -133,7 +133,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-15: Der Versuch, die Methode `drop` des
+<span class="caption">Listing 15-15: Der Versuch, die Methode `drop` des
 Traits `Drop` manuell aufzurufen, um frühzeitig aufzuräumen</span>
 
 Wenn wir versuchen, diesen Programmcode zu kompilieren, erhalten wir folgende
@@ -177,8 +177,8 @@ verwenden wir die Funktion `std::mem::drop`.
 Die Funktion `std::mem::drop` unterscheidet sich von der Methode `drop` im Trait
 `Drop`. Wir rufen sie auf, indem wir den Wert, dessen vorzeitiges Aufräumen wir
 erzwingen möchten, der Funktion als Argument mitgeben. Die Funktion befindet
-sich im Präludium, daher können wir `main` in Codeblock 15-15 ändern, um die
-Funktion `drop` wie in Codeblock 15-16 gezeigt aufzurufen.
+sich im Präludium, daher können wir `main` in Listing 15-15 ändern, um die
+Funktion `drop` wie in Listing 15-16 gezeigt aufzurufen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -203,7 +203,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-16: `std::mem::drop` aufrufen, um einen Wert
+<span class="caption">Listing 15-16: `std::mem::drop` aufrufen, um einen Wert
 explizit aufzuräumen, bevor er den Gültigkeitsbereich verlässt</span>
 
 Wenn wir den Programmcode aufrufen, wird folgendes ausgegeben:

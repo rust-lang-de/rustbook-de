@@ -44,20 +44,20 @@ Viele der gleichen Operationen, die mit `Vec<T>` verfügbar sind, sind auch mit
 Bytes mit einigen zusätzlichen Garantien, Einschränkungen und Fähigkeiten
 implementiert ist. Ein Beispiel für eine Funktion, die auf die gleiche Weise
 mit `Vec<T>` und `String` arbeitet, ist die Funktion `new` zum Erstellen einer
-Instanz, die in Codeblock 8-11 gezeigt wird.
+Instanz, die in Listing 8-11 gezeigt wird.
 
 ```rust
 let mut s = String::new();
 ```
 
-<span class="caption">Codeblock 8-11: Erstellen einer neuen, leeren
+<span class="caption">Listing 8-11: Erstellen einer neuen, leeren
 Zeichenkette</span>
 
 Diese Zeile erzeugt eine neue, leere Zeichenkette namens `s`, in die wir dann
 Daten aufnehmen können. Oft werden wir einige initiale Daten haben, mit denen
 wir die Zeichenkette füllen wollen. Dazu verwenden wir die Methode `to_string`,
 die für jeden Typ verfügbar ist, der das Trait `Display` implementiert, wie es
-bei Zeichenkettenliteralen der Fall ist. Codeblock 8-12 zeigt zwei Beispiele.
+bei Zeichenkettenliteralen der Fall ist. Listing 8-12 zeigt zwei Beispiele.
 
 ```rust
 let data = "initialer Inhalt";
@@ -68,20 +68,20 @@ let s = data.to_string();
 let s = "initialer Inhalt".to_string();
 ```
 
-<span class="caption">Codeblock 8-12: Verwenden der Methode `to_string` zum
+<span class="caption">Listing 8-12: Verwenden der Methode `to_string` zum
 Erzeugen eines `String` aus einem Zeichenkettenliteral</span>
 
 Dieser Code erzeugt eine Zeichenkette, die `initialer Inhalt` enthält.
 
 Wir können auch die Funktion `String::from` verwenden, um einen `String` aus
-einem Zeichenkettenliteral zu erzeugen. Der Code in Codeblock 8-13 ist
-äquivalent zum Code in Codeblock 8-12, der `to_string` verwendet.
+einem Zeichenkettenliteral zu erzeugen. Der Code in Listing 8-13 ist
+äquivalent zum Code in Listing 8-12, der `to_string` verwendet.
 
 ```rust
 let s = String::from("initialer Inhalt");
 ```
 
-<span class="caption">Codeblock 8-13: Verwenden der Funktion `String::from` zum
+<span class="caption">Listing 8-13: Verwenden der Funktion `String::from` zum
 Erzeugen eines `String` aus einem Zeichenkettenliteral</span>
 
 Da Zeichenketten für so viele Dinge verwendet werden, können wir viele
@@ -92,7 +92,7 @@ verwenden, was uns viele Möglichkeiten bietet. Einige von ihnen können
 Stils und der Lesbarkeit.
 
 Denke daran, dass Zeichenketten UTF-8-kodiert sind, sodass sie alle
-ordnungsgemäß kodierten Daten aufnehmen können, wie in Codeblock 8-14 gezeigt.
+ordnungsgemäß kodierten Daten aufnehmen können, wie in Listing 8-14 gezeigt.
 
 ```rust
 let hello = String::from("السلام عليكم");
@@ -109,7 +109,7 @@ let hello = String::from("Здравствуйте");
 let hello = String::from("Hola");
 ```
 
-<span class="caption">Codeblock 8-14: Speichern von Begrüßungstexten in
+<span class="caption">Listing 8-14: Speichern von Begrüßungstexten in
 verschiedenen Sprachen in Zeichenketten</span>
 
 All dies sind gültige `String`-Werte.
@@ -124,7 +124,7 @@ kannst du bequem den Operator `+` oder das Makro `format!` verwenden, um
 #### Anhängen mit `push_str` und `push`
 
 Wir können einen `String` wachsen lassen, indem wir die Methode `push_str`
-verwenden, um einen Zeichenkettenanteilstyp anzuhängen, wie in Codeblock 8-15
+verwenden, um einen Zeichenkettenanteilstyp anzuhängen, wie in Listing 8-15
 zu sehen ist.
 
 ```rust
@@ -132,13 +132,13 @@ let mut s = String::from("foo");
 s.push_str("bar");
 ```
 
-<span class="caption">Codeblock 8-15: Anhängen eines Zeichenkettenanteilstyps
+<span class="caption">Listing 8-15: Anhängen eines Zeichenkettenanteilstyps
 an einen `String` mit der Methode `push_str`</span>
 
 Nach diesen beiden Zeilen enthält `s` den Wert `foobar`. Die Methode `push_str`
 nimmt einen Zeichenkettenanteilstyp, weil wir nicht unbedingt die
 Eigentümerschaft des Parameters übernehmen wollen. Zum Beispiel wollen wir im
-Code in Codeblock 8-16 in der Lage sein, `s2` zu verwenden, nachdem wir seinen
+Code in Listing 8-16 in der Lage sein, `s2` zu verwenden, nachdem wir seinen
 Inhalt an `s1` angehängt haben.
 
 ```rust
@@ -148,7 +148,7 @@ s1.push_str(s2);
 println!("s2 ist {s2}");
 ```
 
-<span class="caption">Codeblock 8-16: Verwenden eines Zeichenkettenanteilstyps
+<span class="caption">Listing 8-16: Verwenden eines Zeichenkettenanteilstyps
 nach dem Anhängen seines Inhalts an eine Zeichenkette</span>
 
 Wenn die Methode `push_str` die Eigentümerschaft von `s2` übernehmen würde,
@@ -156,7 +156,7 @@ könnten wir ihren Wert nicht in der letzten Zeile ausgeben. Dieser Code
 funktioniert jedoch wie erwartet!
 
 Die Methode `push` nimmt ein einzelnes Zeichen als Parameter und fügt es dem
-`String` hinzu. Codeblock 8-17 fügt den Buchstaben `l` mit der Methode `push`
+`String` hinzu. Listing 8-17 fügt den Buchstaben `l` mit der Methode `push`
 zu einem `String` hinzu.
 
 ```rust
@@ -164,7 +164,7 @@ let mut s = String::from("lo");
 s.push('l');
 ```
 
-<span class="caption">Codeblock 8-17: Hinzufügen eines Zeichens zu einem
+<span class="caption">Listing 8-17: Hinzufügen eines Zeichens zu einem
 `String`-Wert mit `push`</span>
 
 Als Ergebnis wird `s` den Wert `lol` enthalten.
@@ -172,7 +172,7 @@ Als Ergebnis wird `s` den Wert `lol` enthalten.
 #### Aneinanderhängen mit `+` und `format!`
 
 Häufig möchtest du zwei vorhandene Zeichenketten kombinieren. Eine Möglichkeit
-das zu tun ist, den Operator `+` zu verwenden, wie in Codeblock 8-18 gezeigt.
+das zu tun ist, den Operator `+` zu verwenden, wie in Listing 8-18 gezeigt.
 
 ```rust
 let s1 = String::from("Hallo ");
@@ -181,7 +181,7 @@ let s3 = s1 + &s2; // Beachte, s1 wurde hierher verschoben und
                    // kann nicht mehr verwendet werden
 ```
 
-<span class="caption">Codeblock 8-18: Verwenden des Operators `+`, um zwei
+<span class="caption">Listing 8-18: Verwenden des Operators `+`, um zwei
 Zeichenketten zu einer neuen zu kombinieren</span>
 
 Die Zeichenkette `s3` wird `Hallo Welt!` enthalten. Der Grund, warum `s1` nach
@@ -207,7 +207,7 @@ Parameter `s` in der Funktion `add`: Wir können nur einen
 Zeichkettenanteilstyp an einen `String` anhängen; wir können nicht zwei
 `String`-Werte aneinanderhängen. Aber warte &ndash; der Typ von `&s2` ist
 `&String`, nicht `&str`, wie im zweiten Parameter von `add` spezifiziert.
-Warum kompiliert also Codeblock 8-18?
+Warum kompiliert also Listing 8-18?
 
 Der Grund, warum wir `&s2` im Aufruf von `add` verwenden können, ist, dass der
 Compiler das Argument `&String` in einen `&str` umwandeln (coerce) kann.
@@ -219,7 +219,7 @@ Operation immer noch ein gültiger `String`.
 
 Zweitens können wir in der Signatur sehen, dass `add` die Eigentümerschaft von
 `self` übernimmt, weil `self` _kein_ `&` hat. Das bedeutet, dass `s1` in
-Codeblock 8-18 in den Aufruf von `add` verschoben wird und danach nicht mehr
+Listing 8-18 in den Aufruf von `add` verschoben wird und danach nicht mehr
 gültig ist. Obwohl also `let s3 = s1 + &s2;` so aussieht, als ob beide
 Zeichenketten kopiert und eine neue erzeugt wird, übernimmt diese Anweisung
 tatsächlich die Eigentümerschaft von `s1`, hängt eine Kopie des Inhalts von
@@ -264,14 +264,14 @@ In vielen anderen Programmiersprachen ist das Zugreifen auf einzelne Zeichen in
 einer Zeichenkette mittels Index eine gültige und gängige Operation. Wenn du
 jedoch in Rust versuchst, mittels Indexierungssyntax auf Teile einer
 Zeichenkette zuzugreifen, wirst du einen Fehler erhalten. Betrachte den
-ungültigen Code in Codeblock 8-19.
+ungültigen Code in Listing 8-19.
 
 ```rust,does_not_compile
 let s1 = String::from("Hallo");
 let h = s1[0];
 ```
 
-<span class="caption">Codeblock 8-19: Versuch, die Indexierungssyntax bei einem
+<span class="caption">Listing 8-19: Versuch, die Indexierungssyntax bei einem
 `String` zu verwenden</span>
 
 Dieser Code führt zu folgendem Fehler:
@@ -304,7 +304,7 @@ ansehen, wie Rust Zeichenketten im Speicher ablegt.
 #### Interne Darstellung
 
 Ein `String` ist eine Hülle um einen `Vec<u8>`. Sehen wir uns einige unserer
-korrekt kodierten UTF-8-Beispielzeichenketten aus Codeblock 8-14 an. Zuerst
+korrekt kodierten UTF-8-Beispielzeichenketten aus Listing 8-14 an. Zuerst
 diese:
 
 ```rust

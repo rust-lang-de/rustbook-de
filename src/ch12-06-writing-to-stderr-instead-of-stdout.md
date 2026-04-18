@@ -52,7 +52,7 @@ landen. Das werden wir ändern.
 
 ### Fehler auf der Standardfehlerausgabe ausgeben
 
-Wir werden den Code in Codeblock 12-24 verwenden, um zu ändern, wie
+Wir werden den Code in Listing 12-24 verwenden, um zu ändern, wie
 Fehlermeldungen ausgegeben werden. Aufgrund der Refaktorierung, die wir früher
 in diesem Kapitel vorgenommen haben, befindet sich der gesamte Code, der
 Fehlermeldungen ausgibt, in einer einzigen Funktion, nämlich der Funktion
@@ -127,7 +127,7 @@ fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 12-24: Schreiben von Fehlermeldungen auf die
+<span class="caption">Listing 12-24: Schreiben von Fehlermeldungen auf die
 Standardfehlerausgabe anstelle der Standardausgabe durch Verwenden von
 `eprintln!`</span>
 

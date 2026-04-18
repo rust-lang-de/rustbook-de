@@ -4,19 +4,19 @@ Bisher haben alle Beispiele in diesem Kapitel mehrere Module in einer Datei
 definiert. Wenn Module groß werden, solltest du ihre Definitionen in eine
 separate Datei verschieben, um die Navigation im Code zu erleichtern.
 
-Gehen wir zum Beispiel von dem Code in Codeblock 7-17 aus, der mehrere
+Gehen wir zum Beispiel von dem Code in Listing 7-17 aus, der mehrere
 Restaurantmodule enthält. Wir verschieben das Modul `front_of_house` in seine
 eigene Datei _src/front_of_house.rs_, indem wir die Crate-Wurzeldatei so ändern,
-dass sie den in Codeblock 7-21 gezeigten Code enthält. In diesem Fall ist die
+dass sie den in Listing 7-21 gezeigten Code enthält. In diesem Fall ist die
 Crate-Wurzeldatei _src/lib.rs_, aber diese Vorgehensweise funktioniert auch mit
 binären Crate, deren Crate-Wurzeldatei _src/main.rs_ ist.
 
 Zuerst extrahieren wir das Modul `front_of_house` in eine eigene Datei.
 Entferne den Code innerhalb der geschweiften Klammern des Moduls
 `front_of_house` und lasse nur die Deklaration `mod front_of_house;` übrig,
-sodass _src/lib.rs_ den in Codeblock 7-21 gezeigten Code enthält. Beachte, dass
+sodass _src/lib.rs_ den in Listing 7-21 gezeigten Code enthält. Beachte, dass
 dies nicht kompiliert und wir noch die Datei _src/front_of_house.rs_ in
-Codeblock 7-22 erstellen müssen.
+Listing 7-22 erstellen müssen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -30,11 +30,11 @@ pub fn eat_at_restaurant() {
 }
 ```
 
-<span class="caption">Codeblock 7-21: Deklarieren des Moduls `front_of_house`,
+<span class="caption">Listing 7-21: Deklarieren des Moduls `front_of_house`,
 dessen Rumpf sich in _src/front_of_house.rs_ befinden wird</span>
 
 Als nächstes fügst du den Code in den geschweiften Klammern in eine neue Datei
-namens _src/front_of_house.rs_ ein, wie in Codeblock 7-22 zu sehen ist. Der
+namens _src/front_of_house.rs_ ein, wie in Listing 7-22 zu sehen ist. Der
 Compiler weiß, dass er in dieser Datei suchen muss, weil er auf die
 Moduldeklaration in der Crate-Wurzel mit dem Namen `front_of_house` gestoßen
 ist.
@@ -47,7 +47,7 @@ pub mod hosting {
 }
 ```
 
-<span class="caption">Codeblock 7-22: Definitionen innerhalb des Moduls
+<span class="caption">Listing 7-22: Definitionen innerhalb des Moduls
 `front_of_house` in _src/front_of_house.rs_</span>
 
 Beachte, dass du den Inhalt einer Datei mit einer `mod`-Deklaration nur

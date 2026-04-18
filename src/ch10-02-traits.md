@@ -31,7 +31,7 @@ erstellen, die Zusammenfassungen von Daten anzeigen kann, die in einer
 `NewsArticle`- oder `SocialPost`-Instanz gespeichert sein könnten. Dazu brauchen
 wir eine Zusammenfassung von jedem Typ, und wir werden diese Zusammenfassung
 anfordern, indem wir eine Methode `summarize` auf einer Instanz aufrufen.
-Codeblock 10-12 zeigt die Definition eines öffentlichen Traits `Summary`, das
+Listing 10-12 zeigt die Definition eines öffentlichen Traits `Summary`, das
 dieses Verhalten zum Ausdruck bringt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -42,7 +42,7 @@ pub trait Summary {
 }
 ```
 
-<span class="caption">Codeblock 10-12: Ein Trait `Summary`, dessen Verhalten aus
+<span class="caption">Listing 10-12: Ein Trait `Summary`, dessen Verhalten aus
 der Methode `summarize` besteht</span>
 
 Hier deklarieren wir ein Trait mit dem Schlüsselwort `trait` und dann den Namen
@@ -66,7 +66,7 @@ zeilenweise aufgelistet und jede Zeile endet mit einem Semikolon.
 
 Nachdem wir nun die gewünschten Signaturen der Methoden des Traits `Summary`
 definiert haben, können wir sie für die Typen in unserem Medienaggregator
-implementieren. Codeblock 10-13 zeigt eine Implementierung des Traits `Summary`
+implementieren. Listing 10-13 zeigt eine Implementierung des Traits `Summary`
 für die Struktur `NewsArticle`, die die Überschrift, den Autor und den Ort
 verwendet, um den Rückgabewert von `summarize` zu erzeugen. Für die Struktur
 `SocialPost` definieren wir `summarize` als den Benutzernamen, gefolgt vom
@@ -107,7 +107,7 @@ impl Summary for SocialPost {
 }
 ```
 
-<span class="caption">Codeblock 10-13: Implementierung des Traits `Summary`
+<span class="caption">Listing 10-13: Implementierung des Traits `Summary`
 für die Typen `NewsArticle` und `SocialPost`</span>
 
 Die Implementierung eines Traits für einen Typ ist ähnlich zur Implementierung
@@ -175,9 +175,9 @@ eines Traits zu haben, anstatt Implementierungen für alle Methoden für jeden T
 zu verlangen. Wenn wir dann das Trait für einen bestimmten Typ implementieren,
 können wir das Standardverhalten jeder Methode beibehalten oder überschreiben.
 
-In Codeblock 10-14 geben wir eine Standard-Zeichenkette für die Methode
+In Listing 10-14 geben wir eine Standard-Zeichenkette für die Methode
 `summarize` des Traits `Summary` an, anstatt nur die Methodensignatur zu
-definieren, wie wir es in Codeblock 10-12 getan haben.
+definieren, wie wir es in Listing 10-12 getan haben.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -211,7 +211,7 @@ pub trait Summary {
 # }
 ```
 
-<span class="caption">Codeblock 10-14: Definieren eines Traits `Summary` mit
+<span class="caption">Listing 10-14: Definieren eines Traits `Summary` mit
 einer Standard-Implementierung der Methode `summarize`</span>
 
 Um eine Standard-Implementierung zu verwenden, um Instanzen von `NewsArticle`
@@ -244,7 +244,7 @@ aufrufen, etwa so:
 Dieser Code gibt `Neuer Artikel verfügbar! (Lies mehr ...)` aus.
 
 Das Erstellen einer Standard-Implementierung erfordert nicht, dass wir an der
-Implementierung von `Summary` für `SocialPost` in Codeblock 10-13 etwas ändern.
+Implementierung von `Summary` für `SocialPost` in Listing 10-13 etwas ändern.
 Der Grund dafür ist, dass die Syntax für das Überschreiben einer
 Standard-Implementierung die gleiche ist wie die Syntax für die Implementierung
 einer Trait-Methode, die keine Standard-Implementierung hat.
@@ -339,7 +339,7 @@ Beachte, dass es nicht möglich ist, die Standardimplementierung von einer
 Da du jetzt weißt, wie man Traits definiert und implementiert, können wir
 untersuchen, wie man Traits zur Definition von Funktionen verwendet, die viele
 verschiedene Typen akzeptieren. Wir verwenden das Trait `Summary`, das wir für
-die Typen `NewsArticle` und `SocialPost` in Codeblock 10-13 implementiert haben,
+die Typen `NewsArticle` und `SocialPost` in Listing 10-13 implementiert haben,
 um eine Funktion `notify` zu definieren, die die Methode `summarize` für ihren
 Parameter `item` aufruft, der von einem Typ ist, der das Trait `Summary`
 implementiert. Um dies zu tun, können wir die Syntax `impl Trait` verwenden,
@@ -615,7 +615,7 @@ Verhalten“][trait-objects] in Kapitel 18 behandelt.
 Durch Verwenden einer Trait Bound mit einem `impl`-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
 die das angegebene Trait implementieren. Beispielsweise implementiert der Typ
-`Pair<T>` in Codeblock 10-15 immer die Funktion `new`, um eine neue Instanz von
+`Pair<T>` in Listing 10-15 immer die Funktion `new`, um eine neue Instanz von
 `Pair<T>` zurückzugeben (erinnere dich an [„Methoden-Syntax“][method-syntax] in
 Kapitel 5, dass `Self` ein Typ-Alias für den Typ des `impl`-Blocks ist, der in
 diesem Fall `Pair<T>` ist). Aber im nächsten `impl`-Block implementiert
@@ -650,7 +650,7 @@ impl<T: Display + PartialOrd> Pair<T> {
 }
 ```
 
-<span class="caption">Codeblock 10-15: Bedingte Implementierung von Methoden
+<span class="caption">Listing 10-15: Bedingte Implementierung von Methoden
 für einen generischen Typ in Abhängigkeit von Trait Bounds</span>
 
 Wir können auch ein Trait für beliebige Typen bedingt implementieren, die ein

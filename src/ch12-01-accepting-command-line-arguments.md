@@ -38,7 +38,7 @@ erzeugen eine Reihe von Werten und wir können die Methode `collect` auf einem
 Iterator aufrufen, um ihn in eine Kollektion, z.B. einen Vektor, zu verwandeln,
 der alle Elemente enthält, die der Iterator erzeugt.
 
-Der Code in Codeblock 12-1 ermöglicht deinem `minigrep`-Programm, alle ihm
+Der Code in Listing 12-1 ermöglicht deinem `minigrep`-Programm, alle ihm
 übergebenen Befehlszeilenargumente zu lesen und die Werte dann in einem Vektor
 zu sammeln.
 
@@ -53,7 +53,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 12-1: Sammeln der Befehlszeilenargumente in
+<span class="caption">Listing 12-1: Sammeln der Befehlszeilenargumente in
 einem Vektor und Ausgeben dieser Werte</span>
 
 Zuerst bringen wir das Modul `std::env` mit einer `use`-Anweisung in den
@@ -126,7 +126,7 @@ ihn und speichern nur die beiden Argumente, die wir brauchen.
 Das Programm ist derzeit in der Lage, auf die als Kommandozeilenargumente
 angegebenen Werte zuzugreifen. Jetzt müssen wir die Werte der beiden Argumente
 in Variablen speichern, damit wir die Werte im restlichen Programm verwenden
-können. Das tun wir in Codeblock 12-2.
+können. Das tun wir in Listing 12-2.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -144,7 +144,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 12-2: Erstellen von Variablen zur Aufnahme des
+<span class="caption">Listing 12-2: Erstellen von Variablen zur Aufnahme des
 Such-Arguments und des Dateipfad-Arguments</span>
 
 Wie wir gesehen haben, als wir den Vektor ausgegeben haben, nimmt der

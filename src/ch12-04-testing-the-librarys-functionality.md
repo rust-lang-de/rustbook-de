@@ -34,7 +34,7 @@ In _src/lib.rs_ fügen wir ein Modul `tests` mit einer Testfunktion hinzu, wie
 wir es in [Kapitel 11][ch11-anatomy] getan haben. Die Testfunktion spezifiziert
 das Verhalten, das die Funktion `search` haben soll: Sie nimmt eine Suchabfrage
 und den Text, in dem gesucht werden soll, entgegen und gibt nur die Zeilen aus
-dem Text zurück, die die Suchabfrage enthalten. Codeblock 12-15 zeigt diesen
+dem Text zurück, die die Suchabfrage enthalten. Listing 12-15 zeigt diesen
 Test.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -63,7 +63,7 @@ Nimm drei.";
 }
 ```
 
-<span class="caption">Codeblock 12-15: Erstellen eines fehlschlagenden Tests
+<span class="caption">Listing 12-15: Erstellen eines fehlschlagenden Tests
 für die Funktion `search`, die wir uns wünschen</span>
 
 Dieser Test sucht nach der Zeichenkette `"dukt"`. Der Text, den wir
@@ -78,7 +78,7 @@ fehlschlägt, weil der Test noch nicht mal kompiliert: Die Funktion `search`
 existiert noch nicht! In Übereinstimmung mit den TDD-Prinzipien werden wir
 jetzt gerade genug Code hinzufügen, um den Test zum Kompilieren und Ausführen
 zu bringen, indem wir eine Definition der Funktion `search` hinzufügen, die
-immer einen leeren Vektor zurückgibt, wie in Codeblock 12-16 gezeigt. Dann
+immer einen leeren Vektor zurückgibt, wie in Listing 12-16 gezeigt. Dann
 sollte der Test kompiliert werden können und fehlschlagen, weil ein leerer
 Vektor nicht mit einem Vektor übereinstimmt, der die Zeile `"sicher, schnell,
 produktiv."` enthält.
@@ -107,7 +107,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 # }
 ```
 
-<span class="caption">Codeblock 12-16: Definiere gerade genug von der Funktion
+<span class="caption">Listing 12-16: Definiere gerade genug von der Funktion
 `search`, damit unser Test kompiliert</span>
 
 Beachte, dass wir eine explizite Lebensdauer `'a` in der Signatur von `search`
@@ -179,7 +179,7 @@ Zeilen.
 #### Iterieren über Zeilen mit der Methode `lines`
 
 Rust hat eine hilfreiche Methode zum zeilenweisen Iterieren von Zeichenketten,
-bequemerweise `lines` genannt, die wie in Codeblock 12-17 gezeigt funktioniert.
+bequemerweise `lines` genannt, die wie in Listing 12-17 gezeigt funktioniert.
 Beachte, dass dies noch nicht kompiliert.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -208,12 +208,12 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 # }
 ```
 
-<span class="caption">Codeblock 12-17: Iteriere über jede Zeile in
+<span class="caption">Listing 12-17: Iteriere über jede Zeile in
 `contents`</span>
 
 Die Methode `lines` gibt einen Iterator zurück. Wir werden in [Kapitel
 13][ch13-iterators] ausführlich über Iteratoren sprechen, aber erinnere dich
-daran, dass du diese Art der Verwendung eines Iterators in [Codeblock
+daran, dass du diese Art der Verwendung eines Iterators in [Listing
 3-5][ch3-iter] gesehen hast, wo wir eine `for`-Schleife mit einem Iterator
 benutzt haben, um etwas Code für jedes Element in einer Kollektion auszuführen.
 
@@ -222,7 +222,7 @@ benutzt haben, um etwas Code für jedes Element in einer Kollektion auszuführen
 Als nächstes prüfen wir, ob die aktuelle Zeile unsere Abfragezeichenkette
 enthält. Glücklicherweise haben Zeichenketten eine hilfreiche Methode namens
 `contains`, die dies für uns erledigt! Füge einen Aufruf der Methode `contains`
-in der Funktion `search` hinzu, wie in Codeblock 12-18 gezeigt. Beachte, dass
+in der Funktion `search` hinzu, wie in Listing 12-18 gezeigt. Beachte, dass
 dies noch nicht kompiliert werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -253,7 +253,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 # }
 ```
 
-<span class="caption">Codeblock 12-18: Hinzufügen von Funktionalität, um zu
+<span class="caption">Listing 12-18: Hinzufügen von Funktionalität, um zu
 sehen, ob die Zeile die Zeichenkette in `query` enthält</span>
 
 Im Moment bauen wir die Funktionalität auf. Damit sie kompiliert werden kann,
@@ -266,7 +266,7 @@ Um diese Funktion zu vervollständigen, brauchen wir auch eine Möglichkeit, die
 passenden Zeilen zu speichern, die wir zurückgeben wollen. Dafür können wir
 einen veränderbaren Vektor vor der `for`-Schleife erstellen und die Methode
 `push` aufrufen, um eine `line` im Vektor zu speichern. Nach der `for`-Schleife
-geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.
+geben wir den Vektor zurück, wie in Listing 12-19 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -300,7 +300,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 # }
 ```
 
-<span class="caption">Codeblock 12-19: Speichern der passenden Zeilen, damit
+<span class="caption">Listing 12-19: Speichern der passenden Zeilen, damit
 wir sie zurückgeben können</span>
 
 Jetzt sollte die Funktion `search` nur noch die Zeilen zurückgeben, die `query`

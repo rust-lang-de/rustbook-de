@@ -72,7 +72,7 @@ In der Testgemeinschaft wird darüber diskutiert, ob private Funktionen direkt
 getestet werden sollten oder nicht, und andere Sprachen machen es schwierig
 oder gar unmöglich, private Funktionen zu testen. Unabhängig davon, an welcher
 Testideologie du festhältst, erlauben dir Rusts Datenschutzregeln, private
-Funktionen zu testen. Betrachte den Code in Codeblock 11-12 mit der privaten
+Funktionen zu testen. Betrachte den Code in Listing 11-12 mit der privaten
 Funktion `internal_adder`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -98,7 +98,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 11-12: Testen einer privaten Funktion</span>
+<span class="caption">Listing 11-12: Testen einer privaten Funktion</span>
 
 Beachte, dass die Funktion `internal_adder` nicht mit `pub` markiert ist. Tests
 sind einfach nur Rust-Code, und das Modul `tests` ist nur ein weiteres Modul.
@@ -130,7 +130,7 @@ nach Integrationstestdateien suchen soll. Wir können dann so viele Testdateien
 erstellen, wie wir wollen, und Cargo wird jede dieser Dateien als eine
 individuelle Crate kompilieren.
 
-Lass uns einen Integrationstest erstellen. Wenn sich der Code in Codeblock
+Lass uns einen Integrationstest erstellen. Wenn sich der Code in Listing
 11-12 noch in der Datei _src/lib.rs_ befindet, erstelle ein Verzeichnis
 _tests_ und eine neue Datei mit dem Namen _tests/integration_test.rs_. Deine
 Verzeichnisstruktur sollte folgendermaßen aussehen:
@@ -145,7 +145,7 @@ adder
     └── integration_test.rs
 ```
 
-Gib den Code in Codeblock 11-13 in die Datei _tests/integration_test.rs_ ein.
+Gib den Code in Listing 11-13 in die Datei _tests/integration_test.rs_ ein.
 
 <span class="filename">Dateiname: tests/integration_test.rs</span>
 
@@ -159,7 +159,7 @@ fn it_adds_two() {
 }
 ```
 
-<span class="caption">Codeblock 11-13: Integrationstest einer Funktion in der
+<span class="caption">Listing 11-13: Integrationstest einer Funktion in der
 Crate `adder`</span>
 
 Jede Datei im Verzeichnis `tests` ist eine separate Crate, also müssen wir
@@ -206,7 +206,7 @@ Modultests erfolgreich sind.
 
 Der erste Abschnitt für die Modultests ist derselbe, wie wir ihn gesehen haben:
 Eine Zeile für jeden Modultest (eine Zeile mit der Bezeichnung `internal`, die
-wir in Codeblock 11-12 hinzugefügt haben) und dann eine zusammenfassende Zeile
+wir in Listing 11-12 hinzugefügt haben) und dann eine zusammenfassende Zeile
 für die Modultests.
 
 Der Abschnitt zu den Integrationstests beginnt mit der Zeile `Running
@@ -352,7 +352,7 @@ fn it_adds_two() {
 ```
 
 Beachte, dass die Deklaration `mod common;` die gleiche ist wie die
-Moduldeklaration, die wir in Codeblock 7-21 gezeigt haben. In der Testfunktion
+Moduldeklaration, die wir in Listing 7-21 gezeigt haben. In der Testfunktion
 können wir dann die Funktion `common::setup()` aufrufen.
 
 #### Integrationstests für binäre Crates

@@ -40,7 +40,7 @@ ebenfalls einen anderen Ansatz der Nebenläufigkeit.)
 Um einen neuen Thread zu erstellen, rufen wir die Funktion `thread::spawn` auf
 und übergeben ihr einen Closure (wir haben in Kapitel 13 über Closures
 gesprochen), der den Code enthält, den wir im neuen Thread ausführen wollen. Das
-Beispiel in Codeblock 16-1 gibt einen Text im Haupt-Thread und anderen Text im
+Beispiel in Listing 16-1 gibt einen Text im Haupt-Thread und anderen Text im
 neuen Thread aus:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -64,7 +64,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-1: Erstellen eines neuen Threads, um einen
+<span class="caption">Listing 16-1: Erstellen eines neuen Threads, um einen
 Text auszugeben, während der Haupt-Thread einen anderen Text ausgibt</span>
 
 Beachte, dass bei der Beendigung des Haupt-Threads eines Rust-Programms alle
@@ -100,7 +100,7 @@ zu wechseln.
 
 ### Warten auf das Ende aller Threads
 
-Der Code in Codeblock 16-1 beendet nicht nur den erzeugten Thread meist
+Der Code in Listing 16-1 beendet nicht nur den erzeugten Thread meist
 vorzeitig, weil der Haupt-Threads endet, sondern weil es keine Garantie für die
 Reihenfolge gibt, in der Threads laufen. Wir können auch nicht garantieren, dass
 der erzeugte Thread überhaupt zum Laufen kommt!
@@ -109,8 +109,8 @@ Wir können das Problem, dass der erzeugte Thread nicht läuft oder vorzeitig
 beendet wird, beheben, indem wir den Rückgabewert von `thread::spawn` in einer
 Variable speichern. Der Rückgabetyp von `thread::spawn` ist `JoinHandle<T>`. Ein
 `JoinHandle<T>` ist ein aneigenbarer (owned) Wert, der, wenn wir die Methode
-`join` darauf aufrufen, darauf wartet, bis sich sein Thread beendet. Codeblock
-16-2 zeigt, wie der `JoinHandle<T>` des Threads, den wir in Codeblock 16-1
+`join` darauf aufrufen, darauf wartet, bis sich sein Thread beendet. Listing
+16-2 zeigt, wie der `JoinHandle<T>` des Threads, den wir in Listing 16-1
 erstellt haben, verwendet und wie `join` aufgerufen wird, um sicherzustellen,
 dass der erzeugte Thread beendet wird, bevor `main` endet:
 
@@ -137,7 +137,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-2: Speichern des `JoinHandle<T>` von
+<span class="caption">Listing 16-2: Speichern des `JoinHandle<T>` von
 `thread::spawn`, um zu garantieren, dass der Thread bis zum Ende ausgeführt
 wird</span>
 
@@ -145,7 +145,7 @@ Aufrufen von `join` auf `JoinHandle` blockiert den gerade laufenden Thread, bis
 der durch `JoinHandle` repräsentierte Thread beendet ist. _Blockieren_ eines
 Threads bedeutet, dass der Thread daran gehindert wird, Arbeit auszuführen oder
 sich zu beenden. Da wir den Aufruf von `join` nach der `for`-Schleife im
-Haupt-Thread gesetzt haben, sollte das Ausführen von Codeblock 16-2 eine Ausgabe
+Haupt-Thread gesetzt haben, sollte das Ausführen von Listing 16-2 eine Ausgabe
 wie folgt erzeugen:
 
 ```text
@@ -228,11 +228,11 @@ Kapitel 13 haben wir `move` im Zusammenhang mit Closures besprochen. Jetzt
 werden wir uns mehr auf die Interaktion zwischen `move` und `thread::spawn`
 konzentrieren.
 
-Beachte in Codeblock 16-1, dass der Closure, den wir an `thread::spawn`
+Beachte in Listing 16-1, dass der Closure, den wir an `thread::spawn`
 übergeben, keine Argumente erfordert: Wir verwenden keine Daten aus dem
 Haupt-Thread im Code des erzeugten Threads. Um Daten aus dem Haupt-Thread im
 erzeugten Thread zu verwenden, muss der Closure des erzeugten Threads die
-benötigten Werte erfassen. Codeblock 16-3 zeigt einen Versuch, einen Vektor im
+benötigten Werte erfassen. Listing 16-3 zeigt einen Versuch, einen Vektor im
 Haupt-Thread zu erstellen und ihn im erzeugten Thread zu verwenden. Dies wird
 jedoch noch nicht funktionieren, wie du gleich sehen wirst.
 
@@ -252,7 +252,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-3: Versuch, einen im Haupt-Thread erzeugten
+<span class="caption">Listing 16-3: Versuch, einen im Haupt-Thread erzeugten
 Vektor in einem anderen Thread zu verwenden</span>
 
 Der Closure verwendet `v`, sodass er `v` erfasst und zum Teil der Umgebung des
@@ -294,7 +294,7 @@ auf `v` benötigt, versucht der Closure, `v` auszuleihen. Es gibt jedoch ein
 Problem: Rust kann nicht sagen, wie lange der erzeugte Thread laufen wird,
 sodass es nicht weiß, ob die Referenz auf `v` immer gültig sein wird.
 
-Codeblock 16-4 zeigt ein Szenario, das eine Referenz auf `v` hat, die eher
+Listing 16-4 zeigt ein Szenario, das eine Referenz auf `v` hat, die eher
 nicht gültig ist:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -315,7 +315,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-4: Ein Thread mit einem Closure, der
+<span class="caption">Listing 16-4: Ein Thread mit einem Closure, der
 versucht, eine Referenz auf `v` vom Haupt-Thread zu erfassen, der `v`
 aufräumt</span>
 
@@ -327,7 +327,7 @@ Inneren, aber der Haupt-Thread räumt `v` sofort auf, indem er die Funktion
 Thread dann mit der Ausführung beginnt, ist `v` nicht mehr gültig, sodass eine
 Referenz darauf ebenfalls ungültig ist. Oh nein!
 
-Um den Kompilierfehler in Codeblock 16-3 zu beheben, können wir die Hinweise
+Um den Kompilierfehler in Listing 16-3 zu beheben, können wir die Hinweise
 der Fehlermeldung verwenden:
 
 ```text
@@ -340,7 +340,7 @@ help: to force the closure to take ownership of `v` (and any other referenced va
 Indem wir vor dem Closure das Schlüsselwort `move` hinzufügen, zwingen wir den
 Closure dazu, die Eigentümerschaft der Werte zu übernehmen, die er benutzt,
 anstatt zuzulassen, dass Rust daraus ableitet, dass er sich die Werte ausleihen
-sollte. Die in Codeblock 16-5 gezeigte Änderung an Codeblock 16-3 wird wie von
+sollte. Die in Listing 16-5 gezeigte Änderung an Listing 16-3 wird wie von
 uns beabsichtigt kompilieren und ausgeführt.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -359,13 +359,13 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-5: Durch Verwenden des Schlüsselwortes `move`
+<span class="caption">Listing 16-5: Durch Verwenden des Schlüsselwortes `move`
 zwigen wir den Closure, die Eigentümerschaft der von ihm verwendeten Werte zu
 übernehmen</span>
 
-Wir könnten versuchen, den Code in Codeblock 16-4 auf diesselbe Weise zu
+Wir könnten versuchen, den Code in Listing 16-4 auf diesselbe Weise zu
 reparieren, wo der Haupt-Thread `drop` aufruft, während wir einen `move`-Closure
-verwenden. Diese Lösung wird jedoch nicht funktionieren, weil das, was Codeblock
+verwenden. Diese Lösung wird jedoch nicht funktionieren, weil das, was Listing
 16-4 versucht, aus einem anderen Grund nicht erlaubt ist. Wenn wir dem Closure
 `move` hinzufügen, würden wir `v` in die Umgebung des Closures verschieben, und
 wir könnten im Haupt-Thread nicht mehr `drop` darauf aufrufen. Wir würden
@@ -400,11 +400,11 @@ error: could not compile `threads` (bin "threads") due to 1 previous error
 ```
 
 Die Eigentumsregeln von Rust haben uns wieder einmal gerettet! Wir haben einen
-Fehler im Code in Codeblock 16-3 erhalten, weil Rust konservativ war und nur `v`
+Fehler im Code in Listing 16-3 erhalten, weil Rust konservativ war und nur `v`
 für den Thread auslieh, was bedeutete, dass der Haupt-Thread theoretisch die
 Referenz des erzeugte Threads ungültig machen konnte. Indem wir Rust anweisen,
 die Eigentümerschaft von `v` in den erzeugte Thread zu verlagern, garantieren
-wir Rust, dass der Haupt-Thread `v` nicht mehr benutzen wird. Wenn wir Codeblock
+wir Rust, dass der Haupt-Thread `v` nicht mehr benutzen wird. Wenn wir Listing
 16-4 auf die gleiche Weise ändern, verletzen wir die Eigentumsregeln, wenn wir
 versuchen, `v` im Haupt-Thread zu benutzen. Das Schlüsselwort `move` setzt Rusts
 konservativen Borrowing-Standard außer Kraft; es lässt uns nicht gegen die

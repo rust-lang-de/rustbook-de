@@ -16,7 +16,7 @@ Funktionszeigern ermöglicht es dir, Funktionen als Argumente für andere
 Funktionen zu verwenden.
 
 Die Syntax für die Angabe, dass ein Parameter ein Funktionszeiger ist, ähnelt
-der von Closures, wie in Codeblock 20-28 gezeigt, wo wir eine Funktion `add_one`
+der von Closures, wie in Listing 20-28 gezeigt, wo wir eine Funktion `add_one`
 definiert haben, die ihrem Parameter 1 hinzufügt. Die Funktion `do_twice` nimmt
 zwei Parameter entgegen: Einen Funktionszeiger auf eine beliebige Funktion mit
 einem `i32`-Parameter und einem `i32`-Rückgabewert, und einen `i32`-Parameter.
@@ -42,7 +42,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-28: Verwenden des Typs `fn` zum
+<span class="caption">Listing 20-28: Verwenden des Typs `fn` zum
 Entgegennehmen eines Funktionszeigers als Argument</span>
 
 Dieser Code gibt `Die Antwort ist: 12` aus. Wir spezifizieren, dass der
@@ -70,7 +70,7 @@ benannte Funktion verwenden könntest, sehen wir uns die Verwendung der Methode
 `map` an, die vom Trait `Iterator` in der Standardbibliothek bereitgestellt
 wird. Um die Methode `map` zu verwenden, um einen Vektor von Zahlen in einen
 Vektor von Zeichenketten zu verwandeln, könnten wir einen Closure verwenden, wie
-in Codeblock 20-29.
+in Listing 20-29.
 
 ```rust
 let list_of_numbers = vec![1, 2, 3];
@@ -78,11 +78,11 @@ let list_of_strings: Vec<String> =
     list_of_numbers.iter().map(|i| i.to_string()).collect();
 ```
 
-<span class="caption">Codeblock 20-29: Verwendung eines Closure mit der Methode
+<span class="caption">Listing 20-29: Verwendung eines Closure mit der Methode
 `map` zur Umwandlung von Zahlen in Zeichenketten</span>
 
 Oder wir könnten eine Funktion als Argument für `map` angeben anstelle des
-Closures. Codeblock 20-30 zeigt, wie das aussehen würde.
+Closures. Listing 20-30 zeigt, wie das aussehen würde.
 
 ```rust
 let list_of_numbers = vec![1, 2, 3];
@@ -90,7 +90,7 @@ let list_of_strings: Vec<String> =
     list_of_numbers.iter().map(ToString::to_string).collect();
 ```
 
-<span class="caption">Codeblock 20-30: Verwenden der Methode
+<span class="caption">Listing 20-30: Verwenden der Methode
 `String::to_string` zur Umwandlung von Zahlen in Zeichenketten</span>
 
 Beachte, dass wir die vollständig qualifizierte Syntax verwenden müssen, über
@@ -106,7 +106,7 @@ dass der Name jeder definierten Aufzählungsvariante auch eine
 Initialisierungsfunktion ist. Wir können diese Initialisierungsfunktionen als
 Funktionszeiger verwenden, die die Closure-Traits implementieren, was bedeutet,
 dass wir die Initialisierungsfunktionen als Argumente für Methoden angeben
-können, die Closures nehmen, wie in Codeblock 20-32 zu sehen ist.
+können, die Closures nehmen, wie in Listing 20-32 zu sehen ist.
 
 ```rust
 enum Status {
@@ -117,7 +117,7 @@ enum Status {
 let list_of_statuses: Vec<Status> = (0u32..20).map(Status::Value).collect();
 ```
 
-<span class="caption">Codeblock 20-31: Verwenden eines
+<span class="caption">Listing 20-31: Verwenden eines
 Aufzählungs-Initialisierers mit der Methode `map` zum Erstellen einer
 `Status`-Instanz aus Zahlen</span>
 
@@ -141,7 +141,7 @@ seinem Gültigkeitsbereich erfasst.
 Stattdessen wirst du normalerweise die Syntax `impl Trait` verwenden, die wir
 in Kapitel 10 kennengelernt haben. Du kannst jeden Funktionstyp zurückgeben,
 indem du `Fn`, `FnOnce` und `FnMut` verwendest. Zum Beispiel wird der Code in
-Codeblock 20-32 problemlos funktionieren.
+Listing 20-32 problemlos funktionieren.
 
 ```rust
 fn returns_closure() -> impl Fn(i32) -> i32 {
@@ -149,7 +149,7 @@ fn returns_closure() -> impl Fn(i32) -> i32 {
 }
 ```
 
-<span class="caption">Codeblock 20-32: Rückgeben eines Closures aus einer
+<span class="caption">Listing 20-32: Rückgeben eines Closures aus einer
 Funktion unter Verwendung der Syntax `impl Trait`</span>
 
 Wie wir jedoch im Abschnitt [„Herleiten und Annotieren von
@@ -157,7 +157,7 @@ Closure-Typen“][closure-types] in Kapitel 13 festgestellt haben, ist jeder
 Closure auch ein eigener Typ. Wenn du mit mehreren Funktionen arbeiten musst,
 die dieselbe Signatur, aber unterschiedliche Implementierungen haben, musst du
 ein Trait-Objekt für sie verwenden. Überlege, was passiert, wenn du einen Code
-wie in Codeblock 20-33 schreibst.
+wie in Listing 20-33 schreibst.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -179,7 +179,7 @@ fn returns_initialized_closure(init: i32) -> impl Fn(i32) -> i32 {
 }
 ```
 
-<span class="caption">Codeblock 20-33: Erstellen eines `Vec<T>` von Closures,
+<span class="caption">Listing 20-33: Erstellen eines `Vec<T>` von Closures,
 die durch Funktionen definiert sind, die `impl Fn` zurückgeben</span>
 
 Hier haben wir zwei Funktionen `returns_closure` und
@@ -222,7 +222,7 @@ wie Rust unterschiedliche konkrete Typen für verschiedene asynchrone Blöcke
 erzeugt, selbst wenn sie denselben Ausgabetyp haben, wie wir im Abschnitt [„Der
 Typ `Pin` und das Trait `Unpin`“][future-types] in Kapitel 17 gesehen haben.)
 Eine Lösung für dieses Problem haben wir jetzt schon ein paar Mal gesehen: Wir
-können ein Trait-Objekt verwenden, wie in Codeblock 20-34.
+können ein Trait-Objekt verwenden, wie in Listing 20-34.
 
 ```rust
 # fn main() {
@@ -242,7 +242,7 @@ fn returns_initialized_closure(init: i32) -> Box<dyn Fn(i32) -> i32> {
 }
 ```
 
-<span class="caption">Codeblock 20-34: Erstellen eines `Vec<T>` von Closures,
+<span class="caption">Listing 20-34: Erstellen eines `Vec<T>` von Closures,
 die durch Funktionen definiert sind, die `Box<dyn Fn>` zurückgeben, damit sie
 denselben Typ haben</span>
 

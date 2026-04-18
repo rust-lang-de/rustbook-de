@@ -25,7 +25,7 @@ Standardbibliotheksdokumentation.
 ### Erstellen einer neuen Hashtabelle
 
 Ein Weg um eine leere Hashtabelle zu erzeugen ist mit `new` und um Elemente
-hinzuzufügen mit `insert`. In Codeblock 8-20 verfolgen wir die Ergebnisse
+hinzuzufügen mit `insert`. In Listing 8-20 verfolgen wir die Ergebnisse
 zweier Mannschaften mit den Namen Blau und Gelb. Das Team Blau startet mit 10
 Punkten, das Team Gelb mit 50 Punkten.
 
@@ -38,7 +38,7 @@ scores.insert(String::from("Blau"), 10);
 scores.insert(String::from("Gelb"), 50);
 ```
 
-<span class="caption">Codeblock 8-20: Erstellen einer neuen Hashtabelle und
+<span class="caption">Listing 8-20: Erstellen einer neuen Hashtabelle und
 Einfügen einiger Schlüssel und Werte</span>
 
 Beachte, dass wir zuerst mit `use` die `HashMap` aus dem Kollektionsteil der
@@ -56,7 +56,7 @@ Werte müssen denselben Typ haben.
 ### Zugreifen auf Werte in einer Hashtabelle
 
 Wir können einen Wert aus der Hashtabelle herausholen, indem wir die Methode
-`get` mit ihrem Schlüssel aufrufen, wie in Codeblock 8-21 gezeigt.
+`get` mit ihrem Schlüssel aufrufen, wie in Listing 8-21 gezeigt.
 
 ```rust
 use std::collections::HashMap;
@@ -70,7 +70,7 @@ let team_name = String::from("Blau");
 let score = scores.get(&team_name).copied().unwrap_or(0);
 ```
 
-<span class="caption">Codeblock 8-21: Zugreifen auf den Spielstand von Team
+<span class="caption">Listing 8-21: Zugreifen auf den Spielstand von Team
 Blau in der Hashtabelle</span>
 
 Hier wird `score` den Wert haben, der mit Team Blau assoziiert ist, und das
@@ -108,7 +108,7 @@ Blau: 10
 
 Bei Typen wie `i32`, die das Trait `Copy` implementieren, werden die Werte in
 die Hashtabelle kopiert. Bei aneigenbaren Werten wie `String` werden die Werte
-verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Codeblock
+verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Listing
 8-22 gezeigt wird.
 
 ```rust
@@ -123,7 +123,7 @@ map.insert(field_name, field_value);
 // Versuche, sie zu benutzen und beobachte, welchen Kompilierfehler du erhältst!
 ```
 
-<span class="caption">Codeblock 8-22: Zeigt, dass Schlüssel und Werte nach dem
+<span class="caption">Listing 8-22: Zeigt, dass Schlüssel und Werte nach dem
 Aufruf von `insert` Eigentum der Hashtabelle sind</span>
 
 Wir können die Variablen `field_name` und `field_value` nicht mehr verwenden,
@@ -154,7 +154,7 @@ kombinieren. Schauen wir uns an, wie diese Varianten jeweils funktionieren!
 
 Wenn wir einen Schlüssel und einen Wert in eine Hashtabelle einfügen und dann
 denselben Schlüssel mit einem anderen Wert einfügen, wird der mit diesem
-Schlüssel assoziierte Wert ersetzt. Auch wenn der Code in Codeblock 8-23
+Schlüssel assoziierte Wert ersetzt. Auch wenn der Code in Listing 8-23
 zweimal `insert` aufruft, wird die Hashtabelle nur ein Schlüssel-Wert-Paar
 enthalten, weil wir beide Male einen Wert für den Schlüssel des Teams Blau
 einfügen.
@@ -170,7 +170,7 @@ scores.insert(String::from("Blau"), 25);
 println!("{scores:?}");
 ```
 
-<span class="caption">Codeblock 8-23: Ersetzen eines gespeicherten Wertes für
+<span class="caption">Listing 8-23: Ersetzen eines gespeicherten Wertes für
 einen bestimmten Schlüssel</span>
 
 Dieser Code wird `{"Blau": 25}` ausgeben. Der ursprüngliche Wert `10` wurde
@@ -190,7 +190,7 @@ Rückgabewert der Methode `entry` ist eine Aufzählung (enum) namens `Entry`, di
 einen Wert repräsentiert, der existieren könnte oder auch nicht. Nehmen wir an,
 wir wollen prüfen, ob der Schlüssel für das Team Gelb einen Wert hat. Wenn das
 nicht der Fall ist, wollen wir den Wert `50` einfügen, und dasselbe gilt für
-das Team Blau. Bei Verwendung von `entry` sieht der Code wie Codeblock 8-24
+das Team Blau. Bei Verwendung von `entry` sieht der Code wie Listing 8-24
 aus.
 
 ```rust
@@ -205,7 +205,7 @@ scores.entry(String::from("Blau")).or_insert(50);
 println!("{scores:?}");
 ```
 
-<span class="caption">Codeblock 8-24: Verwenden der Methode `entry` zum
+<span class="caption">Listing 8-24: Verwenden der Methode `entry` zum
 Einfügen, nur wenn der Schlüssel nicht bereits einen Wert hat</span>
 
 Die Methode `or_insert` von `Entry` ist so definiert, dass sie eine veränderbare
@@ -215,7 +215,7 @@ für diesen Schlüssel ein und gibt eine veränderbare Referenz auf den neuen We
 zurück. Diese Technik ist viel sauberer, als die Logik selbst zu schreiben, und
 sie harmoniert besser mit dem Borrow Checker.
 
-Der Code in Codeblock 8-24 gibt `{"Gelb": 50, "Blau": 10}` aus. Beim ersten
+Der Code in Listing 8-24 gibt `{"Gelb": 50, "Blau": 10}` aus. Beim ersten
 Aufruf von `entry` wird der Schlüssel von Team Gelb mit dem Wert `50`
 eingefügt, da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von `entry`
 wird die Hashtabelle nicht verändern, da das Team Blau bereits den Wert `10`
@@ -225,7 +225,7 @@ hat.
 
 Ein weiterer gängiger Anwendungsfall für Hashtabellen besteht darin, den Wert
 eines Schlüssels nachzuschlagen und ihn dann auf Basis des alten Wertes zu
-aktualisieren. Beispielsweise zeigt Codeblock 8-25 einen Code, der zählt, wie
+aktualisieren. Beispielsweise zeigt Listing 8-25 einen Code, der zählt, wie
 oft jedes Wort in einem Text vorkommt. Wir verwenden eine Hashtabelle mit den
 Wörtern als Schlüssel und inkrementieren den Wert, um nachzuvollziehen, wie oft
 wir dieses Wort schon gesehen haben. Wenn es das erste Mal ist, dass wir ein
@@ -246,7 +246,7 @@ for word in text.split_whitespace() {
 println!("{map:?}");
 ```
 
-<span class="caption">Codeblock 8-25: Zählen des Vorkommens von Wörtern mit
+<span class="caption">Listing 8-25: Zählen des Vorkommens von Wörtern mit
 Hilfe einer Hashtabelle, die Wörter speichert und zählt</span>
 
 Dieser Code gibt `{"Welt": 2, "wunderbare": 1, "Hallo": 1}` aus. Es kann sein,

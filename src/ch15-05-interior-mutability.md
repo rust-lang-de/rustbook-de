@@ -164,7 +164,7 @@ Mechanismus zum Senden der Nachrichten bereitstellen: Die Anwendung könnte die
 Nachricht dem Benutzer direkt zeigen, eine E-Mail senden, eine Textnachricht
 senden oder etwas anderes machen. Die Bibliothek muss dieses Detail nicht
 kennen. Alles, was es braucht, ist Code, der ein von uns bereitgestelltes Trait
-namens `Messenger` implementiert. Codeblock 15-20 zeigt den Bibliothekscode.
+namens `Messenger` implementiert. Listing 15-20 zeigt den Bibliothekscode.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -209,7 +209,7 @@ where
 }
 ```
 
-<span class="caption">Codeblock 15-20: Eine Bibliothek um zu verfolgen, wie nahe
+<span class="caption">Listing 15-20: Eine Bibliothek um zu verfolgen, wie nahe
 ein Wert an einem Maximalwert liegt, und um zu warnen, wenn der Wert über
 bestimmten Schwellwerten liegt</span>
 
@@ -231,7 +231,7 @@ Textnachricht beim Aufrufen von `send` nur die Nachrichten verfolgt, die
 gesendet werden sollen. Wir können eine neue Instanz des Mock-Objekts estellen,
 einen `LimitTracker` erstellen, der das Mock-Objekt verwendet, die Methode
 `set_value` für `LimitTracker` aufrufen und dann überprüfen, ob das Mock-Objekt
-die erwarteten Nachrichten enthält. Codeblock 15-21 zeigt den Versuch, ein
+die erwarteten Nachrichten enthält. Listing 15-21 zeigt den Versuch, ein
 Mock-Objekt zu implementieren, um genau das zu tun, aber der Borrow Checker
 erlaubt dies nicht.
 
@@ -311,7 +311,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 15-21: Der Versuch einen `MockMessenger` zu
+<span class="caption">Listing 15-21: Der Versuch einen `MockMessenger` zu
 implementieren, der vom Borrow Checker nicht erlaubt wird</span>
 
 Dieser Testcode definiert eine Struktur `MockMessenger` mit einem Feld
@@ -369,7 +369,7 @@ funktioniert.
 Dies ist eine Situation, in der innere Veränderbarkeit helfen kann! Wir
 speichern die `send_messages` in einer `RefCell<T>` und dann kann die Methode
 `send` den Wert `sent_messages` ändern, um Nachrichten zu speichern, die wir
-gesehen haben. Codeblock 15-22 zeigt, wie das aussieht.
+gesehen haben. Listing 15-22 zeigt, wie das aussieht.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -450,7 +450,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 15-22: `RefCell<T>` verwenden, um einen inneren
+<span class="caption">Listing 15-22: `RefCell<T>` verwenden, um einen inneren
 Wert zu verändern, während der äußere Wert als unveränderbar betrachtet
 wird</span>
 
@@ -494,8 +494,8 @@ veränderbare Borrow haben.
 
 Wenn wir versuchen, diese Regeln zu verletzen, erhalten wir keinen
 Kompilierfehler wie bei Referenzen, sondern die Implementierung von `RefCell<T>`
-wird zur Laufzeit abbrechen. Codeblock 15-23 zeigt eine Modifikation der
-Implementierung von `send` in Codeblock 15-22. Wir versuchen absichtlich, zwei
+wird zur Laufzeit abbrechen. Listing 15-23 zeigt eine Modifikation der
+Implementierung von `send` in Listing 15-22. Wir versuchen absichtlich, zwei
 veränderbare Borrows im selben Gültigkeitsbereich zu erstellen, um zu
 veranschaulichen, dass `RefCell<T>` uns daran hindert, dies zur Laufzeit zu tun.
 
@@ -580,7 +580,7 @@ veranschaulichen, dass `RefCell<T>` uns daran hindert, dies zur Laufzeit zu tun.
 # }
 ```
 
-<span class="caption">Codeblock 15-23: Wir erstellen zwei veränderbare
+<span class="caption">Listing 15-23: Wir erstellen zwei veränderbare
 Referenzen im selben Gültigkeitsbereich, um zu sehen, dass `RefCell<T>`
 abbricht</span>
 
@@ -589,7 +589,7 @@ Wir erstellen eine Variable `one_borrow` für den intelligenten Zeiger
 gleiche Weise eine weitere veränderbare Borrow in der Variable `two_borrow`.
 Dadurch werden zwei veränderbare Referenzen im selben Gültigkeitsbereich
 erstellt, was nicht zulässig ist. Wenn wir die Tests für unsere Bibliothek
-ausführen, wird der Programmcode in Codeblock 15-23 fehlerfrei kompiliert, aber
+ausführen, wird der Programmcode in Listing 15-23 fehlerfrei kompiliert, aber
 der Test schlägt fehl:
 
 ```console
@@ -642,12 +642,12 @@ haben kann, aber nur unveränderbaren Zugriff auf diese Daten erhält. Wenn
 man eine `Rc<T>` hat, das eine `RefCell<T>` enthält, kann man einen Wert
 erhalten, der mehrere Eigentümer hat _und_ veränderbar ist!
 
-Erinnern wir uns beispielsweise an die Cons-Liste in Codeblock 15-18, in dem
+Erinnern wir uns beispielsweise an die Cons-Liste in Listing 15-18, in dem
 wir `Rc<T>` verwendet haben, um mehreren Listen die gemeinsame Nutzung einer
 anderen Liste zu ermöglichen. Da `Rc<T>` nur unveränderbare Werte enthält,
 können wir keinen der Werte in der Liste ändern, sobald wir sie erstellt haben.
 Fügen wir `RefCell<T>` hinzu, um die Werte in den Listen ändern zu können.
-Codeblock 15-24 zeigt, dass wir durch Verwendung einer `RefCell<T>` in der
+Listing 15-24 zeigt, dass wir durch Verwendung einer `RefCell<T>` in der
 Cons-Definition den in allen Listen gespeicherten Wert ändern können:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -679,7 +679,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-24: Verwenden von `Rc<RefCell<i32>>` um
+<span class="caption">Listing 15-24: Verwenden von `Rc<RefCell<i32>>` um
 `List` zu erstellen, die wir verändern können</span>
 
 Wir erstellen einen Wert, der eine Instanz von `Rc<RefCell<i32>>` ist, und
@@ -691,7 +691,7 @@ die Eigentümerschaft von `value` auf `a` zu übertragen oder `a` von `value`
 auszuleihen.
 
 Wir wickeln die Liste `a` in ein `Rc<T>` ein. Wenn wir also die Listen `b` und
-`c` erstellen, können beide auf `a` verweisen, was wir in Codeblock 15-18 getan
+`c` erstellen, können beide auf `a` verweisen, was wir in Listing 15-18 getan
 haben.
 
 Nachdem wir die Listen `a`, `b` und `c` erstellt haben, wollen wir 10 zum Wert

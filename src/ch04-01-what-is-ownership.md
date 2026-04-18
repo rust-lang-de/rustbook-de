@@ -129,7 +129,7 @@ let s = "Hallo";
 Die Variable `s` bezieht sich auf ein Zeichenkettenliteral, wobei der Wert der
 Zeichenkette fest in den Text unseres Programms kodiert ist. Die Variable ist
 ab der Stelle, an der sie deklariert wurde, bis zum Ende des aktuellen
-Gültigkeitsbereichs gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
+Gültigkeitsbereichs gültig. Listing 4-1 zeigt ein Programm mit Kommentaren,
 die zeigen wo die Variable `s` gültig ist.
 
 ```rust
@@ -141,7 +141,7 @@ die zeigen wo die Variable `s` gültig ist.
                        // und s ist nicht mehr gültig
 ```
 
-<span class="caption">Codeblock 4-1: Eine Variable und der Bereich, in dem sie
+<span class="caption">Listing 4-1: Eine Variable und der Bereich, in dem sie
 gültig ist</span>
 
 Mit anderen Worten, es gibt hier zwei wichtige Zeitpunkte:
@@ -246,7 +246,7 @@ Fehler. Wir müssen eine _Allokierung_ mit genau einer _Freigabe_ paaren.
 
 Rust geht einen anderen Weg: Der Speicher wird automatisch zurückgegeben,
 sobald die Variable, die ihn besitzt, den Gültigkeitsbereich verlässt. Hier ist
-eine Variante unseres Gültigkeitsbereich-Beispiels aus Codeblock 4-1, bei der
+eine Variante unseres Gültigkeitsbereich-Beispiels aus Listing 4-1, bei der
 ein `String` anstelle eines Zeichenkettenliterals verwendet wird:
 
 ```rust
@@ -281,14 +281,14 @@ Speicher allokiert haben. Lass uns jetzt einige dieser Situationen untersuchen.
 #### Variablen und Daten im Zusammenspiel mit Move
 
 Mehrere Variablen können in Rust auf unterschiedliche Weise mit denselben Daten
-interagieren. Codeblock 4-2 zeigt ein Beispiel mit einer ganzen Zahl.
+interagieren. Listing 4-2 zeigt ein Beispiel mit einer ganzen Zahl.
 
 ```rust
 let x = 5;
 let y = x;
 ```
 
-<span class="caption">Codeblock 4-2: Zuweisen des ganzzahligen Wertes der
+<span class="caption">Listing 4-2: Zuweisen des ganzzahligen Wertes der
 Variablen `x` an `y`</span>
 
 Wir können wahrscheinlich erahnen, was das bewirkt: „Binde den Wert `5` an `x`;
@@ -494,7 +494,7 @@ visueller Indikator dafür, dass etwas anderes vor sich geht.
 #### Reine Stack-Daten: Copy
 
 Es gibt noch einen weiteren Kniff, über den wir noch nicht gesprochen haben.
-Folgender Code mit ganzen Zahlen, der teilweise in Codeblock 4-2 gezeigt wurde,
+Folgender Code mit ganzen Zahlen, der teilweise in Listing 4-2 gezeigt wurde,
 funktioniert und ist gültig:
 
 ```rust
@@ -549,7 +549,7 @@ was eine Allokation erfordert oder irgendeine Form von Ressource ist, kann
 Die Übergabe eines Wertes an eine Funktion funktioniert ähnlich wie die
 Zuweisung eines Wertes an eine Variable. Wenn eine Variable an eine Funktion
 übergeben wird, wird sie verschoben oder kopiert, genau wie bei der Zuweisung.
-Codeblock 4-3 enthält ein Beispiel mit einigen Anmerkungen, aus denen
+Listing 4-3 enthält ein Beispiel mit einigen Anmerkungen, aus denen
 hervorgeht, wo Variablen in den Gültigkeitsbereich fallen und wo nicht.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -583,7 +583,7 @@ fn makes_copy(some_integer: i32) { // some_integer kommt in den Gültigkeitsbere
   // Es passiert nichts Besonderes.
 ```
 
-<span class="caption">Codeblock 4-3: Funktionen mit kommentierter
+<span class="caption">Listing 4-3: Funktionen mit kommentierter
 Eigentümerschaft und Gültigkeitsbereich</span>
 
 Wenn wir versuchen würden, `s` nach dem Aufruf von `takes_ownership` zu
@@ -594,9 +594,9 @@ kannst und wo die Eigentumsregeln dich daran hindern.
 
 ### Rückgabewerte und Gültigkeitsbereich
 
-Rückgabewerte können auch Eigentümerschaft übertragen. Codeblock 4-4 ist ein
+Rückgabewerte können auch Eigentümerschaft übertragen. Listing 4-4 ist ein
 Beispiel für eine Funktion mit einem Rückgabewert mit ähnlichen Anmerkungen wie
-die in Codeblock 4-3.
+die in Listing 4-3.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -635,7 +635,7 @@ fn takes_and_gives_back(a_string: String) -> String { // a_string kommt in den
 }
 ```
 
-<span class="caption">Codeblock 4-4: Übertragen der Eigentümerschaft an Rückgabewerten</span>
+<span class="caption">Listing 4-4: Übertragen der Eigentümerschaft an Rückgabewerten</span>
 
 Die Eigentümerschaft an einer Variable folgt jedes Mal dem gleichen Muster: Das
 Zuweisen eines Wertes an eine andere Variable verschiebt diese. Wenn eine
@@ -652,7 +652,7 @@ den Daten, die sich aus dem Funktionsrumpf ergeben, die wir vielleicht auch
 zurückgeben wollen.
 
 Rust macht es es möglich, mehrere Werte mit Hilfe eines Tupels zurückzugeben,
-wie in Codeblock 4-5 gezeigt.
+wie in Listing 4-5 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -672,7 +672,7 @@ fn calculate_length(s: String) -> (String, usize) {
 }
 ```
 
-<span class="caption">Codeblock 4-5: Rückgeben der Eigentümerschaft an
+<span class="caption">Listing 4-5: Rückgeben der Eigentümerschaft an
 Parametern</span>
 
 Aber das ist zu viel Zeremonie und zu viel Arbeit für ein Konzept, das

@@ -2,7 +2,7 @@
 
 Mit der Syntax `if let` kannst du `if` und `let` in einer weniger wortreichen
 Weise kombinieren, um mit Werten umzugehen, die einem Muster entsprechen,
-während der Rest ignoriert wird. Betrachte das Programm in Codeblock 6-6, das
+während der Rest ignoriert wird. Betrachte das Programm in Listing 6-6, das
 auf einen `Option<u8>`-Wert in der Variable `config_max` passt, aber nur dann
 Code ausführen soll, wenn der Wert die `Some`-Variante ist.
 
@@ -14,7 +14,7 @@ match config_max {
 }
 ```
 
-<span class="caption">Codeblock 6-6: Ein `match`-Ausdruck, der nur dann Code
+<span class="caption">Listing 6-6: Ein `match`-Ausdruck, der nur dann Code
 ausführt, wenn der Wert `Some` ist</span>
 
 Wenn der Wert `Some` ist, geben wir den Wert in der Variante `Some` aus, indem
@@ -25,7 +25,7 @@ ist.
 
 Stattdessen könnten wir dies in kürzerer Form schreiben, indem wir `if let`
 verwenden. Der folgende Code verhält sich genauso wie der `match`-Ausdruck in
-Codeblock 6-6:
+Listing 6-6:
 
 ```rust
 let config_max = Some(3u8);
@@ -56,7 +56,7 @@ ausführt und alle anderen Werte ignoriert.
 Wir können ein `else` an ein `if let` anhängen. Der Code-Block, der zum `else`
 gehört, ist der gleiche wie der Code-Block, der zum `_`-Zweig im
 `match`-Ausdruck gehören würde. Erinnere dich an die Aufzählung `Coin` in
-Codeblock 6-4, wo die Variante `Quarter` auch einen `UsState`-Wert enthielt.
+Listing 6-4, wo die Variante `Quarter` auch einen `UsState`-Wert enthielt.
 Wenn wir alle Nicht-25-Cent-Münzen zählen wollten, während wir die Eigenschaft
 der 25-Cent-Münzen ausgeben, könnten wir das mit einem `match`-Ausdruck wie
 diesem tun:
@@ -168,7 +168,7 @@ impl UsState {
 ```
 
 Dann könnten wir `if let` verwenden, um die Art der Münze zu bestimmen, und
-eine Variable `state` in den Rumpf der Bedingung einfügen, wie in Codeblock
+eine Variable `state` in den Rumpf der Bedingung einfügen, wie in Listing
 6-7.
 
 Dateiname: src/main.rs
@@ -217,7 +217,7 @@ fn describe_state_quarter(coin: Coin) -> Option<String> {
 # }
 ```
 
-<span class="caption">Codeblock 6-7: Prüfen, ob ein Bundesstaat im Jahr 1900
+<span class="caption">Listing 6-7: Prüfen, ob ein Bundesstaat im Jahr 1900
 existierte, durch Verwenden von Bedingungen, die in `if let` verschachtelt
 sind.</span>
 
@@ -226,7 +226,7 @@ Damit ist die Aufgabe erledigt, aber die Arbeit wurde in den Rumpf der `if
 ist, könnte es schwierig sein, genau zu verfolgen, wie die Verzweigungen der
 obersten Ebene zusammenhängen. Wir könnten uns auch die Tatsache zunutze
 machen, dass Ausdrücke einen Wert erzeugen, um entweder `state` aus der `if
-let`-Anweisung zu setzen oder um früh zurückzukehren, wie in Codeblock 6-8.
+let`-Anweisung zu setzen oder um früh zurückzukehren, wie in Listing 6-8.
 (Ähnliches könnte man auch mit einem `match` machen.)
 
 Dateiname: src/main.rs
@@ -277,7 +277,7 @@ fn describe_state_quarter(coin: Coin) -> Option<String> {
 # }
 ```
 
-<span class="caption">Codeblock 6-8: Verwenden von `if let`, um einen Wert zu
+<span class="caption">Listing 6-8: Verwenden von `if let`, um einen Wert zu
 setzen oder frühzeitig zurückzukehren.</span>
 
 Das ist allerdings auf gewisse Weise schwierig zu verstehen! Ein Zweig von `if
@@ -290,7 +290,7 @@ auf der rechten Seite, sehr ähnlich zu `if let`, aber sie hat keinen
 Musters im äußeren Gültigkeitsbereich gebunden. Wenn das Muster _nicht_ passt,
 wird das Programm im `else`-Zweig fortgesetzt, der die Funktion beendet.
 
-In Codeblock 6-9 kannst du sehen, wie Codeblock 6-8 aussieht, wenn du
+In Listing 6-9 kannst du sehen, wie Listing 6-8 aussieht, wenn du
 `let...else` anstelle von `if let` verwendest.
 
 Dateiname: src/main.rs
@@ -339,7 +339,7 @@ fn describe_state_quarter(coin: Coin) -> Option<String> {
 # }
 ```
 
-<span class="caption">Codeblock 6-9: Verwenden von `let...else`, um den Fluss
+<span class="caption">Listing 6-9: Verwenden von `let...else`, um den Fluss
 durch die Funktion klarer darzustellen.</span>
 
 Beachte, dass der Funktionsrumpf auf diese Weise „auf dem richtigen Weg“

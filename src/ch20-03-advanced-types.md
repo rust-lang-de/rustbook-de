@@ -14,7 +14,7 @@ Traits mit dem Newtype-Muster implementieren“][newtype] gelesen hast. Das
 Newtype-Muster ist auch für Aufgaben nützlich, die über die bisher besprochenen
 hinausgehen, einschließlich statisch sicherzustellen, dass Werte niemals
 verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein Beispiel für
-die Verwendung von Newtypes zum Angeben von Einheiten hast du in Codeblock 20-16
+die Verwendung von Newtypes zum Angeben von Einheiten hast du in Listing 20-16
 gesehen: Erinnere dich daran, dass die Strukturen `Millimeters` und `Meters`
 `u32`-Werte in einem Newtype einpacken. Wenn wir eine Funktion mit einem
 Parameter vom Typ `Millimeters` schreiben würden, könnten wir kein Programm
@@ -54,7 +54,7 @@ type Kilometers = i32;
 ```
 
 Der Alias `Kilometers` ist ein _Synonym_ für `i32`; im Gegensatz zu den Typen
-`Millimeters` und `Meters`, die wir in Codeblock 20-16 erstellt haben, ist
+`Millimeters` und `Meters`, die wir in Listing 20-16 erstellt haben, ist
 `Kilometers` kein separater, neuer Typ. Werte, die den Typ `Kilometers` haben,
 werden genauso behandelt wie Werte des Typs `i32`:
 
@@ -83,7 +83,7 @@ Box<dyn Fn() + Send + 'static>
 
 Das Schreiben dieses langen Typs in Funktionssignaturen und als
 Typ-Annotationen im gesamten Code kann ermüdend und fehleranfällig sein. Stelle
-dir vor, du hättest ein Projekt voller Code wie das in Codeblock 20-25.
+dir vor, du hättest ein Projekt voller Code wie das in Listing 20-25.
 
 ```rust
 let f: Box<dyn Fn() + Send + 'static> = Box::new(|| println!("hallo"));
@@ -98,11 +98,11 @@ fn returns_long_type() -> Box<dyn Fn() + Send + 'static> {
 }
 ```
 
-<span class="caption">Codeblock 20-25: Verwenden eines langen Typs an vielen
+<span class="caption">Listing 20-25: Verwenden eines langen Typs an vielen
 Stellen</span>
 
 Ein Typ-Alias macht diesen Code leichter handhabbar, indem er die Wiederholung
-reduziert. In Codeblock 20-26 haben wir einen Alias namens `Thunk` für den
+reduziert. In Listing 20-26 haben wir einen Alias namens `Thunk` für den
 verbosen Typ eingeführt und können alle Verwendungen des Typs durch den
 kürzeren Alias `Thunk` ersetzen.
 
@@ -121,7 +121,7 @@ fn returns_long_type() -> Thunk {
 }
 ```
 
-<span class="caption">Codeblock 20-26: Einführen eines Typ-Alias `Thunk` zur
+<span class="caption">Listing 20-26: Einführen eines Typ-Alias `Thunk` zur
 Reduzierung von Wiederholungen</span>
 
 Dieser Code ist viel einfacher zu lesen und zu schreiben! Die Wahl eines
@@ -215,8 +215,8 @@ Funktionen, die niemals zurückkehren, werden _divergierende Funktionen_
 also kann `bar` niemals zurückkehren.
 
 Aber was nützt ein Typ, für den man nie Werte erzeugen kann? Erinnere dich an
-den Code aus Codeblock 2-5, der Teil des Zahlenratespiels ist; wir haben einen
-Teil davon hier in Codeblock 20-27 wiedergegeben.
+den Code aus Listing 2-5, der Teil des Zahlenratespiels ist; wir haben einen
+Teil davon hier in Listing 20-27 wiedergegeben.
 
 ```rust,noplayground
 # use std::cmp::Ordering;
@@ -263,7 +263,7 @@ Teil davon hier in Codeblock 20-27 wiedergegeben.
 # }
 ```
 
-<span class="caption">Codeblock 20-27: Ein `match` mit einem Zweig, der in
+<span class="caption">Listing 20-27: Ein `match` mit einem Zweig, der in
 `continue` endet</span>
 
 Damals haben wir einige Details in diesem Code übersprungen. Im Abschnitt [„Das
@@ -282,7 +282,7 @@ zum Beispiel der folgende Code nicht:
 Der Typ von `guess` in diesem Code müsste eine ganze Zahl _und_ eine
 Zeichenkette sein und Rust verlangt, dass `guess` nur einen Typ hat. Was gibt
 also `continue` zurück? Wie war es uns erlaubt, ein `u32` von einem Zweig
-zurückzugeben und einen anderen Zweig zu haben, der in Codeblock 20-27 mit
+zurückzugeben und einen anderen Zweig zu haben, der in Listing 20-27 mit
 `continue` endet?
 
 Wie du vielleicht schon vermutet hast, hat `continue` einen `!`-Wert. Das
@@ -319,7 +319,7 @@ impl<T> Option<T> {
 }
 ```
 
-In diesem Code geschieht dasselbe wie bei `match` in Codeblock 20-27: Rust
+In diesem Code geschieht dasselbe wie bei `match` in Listing 20-27: Rust
 sieht, dass `val` den Typ `T` und `panic!` den Typ `!` hat, sodass das Ergebnis
 des gesamten `match`-Ausdrucks `T` ist. Dieser Code funktioniert, weil `panic!`
 keinen Wert produziert; es bricht das Programm ab. Im Fall von `None` geben wir

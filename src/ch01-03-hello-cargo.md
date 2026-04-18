@@ -62,7 +62,7 @@ eines existierenden Git-Repositories ausführst; du kannst dieses Verhalten
 > Führe `cargo new --help` aus, um die verfügbaren Optionen zu sehen.
 
 Öffne _Cargo.toml_ in einem Texteditor deiner Wahl. Es sollte ähnlich wie der
-Code in Codeblock 1-2 aussehen.
+Code in Listing 1-2 aussehen.
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -75,7 +75,7 @@ edition = "2024"
 [dependencies]
 ```
 
-<span class="caption">Codeblock 1-2: Inhalt von _Cargo.toml_ erzeugt durch
+<span class="caption">Listing 1-2: Inhalt von _Cargo.toml_ erzeugt durch
 `cargo new`</span>
 
 Diese Datei liegt im Format [_TOML_][toml] (_Tom's Obvious, Minimal
@@ -108,7 +108,7 @@ fn main() {
 ```
 
 Cargo hat für dich ein „Hello, world!“-Programm generiert, genau wie das, das
-wir in Codeblock 1-1 geschrieben haben! Die Unterschiede zwischen unserem
+wir in Listing 1-1 geschrieben haben! Die Unterschiede zwischen unserem
 Projekt und dem Projekt, das Cargo generiert hat, bestehen bisher darin, dass
 Cargo den Code im Verzeichnis _src_ abgelegt hat, und wir haben eine
 Konfigurationsdatei _Cargo.toml_ im obersten Verzeichnis.

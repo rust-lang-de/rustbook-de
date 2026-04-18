@@ -54,7 +54,7 @@ Erfahrung möglicherweise weniger vertraut erscheint. Wir werden die beiden
 Lösungen vergleichen, um die Vor- und Nachteile einer anderen Gestaltung von
 Rust-Code im Vergleich zu Code in anderen Sprachen zu verdeutlichen.
 
-Codeblock 18-11 zeigt diesen Workflow in Codeform: Dies ist eine
+Listing 18-11 zeigt diesen Workflow in Codeform: Dies ist eine
 Beispielverwendung der API, die wir in einer Bibliotheks-Crate `blog`
 implementieren werden. Dieser Code wird sich noch nicht kompilieren lassen, da
 wir die Crate `blog` noch nicht implementiert haben.
@@ -78,7 +78,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-11: Code, der das gewünschte Verhalten
+<span class="caption">Listing 18-11: Code, der das gewünschte Verhalten
 demonstriert, das wir für unsere Crate `blog` haben wollen</span>
 
 Wir möchten dem Benutzer erlauben, einen neuen Entwurf eines Blog-Beitrags mit
@@ -113,7 +113,7 @@ Fehler mit den Zuständen machen, z.B. einen Beitrag veröffentlichen, bevor er
 Fangen wir mit der Implementierung der Bibliothek an! Wir wissen, dass wir eine
 öffentliche Struktur `Post` benötigen, die einige Inhalte enthält, also beginnen
 wir mit der Definition der Struktur und einer zugehörigen öffentlichen Funktion
-`new`, um eine Instanz von `Post` zu erzeugen, wie in Codeblock 18-12 gezeigt.
+`new`, um eine Instanz von `Post` zu erzeugen, wie in Listing 18-12 gezeigt.
 Wir werden auch ein privates Trait `State` erstellen, das das Verhalten
 definiert, das alle Zustandsobjekte für einen `Post` haben müssen.
 
@@ -145,7 +145,7 @@ struct Draft {}
 impl State for Draft {}
 ```
 
-<span class="caption">Codeblock 18-12: Definition einer Struktur `Post` und
+<span class="caption">Listing 18-12: Definition einer Struktur `Post` und
 einer Funktion `new`, die eine neue `Post`-Instanz, ein Trait `State` sowie eine
 Struktur `Draft` erzeugt</span>
 
@@ -166,13 +166,13 @@ auf einen neuen, leeren `String`.
 
 #### Speichern des Textes des Beitragsinhalts
 
-Wir haben in Codeblock 18-11 gesehen, dass wir in der Lage sein wollen, eine
+Wir haben in Listing 18-11 gesehen, dass wir in der Lage sein wollen, eine
 Methode namens `add_text` aufzurufen und ihr einen `&str` zu übergeben, die
 dann als Textinhalt des Blog-Beitrags hinzugefügt wird. Wir implementieren dies
 als Methode, anstatt das Feld `content` mit `pub` offenzulegen, damit wir
 später eine Methode implementieren können, die steuert, wie die Daten des
 Feldes `content` gelesen werden. Die Methode `add_text` ist ziemlich einfach,
-also lass uns die Implementierung in Codeblock 18-13 zum Block `impl Post`
+also lass uns die Implementierung in Listing 18-13 zum Block `impl Post`
 hinzufügen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -204,7 +204,7 @@ impl Post {
 # impl State for Draft {}
 ```
 
-<span class="caption">Codeblock 18-13: Implementierung der Methode `add_text`
+<span class="caption">Listing 18-13: Implementierung der Methode `add_text`
 zum Hinzufügen von Text zum `content` eines Beitrags</span>
 
 Die Methode `add_text` nimmt eine veränderbare Referenz auf `self`, weil wir
@@ -220,14 +220,14 @@ Feld `state`, aber sie ist Teil des Verhaltens, das wir unterstützen wollen.
 Selbst nachdem wir `add_text` aufgerufen und unserem Beitrag etwas Inhalt
 hinzugefügt haben, wollen wir immer noch, dass die Methode `content` einen
 leeren Zeichenkettenanteilstyp (string slice) zurückgibt, weil sich der Beitrag
-noch im Entwurfszustand befindet, wie beim ersten `assert_eq!` in Codeblock
+noch im Entwurfszustand befindet, wie beim ersten `assert_eq!` in Listing
 18-11 gezeigt wird. Lass uns fürs Erste die Methode `content` mit der
 einfachsten Sache implementieren, die diese Anforderung erfüllt: Immer einen
 leeren Zeichenkettenanteilstyp zurückgeben. Wir werden dies später ändern,
 sobald wir die Möglichkeit implementiert haben, den Zustand eines Beitrags zu
 ändern, damit er veröffentlicht werden kann. Bislang können Beiträge nur im
 Entwurfszustand sein, daher sollte der Beitragsinhalt immer leer sein.
-Codeblock 18-14 zeigt diese Platzhalter-Implementierung.
+Listing 18-14 zeigt diese Platzhalter-Implementierung.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -262,18 +262,18 @@ impl Post {
 # impl State for Draft {}
 ```
 
-<span class="caption">Codeblock 18-14: Hinzufügen einer
+<span class="caption">Listing 18-14: Hinzufügen einer
 Platzhalter-Implementierung für die Methode `content` auf `Post`, die immer
 einen leeren Zeichenkettenanteilstyp zurückgibt</span>
 
-Mit dieser zusätzlichen Methode `content` funktioniert alles in Codeblock 18-11
+Mit dieser zusätzlichen Methode `content` funktioniert alles in Listing 18-11
 bis hin zum ersten `assert_eq!` wie beabsichtigt.
 
 #### Antrag auf Überprüfung, der den Zustand des Beitrags ändert
 
 Als nächstes müssen wir eine Funktionalität hinzufügen, um eine Überprüfung
 eines Beitrags zu beantragen, die seinen Zustand von `Draft` in `PendingReview`
-ändern soll. Codeblock 18-15 zeigt diesen Code.
+ändern soll. Listing 18-15 zeigt diesen Code.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -328,7 +328,7 @@ impl State for PendingReview {
 }
 ```
 
-<span class="caption">Codeblock 18-15: Implementierung der Methoden
+<span class="caption">Listing 18-15: Implementierung der Methoden
 `request_review` für `Post` und des Traits `State`</span>
 
 Wir geben `Post` eine öffentliche Methode namens `request_review`, die eine
@@ -376,14 +376,14 @@ Methode `request_review` auf `Post` ist die gleiche, unabhängig von ihrem Wert
 Wir lassen die Methode `content` auf `Post` so wie sie ist und geben einen
 leeren Zeichenkettenanteilstyp zurück. Wir können jetzt einen `Post` sowohl im
 Zustand `PendingReview` als auch im Zustand `Draft` haben, aber wir wollen das
-gleiche Verhalten im Zustand `PendingReview`. Codeblock 18-11 funktioniert
+gleiche Verhalten im Zustand `PendingReview`. Listing 18-11 funktioniert
 jetzt bis zum zweiten `assert_eq!`-Aufruf!
 
 #### Hinzufügen von `approve`, um das Verhalten von `content` zu ändern
 
 Die Methode `approve` ähnelt der Methode `request_review`: Sie setzt den
 `state` auf den Wert, den der aktuelle Zustand nach der Genehmigung haben
-sollte, wie in Codeblock 18-16 gezeigt:
+sollte, wie in Listing 18-16 gezeigt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -467,7 +467,7 @@ impl State for Published {
 }
 ```
 
-<span class="caption">Codeblock 18-16: Implementieren der Methode `approve` auf
+<span class="caption">Listing 18-16: Implementieren der Methode `approve` auf
 `Post` und des Traits `State`</span>
 
 Wir fügen die Methode `approve` zum Trait `State` hinzu und fügen eine neue
@@ -484,7 +484,7 @@ weil der Beitrag in diesen Fällen im Zustand `Published` bleiben sollte.
 Jetzt müssen wir die Methode `content` auf `Post` aktualisieren: Wir wollen,
 dass der von `content` zurückgegebene Wert vom aktuellen Zustand von `Post`
 abhängt, also delegieren wir `Post` an eine Methode `content`, die auf seinen
-`state` definiert ist, wie in Codeblock 18-17 gezeigt:
+`state` definiert ist, wie in Listing 18-17 gezeigt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -567,7 +567,7 @@ impl Post {
 # }
 ```
 
-<span class="caption">Codeblock 18-17: Aktualisieren der Methode `content` auf
+<span class="caption">Listing 18-17: Aktualisieren der Methode `content` auf
 `Post` zum Delegieren an eine Methode `content` auf `State`</span>
 
 Da das Ziel darin besteht, all diese Regeln innerhalb der Strukturen zu halten,
@@ -596,7 +596,7 @@ Umwandlung (deref coercion) auf `&` und `Box` stattfinden, sodass die Methode
 `content` letztlich auf dem Typ aufgerufen wird, der das Trait `State`
 implementiert. Das bedeutet, dass wir die Definition des Traits `State` um
 `content` erweitern müssen, und hier werden wir die Logik dafür unterbringen,
-welcher Inhalt je nach Zustand zurückgegeben wird, wie in Codeblock 18-18 zu
+welcher Inhalt je nach Zustand zurückgegeben wird, wie in Listing 18-18 zu
 sehen ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -690,7 +690,7 @@ impl State for Published {
 }
 ```
 
-<span class="caption">Codeblock 18-18: Hinzufügen der Methode `content` zum
+<span class="caption">Listing 18-18: Hinzufügen der Methode `content` zum
 Trait `State`</span>
 
 Wir fügen eine Standard-Implementierung für die Methode `content` hinzu, die
@@ -707,7 +707,7 @@ Argument und geben eine Referenz auf einen Teil dieses `post` zurück, sodass
 die Lebensdauer der zurückgegebenen Referenz mit der Lebensdauer des Arguments
 `post` zusammenhängt.
 
-Nun sind wir fertig &ndash; der Codeblock 18-11 funktioniert jetzt! Wir haben
+Nun sind wir fertig &ndash; der Listing 18-11 funktioniert jetzt! Wir haben
 das Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert.
 Die Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und
 ist nicht über den gesamten `Post` verstreut.
@@ -802,7 +802,7 @@ Typprüfungssystem Versuche verhindern, Entwurfsbeiträge zu verwenden, bei dene
 nur veröffentlichte Beiträge erlaubt sind, indem ein Kompilierfehler ausgegeben
 wird.
 
-Betrachten wir den ersten Teil von `main` in Codeblock 18-11:
+Betrachten wir den ersten Teil von `main` in Listing 18-11:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -832,7 +832,7 @@ haben. Wenn wir auf diese Weise versuchen, den Inhalt eines Beitragsentwurfs
 zu erhalten, erhalten wir einen Kompilierfehler, der uns sagt, dass die Methode
 nicht existiert. Infolgedessen wird es für uns unmöglich, versehentlich den
 Inhalt eines Beitragsentwurfs in der Produktion anzuzeigen, weil sich dieser
-Code nicht einmal kompilieren lässt. Codeblock 18-19 zeigt die Definition einer
+Code nicht einmal kompilieren lässt. Listing 18-19 zeigt die Definition einer
 Struktur `Post` und einer Struktur `DraftPost` sowie die Methoden dieser
 Strukturen.
 
@@ -866,7 +866,7 @@ impl DraftPost {
 }
 ```
 
-<span class="caption">Codeblock 18-19: Ein `Post` mit einer Methode `content`
+<span class="caption">Listing 18-19: Ein `Post` mit einer Methode `content`
 und ein `DraftPost` ohne Methode `content`</span>
 
 Die beiden Strukturen `Post` und `DraftPost` haben ein privates Feld `content`,
@@ -895,7 +895,7 @@ befindet, sollte noch immer keinen Inhalt haben. Lass uns diese Bedingung
 implementieren, indem wir eine weitere Struktur `PendingReviewPost` hinzufügen,
 indem wir die Methode `request_review` auf `DraftPost` definieren, um einen
 `PendingReviewPost` zurückzugeben, und eine Methode `approve` auf
-`PendingReviewPost`, um einen `Post` zurückzugeben, wie in Codeblock 18-20
+`PendingReviewPost`, um einen `Post` zurückzugeben, wie in Listing 18-20
 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -947,7 +947,7 @@ impl PendingReviewPost {
 }
 ```
 
-<span class="caption">Codeblock 18-20: Ein `PendingReviewPost`, der durch
+<span class="caption">Listing 18-20: Ein `PendingReviewPost`, der durch
 Aufrufen von `request_review` auf `DraftPost` erzeugt wird, und eine Methode
 `approve`, die einen `PendingReviewPost` in einen veröffentlichten `Post`
 verwandelt</span>
@@ -975,7 +975,7 @@ dass die Zusicherungen über den Inhalt des Entwurfs und der anstehenden
 Überprüfungsbeiträge leere Zeichenketten sind, und wir brauchen sie auch nicht:
 Wir können keinen Code mehr kompilieren, der versucht, den Inhalt von Beiträgen
 in diesen Zuständen zu verwenden. Der aktualisierte Code in `main` ist in
-Codeblock 18-21 zu sehen.
+Listing 18-21 zu sehen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -995,7 +995,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-21: Änderungen an `main`, um die neue
+<span class="caption">Listing 18-21: Änderungen an `main`, um die neue
 Implementierung des Blog-Beitrags-Workflows zu nutzen</span>
 
 Die Änderungen, die wir an `main` vornehmen mussten, um `post` neu zuzuweisen,
@@ -1009,7 +1009,7 @@ unveröffentlichten Beitrags, entdeckt werden, bevor sie in die Produktion
 gelangen.
 
 Versuche es mit den Aufgaben, die wir zu Beginn dieses Abschnitts über die Crate
-`blog` nach Codeblock 18-20 erwähnt haben, um zu sehen, was du über das Design
+`blog` nach Listing 18-20 erwähnt haben, um zu sehen, was du über das Design
 dieser Version des Codes denkst. Beachte, dass einige der Aufgaben
 möglicherweise bereits in diesem Entwurf abgeschlossen sind.
 

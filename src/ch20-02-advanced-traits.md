@@ -25,7 +25,7 @@ Ein Beispiel für ein Trait mit einem assoziierten Typ ist das Trait `Iterator`,
 das die Standardbibliothek zur Verfügung stellt. Der assoziierte Typ wird `Item`
 genannt und steht für den Typ der Werte, über die der Typ, der das Trait
 `Iterator` implementiert, iteriert. Die Definition des Traits `Iterator` ist in
-Codeblock 20-13 zu sehen.
+Listing 20-13 zu sehen.
 
 ```rust
 pub trait Iterator {
@@ -35,7 +35,7 @@ pub trait Iterator {
 }
 ```
 
-<span class="caption">Codeblock 20-13: Definition des Traits `Iterator`, das
+<span class="caption">Listing 20-13: Definition des Traits `Iterator`, das
 einen assoziierten Typ `Item` hat</span>
 
 Der Typ `Item` ist ein Platzhalter und die Definition der Methode `next` zeigt,
@@ -80,7 +80,7 @@ impl Iterator for Counter {
 
 Diese Syntax scheint mit der von generischen Datentypen vergleichbar zu sein.
 Warum also nicht einfach das Trait `Iterator` mit generischen Datentypen
-definieren, wie in Codeblock 20-14 gezeigt?
+definieren, wie in Listing 20-14 gezeigt?
 
 ```rust
 pub trait Iterator<T> {
@@ -88,11 +88,11 @@ pub trait Iterator<T> {
 }
 ```
 
-<span class="caption">Codeblock 20-14: Eine hypothetische Definition des Traits
+<span class="caption">Listing 20-14: Eine hypothetische Definition des Traits
 `Iterator` unter Verwendung eines generischen Datentyps</span>
 
 Der Unterschied ist, dass wir beim Verwenden von generischen Datentypen, wie in
-Codeblock 20-14, die Typen in jeder Implementierung annotieren müssen; da wir
+Listing 20-14, die Typen in jeder Implementierung annotieren müssen; da wir
 auch `Iterator<String> for Counter` oder jeden anderen Typ implementieren
 können, könnten wir mehrere Implementierungen von `Iterator` für `Counter`
 haben. Mit anderen Worten, wenn ein Trait einen generischen Parameter hat, kann
@@ -102,7 +102,7 @@ generischen Typparameter jedes Mal geändert werden können. Wenn wir die Method
 anzugeben, welche Implementierung des `Iterators` wir verwenden wollen.
 
 Bei assoziierten Typen brauchen wir Typen nicht zu annotieren, weil wir ein
-Trait auf einem Typ nicht mehrfach implementieren können. In Codeblock 20-13 mit
+Trait auf einem Typ nicht mehrfach implementieren können. In Listing 20-13 mit
 der Definition, die assoziierte Typen verwendet, können wir nur einmal wählen,
 was der Typ von `Item` sein wird, weil es nur einen `impl Iterator for Counter`
 geben kann. Wir müssen nicht angeben, dass wir einen Iterator von `u32`-Werten
@@ -129,7 +129,7 @@ Operators (wie `+`) in bestimmten Situationen anpasst.
 Rust erlaubt es dir nicht, eigene Operatoren zu erstellen oder beliebige
 Operatoren zu überladen. Aber du kannst die in `std::ops` aufgeführten
 Operationen und entsprechenden Traits überladen, indem du die mit dem Operator
-assoziierten Traits implementierst. Beispielsweise überladen wir in Codeblock
+assoziierten Traits implementierst. Beispielsweise überladen wir in Listing
 20-15 den Operator `+`, um zwei `Point`-Instanzen zu addieren. Wir tun dies,
 indem wir das Trait `Add` auf eine `Point`-Struktur implementieren.
 
@@ -163,7 +163,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-15: Implementieren des Traits `Add`, um den
+<span class="caption">Listing 20-15: Implementieren des Traits `Add`, um den
 Operator `+` für `Point`-Instanzen zu überladen</span>
 
 Die Methode `add` addiert die `x`-Werte zweier `Point`-Instanzen und die
@@ -202,7 +202,7 @@ anderen Struktur ist als _Newtype-Muster_ bekannt, das wir im Abschnitt
 [„Externe Traits mit dem Newtype-Muster implementieren“][newtype] ausführlicher
 beschreiben. Wir wollen Werte in Millimeter zu Werten in Meter addieren und die
 Implementierung von `Add` die Umrechnung korrekt durchführen lassen. Wir können
-`Add` für `Millimeters` mit `Meters` als `Rhs` implementieren, wie in Codeblock
+`Add` für `Millimeters` mit `Meters` als `Rhs` implementieren, wie in Listing
 20-16 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -222,7 +222,7 @@ impl Add<Meters> for Millimeters {
 }
 ```
 
-<span class="caption">Codeblock 20-16: Implementieren des Traits `Add` auf
+<span class="caption">Listing 20-16: Implementieren des Traits `Add` auf
 `Millimeters`, um `Millimeters` zu `Meters` zu addieren</span>
 
 Um `Millimeters` und `Meters` zu addieren, geben wir `impl Add<Meters>` an, um
@@ -257,7 +257,7 @@ direkt auf dem Typ mit dem gleichen Namen wie Methoden von Traits zu
 implementieren.
 
 Wenn du Methoden mit dem gleichen Namen aufrufst, musst du Rust mitteilen,
-welche du verwenden willst. Betrachte den Code in Codeblock 20-17, wo wir zwei
+welche du verwenden willst. Betrachte den Code in Listing 20-17, wo wir zwei
 Traits `Pilot` und `Wizard` definiert haben, die beide eine Methode namens `fly`
 haben. Wir implementieren dann beide Traits auf einem Typ `Human`, der bereits
 eine Methode namens `fly` implementiert hat. Jede Methode `fly` macht etwas
@@ -297,13 +297,13 @@ impl Human {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 20-17: Zwei Traits sind so definiert, dass sie
+<span class="caption">Listing 20-17: Zwei Traits sind so definiert, dass sie
 eine Methode `fly` haben und auf dem Typ `Human` implementiert sind, und eine
 Methode `fly` ist direkt auf dem Typ `Human` implementiert</span>
 
 Wenn wir `fly` auf einer Instanz von `Human` aufrufen, ruft der Compiler
 standardmäßig die Methode auf, die direkt auf dem Typ implementiert ist, wie in
-Codeblock 20-18 gezeigt.
+Listing 20-18 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -342,7 +342,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-18: Aufrufen von `fly` auf einer Instanz von
+<span class="caption">Listing 20-18: Aufrufen von `fly` auf einer Instanz von
 `Human`</span>
 
 Wenn man diesen Code ausführt, wird `*Wütend mit den Armen wedeln*` ausgegeben,
@@ -351,7 +351,7 @@ wurde, aufgerufen hat.
 
 Um die Methoden `fly` entweder vom Trait `Pilot` oder vom Trait `Wizard`
 aufzurufen, müssen wir eine explizitere Syntax verwenden, um anzugeben, welche
-Methode `fly` wir meinen. Codeblock 20-19 demonstriert diese Syntax.
+Methode `fly` wir meinen. Listing 20-19 demonstriert diese Syntax.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -392,13 +392,13 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-19: Angeben, welche Methode `fly` wir
+<span class="caption">Listing 20-19: Angeben, welche Methode `fly` wir
 aufrufen wollen</span>
 
 Das Angeben des Trait-Namens vor dem Methodennamen verdeutlicht Rust, welche
 Implementierung von `fly` wir aufrufen wollen. Wir könnten auch
 `Human::fly(&person)` schreiben, was äquivalent zu `person.fly()` ist, das wir
-in Codeblock 20-19 verwendet haben, aber das ist etwas länger zu schreiben, wenn
+in Listing 20-19 verwendet haben, aber das ist etwas länger zu schreiben, wenn
 wir nicht vereindeutigen müssen.
 
 Beim Ausführen dieses Codes wird Folgendes ausgegeben:
@@ -421,7 +421,7 @@ Assoziierte Funktionen, die keine Methoden sind, haben jedoch keinen
 `self`-Parameter. Wenn es mehrere Typen oder Traits gibt, die
 Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
 nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine
-voll-qualifizierte Syntax. In Codeblock 20-20 erstellen wir zum Beispiel ein
+voll-qualifizierte Syntax. In Listing 20-20 erstellen wir zum Beispiel ein
 Trait für ein Tierheim, das alle Hundebabys Spot nennen möchte. Wir erstellen
 ein Trait `Animal` mit einer assoziierten Nicht-Methodenfunktion `baby_name`.
 Das Trait `Animal` ist für die Struktur `Dog` implementiert, für die wir auch
@@ -453,7 +453,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-20: Ein Trait mit einer assoziierten Funktion
+<span class="caption">Listing 20-20: Ein Trait mit einer assoziierten Funktion
 und ein Typ mit einer assoziierten Funktion desselben Namens, der das Trait
 ebenfalls implementiert</span>
 
@@ -479,8 +479,8 @@ Ein Hundebaby wird Spot genannt.
 Diese Ausgabe ist nicht das, was wir wollten. Wir wollen die Funktion
 `baby_name` aufrufen, die Teil des Traits `Animal` ist, das wir auf `Dog`
 implementiert haben, sodass der Code `Ein Hundebaby wird Welpe genannt` ausgibt.
-Die Technik der Angabe des Trait-Namens, die wir in Codeblock 20-19 verwendet
-haben, hilft hier nicht weiter; wenn wir `main` in den Code in Codeblock 20-21
+Die Technik der Angabe des Trait-Namens, die wir in Listing 20-19 verwendet
+haben, hilft hier nicht weiter; wenn wir `main` in den Code in Listing 20-21
 ändern, erhalten wir einen Kompilierfehler.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -510,7 +510,7 @@ fn main() {
 
 ```
 
-<span class="caption">Codeblock 20-21: Versuch, die Funktion `baby_name` des
+<span class="caption">Listing 20-21: Versuch, die Funktion `baby_name` des
 Traits `Animal` aufzurufen, aber Rust weiß nicht, welche Implementierung es
 verwenden soll</span>
 
@@ -543,7 +543,7 @@ error: could not compile `traits-example` (bin "traits-example") due to 1 previo
 Um zu vereindeutigen und Rust zu sagen, dass wir die Implementierung von
 `Animal` für `Dog` verwenden wollen und nicht die Implementierung von `Animal`
 für einen anderen Typ, müssen wir eine vollständig qualifizierte Syntax
-verwenden. Codeblock 20-22 zeigt, wie man eine vollständig qualifizierte Syntax
+verwenden. Listing 20-22 zeigt, wie man eine vollständig qualifizierte Syntax
 verwendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -572,7 +572,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-22: Verwenden einer vollständig
+<span class="caption">Listing 20-22: Verwenden einer vollständig
 qualifizierten Syntax, um anzugeben, dass wir die Funktion `baby_name` des
 Traits `Animal` aufrufen wollen, wie sie auf `Dog` implementiert ist</span>
 
@@ -635,7 +635,7 @@ Trait `OutlinePrint` nur bei Typen funktioniert, die auch `Display`
 implementieren und die Funktionalität bieten, die `OutlinePrint` benötigt. Wir
 können dies in der Trait-Definition tun, indem wir `OutlinePrint: Display`
 angeben. Diese Technik ähnelt dem Angeben einer Trait Bound bei einem Trait.
-Codeblock 20-23 zeigt eine Implementierung des Traits `OutlinePrint`.
+Listing 20-23 zeigt eine Implementierung des Traits `OutlinePrint`.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -657,7 +657,7 @@ trait OutlinePrint: fmt::Display {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 20-23: Implementieren des Traits `OutlinePrint`,
+<span class="caption">Listing 20-23: Implementieren des Traits `OutlinePrint`,
 das die Funktionalität von `Display` erfordert</span>
 
 Da wir festgelegt haben, dass `OutlinePrint` das Trait `Display` erfordert,
@@ -807,7 +807,7 @@ was uns die Waisenregel direkt verbietet, weil das Trait `Display` und der Typ
 `Vec<T>` außerhalb unserer Crate definiert sind. Wir können eine Struktur
 `Wrapper` erstellen, die eine Instanz von `Vec<T>` enthält; dann können wir
 `Display` auf `Wrapper` implementieren und den Wert `Vec<T>` verwenden, wie in
-Codeblock 20-24 gezeigt.
+Listing 20-24 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -828,7 +828,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-24: Erstellen eines Typs `Wrapper` um
+<span class="caption">Listing 20-24: Erstellen eines Typs `Wrapper` um
 `Vec<String>` zur Implementierung von `Display`</span>
 
 Die Implementierung von `Display` verwendet `self.0`, um auf den inneren

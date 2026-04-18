@@ -82,7 +82,7 @@ erstellen. Mit einer Funktion wäre das nicht möglich,
 da uns weder die Anzahl noch den Typ der Werte im Voraus bekannt ist.
 
 
-Codeblock 20-35 zeigt eine leicht vereinfachte Definition des Makros `vec!`.
+Listing 20-35 zeigt eine leicht vereinfachte Definition des Makros `vec!`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -101,7 +101,7 @@ macro_rules! vec {
 }
 ```
 
-<span class="caption">Codeblock 20-35: Eine vereinfachte Version der
+<span class="caption">Listing 20-35: Eine vereinfachte Version der
 Makrodefinition `vec!`</span>
 
 > Hinweis: Die eigentliche Definition des Makros `vec!` in der
@@ -121,15 +121,15 @@ Makrodefinition kennzeichnen.
 
 Die Struktur im `vec!` -Rumpf ähnelt der Struktur eines `match`-Ausdrucks. Hier
 haben wir einen Zweig mit dem Muster `( $( $x:expr ),* )`, gefolgt von `=>` und
-dem mit diesem Muster verknüpften Codeblock. Wenn das Muster passt, wird der
-zugehörige Codeblock ausgegeben. Da dies das einzige Muster in diesem Makro
+dem mit diesem Muster verknüpften Listing. Wenn das Muster passt, wird der
+zugehörige Listing ausgegeben. Da dies das einzige Muster in diesem Makro
 ist, kann es nur einen passenden Zweig geben; jedes andere Muster führt
 zu einem Fehler. Komplexere Makros werden mehr als einen Zweig haben.
 
 Die gültige Mustersyntax in Makrodefinitionen unterscheidet sich von der in
 Kapitel 19 behandelten Mustersyntax, da Makromuster mit der Rust-Codestruktur
 und nicht mit Werten abgeglichen werden. Lass uns im Folgenden die Bedeutung
-der Musterteile in Codeblock 20-28 betrachten; die vollständige Makromustersyntax
+der Musterteile in Listing 20-28 betrachten; die vollständige Makromustersyntax
 findest du in der [Rust-Referenz][macro-reference].
 
 Zunächst verwenden wir ein äußeres Klammernpaar, um das gesamte Muster zu
@@ -188,7 +188,7 @@ arbeiten alle auf ähnliche Weise.
 Beim Erstellen von prozeduralen Makros müssen sich die Definitionen in einer
 eigenen Crate mit einem speziellen Crate-Typ befinden. Dies geschieht aus
 komplexen technischen Gründen, die wir hoffentlich in Zukunft eliminieren
-werden. In Codeblock 20-36 zeigen wir, wie man ein prozedurales Makro definiert,
+werden. In Listing 20-36 zeigen wir, wie man ein prozedurales Makro definiert,
 wobei `some_attribute` ein Platzhalter für die Verwendung einer bestimmten
 Makro-Variante ist.
 
@@ -202,7 +202,7 @@ pub fn some_name(input: TokenStream) -> TokenStream {
 }
 ```
 
-<span class="caption">Codeblock 20-36: Beispiel für die Definition eines
+<span class="caption">Listing 20-36: Beispiel für die Definition eines
 prozeduralen Makros</span>
 
 Die Funktion, die ein prozedurales Makro definiert, nimmt einen `TokenStream`
@@ -229,7 +229,7 @@ können, um eine Standardimplementierung der Funktion `hello_macro` zu erhalten.
 Die Standardimplementierung gibt `Hallo Makro! Mein Name ist TypeName!` aus,
 wobei `TypeName` der Name des Typs ist, auf dem dieses Trait definiert wurde.
 Mit anderen Worten, wir werden eine Crate schreiben, die es einem anderen
-Programmierer ermöglicht, mit unserer Crate Code wie Codeblock 20-37 zu
+Programmierer ermöglicht, mit unserer Crate Code wie Listing 20-37 zu
 schreiben.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -246,7 +246,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-37: Code, den ein Benutzer unserer Crate
+<span class="caption">Listing 20-37: Code, den ein Benutzer unserer Crate
 schreiben kann, wenn er unser prozedurales Makro benutzt</span>
 
 Dieser Code gibt `Hallo Makro! Mein Name ist Pancakes!` aus, wenn wir fertig
@@ -257,7 +257,7 @@ so:
 $ cargo new hello_macro --lib
 ```
 
-Als Nächstes definieren wir in Codeblock 20-38 das Trait `HelloMacro` und die
+Als Nächstes definieren wir in Listing 20-38 das Trait `HelloMacro` und die
 damit assoziierte Funktion.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -268,12 +268,12 @@ pub trait HelloMacro {
 }
 ```
 
-<span class="caption">Codeblock 20-38: Ein einfaches Trait, das wir mit dem
+<span class="caption">Listing 20-38: Ein einfaches Trait, das wir mit dem
 Makro `derive` verwenden werden</span>
 
 Wir haben ein Trait und seine Funktion. An diesem Punkt könnte unser
 Crate-Benutzer das Trait so implementieren, dass die gewünschte Funktionalität
-erreicht wird, wie in Codeblock 20-39.
+erreicht wird, wie in Listing 20-39.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -293,7 +293,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-39: Wie es aussehen würde, wenn Benutzer eine
+<span class="caption">Listing 20-39: Wie es aussehen würde, wenn Benutzer eine
 manuelle Implementierung des Traits `HelloMacro` schreiben würden</span>
 
 Allerdings müssten sie den Implementierungsblock für jeden Typ, den sie mit
@@ -348,7 +348,7 @@ quote = "1.0"
 ```
 
 Um mit der Definition des prozeduralen Makros zu beginnen, platziere den Code in
-Codeblock 20-40 in deine Datei _src/lib.rs_ der Crate `hello_macro_derive`.
+Listing 20-40 in deine Datei _src/lib.rs_ der Crate `hello_macro_derive`.
 Beachte, dass dieser Code nicht kompiliert werden kann, bis wir eine Definition
 für die Funktion `impl_hello_macro` hinzufügen.
 
@@ -369,7 +369,7 @@ pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
 }
 ```
 
-<span class="caption">Codeblock 20-40: Code, den die meisten prozeduralen
+<span class="caption">Listing 20-40: Code, den die meisten prozeduralen
 Makro-Crate benötigen, um Rust-Code zu verarbeiten</span>
 
 Beachte, dass wir den Code aufgeteilt haben in die Funktion
@@ -405,7 +405,7 @@ Die Funktion `hello_macro_derive` wandelt zunächst `input` aus einem
 `TokenStream` in eine Datenstruktur um, die wir dann interpretieren und
 Operationen darauf ausführen können. Hier kommt `syn` ins Spiel. Die Funktion
 `parse` in `syn` nimmt einen `TokenStream` und gibt eine `DeriveInput`-Struktur
-zurück, die den geparsten Rust-Code repräsentiert. Codeblock 20-41 zeigt die
+zurück, die den geparsten Rust-Code repräsentiert. Listing 20-41 zeigt die
 relevanten Teile der Struktur `DeriveInput`, die wir vom Parsen der
 Zeichenkette `struct Pancakes;` erhalten:
 
@@ -429,8 +429,8 @@ DeriveInput {
 }
 ```
 
-<span class="caption">Codeblock 20-41: Die `DeriveInput`-Instanz erhalten wir
-beim Parsen des Codes, den das Attribut des Makros in Codeblock 20-37
+<span class="caption">Listing 20-41: Die `DeriveInput`-Instanz erhalten wir
+beim Parsen des Codes, den das Attribut des Makros in Listing 20-37
 hat</span>
 
 Die Felder dieser Struktur zeigen, dass der Rust-Code, den wir geparst haben,
@@ -459,7 +459,7 @@ schief gelaufen ist, indem du `panic!` oder `expect` verwendest.
 
 Da wir nun den Code haben, um den annotierten Rust-Code aus einem `TokenStream`
 in eine `DeriveInput`-Instanz zu verwandeln, lass uns den Code generieren, der
-das Trait `HelloMacro` auf dem annotierten Typ implementiert, wie in Codeblock
+das Trait `HelloMacro` auf dem annotierten Typ implementiert, wie in Listing
 20-42 gezeigt.
 
 <span class="filename">Dateiname: hello_macro_derive/src/lib.rs</span>
@@ -491,16 +491,16 @@ fn impl_hello_macro(ast: &syn::DeriveInput) -> TokenStream {
 }
 ```
 
-<span class="caption">Codeblock 20-42: Implementierung des Traits `HelloMacro`
+<span class="caption">Listing 20-42: Implementierung des Traits `HelloMacro`
 unter Verwendung des geparsten Rust-Codes</span>
 
 Wir erhalten eine `Ident`-Strukturinstanz, die den Namen (Bezeichner) des
 annotierten Typs enthält, indem wir `ast.ident` verwenden. Die Struktur in
-Codeblock 20-41 zeigt, dass, wenn wir die Funktion `impl_hello_macro` auf den
-Code in Codeblock 20-37 anwenden, das erhaltene `ident` ein Feld `ident` mit
-dem Wert `"Pancakes"` enthält. So wird die Variable `name` in Codeblock 20-42
+Listing 20-41 zeigt, dass, wenn wir die Funktion `impl_hello_macro` auf den
+Code in Listing 20-37 anwenden, das erhaltene `ident` ein Feld `ident` mit
+dem Wert `"Pancakes"` enthält. So wird die Variable `name` in Listing 20-42
 eine Instanz der Struktur `Ident` enthalten, die die Zeichenkette `"Pancakes"`
-ausgibt, der Name der Struktur in Codeblock 20-37.
+ausgibt, der Name der Struktur in Listing 20-37.
 
 Mit dem Makro `quote!` können wir den Rust-Code definieren, den wir zurückgeben
 wollen. Der Compiler erwartet etwas anderes als das direkte Ergebnis der
@@ -533,7 +533,7 @@ Die Verwendung von `stringify!` erspart zudem eine Speicherzuweisung, indem
 
 An diesem Punkt sollte `cargo build` sowohl bei `hello_macro` als auch bei
 `hello_macro_derive` erfolgreich durchlaufen. Schließen wir diese Crates an den
-Code in Codeblock 20-31 an, um das prozedurale Makro in Aktion zu sehen!
+Code in Listing 20-31 an, um das prozedurale Makro in Aktion zu sehen!
 Erstelle ein neues Binärprojekt in deinem _projects_-Verzeichnis durch Aufrufen
 von `cargo new pancakes`. Wir müssen `hello_macro` und `hello_macro_derive` als
 Abhängigkeiten in der Datei _Cargo.toml_ der Crate `pancakes` hinzufügen. Wenn
@@ -546,7 +546,7 @@ hello_macro = { path = "../hello_macro" }
 hello_macro_derive = { path = "../hello_macro/hello_macro_derive" }
 ```
 
-Gib den Code in Codeblock 20-37 in _src/main.rs_ ein und rufe `cargo run` auf:
+Gib den Code in Listing 20-37 in _src/main.rs_ ein und rufe `cargo run` auf:
 Es sollte `Hallo Makro! Mein Name ist Pancakes!` ausgeben. Die Implementierung
 des Traits `HelloMacro` aus dem prozeduralen Makro wurde eingefügt, ohne dass
 die Crate `pancakes` es implementieren musste; `#[derive(HelloMacro)]` fügte die

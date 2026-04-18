@@ -131,7 +131,7 @@ Verwaltungsarbeiten.
 Um unsere Crate auf diese Weise zu strukturieren, können wir ihre Funktionen in
 verschachtelten Modulen organisieren. Erstelle eine neue Bibliothek namens
 `restaurant`, indem du `cargo new --lib restaurant` ausführst. Gib dann den Code
-in Codeblock 7-1 in _src/lib.rs_ ein, um einige Module und Funktionssignaturen
+in Listing 7-1 in _src/lib.rs_ ein, um einige Module und Funktionssignaturen
 zu definieren. Hier ist der vordere Teil des Hauses:
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -154,7 +154,7 @@ mod front_of_house {
 }
 ```
 
-<span class="caption">Codeblock 7-1: Ein Modul `front_of_house`, das andere
+<span class="caption">Listing 7-1: Ein Modul `front_of_house`, das andere
 Module enthält, die dann Funktionen enthalten</span>
 
 Wir definieren ein Modul mit dem Schlüsselwort `mod`, gefolgt vom Namen des
@@ -162,7 +162,7 @@ Moduls (in diesem Fall `front_of_house`). Der Rumpf des Moduls steht dann in
 geschweiften Klammern. Innerhalb von Modulen können wir andere Module
 platzieren, wie in diesem Fall mit den Modulen `hosting` und `serving`. Module
 können auch Definitionen für andere Elemente enthalten, wie Strukturen,
-Aufzählungen, Konstanten, Traits und &ndash; wie in Codeblock 7-1 &ndash;
+Aufzählungen, Konstanten, Traits und &ndash; wie in Listing 7-1 &ndash;
 Funktionen.
 
 Durch die Verwendung von Modulen können wir verwandte Definitionen gruppieren
@@ -177,7 +177,7 @@ bezeichnet werden. Der Grund für ihren Namen ist, dass der Inhalt dieser beiden
 Dateien ein Modul namens `crate` an der Wurzel der Modulstruktur der Crate
 bilden, die als _Modulbaum_ bekannt ist.
 
-Codeblock 7-2 zeigt den Modulbaum für die Struktur in Codeblock 7-1.
+Listing 7-2 zeigt den Modulbaum für die Struktur in Listing 7-1.
 
 ```text
 crate
@@ -191,7 +191,7 @@ crate
          └── take_payment
 ```
 
-<span class="caption">Codeblock 7-2: Modulbaum für den Code in Codeblock
+<span class="caption">Listing 7-2: Modulbaum für den Code in Listing
 7-1</span>
 
 Dieser Baum zeigt, wie einige Module in anderen Modulen verschachtelt sind;

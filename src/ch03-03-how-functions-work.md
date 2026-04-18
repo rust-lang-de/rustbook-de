@@ -154,7 +154,7 @@ Funktionsrümpfe auswirken.
   Schauen wir uns einige Beispiele an.
 
 Eine Variable zu erstellen und ihr mit dem Schlüsselwort `let` einen Wert
-zuzuweisen, ist eine Anweisung. In Codeblock 3-1 ist `let y = 6;` eine
+zuzuweisen, ist eine Anweisung. In Listing 3-1 ist `let y = 6;` eine
 Anweisung.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -165,7 +165,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 3-1: Eine Funktionsdeklaration `main`, die eine
+<span class="caption">Listing 3-1: Eine Funktionsdeklaration `main`, die eine
 Anweisung enthält</span>
 
 Auch Funktionsdefinitionen sind Anweisungen; das gesamte vorhergehende Beispiel
@@ -223,7 +223,7 @@ als auch `y` haben den Wert `6`; das ist in Rust nicht der Fall.
 Ausdrücke werten zu einem Wert aus und machen den größten Teil des restlichen
 Codes aus, den du in Rust schreiben wirst. Betrachte eine mathematische
 Operation, z.B. `5 + 6`, die ein Ausdruck ist, der zum Wert `11` ausgewertet
-wird. Ausdrücke können Teil von Anweisungen sein: In Codeblock 3-1 ist die `6`
+wird. Ausdrücke können Teil von Anweisungen sein: In Listing 3-1 ist die `6`
 in der Anweisung `let y = 6;` ein Ausdruck, der den Wert `6` ergibt. Der Aufruf
 einer Funktion ist ein Ausdruck. Der Aufruf eines Makros ist ein Ausdruck. Ein
 neuer Gültigkeitsbereichsblock, der mit geschweiften Klammern erstellt wird,

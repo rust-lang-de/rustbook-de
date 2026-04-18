@@ -18,7 +18,7 @@ Hochzählen in zwei separaten Threads. Lass uns das Gleiche mit async machen. Di
 Crate `trpl` enthält eine Funktion `spawn_task`, die der API `thread::spawn`
 sehr ähnlich ist, und eine Funktion `sleep`, die eine async-Version der API
 `thread::sleep` ist. Wir können diese zusammen verwenden, um das Zählbeispiel zu
-implementieren, siehe Codeblock 17-6.
+implementieren, siehe Listing 17-6.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -42,7 +42,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 17-6: Erstellen einer neuen Aufgabe, die etwas
+<span class="caption">Listing 17-6: Erstellen einer neuen Aufgabe, die etwas
 ausgibt, während die Hauptaufgabe etwas anderes ausgibt</span>
 
 Als Ausgangspunkt rufen wir in unserer Funktion `trpl::block_on` auf, sodass
@@ -80,7 +80,7 @@ Blocks beendet ist, da die von `spawn_task` erzeugte Aufgabe beendet wird, wenn
 die Funktion `main` endet. Wenn du die Aufgabe bis zum Ende ausführen willst,
 musst du `JoinHandle` verwenden, um auf das Ende der ersten Aufgabe zu warten.
 Bei Threads haben wir die Methode `join` verwendet, um zu „blockieren“, bis der
-Thread fertig ist. In Codeblock 17-7 können wir `await` verwenden, um dasselbe
+Thread fertig ist. In Listing 17-7 können wir `await` verwenden, um dasselbe
 zu tun, weil `JoinHandle` selbst ein Future ist. Sein `Output`-Typ ist `Result`,
 also entpacken wir es ebenfalls, nachdem wir darauf gewartet haben.
 
@@ -108,7 +108,7 @@ also entpacken wir es ebenfalls, nachdem wir darauf gewartet haben.
 # }
 ```
 
-<span class="caption">Codeblock 17-7: Verwenden von `await` mit einem
+<span class="caption">Listing 17-7: Verwenden von `await` mit einem
 `JoinHandle`, um eine Aufgabe bis zum Ende auszuführen</span>
 
 Diese aktualisierte Version läuft, bis _beide_ Schleifen beendet sind:
@@ -146,7 +146,7 @@ haben wir gezeigt, wie man die Methode `join` auf den Typ `JoinHandle` anwendet,
 der beim Aufruf von `std::thread::spawn` zurückgegeben wird. Die Funktion
 `trpl::join` ist ähnlich, aber für Futures. Wenn du ihr zwei Futures gibst,
 erzeugt sie ein neues Future, dessen Ausgabe ein Tupel mit der Ausgabe der
-beiden übergebenen Futures ist, sobald _beide_ abgeschlossen sind. In Codeblock
+beiden übergebenen Futures ist, sobald _beide_ abgeschlossen sind. In Listing
 17-8 verwenden wir also `trpl::join`, um darauf zu warten, dass sowohl `fut1`
 als auch `fut2` fertig sind. Wir warten _nicht_ auf `fut1` und `fut2`, sondern
 auf das neue Future, das von `trpl::join` erzeugt wurde. Wir ignorieren die
@@ -178,7 +178,7 @@ Ausgabe, da es sich nur um ein Tupel mit zwei Einheitswerten handelt.
 # }
 ```
 
-<span class="caption">Codeblock 17-8: Verwenden von `trpl::join`, um auf zwei
+<span class="caption">Listing 17-8: Verwenden von `trpl::join`, um auf zwei
 anonyme Futures zu warten</span>
 
 Wenn wir dies ausführen, sehen wir, dass beide Futures bis zum Ende laufen:
@@ -200,7 +200,7 @@ Hallo Nummer 9 von der ersten Aufgabe!
 ```
 
 Nun siehst du jedes Mal genau dieselbe Reihenfolge, was sich sehr von dem
-unterscheidet, was wir bei Threads und mit `trpl::spawn_task` in Codeblock 17-7
+unterscheidet, was wir bei Threads und mit `trpl::spawn_task` in Listing 17-7
 gesehen haben. Das liegt daran, dass die Funktion `trpl::join` _fair_ ist, d.h.
 sie prüft jedes Future gleich oft, wechselt zwischen ihnen ab und lässt nie
 eines vorauslaufen, wenn das andere bereit ist. Bei Threads entscheidet das
@@ -233,7 +233,7 @@ diesmal jedoch mit asynchronen Versionen der Typen und Funktionen. Wir werden
 einen etwas anderen Weg einschlagen als im Abschnitt [„Nachrichtenaustausch
 zwischen Threads“][message-passing-threads] in Kapitel 16, um einige der
 wichtigsten Unterschiede zwischen Thread-basierter und Future-basierter
-Nebenläufigkeit zu veranschaulichen. In Codeblock 17-9 beginnen wir mit einem
+Nebenläufigkeit zu veranschaulichen. In Listing 17-9 beginnen wir mit einem
 einzigen asynchronen Block &ndash; _ohne_ eine separate Aufgabe zu erstellen, da
 wir einen separaten Thread erstellt haben.
 
@@ -253,7 +253,7 @@ wir einen separaten Thread erstellt haben.
 # }
 ```
 
-<span class="caption">Codeblock 17-9: Erstellen eines asynchronen Kanals und
+<span class="caption">Listing 17-9: Erstellen eines asynchronen Kanals und
 Zuweisen der beiden Enden an `tx` und `rx`</span>
 
 Hier verwenden wir `trpl::channel`, eine asynchrone Version des Kanals wie mit
@@ -283,11 +283,11 @@ Kanal, in den wir die Nachricht senden, ist unlimitiert.
 
 Beachte bei diesem Beispiel zwei Dinge. Erstens: Die Nachricht wird sofort
 ankommen! Zweitens: Obwohl wir hier ein Future verwenden, gibt es noch keine
-Nebenläufigkeit. Alles im Codeblock geschieht der Reihe nach, so wie es auch
+Nebenläufigkeit. Alles im Listing geschieht der Reihe nach, so wie es auch
 geschehen würde, wenn keine Futures beteiligt wären.
 
 Der erste Teil besteht darin, eine Reihe von Nachrichten zu senden und
-dazwischen zu schlafen, wie in Codeblock 17-10 gezeigt.
+dazwischen zu schlafen, wie in Listing 17-10 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -317,7 +317,7 @@ dazwischen zu schlafen, wie in Codeblock 17-10 gezeigt.
 # }
 ```
 
-<span class="caption">Codeblock 17-10: Senden und Empfangen mehrerer
+<span class="caption">Listing 17-10: Senden und Empfangen mehrerer
 Nachrichten über den asynchronen Kanal und Schlafen mit einem `await` zwischen
 jeder Nachricht</span>
 
@@ -328,7 +328,7 @@ realen Welt werden wir jedoch im Allgemeinen auf eine _unbekannte_ Anzahl von
 Nachrichten warten, wir müssen also so lange warten, bis wir feststellen, dass
 es keine weiteren Nachrichten mehr gibt.
 
-In Codeblock 16-10 haben wir eine `for`-Schleife verwendet, um alle Elemente zu
+In Listing 16-10 haben wir eine `for`-Schleife verwendet, um alle Elemente zu
 verarbeiten, die von einem synchronen Kanal empfangen wurden. In Rust gibt es
 jedoch noch keine Möglichkeit, eine `for`-Schleife mit einer _asynchron
 erzeugten_ Liste von Elementen zu verwenden. Stattdessen müssen wir eine neue
@@ -369,7 +369,7 @@ einzelnen Nachrichten. Innerhalb eines bestimmten asynchronen Blocks ist die
 Reihenfolge, in der die Schlüsselwörter `await` im Code erscheinen, auch die
 Reihenfolge, in der sie bei der Ausführung des Programms auftreten.
 
-In Codeblock 17-10 gibt es nur einen asynchronen Block, sodass alles darin
+In Listing 17-10 gibt es nur einen asynchronen Block, sodass alles darin
 linear abläuft. Es gibt immer noch keine Nebenläufigkeit. Alle Aufrufe von
 `tx.send` finden statt, unterbrochen von allen `trpl::sleep`-Aufrufen und
 ihren zugehörigen Wartepunkten. Erst dann durchläuft die `while let`-Schleife
@@ -377,8 +377,8 @@ einen der `await` Punkte nach dem Aufruf von `recv`.
 
 Um die gewünschte Verzögerung zwischen dem Empfang jeder Nachricht zu
 erreichen, müssen wir die Operationen `tx` und `rx` in eigene asynchrone Blöcke
-packen, wie in Codeblock 17-11 gezeigt. Dann kann die Laufzeitumgebung jede
-dieser Operationen separat mit `trpl::join` ausführen, genau wie in Codeblock
+packen, wie in Listing 17-11 gezeigt. Dann kann die Laufzeitumgebung jede
+dieser Operationen separat mit `trpl::join` ausführen, genau wie in Listing
 17-8. Auch hier warten wir auf das Ergebnis des Aufrufs von `trpl::join`, nicht
 auf die einzelnen Futures. Würden wir auf die einzelnen Futures nacheinander
 warten, hätten wir wieder einen sequenziellen Ablauf &ndash; genau das, was wir
@@ -418,10 +418,10 @@ _nicht_ wollen.
 # }
 ```
 
-<span class="caption">Codeblock 17-11: Aufteilen von `send` und `recv` in
+<span class="caption">Listing 17-11: Aufteilen von `send` und `recv` in
 separate `async`-Blöcke und Warten auf die Futures dieser Blöcke</span>
 
-Mit dem aktualisierten Code in Codeblock 17-11 werden die Nachrichten in
+Mit dem aktualisierten Code in Listing 17-11 werden die Nachrichten in
 Abständen von 500 Millisekunden ausgegeben und nicht mehr alle auf einmal nach
 zwei Sekunden.
 
@@ -458,7 +458,7 @@ wir mit Threads arbeiten. Für asynchrone Blöcke gilt dieselbe grundlegende
 Dynamik, sodass das Schlüsselwort `move` mit asynchronen Blöcken genauso
 funktioniert wie mit Closures.
 
-In Codeblock 17-12 ändern wir den Block zum Senden von Nachrichten von `async`
+In Listing 17-12 ändern wir den Block zum Senden von Nachrichten von `async`
 zu `async move`.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -496,8 +496,8 @@ zu `async move`.
 # }
 ```
 
-<span class="caption">Codeblock 17-12: Eine Überarbeitung des Codes aus
-Codeblock 17-11, die den Code korrekt beendet, wenn er fertig ist</span>
+<span class="caption">Listing 17-12: Eine Überarbeitung des Codes aus
+Listing 17-11, die den Code korrekt beendet, wenn er fertig ist</span>
 
 Wenn wir _diese_ Version des Codes ausführen, beendet sie sich ordnungsgemäß,
 nachdem die letzte Nachricht gesendet und empfangen wurde. Als Nächstes wollen
@@ -508,7 +508,7 @@ zu senden.
 
 Dieser asynchrone Kanal ist auch ein Kanal für mehrere Erzeuger, sodass wir
 `clone` auf `tx` aufrufen können, wenn wir Nachrichten von mehreren Futures
-senden wollen, wie in Codeblock 17-13 gezeigt.
+senden wollen, wie in Listing 17-13 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -559,7 +559,7 @@ senden wollen, wie in Codeblock 17-13 gezeigt.
 # }
 ```
 
-<span class="caption">Codeblock 17-13: Verwenden mehrerer Produzenten mit
+<span class="caption">Listing 17-13: Verwenden mehrerer Produzenten mit
 asynchronen Blöcken</span>
 
 Zuerst klonen wir `tx` und erstellen `tx1` außerhalb des ersten asynchronen

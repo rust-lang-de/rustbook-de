@@ -2,7 +2,7 @@
 
 In Kapitel 8 haben wir erwähnt, dass eine Einschränkung von Vektoren darin
 besteht, dass sie nur Elemente eines einzigen Typs speichern können. Wir haben
-in Codeblock 8-9 eine Abhilfe geschaffen, indem wir die Aufzählung (enum)
+in Listing 8-9 eine Abhilfe geschaffen, indem wir die Aufzählung (enum)
 `SpreadsheetCell` definiert haben, die Varianten zur Aufnahme von Ganzzahlen,
 Fließkommazahlen und Text enthielt. Das bedeutete, dass wir in jeder Zelle
 verschiedene Datentypen speichern konnten und trotzdem einen Vektor hatten, der
@@ -72,7 +72,7 @@ hinzufügen können. Trait-Objekte sind nicht so allgemein einsetzbar wie Objekt
 in anderen Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion über
 allgemeines Verhalten zu ermöglichen.
 
-In Codeblock 18-3 wird gezeigt, wie ein Trait `Draw` mit einer Methode `draw`
+In Listing 18-3 wird gezeigt, wie ein Trait `Draw` mit einer Methode `draw`
 definiert werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -83,10 +83,10 @@ pub trait Draw {
 }
 ```
 
-<span class="caption">Codeblock 18-3: Definition des Traits `Draw`</span>
+<span class="caption">Listing 18-3: Definition des Traits `Draw`</span>
 
 Diese Syntax sollte uns aus unseren Diskussionen über die Definition von Traits
-in Kapitel 10 bekannt vorkommen. Als nächstes kommt eine neue Syntax: Codeblock
+in Kapitel 10 bekannt vorkommen. Als nächstes kommt eine neue Syntax: Listing
 18-4 definiert eine Struktur namens `Screen`, die einen Vektor namens
 `components` enthält. Dieser Vektor ist vom Typ `Box<dyn Draw>`, der ein
 Trait-Objekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer `Box`,
@@ -104,12 +104,12 @@ pub struct Screen {
 }
 ```
 
-<span class="caption">Codeblock 18-4: Definition der Struktur `Screen` mit einem
+<span class="caption">Listing 18-4: Definition der Struktur `Screen` mit einem
 Feld `components`, das einen Vektor von Trait-Objekten enthält, die das Trait
 `Draw` implementieren</span>
 
 Auf der Struktur `Screen` definieren wir eine Methode namens `run`, die die
-Methode `draw` auf jeder ihrer `components` aufruft, wie in Codeblock 18-5
+Methode `draw` auf jeder ihrer `components` aufruft, wie in Listing 18-5
 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -132,7 +132,7 @@ impl Screen {
 }
 ```
 
-<span class="caption">Codeblock 18-5: Eine Methode `run` auf `Screen`, die die
+<span class="caption">Listing 18-5: Eine Methode `run` auf `Screen`, die die
 Methode `draw` jeder Komponente aufruft</span>
 
 Dies funktioniert anders als die Definition einer Struktur, die einen
@@ -140,7 +140,7 @@ generischen Typparameter mit Trait Bounds verwendet. Ein generischer
 Typparameter kann jeweils nur durch einen konkreten Typ ersetzt werden, während
 Trait-Objekte die Möglichkeit bieten, zur Laufzeit mehrere konkrete Typen für
 das Trait-Objekt einzusetzen. Beispielsweise hätten wir die Struktur `Screen`
-mit einem generischen Typ und einer Trait Bound wie in Codeblock 18-6 definieren
+mit einem generischen Typ und einer Trait Bound wie in Listing 18-6 definieren
 können.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -166,7 +166,7 @@ where
 }
 ```
 
-<span class="caption">Codeblock 18-6: Eine alternative Implementierung der
+<span class="caption">Listing 18-6: Eine alternative Implementierung der
 Struktur `Screen` und ihrer Methode `run` unter Verwendung generischer Typen und
 Trait Bounds</span>
 
@@ -188,7 +188,7 @@ werden den Typ `Button` zur Verfügung stellen. Auch hier liegt die eigentliche
 Implementierung einer GUI-Bibliothek jenseits des Rahmens dieses Buches, sodass
 die Methode `draw` keine nützliche Implementierung in ihrem Rumpf haben wird. Um
 sich vorzustellen, wie die Implementierung aussehen könnte, könnte eine Struktur
-`Button` Felder für `width`, `height` und `label` haben, wie in Codeblock 18-7
+`Button` Felder für `width`, `height` und `label` haben, wie in Listing 18-7
 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -223,7 +223,7 @@ impl Draw for Button {
 }
 ```
 
-<span class="caption">Codeblock 18-7: Eine Struktur `Button`, die das Trait
+<span class="caption">Listing 18-7: Eine Struktur `Button`, die das Trait
 `Draw` implementiert</span>
 
 Die Felder `width`, `height` und `label` in `Button` unterscheiden sich von den
@@ -240,7 +240,7 @@ Diese Art von Methoden trifft nicht auf Typen wie `TextField` zu.
 Wenn sich jemand, der unsere Bibliothek benutzt, dazu entschließt, eine Struktur
 `SelectBox` zu implementieren, die die Felder `width`, `height` und `options`
 enthält, würde er ebenfalls das Trait `Draw` für den Typ `SelectBox`
-implementieren, wie in Codeblock 18-8 gezeigt.
+implementieren, wie in Listing 18-8 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -262,14 +262,14 @@ impl Draw for SelectBox {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 18-8: Eine andere Crate, die `gui` verwendet und
+<span class="caption">Listing 18-8: Eine andere Crate, die `gui` verwendet und
 das Trait `Draw` auf einer Struktur `SelectBox` implementiert</span>
 
 Der Benutzer unserer Bibliothek kann nun seine Funktion `main` schreiben, um
 eine `Screen`-Instanz zu erzeugen. Der `Screen`-Instanz kann er eine `SelectBox`
 und einen `Button` hinzufügen, indem er sie in eine `Box<T>` legt, um ein
 Trait-Objekt zu werden. Er kann dann die Methode `run` auf der `Screen`-Instanz
-aufrufen, die dann `draw` auf jeder der Komponenten aufruft. Der Codeblock 18-9
+aufrufen, die dann `draw` auf jeder der Komponenten aufruft. Der Listing 18-9
 zeigt diese Umsetzung.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -315,7 +315,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-9: Verwenden von Trait-Objekten zum Speichern
+<span class="caption">Listing 18-9: Verwenden von Trait-Objekten zum Speichern
 von Werten verschiedener Typen, die das gleiche Trait implementieren</span>
 
 Als wir die Bibliothek schrieben, wussten wir nicht, dass jemand den Typ
@@ -328,7 +328,7 @@ Dieses Konzept &ndash; sich nur mit den Nachrichten zu befassen, auf die ein
 Wert reagiert, und nicht mit dem konkreten Typ des Wertes &ndash; ähnelt dem
 Konzept des _Duck-Typing_ in dynamisch typisierten Sprachen: Wenn es wie eine
 Ente läuft und wie eine Ente quakt, dann muss es eine Ente sein! Bei der
-Implementierung von `run` auf `Screen` in Codeblock 18-5 braucht `run` nicht zu
+Implementierung von `run` auf `Screen` in Listing 18-5 braucht `run` nicht zu
 wissen, was der konkrete Typ jeder Komponente ist. Es prüft nicht, ob eine
 Komponente eine Instanz eines `Buttons` oder einer `SelectBox` ist, es ruft nur
 die Methode `draw` auf der Komponente auf. Durch die Spezifikation von
@@ -344,7 +344,7 @@ eine Methode nicht implementiert, wir sie aber trotzdem aufrufen. Rust wird
 unseren Code nicht kompilieren, wenn die Werte nicht die Traits implementieren,
 die die Trait-Objekte benötigen.
 
-Beispielsweise zeigt Codeblock 18-10, was passiert, wenn wir versuchen, einen
+Beispielsweise zeigt Listing 18-10, was passiert, wenn wir versuchen, einen
 `Screen` mit einem `String` als Komponente zu erstellen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -361,7 +361,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-10: Versuch, einen Typ zu verwenden, der das
+<span class="caption">Listing 18-10: Versuch, einen Typ zu verwenden, der das
 Trait des Trait-Objekts nicht implementiert</span>
 
 Wir werden diesen Fehler erhalten, weil `String` das Trait `Draw` nicht
@@ -415,8 +415,8 @@ wiederum einige Optimierungen verhindert. Und Rust hat einige Regeln, wo man
 dynamische Aufrufe verwenden kann und wo nicht. Diese Regeln gehen über den
 Rahmen dieser Diskussion hinaus, aber du kannst mehr über sie in der
 [Dyn-Kompatibilitäts-Referenz][dyn-compatibility] lesen. Wir haben jedoch
-zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 18-5 geschrieben
-haben und in Codeblock 18-9 unterstützen konnten, sodass es sich um einen
+zusätzliche Flexibilität im Code erhalten, den wir in Listing 18-5 geschrieben
+haben und in Listing 18-9 unterstützen konnten, sodass es sich um einen
 Kompromiss handelt, den es zu berücksichtigen gilt.
 
 [dyn-compatibility]: https://doc.rust-lang.org/reference/items/traits.html#dyn-compatibility

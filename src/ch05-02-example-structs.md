@@ -7,7 +7,7 @@ einsetzen.
 
 Legen wir mit Cargo ein neues Binärprojekt namens _rectangles_ an, das die
 Breite und Höhe eines in Pixeln angegebenen Rechtecks nimmt und die Fläche des
-Rechtecks berechnet. Codeblock 5-8 zeigt ein kurzes Programm, das genau das in
+Rechtecks berechnet. Listing 5-8 zeigt ein kurzes Programm, das genau das in
 _src/main.rs_ unseres Projekts macht.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -28,7 +28,7 @@ fn area(width: u32, height: u32) -> u32 {
 }
 ```
 
-<span class="caption">Codeblock 5-8: Berechnen der Fläche eines Rechtecks, das
+<span class="caption">Listing 5-8: Berechnen der Fläche eines Rechtecks, das
 durch separate Breiten- und Höhenvariablen beschrieben wird</span>
 
 Nun führe dieses Programm mit `cargo run` aus:
@@ -72,7 +72,7 @@ vorgestellt: Der Einsatz von Tupeln.
 
 ### Refaktorierung mit Tupeln
 
-Codeblock 5-9 zeigt eine weitere Version unseres Programms, die Tupel
+Listing 5-9 zeigt eine weitere Version unseres Programms, die Tupel
 verwendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -92,7 +92,7 @@ fn area(dimensions: (u32, u32)) -> u32 {
 }
 ```
 
-<span class="caption">Codeblock 5-9: Breite und Höhe des Rechtecks werden mit
+<span class="caption">Listing 5-9: Breite und Höhe des Rechtecks werden mit
 einem Tupel beschrieben</span>
 
 In einem Punkt ist dieses Programm besser. Das Tupel bringt etwas Struktur
@@ -113,7 +113,7 @@ es jetzt einfacher, Fehler zu machen.
 
 Verwenden wir Strukturen, um durch die Benennung der Daten deren Bedeutung
 anzugeben. Wir können das verwendete Tupel in eine Struktur mit einem Namen
-für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Codeblock
+für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Listing
 5-10 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -141,7 +141,7 @@ fn area(rectangle: &Rectangle) -> u32 {
 }
 ```
 
-<span class="caption">Codeblock 5-10: Definieren der Struktur `Rectangle`</span>
+<span class="caption">Listing 5-10: Definieren der Struktur `Rectangle`</span>
 
 Hier haben wir eine Struktur definiert und sie `Rectangle` genannt. Innerhalb
 der geschweiften Klammern haben wir die Felder `width` und `height` definiert,
@@ -167,7 +167,7 @@ Tupelindexwerte `0` und `1` zu verwenden. Das erhöht die Lesbarkeit.
 ### Funktionalität mit abgeleiteten Traits hinzufügen
 
 Es wäre hilfreich, eine Instanz von `Rectangle` samt der Werte seiner Felder
-ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
+ausgeben zu können, während wir unser Programm debuggen. In Listing 5-11
 versuchen wir, das [Makro `println!`][println] zu verwenden, das wir in den
 vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.
 
@@ -189,7 +189,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-11: Versuch, eine `Rectangle`-Instanz
+<span class="caption">Listing 5-11: Versuch, eine `Rectangle`-Instanz
 auszugeben</span>
 
 Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:
@@ -242,7 +242,7 @@ Aber auch hier gibt uns der Compiler einen hilfreichen Hinweis:
 Rust enthält durchaus eine Funktionalität zum Ausgeben von Debug-Informationen,
 aber wir müssen diese explizit für unsere Struktur aktivieren. Dazu fügen wir
 das äußere Attribut `#[derive(Debug)]` unmittelbar vor der Strukturdefinition
-ein, wie in Codeblock 5-12 gezeigt.
+ein, wie in Listing 5-12 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -263,7 +263,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-12: Attribut zum Verwenden des Trait `Debug`
+<span class="caption">Listing 5-12: Attribut zum Verwenden des Trait `Debug`
 und Ausgeben der Instanz `Rectangle` mittels Debug-Formatierung</span>
 
 Wenn wir das Programm nun ausführen, werden wir keinen Fehler mehr erhalten und

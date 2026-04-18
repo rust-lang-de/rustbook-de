@@ -1,6 +1,6 @@
 ## Referenzen und Borrowing
 
-Das Problem mit dem Tupelcode in Codeblock 4-5 ist, dass wir der aufrufenden
+Das Problem mit dem Tupelcode in Listing 4-5 ist, dass wir der aufrufenden
 Funktion den `String` zurückgeben müssen, damit wir den `String` nach dem
 Aufruf von `calculate_length` weiter verwenden können, weil der `String` in
 `calculate_length` verschoben wurde. Stattdessen können wir eine Referenz auf
@@ -103,7 +103,7 @@ ihr ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir
 nicht.
 
 Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns ausleihen?
-Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!
+Versuche den Code in Listing 4-6. Achtung: Es funktioniert nicht!
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -119,7 +119,7 @@ fn change(some_string: &String) {
 }
 ```
 
-<span class="caption">Codeblock 4-6: Versuch, einen ausgeliehenen Wert zu
+<span class="caption">Listing 4-6: Versuch, einen ausgeliehenen Wert zu
 verändern</span>
 
 Hier ist die Fehlermeldung:
@@ -148,7 +148,7 @@ Referenz haben.
 
 ### Veränderbare Referenzen
 
-Wir können den Code aus Codeblock 4-6 so ändern, dass wir einen geliehenen Wert
+Wir können den Code aus Listing 4-6 so ändern, dass wir einen geliehenen Wert
 mit ein paar kleinen Änderungen ändern können, die stattdessen eine
 _veränderbare Referenz_ verwenden:
 

@@ -61,7 +61,7 @@ beendet hat und der Wert `T` verfügbar ist.
 > `Iterator::next`!
 
 Rust kompiliert Code mit `await` unter der Haube zu Code, der `poll` aufruft.
-Wenn du dir Codeblock 17-4 ansiehst, wo wir den Seitentitel für eine einzelne
+Wenn du dir Listing 17-4 ansiehst, wo wir den Seitentitel für eine einzelne
 URL ausgegeben haben, sobald sie aufgelöst wurde, kompiliert Rust das in etwa
 (wenn auch nicht genau) wie folgt:
 
@@ -124,10 +124,10 @@ nicht bereit ist.
 
 ### Der Typ `Pin` und das Trait `Unpin`
 
-In Codeblock 17-13 haben wir das Makro `trpl::join!` verwendet, um auf drei
+In Listing 17-13 haben wir das Makro `trpl::join!` verwendet, um auf drei
 Futures zu warten. Es ist jedoch üblich, eine Sammlung wie einen Vektor zu
 verwenden, der eine bestimmte Anzahl von Futures enthält, die erst zur Laufzeit
-bekannt sind. Ändern wir Codeblock 17-13 zum Code in Codeblock 17-23, der die
+bekannt sind. Ändern wir Listing 17-13 zum Code in Listing 17-23, der die
 drei Futures in einen Vektor einfügt und stattdessen die Funktion
 `trpl::join_all` aufruft, die noch nicht kompiliert werden kann.
 
@@ -184,7 +184,7 @@ drei Futures in einen Vektor einfügt und stattdessen die Funktion
 # }
 ```
 
-<span class="caption">Codeblock 17-23: Warten auf Futures in einer
+<span class="caption">Listing 17-23: Warten auf Futures in einer
 Sammlung</span>
 
 Wir legen jedes Future in eine `Box`, um es zu _Trait-Objekten_ zu machen, genau
@@ -438,13 +438,13 @@ genau der Grund, warum es `Unpin` und nicht `!Unpin` implementiert.
 völlig anderen `String` im Speicher.</span>
 
 Jetzt wissen wir genug, um die Fehler zu verstehen, die für den Aufruf
-`join_all` in Codeblock 17-23 gemeldet wurden. Ursprünglich haben wir versucht,
+`join_all` in Listing 17-23 gemeldet wurden. Ursprünglich haben wir versucht,
 die von asynchronen Blöcken erzeugten Futures in einen `Vec<Box<dyn
 Future<Output = ()>>>` zu verschieben, aber wie wir gesehen haben, können diese
 Futures interne Referenzen haben, sodass sie `Unpin` nicht implementieren.
 Sobald wir sie anpinnen, können wir den resultierenden Typ `Pin` an den `Vec`
 übergeben, in der Gewissheit, dass die zugrunde liegenden Daten in den Futures
-_nicht_ verschoben werden. Codeblock 17-24 zeigt, wie der Code korrigiert werden
+_nicht_ verschoben werden. Listing 17-24 zeigt, wie der Code korrigiert werden
 kann, indem das Makro `pin!` an der Stelle aufgerufen wird, an der die drei
 Futures definiert sind, und der Trait-Objekttyp angepasst wird.
 
@@ -507,7 +507,7 @@ use std::pin::{Pin, pin};
 # }
 ```
 
-<span class="caption">Codeblock 17-24: Die Futures anpinnen, um sie in den
+<span class="caption">Listing 17-24: Die Futures anpinnen, um sie in den
 Vektor verschieben zu können</span>
 
 Dieses Beispiel lässt sich nun kompilieren und ausführen, und wir könnten zur

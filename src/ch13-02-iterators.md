@@ -8,7 +8,7 @@ neu zu implementieren.
 
 Die Iteratoren in Rust sind _faul_ (lazy), das bedeutet, dass sie erst durch
 Methodenaufrufe konsumiert werden müssen, um einen Effekt zu haben. Der
-Programmcode in Codeblock 13-10 erstellt beispielsweise einen Iterator über die
+Programmcode in Listing 13-10 erstellt beispielsweise einen Iterator über die
 Elemente im Vektor `v1` indem die in `Vec<T>` definierte Methode `iter`
 aufgerufen wird. Dieser Programmcode macht nichts Sinnvolles.
 
@@ -19,16 +19,16 @@ let v1 = vec![1, 2, 3];
 let v1_iter = v1.iter();
 ```
 
-<span class="caption">Codeblock 13-10: Einen Iterator erstellen</span>
+<span class="caption">Listing 13-10: Einen Iterator erstellen</span>
 
 Der Iterator wird in der Variable `v1_iter` gespeichert. Sobald wir einen
 Iterator erstellt haben, können wir ihn auf verschiedene Weise verwenden.
-In Codeblock 3-5 haben wir über ein Array iteriert, indem wir eine
+In Listing 3-5 haben wir über ein Array iteriert, indem wir eine
 `for`-Schleife verwendet haben, um einen Code für jedes Element auszuführen.
 Unter der Haube wird dabei implizit ein Iterator erzeugt und dann konsumiert,
 aber wir haben bis jetzt übersehen, wie das genau funktioniert.
 
-In Codeblock 13-11 wird die Erstellung des Iterators von dessen Verwendung in
+In Listing 13-11 wird die Erstellung des Iterators von dessen Verwendung in
 der `for`-Schleife getrennt. Wenn die `for`-Schleife unter Verwendung des
 Iterators in `v1_iter` aufgerufen wird, wird jedes Element des Iterators in
 einer Iteration der Schleife verwendet, die den jeweiligen Wert ausgibt.
@@ -42,7 +42,7 @@ for val in v1_iter {
     println!("Erhalten: {val}");
 }
 ```
-<span class="caption">Codeblock 13-11: Verwendung eines Iterators in einer
+<span class="caption">Listing 13-11: Verwendung eines Iterators in einer
 `for`-Schleife</span>
 
 In Sprachen, deren Standardbibliotheken Iteratoren nicht bereitstellen, würde
@@ -86,7 +86,7 @@ Für das `Iterator`-Trait muss man bei der Implementierung nur eine Methode
 definieren: Die Methode `next`, die jeweils ein Element des Iterators verpackt
 in `Some` zurückgibt und nach Beendigung der Iteration `None` zurückgibt.
 
-Wir können für Iteratoren die Methode `next` direkt aufrufen. Codeblock 13-12
+Wir können für Iteratoren die Methode `next` direkt aufrufen. Listing 13-12
 zeigt, welche Werte bei wiederholten Aufrufen von `next` auf einen aus einem
 Vektor erstellten Iterator zurückgegeben werden:
 
@@ -111,7 +111,7 @@ Vektor erstellten Iterator zurückgegeben werden:
 # }
 ```
 
-<span class="caption">Codeblock 13-12: Iterator mit der Methode `next`
+<span class="caption">Listing 13-12: Iterator mit der Methode `next`
 aufrufen</span>
 
 Beachte, dass wir `v1_iter` veränderbar (mutable) machen mussten: Beim Aufrufen
@@ -146,7 +146,7 @@ die Methode `sum`, sie übernimmt die Eigentümerschaft des Iterators und
 durchläuft die Elemente durch wiederholtes Aufrufen von `next`, wodurch der
 Iterator verbraucht wird. Jedes Element wird während der Iteration zu einer
 Summe hinzugefügt, die zurückgegeben wird, sobald die Iteration abgeschlossen
-ist. Codeblock 13-13 enthält einen Test, der die Methode `sum` veranschaulicht:
+ist. Listing 13-13 enthält einen Test, der die Methode `sum` veranschaulicht:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -168,7 +168,7 @@ ist. Codeblock 13-13 enthält einen Test, der die Methode `sum` veranschaulicht:
 # }
 ```
 
-<span class="caption">Codeblock 13-13: Aufruf der Methode `sum` um den Wert der
+<span class="caption">Listing 13-13: Aufruf der Methode `sum` um den Wert der
 Summe aller Elemente zu erhalten</span>
 
 Man kann `v1_iter` nach dem Aufruf von `sum` nicht verwenden, da `sum` die
@@ -180,7 +180,7 @@ _Iterator-Adaptoren_ sind Methoden, die auf dem Trait `Iterator` definiert
 sind und den Iterator nicht verbrauchen. Stattdessen erzeugen sie andere
 Iteratoren, indem sie einen Aspekt des ursprünglichen Iterators verändern.
 
-Codeblock 13-14 zeigt ein Beispiel für den Aufruf der Iterator-Adaptor-Methode
+Listing 13-14 zeigt ein Beispiel für den Aufruf der Iterator-Adaptor-Methode
 `map`, die einen Closure für jedes Element aufruft, während die Elemente
 durchlaufen werden. Die Methode `map` gibt einen neuen Iterator zurück, der die
 geänderten Elemente erzeugt. Der Closure erzeugt hier einen neuen Iterator, der
@@ -194,7 +194,7 @@ let v1: Vec<i32> = vec![1, 2, 3];
 v1.iter().map(|x| x + 1);
 ```
 
-<span class="caption">Codeblock 13-14: Aufruf des Iteratoradapters `map` um
+<span class="caption">Listing 13-14: Aufruf des Iteratoradapters `map` um
 einen neuen Iterator zu erzeugen</span>
 
 Dieser Code führt jedoch zu einer Warnung:
@@ -220,16 +220,16 @@ warning: `iterators` (bin "iterators") generated 1 warning
      Running `target/debug/iterators`
 ```
 
-Der Programmcode in Codeblock 13-14 hat keine Wirkung, der Closure wird nie
+Der Programmcode in Listing 13-14 hat keine Wirkung, der Closure wird nie
 aufgerufen. Die Warnung erinnert uns daran, dass Iteratoradapter faul sind und
 dass wir den Iterator verwenden müssen, um etwas zu bewirken.
 
 Um das zu beheben, werden wir die Methode `collect` verwenden, die wir mit
-`env::args` im Codeblock 12-1 benutzt haben. Diese Methode konsumiert den
+`env::args` im Listing 12-1 benutzt haben. Diese Methode konsumiert den
 Iterator und sammelt die Ergebniswerte in einen Kollektionsdatentyp (collection
 data type).
 
-In Codeblock 13-15 sammeln wir die Resultate der Iterationen über den Iterator,
+In Listing 13-15 sammeln wir die Resultate der Iterationen über den Iterator,
 der vom Aufruf der Methode `map` zurückgegeben wird, in einem Vektor. Dieser
 Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.
 
@@ -243,7 +243,7 @@ let v2: Vec<_> = v1.iter().map(|x| x + 1).collect();
 assert_eq!(v2, vec![2, 3, 4]);
 ```
 
-<span class="caption">Codeblock 13-15: Aufruf der Methode `map` um einen
+<span class="caption">Listing 13-15: Aufruf der Methode `map` um einen
 Iterator zu erzeugen und anschließend der Methode `collect` um den
 Iterator zu verbrauchen und einen Vektor zu erzeugen</span>
 
@@ -269,7 +269,7 @@ zurück. Wenn der Closure `true` zurückgibt, wird der Wert in die von `filter`
 erzeugte Iteration aufgenommen. Wenn der Closure `false` zurückgibt, wird der
 Wert nicht aufgenommen.
 
-Im Codeblock 13-16 benutzen wir `filter` mit einem Closure, der die Variable
+Im Listing 13-16 benutzen wir `filter` mit einem Closure, der die Variable
 `shoe_size` aus seiner Umgebung erfasst, um über eine Kollektion von
 `Shoe`-Strukturinstanzen zu iterieren. Er wird nur Schuhe (shoes) einer
 bestimmten Größe zurückgeben.
@@ -327,7 +327,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 13-16: Die Methode `filter` mit einen Closure
+<span class="caption">Listing 13-16: Die Methode `filter` mit einen Closure
 benutzen, der `shoe_size` erfasst</span>
 
 Die Funktion `shoes_in_size` übernimmt die Eigentümerschaft über einen Vektor

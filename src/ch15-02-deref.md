@@ -22,7 +22,7 @@ können.
 
 Eine reguläre Referenz ist eine Art Zeiger, und eine Möglichkeit, sich einen
 Zeiger als Pfeil vorzustellen, der auf einen Wert zeigt, der an einer anderen
-Stelle gespeichert ist. In Codeblock 15-6 erstellen wir eine Referenz auf einen
+Stelle gespeichert ist. In Listing 15-6 erstellen wir eine Referenz auf einen
 `i32`-Wert und verwenden dann den Dereferenzierungsoperator, um der Referenz
 zum Wert zu folgen:
 
@@ -38,7 +38,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-6: Einen Dereferenzierungsoperator verwenden
+<span class="caption">Listing 15-6: Einen Dereferenzierungsoperator verwenden
 um einer Referenz auf einen `i32`-Wert zu folgen </span>
 
 Die Variable `x` enthält den `i32`-Wert `5`. Wir weisen `y` eine Referenz auf
@@ -74,8 +74,8 @@ den sie zeigt.
 
 ### `Box<T>` wie eine Referenz verwenden
 
-Wir können den Programmcode in Codeblock 15-6 neu schreiben, um anstelle einer
-Referenz `Box<T>` zu verwenden. Wie Codeblock 15-7 zeigt, funktioniert der
+Wir können den Programmcode in Listing 15-6 neu schreiben, um anstelle einer
+Referenz `Box<T>` zu verwenden. Wie Listing 15-7 zeigt, funktioniert der
 Dereferenzierungsoperator.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -90,10 +90,10 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-7: Using the dereference operator on a
+<span class="caption">Listing 15-7: Using the dereference operator on a
 `Box<i32>`</span>
 
-Der Hauptunterschied zwischen Codeblock 15-7 und 15-6 besteht darin, dass wir
+Der Hauptunterschied zwischen Listing 15-7 und 15-6 besteht darin, dass wir
 hier `y` als Instanz einer `Box<T>` festlegen, das auf einen kopierten Wert von
 `x` zeigt, und nicht als Referenz, die auf den Wert `x` zeigt. In der letzten
 Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden um
@@ -117,7 +117,7 @@ Dereferenzierungsoperators hinzufügen kann.
 > sind als das zeigerähnliche Verhalten.
 
 Der Typ `Box<T>` wird letztendlich als Tupel-Struktur (tuple struct) mit einem
-Element definiert. Codeblock 15-8 definiert den Typ `MyBox<T>` auf die gleiche
+Element definiert. Listing 15-8 definiert den Typ `MyBox<T>` auf die gleiche
 Weise. Wir werden auch eine Funktion `new` definieren, analog zu `Box<T>`.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -134,7 +134,7 @@ impl<T> MyBox<T> {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 15-8: Definition des Type `MyBox<T>`</span>
+<span class="caption">Listing 15-8: Definition des Type `MyBox<T>`</span>
 
 Wir definieren eine Struktur mit dem Namen `MyBox` und deklarieren einen
 generischen Parameter `T`, da unser Typ Werte jedes beliebigen Typs enthalten
@@ -142,9 +142,9 @@ können soll. Der Typ `MyBox` ist eine Tupelstruktur mit einem Element vom Typ
 `T`. Die Funktion `MyBox::new` verwendet einen Parameter vom Typ `T` und gibt
 eine `MyBox`-Instanz zurück, die den übergebenen Wert enthält.
 
-Versuchen wir, die Funktion `main` in Codeblock 15-7 zu Codeblock 15-8
+Versuchen wir, die Funktion `main` in Listing 15-7 zu Listing 15-8
 hinzuzufügen und sie so zu ändern, dass der von uns definierte Typ `MyBox<T>`
-anstelle von `Box<T>` verwendet wird. Der Programmcode in Codeblock 15-9 wird
+anstelle von `Box<T>` verwendet wird. Der Programmcode in Listing 15-9 wird
 nicht kompilieren, da Rust nicht weiß, wie er `MyBox` dereferenzieren kann.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -167,7 +167,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-9: Versuch, `MyBox<T>` auf die gleiche Weise
+<span class="caption">Listing 15-9: Versuch, `MyBox<T>` auf die gleiche Weise
 wie `Box<T>` und Referenzen zu benutzen</span>
 
 Hier ist der Kompilierfehler den wir erhalten:
@@ -196,7 +196,7 @@ beschrieben, müssen wir zur Implementierung eines Traits Implementierungen für
 die erforderlichen Methoden des Traits bereitstellen. Das von der
 Standardbibliothek bereitgestellte Trait `Deref` erfordert die Implementierung
 einer Methode namens `deref`, die `self` ausleiht und eine Referenz auf die
-beinhalteten Daten zurückgibt. Codeblock 15-10 enthält eine Implementierung von
+beinhalteten Daten zurückgibt. Listing 15-10 enthält eine Implementierung von
 `Deref`, um die Definition von `MyBox` zu ergänzen:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -229,7 +229,7 @@ impl<T> Deref for MyBox<T> {
 # }
 ```
 
-<span class="caption">Codeblock 15-10: `Deref` auf `MyBox<T>`
+<span class="caption">Listing 15-10: `Deref` auf `MyBox<T>`
 implementieren</span>
 
 Die Syntax `type Target = T;` definiert einen assoziierten Typ, den das Trait
@@ -241,7 +241,7 @@ Wir füllen den Rumpf der Methode `deref` mit `&self.0`, damit `deref` eine
 Referenz auf den Wert zurückgibt, auf den wir mit dem Operator `*` zugreifen
 wollen. Erinnere dich an [„Mit Tupel-Strukturen verschiedene Typen
 erzeugen“][tuple-structs] in Kapitel 5, wo `.0` auf den ersten Wert in einer
-Tupel-Struktur zugreift. Die Funktion `main` in Codeblock 15-9, die `*` für
+Tupel-Struktur zugreift. Die Funktion `main` in Listing 15-9, die `*` für
 den Wert `MyBox<T>` aufruft, kompiliert nun und die Zusicherungen werden
 erfüllt!
 
@@ -250,7 +250,7 @@ Methode `deref` gibt dem Compiler die Möglichkeit, einen Wert eines beliebigen
 Typs zu verwenden, der `Deref` implementiert, und die Methode `deref`
 aufzurufen, um eine `&`-Referenz zu erhalten, die er dereferenzieren kann.
 
-Als wir in Codeblock 15-9 `*y` eingegeben haben, hat Rust hinter den Kulissen
+Als wir in Listing 15-9 `*y` eingegeben haben, hat Rust hinter den Kulissen
 tatsächlich diesen Programmcode ausgeführt:
 
 ```rust,ignore
@@ -275,7 +275,7 @@ die Eigentümerschaft des inneren Wertes von `MyBox<T>` übernehmen.
 Beachte, dass der `*`-Operator durch einen Aufruf der Methode `deref` und dann
 einem Aufruf des `*`-Operators ersetzt wird. Da die Ersetzung des `*`-Operators
 nicht unendlich rekursiv ist, erhalten wir Daten vom Typ `i32`, die mit der `5`
-in `assert_eq!` in Codeblock 15-9 übereinstimmen.
+in `assert_eq!` in Listing 15-9 übereinstimmen.
 
 ### Automatische Umwandlung in Funktionen und Methoden verwenden
 
@@ -300,8 +300,8 @@ schreiben, der sowohl für Referenzen als auch für intelligente Zeiger geeignet
 ist.
 
 Um die automatische Umwandlung in Aktion zu sehen, verwenden wir den in
-Codeblock 15-8 definierten Typ `MyBox<T>` sowie die Implementierung von
-`Deref`, die wir in Codeblock 15-10 hinzugefügt haben. Codeblock 15-11 zeigt
+Listing 15-8 definierten Typ `MyBox<T>` sowie die Implementierung von
+`Deref`, die wir in Listing 15-10 hinzugefügt haben. Listing 15-11 zeigt
 die Definition einer Funktion mit einem Zeichenketten-Anteilstyp (string slice)
 Parameter.
 
@@ -315,13 +315,13 @@ fn hello(name: &str) {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 15-11: Eine Funktion `hello` mit dem Parameter
+<span class="caption">Listing 15-11: Eine Funktion `hello` mit dem Parameter
 `name` vom Typ `&str`</span>
 
 Wir können die Funktion `hello` mit einem Zeichenketten-Anteilstyp als Argument
 aufrufen, wie zum Beispiel `hello("Rust");`. Die automatische Umwandlung
 ermöglicht es, `hello` mit einer Referenz auf einen Wert vom Typ
-`MyBox<String>` aufzurufen, wie Codeblock 15-12 zeigt.
+`MyBox<String>` aufzurufen, wie Listing 15-12 zeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -354,11 +354,11 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-12: `hello` mit einer Referenz auf einen
+<span class="caption">Listing 15-12: `hello` mit einer Referenz auf einen
 `MyBox<String>`-Wert, der aufgrund automatischer Umwandlung funktioniert</span>
 
 Hier rufen wir die Funktion `hello` mit dem Argument `&m` auf, das auf einen
-`MyBox<String>`-Wert referenziert. Da wir in Codeblock 15-10 das Trait
+`MyBox<String>`-Wert referenziert. Da wir in Listing 15-10 das Trait
 `Deref` für `MyBox<T>` implementiert haben, kann Rust `&MyBox<String>` durch
 Aufrufen von `deref` in `&String` verwandeln. Die Standardbibliothek bietet
 eine Implementierung von `Deref` auf `String`, die einen
@@ -367,7 +367,7 @@ Zeichenketten-Anteilstyp zurückgibt. Dies kann man in der API-Dokumentation fü
 umzuwandeln, was der Definition der Funktion `hello` entspricht.
 
 Wenn Rust keine automatische Umwandlung implementiert hätte, müssten wir den
-Programmcode in Codeblock 15-13 anstelle des Programmcodes in 15-12 schreiben,
+Programmcode in Listing 15-13 anstelle des Programmcodes in 15-12 schreiben,
 um `hello` mit einem Wert vom Typ `&MyBox<String>` aufzurufen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -401,7 +401,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-13: Programmcode den wir schreiben
+<span class="caption">Listing 15-13: Programmcode den wir schreiben
 müssten wenn Rust keine automatische Umwandlung hätte</span>
 
 Das `(*m)` dereferenziert `MyBox<String>` zu einem `String`. Dann nehmen `&`

@@ -58,7 +58,7 @@ falsch machen.
 #### Die API von `Mutex<T>`
 
 Als Beispiel für die Verwendung eines Mutex beginnen wir mit der Verwendung
-eines Mutex in einem single-threaded Kontext, wie in Codeblock 16-12 gezeigt.
+eines Mutex in einem single-threaded Kontext, wie in Listing 16-12 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -77,7 +77,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-12: Untersuchen der API von `Mutex<T>` in
+<span class="caption">Listing 16-12: Untersuchen der API von `Mutex<T>` in
 einem single-threaded Kontext zur Vereinfachung</span>
 
 Wie bei vielen Typen erzeugen wir einen `Mutex<T>` mit der zugehörigen Funktion
@@ -117,7 +117,7 @@ sehen, dass wir den inneren `i32` in 6 ändern konnten.
 
 Versuchen wir nun, einen Wert zwischen mehreren Threads mit `Mutex<T>` zu
 teilen. Wir starten 10 Threads und lassen sie jeweils einen Zählerwert um 1
-erhöhen, sodass der Zähler von 0 auf 10 geht. Das Beispiel in Codeblock 16-13
+erhöhen, sodass der Zähler von 0 auf 10 geht. Das Beispiel in Listing 16-13
 wird einen Kompilierfehler haben und wir werden diesen Fehler verwenden, um mehr
 über die Verwendung von `Mutex<T>` zu erfahren und darüber, wie Rust uns hilft,
 ihn korrekt zu verwenden.
@@ -149,11 +149,11 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-13: Zehn Threads inkrementieren jeweils
+<span class="caption">Listing 16-13: Zehn Threads inkrementieren jeweils
 einen Zähler, der durch einen `Mutex<T>` geschützt ist</span>
 
 Wir erstellen eine Variable `counter`, um ein `i32` innerhalb eines `Mutex<T>`
-zu halten, wie wir es in Codeblock 16-12 getan haben. Als Nächstes erstellen wir
+zu halten, wie wir es in Listing 16-12 getan haben. Als Nächstes erstellen wir
 10 Threads, indem wir über einen Zahlenbereich iterieren. Wir verwenden
 `thread::spawn` und geben allen Threads den gleichen Closure, der den Zähler in
 den Thread verschiebt, eine Sperre auf dem `Mutex<T>` durch Aufrufen der Methode
@@ -162,7 +162,7 @@ Ausführung seines Closures beendet hat, verlässt `num` den Gültigkeitsbereich
 und gibt die Sperre frei, sodass ein anderer Thread sie erwerben kann.
 
 Im Haupt-Thread sammeln wir alle `JoinHandle`. Dann rufen wir analog zu
-Codeblock 16-2 `join` auf jedem Thread auf, um sicherzustellen, dass alle
+Listing 16-2 `join` auf jedem Thread auf, um sicherzustellen, dass alle
 Threads beendet sind. An diesem Punkt erhält der Haupt-Thread die Sperre und
 gibt das Ergebnis dieses Programms aus.
 
@@ -209,7 +209,7 @@ Kompilierfehler mit einer Mehrfacheigentums-Methode beheben, die wir in Kapitel
 In Kapitel 15 gaben wir einen Wert an mehrere Eigentümer, indem wir den
 intelligenten Zeiger `Rc<T>` verwendet haben, um einen Referenzzählwert zu
 erstellen. Lass uns hier das Gleiche tun und sehen, was passiert. Wir packen
-den `Mutex<T>` in `Rc<T>` in Codeblock 16-14 ein und klonen `Rc<T>`, bevor wir
+den `Mutex<T>` in `Rc<T>` in Listing 16-14 ein und klonen `Rc<T>`, bevor wir
 die Eigentümerschaft an den Thread übertragen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -241,7 +241,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-14: Versuch, `Rc<T>` zu verwenden, um
+<span class="caption">Listing 16-14: Versuch, `Rc<T>` zu verwenden, um
 mehreren Threads zu erlauben, den `Mutex<T>` zu besitzen</span>
 
 Wir kompilieren erneut und bekommen verschiedene Fehler! Der Compiler lehrt uns
@@ -319,7 +319,7 @@ die Garantien erzwingen muss, die atomare Typen bieten.
 
 Kehren wir zu unserem Beispiel zurück: `Arc<T>` und `Rc<T>` haben die gleiche
 API, also reparieren wir unser Programm, indem wir die `use`-Zeile, den Aufruf
-von `new` und den Aufruf von `clone` ändern. Der Code in Codeblock 16-15 wird
+von `new` und den Aufruf von `clone` ändern. Der Code in Listing 16-15 wird
 schließlich kompilieren und laufen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -350,7 +350,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-15: Verwenden von `Arc<T>`, um den `Mutex<T>`
+<span class="caption">Listing 16-15: Verwenden von `Arc<T>`, um den `Mutex<T>`
 einzupacken, um die Eigentümerschaft mit mehreren Threads teilen zu
 können</span>
 

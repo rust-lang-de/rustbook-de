@@ -52,7 +52,7 @@ in deinem Dateinamen verwendest, verwende einen Unterstrich, um sie zu trennen.
 Verwende zum Beispiel _hello_world.rs_ statt _helloworld.rs_.
 
 Öffne nun die Datei _main.rs_, die du gerade erstellt hast, und gib den Code in
-Codeblock 1-1 ein.
+Listing 1-1 ein.
 
 <span class="filename">Dateiname: main.rs</span>
 
@@ -62,7 +62,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 1-1: Ein Programm, das `Hallo Welt!`
+<span class="caption">Listing 1-1: Ein Programm, das `Hallo Welt!`
 ausgibt</span>
 
 Speichere die Datei und gehe zurück zu deinem Terminalfenster im Verzeichnis

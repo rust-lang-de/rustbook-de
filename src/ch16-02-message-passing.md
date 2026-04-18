@@ -35,7 +35,7 @@ miteinander kommunizieren müssen, z.B. für ein Chatsystem oder ein System, in
 dem viele Threads Teile einer Berechnung durchführen und die Teile an einen
 Thread senden, der die Ergebnisse zusammenfasst.
 
-Erstens werden wir in Codeblock 16-6 einen Kanal erstellen, aber nichts damit
+Erstens werden wir in Listing 16-6 einen Kanal erstellen, aber nichts damit
 machen. Beachte, dass sich dieser Code noch nicht kompilieren lässt, weil Rust
 nicht sagen kann, welchen Typ von Werten wir über den Kanal senden wollen.
 
@@ -49,7 +49,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-6: Erstellen eines Kanals und Zuweisen der
+<span class="caption">Listing 16-6: Erstellen eines Kanals und Zuweisen der
 beiden Hälften zu `tx` und `rx`</span>
 
 Wir erstellen einen neuen Kanal mit der Funktion `mpsc::channel`; `mpsc` steht
@@ -75,7 +75,7 @@ Tupels zu extrahieren, die von `mpsc::channel` zurückgegeben werden.
 
 Verschieben wir das sendende Ende in einen erzeugten Thread und lassen es eine
 Zeichenkette senden, sodass der erzeugte Thread mit dem Haupt-Thread
-kommuniziert, wie in Codeblock 16-7 gezeigt. Das ist so, als würde man eine
+kommuniziert, wie in Listing 16-7 gezeigt. Das ist so, als würde man eine
 Gummiente flussaufwärts in den Fluss setzen oder eine Chat-Nachricht von einem
 Thread zum anderen senden.
 
@@ -95,7 +95,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-7: Verschieben von `tx` in einen erzeugten
+<span class="caption">Listing 16-7: Verschieben von `tx` in einen erzeugten
 Thread und Senden von „hallo“</span>
 
 Wieder verwenden wir `thread::spawn`, um einen neuen Thread zu erstellen, und
@@ -111,7 +111,7 @@ diesem Beispiel rufen wir `unwrap` auf, um im Falle eines Fehlers abzubrechen.
 Aber in einer echten Anwendung würden wir es ordentlich handhaben: Kehre zu
 Kapitel 9 zurück, um Strategien für eine korrekte Fehlerbehandlung anzusehen.
 
-In Codeblock 16-8 erhalten wir den Wert vom Empfänger im Haupt-Thread. Das ist
+In Listing 16-8 erhalten wir den Wert vom Empfänger im Haupt-Thread. Das ist
 so, als würde man die Gummiente am Ende des Flusses aus dem Wasser holen oder
 eine Chat-Nachricht erhalten.
 
@@ -134,7 +134,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-8: Empfangen des Wertes „hallo“ im
+<span class="caption">Listing 16-8: Empfangen des Wertes „hallo“ im
 Haupt-Thread und Ausgeben des Wertes</span>
 
 Das Empfänger hat zwei nützliche Methoden: `recv` und `try_recv`. Wir benutzen
@@ -157,7 +157,7 @@ Wir haben in diesem Beispiel der Einfachheit halber `recv` verwendet; wir haben
 keine andere Arbeit für den Haupt-Thread zu erledigen, außer auf Nachrichten zu
 warten, daher ist es angebracht, den Haupt-Thread zu blockieren.
 
-Wenn wir den Code in Codeblock 16-8 ausführen, sehen wir den durch den
+Wenn wir den Code in Listing 16-8 ausführen, sehen wir den durch den
 Haupt-Thread ausgegebenen Wert:
 
 ```text
@@ -175,7 +175,7 @@ Berücksichtigen der Eigentümerschaft in deinen Rust-Programmen erhältst. Lass
 uns ein Experiment machen, um zu zeigen, wie Kanäle und Eigentümerschaft
 zusammenwirken, um Probleme zu vermeiden: Wir versuchen, einen Wert `val` im
 erzeugten Thread zu verwenden, _nachdem_ wir ihn in den Kanal geschickt haben.
-Versuche, den Code in Codeblock 16-9 zu kompilieren, um zu sehen, warum dieser
+Versuche, den Code in Listing 16-9 zu kompilieren, um zu sehen, warum dieser
 Code nicht erlaubt ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -198,7 +198,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-9: Versuch, `val` zu benutzen, nachdem wir
+<span class="caption">Listing 16-9: Versuch, `val` zu benutzen, nachdem wir
 es in den Kanal geschickt haben</span>
 
 Hier versuchen wir, `val` auszugeben, nachdem wir es per `tx.send` in den Kanal
@@ -207,7 +207,7 @@ einen anderen Thread gesendet wurde, könnte dieser Thread ihn ändern oder
 aufräumen, bevor wir versuchen, den Wert erneut zu verwenden. Möglicherweise
 können die Änderungen des anderen Threads aufgrund inkonsistenter oder nicht
 vorhandener Daten zu Fehlern oder unerwarteten Ergebnissen führen. Rust gibt
-uns jedoch einen Fehler, wenn wir versuchen, den Code in Codeblock 16-9 zu
+uns jedoch einen Fehler, wenn wir versuchen, den Code in Listing 16-9 zu
 kompilieren:
 
 ```console
@@ -237,12 +237,12 @@ verwenden; das Eigentumssystem prüft, ob alles in Ordnung ist.
 
 ### Senden mehrerer Werte
 
-Der Code in Codeblock 16-8 wurde kompiliert und ausgeführt, aber er zeigte uns
+Der Code in Listing 16-8 wurde kompiliert und ausgeführt, aber er zeigte uns
 nicht eindeutig, dass zwei getrennte Threads über den Kanal miteinander
 sprachen.
 
-In Codeblock 16-10 haben wir einige Änderungen vorgenommen, die beweisen, dass
-der Code in Codeblock 16-8 nebenläufig ausgeführt wird: Der erzeugte Thread
+In Listing 16-10 haben wir einige Änderungen vorgenommen, die beweisen, dass
+der Code in Listing 16-8 nebenläufig ausgeführt wird: Der erzeugte Thread
 sendet nun mehrere Nachrichten und macht dazwischen eine Pause von einer
 Sekunde.
 
@@ -276,7 +276,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-10: Senden mehrerer Nachrichten mit Pausen
+<span class="caption">Listing 16-10: Senden mehrerer Nachrichten mit Pausen
 dazwischen</span>
 
 Diesmal verwendet der erzeugte Thread einen Vektor von Zeichenketten, die wir
@@ -288,7 +288,7 @@ Im Haupt-Thread rufen wir die Funktion `recv` nicht mehr explizit auf:
 Stattdessen behandeln wir `rx` als Iterator. Jeden empfangenen Wert geben wir
 aus. Wenn der Kanal geschlossen wird, wird die Iteration beendet.
 
-Wenn du den Code in Codeblock 16-10 ausführst, solltest du die folgende Ausgabe
+Wenn du den Code in Listing 16-10 ausführst, solltest du die folgende Ausgabe
 mit einer Ein-Sekunden-Pause zwischen jeder Zeile sehen:
 
 ```text
@@ -305,10 +305,10 @@ erzeugten Thread zu erhalten.
 ### Erstellen mehrerer Produzenten
 
 Vorhin haben wir erwähnt, dass `mpsc` ein Akronym für _mehrfacher Produzent,
-einzelner Konsument_ ist. Lass uns `mpsc` verwenden und den Code in Codeblock
+einzelner Konsument_ ist. Lass uns `mpsc` verwenden und den Code in Listing
 16-10 erweitern, um mehrere Threads zu erzeugen, die alle Werte an den gleichen
 Empfänger senden. Wir können dies tun, indem wir den Sender klonen, wie in
-Codeblock 16-11 gezeigt:
+Listing 16-11 gezeigt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -359,7 +359,7 @@ Codeblock 16-11 gezeigt:
 # }
 ```
 
-<span class="caption">Codeblock 16-11: Senden mehrerer Nachrichten von mehreren
+<span class="caption">Listing 16-11: Senden mehrerer Nachrichten von mehreren
 Produzenten</span>
 
 Bevor wir den ersten Thread erzeugen, rufen wir dieses Mal `clone` auf dem

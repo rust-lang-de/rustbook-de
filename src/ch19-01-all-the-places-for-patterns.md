@@ -20,7 +20,7 @@ match WERT {
 }
 ```
 
-Hier ist zum Beispiel der `match`-Ausdruck aus Codeblock 6-5, der auf einen
+Hier ist zum Beispiel der `match`-Ausdruck aus Listing 6-5, der auf einen
 `Option<i32>`-Wert in der Variablen `x` passt:
 
 ```rust,ignore
@@ -75,14 +75,14 @@ Muster ist, bedeutet dieses Muster effektiv: „Binde alles an die Variable `x`,
 unabhängig vom Wert.“
 
 Um den Aspekt des Musterabgleichs (pattern matching) von `let` besser zu
-verstehen, betrachte Codeblock 19-1, der ein Muster mit `let` verwendet, um ein
+verstehen, betrachte Listing 19-1, der ein Muster mit `let` verwendet, um ein
 Tupel zu destrukturieren.
 
 ```rust
 let (x, y, z) = (1, 2, 3);
 ```
 
-<span class="caption">Codeblock 19-1: Verwenden eines Musters zum
+<span class="caption">Listing 19-1: Verwenden eines Musters zum
 Destrukturieren eines Tupels und zum gleichzeitigen Erzeugen von drei
 Variablen</span>
 
@@ -94,7 +94,7 @@ als drei darin verschachtelte einzelne Variablenmuster vorstellen.
 
 Wenn die Anzahl der Elemente im Muster nicht mit der Anzahl der Elemente im
 Tupel übereinstimmt, passt der Gesamttyp nicht und es kommt zu einem
-Compilerfehler. Codeblock 19-2 zeigt beispielsweise einen Versuch, ein Tupel
+Compilerfehler. Listing 19-2 zeigt beispielsweise einen Versuch, ein Tupel
 mit drei Elementen in zwei Variablen zu destrukturieren, was nicht
 funktioniert.
 
@@ -102,7 +102,7 @@ funktioniert.
 let (x, y) = (1, 2, 3);
 ```
 
-<span class="caption">Codeblock 19-2: Fehlerhaft aufgebautes Musters, dessen
+<span class="caption">Listing 19-2: Fehlerhaft aufgebautes Musters, dessen
 Variablen nicht mit der Anzahl der Elemente im Tupel übereinstimmen</span>
 
 Der Versuch, diesen Code zu kompilieren, führt zu folgendem Typfehler:
@@ -139,14 +139,14 @@ kürzeren Weg verwendet, um das Äquivalent eines `match`-Ausdrucks zu schreiben
 der nur einen Fall prüft. Optional kann `if let` ein entsprechendes `else`
 haben mit Code, der ausgeführt wird, wenn das Muster in `if let` nicht passt.
 
-Codeblock 19-3 zeigt, dass es auch möglich ist, die Ausdrücke `if let`, `else
+Listing 19-3 zeigt, dass es auch möglich ist, die Ausdrücke `if let`, `else
 if` und `else if let` zu mischen und anzupassen. Dies gibt uns mehr
 Flexibilität als ein `match`-Ausdruck, in dem wir nur einen Wert zum Abgleich
 mit den Mustern haben können. Auch erfordert Rust nicht, dass die Bedingungen
 in einer Reihe von `if let`-, `else if`- und `else if let`-Zweigen sich
 notwendigerweise aufeinander beziehen.
 
-Der Code in Codeblock 19-3 bestimmt die Farbe des Hintergrunds auf der
+Der Code in Listing 19-3 bestimmt die Farbe des Hintergrunds auf der
 Grundlage einer Reihe von Prüfungen mehrerer Bedingungen. Für dieses Beispiel
 haben wir Variablen mit hartkodierten Werten erstellt, die ein reales Programm
 von Benutzereingaben erhalten könnte.
@@ -175,7 +175,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-3: Mischen von `if let`, `else if`, `else if
+<span class="caption">Listing 19-3: Mischen von `if let`, `else if`, `else if
 let` und `else`</span>
 
 Wenn der Benutzer eine Lieblingsfarbe angibt, ist diese Farbe die
@@ -208,7 +208,7 @@ haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.
 
 Analog zu `if let` ermöglicht die bedingte Schleife `while let`, dass eine
 `while`-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Auf
-ähnliche Weise zeigen wir in Codeblock 19-4 eine `while let`-Schleife, die auf
+ähnliche Weise zeigen wir in Listing 19-4 eine `while let`-Schleife, die auf
 Nachrichten wartet, die zwischen Threads gesendet werden. In aktuellen Fall
 prüfen wir ein `Result` statt einer einer `Option`.
 
@@ -225,14 +225,14 @@ while let Ok(value) = rx.recv() {
 }
 ```
 
-<span class="caption">Codeblock 19-4: Das Verwenden einer `while let`-Schleife,
+<span class="caption">Listing 19-4: Das Verwenden einer `while let`-Schleife,
 um Werte so lange auszugeben, wie `rx.recv()` ein `Ok` zurückgibt</span>
 
 Dieses Beispiel gibt `1`, `2` und `3` aus. Die Methode `recv` nimmt die erste
 Nachricht von der Empfängerseite des Kanals und gibt `Ok(value)` zurück. Als
 wir `recv` das erste Mal in Kapitel 16 gesehen haben, haben wir den Fehler
 direkt ausgepackt oder mit ihm als Iterator in einer `for`-Schleife
-interagiert. Wie Codeblock 19-4 zeigt, können wir aber auch `while let`
+interagiert. Wie Listing 19-4 zeigt, können wir aber auch `while let`
 verwenden, da die Methode `recv` nach jeder angekommenen Nachricht den Wert
 `Ok` zurückgibt, solange der Sender existiert, und schließlich `Err`
 zurückgibt, sobald die Senderseite die Verbindung trennt.
@@ -241,7 +241,7 @@ zurückgibt, sobald die Senderseite die Verbindung trennt.
 
 In einer `for`-Schleife ist der Wert, der direkt auf das Schlüsselwort `for`
 folgt, ein Muster. Zum Beispiel ist in `for x in y` das `x` das Muster.
-Codeblock 19-5 zeigt, wie man ein Muster in einer `for`-Schleife verwendet, um
+Listing 19-5 zeigt, wie man ein Muster in einer `for`-Schleife verwendet, um
 ein Tupel als Teil der `for`-Schleife zu destrukturieren oder zu zerlegen.
 
 ```rust
@@ -252,10 +252,10 @@ for (index, value) in v.iter().enumerate() {
 }
 ```
 
-<span class="caption">Codeblock 19-5: Verwenden eines Musters in einer
+<span class="caption">Listing 19-5: Verwenden eines Musters in einer
 `for`-Schleife zum Destrukturieren eines Tupels</span>
 
-Der Code in Codeblock 19-5 wird Folgendes ausgeben:
+Der Code in Listing 19-5 wird Folgendes ausgeben:
 
 ```console
 $ cargo run
@@ -275,7 +275,7 @@ zum Muster `(index, value)` passt, ist `index` gleich `0` und `value` gleich
 
 ### Funktionsparameter
 
-Funktionsparameter können auch Muster sein. Der Code in Codeblock 19-6, der
+Funktionsparameter können auch Muster sein. Der Code in Listing 19-6, der
 eine Funktion namens `foo` deklariert, die einen Parameter namens `x` vom Typ
 `i32` benötigt, sollte inzwischen bekannt aussehen.
 
@@ -287,11 +287,11 @@ fn foo(x: i32) {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 19-6: Eine Funktionssignatur verwendet Muster
+<span class="caption">Listing 19-6: Eine Funktionssignatur verwendet Muster
 in den Parametern</span>
 
 Der Teil `x` ist ein Muster! Wie wir es mit `let` taten, konnten wir ein Tupel
-in den Argumenten einer Funktion dem Muster zuordnen. Codeblock 19-7 teilt die
+in den Argumenten einer Funktion dem Muster zuordnen. Listing 19-7 teilt die
 Werte in einem Tupel auf, wenn wir es an eine Funktion übergeben.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -307,7 +307,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-7: Eine Funktion mit Parametern, die ein
+<span class="caption">Listing 19-7: Eine Funktion mit Parametern, die ein
 Tupel destrukturieren</span>
 
 Dieser Code gibt `Aktuelle Position: (3, 5)` aus. Die Werte `&(3, 5)` passen

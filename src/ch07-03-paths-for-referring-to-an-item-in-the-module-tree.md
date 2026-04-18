@@ -16,9 +16,9 @@ Ein Pfad kann zwei Formen annehmen:
 Sowohl absolute als auch relative Pfade bestehen aus einem oder mehreren
 Bezeichnern, die durch doppelte Doppelpunkte (`::`) getrennt sind.
 
-Um zu Codeblock 7-1 zurückzukehren, nehmen wir an, wir wollen die Funktion
+Um zu Listing 7-1 zurückzukehren, nehmen wir an, wir wollen die Funktion
 `add_to_waitlist` aufrufen. Das ist dasselbe wie die Frage, wie der Pfad der
-Funktion `add_to_waitlist` ist. Codeblock 7-3 enthält Codeblock 7-1, wobei
+Funktion `add_to_waitlist` ist. Listing 7-3 enthält Listing 7-1, wobei
 einige Module und Funktionen entfernt wurden.
 
 Wir zeigen zwei Möglichkeiten, wie die Funktion `add_to_waitlist` von einer
@@ -50,7 +50,7 @@ pub fn eat_at_restaurant() {
 }
 ```
 
-<span class="caption">Codeblock 7-3: Aufruf der Funktion `add_to_waitlist`
+<span class="caption">Listing 7-3: Aufruf der Funktion `add_to_waitlist`
 mittels absoluter und relativer Pfade</span>
 
 Beim ersten Aufruf der Funktion `add_to_waitlist` in `eat_at_restaurant`
@@ -85,9 +85,9 @@ werden. Wir bevorzugen generell die Angabe absoluter Pfade, da es
 wahrscheinlicher ist, dass Codedefinitionen und Elementaufrufe unabhängig
 voneinander verschoben werden.
 
-Lass uns versuchen, Codeblock 7-3 zu kompilieren, und herausfinden, warum er
+Lass uns versuchen, Listing 7-3 zu kompilieren, und herausfinden, warum er
 sich noch nicht kompilieren lässt! Die Fehler, die wir erhalten, sind in
-Codeblock 7-4 zu sehen.
+Listing 7-4 zu sehen.
 
 ```console
 $ cargo build
@@ -124,7 +124,7 @@ For more information about this error, try `rustc --explain E0603`.
 error: could not compile `restaurant` (lib) due to 2 previous errors
 ```
 
-<span class="caption">Codeblock 7-4: Kompilierfehler im Code in Codeblock
+<span class="caption">Listing 7-4: Kompilierfehler im Code in Listing
 7-3</span>
 
 Die Fehlermeldungen besagen, dass das Modul `hosting` privat ist. Mit anderen
@@ -154,11 +154,11 @@ Schlüsselwort `pub` verwendest, um ein Element öffentlich zu machen.
 
 ### Pfade mit dem Schlüsselwort `pub` öffentlich machen
 
-Kehren wir zum Fehler in Codeblock 7-4 zurück, der uns sagte, das Modul
+Kehren wir zum Fehler in Listing 7-4 zurück, der uns sagte, das Modul
 `hosting` sei privat. Wir wollen, dass die Funktion `eat_at_restaurant` im
 übergeordneten Modul Zugriff auf die Funktion `add_to_waitlist` im
 untergeordneten Modul hat, also markieren wir das Modul `hosting` mit dem
-Schlüsselwort `pub`, wie in Codeblock 7-5 gezeigt.
+Schlüsselwort `pub`, wie in Listing 7-5 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -179,11 +179,11 @@ mod front_of_house {
 # }
 ```
 
-<span class="caption">Codeblock 7-5: Deklarieren des Moduls `hosting` als
+<span class="caption">Listing 7-5: Deklarieren des Moduls `hosting` als
 `pub`, um es von `eat_at_restaurant` aus zu benutzen</span>
 
-Leider führt der Code in Codeblock 7-5 immer noch zu Kompilierfehlern, wie
-Codeblock 7-6 zeigt.
+Leider führt der Code in Listing 7-5 immer noch zu Kompilierfehlern, wie
+Listing 7-6 zeigt.
 
 ```console
 $ cargo build
@@ -216,7 +216,7 @@ For more information about this error, try `rustc --explain E0603`.
 error: could not compile `restaurant` (lib) due to 2 previous errors
 ```
 
-<span class="caption">Codeblock 7-6: Kompilierfehler im Code in Codeblock
+<span class="caption">Listing 7-6: Kompilierfehler im Code in Listing
 7-5</span>
 
 Was ist passiert? Das Hinzufügen des Schlüsselworts `pub` vor `mod hosting`
@@ -230,12 +230,12 @@ können wir nicht viel tun, indem wir nur das Modul öffentlich machen; wir
 müssen weiter gehen und eines oder mehrere der Elemente innerhalb des Moduls
 ebenfalls öffentlich machen.
 
-Die Fehler in Codeblock 7-6 besagen, dass die Funktion `add_to_waitlist` privat
+Die Fehler in Listing 7-6 besagen, dass die Funktion `add_to_waitlist` privat
 ist. Die Datenschutzregeln gelten für Strukturen, Aufzählungen, Funktionen und
 Methoden sowie für Module.
 
 Lass uns auch die Funktion `add_to_waitlist` öffentlich machen, indem wir das
-Schlüsselwort `pub` vor ihre Definition hinzufügen, wie in Codeblock 7-7.
+Schlüsselwort `pub` vor ihre Definition hinzufügen, wie in Listing 7-7.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -256,7 +256,7 @@ mod front_of_house {
 # }
 ```
 
-<span class="caption">Codeblock 7-7: Das Hinzufügen des Schlüsselworts `pub` zu
+<span class="caption">Listing 7-7: Das Hinzufügen des Schlüsselworts `pub` zu
 `mod hosting` und `fn add_to_waitlist` lässt uns die Funktion in
 `eat_at_restaurant` aufrufen</span>
 
@@ -328,7 +328,7 @@ des Modulbaums erleichtern kann, wenn das Modul eng mit dem übergeordneten Modu
 verwandt ist, aber das übergeordnete Modul eines Tages an eine andere Stelle im
 Modulbaum verschoben werden könnte.
 
-Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
+Betrachte den Code in Listing 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die
 Funktion `fix_incorrect_order`, die im Modul `back_of_house` definiert ist,
 ruft die im übergeordneten Modul definierte Funktion `deliver_order` auf, indem
@@ -349,7 +349,7 @@ mod back_of_house {
 }
 ```
 
-<span class="caption">Codeblock 7-8: Aufrufen einer Funktion unter Verwendung
+<span class="caption">Listing 7-8: Aufrufen einer Funktion unter Verwendung
 eines relativen Pfades, der mit `super` beginnt</span>
 
 Die Funktion `fix_incorrect_order` befindet sich im Modul `back_of_house`,
@@ -369,7 +369,7 @@ zu kennzeichnen, aber es gibt ein paar zusätzliche Details zur Verwendung von
 `pub` mit Strukturen und Aufzählungen. Wenn wir `pub` vor einer
 Struktur-Definition verwenden, machen wir die Struktur öffentlich, aber die
 Felder der Struktur sind immer noch privat. Wir können jedes Feld von Fall zu
-Fall öffentlich machen oder auch nicht. In Codeblock 7-9 haben wir eine
+Fall öffentlich machen oder auch nicht. In Listing 7-9 haben wir eine
 öffentliche Struktur `back_of_house::Breakfast` mit einem öffentlichen Feld
 `toast`, aber einem privaten Feld `seasonal_fruit` definiert. Dies ist der Fall
 in einem Restaurant, in dem der Kunde die Brotsorte auswählen kann, die zu
@@ -411,7 +411,7 @@ pub fn eat_at_restaurant() {
 }
 ```
 
-<span class="caption">Codeblock 7-9: Eine Struktur mit öffentlichen und
+<span class="caption">Listing 7-9: Eine Struktur mit öffentlichen und
 privaten Feldern</span>
 
 Da das Feld `toast` in der Struktur `back_of_house::Breakfast` öffentlich ist,
@@ -431,7 +431,7 @@ keine solche Funktion hätte, könnten wir keine Instanz von `Breakfast` in
 
 Wenn wir dagegen eine Aufzählung veröffentlichen, dann sind alle ihre
 Varianten öffentlich. Wir brauchen nur das Schlüsselwort `pub` vor dem
-Schlüsselwort `enum`, wie in Codeblock 7-10 gezeigt.
+Schlüsselwort `enum`, wie in Listing 7-10 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -449,7 +449,7 @@ pub fn eat_at_restaurant() {
 }
 ```
 
-<span class="caption">Codeblock 7-10: Kennzeichnen einer Aufzählung als
+<span class="caption">Listing 7-10: Kennzeichnen einer Aufzählung als
 öffentlich macht alle ihre Varianten öffentlich</span>
 
 Da wir die Aufzählung `Appetizer` öffentlich gemacht haben, können wir die

@@ -70,7 +70,7 @@ Daumenregeln:
 Und wenn du Parallelität und Nebenläufigkeit benötigst, musst du dich nicht
 zwischen Threads und asynchronem Code entscheiden. Du kannst beide zusammen
 verwenden, wobei jede der beiden die Aufgabe übernimmt, für die sie am besten
-geeignet ist. Codeblock 17-25 zeigt zum Beispiel ein gängiges Beispiel für
+geeignet ist. Listing 17-25 zeigt zum Beispiel ein gängiges Beispiel für
 dieses Zusammenspiel in echtem Rust-Code.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -96,7 +96,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 17-25: Senden von Nachrichten mit blockierendem
+<span class="caption">Listing 17-25: Senden von Nachrichten mit blockierendem
 Code in einem Thread und Warten auf die Nachrichten in einem asynchronen
 Block</span>
 

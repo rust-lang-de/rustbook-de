@@ -1,6 +1,6 @@
 ## Kontrolliertes Beenden und Aufräumen
 
-Der Code in Codeblock 21-20 antwortet auf Anfragen asynchron durch die
+Der Code in Listing 21-20 antwortet auf Anfragen asynchron durch die
 Verwendung eines Thread-Pools, wie von uns beabsichtigt. Wir erhalten einige
 Warnungen über die Felder `workers`, `id` und `thread`, die wir nicht direkt
 benutzen, was uns daran erinnert, dass wir nichts aufräumen. Wenn wir die
@@ -20,7 +20,7 @@ Thread-Pool kontrolliert herunterfährt.
 
 Lass uns damit beginnen, `Drop` auf unseren Thread-Pool zu implementieren. Wenn
 der Pool aufgeräumt wird, sollten wir auf das Ende unsere Threads warten, um
-sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 21-22 zeigt einen
+sicherzustellen, dass sie ihre Arbeit beenden. Listing 21-22 zeigt einen
 ersten Versuch einer `Drop`-Implementierung; dieser Code wird noch nicht ganz
 funktionieren.
 
@@ -103,7 +103,7 @@ impl Drop for ThreadPool {
 # }
 ```
 
-<span class="caption">Codeblock 21-22: Warten auf das Ende der einzelnen
+<span class="caption">Listing 21-22: Warten auf das Ende der einzelnen
 Threads, wenn der Thread-Pool den Gültigkeitsbereich verlässt</span>
 
 Zuerst iterieren wir über alle `workers` im Thread-Pool. Wir verwenden dafür
@@ -139,7 +139,7 @@ veränderbare Borrow von jedem `worker` haben und `join` die Eigentümerschaft f
 sein Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Thread
 `thread` aus der `Worker`-Instanz herausnehmen, damit `join` den Thread
 konsumieren kann. Eine Möglichkeit, dies zu tun, besteht darin, den gleichen
-Ansatz wie in Codeblock 18-15 zu verfolgen. Wenn `Worker` ein
+Ansatz wie in Listing 18-15 zu verfolgen. Wenn `Worker` ein
 `Option<Thread::JoinHandle<()>>` hielte, könnten wir die Methode `take` auf
 `Option` aufrufen, um den Wert aus der Variante `Some` herauszuverschieben und
 eine Variante `None` an ihrer Stelle zu belassen. Mit anderen Worten, ein
@@ -269,7 +269,7 @@ von `drop` in `ThreadPool` und dann eine Änderung in der `Worker`-Schleife.
 
 Zuerst ändern wir die Implementierung von `drop` in `ThreadPool`, um den
 `sender` explizit zu aufzuräumen, bevor wir auf das Ende der Threads warten.
-Codeblock 21-23 zeigt die Änderungen an `ThreadPool`, um den `sender` explizit
+Listing 21-23 zeigt die Änderungen an `ThreadPool`, um den `sender` explizit
 aufzuräumen. Anders als beim Thread, _müssen_ wir hier eine `Option` verwenden,
 um den `sender` mit `Option::take` aus dem `ThreadPool` herausnehmen zu können.
 
@@ -365,13 +365,13 @@ impl Drop for ThreadPool {
 # }
 ```
 
-<span class="caption">Codeblock 21-23: `sender` vor dem Warten auf die
+<span class="caption">Listing 21-23: `sender` vor dem Warten auf die
 `Worker`-Threads explizit aufräumen</span>
 
 Das Aufräumen von `sender` schließt den Kanal, was bedeutet, dass keine weiteren
 Nachrichten gesendet werden. Wenn das passiert, geben alle Aufrufe von `recv`,
 die die `Worker`-Instanzen in der Endlosschleife machen, einen Fehler zurück. In
-Codeblock 21-24 ändern wir die `Worker`-Schleife so, dass die Schleife in diesem
+Listing 21-24 ändern wir die `Worker`-Schleife so, dass die Schleife in diesem
 Fall ordnungsgemäß beendet wird, was bedeutet, dass die Threads beendet werden,
 wenn die Implementierung von `drop` in `ThreadPool` `join` für sie aufruft.
 
@@ -470,12 +470,12 @@ impl Worker {
 }
 ```
 
-<span class="caption">Codeblock 21-24: Explizites Verlassen der Schleife, wenn
+<span class="caption">Listing 21-24: Explizites Verlassen der Schleife, wenn
 `recv` einen Fehler zurückgibt</span>
 
 Um diesen Code in Aktion zu sehen, modifizieren wir `main` so, dass nur zwei
 Anfragen akzeptiert werden, bevor der Server kontrolliert heruntergefahren
-wird, wie in Codeblock 21-25 gezeigt.
+wird, wie in Listing 21-25 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -526,7 +526,7 @@ fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 21-25: Herunterfahren des Servers, nachdem er
+<span class="caption">Listing 21-25: Herunterfahren des Servers, nachdem er
 zwei Anfragen bearbeitet hat, durch Verlassen der Schleife</span>
 
 Du würdest nicht wollen, dass ein Webserver aus der realen Welt

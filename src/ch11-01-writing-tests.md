@@ -45,7 +45,7 @@ $ cd adder
 ```
 
 Der Inhalt der Datei _src/lib.rs_ in deiner Bibliothek `adder` sollte wie
-Codeblock 11-1 aussehen.
+Listing 11-1 aussehen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -66,7 +66,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 11-1: Das Testmodul und die Funktion, die
+<span class="caption">Listing 11-1: Das Testmodul und die Funktion, die
 automatisch von `cargo new` generiert werden</span>
 
 Die Datei beginnt mit einer Beispielfunktion `add`, damit wir etwas zum Testen
@@ -86,7 +86,7 @@ Aufbau eines typischen Tests. Lassen wir ihn laufen, um zu sehen, dass dieser
 Test erfolgreich ist.
 
 Das Kommando `cargo test` führt alle Tests in unserem Projekt aus, wie in
-Codeblock 11-2 zu sehen ist.
+Listing 11-2 zu sehen ist.
 
 ```console
 $ cargo test
@@ -106,7 +106,7 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-<span class="caption">Codeblock 11-2: Ergebnis der Ausführung des automatisch
+<span class="caption">Listing 11-2: Ergebnis der Ausführung des automatisch
 generierten Tests</span>
 
 Cargo hat den Test kompiliert und ausgeführt. Nach den Zeilen `Compiling`,
@@ -193,7 +193,7 @@ Haupt-Thread (main thread) sieht, dass ein Test-Thread abgebrochen wurde, wird
 der Test als fehlgeschlagen markiert. Über den einfachsten Weg, ein Programm
 abzubrechen, sprachen wir in Kapitel 9, und zwar durch den Aufruf des Makros
 `panic!`. Erstelle einen neuen Test `another`, sodass deine Datei _src/lib.rs_
-wie in Codeblock 11-3 aussieht.
+wie in Listing 11-3 aussieht.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -217,11 +217,11 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 11-3: Hinzufügen eines zweiten Tests, der
+<span class="caption">Listing 11-3: Hinzufügen eines zweiten Tests, der
 fehlschlägt, weil wir das Makro `panic!` aufrufen</span>
 
 Führe die Tests erneut mit `cargo test` aus. Die Ausgabe sollte wie in
-Codeblock 11-4 aussehen, was zeigt, dass unser Test `exploration` bestanden und
+Listing 11-4 aussehen, was zeigt, dass unser Test `exploration` bestanden und
 `another` fehlgeschlagen ist.
 
 ```console
@@ -250,7 +250,7 @@ test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 error: test failed, to rerun pass `--lib`
 ```
 
-<span class="caption">Codeblock 11-4: Testergebnisse, wenn ein Test bestanden
+<span class="caption">Listing 11-4: Testergebnisse, wenn ein Test bestanden
 und ein Test nicht bestanden wird</span>
 
 Statt `ok` zeigt die Zeile `test tests::another` das Ergebnis `FAILED`.
@@ -284,8 +284,8 @@ Makro `panic!` auf, um den Test fehlschlagen zu lassen. Das Verwenden des
 Makros `assert!` hilft uns zu überprüfen, ob unser Code so funktioniert, wie
 wir es beabsichtigen.
 
-In Codeblock 5-15 in Kapitel 5 haben wir eine Struktur `Rectangle` und eine
-Methode `can_hold` verwendet, die hier in Codeblock 11-5 wiederholt werden.
+In Listing 5-15 in Kapitel 5 haben wir eine Struktur `Rectangle` und eine
+Methode `can_hold` verwendet, die hier in Listing 11-5 wiederholt werden.
 Lass uns diesen Code in die Datei _src/lib.rs_ packen und dann einige Tests
 dafür mit dem Makro `assert!` schreiben.
 
@@ -305,11 +305,11 @@ impl Rectangle {
 }
 ```
 
-<span class="caption">Codeblock 11-5: Verwenden der Struktur `Rectangle` und
+<span class="caption">Listing 11-5: Verwenden der Struktur `Rectangle` und
 ihrer Methode `can_hold` aus Kapitel 5</span>
 
 Die Methode `can_hold` gibt ein Boolean zurück, was bedeutet, dass es ein
-perfekter Anwendungsfall für das Makro `assert!` ist. In Codeblock 11-6
+perfekter Anwendungsfall für das Makro `assert!` ist. In Listing 11-6
 schreiben wir einen Test, der die Methode `can_hold` überprüft, indem wir eine
 `Rectangle`-Instanz mit einer Breite von 8 und einer Höhe von 7 erstellen und
 sicherstellen, dass es eine weitere `Rectangle`-Instanz mit einer Breite von 5
@@ -350,7 +350,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 11-6: Ein Test für `can_hold`, der prüft, ob in
+<span class="caption">Listing 11-6: Ein Test für `can_hold`, der prüft, ob in
 ein größeres Rechteck tatsächlich ein kleineres Rechteck passt</span>
 
 Beachte die Zeile `use super::*;` im Modul `tests`. Das Modul `tests` ist ein
@@ -564,7 +564,7 @@ fehlgeschlagen ist; umgekehrt zeigt das Makro `assert!` nur an, dass der
 Ausdruck `==` den Wert `false` ergeben hat, ohne die Werte auszugeben, die zum
 falschen Testergebnis geführt haben.
 
-In Codeblock 11-7 schreiben wir eine Funktion namens `add_two`, die zu ihrem
+In Listing 11-7 schreiben wir eine Funktion namens `add_two`, die zu ihrem
 Parameter `2` addiert, und dann testen wir diese Funktion mit dem Makro
 `assert_eq!`.
 
@@ -587,7 +587,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 11-7: Testen der Funktion `add_two` mit dem
+<span class="caption">Listing 11-7: Testen der Funktion `add_two` mit dem
 Makro `assert_eq!`</span>
 
 Lass uns prüfen, ob sie den Test besteht!
@@ -701,7 +701,7 @@ Standardbibliothekstypen implementieren diese Traits. Für Strukturen und
 Aufzählungen, die du definierst, musst du `PartialEq` implementieren, um die
 Gleichheit dieser Typen sicherzustellen. Du musst auch `Debug` implementieren,
 um die Werte auszugeben, wenn die Zusicherung fehlschlägt. Da es sich bei beiden
-Traits um ableitbare Traits handelt, wie in Codeblock 5-12 in Kapitel 5 erwähnt,
+Traits um ableitbare Traits handelt, wie in Listing 5-12 in Kapitel 5 erwähnt,
 genügt normalerweise das Ergänzen der Annotation `#[derive(PartialEq, Debug)]`
 bei deiner Struktur- und Aufzählungsdefinition. Siehe Anhang C [„Ableitbare
 Traits“][derivable-traits] für weitere Einzelheiten über diese und andere
@@ -861,7 +861,7 @@ was wir erwartet hatten.
 
 Neben der Prüfung von Rückgabewerten ist es auch wichtig zu prüfen, ob unser
 Code Fehlerbedingungen so behandelt, wie wir es erwarten. Denke zum Beispiel an
-den Typ `Guess`, den wir in Kapitel 9 in Codeblock 9-13 erstellt haben. Anderer
+den Typ `Guess`, den wir in Kapitel 9 in Listing 9-13 erstellt haben. Anderer
 Code, der `Guess` verwendet, hängt von der Garantie ab, dass `Guess`-Instanzen
 nur Werte zwischen 1 und 100 enthalten. Wir können einen Test schreiben, der
 sicherstellt, dass der Versuch, eine `Guess`-Instanz mit einem Wert außerhalb
@@ -872,7 +872,7 @@ hinzufügen. Der Test gilt als bestanden, wenn der Code innerhalb der Funktion
 abbricht; der Test schlägt fehl, wenn der Code innerhalb der Funktion nicht
 abbricht.
 
-Codeblock 11-8 zeigt einen Test, der prüft, ob die Fehlerbedingungen von
+Listing 11-8 zeigt einen Test, der prüft, ob die Fehlerbedingungen von
 `Guess::new` eintreten, wenn wir dies erwarten.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -904,7 +904,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 11-8: Testet, dass eine Bedingung zum
+<span class="caption">Listing 11-8: Testet, dass eine Bedingung zum
 Programmabbruch führt</span>
 
 Wir setzen das Attribut `#[should_panic]` hinter das Attribut `#[test]` und vor
@@ -961,7 +961,7 @@ impl Guess {
 # }
 ```
 
-Wenn wir den Test in Codeblock 11-8 ausführen, wird er fehlschlagen:
+Wenn wir den Test in Listing 11-8 ausführen, wird er fehlschlagen:
 
 ```console
 $ cargo test
@@ -996,7 +996,7 @@ anderen Grund zum Programmabbrucht führt als dem, den wir erwartet haben. Um
 Tests mit `should_panic` präziser zu machen, können wir beim
 `should_panic`-Attribut einen optionalen Parameter `expected` ergänzen. Das
 Testsystem stellt sicher, dass die Fehlermeldung den angegebenen Text enthält.
-Betrachte zum Beispiel den modifizierten Code für `Guess` in Codeblock 11-9, wo
+Betrachte zum Beispiel den modifizierten Code für `Guess` in Listing 11-9, wo
 die Funktion `new` mit unterschiedlichen Meldungen das Programm abbricht, je
 nachdem, ob der Wert zu klein oder zu groß ist.
 
@@ -1032,7 +1032,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 11-9: Testen eines Programmabbruchs mit einer
+<span class="caption">Listing 11-9: Testen eines Programmabbruchs mit einer
 bestimmten Teilzeichenkette in der Meldung</span>
 
 Dieser Test wird bestanden werden, weil der Wert, den wir beim Parameter
@@ -1117,7 +1117,7 @@ diesem Fall erhielten, lautete: `Schätzwert muss größer oder gleich 1 sein, i
 ### Verwenden von `Result<T, E>` in Tests
 
 Unsere bisherigen Tests brechen alle ab, wenn sie fehlschlagen. Wir können auch
-Tests schreiben, die `Result<T, E>` verwenden! Hier ist der Test aus Codeblock
+Tests schreiben, die `Result<T, E>` verwenden! Hier ist der Test aus Listing
 11-1 so umgeschrieben, dass er `Result<T, E>` verwendet und `Err` zurückgibt,
 anstatt das Programm abzubrechen:
 

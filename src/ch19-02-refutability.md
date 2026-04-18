@@ -27,7 +27,7 @@ beabsichtigten Verhalten des Codes.
 
 Betrachten wir ein Beispiel dafür, was passiert, wenn wir versuchen, ein
 abweisbares Muster zu verwenden, wo Rust ein unabweisbares Muster erfordert und
-umgekehrt. Codeblock 19-8 zeigt eine `let`-Anweisung, allerdings haben wir für
+umgekehrt. Listing 19-8 zeigt eine `let`-Anweisung, allerdings haben wir für
 das Muster `Some(x)` angegeben, ein abweisbares Muster. Wie zu erwarten ist,
 lässt sich dieser Code nicht kompilieren.
 
@@ -36,7 +36,7 @@ lässt sich dieser Code nicht kompilieren.
 let Some(x) = some_option_value;
 ```
 
-<span class="caption">Codeblock 19-8: Versuch, ein abweisbares Muster mit `let`
+<span class="caption">Listing 19-8: Versuch, ein abweisbares Muster mit `let`
 zu verwenden</span>
 
 Wenn `some_option_value` den Wert `None` hätte, würde er nicht zum Muster
@@ -74,7 +74,7 @@ Wenn wir ein abweisbares Muster haben, obwohl ein unabweisbares Muster benötigt
 wird, können wir den Code, der das Muster verwendet, korrigieren: Anstatt `let`
 zu verwenden, können wir `let...else` verwenden. Wenn das Muster dann nicht
 passt, führt das Programm einfach den Code in den geschweiften Klammern aus.
-Codeblock 19-9 zeigt, wie der Code in Codeblock 19-8 zu korrigieren ist.
+Listing 19-9 zeigt, wie der Code in Listing 19-8 zu korrigieren ist.
 
 ```rust
 # let some_option_value: Option<i32> = None;
@@ -83,13 +83,13 @@ let Some(x) = some_option_value else {
 };
 ```
 
-<span class="caption">Codeblock 19-9: Verwenden von `let...else` und eines
+<span class="caption">Listing 19-9: Verwenden von `let...else` und eines
 Blocks mit abweisbaren Mustern anstelle von `let`</span>
 
 Wir haben den Code repariert! Dieser Code ist vollkommen gültig, auch wenn wir
 damit kein unabweisbares Muster verwenden können, ohne eine Warnung zu
 erhalten. Wenn wir in `let...else` ein unabweisbares Muster angeben, das immer
-passt, z.B. `x` wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung
+passt, z.B. `x` wie in Listing 19-10 gezeigt, gibt der Compiler eine Warnung
 aus.
 
 ```rust
@@ -98,7 +98,7 @@ let x = 5 else {
 };
 ```
 
-<span class="caption">Codeblock 19-10: Der Versuch, ein unabweisbares Muster
+<span class="caption">Listing 19-10: Der Versuch, ein unabweisbares Muster
 mit `let...else` zu verwenden</span>
 
 Rust beklagt, dass es keinen Sinn macht, `let...else` mit einem unabweisbaren

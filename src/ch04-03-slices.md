@@ -29,7 +29,7 @@ keine Eigentümerschaft, also ist das in Ordnung. (In idiomatischem Rust
 denn, sie müssen es, und die Gründe dafür werden im weiteren Verlauf klar
 werden.) Aber was sollen wir zurückgeben? Wir haben nicht wirklich die
 Mittel, _einen Teil_ einer Zeichenkette zu referenzieren. Wir könnten jedoch
-den Index des Wortendes zurückgeben. Versuchen wir das, wie in Codeblock 4-7
+den Index des Wortendes zurückgeben. Versuchen wir das, wie in Listing 4-7
 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -50,7 +50,7 @@ fn first_word(s: &String) -> usize {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 4-7: Die Funktion `first_word`, die einen
+<span class="caption">Listing 4-7: Die Funktion `first_word`, die einen
 Byte-Indexwert zum Parameter `String` zurückgibt</span>
 
 Da wir den `String` Zeichen für Zeichen durchgehen und prüfen müssen, ob ein
@@ -133,8 +133,8 @@ Zeichenkette herauszufinden, aber es gibt ein Problem. Wir geben ein `usize`
 für sich allein zurück, aber die Zahl ist nur aussagekräftig im Kontext des
 `&String`. Mit anderen Worten: Da es sich um einen vom `String` getrennten Wert
 handelt, gibt es keine Garantie, dass er auch in Zukunft noch gültig ist.
-Betrachte das Programm in Codeblock 4-8, das die Funktion `first_word` aus
-Codeblock 4-7 verwendet.
+Betrachte das Programm in Listing 4-8, das die Funktion `first_word` aus
+Listing 4-7 verwendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -164,7 +164,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 4-8: Speichern des Ergebnisses des
+<span class="caption">Listing 4-8: Speichern des Ergebnisses des
 Funktionsaufrufs `first_word` und anschließendes Ändern des Inhalts der
 Zeichenkette</span>
 
@@ -289,7 +289,7 @@ fn first_word(s: &String) -> &str {
 # fn main() {}
 ```
 
-Den Index für das Wortende erhalten wir auf die gleiche Weise wie in Codeblock
+Den Index für das Wortende erhalten wir auf die gleiche Weise wie in Listing
 4-7, indem wir nach dem ersten Vorkommen eines Leerzeichens suchen. Wenn wir
 ein Leerzeichen finden, geben wir einen Zeichenkettenanteilstyp zurück, wobei
 wir den Anfang der Zeichenkette und den Index des Leerzeichens als Anfangs-
@@ -309,7 +309,7 @@ fn second_word(s: &String) -> &str {
 
 Wir haben jetzt eine einfache API, die viel schwieriger durcheinanderzubringen
 ist, weil der Compiler sicherstellt, dass die Referenzen auf den `String`
-gültig bleiben. Erinnere dich an den Fehler im Programm in Codeblock 4-8, als
+gültig bleiben. Erinnere dich an den Fehler im Programm in Listing 4-8, als
 wir den Index bis zum Ende des ersten Wortes erhielten, dann aber die
 Zeichenkette löschten, sodass unser Index ungültig wurde. Dieser Code war
 logisch falsch, zeigte aber keine unmittelbaren Fehler. Die Probleme würden
@@ -402,7 +402,7 @@ ihre Signatur:
 fn first_word(s: &String) -> &str {
 ```
 
-Ein erfahrenerer Rust-Entwickler würde stattdessen die in Codeblock 4-9
+Ein erfahrenerer Rust-Entwickler würde stattdessen die in Listing 4-9
 gezeigte Signatur schreiben, da sie es uns erlaubt, dieselbe Funktion sowohl
 auf `&String`-Werte als auch auf `&str`-Werte anzuwenden.
 
@@ -441,7 +441,7 @@ fn first_word(s: &str) -> &str {
 # }
 ```
 
-<span class="caption">Codeblock 4-9: Verbessern der Funktion `first_word` durch
+<span class="caption">Listing 4-9: Verbessern der Funktion `first_word` durch
 Verwenden eines Zeichenkettenanteilstyps für den Typ des Parameters `s`</span>
 
 Wenn wir einen Zeichenkettenanteilstyp haben, können wir diesen direkt

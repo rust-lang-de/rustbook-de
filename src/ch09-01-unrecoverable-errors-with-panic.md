@@ -72,7 +72,7 @@ Wir können die Aufrufhistorie (backtrace) der Funktionen, von der der
 verursacht. Um zu verstehen, wie man eine `panic!`-Aufrufhistorie liest, lass
 uns ein anderes Beispiel betrachten, bei dem ein `panic!`-Aufruf aufgrund eines
 Fehlers in unserem Code von einer Bibliothek kommt, anstatt von unserem Code,
-der das Makro direkt aufruft. Codeblock 9-1 enthält einen Code, der versucht,
+der das Makro direkt aufruft. Listing 9-1 enthält einen Code, der versucht,
 auf einen Index in einem Vektor zuzugreifen, der außerhalb des Bereichs
 gültiger Indizes liegt.
 
@@ -86,7 +86,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 9-1: Versuch, auf ein Element jenseits des
+<span class="caption">Listing 9-1: Versuch, auf ein Element jenseits des
 Endes eines Vektors zuzugreifen, was einen Aufruf von `panic!` auslöst</span>
 
 Hier versuchen wir, auf das 100. Element unseres Vektors zuzugreifen (das bei
@@ -135,7 +135,7 @@ Zeilen darunter sind Code, der deinen Code aufgerufen hat. Diese Zeilen können
 Core-Rust-Code, Code der Standardbibliothek oder Crate, enthalten, die du
 verwendest. Versuchen wir, eine Aufrufhistorie zu erhalten, indem wir die
 Umgebungsvariable `RUST_BACKTRACE` auf einen beliebigen Wert außer `0` setzen.
-Codeblock 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.
+Listing 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.
 
 ```console
 $ RUST_BACKTRACE=1 cargo run
@@ -161,7 +161,7 @@ stack backtrace:
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 ```
 
-<span class="caption">Codeblock 9-2: Aufrufhistorie, erzeugt durch einen Aufruf
+<span class="caption">Listing 9-2: Aufrufhistorie, erzeugt durch einen Aufruf
 von `panic!`, wenn die Umgebungsvariable `RUST_BACKTRACE` gesetzt ist</span>
 
 Das ist eine lange Ausgabe! Die genaue Ausgabe kann je nach Betriebssystem und
@@ -170,11 +170,11 @@ zu erhalten, müssen Fehlersuchinfos (debug symbols) aktiviert sein.
 Fehlersuchinfos sind standardmäßig aktiviert, wenn du `cargo build` oder
 `cargo run` ohne Flag `--release` verwendest, wie wir es hier haben.
 
-In der Ausgabe in Codeblock 9-2 zeigt Zeile 17 der Aufrufhistorie auf die Zeile
+In der Ausgabe in Listing 9-2 zeigt Zeile 17 der Aufrufhistorie auf die Zeile
 in unserem Projekt, die das Problem verursacht: Zeile 4 in _src/main.rs_. Wenn
 wir nicht wollen, dass unser Programm abbricht, sollten wir bei der ersten
 Zeile, die auf eine von uns geschriebenen Datei verweist, mit der Untersuchung
-beginnen. In Codeblock 9-1, wo wir absichtlich Code geschrieben haben, der das
+beginnen. In Listing 9-1, wo wir absichtlich Code geschrieben haben, der das
 Programm abbricht, besteht die Möglichkeit das Problem zu beheben darin, kein
 Element außerhalb des Bereichs der Vektorindizes anzufordern. Wenn dein Code in
 Zukunft abbricht, musst du herausfinden, bei welcher Aktion der Code mit

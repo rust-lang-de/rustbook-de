@@ -11,7 +11,7 @@ Um eine Struktur zu definieren, geben wir das Schlüsselwort `struct` an und
 benennen die gesamte Struktur. Der Name einer Struktur sollte die Bedeutung der
 Daten beschreiben, die gruppiert werden. Dann definieren wir innerhalb
 geschweifter Klammern die Namen und Typen der Datenteile, die wir _Felder_
-nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
+nennen. Beispielsweise zeigt Listing 5-1 eine Struktur, die Informationen
 über ein Benutzerkonto speichert.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -27,7 +27,7 @@ struct User {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 5-1: Definition der Struktur `User`</span>
+<span class="caption">Listing 5-1: Definition der Struktur `User`</span>
 
 Um eine Struktur zu verwenden, nachdem wir sie definiert haben, erstellen wir
 eine _Instanz_ dieser Struktur, indem wir für jedes Feld einen konkreten Wert
@@ -39,7 +39,7 @@ Reihenfolge angeben, in der wir sie in der Struktur deklariert haben. Anders
 gesagt ist die Strukturdefinition wie eine allgemeine Typvorlage und Instanzen
 füllen diese Vorlage mit bestimmten Daten aus, um Werte des Typs zu erzeugen.
 Beispielsweise können wir einen bestimmten Benutzer deklarieren, wie in
-Codeblock 5-2 zu sehen ist.
+Listing 5-2 zu sehen ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -61,14 +61,14 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-2: Eine Instanz der Struktur `User`
+<span class="caption">Listing 5-2: Eine Instanz der Struktur `User`
 erzeugen</span>
 
 Um auf einen bestimmten Wert in einer Struktur zuzugreifen, verwenden wir die
 Punktnotation. Um beispielsweise auf die E-Mail-Adresse dieses Benutzers
 zuzugreifen, verwenden wir `user1.email`. Wenn die Instanz veränderbar ist,
 können wir einen Wert ändern, indem wir die Punktnotation verwenden und ihn
-einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
+einem bestimmten Feld zuweisen. Listing 5-3 gezeigt, wie der Wert im Feld
 `email` einer veränderbaren `User`-Instanz geändert werden kann.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -93,14 +93,14 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-3: Wert im Feld `email` einer `User`-Instanz ändern</span>
+<span class="caption">Listing 5-3: Wert im Feld `email` einer `User`-Instanz ändern</span>
 
 Beachte, dass die gesamte Instanz veränderbar sein muss. Rust erlaubt es
 nicht, nur einzelne Felder als veränderbar zu markieren. Wie mit jedem
 Ausdruck können wir eine neue Instanz der Struktur als letzten Ausdruck im
 Funktionsrumpf erzeugen, um diese neue Instanz implizit zurückzugeben.
 
-Codeblock 5-4 zeigt eine Funktion `build_user`, die eine `User`-Instanz mit der
+Listing 5-4 zeigt eine Funktion `build_user`, die eine `User`-Instanz mit der
 angegebenen E-Mail und dem Benutzernamen zurückgibt. Das Feld `active` erhält
 den Wert `true` und das Feld `sign_in_count` den Wert `1`.
 
@@ -131,7 +131,7 @@ fn build_user(email: String, username: String) -> User {
 # }
 ```
 
-<span class="caption">Codeblock 5-4: Funktion `build_user`, die eine E-Mail und
+<span class="caption">Listing 5-4: Funktion `build_user`, die eine E-Mail und
 einen Benutzernamen entgegennimmt und eine `User`-Instanz zurückgibt</span>
 
 Es ist sinnvoll, den Funktionsparametern dieselben Namen wie die der
@@ -142,11 +142,11 @@ praktische Kurznotation!
 
 ### Kurznotation der Feld-Initialisierung verwenden
 
-Da die Parameter und die Strukturfelder in Codeblock 5-4 die gleichen Namen
+Da die Parameter und die Strukturfelder in Listing 5-4 die gleichen Namen
 haben, können wir die _Kurznotation der Feld-Initialisierung_ (field init
 shorthand syntax) verwenden, um die Funktion `build_user` so umzuschreiben,
 dass sie sich unverändert gleich verhält, ohne `email` und `username` zu
-wiederholen, siehe Codeblock 5-5.
+wiederholen, siehe Listing 5-5.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -175,7 +175,7 @@ fn build_user(email: String, username: String) -> User {
 # }
 ```
 
-<span class="caption">Codeblock 5-5: Funktion `build_user` mit Kurznotation der
+<span class="caption">Listing 5-5: Funktion `build_user` mit Kurznotation der
 Feld-Initialisierung, weil die Parameternamen `email` und `username` identisch
 mit den Strukturfeldern sind</span>
 
@@ -192,10 +192,10 @@ meisten Werte einer alten Instanz desselben Typs verwendet und nur einige davon
 verändert. Du kannst dazu die Strukturaktualisierungssyntax (struct update
 syntax) verwenden.
 
-Zunächst zeigt Codeblock 5-6, wie wir eine neue `User`-Instanz `user2` auf
+Zunächst zeigt Listing 5-6, wie wir eine neue `User`-Instanz `user2` auf
 normalem Wege ohne Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert
 für `email`, verwenden aber ansonsten die gleichen Werte von `user1`, die wir
-in Codeblock 5-2 erstellt haben.
+in Listing 5-2 erstellt haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -226,11 +226,11 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-6: Erstellen einer neuen `User`-Instanz unter
+<span class="caption">Listing 5-6: Erstellen einer neuen `User`-Instanz unter
 Verwendung aller Werte von `user1` bis auf einen.</span>
 
 Durch Verwenden der Strukturaktualisierungssyntax können wir dasselbe Ergebnis
-mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax `..` gibt an,
+mit weniger Code erreichen, wie Listing 5-7 zeigt. Die Syntax `..` gibt an,
 dass die restlichen Felder, die nicht explizit gesetzt wurden, den gleichen
 Wert haben sollen wie die Felder in der gegebenen Instanz.
 
@@ -261,12 +261,12 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-7: Verwenden der
+<span class="caption">Listing 5-7: Verwenden der
 Strukturaktualisierungssyntax, um einen neuen Wert für `email` in der
 `User`-Instanz zu setzen und die restlichen Werte aus der Instanz `user1` zu
 übernehmen</span>
 
-Der Code in Codeblock 5-7 erzeugt auch eine Instanz `user2`, die einen anderen
+Der Code in Listing 5-7 erzeugt auch eine Instanz `user2`, die einen anderen
 Wert für `email` hat, aber die gleichen Werte der Felder `username`, `active`
 und `sign_in_count` wie `user1`. Das `..user1` muss an letzter Stelle stehen um
 festzulegen, dass alle verbleibenden Felder ihre Werte von den entsprechenden
@@ -360,7 +360,7 @@ jeden Typ implementiert, auch für unit-ähnliche Strukturen.
 
 > ### Eigentümerschaft von Strukturdaten
 >
-> In der Strukturdefinition `User` in Codeblock 5-1 haben wir den Typ `String`
+> In der Strukturdefinition `User` in Listing 5-1 haben wir den Typ `String`
 > anstelle von `&str` verwendet. Dies ist eine bewusste Entscheidung, denn wir
 > wollen, dass Instanzen dieser Struktur all ihre Daten besitzen und diese
 > Daten so lange gültig sind, wie die gesamte Struktur gültig ist.

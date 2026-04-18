@@ -30,7 +30,7 @@ vertraut machen kannst.
 Das Hauptziel der Lebensdauer ist es, hängende Referenzen (dangling references)
 zu verhindern, die dazu führen würden, dass ein Programm auf andere Daten
 referenziert als die, auf die es referenzieren soll. Betrachte das Programm in
-Codeblock 10-16, das einen äußeren und einen inneren Gültigkeitsbereich hat.
+Listing 10-16, das einen äußeren und einen inneren Gültigkeitsbereich hat.
 
 ```rust,does_not_compile
 fn main() {
@@ -45,7 +45,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 10-16: Ein Versuch, eine Referenz zu verwenden,
+<span class="caption">Listing 10-16: Ein Versuch, eine Referenz zu verwenden,
 deren Wert außerhalb des Gültigkeitsbereichs liegt</span>
 
 > Hinweis: Die Beispiele in den Codeblöcken 10-16, 10-17 und 10-23 deklarieren
@@ -97,7 +97,7 @@ ungültig ist? Es verwendet einen Borrow Checker.
 
 Der Rust-Compiler verfügt über einen _Borrow Checker_ (engl. Ausleihenprüfer), der
 Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Borrows gültig
-sind. Codeblock 10-17 zeigt den gleichen Code wie Codeblock 10-16, jedoch mit
+sind. Listing 10-17 zeigt den gleichen Code wie Listing 10-16, jedoch mit
 Annotationen, die die Lebensdauer der Variablen angeben.
 
 ```rust,does_not_compile
@@ -113,7 +113,7 @@ fn main() {
 }                         // ---------+
 ```
 
-<span class="caption">Codeblock 10-17: Annotationen der Lebensdauern von `r`
+<span class="caption">Listing 10-17: Annotationen der Lebensdauern von `r`
 und `x`, genannt `'a` bzw. `'b`</span>
 
 Hier haben wir die Lebensdauer von `r` mit `'a` und die Lebensdauer von `x` mit
@@ -124,7 +124,7 @@ hat, jedoch auf einen Speicherbereich mit Lebensdauern `'b` referenziert. Das
 Programm wird abgelehnt, weil `'b` kürzer als `'a` ist: Der Referenzinhalt lebt
 nicht so lange wie die Referenz selbst.
 
-Mit Codeblock 10-18 wird der Code so korrigiert, dass er keine hängende
+Mit Listing 10-18 wird der Code so korrigiert, dass er keine hängende
 Referenz hat und fehlerfrei kompiliert werden kann.
 
 ```rust
@@ -138,7 +138,7 @@ fn main() {
 }                         // ----------+
 ```
 
-<span class="caption">Codeblock 10-18: Eine gültige Referenz, da die Daten eine
+<span class="caption">Listing 10-18: Eine gültige Referenz, da die Daten eine
 längere Lebensdauer als die Referenz haben</span>
 
 Hier hat `x` die Lebensdauer `'b`, die in diesem Fall größer ist als `'a`. Das
@@ -156,7 +156,7 @@ Wir schreiben eine Funktion, die den längeren von zwei
 Zeichenkettenanteilstypen zurückgibt. Diese Funktion nimmt zwei
 Zeichenkettenanteilstypen entgegen und gibt einen einzigen
 Zeichenkettenanteilstyp zurück. Nachdem wir die Funktion `longest`
-implementiert haben, sollte der Code in Codeblock 10-19 `Die längere
+implementiert haben, sollte der Code in Listing 10-19 `Die längere
 Zeichenkette ist abcd` ausgeben.
 
 <span class="filename">Datei: src/main.rs</span>
@@ -171,7 +171,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 10-19: Eine Funktion `main`, die die Funktion
+<span class="caption">Listing 10-19: Eine Funktion `main`, die die Funktion
 `longest` aufruft, um die längere von zwei Zeichenkettenanteilstypen zu
 bestimmen</span>
 
@@ -180,9 +180,9 @@ die Referenzen sind und keine Zeichenketten, weil wir nicht wollen, dass die
 Funktion `longest` die Eigentümerschaft ihrer Parameter übernimmt. Lies
 [„Zeichenkettenanteilstypen als Parameter“][string-slices-as-parameters] in
 Kapitel 4, um mehr darüber zu erfahren, warum die Parameter, die wir in
-Codeblock 10-19 verwenden, die von uns gewünschten sind.
+Listing 10-19 verwenden, die von uns gewünschten sind.
 
-Wenn wir versuchen, die Funktion `longest`, wie in Codeblock 10-20 gezeigt, zu
+Wenn wir versuchen, die Funktion `longest`, wie in Listing 10-20 gezeigt, zu
 implementieren, wird sie sich nicht kompilieren lassen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -205,7 +205,7 @@ fn longest(x: &str, y: &str) -> &str {
 }
 ```
 
-<span class="caption">Codeblock 10-20: Eine Implementierung der Funktion
+<span class="caption">Listing 10-20: Eine Implementierung der Funktion
 `longest`, die die längere von zwei Zeichenkettenanteilstypen zurückgibt, aber
 noch nicht kompiliert</span>
 
@@ -293,7 +293,7 @@ Wir möchten, dass die Signatur die folgende Bedingung ausdrückt: Die
 zurückgegebene Referenz ist gültig, solange die beiden Parameter gültig sind.
 Dies ist die Beziehung zwischen den Lebensdauern der Parameter und des
 Rückgabewerts. Wir nennen die Lebensdauer `'a` und fügen sie dann jeder
-Referenz hinzu, wie in Codeblock 10-21 gezeigt.
+Referenz hinzu, wie in Listing 10-21 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -315,12 +315,12 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
 }
 ```
 
-<span class="caption">Codeblock 10-21: Die Funktionsdefinition `longest` gibt
+<span class="caption">Listing 10-21: Die Funktionsdefinition `longest` gibt
 an, dass alle Referenzen in der Signatur die gleiche Lebensdauer `'a` haben
 müssen</span>
 
 Dieser Code sollte kompilierbar sein und das gewünschte Ergebnis liefern, wenn
-wir ihn mit der Funktion `main` in Codeblock 10-19 verwenden.
+wir ihn mit der Funktion `main` in Listing 10-19 verwenden.
 
 Die Funktionssignatur sagt Rust, dass die Funktion für eine gewisse Lebensdauer
 `'a` zwei Parameter benötigt, die beide den Zeichenkettenanteilstyp haben und
@@ -363,7 +363,7 @@ Lebensdauer von `x` und `y` gültig sein.
 
 Schauen wir uns an, wie die Lebensdauer-Annotationen die Funktion `longest`
 beschränken, indem wir Referenzen mit unterschiedlichen konkreten Lebensdauern
-übergeben. Codeblock 10-22 ist ein einfaches Beispiel.
+übergeben. Listing 10-22 ist ein einfaches Beispiel.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -387,7 +387,7 @@ fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 10-22: Verwenden der Funktion `longest` mit
+<span class="caption">Listing 10-22: Verwenden der Funktion `longest` mit
 Referenzen auf Zeichenketten, die unterschiedliche konkrete Lebensdauern
 haben</span>
 
@@ -404,7 +404,7 @@ Wir verschieben die Deklaration der Variable `result` oberhalb des inneren
 Gültigkeitsbereichs, lassen aber die Zuweisung des Wertes an die Variable
 `result` innerhalb des Gültigkeitsbereichs mit `string2`. Dann verschieben wir
 `println!`, das `result` verwendet, unterhalb des inneren Gültigkeitsbereichs.
-Der Code in Codeblock 10-23 lässt sich nicht kompilieren.
+Der Code in Listing 10-23 lässt sich nicht kompilieren.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -428,7 +428,7 @@ fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 10-23: Der Versuch, `result` zu verwenden,
+<span class="caption">Listing 10-23: Der Versuch, `result` zu verwenden,
 nachdem `string2` den Gültigkeitsbereich verlassen hat</span>
 
 Wenn wir versuchen, diesen Code zu kompilieren, erhalten wir folgenden Fehler:
@@ -465,7 +465,7 @@ Compiler kann jedoch nicht sehen, dass die Referenz in diesem Fall gültig ist.
 Wir haben Rust gesagt, dass die Lebensdauer der Referenz, die von der Funktion
 `longest` zurückgegeben wird, die gleiche ist wie die kürzere der Lebensdauern
 der entgegengenommenen Referenzen. Daher lehnt der Borrow Checker den Code in
-Codeblock 10-23 als möglicherweise ungültige Referenz ab.
+Listing 10-23 als möglicherweise ungültige Referenz ab.
 
 Versuche, dir weitere Experimente auszudenken, die die Werte und die
 Lebensdauern der an die Funktion `longest` übergebenen Referenzen variieren und
@@ -569,7 +569,7 @@ würden.
 Bisher haben wir nur Strukturen (structs) definiert, die aneigenbare Typen
 enthalten. Es ist möglich, dass Strukturen Referenzen enthalten, aber in diesem
 Fall müssten wir Lebensdauer-Annotationen zu jeder Referenz in der
-Strukturdefinition angeben. Codeblock 10-24 hat eine Struktur namens
+Strukturdefinition angeben. Listing 10-24 hat eine Struktur namens
 `ImportantExcerpt`, die einen Zeichenkettenanteilstyp enthält.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -588,7 +588,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 10-24: Eine Struktur, die eine Referenz
+<span class="caption">Listing 10-24: Eine Struktur, die eine Referenz
 enthält, sodass ihre Definition eine Lebensdauer-Annotationen benötigt</span>
 
 Diese Struktur hat das einzige Feld `part`, das einen Zeichenkettenanteilstyp
@@ -611,8 +611,8 @@ ist.
 
 Du hast gelernt, dass jede Referenz eine Lebensdauer hat und dass du
 Lebensdauerparameter für Funktionen oder Strukturen angeben musst, die
-Referenzen verwenden. In Kapitel 4 hatten wir jedoch eine Funktion in Codeblock
-4-9, die wiederum in Codeblock 10-25 gezeigt wird, die ohne
+Referenzen verwenden. In Kapitel 4 hatten wir jedoch eine Funktion in Listing
+4-9, die wiederum in Listing 10-25 gezeigt wird, die ohne
 Lebensdauer-Annotationen kompiliert.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -647,7 +647,7 @@ fn first_word(s: &str) -> &str {
 # }
 ```
 
-<span class="caption">Codeblock 10-25: Eine Funktion, die wir in Codeblock 4-9
+<span class="caption">Listing 10-25: Eine Funktion, die wir in Listing 4-9
 definiert haben und die ohne Lebensdauer-Annotationen kompiliert, obwohl
 Parameter und Rückgabetyp Referenzen sind</span>
 
@@ -716,7 +716,7 @@ weil weniger Symbole erforderlich sind.
 
 Tun wir so, als wären wir der Compiler. Wir werden diese Regeln anwenden, um
 herauszufinden, wie lang die Lebensdauer der Referenzen in der Signatur der
-Funktion `first_word` in Codeblock 10-26 ist. Die Signatur beginnt ohne
+Funktion `first_word` in Listing 10-26 ist. Die Signatur beginnt ohne
 Lebensdauern:
 
 ```rust,ignore
@@ -745,7 +745,7 @@ der Compiler kann seine Analyse fortsetzen, ohne dass der Programmierer die
 Lebensdauer in dieser Funktionssignatur annotieren muss.
 
 Schauen wir uns ein anderes Beispiel an, diesmal mit der Funktion `longest`,
-die keine Lebensdauerparameter hatte, als wir in Codeblock 10-20 mit ihr zu
+die keine Lebensdauerparameter hatte, als wir in Listing 10-20 mit ihr zu
 arbeiten begannen:
 
 ```rust,ignore
@@ -765,7 +765,7 @@ Eingangslebensdauer gibt. Auch die dritte Regel trifft nicht zu, weil `longest`
 eine Funktion ist, keine Methode, sodass keiner der Parameter `self` ist.
 Nachdem wir alle drei Regeln durchgearbeitet haben, haben wir immer noch nicht
 herausgefunden, wie lang die Lebensdauer des Rückgabetyps ist. Aus diesem Grund
-haben wir beim Versuch, den Code in Codeblock 10-20 zu kompilieren, einen
+haben wir beim Versuch, den Code in Listing 10-20 zu kompilieren, einen
 Fehler erhalten: Der Compiler arbeitete die Lebensdauer-Elisionsregeln
 durch, konnte aber immer noch nicht alle Lebensdauern der Referenzen in der
 Signatur ermitteln.
@@ -778,7 +778,7 @@ nicht sehr oft annotieren müssen.
 ### In Methodendefinitionen
 
 Wenn wir Methoden auf einer Struktur mit Lebensdauer implementieren, verwenden
-wir die gleiche Syntax wie die in Codeblock 10-11 gezeigten generischen
+wir die gleiche Syntax wie die in Listing 10-11 gezeigten generischen
 Typparameter. Wo wir die Lebensdauerparameter deklarieren und verwenden, hängt
 davon ab, ob sie sich auf die Strukturfelder oder auf die Methodenparameter und
 Rückgabewerte beziehen.
@@ -792,7 +792,7 @@ Lebensdauern der Referenzen in den Feldern der Struktur gebunden sein oder sie
 können unabhängig sein. Darüber hinaus sorgen die Lebensdauer-Elisionsregeln
 oft dafür, dass Lebensdauer-Annotationen in Methodensignaturen nicht
 erforderlich sind. Betrachten wir einige Beispiele mit der Struktur
-`ImportantExcerpt`, die wir in Codeblock 10-24 definiert haben.
+`ImportantExcerpt`, die wir in Listing 10-24 definiert haben.
 
 Zuerst werden wir eine Methode namens `level` verwenden, deren einziger
 Parameter eine Referenz auf `self` ist und deren Rückgabewert ein `i32` ist,
@@ -926,7 +926,7 @@ where
 }
 ```
 
-Dies ist die Funktion `longest` aus Codeblock 10-21, die die längere von zwei
+Dies ist die Funktion `longest` aus Listing 10-21, die die längere von zwei
 Zeichenkettenanteilstypen zurückgibt. Aber jetzt hat sie einen zusätzlichen
 Parameter namens `ann` vom generischen Typ `T`, der jeder beliebige Typ sein
 kann, der das Trait `Display` implementiert, wie in der `where`-Klausel

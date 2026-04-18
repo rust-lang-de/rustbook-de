@@ -32,7 +32,7 @@ aber asynchron.
 Die Ähnlichkeit zwischen Iteratoren und Strömen in Rust bedeutet, dass wir aus
 jedem Iterator einen Strom erzeugen können. Wie bei einem Iterator können wir
 mit einem Strom arbeiten, indem wir seine Methode `next` aufrufen und dann auf
-die Ausgabe warten, wie in Codeblock 17-21.
+die Ausgabe warten, wie in Listing 17-21.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -50,7 +50,7 @@ die Ausgabe warten, wie in Codeblock 17-21.
 # }
 ```
 
-<span class="caption">Codeblock 17-21: Erstellen eines Stroms aus einem
+<span class="caption">Listing 17-21: Erstellen eines Stroms aus einem
 Iterator und Ausgeben seiner Werte</span>
 
 Wir beginnen mit einem Array von Zahlen, das wir in einen Iterator umwandeln
@@ -102,7 +102,7 @@ APIs auf höherer Ebene ab, die auf `Stream` basieren, darunter die Methode
 aber die meisten Crates des Ökosystems verwenden ähnliche Definitionen.
 
 Um den Compilerfehler zu beheben, fügen wir eine `use`-Anweisung für
-`trpl::StreamExt` hinzu, wie in Codeblock 17-22.
+`trpl::StreamExt` hinzu, wie in Listing 17-22.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -123,7 +123,7 @@ fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 17-22: Erfolgreiche Verwendung eines Iterators
+<span class="caption">Listing 17-22: Erfolgreiche Verwendung eines Iterators
 als Grundlage für einen Strom</span>
 
 Mit all diesen Teilen zusammen funktioniert der Code so, wie wir es wollen!

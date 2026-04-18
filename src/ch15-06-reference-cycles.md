@@ -14,7 +14,7 @@ erreicht und die Werte niemals aufgeräumt werden.
 
 Schauen wir uns an, wie ein Referenzzyklus passieren und wie er verhindert
 werden kann, beginnend mit der Definition der Aufzählung `List` und einer
-Methode `tail` in Codeblock 15-25.
+Methode `tail` in Listing 15-25.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -41,19 +41,19 @@ impl List {
 fn main() {}
 ```
 
-<span class="caption">Codeblock 15-25: Definition einer Cons-Liste die ein
+<span class="caption">Listing 15-25: Definition einer Cons-Liste die ein
 `RefCell<T>` hält, damit man ändern kann, worauf eine `Cons`-Variante
 referenziert</span>
 
-Wir verwenden eine andere Variante der `List`-Definition aus Codeblock 15-5.
+Wir verwenden eine andere Variante der `List`-Definition aus Listing 15-5.
 Das zweite Element in der `Cons`-Variante ist jetzt `RefCell<Rc<List>>`. Dies
-bedeutet, dass wir anstelle der Möglichkeit, den `i32`-Wert wie in Codeblock
+bedeutet, dass wir anstelle der Möglichkeit, den `i32`-Wert wie in Listing
 15-24 zu ändern, den `List`-Wert einer `Cons`-Variante ändern, auf den sie
 zeigt. Wir fügen eine Methode `tail` hinzu, damit wir bequem auf das zweite
 Element zugreifen können, wenn wir eine `Cons`-Variante haben.
 
-In Codeblock 15-26 fügen wir eine Funktion `main` hinzu, die die Definitionen
-in Codeblock 15-25 verwendet. Dieser Code erstellt eine Liste `a` und eine
+In Listing 15-26 fügen wir eine Funktion `main` hinzu, die die Definitionen
+in Listing 15-25 verwendet. Dieser Code erstellt eine Liste `a` und eine
 Liste `b`, die auf die Liste `a` zeigt. Anschließend wird die Liste `a` so
 geändert, dass sie auf `b` zeigt, wodurch ein Referenzzyklus erstellt wird. Wir
 fügen `println!`-Anweisungen ein, um zu zeigen, wie hoch der Referenzzähler an
@@ -106,7 +106,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-26: Erstellen eines Referenzzyklus aus zwei
+<span class="caption">Listing 15-26: Erstellen eines Referenzzyklus aus zwei
 Listenwerten, die aufeinander zeigen</span>
 
 Wir erstellen eine `Rc<List>`-Instanz, die einen `List`-Wert in der Variablen
@@ -182,7 +182,7 @@ Datenstrukturen so zu reorganisieren, dass einige Referenzen die
 Eigentümerschaft (ownership) erhalten und andere nicht. Infolgedessen können
 Zyklen entstehen, die aus Beziehungen mit und ohne Eigentümerschaft bestehen,
 und nur die Beziehungen mit Eigentümerschaft beeinflussen, ob ein
-Wert aufgeräumt wird oder nicht. In Codeblock 15-25 möchten wir immer, dass
+Wert aufgeräumt wird oder nicht. In Listing 15-25 möchten wir immer, dass
 `Cons`-Varianten ihre Liste besitzen, sodass eine Neuorganisation der
 Datenstruktur nicht möglich ist. Schauen wir uns ein Beispiel an, in dem
 Diagramme aus übergeordneten und untergeordneten Knoten verwendet werden, um
@@ -264,7 +264,7 @@ Knoten Kind-Knoten eines anderen Knotens sind, sodass wir ein `RefCell<T>` in
 Als Nächstes verwenden wir unsere Strukturdefinition und erstellen eine
 `Node`-Instanz mit dem Namen `leaf` und dem Wert `3` und ohne Kind-Elemente,
 sowie eine weitere Instanz mit dem Namen `branch` und dem Wert `5` und `leaf`
-als Kind-Element, wie in Codeblock 15-27 gezeigt wird.
+als Kind-Element, wie in Listing 15-27 gezeigt wird.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -291,7 +291,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-27: Erstellen eines `leaf`-Knotens ohne
+<span class="caption">Listing 15-27: Erstellen eines `leaf`-Knotens ohne
 Kind-Element und eines `branch`-Knotens mit `leaf` als Kind-Element</span>
 
 Wir klonen `Rc<Node>` in `leaf` und speichern ihn in `branch`, was bedeutet,
@@ -357,7 +357,7 @@ struct Node {
 ```
 
 Ein Knoten kann auf seinen Eltern-Knoten referenzieren, besitzt ihn jedoch
-nicht. In Codeblock 15-28 aktualisieren wir `main`, um diese neue Definition
+nicht. In Listing 15-28 aktualisieren wir `main`, um diese neue Definition
 zu verwenden, damit der `leaf`-Knoten auf seinen Eltern-Knoten `branch`
 referenzieren kann.
 
@@ -395,10 +395,10 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-28: Ein `leaf`-Knoten mit einer schwachen
+<span class="caption">Listing 15-28: Ein `leaf`-Knoten mit einer schwachen
 Referenz auf seinen Eltern-Knoten `branch`</span>
 
-Das Erstellen des `leaf`-Knotens ähnelt Codeblock 15-27 mit Ausnahme des Feldes
+Das Erstellen des `leaf`-Knotens ähnelt Listing 15-27 mit Ausnahme des Feldes
 `parent`: `leaf` beginnt ohne Eltern-Knoten, daher erstellen wir eine neue
 leere `Weak<Node>`-Referenz-Instanz.
 
@@ -422,7 +422,7 @@ verwenden dann die Funktion `Rc::downgrade`, um eine `Weak<Node>`-Referenz auf
 Wenn wir das Eltern-Element von `leaf` erneut ausgeben, erhalten wir diesmal
 eine `Some`-Variante mit `branch`: Jetzt kann `leaf` auf das Eltern-Element
 zugreifen! Wenn wir `leaf` ausgeben, vermeiden wir auch den Zyklus, der
-schließlich zu einem Stack führte, wie wir ihn in Codeblock 15-26 hatten. Die
+schließlich zu einem Stack führte, wie wir ihn in Listing 15-26 hatten. Die
 `Weak<Node>`-Referenzen werden als `(Weak)` ausgegeben:
 
 
@@ -443,7 +443,7 @@ Schauen wir uns an, wie sich die Werte für `strong_count` und `weak_count` der
 erstellt und die Erstellung von `branch` in diesen Bereich verschoben wird. Auf
 diese Weise können wir sehen, was passiert, wenn `branch` erstellt und dann
 aufgeräumt wird, wenn es den Gültigkeitsbereich verlässt. Die Änderungen
-sind in Codeblock 15-29 aufgeführt.
+sind in Listing 15-29 aufgeführt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -501,7 +501,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 15-29: Erstellen von `branch` in einem inneren
+<span class="caption">Listing 15-29: Erstellen von `branch` in einem inneren
 Gültigkeitsbereich und Prüfen der starken und schwachen Referenzzähler</span>
 
 Nachdem `leaf` erstellt wurde, hat `Rc<Node>` einen `strong_count` von 1 und

@@ -228,7 +228,7 @@ Stattdessen können wir einen neuen Typ in einem bestimmten Modul erstellen und
 die Validierungen in eine Funktion geben, um eine Instanz des Typs zu erzeugen,
 anstatt die Validierungen überall zu wiederholen. Auf diese Weise ist es für
 die Funktionen sicher, den neuen Typ in ihren Signaturen zu verwenden und die
-erhaltenen Werte bedenkenlos zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit,
+erhaltenen Werte bedenkenlos zu nutzen. Listing 9-13 zeigt eine Möglichkeit,
 einen Typ `Guess` zu definieren, der nur dann eine Instanz von `Guess` erzeugt,
 wenn die Funktion `new` einen Wert zwischen 1 und 100 erhält.
 
@@ -254,7 +254,7 @@ impl Guess {
 }
 ```
 
-<span class="caption">Codeblock 9-13: Ein Typ `Guess`, der nur bei Werten
+<span class="caption">Listing 9-13: Ein Typ `Guess`, der nur bei Werten
 zwischen 1 und 100 fortsetzt</span>
 
 Beachte, dass dieser Code in *src/guessing_game.rs* davon abhängt, dass in

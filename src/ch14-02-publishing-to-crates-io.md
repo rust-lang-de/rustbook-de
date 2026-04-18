@@ -25,7 +25,7 @@ deine Crate _benutzt_ wird, und nicht, wie deine Crate _implementiert_ ist.
 
 Dokumentationskommentare verwenden drei Schrägstriche `///` anstelle von zwei
 und unterstützen Markdown-Notation zum Formatieren des Textes. Platziere
-Dokumentationskommentare nur vor dem zu dokumentierenden Element. Codeblock
+Dokumentationskommentare nur vor dem zu dokumentierenden Element. Listing
 14-1 zeigt Dokumentationskommentare für eine Funktion `add_one` in einer Crate
 mit dem Namen `my_crate`.
 
@@ -47,7 +47,7 @@ pub fn add_one(x: i32) -> i32 {
 }
 ```
 
-<span class="caption">Codeblock 14-1: Ein Dokumentationskommentar für eine
+<span class="caption">Listing 14-1: Ein Dokumentationskommentar für eine
 Funktion</span> 
 
 Hier geben wir eine Beschreibung der Funktionsweise der Funktion `add_one` an,
@@ -71,7 +71,7 @@ in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1.
 
 #### Häufig verwendete Abschnitte
 
-Wir haben die Markdown-Überschrift `# Examples` in Codeblock 14-1 verwendet um
+Wir haben die Markdown-Überschrift `# Examples` in Listing 14-1 verwendet um
 einen Abschnitt im HTML-Code mit dem Titel `Examples` zu erstellen. Hier sind
 einige andere Abschnitte, die Autoren von Crates häufig in ihrer Dokumentation
 verwenden:
@@ -103,7 +103,7 @@ Codeblöcke in deiner Dokumentation als Test aus! Nichts ist besser als eine
 Dokumentation mit Beispielen, aber nichts ist schlimmer als eine Dokumentation
 mit Beispielen die nicht funktionieren, da sich der Code seit dem Schreiben der
 Dokumentation geändert hat. Wenn wir `cargo test` für die Dokumentation der
-Funktion `add_one` aus Codeblock 14-1 aufrufen, sehen wir folgenden Abschnitt in
+Funktion `add_one` aus Listing 14-1 aufrufen, sehen wir folgenden Abschnitt in
 den Testergebnissen:
 
 ```text
@@ -130,7 +130,7 @@ Crate oder das Modul als Ganzes zu dokumentieren.
 Um beispielsweise eine Dokumentation hinzuzufügen, die den Zweck der Crate
 `my_crate` beschreibt, die die Funktion `add_one` enthält, können wir am Anfang
 der Datei _src/lib.rs_ Dokumentationskommentare hinzufügen die mit `//!`
-beginnen. Siehe Codeblock 14-2.
+beginnen. Siehe Listing 14-2.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -156,7 +156,7 @@ beginnen. Siehe Codeblock 14-2.
 # }
 ```
 
-<span class="caption">Codeblock 14-2: Dokumentation für die gesamte Crate
+<span class="caption">Listing 14-2: Dokumentation für die gesamte Crate
 `my_crate`</span>
 
 Beachte, dass nach der letzten Zeile, die mit `//!` beginnt, kein Programmcode
@@ -213,7 +213,7 @@ Nehmen wir zum Beispiel an, wir haben eine Bibliothek mit dem Namen `art`
 erstellt, um künstlerische Konzepte zu modellieren. In dieser Bibliothek sind
 zwei Module enthalten: Ein Modul `kinds` mit zwei Aufzählungen (enums) namens
 `PrimaryColor` und `SecondaryColor` und ein Modul `utils` das eine Funktion
-namens `mix` beinhaltet. Siehe Codeblock 14-3.
+namens `mix` beinhaltet. Siehe Listing 14-3.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -250,7 +250,7 @@ pub mod utils {
 }
 ```
 
-<span class="caption">Codeblock 14-3: Eine Bibliothek `art` mit Elementen die in
+<span class="caption">Listing 14-3: Eine Bibliothek `art` mit Elementen die in
 Modulen `kinds` und `utils` organisiert sind</span>
 
 Abbildung 14-3 zeigt wie die Startseite der Dokumentation für diese Crate
@@ -267,7 +267,7 @@ klicken um sie zu sehen.
 
 Eine Crate, die von dieser Bibliothek abhängt, würde `use`-Anweisungen
 benötigen, die die Elemente aus `art` in den Gültigkeitsbereich bringen und die
-derzeit definierte Modulstruktur angeben. Codeblock 14-4 zeigt ein Beispiel für
+derzeit definierte Modulstruktur angeben. Listing 14-4 zeigt ein Beispiel für
 eine Crate, in der die Elemente `PrimaryColor` und `mix` aus der Crate `art`
 verwendet werden.
 
@@ -284,10 +284,10 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 14-4: Eine Crate, die die Gegenstände der Crate
+<span class="caption">Listing 14-4: Eine Crate, die die Gegenstände der Crate
 `art` mit ihrer internen Struktur exportiert</span>
 
-Der Autor des Programmcodes in Codeblock 14-4, der die Crate `art` verwendet,
+Der Autor des Programmcodes in Listing 14-4, der die Crate `art` verwendet,
 musste herausfinden, dass sich `PrimaryColor` im Modul `kinds` und `mix` im
 Modul `utils` befindet. Die Modulstruktur der Crate `art` ist für Entwickler,
 die an der Crate `art` arbeiten, relevanter als für Entwickler die die Crate
@@ -298,7 +298,7 @@ Entwickler die Modulnamen in den `use`-Anweisungen angeben müssen.
 
 Um die interne Organisation aus der öffentlichen API zu entfernen, können wir
 den Programmcode der Crate `art` ändern, um `pub use`-Anweisungen hinzuzufügen,
-um die Elemente der obersten Ebene erneut zu exportieren, wie in Codeblock 14-5
+um die Elemente der obersten Ebene erneut zu exportieren, wie in Listing 14-5
 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -341,7 +341,7 @@ pub mod utils {
 }
 ```
 
-<span class="caption">Codeblock 14-5: Hinzufügen von `pub use`-Anmerkungen um
+<span class="caption">Listing 14-5: Hinzufügen von `pub use`-Anmerkungen um
 Elemente erneut zu exportieren</span>
 
 Die Dokumentation der API, die von `cargo doc` generiert wurde, wird nun
@@ -354,10 +354,10 @@ Abbildung 14-4 ersichtlich, angezeigt, so sind die Typen `PrimaryColor` und
 <span class="caption">Abbildung 14-4: Die Startseite der Dokumentation von
 `art` mit den aufgelisteten erneuten Exporten</span>
 
-Die Benutzer der Crate `art` können weiterhin die interne Struktur aus Codeblock
-14-3 sehen und verwenden, wie es in Codeblock 14-4 gezeigt wurde, oder sie
-können die benutzerfreundliche Struktur in Codeblock 14-5 verwenden, wie es im
-Codeblock 14-6 gezeigt wurde.
+Die Benutzer der Crate `art` können weiterhin die interne Struktur aus Listing
+14-3 sehen und verwenden, wie es in Listing 14-4 gezeigt wurde, oder sie
+können die benutzerfreundliche Struktur in Listing 14-5 verwenden, wie es im
+Listing 14-6 gezeigt wurde.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -373,7 +373,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 14-6: Ein Programm, das die erneut exportierten
+<span class="caption">Listing 14-6: Ein Programm, das die erneut exportierten
 Elemente der Crate `art` verwendet</span>
 
 In Fällen, in denen es viele verschachtelte Module gibt, kann das erneute

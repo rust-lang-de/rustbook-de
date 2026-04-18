@@ -1,7 +1,7 @@
 ## Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort `use`
 
 Die Pfade für den Aufruf von Funktionen auszuschreiben, kann lästig sein und
-sich wiederholen. In Codeblock 7-7 mussten wir, unabhängig davon, ob wir den
+sich wiederholen. In Listing 7-7 mussten wir, unabhängig davon, ob wir den
 absoluten oder relativen Pfad zur Funktion `add_to_waitlist` wählten, jedes
 Mal, wenn wir `add_to_waitlist` aufrufen wollten, auch `front_of_house` und
 `hosting` angeben. Glücklicherweise gibt es eine Möglichkeit, diesen Vorgang zu
@@ -9,7 +9,7 @@ vereinfachen: Wir können eine Verknüpfung zu einem Pfad mit dem Schlüsselwort
 `use` einmal erstellen und dann den kürzeren Namen überall sonst im
 Gültigkeitsbereich verwenden.
 
-In Codeblock 7-11 bringen wir das Modul `crate::front_of_house::hosting` in den
+In Listing 7-11 bringen wir das Modul `crate::front_of_house::hosting` in den
 Gültigkeitsbereich der Funktion `eat_at_restaurant`, sodass wir nur noch
 `hosting::add_to_waitlist` angeben müssen, um die Funktion `add_to_waitlist` in
 `eat_at_restaurant` aufzurufen.
@@ -30,7 +30,7 @@ pub fn eat_at_restaurant() {
 }
 ```
 
-<span class="caption">Codeblock 7-11: Ein Modul mit `use` in den
+<span class="caption">Listing 7-11: Ein Modul mit `use` in den
 Gültigkeitsbereich bringen</span>
 
 Das Angeben von `use` und einem Pfad in einem Gültigkeitsbereich ist ähnlich dem
@@ -42,7 +42,7 @@ Gültigkeitsbereich gebracht werden, überprüfen wie alle anderen Pfade auch di
 Privatsphäre.
 
 Beachte, dass `use` nur die Verknüpfung für den jeweiligen Gültigkeitsbereich
-erstellt, in dem `use` vorkommt. Codeblock 7-12 verschiebt die Funktion
+erstellt, in dem `use` vorkommt. Listing 7-12 verschiebt die Funktion
 `eat_at_restaurant` in ein neues untergeordnetes Modul namens `customer`, das
 dann einen anderen Gültigkeitsbereich als die `use`-Anweisung hat, sodass der
 Funktionsrumpf nicht kompiliert werden kann.
@@ -65,7 +65,7 @@ mod customer {
 }
 ```
 
-<span class="caption">Codeblock 7-12: Eine `use`-Anweisung gilt nur in dem
+<span class="caption">Listing 7-12: Eine `use`-Anweisung gilt nur in dem
 Gültigkeitsbereich, in dem sie steht</span>
 
 Der Compilerfehler zeigt, dass die Verknüpfung innerhalb des Moduls `customer`
@@ -106,11 +106,11 @@ Moduls `customer`.
 
 ### Idiomatische `use`-Pfade erstellen
 
-In Codeblock 7-11 hast du dich vielleicht gefragt, warum wir `use
+In Listing 7-11 hast du dich vielleicht gefragt, warum wir `use
 crate::front_of_house::hosting` angegeben und dann `hosting::add_to_waitlist`
 in `eat_at_restaurant` aufgerufen haben, anstatt den `use`-Pfad bis hin zur
 Funktion `add_to_waitlist` anzugeben, um dasselbe Ergebnis zu erzielen wie in
-Codeblock 7-13.
+Listing 7-13.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -128,20 +128,20 @@ pub fn eat_at_restaurant() {
 }
 ```
 
-<span class="caption">Codeblock 7-13: Die Funktion `add_to_waitlist` mit `use`
+<span class="caption">Listing 7-13: Die Funktion `add_to_waitlist` mit `use`
 in den Gültigkeitsbereich bringen ist nicht idiomatisch.</span>
 
-Obwohl sowohl Codeblock 7-11 als auch Codeblock 7-13 die gleiche Aufgabe
-erfüllen, ist Codeblock 7-11 der idiomatische Weg, eine Funktion mit `use` in
+Obwohl sowohl Listing 7-11 als auch Listing 7-13 die gleiche Aufgabe
+erfüllen, ist Listing 7-11 der idiomatische Weg, eine Funktion mit `use` in
 den Gültigkeitsbereich zu bringen. Wenn wir das Elternmodul der Funktion mit
 `use` in den Gültigkeitsbereich bringen, sodass wir das Elternmodul beim Aufruf
 der Funktion angeben müssen, wird klar, dass die Funktion nicht lokal definiert
 ist, während gleichzeitig die Wiederholung des vollständigen Pfades minimiert
-wird. Im Code in Codeblock 7-13 ist unklar, wo `add_to_waitlist` definiert ist.
+wird. Im Code in Listing 7-13 ist unklar, wo `add_to_waitlist` definiert ist.
 
 Wenn andererseits Strukturen, Aufzählungen und andere Elemente mit `use`
 eingebracht werden, ist es idiomatisch, den vollständigen Pfad anzugeben.
-Codeblock 7-14 zeigt den idiomatischen Weg, die Struktur `HashMap` der
+Listing 7-14 zeigt den idiomatischen Weg, die Struktur `HashMap` der
 Standardbibliothek in den Gültigkeitsbereich einer binären Crate zu bringen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -155,7 +155,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 7-14: `HashMap` auf idiomatische Weise in den
+<span class="caption">Listing 7-14: `HashMap` auf idiomatische Weise in den
 Gültigkeitsbereich bringen</span>
 
 Es gibt keinen triftigen Grund für dieses Idiom: Es ist einfach eine
@@ -164,7 +164,7 @@ Rust-Code auf diese Weise zu lesen und zu schreiben.
 
 Die Ausnahme von diesem Idiom ist, wenn wir zwei gleichnamige Elemente mit
 `use` in den Gültigkeitsbereich bringen, denn das lässt Rust nicht zu. In
-Codeblock 7-15 wird gezeigt, wie zwei `Result`-Typen mit gleichem Namen, aber
+Listing 7-15 wird gezeigt, wie zwei `Result`-Typen mit gleichem Namen, aber
 unterschiedlichen Elternmodulen in den Gültigkeitsbereich gebracht werden und
 wie auf sie verwiesen werden kann.
 
@@ -185,7 +185,7 @@ fn function2() -> io::Result<()> {
 }
 ```
 
-<span class="caption">Codeblock 7-15: Um zwei Typen mit dem gleichen Namen in
+<span class="caption">Listing 7-15: Um zwei Typen mit dem gleichen Namen in
 denselben Gültigkeitsbereich zu bringen, müssen ihre übergeordneten Module
 angegeben werden.</span>
 
@@ -199,8 +199,8 @@ Gültigkeitsbereich und Rust wüsste nicht, welchen wir beim Verwenden von
 
 Es gibt eine andere Lösung für das Problem, zwei Typen desselben Namens mit
 `use` in den gleichen Gültigkeitsbereich zu bringen: Hinter dem Pfad können wir
-`as` und einen neuen lokalen Namen oder _Alias_ für den Typ angeben. Codeblock
-7-16 zeigt eine weitere Möglichkeit, den Code in Codeblock 7-15 zu schreiben,
+`as` und einen neuen lokalen Namen oder _Alias_ für den Typ angeben. Listing
+7-16 zeigt eine weitere Möglichkeit, den Code in Listing 7-15 zu schreiben,
 indem einer der beiden `Result`-Typen mittels `as` umbenannt wird.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -220,13 +220,13 @@ fn function2() -> IoResult<()> {
 }
 ```
 
-<span class="caption">Codeblock 7-16: Umbenennen eines Typs, wenn er mit dem
+<span class="caption">Listing 7-16: Umbenennen eines Typs, wenn er mit dem
 Schlüsselwort `as` in den Gültigkeitsbereich gebracht wird</span>
 
 In der zweiten `use`-Anweisung wählten wir den neuen Namen `IoResult` für den
 Typ `std::io::Result`, der nicht im Konflikt zum ebenfalls von uns in den
-Gültigkeitsbereich gebrachten `Result` aus `std::fmt` steht. Codeblock 7-15
-und Codeblock 7-16 gelten als idiomatisch, die Wahl liegt also bei dir!
+Gültigkeitsbereich gebrachten `Result` aus `std::fmt` steht. Listing 7-15
+und Listing 7-16 gelten als idiomatisch, die Wahl liegt also bei dir!
 
 ### Rück-Exportieren von Namen mit `pub use`
 
@@ -239,7 +239,7 @@ _Rück-Exportieren_ (re-exporting) genannt, weil wir ein Element in den
 Gültigkeitsbereich bringen, dieses Element aber auch anderen zur Verfügung
 stellen, um es in ihren Gültigkeitsbereich zu bringen.
 
-Codeblock 7-17 zeigt den Code in Codeblock 7-11, wobei `use` im Wurzelmodul in
+Listing 7-17 zeigt den Code in Listing 7-11, wobei `use` im Wurzelmodul in
 `pub use` geändert wurde.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -258,7 +258,7 @@ pub fn eat_at_restaurant() {
 }
 ```
 
-<span class="caption">Codeblock 7-17: Bereitstellen eines Namens für externen
+<span class="caption">Listing 7-17: Bereitstellen eines Namens für externen
 Code zum Verwenden in einem neuen Gültigkeitsbereich mit `pub use`</span>
 
 Vor dieser Änderung musste externer Code die Funktion `add_to_waitlist` mit dem
@@ -351,7 +351,7 @@ Standard-Bibliotheks-Crate, beginnt.
 Wenn wir mehrere in der gleichen Crate oder im gleichen Modul definierte
 Elemente verwenden, kann das Auflisten jedes Elements in einer eigenen Zeile
 viel vertikalen Platz in unseren Dateien einnehmen. Zum Beispiel bringen diese
-beiden `use`-Anweisungen, die wir im Ratespiel in Codeblock 2-4 hatten, Elemente
+beiden `use`-Anweisungen, die wir im Ratespiel in Listing 2-4 hatten, Elemente
 aus `std` in den Gültigkeitsbereich:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -367,7 +367,7 @@ Stattdessen können wir verschachtelte Pfade verwenden, um die gleichen Elemente
 in einer Zeile in den Gültigkeitsbereich zu bringen. Wir tun dies, indem wir
 den gemeinsamen Teil des Pfades angeben, gefolgt von zwei Doppelpunkten und
 dann geschweiften Klammern um Liste der Pfadteile, die sich unterscheiden, wie
-in Codeblock 7-18 gezeigt.
+in Listing 7-18 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -377,7 +377,7 @@ use std::{cmp::Ordering, io};
 // --abschneiden--
 ```
 
-<span class="caption">Codeblock 7-18: Angeben eines verschachtelten Pfades, um
+<span class="caption">Listing 7-18: Angeben eines verschachtelten Pfades, um
 mehrere Elemente mit demselben Präfix in den Gültigkeitsbereich zu
 bringen</span>
 
@@ -387,7 +387,7 @@ Anzahl der separaten `use`-Anweisungen um ein Vielfaches reduzieren!
 
 Wir können einen verschachtelten Pfad auf jeder Ebene in einem Pfad verwenden,
 was nützlich ist, wenn zwei `use`-Anweisungen kombiniert werden, die sich einen
-Teilpfad teilen. Beispielsweise zeigt Codeblock 7-19 zwei `use`-Anweisungen:
+Teilpfad teilen. Beispielsweise zeigt Listing 7-19 zwei `use`-Anweisungen:
 Eine, die `std::io` in den Gültigkeitsbereich bringt, und eine, die
 `std::io::Write` in den Gültigkeitsbereich bringt.
 
@@ -398,13 +398,13 @@ use std::io;
 use std::io::Write;
 ```
 
-<span class="caption">Codeblock 7-19: Zwei `use`-Anweisungen, bei denen eine
+<span class="caption">Listing 7-19: Zwei `use`-Anweisungen, bei denen eine
 ein Teilpfad der anderen ist</span>
 
 Der gemeinsame Teil dieser beiden Pfade ist `std::io` und das ist der
 vollständige erste Pfad. Um diese beiden Pfade zu einer einzigen
 `use`-Anweisung zu verschmelzen, können wir `self` im verschachtelten Pfad
-verwenden, wie in Codeblock 7-20 gezeigt wird.
+verwenden, wie in Listing 7-20 gezeigt wird.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -412,7 +412,7 @@ verwenden, wie in Codeblock 7-20 gezeigt wird.
 use std::io::{self, Write};
 ```
 
-<span class="caption">Codeblock 7-20: Zusammenfassen der Pfade aus Codeblock
+<span class="caption">Listing 7-20: Zusammenfassen der Pfade aus Listing
 7-19 zu einer `use`-Anweisung</span>
 
 Diese Zeile bringt `std::io` und `std::io::Write` in den Gültigkeitsbereich.

@@ -75,7 +75,7 @@ schreiben.
 Der erste Teil des Ratespielprogramms fragt nach einer Benutzereingabe,
 verarbeitet diese Eingabe und überprüft, ob die Eingabe in der erwarteten Form
 vorliegt. Zu Beginn erlauben wir dem Spieler, eine Schätzung einzugeben. Gib
-den Code aus Codeblock 2-1 in _src/main.rs_ ein.
+den Code aus Listing 2-1 in _src/main.rs_ ein.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -97,7 +97,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 2-1: Code, der eine Schätzung vom Benutzer
+<span class="caption">Listing 2-1: Code, der eine Schätzung vom Benutzer
 erhält und ausgibt</span>
 
 Dieser Code enthält eine Menge Informationen, also gehen wir ihn Zeile für
@@ -510,7 +510,7 @@ Patch-Version erhältst, die noch mit dem Code in diesem Kapitel kompiliert
 werden kann. Ab Version `0.9.0` ist nicht garantiert, dass die API mit der in
 den folgenden Beispielen verwendeten übereinstimmt.
 
-Lass uns nun, ohne den Code zu ändern, das Projekt bauen, wie in Codeblock 2-2
+Lass uns nun, ohne den Code zu ändern, das Projekt bauen, wie in Listing 2-2
 gezeigt.
 
 ```console
@@ -536,7 +536,7 @@ $ cargo build
   Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.48s
 ```
 
-<span class="caption">Codeblock 2-2: Die Ausgabe beim Ausführen von `cargo
+<span class="caption">Listing 2-2: Die Ausgabe beim Ausführen von `cargo
 build` nach dem Hinzufügen der Crate `rand` als Abhängigkeit</span>
 
 Möglicherweise siehst du unterschiedliche Versionsnummern (aber dank SemVer
@@ -644,7 +644,7 @@ zusammengestellt werden.
 ### Generieren einer Zufallszahl
 
 Beginnen wir mit `rand`, um eine Zahl zum Raten zu erzeugen. Der nächste
-Schritt ist _src/main.rs_ zu ändern, wie in Codeblock 2-3 gezeigt.
+Schritt ist _src/main.rs_ zu ändern, wie in Listing 2-3 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -671,7 +671,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 2-3: Hinzufügen von Code zum Generieren einer
+<span class="caption">Listing 2-3: Hinzufügen von Code zum Generieren einer
 Zufallszahl</span>
 
 Zuerst fügen wir die Zeile `use rand::Rng;` hinzu. Das Trait (engl. Merkmal)
@@ -734,7 +734,7 @@ und 100 sein. Großartige Arbeit!
 ## Vergleichen der Schätzung mit der Geheimzahl
 
 Jetzt, da wir eine Benutzereingabe und eine Zufallszahl haben, können wir sie
-vergleichen. Dieser Schritt ist in Codeblock 2-4 dargestellt. Beachte, dass
+vergleichen. Dieser Schritt ist in Listing 2-4 dargestellt. Beachte, dass
 sich dieser Code noch nicht ganz kompilieren lässt, wie wir erklären werden.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -770,7 +770,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 2-4: Behandeln der möglichen Rückgabewerte beim
+<span class="caption">Listing 2-4: Behandeln der möglichen Rückgabewerte beim
 Vergleich zweier Zahlen</span>
 
 Zuerst fügen wir eine weitere `use`-Anweisung hinzu, die einen Typ namens
@@ -815,7 +815,7 @@ Bildschirm ausgegeben. Der `match`-Ausdruck endet nach der ersten erfolgreichen
 Übereinstimmung, sodass der letzte Zweig in diesem Szenario nicht
 berücksichtigt wird.
 
-Der Code in Codeblock 2-4 lässt sich jedoch noch nicht kompilieren. Lass es uns
+Der Code in Listing 2-4 lässt sich jedoch noch nicht kompilieren. Lass es uns
 versuchen:
 
 ```console
@@ -1134,7 +1134,7 @@ Um das Verhalten des Spiels weiter zu verfeinern, sollten wir das Programm nicht
 abbrechen, wenn der Benutzer keine gültige Zahl eingibt, sondern dafür sorgen,
 dass das Spiel ungültige Zahlen ignoriert, damit der Benutzer weiter raten kann.
 Das können wir erreichen, indem wir die Zeile ändern, in der `guess` von
-`String` in `u32` umgewandelt wird, wie in Codeblock 2-5 gezeigt.
+`String` in `u32` umgewandelt wird, wie in Listing 2-5 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -1182,7 +1182,7 @@ Das können wir erreichen, indem wir die Zeile ändern, in der `guess` von
 # }
 ```
 
-<span class="caption">Codeblock 2-5: Ignorieren einer ungültigen Zahl und
+<span class="caption">Listing 2-5: Ignorieren einer ungültigen Zahl und
 Auffordern zu einer weiteren Schätzung, anstatt das Programm abzubrechen</span>
 
 Das Umstellen von einem `expect`-Aufruf zu einem `match`-Ausdruck ist eine
@@ -1238,7 +1238,7 @@ Du hast gewonnen!
 Fantastisch! Mit einem winzigen letzten Feinschliff beenden wir das Ratespiel.
 Denke daran, dass das Programm immer noch die Geheimzahl ausgibt. Das hat beim
 Testen gut funktioniert, aber es ruiniert das Spiel. Löschen wir das
-`println!`, das die Geheimzahl ausgibt. Codeblock 2-6 zeigt den finalen Code.
+`println!`, das die Geheimzahl ausgibt. Listing 2-6 zeigt den finalen Code.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -1280,7 +1280,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 2-6: Vollständiger Code des
+<span class="caption">Listing 2-6: Vollständiger Code des
 Ratespiels</span>
 
 An diesem Punkt hast du das Ratespiel erfolgreich aufgebaut. Herzlichen

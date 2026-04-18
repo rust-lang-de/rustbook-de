@@ -77,7 +77,7 @@ folgen.
      
 Wir werden die Funktionalität für das Parsen von Argumenten in eine Funktion
 extrahieren, die von `main` aufgerufen wird, um das Verschieben der
-Kommandozeilen-Parselogik nach _src/lib.rs_ vorzubereiten. Codeblock 12-5 zeigt
+Kommandozeilen-Parselogik nach _src/lib.rs_ vorzubereiten. Listing 12-5 zeigt
 den neuen Anfang von `main`, der eine neue Funktion `parse_config` aufruft, die
 wir vorerst in _src/main.rs_ definieren werden.
 
@@ -111,7 +111,7 @@ fn parse_config(args: &[String]) -> (&str, &str) {
 }
 ```
 
-<span class="caption">Codeblock 12-5: Extrahieren einer Funktion `parse_config`
+<span class="caption">Listing 12-5: Extrahieren einer Funktion `parse_config`
 aus `main`</span>
 
 Wir sammeln immer noch die Kommandozeilenargumente in einem Vektor, aber
@@ -148,7 +148,7 @@ Namen. Auf diese Weise wird es künftigen Entwicklern dieses Codes leichter
 fallen, zu verstehen, wie die verschiedenen Werte miteinander in Beziehung
 stehen und was ihr Zweck ist.
                                                    
-Codeblock 12-6 zeigt die Verbesserungen der Funktion `parse_config`.
+Listing 12-6 zeigt die Verbesserungen der Funktion `parse_config`.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -185,7 +185,7 @@ fn parse_config(args: &[String]) -> Config {
 }
 ```
 
-<span class="caption">Codeblock 12-6: Refactorieren von `parse_config` zur
+<span class="caption">Listing 12-6: Refactorieren von `parse_config` zur
 Rückgabe einer Instanz einer `Config`-Struktur</span>
 
 Wir haben eine Struktur namens `Config` hinzugefügt, die so definiert ist, dass
@@ -252,7 +252,7 @@ assoziiert ist. Durch diese Änderung wird der Code idiomatischer. Wir können
 Instanzen von Typen in der Standardbibliothek erstellen, wie bei `String`,
 indem wir `String::new` aufrufen. In ähnlicher Weise können wir durch Ändern
 von `parse_config` in eine Funktion `new`, die mit `Config` assoziiert ist,
-Instanzen von `Config` durch Aufrufen von `Config::new` erzeugen. Codeblock
+Instanzen von `Config` durch Aufrufen von `Config::new` erzeugen. Listing
 12-7 zeigt die Änderungen, die wir vornehmen müssen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -294,7 +294,7 @@ impl Config {
 }
 ```
 
-<span class="caption">Codeblock 12-7: Ändern von `parse_config` in
+<span class="caption">Listing 12-7: Ändern von `parse_config` in
 `Config::new`</span>
 
 Wir haben `main` aktualisiert, wo wir `parse_config` aufgerufen haben, um
@@ -328,7 +328,7 @@ korrigieren.
 
 #### Verbessern der Fehlermeldung
 
-In Codeblock 12-8 fügen wir eine Prüfung in der Funktion `new` hinzu, die
+In Listing 12-8 fügen wir eine Prüfung in der Funktion `new` hinzu, die
 überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und Index 2
 zugegriffen wird. Wenn der Anteilstyp nicht lang genug ist, bricht das Programm
 ab und zeigt eine bessere Fehlermeldung an.
@@ -374,10 +374,10 @@ ab und zeigt eine bessere Fehlermeldung an.
 # }
 ```
 
-<span class="caption">Codeblock 12-8: Hinzufügen einer Prüfung für die Anzahl
+<span class="caption">Listing 12-8: Hinzufügen einer Prüfung für die Anzahl
 der Argumente</span>
 
-Dieser Code ähnelt [der Funktion `Guess::new`, die wir in Codeblock
+Dieser Code ähnelt [der Funktion `Guess::new`, die wir in Listing
 9-13][ch9-custom-types] geschrieben haben, wo wir `panic!` aufgerufen haben,
 wenn das Argument `value` außerhalb des gültigen Wertebereichs lag. Anstatt hier
 auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von `args` mindestens
@@ -402,7 +402,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 Diese Ausgabe ist besser: Wir haben jetzt eine vernünftige Fehlermeldung. Wir
 haben jedoch auch irrelevante Informationen, die wir unseren Benutzern nicht
-geben wollen. Vielleicht ist die Technik, die wir in Codeblock 9-13 verwendet
+geben wollen. Vielleicht ist die Technik, die wir in Listing 9-13 verwendet
 haben, hier nicht die beste: Das Aufrufen von `panic!` ist für ein
 Programmierproblem besser geeignet als für ein Nutzungsproblem, [wie in Kapitel
 9 besprochen][ch9-error-guidelines]. Stattdessen können wir die andere Technik
@@ -421,10 +421,10 @@ um zu signalisieren, dass ein Problem aufgetreten ist. Dann können wir `main`
 Benutzer umzuwandeln, ohne den umgebenden Text über `thread 'main'` und
 `RUST_BACKTRACE`, den ein Aufruf von `panic!` verursacht.
 
-Codeblock 12-9 zeigt die Änderungen, die wir am Rückgabewert der Funktion, die
+Listing 12-9 zeigt die Änderungen, die wir am Rückgabewert der Funktion, die
 nun `Config::build` aufruft, und am Funktionsrumpf vornehmen müssen, um ein
 `Result` zurückzugeben. Beachte, dass dies nicht kompiliert werden kann, bis
-wir auch `main` aktualisieren, was wir im nächsten Codeblock tun werden.
+wir auch `main` aktualisieren, was wir im nächsten Listing tun werden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -465,7 +465,7 @@ impl Config {
 }
 ```
 
-<span class="caption">Codeblock 12-9: Rückgabe eines `Result` von
+<span class="caption">Listing 12-9: Rückgabe eines `Result` von
 `Config::build`</span>
 
 Unsere Funktion `build` liefert ein `Result` mit einer `Config`-Instanz im
@@ -486,7 +486,7 @@ und den Prozess im Fehlerfall sauberer zu beenden.
 
 Um den Fehlerfall zu behandeln und eine benutzerfreundliche Meldung auszugeben,
 müssen wir `main` aktualisieren, um das von `Config::build` zurückgegebene
-`Result` zu behandeln, wie in Codeblock 12-10 gezeigt. Wir werden auch die
+`Result` zu behandeln, wie in Listing 12-10 gezeigt. Wir werden auch die
 Verantwortung dafür übernehmen, das Kommandozeilenwerkzeug mit einem Fehlercode
 ungleich Null wie bei `panic!` zu beenden und es von Hand zu implementieren.
 Ein Exit-Status ungleich Null ist eine Konvention, um dem Prozess, der unser
@@ -538,10 +538,10 @@ fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 12-10: Beenden mit einem Fehlercode, wenn das
+<span class="caption">Listing 12-10: Beenden mit einem Fehlercode, wenn das
 Erstellen einer `Config` fehlschlägt</span>
 
-In diesem Codeblock haben wir eine Methode verwendet, die wir bisher noch nicht
+In diesem Listing haben wir eine Methode verwendet, die wir bisher noch nicht
 behandelt haben: `unwrap_or_else`, die in der Standardbibliothek unter
 `Result<T, E>` definiert ist. Das Verwenden von `unwrap_or_else` erlaubt es uns,
 eine benutzerdefinierte nicht-`panic!`-Fehlerbehandlung zu definieren. Wenn das
@@ -551,7 +551,7 @@ ruft diese Methode den Code im Closure auf, die eine anonyme Funktion ist, die
 wir definieren und als Argument an `unwrap_or_else` übergeben. Auf Closures
 gehen wir ausführlicher in [Kapitel 13][ch13] ein. Im Moment musst du nur
 wissen, dass `unwrap_or_else` den inneren Wert des `Err`, in diesem Fall die
-statische Zeichenkette `Nicht genügend Argumente`, die wir in Codeblock 12-9
+statische Zeichenkette `Nicht genügend Argumente`, die wir in Listing 12-9
 hinzugefügt haben, an unseren Closure im Argument `err`, das zwischen den
 senkrechten Strichen erscheint, weitergibt. Der Code im Closure kann dann den
 `err`-Wert verwenden, wenn sie ausgeführt wird.
@@ -562,7 +562,7 @@ der im Fehlerfall ausgeführt wird, besteht nur aus zwei Zeilen: Wir geben den
 `err`-Wert aus und rufen dann `process::exit` auf. Die Funktion `process::exit`
 stoppt das Programm sofort und gibt die Zahl zurück, die als Exit-Statuscode
 übergeben wurde. Dies ähnelt der `panic!`-basierten Behandlung, die wir in
-Codeblock 12-8 verwendet haben, aber wir erhalten nicht mehr die gesamte
+Listing 12-8 verwendet haben, aber wir erhalten nicht mehr die gesamte
 zusätzliche Ausgabe. Lass es uns versuchen:
 
 ```console
@@ -587,7 +587,7 @@ fertig sind, wird die Funktion `main` übersichtlich und leicht zu verifizieren
 sein. Zudem werden wir in der Lage sein, Tests für all die andere Logik zu
 schreiben.
 
-Codeblock 12-11 zeigt die extrahierte Funktion `run`. Im Moment machen wir nur
+Listing 12-11 zeigt die extrahierte Funktion `run`. Im Moment machen wir nur
 die kleine, inkrementelle Verbesserung durch Extrahieren der Funktion. Wir sind
 immer noch dabei, die Funktion in _src/main.rs_ zu definieren.
 
@@ -642,7 +642,7 @@ fn run(config: Config) {
 # }
 ```
 
-<span class="caption">Codeblock 12-11: Extrahieren einer Funktion `run`, die
+<span class="caption">Listing 12-11: Extrahieren einer Funktion `run`, die
 den Rest der Programmlogik enthält</span>
 
 Die Funktion `run` enthält nun die gesamte restliche Logik von `main`,
@@ -652,11 +652,11 @@ beginnend mit dem Lesen der Datei. Die Funktion `run` nimmt die
 #### Fehlerrückgabe aus `run`
 
 Wenn die verbleibende Programmlogik in die Funktion `run` separiert wird, können
-wir die Fehlerbehandlung verbessern, wie wir es mit `Config::build` in Codeblock
+wir die Fehlerbehandlung verbessern, wie wir es mit `Config::build` in Listing
 12-9 getan haben. Anstatt das Programm durch den Aufruf von `expect` abbrechen
 zu lassen, gibt die Funktion `run` ein `Result<T, E>` zurück, wenn etwas schief
 läuft. Auf diese Weise können wir in `main` die Logik rund um den Umgang mit
-Fehlern auf benutzerfreundliche Weise weiter konsolidieren. Codeblock 12-12
+Fehlern auf benutzerfreundliche Weise weiter konsolidieren. Listing 12-12
 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von `run` vornehmen
 müssen.
 
@@ -711,7 +711,7 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 # }
 ```
 
-<span class="caption">Codeblock 12-12: Ändern der Funktion `run`, um ein
+<span class="caption">Listing 12-12: Ändern der Funktion `run`, um ein
 `Result` zurückzugeben</span>
 
 Wir haben hier drei wesentliche Änderungen vorgenommen. Erstens haben wir den
@@ -787,7 +787,7 @@ Fehlerbehandlungscode zu haben! Lass uns dieses Problem jetzt beheben.
 #### Behandeln von Fehlern, die von `run` in `main` zurückgegeben wurden
 
 Wir werden nach Fehlern suchen und sie mit einer Technik behandeln, die ähnlich
-der Technik ist, die wir mit `Config::build` in Codeblock 12-10 verwendet
+der Technik ist, die wir mit `Config::build` in Listing 12-10 verwendet
 haben, aber mit einem kleinen Unterschied:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -868,7 +868,7 @@ Bibliothek `minigrep` verwendet) die Suchfunktion aus mehr Kontexten als nur
 unserer Binärdatei `minigrep` aufrufen.
 
 Zunächst definieren wir die Signatur der Funktion `search` in _src/lib.rs_, wie
-in Codeblock 12-13 gezeigt, mit einem Rumpf, der das Makro `unimplemented!`
+in Listing 12-13 gezeigt, mit einem Rumpf, der das Makro `unimplemented!`
 aufruft. Wir werden die Signatur genauer erklären, wenn wir die Implementierung
 ausfüllen.
 
@@ -880,7 +880,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 }
 ```
 
-<span class="caption">Codeblock 12-13: Definieren der Funktion `search` in
+<span class="caption">Listing 12-13: Definieren der Funktion `search` in
 _src/lib.rs_</span>
 
 Wir haben das Schlüsselwort `pub` in der Funktionsdefinition verwendet, um
@@ -889,7 +889,7 @@ kennzeichnen. Wir haben nun eine Bibliotheks-Crate, die wir aus unserer binären
 Crate heraus verwenden und testen können!
 
 Jetzt müssen wir den in _src/lib.rs_ definierten Code in den Gültigkeitsbereich
-der binären Crate in _src/main.rs_ bringen und ihn aufrufen, wie in Codeblock
+der binären Crate in _src/main.rs_ bringen und ihn aufrufen, wie in Listing
 12-14 zu sehen ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -949,7 +949,7 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 }
 ```
 
-<span class="caption">Codeblock 12-14: Verwenden der Bibliotheks-Crate
+<span class="caption">Listing 12-14: Verwenden der Bibliotheks-Crate
 `minigrep` in _src/main.rs_</span>
 
 Wir fügen eine Zeile `use minigrep::Config` hinzu, um den Typ `Config` aus der

@@ -49,7 +49,7 @@ ist standardmäßig privat. Zum Beispiel können wir eine Struktur
 der Werte im Vektor enthält, was bedeutet, dass der Mittelwert nicht auf
 Anfrage berechnet werden muss, wenn jemand ihn braucht. Mit anderen Worten:
 `AveragedCollection` wird den errechneten Durchschnitt für uns
-zwischenspeichern. Codeblock 18-1 zeigt die Definition der Struktur
+zwischenspeichern. Listing 18-1 zeigt die Definition der Struktur
 `AveragedCollection`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -61,7 +61,7 @@ pub struct AveragedCollection {
 }
 ```
 
-<span class="caption">Codeblock 18-1: Eine Struktur `AveragedCollection`, die
+<span class="caption">Listing 18-1: Eine Struktur `AveragedCollection`, die
 eine Liste von ganzen Zahlen und deren Durchschnitt verwaltet</span>
 
 Die Struktur wird als `pub` markiert, damit anderer Code sie verwenden kann,
@@ -69,7 +69,7 @@ aber die Felder innerhalb der Struktur bleiben privat. Dies ist in diesem Fall
 wichtig, weil wir sicherstellen wollen, dass immer dann, wenn ein Wert
 hinzugefügt oder aus der Liste entfernt wird, auch der Durchschnitt
 aktualisiert wird. Wir tun dies, indem wir die Methoden `add`, `remove` und
-`average` auf der Struktur implementieren, wie in Codeblock 18-2 gezeigt.
+`average` auf der Struktur implementieren, wie in Listing 18-2 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -107,7 +107,7 @@ impl AveragedCollection {
 }
 ```
 
-<span class="caption">Codeblock 18-2: Implementierungen der öffentlichen
+<span class="caption">Listing 18-2: Implementierungen der öffentlichen
 Methoden `add`, `remove` und `average` auf  `AveragedCollection`</span>
 
 Die öffentlichen Methoden `add`, `remove` und `average` sind die einzigen
@@ -159,7 +159,7 @@ die Wiederverwendung von Code: Du kannst ein bestimmtes Verhalten für einen Typ
 implementieren und die Vererbung ermöglicht es dir, diese Implementierung für
 einen anderen Typ wiederzuverwenden. Du kannst das auf begrenzte Weise in
 Rust-Code unter Verwendung von Standard-Trait-Mmethodenimplementierungen tun,
-was du in Codeblock 10-14 gesehen hast, als wir eine Standard-Implementierung
+was du in Listing 10-14 gesehen hast, als wir eine Standard-Implementierung
 der Methode `summarize` für das Trait `Summary` hinzugefügt haben. Jeder Typ,
 der das Trait `Summary` implementiert, hätte die Methode `summarize` ohne
 weiteren Code darauf zur Verfügung. Dies ist vergleichbar mit einer

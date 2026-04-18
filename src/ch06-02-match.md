@@ -13,13 +13,13 @@ Stelle dir einen `match`-Ausdruck wie eine Münzsortiermaschine vor:  Die Münze
 rutschen eine Bahn mit unterschiedlich großen Löchern entlang, und jede Münze
 fällt durch das erste Loch, in das sie hineinpasst. Auf die gleiche Weise
 durchlaufen die Werte die Muster in einem `match`-Ausdruck und beim ersten
-„passenden“ Muster fällt der Wert in den zugehörigen Codeblock, der ausgeführt
+„passenden“ Muster fällt der Wert in den zugehörigen Listing, der ausgeführt
 werden soll.
 
 Apropos Münzen, nehmen wir sie als Beispiel für die Verwendung von `match`! Wir
 können eine Funktion schreiben, die eine unbekannte US-Münze nimmt und, ähnlich
 wie die Zählmaschine, bestimmt, um welche Münze es sich handelt und ihren Wert
-in Cent zurückgibt, wie in Codeblock 6-3 gezeigt.
+in Cent zurückgibt, wie in Listing 6-3 gezeigt.
 
 ```rust
 enum Coin {
@@ -41,7 +41,7 @@ fn value_in_cents(coin: Coin) -> u8 {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 6-3: Eine Aufzählung und ein `match`-Ausdruck,
+<span class="caption">Listing 6-3: Eine Aufzählung und ein `match`-Ausdruck,
 der die Varianten der Aufzählung als Muster hat</span>
 
 Lass uns den `match`-Ausdruck in der Funktion `value_in_cents` aufschlüsseln. 
@@ -64,14 +64,14 @@ Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum Wert
 passt, wird der zu diesem Muster gehörende Code ausgeführt. Wenn das Muster
 nicht zum Wert passt, wird die Ausführung beim nächsten Zweig fortgesetzt,
 ähnlich wie bei einer Münzsortiermaschine. Wir können so viele Zweige haben,
-wie wir brauchen: In Codeblock 6-3 hat unser `match`-Ausdruck vier Zweige.
+wie wir brauchen: In Listing 6-3 hat unser `match`-Ausdruck vier Zweige.
 
 Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der Ergebniswert des
 Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
 `match`-Ausdruck zurückgegeben wird. 
 
 Wir verwenden üblicherweise keine geschweiften Klammern, wenn der Zweig-Code
-kurz ist, so wie in Codeblock 6-3, wo jeder Zweig nur einen Wert zurückgibt.
+kurz ist, so wie in Listing 6-3, wo jeder Zweig nur einen Wert zurückgibt.
 Wenn du mehrere Codezeilen in einem Zweig ausführen möchtest, musst du
 geschweifte Klammern verwenden, und das Komma nach dem Zweig ist dann optional.
 Zum Beispiel gibt der folgende Code jedes Mal „Glückspfennig!“ aus, wenn die
@@ -113,7 +113,7 @@ mit unterschiedlichem Aussehen auf einer Seite für jeden der 50 Staaten. Keine
 andere Münze hatte ein Staaten-spezifisches Aussehen, sodass nur 25-Cent-Münzen
 diese zusätzliche Eigenschaft haben. Wir können diese Information in unserer
 Aufzählung unterbringen, indem wir die Variante `Quarter` so ändern, dass sie
-einen `UsState`-Wert enthält, wie in Codeblock 6-4 umgesetzt.
+einen `UsState`-Wert enthält, wie in Listing 6-4 umgesetzt.
 
 ```rust
 enum UsState {
@@ -132,7 +132,7 @@ enum Coin {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 6-4: Aufzählung `Coin`, bei der die Variante
+<span class="caption">Listing 6-4: Aufzählung `Coin`, bei der die Variante
 `Quarter` zusätzlich einen `UsState`-Wert enthält</span>
 
 Stellen wir uns vor, dass ein Freund versucht, 25-Cent-Münzen aller 50
@@ -199,7 +199,7 @@ kein Wert enthalten ist, soll die Funktion den Wert `None` zurückgeben und
 nicht versuchen, irgendwelche Operationen durchzuführen.
 
 Diese Funktion ist dank `match` sehr einfach zu schreiben und wird wie in
-Codeblock 6-5 aussehen.
+Listing 6-5 aussehen.
 
 ```rust
 fn plus_one(x: Option<i32>) -> Option<i32> {
@@ -214,7 +214,7 @@ let six = plus_one(five);
 let none = plus_one(None);
 ```
 
-<span class="caption">Codeblock 6-5: Eine Funktion, die einen `match`-Ausdruck
+<span class="caption">Listing 6-5: Eine Funktion, die einen `match`-Ausdruck
 auf einer `Option<i32>` verwendet</span>
 
 Lass uns die erste Ausführung von `plus_one` näher betrachten. Wenn wir
@@ -255,7 +255,7 @@ bindet den in `Some` enthaltenen Wert, sodass `i` den Wert `5` annimmt. Dann
 wird der Code im `match`-Zweig ausgeführt, also fügen wir 1 zum Wert von `i`
 hinzu und erzeugen einen neuen `Some`-Wert mit der Summe `6` darin.
 
-Betrachten wir nun den zweiten Aufruf von `plus_one` in Codeblock 6-5, wo `x`
+Betrachten wir nun den zweiten Aufruf von `plus_one` in Listing 6-5, wo `x`
 den Wert `None` hat. Wir betreten den `match`-Block und vergleichen mit dem
 ersten Zweig:
 

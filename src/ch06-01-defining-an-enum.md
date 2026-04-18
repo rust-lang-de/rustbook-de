@@ -116,7 +116,7 @@ IP-Adresstyp nachdenken, haben wir im Moment keine Möglichkeit, den _Wert_ der
 tatsächlichen IP-Adresse zu speichern; wir wissen nur, um welche _Variante_ es
 sich handelt. Mit dem was du gerade erst in Kapitel 5 über Strukturen gelernt
 hast, könntest du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
-Codeblock 6-1.
+Listing 6-1.
 
 ```rust
 enum IpAddrKind {
@@ -140,7 +140,7 @@ let loopback = IpAddr {
 };
 ```
 
-<span class="caption">Codeblock 6-1: Speichern des Wertes und der
+<span class="caption">Listing 6-1: Speichern des Wertes und der
 `IpAddrKind`-Variante einer IP-Adresse mittels `struct`</span>
 
 Hier haben wir eine Struktur `IpAddr` definiert, die zwei Felder hat:  Ein Feld
@@ -232,7 +232,7 @@ erstellen und verwenden können, da wir die Definition der Standardbibliothek
 nicht in unseren Gültigkeitsbereich aufgenommen haben. Wir werden in Kapitel 7
 mehr darauf eingehen, wie man Typen in den Gültigkeitsbereich aufnimmt.
 
-Schauen wir uns ein weiteres Beispiel für eine Aufzählung in Codeblock 6-2 an:
+Schauen wir uns ein weiteres Beispiel für eine Aufzählung in Listing 6-2 an:
 In dieser Aufzählung ist eine Vielzahl von Typen in ihren Varianten eingebettet.
 
 ```rust
@@ -246,7 +246,7 @@ enum Message {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 6-2: Eine Aufzählung `Message`, deren Varianten
+<span class="caption">Listing 6-2: Eine Aufzählung `Message`, deren Varianten
 jeweils eine unterschiedliche Anzahl an Werttypen speichern</span>
 
 Diese Aufzählung hat vier Varianten mit unterschiedlichen Typen:
@@ -256,7 +256,7 @@ Diese Aufzählung hat vier Varianten mit unterschiedlichen Typen:
 - `Write`: Enthält einen einzelnen `String`.
 - `ChangeColor`: Enthält drei `i32`-Werte.
 
-Die Definition einer Aufzählung mit Varianten wie in Codeblock 6-2 ist ähnlich
+Die Definition einer Aufzählung mit Varianten wie in Listing 6-2 ist ähnlich
 zur Definition verschiedener Arten von Strukturdefinitionen, außer dass die
 Aufzählung nicht das Schlüsselwort `struct` verwendet und alle Varianten unter
 dem Typ `Message` zusammengefasst sind. Die folgenden Strukturen könnten die
@@ -276,7 +276,7 @@ struct ChangeColorMessage(i32, i32, i32); // Tupelstruktur
 
 Aber wenn wir die verschiedenen Strukturen verwenden würden, die jeweils ein
 eigener Typ sind, könnten wir nicht so einfach eine Funktion definieren, die
-eine dieser Nachrichtenarten entgegennimmt, wie wir es mit der in Codeblock 6-2
+eine dieser Nachrichtenarten entgegennimmt, wie wir es mit der in Listing 6-2
 definierten Aufzählung `Message` gemacht haben, bei der es sich um einen
 einzigen Typ handelt.
 

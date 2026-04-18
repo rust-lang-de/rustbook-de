@@ -29,7 +29,7 @@ repräsentiert, die ein Feld mit dem Namen `shirts` hat, das ein
 `Vec<ShirtColor>` mit den derzeit vorrätigen Hemden enthält. Die Methode
 `giveaway`, die auf `Inventory` definiert ist, erhält die optionale
 Shirtfarbe der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe
-zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt.
+zurück, die die Person erhalten wird. Dies wird in Listing 13-1 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -81,7 +81,7 @@ fn main() {
     println!("Der Benutzer mit Präferenz {user_pref2:?} erhält {giveaway2:?}");
 }
 ```
-<span class="caption">Codeblock 13-1: Werbegeschenk der Shirtfirma</span>
+<span class="caption">Listing 13-1: Werbegeschenk der Shirtfirma</span>
 
 Der in `main` definierte `store` hat zwei blaue Shirts und ein rotes Shirt
 übrig, die für diese limitierte Aktion verteilt werden sollen. Wir rufen die
@@ -152,10 +152,10 @@ denen der Compiler auch Closure-Typannotationen benötigt).
 Wie bei Variablen können wir Typ-Annotationen hinzufügen, wenn wir die
 Explizitheit und Klarheit erhöhen wollen, auch wenn wir dafür ausführlicher sind
 als unbedingt nötig. Die Annotation der Typen für einen Closure würde wie die in
-Codeblock 13-2 gezeigte Definition aussehen. In diesem Beispiel definieren wir
+Listing 13-2 gezeigte Definition aussehen. In diesem Beispiel definieren wir
 einen Closure und speichern ihn in einer Variablen, anstatt den Closure an der
 Stelle zu definieren, an der wir ihn als Argument übergeben, wie wir es in
-Codeblock 13-1 getan haben.
+Listing 13-1 getan haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -193,7 +193,7 @@ Codeblock 13-1 getan haben.
 # }
 ```
 
-<span class="caption">Codeblock 13-2: Hinzufügen optionaler Datentypangabe der
+<span class="caption">Listing 13-2: Hinzufügen optionaler Datentypangabe der
 Parameter- und Rückgabewert-Typen im Closure</span>
 
 Mit Typ-Annotationen ähnelt die Syntax eines Closures sehr der Syntax einer
@@ -222,7 +222,7 @@ bei dem entweder Typ-Annotationen oder Werte eines bestimmten Typs in den `Vec`
 eingefügt werden müssen, damit Rust den Typ ableiten kann.
 
 Bei Closure-Definitionen wird für jeden Parameter und für den Rückgabewert ein
-konkreter Typ abgeleitet. Codeblock 13-3 zeigt zum Beispiel die Definition eines
+konkreter Typ abgeleitet. Listing 13-3 zeigt zum Beispiel die Definition eines
 kurzen Closures, der nur den Wert des übergebenen Parameters zurückgibt. Dieser
 Closure ist außer für dieses Beispiel nicht weiter nützlich. Beachte, dass wir
 der Definition keine Datentypangaben hinzugefügt haben. Da es keine
@@ -239,7 +239,7 @@ let s = example_closure(String::from("hallo"));
 let n = example_closure(5);
 ```
 
-<span class="caption">Codeblock 13-3: Versuchter Aufruf eines Closure, dem zwei
+<span class="caption">Listing 13-3: Versuchter Aufruf eines Closure, dem zwei
 unterschiedliche Typen übergeben wurden</span>
 
 Der Compiler gibt diesen Fehler aus:
@@ -291,7 +291,7 @@ kann: Unveränderbare Borrows, veränderbare Borrows und Eigentümerschaft
 Möglichkeiten verwendet wird, je nachdem, was der Rumpf der Funktion mit den
 erfassten Werten macht.
 
-In Codeblock 13-4 definieren wir einen Closure, der eine unveränderbare Referenz
+In Listing 13-4 definieren wir einen Closure, der eine unveränderbare Referenz
 an den Vektor mit dem Namen `list` erfasst, weil er nur eine unveränderbare
 Referenz benötigt, um den Wert auszugeben.
 
@@ -310,7 +310,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 13-4: Definieren und Aufrufen eines Closure, der
+<span class="caption">Listing 13-4: Definieren und Aufrufen eines Closure, der
 eine unveränderbare Referenz erfasst</span>
 
 Dieses Beispiel veranschaulicht auch, dass eine Variable an eine
@@ -334,7 +334,7 @@ Im Closure: [1, 2, 3]
 Nach dem Closure-Aufruf: [1, 2, 3]
 ```
 
-In Codeblock 13-5 wird die Definition des Closures so geändert, dass er ein
+In Listing 13-5 wird die Definition des Closures so geändert, dass er ein
 Element zum Vektor `list` hinzufügt. Der Closure erfasst nun eine veränderbare
 Referenz.
 
@@ -352,7 +352,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 13-5: Definieren und Aufrufen eines Closures,
+<span class="caption">Listing 13-5: Definieren und Aufrufen eines Closures,
 der eine veränderbare Referenz erfasst</span>
 
 Dieser Code kompiliert, läuft und gibt aus:
@@ -386,7 +386,7 @@ gehören. Wir werden in Kapitel 16, wenn wir über Nebenläufigkeit (concurrency
 sprechen, detailliert auf Threads eingehen und erläutern, warum man sie
 verwenden sollte, aber jetzt wollen wir uns kurz mit dem Erzeugen eines neuen
 Threads mithilfe eines Closures befassen, der das Schlüsselwort `move` benötigt.
-Codeblock 13-6 zeigt Codeblock 13-4 modifiziert, um den Vektor in einem neuen
+Listing 13-6 zeigt Listing 13-4 modifiziert, um den Vektor in einem neuen
 Thread statt im Haupt-Thread auszugeben.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -404,11 +404,11 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 13-6: Verwenden von `move`, um den Closure des
+<span class="caption">Listing 13-6: Verwenden von `move`, um den Closure des
 Threads zu zwingen, die Eigentümerschaft an `list` zu übernehmen</span>
 
 Wir starten einen neuen Thread und geben ihm einen Closure als Argument mit. Der
-Rumps des Closures gibt die Liste aus. In Codeblock 13-4 hat der Closure nur
+Rumps des Closures gibt die Liste aus. In Listing 13-4 hat der Closure nur
 `list` mit einer unveränderbaren Referenz erfasst, weil das die kleinste
 Zugriffmenge auf `list` ist, die benötigt wird, um sie auszugeben. In diesem
 Beispiel müssen wir, obwohl der Closurer-Rumpf nur eine unveränderbare Referenz
@@ -459,7 +459,7 @@ der Closure-Rumpf die Werte behandelt:
   ein Closure mehrere Male gleichzeitig aufgerufen wird.
 
 Schauen wir uns die Definition der Methode `unwrap_or_else` auf `Option<T>` an,
-die wir in Codeblock 13-1 verwendet haben:
+die wir in Listing 13-1 verwendet haben:
 
 ```rust,ignore
 impl<T> Option<T> {
@@ -509,7 +509,7 @@ für die Mermalsabgrenzung verwendet. Der Closure erhält ein Argument, eine
 Referenz auf das aktuelle Element im betrachteten Anteilstyp, und gibt einen
 Wert vom Typ `K` zurück, der geordnet werden kann. Diese Funktion ist nützlich,
 wenn man einen Anteilstyp nach einem bestimmten Attribut der einzelnen Elemente
-sortieren will. In Codeblock 13-7 haben wir eine Liste von `Rectangle`-Instanzen
+sortieren will. In Listing 13-7 haben wir eine Liste von `Rectangle`-Instanzen
 und benutzen `sort_by_key`, um sie nach ihrem `width`-Attribut von niedrig nach
 hoch zu sortieren:
 
@@ -534,7 +534,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 13-7: Verwenden von `sort_by_key` um Rechtecke
+<span class="caption">Listing 13-7: Verwenden von `sort_by_key` um Rechtecke
 nach ihrer Breite zu sortieren</span>
 
 Dieser Code gibt aus:
@@ -565,7 +565,7 @@ nimmt, ist, dass es den Closure mehrfach aufruft: Einmal für jedes Element im
 Anteilstyp. Der Closure `|r| r.width` erfasst, verändert oder verschiebt nichts
 aus seiner Umgebung, sodass er die Anforderungen der Trait Bound erfüllt.
 
-Im Gegensatz dazu zeigt Codeblock 13-8 ein Beispiel für einen Closure, der nur
+Im Gegensatz dazu zeigt Listing 13-8 ein Beispiel für einen Closure, der nur
 das Trait `FnOnce` implementiert, weil er einen Wert aus der Umgebung
 verschiebt. Der Compiler lässt uns diesen Closure nicht mit `sort_by_key`
 verwenden.
@@ -597,7 +597,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 13-8: Versuch, einen `FnOnce`-Closure mit
+<span class="caption">Listing 13-8: Versuch, einen `FnOnce`-Closure mit
 `sort_by_key` zu verwenden</span>
 
 Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), der
@@ -642,7 +642,7 @@ Der Fehler bezieht sich auf die Zeile im Closure-Rumpf, die `value` aus der
 Umgebung verschiebt. Um dies zu beheben, müssen wir den Rumpf des Closures so
 ändern, dass er keine Werte aus der Umgebung verschiebt. Es ist einfacher, einen
 Zähler in der Umgebung zu halten und seinen Wert im Closure-Rumpf zu erhöhen, um
-zu zählen, wie oft `sort_by_key` aufgerufen wurde. Der Closure in Codeblock 13-9
+zu zählen, wie oft `sort_by_key` aufgerufen wurde. Der Closure in Listing 13-9
 funktioniert mit `sort_by_key`, weil er nur eine veränderbare Referenz auf den
 `num_sort_operations`-Zähler erfasst und daher mehr als einmal aufgerufen werden
 kann.
@@ -672,7 +672,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 13-9: Verwenden eines `FnMut`-Closure mit
+<span class="caption">Listing 13-9: Verwenden eines `FnMut`-Closure mit
 `sort_by_key` ist erlaubt</span>
 
 Die `Fn`-Traits sind wichtig bei der Definition oder Verwendung von Funktionen

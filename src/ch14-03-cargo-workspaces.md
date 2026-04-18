@@ -150,7 +150,7 @@ abhängen, daher müssen wir die Abhängigkeit explizit angeben.
 
 Als nächstes verwenden wir die Funktion `add_one` (aus der Crate `add_one`) in
 der Crate `adder`. Öffne die Datei _adder/src/main.rs_ und ändere die Funktion
-`main`, um die Funktion `add_one` aufzurufen, siehe Codeblock 14-7.
+`main`, um die Funktion `add_one` aufzurufen, siehe Listing 14-7.
 
 <span class="filename">Dateiname: adder/src/main.rs</span>
 
@@ -161,7 +161,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 14-7: Die `add_one`-Bibliotheks-Crate in der
+<span class="caption">Listing 14-7: Die `add_one`-Bibliotheks-Crate in der
 Crate `adder` verwenden</span>
 
 Erstellen wir den Arbeitsbereich, indem wir `cargo build` im obersten

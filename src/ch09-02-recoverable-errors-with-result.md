@@ -29,7 +29,7 @@ Erfolgswert und der Fehlerwert, den wir zurückgeben wollen, unterschiedlich
 sein können.
 
 Rufen wir eine Funktion auf, die einen `Result`-Wert zurückgibt, weil die
-Funktion fehlschlagen könnte. In Codeblock 9-3 versuchen wir, eine Datei zu
+Funktion fehlschlagen könnte. In Listing 9-3 versuchen wir, eine Datei zu
 öffnen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -42,7 +42,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 9-3: Eine Datei öffnen</span>
+<span class="caption">Listing 9-3: Eine Datei öffnen</span>
 
 Der Rückgabetyp von `File::open` ist `Result<T, E>`. Der generische Parameter
 `T` wurde hier mit dem Typ des Erfolgswertes `std::fs::File`, der eine
@@ -62,8 +62,8 @@ Falls `File::open` erfolgreich ist, wird der Wert der Variable
 enthält. Im Fehlerfall ist der Wert von `greeting_file_result` eine Instanz von
 `Err`, die mehr Informationen über die Art des aufgetretenen Fehlers enthält.
 
-Wir müssen den Code in Codeblock 9-3 ergänzen, um abhängig vom Rückgabewert von
-`File::open` unterschiedliche Aktionen durchzuführen. Codeblock 9-4 zeigt eine
+Wir müssen den Code in Listing 9-3 ergänzen, um abhängig vom Rückgabewert von
+`File::open` unterschiedliche Aktionen durchzuführen. Listing 9-4 zeigt eine
 Möglichkeit, `Result` mit Hilfe eines grundlegenden Werkzeugs, dem Ausdruck
 `match`, den wir in Kapitel 6 besprochen haben, zu behandeln.
 
@@ -82,7 +82,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 9-4: Verwenden eines `match`-Ausdrucks zum
+<span class="caption">Listing 9-4: Verwenden eines `match`-Ausdrucks zum
 Behandeln der `Result`-Varianten, die zurückgegeben werden könnten</span>
 
 Beachte, dass die Aufzählung `Result` und ihre Varianten automatisch im
@@ -116,15 +116,15 @@ Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.
 
 ### Abgleich verschiedener Fehler
 
-Der Code in Codeblock 9-4 wird abbrechen, egal aus welchem Grund `File::open`
+Der Code in Listing 9-4 wird abbrechen, egal aus welchem Grund `File::open`
 fehlschlug. Nun wollen wir jedoch bei verschiedenen Fehlerursachen
 unterschiedliche Maßnahmen ergreifen. Wenn `File::open` fehlgeschlagen ist,
 weil die Datei nicht existiert, wollen wir die Datei erstellen und die
 Dateiressource der neuen Datei zurückgeben. Wenn `File::open` aus irgendeinem
 anderen Grund fehlschlug, z.B. weil wir keine Berechtigung zum Öffnen der Datei
-hatten, wollen wir immer noch, dass der Code abbricht, so wie es in Codeblock
+hatten, wollen wir immer noch, dass der Code abbricht, so wie es in Listing
 9-4 der Fall war. Dazu fügen wir einen inneren `match`-Ausdruck hinzu, wie in
-Codeblock 9-5 gezeigt.
+Listing 9-5 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -150,7 +150,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 9-5: Unterschiedliche Arten von Fehlern auf
+<span class="caption">Listing 9-5: Unterschiedliche Arten von Fehlern auf
 unterschiedliche Weise behandeln</span>
 
 Der Typ des Wertes, den `File::open` innerhalb der Variante `Err` zurückgibt,
@@ -182,7 +182,7 @@ Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 > Behandlung von `Result<T, E>`-Werten in deinem Code.
 >
 > Hier ist zum Beispiel eine andere Möglichkeit, die gleiche Logik wie in
-> Codeblock 9-5 zu schreiben, aber unter Verwendung von Closures und der Methode
+> Listing 9-5 zu schreiben, aber unter Verwendung von Closures und der Methode
 `unwrap_or_else`:
 >
 > ```rust
@@ -202,7 +202,7 @@ Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 > }
 > ```
 >
-> Obwohl dieser Code dasselbe Verhalten wie Codeblock 9-5 aufweist, enthält er
+> Obwohl dieser Code dasselbe Verhalten wie Listing 9-5 aufweist, enthält er
 > keine `match`-Ausdrücke und ist einfacher zu lesen. Kehre zu diesem Beispiel
 > zurück, nachdem du Kapitel 13 gelesen hast, und schlage die Methode
 > `unwrap_or_else` in der Standardbibliotheksdokumentation nach. Viele weitere
@@ -215,7 +215,7 @@ Das Verwenden von `match` funktioniert gut genug, aber es kann etwas langatmig
 sein und vermittelt das Vorhaben nicht immer gut. Der Typ `Result<T, E>` bietet
 viele Hilfsmethoden, um verschiedene, spezifischere Aufgaben zu erledigen. Die
 Methode `unwrap` ist eine Abkürzungsmethode, implementiert wie der Ausdruck
-`match`, den wir in Codeblock 9-4 verwendet haben. Wenn der `Result`-Wert die
+`match`, den wir in Listing 9-4 verwendet haben. Wenn der `Result`-Wert die
 Variante `Ok` ist, gibt `unwrap` den Wert innerhalb `Ok` zurück. Wenn `Result`
 die Variante `Err` ist, ruft `unwrap` das Makro `panic!` für uns auf. Hier ist
 ein Beispiel für `unwrap` im Einsatz:
@@ -281,7 +281,7 @@ und gibt dem aufrufenden Code mehr Kontrolle, wo mehr Informationen und Logik
 zur Fehlerbehandlung vorhanden sein könnte, als im Kontext deines Codes zur
 Verfügung steht.
 
-Beispielsweise zeigt Codeblock 9-6 eine Funktion, die einen Benutzernamen aus
+Beispielsweise zeigt Listing 9-6 eine Funktion, die einen Benutzernamen aus
 einer Datei liest. Wenn die Datei nicht existiert oder nicht gelesen werden
 kann, gibt diese Funktion den Fehler an den Code zurück, der die Funktion
 aufgerufen hat.
@@ -309,7 +309,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
 }
 ```
 
-<span class="caption">Codeblock 9-6: Eine Funktion, die mit `match` Fehler an
+<span class="caption">Listing 9-6: Eine Funktion, die mit `match` Fehler an
 den aufrufenden Code zurückgibt</span>
 
 Diese Funktion kann auf eine viel kürzere Art und Weise geschrieben werden,
@@ -332,7 +332,7 @@ die Methode `read_to_string`.
 
 Der Funktionsrumpf beginnt mit dem Aufruf der Funktion `File::open`. Dann
 behandeln wir den `Result`-Wert, der von `match` zurückgegeben wird, auf
-ähnliche Weise wie bei `match` in Codeblock 9-4. Wenn `File::open` erfolgreich
+ähnliche Weise wie bei `match` in Listing 9-4. Wenn `File::open` erfolgreich
 ist, erhält die Dateiressource in der Mustervariablen `file` den Wert in der
 veränderbaren Variablen `username_file` und die Funktion wird fortgesetzt. Im
 Fall von `Err` verwenden wir das Schlüsselwort `return`, anstatt `panic!`
@@ -370,8 +370,8 @@ Fragezeichen-Operator `?` bereitstellt, um dies zu erleichtern.
 
 #### Der Operator `?` als Abkürzung
 
-Codeblock 9-7 zeigt eine Implementierung von `read_username_from_file`, die
-dasselbe Verhalten wie Codeblock 9-6 hat, aber diese Implementierung verwendet
+Listing 9-7 zeigt eine Implementierung von `read_username_from_file`, die
+dasselbe Verhalten wie Listing 9-6 hat, aber diese Implementierung verwendet
 den `?`-Operator.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -389,17 +389,17 @@ fn read_username_from_file() -> Result<String, io::Error> {
 }
 ```
 
-<span class="caption">Codeblock 9-7: Eine Funktion, die Fehler an den
+<span class="caption">Listing 9-7: Eine Funktion, die Fehler an den
 aufrufenden Code zurückgibt, indem sie den `?`-Operator verwendet</span>
 
 Das `?` hinter dem `Result`-Wert bewirkt fast das gleiche wie die
-`match`-Ausdrücke, die wir zum Behandeln der `Result`-Werte in Codeblock 9-6
+`match`-Ausdrücke, die wir zum Behandeln der `Result`-Werte in Listing 9-6
 definiert haben. Wenn der Wert von `Result` ein `Ok` ist, wird der Wert
 innerhalb `Ok` zurückgegeben und das Programm fortgesetzt. Wenn der Wert ein
 `Err` ist, wird er als Funktionsergebnis zurückgegeben, als ob wir das
 Schlüsselwort `return` verwendet hätten.
 
-Es gibt einen Unterschied zwischen dem, was der `match`-Ausdruck aus Codeblock
+Es gibt einen Unterschied zwischen dem, was der `match`-Ausdruck aus Listing
 9-6 tut, und dem, was der `?`-Operator tut: Fehlerwerte, bei denen der
 `?`-Operator aufgerufen wird, durchlaufen die Funktion `from`, die im Trait
 `From` der Standardbibliothek definiert ist und die zur Konvertierung von Werten
@@ -410,7 +410,7 @@ eine Funktion einen einzigen Fehlertyp zurückgibt, um alle möglichen Fehlerart
 einer Funktion darzustellen, auch wenn Teile aus vielen verschiedenen Gründen
 versagen könnten.
 
-Wir könnten zum Beispiel die Funktion `read_username_from_file` in Codeblock
+Wir könnten zum Beispiel die Funktion `read_username_from_file` in Listing
 9-7 so ändern, dass sie einen von uns definierten Fehlertyp namens `OurError`
 zurückgibt. Wenn wir auch `impl From<io::Error> for OurError` definieren, um
 eine Instanz von `OurError` aus einem `io::Error` zu konstruieren, dann werden
@@ -418,7 +418,7 @@ die `?`-Operator-Aufrufe im Rumpf von `read_username_from_file` `from` aufrufen
 und die Fehlertypen konvertieren, ohne dass weiterer Code zur Funktion
 hinzugefügt werden muss.
 
-Im Zusammenhang mit Codeblock 9-7 gibt das `?` am Ende des Aufrufs von
+Im Zusammenhang mit Listing 9-7 gibt das `?` am Ende des Aufrufs von
 `File::open` den Wert innerhalb eines `Ok` an die Variable `username_file`
 zurück. Wenn ein Fehler auftritt, beendet der Operator vorzeitig die gesamte
 Funktion und gibt dem aufrufenden Code einen `Err`-Wert zurück. Dasselbe gilt
@@ -427,7 +427,7 @@ für das `?` am Ende des `read_to_string`-Aufrufs.
 Der `?`-Operator eliminiert viel umständlichen Code und macht die
 Implementierung dieser Funktion einfacher. Wir können diesen Code sogar noch
 weiter verkürzen, indem wir die Methodenaufrufe unmittelbar nach dem `?`
-verketten, wie in Codeblock 9-8 zu sehen ist.
+verketten, wie in Listing 9-8 zu sehen ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -445,7 +445,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
 }
 ```
 
-<span class="caption">Codeblock 9-8: Verketten von Methodenaufrufen nach dem
+<span class="caption">Listing 9-8: Verketten von Methodenaufrufen nach dem
 `?`-Operator</span>
 
 Wir haben das Erstellen des neuen `String` in `username` an den Anfang der
@@ -455,10 +455,10 @@ an das Ergebnis von `File::open("hallo.txt")?` gehängt. Wir haben immer noch
 ein `?` am Ende des Aufrufs von `read_to_string`, und wir geben immer noch
 einen `Ok`-Wert zurück, der `username` enthält, wenn sowohl `File::open` als
 auch `read_to_string` erfolgreich sind, anstatt Fehler zurückzugeben. Die
-Funktionalität ist wieder die gleiche wie in Codeblock 9-6 und Codeblock 9-7;
+Funktionalität ist wieder die gleiche wie in Listing 9-6 und Listing 9-7;
 das ist nur eine andere, ergonomischere Schreibweise.
 
-Codeblock 9-9 zeigt, dass es einen Weg gibt, diese Funktion noch kürzer zu
+Listing 9-9 zeigt, dass es einen Weg gibt, diese Funktion noch kürzer zu
 machen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -472,7 +472,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
 }
 ```
 
-<span class="caption">Codeblock 9-9: Verwenden von `fs::read_to_string`,
+<span class="caption">Listing 9-9: Verwenden von `fs::read_to_string`,
 anstatt die Datei zu öffnen und dann zu lesen</span>
 
 Das Einlesen einer Datei in eine Zeichenkette ist eine ziemlich häufig
@@ -488,12 +488,12 @@ zuerst auf dem längeren Weg gemacht.
 Der Operator `?` kann nur in Funktionen verwendet werden, deren Rückgabetyp mit
 dem Wert, auf den `?` angewendet wird, kompatibel ist. Das liegt daran, dass
 der Operator `?` so definiert ist, dass er einen Wert frühzeitig aus der
-Funktion zurückgibt, genauso wie der Ausdruck `match`, den wir in Codeblock 9-6
-definiert haben. In Codeblock 9-6 verwendet `match` einen `Result`-Wert, und
+Funktion zurückgibt, genauso wie der Ausdruck `match`, den wir in Listing 9-6
+definiert haben. In Listing 9-6 verwendet `match` einen `Result`-Wert, und
 der frühe Rückgabezweig liefert einen `Err(e)`-Wert. Der Rückgabetyp der
 Funktion muss ein `Result` sein, damit er mit `return` kompatibel ist.
 
-Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den `?`-Operator
+Schauen wir uns in Listing 9-10 an, was passiert, wenn wir den `?`-Operator
 in einer Funktion `main` verwenden, deren Rückgabetyp nicht mit dem Typ des
 Wertes, für den wir `?` verwenden, kompatibel ist.
 
@@ -507,7 +507,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 9-10: Der Versuch, das `?` in der Funktion
+<span class="caption">Listing 9-10: Der Versuch, das `?` in der Funktion
 `main` zu verwenden, die `()` zurückgibt, lässt sich nicht kompilieren.</span>
 
 Dieser Code öffnet eine Datei, was fehlschlagen kann. Der `?`-Operator folgt
@@ -555,7 +555,7 @@ Das Verhalten des `?`-Operators beim Aufruf auf eine `Option<T>` ist ähnlich
 dem Verhalten, wenn er auf ein `Result<T, E>` aufgerufen wird: Wenn der Wert
 `None` ist, wird `None` zu diesem Zeitpunkt von der Funktion zurückgegeben.
 Wenn der Wert `Some` ist, ist der Wert innerhalb von `Some` der resultierende
-Wert des Ausdrucks und die Funktion wird fortgesetzt. Codeblock 9-11 zeigt ein
+Wert des Ausdrucks und die Funktion wird fortgesetzt. Listing 9-11 zeigt ein
 Beispiel für eine Funktion, die das letzte Zeichen der ersten Zeile in einem
 gegebenen Text findet.
 
@@ -575,7 +575,7 @@ fn last_char_of_first_line(text: &str) -> Option<char> {
 # }
 ```
 
-<span class="caption">Codeblock 9-11: Verwenden des `?`-Operators auf einem
+<span class="caption">Listing 9-11: Verwenden des `?`-Operators auf einem
 `Option<T>`-Wert</span>
 
 Diese Funktion gibt `Option<char>` zurück, weil es möglich ist, dass ein
@@ -617,8 +617,8 @@ Ausstiegspunkt von ausführbaren Programmen ist, und es gibt Einschränkungen
 hinsichtlich ihres Rückgabetyps, damit sich die Programme wie erwartet
 verhalten.
 
-Glücklicherweise kann `main` auch ein `Result<(), E>` zurückgeben. Codeblock
-9-12 enthält den Code aus Codeblock 9-10, aber wir haben den Rückgabetyp von
+Glücklicherweise kann `main` auch ein `Result<(), E>` zurückgeben. Listing
+9-12 enthält den Code aus Listing 9-10, aber wir haben den Rückgabetyp von
 `main` in `Result<(), Box<dyn Error>>` geändert und am Ende einen Rückgabewert
 `Ok(())` hinzugefügt. Dieser Code wird nun kompilieren:
 
@@ -635,7 +635,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 ```
 
-<span class="caption">Codeblock 9-12: Die Änderung von `main` zur Rückgabe von
+<span class="caption">Listing 9-12: Die Änderung von `main` zur Rückgabe von
 `Result<(), E>` erlaubt die Verwendung des `?`-Operators für
 `Result`-Werte.</span>
 

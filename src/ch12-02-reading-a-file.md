@@ -5,7 +5,7 @@ Befehlszeilenargument `file_path` angegeben ist. Zuerst brauchen wir eine
 Beispieldatei, um sie zu testen: Die beste Art von Datei, die wir benutzen
 können, um sicherzustellen, dass `minigrep` funktioniert, ist eine Datei mit
 einer kleinen Menge Text über mehrere Zeilen mit einigen sich wiederholenden
-Wörtern. In Codeblock 12-3 ist ein Gedicht von Emily Dickinson, das gut
+Wörtern. In Listing 12-3 ist ein Gedicht von Emily Dickinson, das gut
 funktionieren wird! Erstelle eine Datei namens _poem.txt_ im Hauptverzeichnis
 deines Projekts und gib das Gedicht „I'm Nobody! Who are you?“ ein.
 
@@ -23,11 +23,11 @@ To tell your name the livelong day
 To an admiring bog!
 ```
 
-<span class="caption">Codeblock 12-3: Ein Gedicht von Emily Dickinson ist ein
+<span class="caption">Listing 12-3: Ein Gedicht von Emily Dickinson ist ein
 guter Testfall</span>
 
 Wenn der Text vorhanden ist, editiere _src/main.rs_ und füge Code zum Lesen der
-Datei hinzu, wie in Codeblock 12-4 gezeigt.
+Datei hinzu, wie in Listing 12-4 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -52,7 +52,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 12-4: Lesen des Inhalts der Datei, die durch
+<span class="caption">Listing 12-4: Lesen des Inhalts der Datei, die durch
 das zweite Argument angegeben wurde</span>
 
 Zuerst fügen wir eine weitere `use`-Anweisung hinzu, um einen relevanten Teil

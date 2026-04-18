@@ -13,7 +13,7 @@ die Instanz der Struktur, zu der die Methode aufgerufen wird.
 
 Lass uns die Funktion `area`, die eine `Rectangle`-Instanz als Parameter hat,
 ändern und stattdessen eine Methode `area` auf der Struktur `Rectangle`
-definieren, wie in Codeblock 5-13 zu sehen ist.
+definieren, wie in Listing 5-13 zu sehen ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -43,7 +43,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-13: Methode `area` der Struktur `Rectangle`</span>
+<span class="caption">Listing 5-13: Methode `area` der Struktur `Rectangle`</span>
 
 Um die Funktion im Kontext von `Rectangle` zu definieren, beginnen wir mit dem
 Block `impl` (Implementierung) für `Rectangle`. Alles in diesem Block wird mit
@@ -189,7 +189,7 @@ Struktur `Rectangle` implementieren. Diesmal soll eine zweite Instanz von
 `Rectangle` vollständig in `self` (dem ersten `Rectangle`) hineinpasst;
 andernfalls soll `false` zurückgegeben werden. Das heißt, sobald wir die
 Methode `can_hold` definiert haben, wollen wir in der Lage sein, das in
-Codeblock 5-14 gezeigte Programm zu schreiben.
+Listing 5-14 gezeigte Programm zu schreiben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -213,7 +213,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-14: Verwendung der noch nicht geschriebenen
+<span class="caption">Listing 5-14: Verwendung der noch nicht geschriebenen
 Methode `can_hold`</span>
 
 Die erwartete Ausgabe würde wie folgt aussehen, da beide Dimensionen von
@@ -237,7 +237,7 @@ soll, sodass wir es nach dem Aufruf der Methode `can_hold` weiter verwenden
 können. Der Rückgabewert von `can_hold` ist ein boolescher Wert und die
 Implementierung prüft, ob Breite und Höhe von `self` jeweils größer als von
 `Rectangle` sind. Fügen wir die neue Methode `can_hold` zum Block `impl` aus
-Codeblock 5-13 hinzu, wie in Codeblock 5-15 gezeigt.
+Listing 5-13 hinzu, wie in Listing 5-15 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -277,10 +277,10 @@ impl Rectangle {
 # }
 ```
 
-<span class="caption">Codeblock 5-15: Implementierung der Methode `can_hold`
+<span class="caption">Listing 5-15: Implementierung der Methode `can_hold`
 auf `Rectangle`, die eine weitere `Rectangle`-Instanz als Parameter hat</span>
 
-Wenn wir diesen Code mit der Funktion `main` in Codeblock 5-14 ausführen,
+Wenn wir diesen Code mit der Funktion `main` in Listing 5-14 ausführen,
 erhalten wir die gewünschte Ausgabe. Methoden können mehrere Parameter haben,
 die wir in der Signatur nach dem Parameter `self` angeben. Diese Parameter
 funktionieren genau wie Parameter in Funktionen.
@@ -340,7 +340,7 @@ die Module in [Kapitel 7][modules] besprechen.
 ### Mehrere `impl`-Blöcke
 
 Jede Struktur darf mehrere `impl`-Blöcke haben. Beispielsweise entspricht
-Codeblock 5-15 dem in Codeblock 5-16 gezeigten Code, bei dem jede Methode in
+Listing 5-15 dem in Listing 5-16 gezeigten Code, bei dem jede Methode in
 einem eigenen `impl`-Block steht.
 
 ```rust
@@ -381,7 +381,7 @@ impl Rectangle {
 # }
 ```
 
-<span class="caption">Codeblock 5-16: Neuschreiben von Codeblock 5-15 unter
+<span class="caption">Listing 5-16: Neuschreiben von Listing 5-15 unter
 Verwendung mehrerer `impl`-Blöcke</span>
 
 Es ist nicht nötig, diese Methoden hier auf mehrere `impl`-Blöcke zu verteilen,

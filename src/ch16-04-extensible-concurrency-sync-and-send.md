@@ -25,7 +25,7 @@ willst.
 
 Daher stellen das Typsystem und die Trait Bounds von Rust sicher, dass du
 niemals versehentlich einen `Rc<T>`-Wert unsicher zwischen Threads senden
-kannst. Als wir dies in Codeblock 16-14 versuchten, erhielten wir folgenden
+kannst. Als wir dies in Listing 16-14 versuchten, erhielten wir folgenden
 Fehler: Das Trait `Send` ist für `Rc<Mutex<i32>>` nicht implementiert. Als wir
 zu `Arc<T>` wechselten, das `Send` implementiert, ließ sich der Code
 kompilieren.

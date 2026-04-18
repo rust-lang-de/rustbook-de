@@ -142,7 +142,7 @@ anzuzeigen:
 $ cargo test -- --show-output
 ```
 
-Wenn wir die Tests in Codeblock 11-10 mit dem Schalter `--show-output` erneut
+Wenn wir die Tests in Listing 11-10 mit dem Schalter `--show-output` erneut
 ausführen, sehen wir folgende Ausgabe:
 
 ```console
@@ -192,7 +192,7 @@ wählen, welche Tests ausgeführt werden sollen, indem du `cargo test` den oder
 die Namen der Tests, die du ausführen willst, als Argument übergibst.
 
 Um zu demonstrieren, wie man eine Teilmenge von Tests ausführt, werden wir
-zuerst drei Tests für unsere Funktion `add_two` erstellen, wie in Codeblock
+zuerst drei Tests für unsere Funktion `add_two` erstellen, wie in Listing
 11-11 zu sehen ist, und auswählen, welche wir ausführen wollen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -226,7 +226,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 11-11: Drei Tests mit drei verschiedenen
+<span class="caption">Listing 11-11: Drei Tests mit drei verschiedenen
 Namen</span>
 
 Wenn wir die Tests ohne Argumente durchführen, wie vorhin gesehen, werden alle

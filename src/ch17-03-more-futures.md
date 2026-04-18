@@ -19,7 +19,7 @@ Laufzeitumgebung abgibst.
 
 Simulieren wir einen lang andauernden Vorgang, um das Problem des Verhungerns
 (starvation) zu veranschaulichen, und untersuchen wir anschließend, wie es
-gelöst werden kann. Codeblock 17-14 führt eine Funktion `slow` ein.
+gelöst werden kann. Listing 17-14 führt eine Funktion `slow` ein.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -38,7 +38,7 @@ fn slow(name: &str, ms: u64) {
 }
 ```
 
-<span class="caption">Codeblock 17-14: Verwenden von `thread::sleep` zum
+<span class="caption">Listing 17-14: Verwenden von `thread::sleep` zum
 Simulieren langsamer Abläufe</span>
 
 Dieser Code verwendet `std::thread::sleep` anstelle von `trpl::sleep`, sodass
@@ -46,7 +46,7 @@ der Aufruf von `slow` den aktuellen Thread für eine bestimmte Anzahl von
 Millisekunden blockiert. Wir können `slow` benutzen, um reale Abläufe zu
 simulieren, die sowohl langwierig als auch blockierend sind.
 
-In Codeblock 17-15 verwenden wir `slow`, um diese Art von CPU-gebundener Arbeit
+In Listing 17-15 verwenden wir `slow`, um diese Art von CPU-gebundener Arbeit
 in einem Paar von Futures zu emulieren.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -85,7 +85,7 @@ in einem Paar von Futures zu emulieren.
 # }
 ```
 
-<span class="caption">Codeblock 17-15: Aufrufen der Funktion `slow` zum
+<span class="caption">Listing 17-15: Aufrufen der Funktion `slow` zum
 Simulieren langsamer Abläufe</span>
 
 Zunächst gibt jedes Future die Kontrolle erst nach einer Reihe von langsamen
@@ -104,7 +104,7 @@ erhältst du diese Ausgabe:
 'b' ist für 350 ms gelaufen
 'a' beendet.
 ```
-Wie in Codeblock 17-5, wo wir `trpl::select` verwendet haben, um Futures beim
+Wie in Listing 17-5, wo wir `trpl::select` verwendet haben, um Futures beim
 Abrufen von zwei URLs gegeneinander antreten zu lassen, wird `select` immer
 noch beendet, sobald `a` fertig ist. Es gibt jedoch keine Abwechslung zwischen
 den Aufrufen von `slow` in den beiden Futures. Das Future `a` erledigt seine
@@ -115,11 +115,11 @@ beide Futures während ihrer langsamen Vorgänge Fortschritte machen können,
 brauchen wir await-Punkte, damit wir die Kontrolle an die Laufzeitumgebung
 abgeben können. Das heißt, wir brauchen etwas, auf das wir warten können!
 
-Wir können diese Art der Übergabe bereits in Codeblock 17-15 sehen: Wenn wir
+Wir können diese Art der Übergabe bereits in Listing 17-15 sehen: Wenn wir
 `trpl::sleep` am Ende des Futures `a` entfernen, würde es fertig werden, ohne
 dass das Future `b` _überhaupt_ läuft. Versuchen wir, die Funktion
 `trpl::sleep` als Ausgangspunkt zu verwenden, um Operationen am Fortschritt zu
-hindern, wie in Codeblock 17-16 gezeigt.
+hindern, wie in Listing 17-16 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -164,7 +164,7 @@ hindern, wie in Codeblock 17-16 gezeigt.
 # }
 ```
 
-<span class="caption">Codeblock 17-16: Verwenden von `sleep`, um Vorgänge zu
+<span class="caption">Listing 17-16: Verwenden von `sleep`, um Vorgänge zu
 unterbrechen</span>
 
 Wir haben Aufrufe von `trpl::sleep` mit await-Punkten zwischen den Aufrufen von
@@ -191,7 +191,7 @@ könnten die Arbeit so aufteilen, wie es für uns am sinnvollsten ist.
 Wir wollen hier aber nicht wirklich _schlafen_: Wir wollen so schnell wie
 möglich vorankommen. Wir müssen nur die Kontrolle an die Laufzeitumgebung
 abgeben. Das können wir direkt tun, indem wir die Funktion `trpl::yield_now`
-verwenden. In Codeblock 17-17 ersetzen wir all diese Aufrufe von `trpl::sleep`
+verwenden. In Listing 17-17 ersetzen wir all diese Aufrufe von `trpl::sleep`
 durch `trpl::yield_now`.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -235,7 +235,7 @@ durch `trpl::yield_now`.
 # }
 ```
 
-<span class="caption">Codeblock 17-17: Verwenden von `yield_now`, um Vorgänge
+<span class="caption">Listing 17-17: Verwenden von `yield_now`, um Vorgänge
 anzuhalten</span>
 
 Dieser Code ist sowohl klarer als auch wesentlich schneller als `sleep`, weil
@@ -273,7 +273,7 @@ können wir eine Funktion `timeout` mit bereits vorhandenen asynchronen
 Bausteinen erstellen. Wenn wir fertig sind, ist das Ergebnis ein weiterer
 Baustein, mit dem wir weitere asynchrone Abstraktionen erstellen können.
 
-Codeblock 17-18 zeigt die erwartete Arbeitsweise von `timeout` bei einem
+Listing 17-18 zeigt die erwartete Arbeitsweise von `timeout` bei einem
 langsamen Future.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -298,7 +298,7 @@ langsamen Future.
 # }
 ```
 
-<span class="caption">Codeblock 17-18: Verwendeng unseres imaginären `timeout`,
+<span class="caption">Listing 17-18: Verwendeng unseres imaginären `timeout`,
 um eine langsame Operation mit einem Zeitlimit durchzuführen</span>
 
 Lass es uns implementieren! Denken wir zunächst über die API für `timeout`
@@ -315,7 +315,7 @@ nach:
   Zeitlimit zuerst erreicht wird, wird `Result` ein `Err` mit der Wartedauer
   sein.
 
-Codeblock 17-19 zeigt diese Deklaration.
+Listing 17-19 zeigt diese Deklaration.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -346,7 +346,7 @@ async fn timeout<F: Future>(
 }
 ```
 
-<span class="caption">Codeblock 17-19: Definieren der Signatur von
+<span class="caption">Listing 17-19: Definieren der Signatur von
 `timeout`</span>
 
 Damit sind unsere Ziele für die Typen erfüllt. Denken wir nun über das
@@ -355,7 +355,7 @@ _Verhalten_ nach, das wir brauchen: Wir wollen die Dauer des übergebenen Future
 `trpl::select` verwenden, um mit diesem Timer das übergebene Future zu
 überwachen.
 
-In Codeblock 17-20 implementieren wir `timeout`, indem wir das Ergebnis von
+In Listing 17-20 implementieren wir `timeout`, indem wir das Ergebnis von
 `trpl::select` abgleichen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -394,7 +394,7 @@ async fn timeout<F: Future>(
 # }
 ```
 
-<span class="caption">Codeblock 17-20: Definieren von `timeout` mit `select` und
+<span class="caption">Listing 17-20: Definieren von `timeout` mit `select` und
 `sleep`</span>
 
 Die Implementierung von `trpl::select` ist nicht fair: Sie fragt die Argumente
@@ -423,7 +423,7 @@ Da Futures aus anderen Futures zusammengesetzt werden können, lassen sich mit
 kleineren asynchronen Bausteinen wirklich leistungsfähige Werkzeuge erstellen.
 So kannst du beispielsweise mit demselben Ansatz Zeitüberschreitungen mit
 Wiederholungen kombinieren und diese wiederum für Operationen wie
-Netzwerkaufrufe verwenden (so wie in Codeblock 17-5).
+Netzwerkaufrufe verwenden (so wie in Listing 17-5).
 
 In der Praxis arbeitest du in der Regel direkt mit `async` und `await` und
 seltener mit Funktionen wie `select` und Makros wie `join!`, um die Ausführung

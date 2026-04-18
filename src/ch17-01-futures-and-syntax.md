@@ -86,7 +86,7 @@ die den Vorgang zuerst beendet hat.
 
 Beginnen wir mit dem Schreiben einer Funktion, die eine Seiten-URL als
 Parameter entgegennimmt, eine Anfrage an diese stellt und den Text des
-Elements `<title>` zurückgibt (siehe Codeblock 17-1).
+Elements `<title>` zurückgibt (siehe Listing 17-1).
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -106,7 +106,7 @@ async fn page_title(url: &str) -> Option<String> {
 }
 ```
 
-<span class="caption">Codeblock 17-1: Definieren einer asynchronen Funktion zum
+<span class="caption">Listing 17-1: Definieren einer asynchronen Funktion zum
 Abrufen des Titelelements aus einer HTML-Seite</span>
 
 Zuerst definieren wir eine Funktion `page_title` und versehen sie mit dem
@@ -164,7 +164,7 @@ Dies mag sich von dem unterscheiden, was du vielleicht gewohnt bist, wenn du
 async in anderen Sprachen verwendet hast. Rust hat sich dafür entschieden, weil
 es die Arbeit mit Methodenketten viel angenehmer macht. Als Ergebnis können wir
 den Rumpf von `page_url_for` ändern, um die Funktionsaufrufe `trpl::get` und
-`text` mit `await` dazwischen zu verketten, wie in Codeblock 17-2 gezeigt.
+`text` mit `await` dazwischen zu verketten, wie in Listing 17-2 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -183,7 +183,7 @@ den Rumpf von `page_url_for` ändern, um die Funktionsaufrufe `trpl::get` und
 # }
 ```
 
-<span class="caption">Codeblock 17-2: Verketten mit dem Schlüsselwort
+<span class="caption">Listing 17-2: Verketten mit dem Schlüsselwort
 `await`</span>
 
 Damit haben wir erfolgreich unsere erste asynchrone Funktion geschrieben! Bevor
@@ -199,7 +199,7 @@ des anonymen Datentyps, den der Compiler für diesen asynchronen Block erstellt.
 
 Die Angabe von `async fn` ist also gleichbedeutend mit dem Schreiben einer
 Funktion, die ein _Future_ des Rückgabetyps zurückgibt. Für den Compiler ist
-eine Funktionsdefinition wie `async fn page_title` in Codeblock 17-1 fast
+eine Funktionsdefinition wie `async fn page_title` in Listing 17-1 fast
 äquivalent zu einer nicht-asynchronen Funktion, die wie folgt definiert ist:
 
 ```rust
@@ -237,7 +237,7 @@ Jetzt können wir `page_title` in `main` aufrufen.
 
 ## Ausführen einer asynchronen Funktion mit einer Laufzeitumgebung
 
-Zunächst holen wir uns den Titel für eine einzelne Seite, wie in Codeblock 17-3
+Zunächst holen wir uns den Titel für eine einzelne Seite, wie in Listing 17-3
 gezeigt. Leider lässt sich dieser Code noch nicht kompilieren.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -262,7 +262,7 @@ async fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 17-3: Aufruf der Funktion `page_title` aus
+<span class="caption">Listing 17-3: Aufruf der Funktion `page_title` aus
 `main` mit einem vom Benutzer angegebenen Argument</span>
 
 Wir folgen wir dem gleichen Muster, das wir zum Einlesen von
@@ -314,12 +314,12 @@ den Wert zurück, den das Future erzeugt hat.
 
 Wir könnten das von `page_title` zurückgegebene Future direkt an `block_on`
 übergeben. Sobald es abgeschlossen ist, könnten wir die resultierende
-`Option<String>` abgleichen, so wie wir es in Codeblock 17-3 versucht haben.
+`Option<String>` abgleichen, so wie wir es in Listing 17-3 versucht haben.
 Für die meisten Beispiele in diesem Kapitel (und den meisten asynchronen Code
 in der realen Welt!) werden wir jedoch mehr als nur einen asynchronen
 Funktionsaufruf durchführen, also übergeben wir stattdessen einen `async`-Block
 und warten explizit auf das Ergebnis des Aufrufs von `page_title`, wie in
-Codeblock 17-4.
+Listing 17-4.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -346,7 +346,7 @@ fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 17-4: Warten auf einen asynchronen Block mit
+<span class="caption">Listing 17-4: Warten auf einen asynchronen Block mit
 `trpl::block_on`</span>
 
 Wenn wir diesen Code ausführen, erhalten wir das Verhalten, das wir anfangs
@@ -396,7 +396,7 @@ dich mit Laufzeitumgebungen befasst: Ein Executor ist der Teil einer
 Laufzeitumgebung, der für die Ausführung des asynchronen Codes verantwortlich
 ist.)
 
-Jetzt kannst du sehen, warum uns der Compiler in Codeblock 17-3 davon
+Jetzt kannst du sehen, warum uns der Compiler in Listing 17-3 davon
 abgehalten hat, `main` selbst zu einer asynchronen Funktion zu machen. Wäre
 `main` eine asynchrone Funktion, müsste etwas anderes den Zustandsautomaten für
 das Future verwalten, das `main` zurückgibt, aber `main` ist der Startpunkt des
@@ -407,7 +407,7 @@ zurückgegebene Future auszuführen, bis es fertig ist.
 > Hinweis: Einige Laufzeitumgebungen stellen Makros zur Verfügung, mit denen du
 > eine asynchrone Funktion `main` schreiben _kannst_. Diese Makros wandeln
 > `async fn main() { ... }` in eine normale `fn main` um, die dasselbe tut, was
-> wir in Codeblock 17-4 von Hand gemacht haben: Eine Funktion aufrufen, die ein
+> wir in Listing 17-4 von Hand gemacht haben: Eine Funktion aufrufen, die ein
 > Future zu Ende ausführt, so wie `trpl::block_on` es macht.
 
 Fügen wir die Teile zusammen und sehen wir uns an, wie wir nebenläufigen Code
@@ -415,7 +415,7 @@ schreiben können.
 
 ### Zwei URLs nebenläufig gegeneinander antreten lassen
 
-In Codeblock 17-5 rufen wir `page_title` mit zwei verschiedenen URLs auf, die
+In Listing 17-5 rufen wir `page_title` mit zwei verschiedenen URLs auf, die
 von der Befehlszeile übergeben werden, und lassen sie um die Wette laufen,
 indem das zuerst fertig werdende Future ausgewählt wird.
 
@@ -454,7 +454,7 @@ async fn page_title(url: &str) -> (&str, Option<String>) {
 }
 ```
 
-<span class="caption">Codeblock 17-5: Aufruf von `page_title` für zwei URLs, um
+<span class="caption">Listing 17-5: Aufruf von `page_title` für zwei URLs, um
 zu sehen, welche zuerst zurückgegeben wird</span>
 
 Wir beginnen mit dem Aufruf von `page_title` für jede der vom Benutzer
