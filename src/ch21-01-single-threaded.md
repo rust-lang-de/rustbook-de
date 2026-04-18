@@ -375,7 +375,7 @@ HTTP-Antwort in den Strom</span>
 
 Die erste neue Zeile definiert die Variable `response`, die die Daten der
 Erfolgsmeldung enthält. Dann rufen wir `as_bytes` auf unserer `response` auf,
-um die Zeichenkettendaten in Bytes zu konvertieren. Die Methode `write_all` auf
+um die String-Daten in Bytes zu konvertieren. Die Methode `write_all` auf
 `stream` nimmt ein `&[u8]` und sendet diese Bytes direkt in die Verbindung. Da
 die Operation `write_all` fehlschlagen könnte, verwenden wir wie bisher bei
 jedem Fehlerergebnis `unwrap` . Auch hier würdest du in einer echten Anwendung
@@ -463,9 +463,9 @@ Rumpf der Antwort</span>
 
 Wir haben `fs` zur `use`-Deklaration hinzugefügt, um das Dateisystemmodul der
 Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code zum Lesen des
-Inhalts einer Datei in eine Zeichenkette sollte vertraut aussehen; wir haben
-ihn verwendet, als wir den Inhalt einer Datei für unser E/A-Projekt in
-Listing 12-4 gelesen haben.
+Inhalts einer Datei in einen String sollte vertraut aussehen; wir haben ihn
+verwendet, als wir den Inhalt einer Datei für unser E/A-Projekt in Listing 12-4
+gelesen haben.
 
 Als Nächstes verwenden wir `format!`, um den Inhalt der Datei als Rumpf der
 Erfolgsantwort hinzuzufügen. Um eine gültige HTTP-Antwort zu gewährleisten,

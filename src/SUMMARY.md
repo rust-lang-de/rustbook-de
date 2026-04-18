@@ -21,7 +21,7 @@
 - [Eigentümerschaft (ownership) verstehen](ch04-00-understanding-ownership.md)
   - [Was ist Eigentümerschaft (ownership)?](ch04-01-what-is-ownership.md)
   - [Referenzen und Borrowing](ch04-02-references-and-borrowing.md)
-  - [Der Anteilstyp (slice)](ch04-03-slices.md)
+  - [Der Slice-Typ](ch04-03-slices.md)
 
 - [Strukturen (structs) für zusammenhängende Daten verwenden](ch05-00-structs.md)
   - [Strukturen (structs) definieren und instanziieren](ch05-01-defining-structs.md)
@@ -42,7 +42,7 @@
 
 - [Allgemeine Kollektionen](ch08-00-common-collections.md)
   - [Wertlisten in Vektoren ablegen](ch08-01-vectors.md)
-  - [UTF-8-kodierten Text in Zeichenketten (strings) ablegen](ch08-02-strings.md)
+  - [UTF-8-kodierten Text in Strings ablegen](ch08-02-strings.md)
   - [Schlüssel mit zugehörigen Werten in Hashtabellen ablegen](ch08-03-hash-maps.md)
 
 - [Fehlerbehandlung](ch09-00-error-handling.md)

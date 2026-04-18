@@ -25,17 +25,16 @@ Wir können auch das Newtype-Muster verwenden, um einige Implementierungsdetails
 eines Typs zu abstrahieren: Der neue Typ kann eine öffentliche API
 bereitstellen, die sich von der API des privaten, inneren Typs unterscheidet.
 
-Newtypes können auch die interne Implementierung verbergen. Zum Beispiel
-könnten wir einen Typ `People` zur Verfügung stellen, um eine `HashMap<i32,
-String>` einzupacken, die die ID einer Person in Verbindung mit ihrem Namen
-speichert. Code, der `People` verwendet, würde nur mit der öffentlichen API
-interagieren, die wir zur Verfügung stellen, z.B. eine Methode, um eine
-Namenszeichenkette zur `People`-Kollektion hinzuzufügen; dieser Code müsste
-nicht wissen, dass wir Namen intern eine `i32`-ID zuordnen. Das Newtype-Muster
-ist ein leichtgewichtiger Weg, eine Kapselung zu erreichen, um
-Implementierungsdetails zu verbergen, die wir in [„Kapselung, die
-Implementierungsdetails verbirgt“][encapsulation] in Kapitel 18 besprochen
-haben.
+Newtypes können auch die interne Implementierung verbergen. Zum Beispiel könnten
+wir einen Typ `People` zur Verfügung stellen, um eine `HashMap<i32, String>`
+einzupacken, die die ID einer Person in Verbindung mit ihrem Namen speichert.
+Code, der `People` verwendet, würde nur mit der öffentlichen API interagieren,
+die wir zur Verfügung stellen, z.B. eine Methode, um einen Namens-String zur
+`People`-Kollektion hinzuzufügen; dieser Code müsste nicht wissen, dass wir
+Namen intern eine `i32`-ID zuordnen. Das Newtype-Muster ist ein
+leichtgewichtiger Weg, eine Kapselung zu erreichen, um Implementierungsdetails
+zu verbergen, die wir in [„Kapselung, die Implementierungsdetails
+verbirgt“][encapsulation] in Kapitel 18 besprochen haben.
 
 ### Typ-Synonyme und Typ-Aliase
 
@@ -279,11 +278,10 @@ zum Beispiel der folgende Code nicht:
     };
 ```
 
-Der Typ von `guess` in diesem Code müsste eine ganze Zahl _und_ eine
-Zeichenkette sein und Rust verlangt, dass `guess` nur einen Typ hat. Was gibt
-also `continue` zurück? Wie war es uns erlaubt, ein `u32` von einem Zweig
-zurückzugeben und einen anderen Zweig zu haben, der in Listing 20-27 mit
-`continue` endet?
+Der Typ von `guess` in diesem Code müsste eine ganze Zahl _und_ ein String sein
+und Rust verlangt, dass `guess` nur einen Typ hat. Was gibt also `continue`
+zurück? Wie war es uns erlaubt, ein `u32` von einem Zweig zurückzugeben und
+einen anderen Zweig zu haben, der in Listing 20-27 mit `continue` endet?
 
 Wie du vielleicht schon vermutet hast, hat `continue` einen `!`-Wert. Das
 heißt, wenn Rust den Typ von `guess` berechnet, betrachtet es beide
@@ -348,13 +346,13 @@ großen Typen_ (dynamically sized types). Diese Typen, die manchmal als _DSTs_
 oder _Typen ohne Größe_ (unsized types) bezeichnet werden, erlauben es uns,
 Code mit Werten zu schreiben, deren Größe wir nur zur Laufzeit kennen können.
 
-Schauen wir uns die Details eines dynamisch großen Typs namens `str` an, den
-wir im ganzen Buch verwendet haben. Das stimmt, nicht `&str`, sondern `str` an
-sich ist ein DST. In vielen Fällen, beispielsweise beim Speichern von durch
-einen Benutzer eingegebenem Text, können wir erst zur Laufzeit feststellen, wie
-lang die Zeichenkette ist. Das bedeutet, dass wir weder eine Variable vom Typ
-`str` erzeugen, noch wir ein Argument vom Typ `str` nehmen können. Betrachte
-den folgenden Code, der nicht funktioniert:
+Schauen wir uns die Details eines dynamisch großen Typs namens `str` an, den wir
+im ganzen Buch verwendet haben. Das stimmt, nicht `&str`, sondern `str` an sich
+ist ein DST. In vielen Fällen, beispielsweise beim Speichern von durch einen
+Benutzer eingegebenem Text, können wir erst zur Laufzeit feststellen, wie lang
+der String ist. Das bedeutet, dass wir weder eine Variable vom Typ `str`
+erzeugen, noch wir ein Argument vom Typ `str` nehmen können. Betrachte den
+folgenden Code, der nicht funktioniert:
 
 ```rust,does_not_compile
 let s1: str = "Guten Tag!";
@@ -370,21 +368,19 @@ Bytes. Aus diesem Grund ist es nicht möglich, eine Variable zu erzeugen, die
 einen dynamisch großen Typ enthält.
 
 Was sollen wir also tun? In diesem Fall kennst du die Antwort bereits: Wir
-machen die Typen `s1` und `s2` zu einem Zeichenkettenanteilstyp (`&str`)
-anstatt zu einem `str`. Erinnere dich, dass wir im Abschnitt
-[„Zeichenkettenanteilstypen (string slices)“][string-slices] in Kapitel 4
-gesagt haben, dass die Anteilstypen-Datenstruktur die Startposition und die
-Länge des Anteilstyps speichert. Obwohl also `&T` ein einzelner Wert ist, der
-die Speicheradresse des Ortes speichert, an dem sich `T` befindet, hat ein
-Zeichenkettenanteilstyp _zwei_ Werte: Die Adresse von `str` und seine Länge.
-Als solches können wir die Größe eines Zeichenkettenanteilstyp-Wertes zur
-Kompilierzeit kennen: Er ist doppelt so lang wie ein `usize`. Das heißt, wir
-wissen immer die Größe eine Zeichenkettenanteilstyps, egal wie lang die
-Zeichenkette ist, auf die er sich bezieht. Im Allgemeinen werden in Rust Typen
-mit dynamischer Größe auf diese Weise verwendet: Sie haben ein zusätzliches
-Stück Metadaten, das die Größe der dynamischen Information speichert. Die
-goldene Regel für Typen dynamischer Größe lautet, dass wir Werte von Typen mit
-dynamischer Größe immer hinter eine Art Zeiger stellen müssen.
+machen die Typen `s1` und `s2` zu einem String Slice (`&str`) anstatt zu einem
+`str`. Erinnere dich, dass wir im Abschnitt [„String Slices“][string-slices] in
+Kapitel 4 gesagt haben, dass die Slice-Datenstruktur die Startposition und die
+Länge des Slices speichert. Obwohl also `&T` ein einzelner Wert ist, der die
+Speicheradresse des Ortes speichert, an dem sich `T` befindet, hat ein String
+Slice _zwei_ Werte: Die Adresse von `str` und seine Länge. Als solches können
+wir die Größe eines String-Slice-Wertes zur Kompilierzeit kennen: Er ist doppelt
+so lang wie ein `usize`. Das heißt, wir wissen immer die Größe eines String
+Slices, egal wie lang der String ist, auf die er sich bezieht. Im Allgemeinen
+werden in Rust Typen mit dynamischer Größe auf diese Weise verwendet: Sie haben
+ein zusätzliches Stück Metadaten, das die Größe der dynamischen Information
+speichert. Die goldene Regel für Typen dynamischer Größe lautet, dass wir Werte
+von Typen mit dynamischer Größe immer hinter eine Art Zeiger stellen müssen.
 
 Wir können `str` mit allen Arten von Zeigern kombinieren: Zum Beispiel
 `Box<str>` oder `Rc<str>`. Tatsächlich hast du das schon einmal gesehen, aber
@@ -439,6 +435,6 @@ Als nächstes werden wir über Funktionen und Closures sprechen!
 
 [encapsulation]: ch18-01-what-is-oo.html#kapselung-die-implementierungsdetails-verbirgt
 [match-operator]: ch06-02-match.html
-[string-slices]: ch04-03-slices.html#zeichenkettenanteilstypen-string-slices
+[string-slices]: ch04-03-slices.html#string-slices
 [newtype]: ch20-02-advanced-traits.html#externe-traits-mit-dem-newtype-muster-implementieren
 [using-trait-objects]: ch18-02-trait-objects.html

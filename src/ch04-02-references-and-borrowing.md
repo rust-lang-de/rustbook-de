@@ -39,7 +39,7 @@ es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
 
 <img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
 Tabelle für s1. Die Tabelle für s1 enthält die Stack-Daten für s1 und zeigt auf
-die Zeichenketten-Daten auf dem Heap." src="img/trpl04-06.svg" class="center" />
+die String-Daten auf dem Heap." src="img/trpl04-06.svg" class="center" />
 
 <span class="caption">Abbildung 4-6: Eine Grafik mit `&String s`, das auf
 `String s1` zeigt</span>
@@ -84,7 +84,7 @@ Anmerkungen ergänzen:
 # }
 #
 fn calculate_length(s: &String) -> usize { // s ist eine Referenz
-                                           // auf eine Zeichenkette
+                                           // auf einen String
     s.len()
 } // Hier verlässt s den Gültigkeitsbereich. Aber weil es keine
   // Eigentümerschaft an dem hat, worauf es referenziert, passiert nichts.
@@ -395,11 +395,11 @@ Lass uns einen genaueren Blick auf das werfen, was in jeder Phase unseres
 # }
 #
 fn dangle() -> &String { // dangle gibt eine Referenz
-                         // auf eine Zeichenkette zurück
+                         // auf einen String zurück
 
-    let s = String::from("Hallo"); // s ist eine neue Zeichenkette
+    let s = String::from("Hallo"); // s ist ein neuer String
 
-    &s // wir geben einen Verweis auf die Zeichenkette s zurück
+    &s // wir geben eine Referenz auf den String s zurück
 } // Hier verlässt s den Gültigkeitsbereich und wird verworfen.
   // Sein Speicherplatz wird aufgeräumt. Gefahr!
 ```
@@ -434,5 +434,4 @@ Lass uns rekapitulieren, was wir über Referenzen gelernt haben:
   Referenz _oder_ eine beliebige Anzahl unveränderbarer Referenzen haben.
 - Referenzen müssen immer gültig sein.
 
-Als Nächstes werden wir uns mit einer anderen Art von Referenz befassen:
-Anteilstypen (slice).
+Als Nächstes werden wir uns mit einer anderen Art von Referenz befassen: Slices.

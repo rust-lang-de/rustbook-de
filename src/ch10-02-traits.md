@@ -175,9 +175,9 @@ eines Traits zu haben, anstatt Implementierungen für alle Methoden für jeden T
 zu verlangen. Wenn wir dann das Trait für einen bestimmten Typ implementieren,
 können wir das Standardverhalten jeder Methode beibehalten oder überschreiben.
 
-In Listing 10-14 geben wir eine Standard-Zeichenkette für die Methode
-`summarize` des Traits `Summary` an, anstatt nur die Methodensignatur zu
-definieren, wie wir es in Listing 10-12 getan haben.
+In Listing 10-14 geben wir einen Standard-String für die Methode `summarize` des
+Traits `Summary` an, anstatt nur die Methodensignatur zu definieren, wie wir es
+in Listing 10-12 getan haben.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 

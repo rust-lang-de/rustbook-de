@@ -92,8 +92,7 @@ Der Wert von x ist: 5
 Die Deklaration `another_function` hat einen Parameter namens `x`. Der Typ von
 `x` wird als `i32` angegeben. Wenn wir `5` an `another_function` übergeben,
 setzt das Makro `println!` den Wert `5` an die Stelle, an der sich das Paar
-geschweifter Klammern mit dem `x` darin in der Formatierungszeichenkette
-befand.
+geschweifter Klammern mit dem `x` darin im Formatierungs-String befand.
 
 In Funktionssignaturen _musst_ du den Typ jedes Parameters deklarieren. Dies
 ist eine bewusste Designentscheidung von Rust: Das Erfordernis von

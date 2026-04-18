@@ -252,8 +252,8 @@ wir eine Aufzählung definieren und verwenden!
 
 Angenommen, wir möchten Werte aus einer Zeile einer Tabellenkalkulationstabelle
 erhalten, in der einige Spalten der Zeile ganze Zahlen, Fließkommazahlen und
-Zeichenketten enthalten. Wir können eine Aufzählung definieren, deren Varianten
-die verschiedenen Werttypen enthalten, und alle Aufzählungsvarianten werden als
+Strings enthalten. Wir können eine Aufzählung definieren, deren Varianten die
+verschiedenen Werttypen enthalten, und alle Aufzählungsvarianten werden als
 derselbe Typ angesehen: Der Typ der Aufzählung. Dann können wir einen Vektor
 erstellen, der diese Aufzählung und damit letztlich verschiedene Typen enthält.
 Wir haben dies in Listing 8-9 demonstriert.

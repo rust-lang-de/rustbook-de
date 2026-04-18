@@ -299,11 +299,10 @@ Funktionalität der automatischen Umwandlung können wir auch Programmcode
 schreiben, der sowohl für Referenzen als auch für intelligente Zeiger geeignet
 ist.
 
-Um die automatische Umwandlung in Aktion zu sehen, verwenden wir den in
-Listing 15-8 definierten Typ `MyBox<T>` sowie die Implementierung von
-`Deref`, die wir in Listing 15-10 hinzugefügt haben. Listing 15-11 zeigt
-die Definition einer Funktion mit einem Zeichenketten-Anteilstyp (string slice)
-Parameter.
+Um die automatische Umwandlung in Aktion zu sehen, verwenden wir den in Listing
+15-8 definierten Typ `MyBox<T>` sowie die Implementierung von `Deref`, die wir
+in Listing 15-10 hinzugefügt haben. Listing 15-11 zeigt die Definition einer
+Funktion mit einem String-Slice-Parameter.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -318,10 +317,10 @@ fn hello(name: &str) {
 <span class="caption">Listing 15-11: Eine Funktion `hello` mit dem Parameter
 `name` vom Typ `&str`</span>
 
-Wir können die Funktion `hello` mit einem Zeichenketten-Anteilstyp als Argument
-aufrufen, wie zum Beispiel `hello("Rust");`. Die automatische Umwandlung
-ermöglicht es, `hello` mit einer Referenz auf einen Wert vom Typ
-`MyBox<String>` aufzurufen, wie Listing 15-12 zeigt.
+Wir können die Funktion `hello` mit einem String Slice als Argument aufrufen,
+wie zum Beispiel `hello("Rust");`. Die automatische Umwandlung ermöglicht es,
+`hello` mit einer Referenz auf einen Wert vom Typ `MyBox<String>` aufzurufen,
+wie Listing 15-12 zeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -358,13 +357,13 @@ fn main() {
 `MyBox<String>`-Wert, der aufgrund automatischer Umwandlung funktioniert</span>
 
 Hier rufen wir die Funktion `hello` mit dem Argument `&m` auf, das auf einen
-`MyBox<String>`-Wert referenziert. Da wir in Listing 15-10 das Trait
-`Deref` für `MyBox<T>` implementiert haben, kann Rust `&MyBox<String>` durch
-Aufrufen von `deref` in `&String` verwandeln. Die Standardbibliothek bietet
-eine Implementierung von `Deref` auf `String`, die einen
-Zeichenketten-Anteilstyp zurückgibt. Dies kann man in der API-Dokumentation für
-`Deref` nachlesen. Rust ruft erneut `deref` auf, um `&String` in `&str`
-umzuwandeln, was der Definition der Funktion `hello` entspricht.
+`MyBox<String>`-Wert referenziert. Da wir in Listing 15-10 das Trait `Deref` für
+`MyBox<T>` implementiert haben, kann Rust `&MyBox<String>` durch Aufrufen von
+`deref` in `&String` verwandeln. Die Standardbibliothek bietet eine
+Implementierung von `Deref` auf `String`, die einen String Slice zurückgibt.
+Dies kann man in der API-Dokumentation für `Deref` nachlesen. Rust ruft erneut
+`deref` auf, um `&String` in `&str` umzuwandeln, was der Definition der Funktion
+`hello` entspricht.
 
 Wenn Rust keine automatische Umwandlung implementiert hätte, müssten wir den
 Programmcode in Listing 15-13 anstelle des Programmcodes in 15-12 schreiben,
@@ -404,12 +403,12 @@ fn main() {
 <span class="caption">Listing 15-13: Programmcode den wir schreiben
 müssten wenn Rust keine automatische Umwandlung hätte</span>
 
-Das `(*m)` dereferenziert `MyBox<String>` zu einem `String`. Dann nehmen `&`
-und `[..]` einen Anteilstyp des `String`, der gleich der gesamten Zeichenkette
-ist, um der Signatur von `hello` zu entsprechen. Der Programmcode ohne
-automatische Umwandlung ist mit all den Symbolen schwerer zu lesen, zu
-schreiben und zu verstehen. Durch die automatische Umwandlung kann Rust diese
-Konvertierung automatisch für uns durchführen.
+Das `(*m)` dereferenziert `MyBox<String>` zu einem `String`. Dann nehmen `&` und
+`[..]` einen Slice des `String`, der gleich des gesamten Strings ist, um der
+Signatur von `hello` zu entsprechen. Der Programmcode ohne automatische
+Umwandlung ist mit all den Symbolen schwerer zu lesen, zu schreiben und zu
+verstehen. Durch die automatische Umwandlung kann Rust diese Konvertierung
+automatisch für uns durchführen.
 
 Wenn das Trait `Deref` für die beteiligten Typen definiert ist, analysiert Rust
 die Typen und verwendet `Deref::deref` so oft wie nötig, um eine Referenz zu

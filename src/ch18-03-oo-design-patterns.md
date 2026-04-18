@@ -87,12 +87,12 @@ hinzuzufügen. Wenn wir versuchen, den Inhalt des Beitrags sofort, also vor der
 Genehmigung, abzurufen, sollten wir keinen Text erhalten, da der Beitrag noch
 ein Entwurf ist. Wir haben zu Demonstrationszwecken `assert_eq!` in den Code
 eingefügt. Ein ausgezeichneter Modultest dafür wäre die Zusicherung, dass ein
-Entwurf eines Blog-Beitrags eine leere Zeichenkette aus der Methode `content`
+Entwurf eines Blog-Beitrags einen leeren String aus der Methode `content`
 zurückgibt, aber wir werden für dieses Beispiel keine Tests schreiben.
 
 Als nächstes wollen wir einen Antrag auf Überprüfung des Beitrags ermöglichen
-und wir wollen, dass `content` eine leere Zeichenkette zurückgibt, solange wir
-auf die Überprüfung warten. Wenn der Beitrag die Genehmigung erhält, soll er
+und wir wollen, dass `content` einen leeren String zurückgibt, solange wir auf
+die Überprüfung warten. Wenn der Beitrag die Genehmigung erhält, soll er
 veröffentlicht werden, d.h. der Text des Beitrags wird zurückgegeben, wenn
 `content` aufgerufen wird.
 
@@ -219,15 +219,14 @@ Feld `state`, aber sie ist Teil des Verhaltens, das wir unterstützen wollen.
 
 Selbst nachdem wir `add_text` aufgerufen und unserem Beitrag etwas Inhalt
 hinzugefügt haben, wollen wir immer noch, dass die Methode `content` einen
-leeren Zeichenkettenanteilstyp (string slice) zurückgibt, weil sich der Beitrag
-noch im Entwurfszustand befindet, wie beim ersten `assert_eq!` in Listing
-18-11 gezeigt wird. Lass uns fürs Erste die Methode `content` mit der
-einfachsten Sache implementieren, die diese Anforderung erfüllt: Immer einen
-leeren Zeichenkettenanteilstyp zurückgeben. Wir werden dies später ändern,
-sobald wir die Möglichkeit implementiert haben, den Zustand eines Beitrags zu
-ändern, damit er veröffentlicht werden kann. Bislang können Beiträge nur im
-Entwurfszustand sein, daher sollte der Beitragsinhalt immer leer sein.
-Listing 18-14 zeigt diese Platzhalter-Implementierung.
+leeren String Slice zurückgibt, weil sich der Beitrag noch im Entwurfszustand
+befindet, wie beim ersten `assert_eq!` in Listing 18-11 gezeigt wird. Lass uns
+fürs Erste die Methode `content` mit der einfachsten Sache implementieren, die
+diese Anforderung erfüllt: Immer einen leeren String Slice zurückgeben. Wir
+werden dies später ändern, sobald wir die Möglichkeit implementiert haben, den
+Zustand eines Beitrags zu ändern, damit er veröffentlicht werden kann. Bislang
+können Beiträge nur im Entwurfszustand sein, daher sollte der Beitragsinhalt
+immer leer sein. Listing 18-14 zeigt diese Platzhalter-Implementierung.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -264,7 +263,7 @@ impl Post {
 
 <span class="caption">Listing 18-14: Hinzufügen einer
 Platzhalter-Implementierung für die Methode `content` auf `Post`, die immer
-einen leeren Zeichenkettenanteilstyp zurückgibt</span>
+einen leeren String Slice zurückgibt</span>
 
 Mit dieser zusätzlichen Methode `content` funktioniert alles in Listing 18-11
 bis hin zum ersten `assert_eq!` wie beabsichtigt.
@@ -374,10 +373,10 @@ Methode `request_review` auf `Post` ist die gleiche, unabhängig von ihrem Wert
 `state`. Jeder Zustand ist für seine eigenen Regeln verantwortlich.
 
 Wir lassen die Methode `content` auf `Post` so wie sie ist und geben einen
-leeren Zeichenkettenanteilstyp zurück. Wir können jetzt einen `Post` sowohl im
-Zustand `PendingReview` als auch im Zustand `Draft` haben, aber wir wollen das
-gleiche Verhalten im Zustand `PendingReview`. Listing 18-11 funktioniert
-jetzt bis zum zweiten `assert_eq!`-Aufruf!
+leeren String Slice zurück. Wir können jetzt einen `Post` sowohl im Zustand
+`PendingReview` als auch im Zustand `Draft` haben, aber wir wollen das gleiche
+Verhalten im Zustand `PendingReview`. Listing 18-11 funktioniert jetzt bis zum
+zweiten `assert_eq!`-Aufruf!
 
 #### Hinzufügen von `approve`, um das Verhalten von `content` zu ändern
 
@@ -694,12 +693,12 @@ impl State for Published {
 Trait `State`</span>
 
 Wir fügen eine Standard-Implementierung für die Methode `content` hinzu, die
-einen leeren Zeichenkettenanteilstyp zurückgibt. Das bedeutet, dass wir
-`content` in den Strukturen `Draft` und `PendingReview` nicht implementieren
-müssen. Die Struktur `Published` überschreibt die Methode `content` und gibt
-den Wert in `post.content` zurück. Die Verwendung der Methode `content` in
-`State` zur Bestimmung des Inhalts von `Post` ist zwar praktisch, verwischt
-jedoch die Grenzen zwischen den Verantwortlichkeiten von `State` und `Post`.
+einen leeren String Slice zurückgibt. Das bedeutet, dass wir `content` in den
+Strukturen `Draft` und `PendingReview` nicht implementieren müssen. Die Struktur
+`Published` überschreibt die Methode `content` und gibt den Wert in
+`post.content` zurück. Die Verwendung der Methode `content` in `State` zur
+Bestimmung des Inhalts von `Post` ist zwar praktisch, verwischt jedoch die
+Grenzen zwischen den Verantwortlichkeiten von `State` und `Post`.
 
 Beachte, dass wir Lebensdauer-Annotationen bei dieser Methode benötigen, wie
 wir in Kapitel 10 besprochen haben. Wir nehmen eine Referenz auf ein `post` als
@@ -825,16 +824,15 @@ fn main() {
 
 Wir ermöglichen nach wie vor das Erstellen neuer Beiträge im Entwurfsstadium
 unter Verwendung von `Post::new` und der Möglichkeit, dem Inhalt des Beitrags
-Text hinzuzufügen. Aber anstatt eine Methode `content` bei einem
-Beitragsentwurf zu haben, die eine leere Zeichenkette zurückgibt, werden wir
-es so einrichten, dass Beitragsentwürfe überhaupt keine Methode `content`
-haben. Wenn wir auf diese Weise versuchen, den Inhalt eines Beitragsentwurfs
-zu erhalten, erhalten wir einen Kompilierfehler, der uns sagt, dass die Methode
-nicht existiert. Infolgedessen wird es für uns unmöglich, versehentlich den
-Inhalt eines Beitragsentwurfs in der Produktion anzuzeigen, weil sich dieser
-Code nicht einmal kompilieren lässt. Listing 18-19 zeigt die Definition einer
-Struktur `Post` und einer Struktur `DraftPost` sowie die Methoden dieser
-Strukturen.
+Text hinzuzufügen. Aber anstatt eine Methode `content` bei einem Beitragsentwurf
+zu haben, die einen leeren String zurückgibt, werden wir es so einrichten, dass
+Beitragsentwürfe überhaupt keine Methode `content` haben. Wenn wir auf diese
+Weise versuchen, den Inhalt eines Beitragsentwurfs zu erhalten, erhalten wir
+einen Kompilierfehler, der uns sagt, dass die Methode nicht existiert.
+Infolgedessen wird es für uns unmöglich, versehentlich den Inhalt eines
+Beitragsentwurfs in der Produktion anzuzeigen, weil sich dieser Code nicht
+einmal kompilieren lässt. Listing 18-19 zeigt die Definition einer Struktur
+`Post` und einer Struktur `DraftPost` sowie die Methoden dieser Strukturen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -970,12 +968,12 @@ Aber wir müssen auch einige kleine Änderungen an `main` vornehmen. Die Methode
 `request_review` und `approve` geben neue Instanzen zurück, anstatt die
 Struktur, auf der sie aufgerufen werden, zu modifizieren, sodass wir mehr `let
 post =` Verschattungs-Zuweisungen (shadowing assignments) hinzufügen müssen, um
-die zurückgegebenen Instanzen zu speichern. Wir können auch nicht zulassen,
-dass die Zusicherungen über den Inhalt des Entwurfs und der anstehenden
-Überprüfungsbeiträge leere Zeichenketten sind, und wir brauchen sie auch nicht:
-Wir können keinen Code mehr kompilieren, der versucht, den Inhalt von Beiträgen
-in diesen Zuständen zu verwenden. Der aktualisierte Code in `main` ist in
-Listing 18-21 zu sehen.
+die zurückgegebenen Instanzen zu speichern. Wir können auch nicht zulassen, dass
+die Zusicherungen über den Inhalt des Entwurfs und der anstehenden
+Überprüfungsbeiträge leere Strings sind, und wir brauchen sie auch nicht: Wir
+können keinen Code mehr kompilieren, der versucht, den Inhalt von Beiträgen in
+diesen Zuständen zu verwenden. Der aktualisierte Code in `main` ist in Listing
+18-21 zu sehen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

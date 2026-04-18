@@ -20,9 +20,8 @@ effizient ist. Bleib dran!
 
 Wenn du Eigentümerschaft verstehst, hast du eine solide Grundlage, um die
 Funktionalitäten zu verstehen, die Rust einzigartig machen. In diesem Kapitel
-lernst du Eigentümerschaft kennen, indem du einige Beispiele durcharbeitest,
-die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
-(strings).
+lernst du Eigentümerschaft kennen, indem du einige Beispiele durcharbeitest, die
+sich auf eine sehr verbreitete Datenstruktur konzentrieren: Strings.
 
 > ### Stack und Heap
 >
@@ -126,11 +125,11 @@ Variable an:
 let s = "Hallo";
 ```
 
-Die Variable `s` bezieht sich auf ein Zeichenkettenliteral, wobei der Wert der
-Zeichenkette fest in den Text unseres Programms kodiert ist. Die Variable ist
-ab der Stelle, an der sie deklariert wurde, bis zum Ende des aktuellen
-Gültigkeitsbereichs gültig. Listing 4-1 zeigt ein Programm mit Kommentaren,
-die zeigen wo die Variable `s` gültig ist.
+Die Variable `s` bezieht sich auf ein String-Literal, wobei der Wert des Strings
+fest in den Text unseres Programms kodiert ist. Die Variable ist ab der Stelle,
+an der sie deklariert wurde, bis zum Ende des aktuellen Gültigkeitsbereichs
+gültig. Listing 4-1 zeigt ein Programm mit Kommentaren, die zeigen wo die
+Variable `s` gültig ist.
 
 ```rust
 {                      // s ist hier nicht gültig, es wurde noch nicht deklariert
@@ -172,18 +171,16 @@ Datentypen, unabhängig davon, ob sie von der Standardbibliothek bereitgestellt
 oder von dir erstellt wurden. Wir werden die Aspekte von `String`, die nicht
 mit der Eigentümerschaft zusammenhängen, in [Kapitel 8][ch8] besprechen.
 
-Wir haben bereits Zeichenkettenliterale gesehen, bei denen ein
-Zeichenkettenwert fest in unserem Programm kodiert ist. Zeichenkettenliterale
-sind praktisch, aber sie eignen sich nicht für jede Situation, in der wir Text
-verwenden möchten. Ein Grund dafür ist, dass sie unveränderbar sind. Ein
-anderer Grund ist, dass nicht jeder Zeichenkettenwert bekannt ist, wenn wir
-unseren Code schreiben: Was ist zum Beispiel, wenn wir Benutzereingaben
-entgegennehmen und speichern wollen? Für diese Situationen hat Rust den
-Zeichenkettentyp `String`. Dieser Typ verwaltet Daten, die auf dem
-Heap allokiert sind, und kann so eine Textmenge speichern, die uns zur
-Kompilierzeit unbekannt ist. Du kannst einen `String` aus einem
-Zeichenkettenliteral erzeugen, indem du die Funktion `from` wie folgt
-verwendest:
+Wir haben bereits String-Literale gesehen, bei denen ein String-Wert fest in
+unserem Programm kodiert ist. String-Literale sind praktisch, aber sie eignen
+sich nicht für jede Situation, in der wir Text verwenden möchten. Ein Grund
+dafür ist, dass sie unveränderbar sind. Ein anderer Grund ist, dass nicht jeder
+String-Wert bekannt ist, wenn wir unseren Code schreiben: Was ist zum Beispiel,
+wenn wir Benutzereingaben entgegennehmen und speichern wollen? Für diese
+Situationen hat Rust den String-Typ `String`. Dieser Typ verwaltet Daten, die
+auf dem Heap allokiert sind, und kann so eine Textmenge speichern, die uns zur
+Kompilierzeit unbekannt ist. Du kannst einen `String` aus einem String-Literal
+erzeugen, indem du die Funktion `from` wie folgt verwendest:
 
 ```rust
 let s = String::from("Hallo");
@@ -196,12 +193,12 @@ wie `string_from` zu verwenden. Wir werden diese Syntax im Abschnitt
 unter [„Mit Pfaden auf ein Element im Modulbaum verweisen“][paths-module-tree]
 über den Namensraum mit Modulen sprechen. 
 
-Diese Art von Zeichenkette kann _verändert_ werden:
+Diese Art von String kann _verändert_ werden:
 
 ```rust
 let mut s = String::from("Hallo");
 
-s.push_str(" Welt!"); // push_str() hängt ein Literal an eine Zeichenkette an
+s.push_str(" Welt!"); // push_str() hängt ein Literal an einen String an
 
 println!("{s}"); // Gibt `Hallo Welt!` aus
 ```
@@ -212,14 +209,14 @@ dem Arbeitsspeicher umgehen.
 
 ### Speicher und Allokation
 
-Im Falle eines Zeichenkettenliterals kennen wir den Inhalt zum Zeitpunkt der
+Im Falle eines String-Literals kennen wir den Inhalt zum Zeitpunkt der
 Kompilierung, sodass der Text direkt in die endgültige ausführbare Datei fest
-kodiert wird. Aus diesem Grund sind Zeichenkettenliterale schnell und
-effizient. Allerdings ergeben sich diese Eigenschaften nur aus der
-Unveränderbarkeit des Zeichenkettenliterals. Leider können wir nicht für jedes
-Stück Text, dessen Größe zum Zeitpunkt der Kompilierung unbekannt ist und
-dessen Größe sich während der Ausführung des Programms ändern könnte, einen
-Speicherblock in die Binärdatei packen.
+kodiert wird. Aus diesem Grund sind String-Literale schnell und effizient.
+Allerdings ergeben sich diese Eigenschaften nur aus der Unveränderbarkeit des
+String-Literals. Leider können wir nicht für jedes Stück Text, dessen Größe zum
+Zeitpunkt der Kompilierung unbekannt ist und dessen Größe sich während der
+Ausführung des Programms ändern könnte, einen Speicherblock in die Binärdatei
+packen.
 
 Um mit dem Typ `String` einen veränderbaren, größenänderbaren Textabschnitt zu
 unterstützen, müssen wir Speicher im Heap allokieren, dessen Größe zur
@@ -244,10 +241,10 @@ Wenn wir es vergessen, verschwenden wir Speicher. Wenn wir es zu früh machen,
 haben wir eine ungültige Variable. Wenn wir es zweimal machen, ist das auch ein
 Fehler. Wir müssen eine _Allokierung_ mit genau einer _Freigabe_ paaren.
 
-Rust geht einen anderen Weg: Der Speicher wird automatisch zurückgegeben,
-sobald die Variable, die ihn besitzt, den Gültigkeitsbereich verlässt. Hier ist
-eine Variante unseres Gültigkeitsbereich-Beispiels aus Listing 4-1, bei der
-ein `String` anstelle eines Zeichenkettenliterals verwendet wird:
+Rust geht einen anderen Weg: Der Speicher wird automatisch zurückgegeben, sobald
+die Variable, die ihn besitzt, den Gültigkeitsbereich verlässt. Hier ist eine
+Variante unseres Gültigkeitsbereich-Beispiels aus Listing 4-1, bei der ein
+`String` anstelle eines String-Literals verwendet wird:
 
 ```rust
 {
@@ -311,34 +308,34 @@ das, was passiert.
 
 Betrachte Abbildung 4-1, um zu sehen, was mit dem `String` unter der Haube
 geschieht. Ein `String` besteht aus drei Teilen, die auf der linken Seite
-dargestellt sind: Einem Zeiger auf den Speicherbereich, der den Inhalt der
-Zeichenkette enthält, die Länge und die Kapazität. Dieser Datenblock wird auf
-dem Stack gespeichert. Auf der rechten Seite ist der Speicherbereich im Heap,
-der den Inhalt enthält.
+dargestellt sind: Einem Zeiger auf den Speicherbereich, der den Inhalt des
+Strings enthält, die Länge und die Kapazität. Dieser Datenblock wird auf dem
+Stack gespeichert. Auf der rechten Seite ist der Speicherbereich im Heap, der
+den Inhalt enthält.
 
 <img alt="Zwei Tabellen: Die erste Tabelle enthält die Darstellung von s1 auf
-dem Stack, bestehend aus seiner Länge (5), seiner Kapazität (5) und einem
-Zeiger auf den ersten Wert in der zweiten Tabelle. Die zweite Tabelle enthält
-die Darstellung der Zeichenkettendaten auf dem Heap, Byte für Byte."
+dem Stack, bestehend aus seiner Länge (5), seiner Kapazität (5) und einem Zeiger
+auf den ersten Wert in der zweiten Tabelle. Die zweite Tabelle enthält die
+Darstellung der String-Daten auf dem Heap, Byte für Byte."
 src="img/trpl04-01.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-1: Speicherdarstellung eines `String` mit dem
 Wert „Hallo“, gebunden an `s1`</span>
 
-Die Länge gibt an, wie viel Speicherplatz in Bytes der Inhalt der Zeichenkette
+Die Länge gibt an, wie viel Speicherplatz in Bytes der Inhalt des Strings
 derzeit belegt. Die Kapazität ist die Gesamtmenge des Speichers in Bytes, die
-der `String` vom Speicher-Allokator erhalten hat. Der Unterschied zwischen
-Länge und Kapazität ist von Bedeutung, aber nicht in diesem Zusammenhang,
-deshalb ist es im Moment in Ordnung, die Kapazität zu ignorieren.
+der `String` vom Speicher-Allokator erhalten hat. Der Unterschied zwischen Länge
+und Kapazität ist von Bedeutung, aber nicht in diesem Zusammenhang, deshalb ist
+es im Moment in Ordnung, die Kapazität zu ignorieren.
 
 Wenn wir `s1` an `s2` zuweisen, werden die `String`-Daten kopiert, d.h. wir
 kopieren den Zeiger, die Länge und die Kapazität, die sich auf dem
 Stack befinden. Wir kopieren nicht die Daten im Heap, auf die sich der Zeiger
 bezieht. Die Speicherdarstellung sieht also wie in Abbildung 4-2 aus.
 
-<img alt="Drei Tabellen: Die Tabellen s1 und s2, die die Zeichenketten auf dem
-Stack repräsentieren und beide auf die gleichen Zeichenkettendaten auf dem Heap
-verweisen." src="img/trpl04-02.svg" class="center" style="width: 50%;" />
+<img alt="Drei Tabellen: Die Tabellen s1 und s2, die die Strings auf dem Stack
+repräsentieren und beide auf die gleichen String-Daten auf dem Heap verweisen."
+src="img/trpl04-02.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-2: Speicherdarstellung der Variable `s2`, die
 eine Kopie des Zeigers, der Länge und der Kapazität von `s1` hat</span>
@@ -349,8 +346,8 @@ Würde Rust dies tun, könnte die Operation `s2 = s1` bei großen Datenmengen im
 Heap sehr teuer hinsichtlich der Laufzeitperformanz werden.
 
 <img alt="Vier Tabellen: Zwei Tabellen, die die Stack-Daten für s1 und s2
-darstellen, und jede zeigt auf ihre eigene Kopie der Zeichenketten-Daten auf
-dem Heap." src="img/trpl04-03.svg" class="center" style="width: 50%;" />
+darstellen, und jede zeigt auf ihre eigene Kopie der String-Daten auf dem Heap."
+src="img/trpl04-03.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-3: Eine weitere Möglichkeit für das, was
 `s2 = s1` tun könnte, falls Rust auch die Daten im Heap kopieren würde</span>
@@ -413,10 +410,10 @@ ungültig macht, wird es nicht als flache Kopie, sondern als _Verschieben_
 _verschoben_ wurde. Was tatsächlich geschieht, ist in Abbildung 4-4
 dargestellt.
 
-<img alt="Drei Tabellen: Die Tabellen s1 und s2, die jeweils die Zeichenketten
-auf dem Stack darstellen und beide auf dieselben Zeichenkettendaten auf dem
-Heap referenzieren. Die Tabelle s1 ist durchgestrichen, weil s1 nicht mehr
-gültig ist; nur s2 kann für den Zugriff auf die Heap-Daten verwendet werden."
+<img alt="Drei Tabellen: Die Tabellen s1 und s2, die jeweils die Strings auf dem
+Stack darstellen und beide auf dieselben String-Daten auf dem Heap
+referenzieren. Die Tabelle s1 ist durchgestrichen, weil s1 nicht mehr gültig
+ist; nur s2 kann für den Zugriff auf die Heap-Daten verwendet werden."
 src="img/trpl04-04.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-4: Speicherdarstellung, nachdem `s1` ungültig
@@ -449,23 +446,22 @@ Betrachte zum Beispiel diesen Code:
 ```
 
 Wir deklarieren zunächst eine Variable `s` und binden sie an einen `String` mit
-dem Wert `„Hallo“`. Danach erstellen wir eine neue Zeichenkette mit dem Wert
-„Ahoi“ und weisen sie der Variable „s“ zu. Zu diesem Zeitpunkt referenziert
+dem Wert `„Hallo“`. Danach erstellen wir einen neuen `String` mit dem Wert
+`"Ahoi"` und weisen ihn der Variable `s` zu. Zu diesem Zeitpunkt referenziert
 nichts mehr auf den ursprünglichen Wert im Heap. Abbildung 4-5 zeigt die
 aktuellen Daten im Speicher:
 
-<img alt="Eine Tabelle stellt den Zeichenketten-Wert auf dem Heap dar und zeigt
-auf den zweiten Teil der Zeichenketten-Daten (Ahoi) auf dem Heap, wobei die
-ursprünglichen Zeichenketten-Daten (Hallo) durchgestrichen sind, weil auf sie
-nicht mehr zugegriffen werden kann." src="img/trpl04-05.svg" class="center"
-style="width: 50%;" />
+<img alt="Eine Tabelle stellt den String-Wert auf dem Heap dar und zeigt auf den
+zweiten Teil der String-Daten (Ahoi) auf dem Heap, wobei die ursprünglichen
+String-Daten (Hallo) durchgestrichen sind, weil auf sie nicht mehr zugegriffen
+werden kann." src="img/trpl04-05.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-5: Darstellung im Speicher, nachdem der
 ursprüngliche Wert vollständig ersetzt worden ist.</span>
 
-Die ursprüngliche Zeichenkette verlässt damit sofort den Gültigkeitsbereich.
-Rust führt die Funktion `drop` aus und ihr Speicher wird sofort freigegeben.
-Wenn wir den Wert am Ende ausgeben, lautet er „Ahoi Welt!“.
+Der ursprünglich String verlässt damit den Gültigkeitsbereich. Rust führt die
+Funktion `drop` aus und ihr Speicher wird sofort freigegeben. Wenn wir den Wert
+am Ende ausgeben, lautet er „Ahoi Welt!“.
 
 #### Variablen und Daten im Zusammenspiel mit Clone
 
@@ -666,7 +662,7 @@ fn main() {
 }
 
 fn calculate_length(s: String) -> (String, usize) {
-    let length = s.len(); // len() gibt die Länge der Zeichenkette zurück
+    let length = s.len(); // len() gibt die Länge des Strings zurück
 
     (s, length)
 }

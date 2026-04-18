@@ -87,10 +87,10 @@ Stellen gültig sind.
 |:------------|:---------------------------------------------|
 | `'ident` | Benannte Lebensdauer oder Schleifenbeschriftung |
 | `...u8`,<br> `...i32`,<br> `...f64`,<br> `...usize`<br> usw. | Numerisches Literal eines bestimmten Typs |
-| `"..."` | Zeichenketten-Literal |
-| `r"..."`,<br> `r#"..."#`,<br> `r##"..."##`<br> usw. | Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet |
-| `b"..."` | Byte-Zeichenkettenliteral, erzeugt ein Byte-Array anstelle einer Zeichenkette |
-| `br"..."`,<br> `br#"..."#`,<br> `br##"..."##`<br> usw. | Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral |
+| `"..."` | String-Literal |
+| `r"..."`,<br> `r#"..."#`,<br> `r##"..."##`<br> usw. | Roh-String-Literal, Escape-Zeichen werden nicht verarbeitet |
+| `b"..."` | Byte-String-Literal, erzeugt ein Byte-Array anstelle eines Strings |
+| `br"..."`,<br> `br#"..."#`,<br> `br##"..."##`<br> usw. | Roh-Byte-String-Literal, Kombination aus Roh- und Byte-String-Literal |
 | `'...'` | Zeichen-Literal |
 | `b'...'` | ASCII-Byte-Literal |
 | <code>&vert;...&vert; expr</code> | Closure |
@@ -205,4 +205,4 @@ Tabelle B-10 zeigt die Kontexte, in denen eckige Klammern verwendet werden.
 | `[expr; len]` | Array-Literal mit `len` Kopien von `expr` |
 | `[type; len]` | Array-Typ mit `len` Instanzen von `type` |
 | `expr[expr]` | Sammlungs-Indexierung, ist überladbar (`Index`, `IndexMut`) |
-| `expr[..]`,<br> `expr[a..]`,<br> `expr[..b]`,<br> `expr[a..b]` | Sammlungs-Indexierung, die wie ein Sammlungsanteil aussieht, unter Verwendung von `Range`, `RangeFrom`, `RangeTo` oder `RangeFull` als „Index“ |
+| `expr[..]`,<br> `expr[a..]`,<br> `expr[..b]`,<br> `expr[a..b]` | Sammlungs-Indexierung, die wie ein Sammlungs-Slice aussieht, unter Verwendung von `Range`, `RangeFrom`, `RangeTo` oder `RangeFull` als „Index“ |

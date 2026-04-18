@@ -63,17 +63,16 @@ let home: IpAddr = "127.0.0.1"
     .expect("Fest programmierte IP-Adresse sollte gültig sein");
 ```
 
-Wir erstellen eine `IpAddr`-Instanz, indem wir eine hartkodierte Zeichenkette
+Wir erstellen eine `IpAddr`-Instanz, indem wir einen hartkodierten String
 parsen. Wir können sehen, dass `127.0.0.1` eine gültige IP-Adresse ist, sodass
-es akzeptabel ist, hier `expect` zu verwenden. Eine hartkodierte, gültige
-Zeichenkette ändert jedoch nicht den Rückgabetyp der Methode `parse`: Wir
-erhalten immer noch einen `Result`-Wert und der Compiler wird von uns
-verlangen, `Result` so zu behandeln, als ob die `Err`-Variante möglich wäre,
-weil der Compiler nicht klug genug ist, um zu erkennen, dass diese
-Zeichenkette stets eine gültige IP-Adresse ist. Wenn die
-IP-Adressen-Zeichenkette von einem Benutzer kam, anstatt fest im Programm
-kodiert zu sein, und daher möglicherweise fehlschlagen könnte, würden wir
-stattdessen definitiv `Result` auf eine robustere Weise behandeln wollen.
+es akzeptabel ist, hier `expect` zu verwenden. Ein hartkodierter, gültiger
+String ändert jedoch nicht den Rückgabetyp der Methode `parse`: Wir erhalten
+immer noch einen `Result`-Wert und der Compiler wird von uns verlangen, `Result`
+so zu behandeln, als ob die `Err`-Variante möglich wäre, weil der Compiler nicht
+klug genug ist, um zu erkennen, dass dieser String stets eine gültige IP-Adresse
+ist. Wenn der IP-Adressen-String von einem Benutzer kam, anstatt fest im
+Programm kodiert zu sein, und daher möglicherweise fehlschlagen könnte, würden
+wir stattdessen definitiv `Result` auf eine robustere Weise behandeln wollen.
 
 ### Richtlinien zur Fehlerbehandlung
 

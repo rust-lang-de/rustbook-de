@@ -256,14 +256,14 @@ error: could not compile `branches` (bin "branches") due to 1 previous error
 ```
 
 Der Ausdruck im `if`-Block wird zu einer ganzen Zahl und der Ausdruck im
-`else`-Block zu einer Zeichenkette ausgewertet. Dies wird nicht funktionieren,
-da Variablen einen einzigen Typ haben müssen. Rust muss zur Kompilierzeit
-definitiv wissen, welchen Typ die Variable `number` hat, damit es zur
-Kompilierzeit überprüfen kann, ob ihr Typ überall gültig ist, wo wir `number`
-verwenden. Rust wäre dazu nicht in der Lage, wenn der Typ von `number` erst zur
-Laufzeit bestimmt würde; der Compiler wäre komplexer und würde weniger
-Garantien über den Code geben, wenn er mehrere hypothetische Typen für jede
-Variable verfolgen müsste.
+`else`-Block zu einem String ausgewertet. Dies wird nicht funktionieren, da
+Variablen einen einzigen Typ haben müssen. Rust muss zur Kompilierzeit definitiv
+wissen, welchen Typ die Variable `number` hat, damit es zur Kompilierzeit
+überprüfen kann, ob ihr Typ überall gültig ist, wo wir `number` verwenden. Rust
+wäre dazu nicht in der Lage, wenn der Typ von `number` erst zur Laufzeit
+bestimmt würde; der Compiler wäre komplexer und würde weniger Garantien über den
+Code geben, wenn er mehrere hypothetische Typen für jede Variable verfolgen
+müsste.
 
 ### Wiederholung mit Schleifen
 

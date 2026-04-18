@@ -70,8 +70,8 @@ Schlafen von fünf Sekunden</span>
 
 Wir haben von `if` zu `match` gewechselt, da wir nun drei Fälle haben. Wir
 müssen explizit auf ein Stück von `request_line` abgleichen, um einen
-Musterabgleich mit den Zeichenketten-Literalwerten durchzuführen; `match` führt
-keine automatische Referenzierung und Dereferenzierung durch, wie es die
+Musterabgleich mit den String-Literalwerten durchzuführen; `match` führt keine
+automatische Referenzierung und Dereferenzierung durch, wie es die
 Gleichheitsmethode tut.
 
 Der erste Zweig ist der gleiche wie der `if`-Block aus Listing 21-9. Der

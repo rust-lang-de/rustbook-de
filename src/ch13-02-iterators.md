@@ -42,6 +42,7 @@ for val in v1_iter {
     println!("Erhalten: {val}");
 }
 ```
+
 <span class="caption">Listing 13-11: Verwendung eines Iterators in einer
 `for`-Schleife</span>
 

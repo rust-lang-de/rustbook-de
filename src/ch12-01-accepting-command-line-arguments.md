@@ -11,10 +11,10 @@ $ cd minigrep
 ```
 
 Die erste Aufgabe besteht darin, `minigrep` dazu zu bringen, seine beiden
-Kommandozeilenargumente entgegennehmen: Den Dateipfad und eine Zeichenkette,
-nach der gesucht werden soll. Das heißt, wir wollen in der Lage sein, unser
-Programm mit `cargo run`, einer zu suchenden Zeichenkette und einem Pfad zu
-einer Datei, in der gesucht werden soll, auszuführen:
+Kommandozeilenargumente entgegennehmen: Den Dateipfad und einen String, nach dem
+gesucht werden soll. Das heißt, wir wollen in der Lage sein, unser Programm mit
+`cargo run`, einem zu suchenden String und einem Pfad zu einer Datei, in der
+gesucht werden soll, auszuführen:
 
 ```console
 $ cargo run -- searchstring example-filename.txt
@@ -82,10 +82,10 @@ In der ersten Zeile von `main` rufen wir `env::args` auf und wir verwenden
 sofort `collect`, um den Iterator in einen Vektor zu verwandeln, der alle vom
 Iterator erzeugten Werte enthält. Wir können die Funktion `collect` verwenden,
 um viele Arten von Kollektionen zu erstellen, also vermerken wir explizit den
-Typ von `args`, um anzugeben, dass wir einen Vektor mit Zeichenketten wollen.
-Obwohl du in Rust nur sehr selten Typen mit Annotationen versehen musst, ist
-`collect` eine Funktion, die du häufig mit Annotationen versehen musst, da Rust
-nicht in der Lage ist, auf die Art der gewünschten Kollektion zu schließen.
+Typ von `args`, um anzugeben, dass wir einen Vektor mit Strings wollen. Obwohl
+du in Rust nur sehr selten Typen mit Annotationen versehen musst, ist `collect`
+eine Funktion, die du häufig mit Annotationen versehen musst, da Rust nicht in
+der Lage ist, auf die Art der gewünschten Kollektion zu schließen.
 
 Zum Schluss geben wir den Vektor mit dem Debug-Makro aus. Versuchen wir, den
 Code zuerst ohne Argumente und dann mit zwei Argumenten laufen zu lassen:
@@ -148,12 +148,11 @@ fn main() {
 Such-Arguments und des Dateipfad-Arguments</span>
 
 Wie wir gesehen haben, als wir den Vektor ausgegeben haben, nimmt der
-Programmname den ersten Wert im Vektor bei `args[0]` ein, also beginnen wir
-beim Index `1`. Das erste Argument, das `minigrep` annimmt, ist die
-Zeichenkette, nach der wir suchen, also setzen wir eine Referenz auf das erste
-Argument in die Variable `query`. Das zweite Argument wird der Dateipfad sein,
-also setzen wir eine Referenz auf das zweite Argument in die Variable
-`file_path`.
+Programmname den ersten Wert im Vektor bei `args[0]` ein, also beginnen wir beim
+Index `1`. Das erste Argument, das `minigrep` annimmt, ist der String, nach dem
+wir suchen, also setzen wir eine Referenz auf das erste Argument in die Variable
+`query`. Das zweite Argument wird der Dateipfad sein, also setzen wir eine
+Referenz auf das zweite Argument in die Variable `file_path`.
 
 Wir geben vorübergehend die Werte dieser Variablen aus, um zu belegen, dass der
 Code so funktioniert, wie wir es beabsichtigen. Lassen wir dieses Programm mit

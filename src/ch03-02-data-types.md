@@ -5,14 +5,14 @@ welche Art von Daten angegeben wird, damit es weiß, wie es mit diesen Daten
 arbeiten soll. Wir werden uns zwei Datentyp-Untermengen ansehen: Skalar (scalar) und
 Verbund (compound).
 
-Denk daran, dass Rust eine _statisch typisierte_ Sprache ist, was bedeutet,
-dass es die Typen von allen Variablen zur Kompilierzeit kennen muss. Der
-Compiler kann normalerweise auf der Grundlage des Wertes und wie wir ihn
-verwenden ableiten, welchen Typ wir verwenden wollen. Wenn mehrere Typen
-möglich sind, wie zum Beispiel als wir im Abschnitt [„Vergleichen der Schätzung
-mit der Geheimzahl“][comparing-the-guess-to-the-secret-number] eine
-Zeichenkette (`String`) mittels `parse` zu einem numerischen Typ umwandelten,
-müssen wir eine Typ-Annotation ergänzen, wie hier:
+Denk daran, dass Rust eine _statisch typisierte_ Sprache ist, was bedeutet, dass
+es die Typen von allen Variablen zur Kompilierzeit kennen muss. Der Compiler
+kann normalerweise auf der Grundlage des Wertes und wie wir ihn verwenden
+ableiten, welchen Typ wir verwenden wollen. Wenn mehrere Typen möglich sind, wie
+zum Beispiel als wir im Abschnitt [„Vergleichen der Schätzung mit der
+Geheimzahl“][comparing-the-guess-to-the-secret-number] einen String mittels
+`parse` zu einem numerischen Typ umwandelten, müssen wir eine Typ-Annotation
+ergänzen, wie hier:
 
 ```rust
 let guess: u32 = "42".parse().expect("Keine Zahl!");
@@ -246,17 +246,17 @@ fn main() {
 ```
 
 Beachte, dass wir `char`-Literale mit einfachen Anführungszeichen angeben, im
-Gegensatz zu Zeichenketten-Literalen, die doppelte Anführungszeichen verwenden.
-Der Typ `char` von Rust ist vier Bytes groß und stellt einen Unicode-Skalarwert
-dar, was bedeutet, dass er viel mehr als nur ASCII darstellen kann.
-Akzentuierte Buchstaben, chinesische, japanische und koreanische Zeichen, Emoji
-und Leerzeichen mit Null-Breite sind gültige `char`-Werte in Rust.
+Gegensatz zu String-Literalen, die doppelte Anführungszeichen verwenden. Der Typ
+`char` von Rust ist vier Bytes groß und stellt einen Unicode-Skalarwert dar, was
+bedeutet, dass er viel mehr als nur ASCII darstellen kann. Akzentuierte
+Buchstaben, chinesische, japanische und koreanische Zeichen, Emoji und
+Leerzeichen mit Null-Breite sind gültige `char`-Werte in Rust.
 Unicode-Skalarwerte reichen von `U+0000` bis `U+D7FF` und von `U+E000` bis
 einschließlich `U+10FFFF`. Ein „Zeichen“ ist jedoch nicht wirklich ein Konzept
 in Unicode, deine menschliche Intuition dafür, was ein „Zeichen“ ist, stimmt
 möglicherweise nicht mit dem überein, was ein `char` in Rust ist. Wir werden
-dieses Thema in [„UTF-8-kodierten Text in Zeichenketten (strings)
-ablegen“][strings] in Kapitel 8 im Detail besprechen.
+dieses Thema in [„UTF-8-kodierten Text in Strings ablegen“][strings] in Kapitel
+8 im Detail besprechen.
 
 ### Verbund-Typen
 

@@ -169,10 +169,10 @@ fn main() {
 <span class="caption">Listing 10-3: Abstrahierter Code, um die größte Zahl in
 zwei Listen zu finden</span>
 
-Die Funktion `largest` hat einen Parameter `list`, der einen beliebigen
-Anteilstyp von `i32`-Werten repräsentiert, die wir an die Funktion übergeben
-könnten. Wenn wir die Funktion aufrufen, läuft der Code also auf den
-spezifischen Werten, die wir übergeben.
+Die Funktion `largest` hat einen Parameter `list`, der einen beliebigen Slice
+von `i32`-Werten repräsentiert, die wir an die Funktion übergeben könnten. Wenn
+wir die Funktion aufrufen, läuft der Code also auf den spezifischen Werten, die
+wir übergeben.
 
 Zusammenfassend hier die Schritte, die wir unternommen haben, um den Code aus
 Listing 10-2 in Listing 10-3 zu überführen:
@@ -189,6 +189,6 @@ abstrakten Liste anstelle spezifischer Werte arbeiten kann, erlauben es
 generische Datentypen, auf abstrakten Typen zu arbeiten.
 
 Nehmen wir zum Beispiel an, wir hätten zwei Funktionen: Eine, die das größte
-Element in einem Anteilstyp mit `i32`-Werten findet, und eine, die das größte
-Element in einem Anteilstyp mit `char`-Werten findet. Wie würden wir diese
-Duplizierung beseitigen? Lass es uns herausfinden!
+Element in einem Slice mit `i32`-Werten findet, und eine, die das größte Element
+in einem Slice mit `char`-Werten findet. Wie würden wir diese Duplizierung
+beseitigen? Lass es uns herausfinden!

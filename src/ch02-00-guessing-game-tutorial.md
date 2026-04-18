@@ -160,8 +160,8 @@ Die Syntax `fn` deklariert eine neue Funktion; die Klammern `()` zeigen an,
 dass es keine Parameter gibt; und die geschweifte Klammer `{` beginnt den Rumpf
 der Funktion.
 
-Wie du auch in Kapitel 1 gelernt hast, ist `println!` ein Makro, das eine
-Zeichenkette auf dem Bildschirm ausgibt:
+Wie du auch in Kapitel 1 gelernt hast, ist `println!` ein Makro, das einen
+String auf dem Bildschirm ausgibt:
 
 ```rust,ignore
 # use std::io;
@@ -232,22 +232,21 @@ let mut bananas = 5; // veränderbar
 > Zeile weitergeht. Rust ignoriert alles in Kommentaren. Diese werden in
 > Kapitel 3 ausführlicher besprochen.
 
-Zurück zum Programm des Ratespiels. Du weißt jetzt, dass `let mut
-guess` eine veränderbare Variable namens `guess` einführt. Das
-Gleichheitszeichen (`=`) sagt Rust, dass wir jetzt etwas an die Variable binden
-wollen. Auf der rechten Seite des Gleichheitszeichens steht der Wert, an den
-`guess` gebunden ist, was das Ergebnis des Aufrufs von `String::new` ist, einer
-Funktion, die eine neue Instanz eines `String` zurückgibt. [`String`][string]
-ist ein von der Standardbibliothek bereitgestellter Zeichenketten-Typ, der ein
-wachstumsfähiges, UTF-8-kodiertes Stück Text ist.
+Zurück zum Programm des Ratespiels. Du weißt jetzt, dass `let mut guess` eine
+veränderbare Variable namens `guess` einführt. Das Gleichheitszeichen (`=`) sagt
+Rust, dass wir jetzt etwas an die Variable binden wollen. Auf der rechten Seite
+des Gleichheitszeichens steht der Wert, an den `guess` gebunden ist, was das
+Ergebnis des Aufrufs von `String::new` ist, einer Funktion, die eine neue
+Instanz eines `String` zurückgibt. [`String`][string] ist ein von der
+Standardbibliothek bereitgestellter String-Typ, der ein wachstumsfähiges,
+UTF-8-kodiertes Stück Text ist.
 
 Die Syntax `::` in der Zeile `::new` zeigt an, dass `new` eine assoziierte
-Funktion (associated function) vom Typ `String` ist. Eine _assoziierte
-Funktion_ ist eine Funktion, die auf einem Typ, in diesem Fall `String`,
-implementiert ist. Diese Funktion `new` erzeugt eine neue, leere Zeichenkette.
-Du wirst eine Funktion `new` bei vielen Typen finden, weil es ein
-gebräuchlicher Name für eine Funktion ist, die einen neuen Wert irgendeiner Art
-erzeugt.
+Funktion (associated function) vom Typ `String` ist. Eine _assoziierte Funktion_
+ist eine Funktion, die auf einem Typ, in diesem Fall `String`, implementiert
+ist. Diese Funktion `new` erzeugt einen neuen, leeren String. Du wirst eine
+Funktion `new` bei vielen Typen finden, weil es ein gebräuchlicher Name für eine
+Funktion ist, die einen neuen Wert irgendeiner Art erzeugt.
 
 Insgesamt hat die Zeile `let mut guess = String::new();` eine veränderbare
 Variable erzeugt, die derzeit an eine neue, leere Instanz eines `String`
@@ -289,12 +288,12 @@ darstellt.
 Die nächste Zeile `.read_line(&mut guess)` ruft die Methode
 [`read_line`][read_line] der Standardeingaberessource auf, um eine Eingabe vom
 Benutzer zu erhalten. Wir übergeben auch das Argument `&mut guess` an
-`read_line`, um ihm mitzuteilen, in welche Zeichenkette es die Benutzereingabe
+`read_line`, um ihm mitzuteilen, in welchen String es die Benutzereingabe
 speichern soll. Die Aufgabe von `read_line` ist es, alles, was der Benutzer in
-die Standardeingabe eingibt, an eine Zeichenkette anzuhängen (ohne deren Inhalt
-zu überschreiben), daher übergeben wir diese Zeichenkette als Argument. Das
-Zeichenketten-Argument muss veränderbar sein, damit die Methode den Inhalt der
-Zeichenkette ändern kann.
+die Standardeingabe eingibt, an einen String anzuhängen (ohne dessen Inhalt zu
+überschreiben), daher übergeben wir diesen String als Argument. Das
+String-Argument muss veränderbar sein, damit die Methode den Inhalt des Strings
+ändern kann.
 
 Das `&` zeigt an, dass es sich bei diesem Argument um eine _Referenz_ handelt,
 die dir eine Möglichkeit bietet, mehrere Teile deines Codes auf einen Datenteil
@@ -344,10 +343,10 @@ Syntax `.method_name()` aufrufst. Lass uns nun besprechen, was diese Zeile
 bewirkt. 
 
 Wie bereits erwähnt, schreibt `read_line` die Benutzereingabe in die übergebene
-Zeichenketten-Variable, gibt aber darüber hinaus auch einen `Result`-Wert
-zurück. [`Result`][result] ist eine [_Aufzählung_][enums] (enumeration, oder
-kurz enum), die einen Datentyp darstellt, der einem von mehreren möglichen
-Zuständen annehmen kann. Wir nennen jeden möglichen Zustand eine _Variante_.
+String-Variable, gibt aber darüber hinaus auch einen `Result`-Wert zurück.
+[`Result`][result] ist eine [_Aufzählung_][enums] (enumeration, oder kurz enum),
+die einen Datentyp darstellt, der einem von mehreren möglichen Zuständen
+annehmen kann. Wir nennen jeden möglichen Zustand eine _Variante_.
 
 In Kapitel 6 werden [Aufzählungen][enums] ausführlicher behandelt. Der Zweck
 dieser `Result`-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.
@@ -358,15 +357,15 @@ Die Variante `Err` bedeutet, dass die Operation fehlgeschlagen ist, und enthält
 Informationen darüber, wie oder warum die Operation fehlgeschlagen ist.
 
 Für Werte vom Typ `Result` sind, wie für Werte jedes Typs, Methoden definiert.
-Eine Instanz von `Result` hat eine [Methode `expect`][expect], die du
-aufrufen kannst. Wenn diese `io::Result`-Instanz ein `Err`-Wert ist, wird
-`expect` das Programm abbrechen und die Meldung anzeigen, die du als
-Argument an `expect` übergeben hast. Wenn die Methode `read_line` ein `Err`
-zurückgibt, ist dies wahrscheinlich das Ergebnis eines Fehlers, der vom
-zugrundeliegenden Betriebssystem herrührt. Wenn diese `io::Result`-Instanz ein
-`Ok`-Wert ist, wird `expect` den Wert, den `Ok` hält, als Rückgabewert
-verwenden, damit du ihn verwenden kannst. In diesem Fall ist dieser Wert die
-Anzahl der Bytes, die der Benutzer in die Standardeingabe eingegeben hat.
+Eine Instanz von `Result` hat eine [Methode `expect`][expect], die du aufrufen
+kannst. Wenn diese `io::Result`-Instanz ein `Err`-Wert ist, wird `expect` das
+Programm abbrechen und die Meldung anzeigen, die du als Argument an `expect`
+übergeben hast. Wenn die Methode `read_line` ein `Err` zurückgibt, ist dies
+wahrscheinlich das Ergebnis eines Fehlers, der vom zugrundeliegenden
+Betriebssystem herrührt. Wenn diese `io::Result`-Instanz ein `Ok`-Wert ist, wird
+`expect` den Wert, den `Ok` hält, als Rückgabewert verwenden, damit du ihn
+verwenden kannst. In diesem Fall ist dieser Wert die Anzahl der Bytes, die der
+Benutzer in die Standardeingabe eingegeben hat.
 
 Wenn du nicht `expect` aufrufst, wird das Programm kompiliert, aber du erhältst
 eine Warnung:
@@ -423,17 +422,17 @@ hinzugefügten Code nur noch eine weitere Zeile zu besprechen:
 # }
 ```
 
-Diese Zeile gibt die Zeichenkette aus, die jetzt die Eingabe des Benutzers
-enthält. Der Satz geschweifte Klammern `{}` ist ein Platzhalter:
-Stelle dir `{}` wie kleine Krebszangen vor, die einen Wert an Ort und Stelle
-halten. Wenn du den Wert einer Variablen ausgibst, kann der Variablenname
-innerhalb der geschweiften Klammern stehen. Wenn du das Ergebnis der Auswertung
-eines Ausdrucks ausgeben willst, füge leere geschweifte Klammern in die
-Formatierungszeichenkette ein und gib dann nach der Formatierungszeichenkette
-eine durch Komma getrennte Liste von Ausdrücken ein, die in jedem leeren
-geschweiften Klammerplatzhalter in derselben Reihenfolge ausgegeben werden
-sollen. Das Ausgeben einer Variablen und des Ergebnisses eines Ausdrucks in
-einem Aufruf von `println!` würde wie folgt aussehen:
+Diese Zeile gibt den String aus, der jetzt die Eingabe des Benutzers enthält.
+Der Satz geschweifte Klammern `{}` ist ein Platzhalter: Stelle dir `{}` wie
+kleine Krebszangen vor, die einen Wert an Ort und Stelle halten. Wenn du den
+Wert einer Variablen ausgibst, kann der Variablenname innerhalb der geschweiften
+Klammern stehen. Wenn du das Ergebnis der Auswertung eines Ausdrucks ausgeben
+willst, füge leere geschweifte Klammern in den Formatierungs-String ein und gib
+dann nach dem Formatierungs-String eine durch Komma getrennte Liste von
+Ausdrücken ein, die in jedem leeren geschweiften Klammerplatzhalter in derselben
+Reihenfolge ausgegeben werden sollen. Das Ausgeben einer Variablen und des
+Ergebnisses eines Ausdrucks in einem Aufruf von `println!` würde wie folgt
+aussehen:
 
 ```rust
 let x = 5;
@@ -845,18 +844,18 @@ For more information about this error, try `rustc --explain E0308`.
 error: could not compile `guessing_game` (bin "guessing_game") due to 1 previous error
 ```
 
-Die Kernbotschaft des Fehlers besagt, dass es _nicht übereinstimmende Typen_ 
-(mismatched types) gibt. Rust hat ein starkes, statisches Typsystem. Es hat jedoch 
-auch eine Typ-Inferenz. Als wir `let mut guess = String::new()` schrieben, konnte
-Rust daraus schließen, dass `guess` ein `String` sein sollte, und zwang uns
-nicht, den Typ anzugeben. Die `secret_number` hingegen ist ein Zahlentyp.
-Einige Zahlentypen können einen Wert zwischen 1 und 100 haben: `i32`, eine
-32-Bit-Zahl; `u32`, eine 32-Bit-Zahl ohne Vorzeichen; `i64`, eine 64-Bit-Zahl;
-sowie andere. Solange nicht anders angegeben, verwendet Rust standardmäßig
-`i32`, was der Typ von `secret_number` ist, es sei denn, du fügst an anderer
-Stelle Typinformationen hinzu, die Rust veranlassen würden, auf einen anderen
-numerischen Typ zu schließen. Der Grund für den Fehler liegt darin, dass Rust
-eine Zeichenkette und einen Zahlentyp nicht vergleichen kann.
+Die Kernbotschaft des Fehlers besagt, dass es _nicht übereinstimmende Typen_
+(mismatched types) gibt. Rust hat ein starkes, statisches Typsystem. Es hat
+jedoch auch eine Typ-Inferenz. Als wir `let mut guess = String::new()`
+schrieben, konnte Rust daraus schließen, dass `guess` ein `String` sein sollte,
+und zwang uns nicht, den Typ anzugeben. Die `secret_number` hingegen ist ein
+Zahlentyp. Einige Zahlentypen können einen Wert zwischen 1 und 100 haben: `i32`,
+eine 32-Bit-Zahl; `u32`, eine 32-Bit-Zahl ohne Vorzeichen; `i64`, eine
+64-Bit-Zahl; sowie andere. Solange nicht anders angegeben, verwendet Rust
+standardmäßig `i32`, was der Typ von `secret_number` ist, es sei denn, du fügst
+an anderer Stelle Typinformationen hinzu, die Rust veranlassen würden, auf einen
+anderen numerischen Typ zu schließen. Der Grund für den Fehler liegt darin, dass
+Rust einen String und einen Zahlentyp nicht vergleichen kann.
 
 Letztendlich wollen wir den `String`, den das Programm als Eingabe liest, in
 einen Zahlentyp umwandeln, damit wir ihn numerisch mit der Geheimzahl
@@ -917,14 +916,13 @@ willst.
 
 Wir binden `guess` an den Ausdruck `guess.trim().parse()`. Das `guess` im
 Ausdruck bezieht sich auf das ursprüngliche `guess`, das ein `String` mit der
-Eingabe darin war. Die Methode `trim` der `String`-Instanz wird alle
-Leerzeichen am Anfang und am Ende entfernen. Obwohl `u32` nur numerische
-Zeichen enthalten kann, muss der Benutzer die <span
-class="keystroke">Eingabetaste</span> drücken, um `read_line`
-zufriedenzustellen. Wenn der Benutzer die <span
-class="keystroke">Eingabetaste</span> drückt, wird der Zeichenkette ein
-Zeilenumbruchszeichen (newline character) hinzugefügt. Wenn der Benutzer z.B.
-<span class="keystroke">5</span> eingibt und die <span
+Eingabe darin war. Die Methode `trim` der `String`-Instanz wird alle Leerzeichen
+am Anfang und am Ende entfernen. Obwohl `u32` nur numerische Zeichen enthalten
+kann, muss der Benutzer die <span class="keystroke">Eingabetaste</span> drücken,
+um `read_line` zufriedenzustellen. Wenn der Benutzer die <span
+class="keystroke">Eingabetaste</span> drückt, wird dem String ein
+Zeilenumbruchszeichen hinzugefügt. Wenn der Benutzer z.B. <span
+class="keystroke">5</span> eingibt und die <span
 class="keystroke">Eingabetaste</span> drückt, sieht `guess` wie folgt aus:
 `5\n`. Das `\n` steht für „Zeilenumbruch“ (newline), das Ergebnis des Drückens
 der <span class="keystroke">Eingabetaste</span>. (Unter Windows ergibt das
@@ -932,14 +930,14 @@ Drücken der <span class="keystroke">Eingabetaste</span> einen Wagenrücklauf
 (carriage return) und einen Zeilenumbruch (newline): `\r\n`) Die Methode `trim`
 entfernt `\n` und `\r\n`, was nur `5` ergibt.
 
-Die [Methode `parse` für Zeichenketten][parse] konvertiert eine Zeichenkette in
-einen anderen Typ. Hier verwenden wir sie, um eine Zeichenkette in eine Zahl
-umzuwandeln. Wir müssen Rust den genauen Zahlentyp mitteilen, den wir wollen,
-indem wir `let guess: u32` verwenden. Der Doppelpunkt (`:`) nach `guess` sagt
-Rust, dass wir den Typ der Variablen annotieren werden. Rust hat ein paar
-eingebaute Zahlentypen; `u32`, das du hier siehst, ist eine vorzeichenlose
-32-Bit-Ganzzahl. Es ist eine gute Standardwahl für eine kleine positive Zahl.
-Über andere Zahlentypen erfährst du in [Kapitel 3][integers].
+Die [Methode `parse` für Strings][parse] konvertiert einen String in einen
+anderen Typ. Hier verwenden wir sie, um einen String in eine Zahl umzuwandeln.
+Wir müssen Rust den genauen Zahlentyp mitteilen, den wir wollen, indem wir `let
+guess: u32` verwenden. Der Doppelpunkt (`:`) nach `guess` sagt Rust, dass wir
+den Typ der Variablen annotieren werden. Rust hat ein paar eingebaute
+Zahlentypen; `u32`, das du hier siehst, ist eine vorzeichenlose 32-Bit-Ganzzahl.
+Es ist eine gute Standardwahl für eine kleine positive Zahl. Über andere
+Zahlentypen erfährst du in [Kapitel 3][integers].
 
 Zusätzlich bedeuten die Annotation `u32` in diesem Beispielprogramm und der
 Vergleich mit `secret_number`, dass Rust daraus ableiten wird, dass
@@ -947,18 +945,17 @@ Vergleich mit `secret_number`, dass Rust daraus ableiten wird, dass
 zwischen zwei Werten desselben Typs durchgeführt!
 
 Die Methode `parse` funktioniert nur bei Zeichen, die logisch in Zahlen
-umgewandelt werden können und kann daher leicht Fehler verursachen. Wenn die
-Zeichenkette zum Beispiel `A👍%` enthielte, gäbe es keine Möglichkeit, dies in
-eine Zahl umzuwandeln. Da dies fehlschlagen könnte, gibt die Methode `parse`
-einen `Result`-Typ zurück, ähnlich wie die Methode `read_line` (weiter oben in
+umgewandelt werden können und kann daher leicht Fehler verursachen. Wenn der
+String zum Beispiel `A👍%` enthielte, gäbe es keine Möglichkeit, diesen in eine
+Zahl umzuwandeln. Da dies fehlschlagen könnte, gibt die Methode `parse` einen
+`Result`-Typ zurück, ähnlich wie die Methode `read_line` (weiter oben in
 [„Behandeln potentieller Fehler mit `Result`“][result-behandeln]). Wir werden
 dieses `Result` auf die gleiche Weise behandeln, indem wir erneut `expect`
 verwenden. Wenn `parse` eine `Err`-Variante von `Result` zurückgibt, weil es
-keine Zahl aus der Zeichenkette erzeugen konnte, wird der `expect`-Aufruf das
-Spiel abbrechen und die Nachricht ausgeben, die wir ihm geben. Wenn `parse` die
-Zeichenkette erfolgreich in eine Zahl umwandeln kann, gibt es die `Ok`-Variante
-von `Result` zurück, und `expect` gibt die Zahl zurück, die wir vom `Ok`-Wert
-erwarten.
+keine Zahl aus dem String erzeugen konnte, wird der `expect`-Aufruf das Spiel
+abbrechen und die Nachricht ausgeben, die wir ihm geben. Wenn `parse` den String
+erfolgreich in eine Zahl umwandeln kann, gibt es die `Ok`-Variante von `Result`
+zurück, und `expect` gibt die Zahl zurück, die wir vom `Ok`-Wert erwarten.
 
 Lassen wir das Programm jetzt laufen:
 
@@ -1192,23 +1189,23 @@ des Fehlers. Denke daran, dass `parse` einen `Result`-Typ zurückgibt und
 hier einen `match`-Ausdruck, wie wir es mit dem `Ordering`-Ergebnis der Methode
 `cmp` getan haben.
 
-Wenn `parse` in der Lage ist, die Zeichenkette erfolgreich in eine Zahl
-umzuwandeln, gibt es einen `Ok`-Wert zurück, der die resultierende Zahl
-enthält. Dieser `Ok`-Wert wird mit dem Muster des ersten Zweigs übereinstimmen
-und der `match`-Ausdruck wird nur den `num`-Wert zurückgeben, der durch `parse`
-erzeugt und in den `Ok`-Wert eingefügt wurde. Diese Zahl wird in der neuen
+Wenn `parse` in der Lage ist, den String erfolgreich in eine Zahl umzuwandeln,
+gibt es einen `Ok`-Wert zurück, der die resultierende Zahl enthält. Dieser
+`Ok`-Wert wird mit dem Muster des ersten Zweigs übereinstimmen und der
+`match`-Ausdruck wird nur den `num`-Wert zurückgeben, der durch `parse` erzeugt
+und in den `Ok`-Wert eingefügt wurde. Diese Zahl wird in der neuen
 `guess`-Variable, die wir erzeugen, genau dort landen, wo wir sie haben wollen.
 
-Wenn `parse` _nicht_ in der Lage ist, die Zeichenkette in eine Zahl
-umzuwandeln, gibt es einen `Err`-Wert zurück, der mehr Informationen über den
-Fehler enthält. Der `Err`-Wert stimmt nicht mit dem `Ok(num)`-Muster im ersten
-`match`-Zweig überein, aber er stimmt mit dem `Err(_)`-Muster im zweiten Zweig
-überein. Der Unterstrich `_` ist ein Auffangwert; in diesem Beispiel sagen
-wir, dass alle `Err`-Werte übereinstimmen sollen, egal welche Informationen sie
-enthalten. Das Programm wird also den Code `continue` des zweiten Zweigs
-ausführen, der das Programm anweist, zur nächsten `loop`-Iteration zu gehen und
-nach einer weiteren Schätzung zu fragen. Effektiv ignoriert das Programm also
-alle Fehler, die bei `parse` auftreten könnten!
+Wenn `parse` _nicht_ in der Lage ist, den String in eine Zahl umzuwandeln, gibt
+es einen `Err`-Wert zurück, der mehr Informationen über den Fehler enthält. Der
+`Err`-Wert stimmt nicht mit dem `Ok(num)`-Muster im ersten `match`-Zweig
+überein, aber er stimmt mit dem `Err(_)`-Muster im zweiten Zweig überein. Der
+Unterstrich `_` ist ein Auffangwert; in diesem Beispiel sagen wir, dass alle
+`Err`-Werte übereinstimmen sollen, egal welche Informationen sie enthalten. Das
+Programm wird also den Code `continue` des zweiten Zweigs ausführen, der das
+Programm anweist, zur nächsten `loop`-Iteration zu gehen und nach einer weiteren
+Schätzung zu fragen. Effektiv ignoriert das Programm also alle Fehler, die bei
+`parse` auftreten könnten!
 
 Jetzt sollte alles im Programm wie erwartet funktionieren. Lass es uns
 versuchen:

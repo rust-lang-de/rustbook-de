@@ -83,10 +83,10 @@ Unter Windows gib den Befehl `.\main` anstelle von `./main` ein:
 Hallo Welt!
 ```
 
-Unabhängig von deinem Betriebssystem sollte die Zeichenkette `Hallo Welt!` im
-Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
-Abschnitt [„Fehlersuche“][troubleshooting] des Installationsabschnitts nach,
-wie du Hilfe erhalten kannst.
+Unabhängig von deinem Betriebssystem sollte der String `Hallo Welt!` im Terminal
+ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im Abschnitt
+[„Fehlersuche“][troubleshooting] des Installationsabschnitts nach, wie du Hilfe
+erhalten kannst.
 
 Wenn `Hallo Welt!` ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell
 ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
@@ -139,9 +139,8 @@ erläutern. Im Moment musst du nur wissen, dass die Verwendung eines `!`
 bedeutet, dass du ein Makro anstelle einer normalen Funktion aufrufst und dass
 Makros nicht immer denselben Regeln folgen wie Funktionen.
 
-Zweitens siehst du die Zeichenkette `"Hallo Welt!"`. Wir übergeben diese
-Zeichenkette als Argument an `println!`, und die Zeichenkette wird auf dem
-Bildschirm ausgegeben.
+Zweitens siehst du den String `"Hallo Welt!"`. Wir übergeben diesen String als
+Argument an `println!`, und er wird auf dem Bildschirm ausgegeben.
 
 Drittens beenden wir die Zeile mit einem Semikolon (`;`), was anzeigt, dass
 dieser Ausdruck beendet ist und der nächste beginnen kann. Die meisten Zeilen

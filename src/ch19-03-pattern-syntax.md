@@ -549,7 +549,7 @@ wird uns Listing 19-21 einen Fehler liefern.
 let s = Some(String::from("Hallo!"));
 
 if let Some(_s) = s {
-    println!("Zeichenkette gefunden");
+    println!("String gefunden");
 }
 
 println!("{s:?}");
@@ -568,7 +568,7 @@ ohne Fehler kompilieren, weil `s` nicht in `_` verschoben wird.
 let s = Some(String::from("Hallo!"));
 
 if let Some(_) = s {
-    println!("Zeichenkette gefunden");
+    println!("String gefunden");
 }
 
 println!("{s:?}");

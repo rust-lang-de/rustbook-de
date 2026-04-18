@@ -143,20 +143,19 @@ tatsächlich benötigt wird.
 > Leistungsgarantien gewährleisten kann, genau wie bei Iteratoren.
 
 Sobald wir `response_text` haben, können wir ihn mit `Html::parse` in eine
-Instanz des Typs `Html` einlesen. Anstelle einer rohen Zeichenkette haben wir
-nun einen Datentyp, den wir verwenden können, um mit HTML als eine
-reichhaltigere Datenstruktur zu arbeiten. Insbesondere können wir die Methode
-`select_first` verwenden, um die erste Instanz eines bestimmten CSS-Selektors
-zu finden. Durch Übergeben der Zeichenkette `"title"` erhalten wir das erste
-`<title>`-Element im Dokument, wenn es eines gibt. Da möglicherweise kein
-passendes Element vorhanden ist, gibt `select_first` eine `Option<ElementRef>`
-zurück. Schließlich verwenden wir die Methode `Option::map`, die uns mit dem
-Element in der `Option` arbeiten lässt, wenn es vorhanden ist, und nichts tut,
-wenn es nicht vorhanden ist. (Wir könnten hier auch einen `match`-Ausdruck
-verwenden, aber `map` ist idiomatischer.) Im Rumpf der Funktion, die wir an
-`map` übergeben, rufen wir `inner_html` auf `title` auf, um dessen
-Inhalt als `String` zu erhalten. Wenn alles erledigt ist, haben wir eine
-`Option<String>`.
+Instanz des Typs `Html` einlesen. Anstelle eines rohen Strings haben wir nun
+einen Datentyp, den wir verwenden können, um mit HTML als eine reichhaltigere
+Datenstruktur zu arbeiten. Insbesondere können wir die Methode `select_first`
+verwenden, um die erste Instanz eines bestimmten CSS-Selektors zu finden. Durch
+Übergeben des Strings `"title"` erhalten wir das erste `<title>`-Element im
+Dokument, wenn es eines gibt. Da möglicherweise kein passendes Element vorhanden
+ist, gibt `select_first` eine `Option<ElementRef>` zurück. Schließlich verwenden
+wir die Methode `Option::map`, die uns mit dem Element in der `Option` arbeiten
+lässt, wenn es vorhanden ist, und nichts tut, wenn es nicht vorhanden ist. (Wir
+könnten hier auch einen `match`-Ausdruck verwenden, aber `map` ist
+idiomatischer.) Im Rumpf der Funktion, die wir an `map` übergeben, rufen wir
+`inner_html` auf `title` auf, um dessen Inhalt als `String` zu erhalten. Wenn
+alles erledigt ist, haben wir eine `Option<String>`.
 
 Beachte, dass das Rust-Schlüsselwort `await` _hinter_ dem Ausdruck steht, auf
 den du wartest, nicht vor ihm. Das heißt, es ist ein _Postfix_-Schlüsselwort.

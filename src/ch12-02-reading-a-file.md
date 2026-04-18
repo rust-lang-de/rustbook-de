@@ -67,7 +67,7 @@ Nach dieser Anweisung haben wir wieder eine temporäre `println!`-Anweisung
 hinzugefügt, die den Wert von `contents` ausgibt, nachdem die Datei eingelesen
 wurde, sodass wir überprüfen können, ob das Programm soweit funktioniert.
 
-Lassen wir diesen Code mit einer beliebigen Zeichenkette als erstes
+Lassen wir diesen Code mit einem beliebigen String als erstes
 Kommandozeilenargument laufen (weil wir den Suchteil noch nicht implementiert
 haben) und die Datei _poem.txt_ als zweites Argument:
 

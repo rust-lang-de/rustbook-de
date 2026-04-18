@@ -73,11 +73,11 @@ Verwendung von Mustern in `let`-Anweisungen und die Destrukturierung in Kapitel
 `let`-Anweisung auf diese Weise ein bequemer Ansatz ist, um die Teile des
 Tupels zu extrahieren, die von `mpsc::channel` zurückgegeben werden.
 
-Verschieben wir das sendende Ende in einen erzeugten Thread und lassen es eine
-Zeichenkette senden, sodass der erzeugte Thread mit dem Haupt-Thread
-kommuniziert, wie in Listing 16-7 gezeigt. Das ist so, als würde man eine
-Gummiente flussaufwärts in den Fluss setzen oder eine Chat-Nachricht von einem
-Thread zum anderen senden.
+Verschieben wir das sendende Ende in einen erzeugten Thread und lassen es einen
+String senden, sodass der erzeugte Thread mit dem Haupt-Thread kommuniziert, wie
+in Listing 16-7 gezeigt. Das ist so, als würde man eine Gummiente flussaufwärts
+in den Fluss setzen oder eine Chat-Nachricht von einem Thread zum anderen
+senden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -279,10 +279,10 @@ fn main() {
 <span class="caption">Listing 16-10: Senden mehrerer Nachrichten mit Pausen
 dazwischen</span>
 
-Diesmal verwendet der erzeugte Thread einen Vektor von Zeichenketten, die wir
-an den Haupt-Thread senden wollen. Wir iterieren über diese Zeichenketten,
-senden jede einzeln und pausieren dazwischen, indem wir die Funktion
-`thread::sleep` mit einem `Duration`-Wert von einer Sekunde aufrufen.
+Diesmal verwendet der erzeugte Thread einen Vektor von Strings, die wir an den
+Haupt-Thread senden wollen. Wir iterieren über diese Strings, senden jeden
+einzeln und pausieren dazwischen, indem wir die Funktion `thread::sleep` mit
+einem `Duration`-Wert von einer Sekunde aufrufen.
 
 Im Haupt-Thread rufen wir die Funktion `recv` nicht mehr explizit auf:
 Stattdessen behandeln wir `rx` als Iterator. Jeden empfangenen Wert geben wir

@@ -1,63 +1,61 @@
-## UTF-8-kodierten Text in Zeichenketten (strings) ablegen
+## UTF-8-kodierten Text in Strings ablegen
 
-Wir haben in Kapitel 4 über Zeichenketten (strings) gesprochen, aber wir werden
-uns jetzt eingehender damit befassen. Neue Rust-Entwickler haben gewöhnlich aus
-einer Kombination von drei Gründen Probleme mit Zeichenketten: Rusts Neigung,
-mögliche Fehler aufzudecken, Zeichenketten als eine kompliziertere
-Datenstruktur, als viele Programmierer ihnen zugestehen, und UTF-8. Diese
-Faktoren kombinieren sich in einer Weise, die schwierig erscheinen kann, wenn
-man von anderen Programmiersprachen kommt.
+Wir haben in Kapitel 4 über Strings gesprochen, aber wir werden uns jetzt
+eingehender damit befassen. Neue Rust-Entwickler haben gewöhnlich aus einer
+Kombination von drei Gründen Probleme mit Strings: Rusts Neigung, mögliche
+Fehler aufzudecken, Strings als eine kompliziertere Datenstruktur, als viele
+Programmierer ihnen zugestehen, und UTF-8. Diese Faktoren kombinieren sich in
+einer Weise, die schwierig erscheinen kann, wenn man von anderen
+Programmiersprachen kommt.
 
-Wir besprechen Zeichenketten im Kontext von Kollektionen, da Zeichenketten als
+Wir besprechen Strings im Kontext von Kollektionen, da Strings als
 Byte-Kollektion implementiert sind, sowie einige Methoden, die nützliche
 Funktionalitäten bieten, wenn diese Bytes als Text interpretiert werden. In
 diesem Abschnitt werden wir über `String`-Operationen sprechen, die jeder
 Kollektionstyp hat, wie das Erstellen, Aktualisieren und Lesen. Wir werden auch
 die Art und Weise besprechen, in der sich `String` von den anderen Kollektionen
-unterscheidet, nämlich warum die Indexierung bei einem `String` kompliziert
-ist, weil Menschen und Computer `String`-Daten unterschiedlich interpretieren.
+unterscheidet, nämlich warum die Indexierung bei einem `String` kompliziert ist,
+weil Menschen und Computer `String`-Daten unterschiedlich interpretieren.
 
-### Zeichenketten definieren
+### Strings definieren
 
-Zuerst werden wir definieren, was wir mit dem Begriff _Zeichenkette_ (string)
-meinen. Rust hat nur einen einzigen Zeichenkettentyp in der Kernsprache, nämlich
-den Zeichenkettenanteilstyp `str`, der üblicherweise in seiner Borrow-Form
-`&str` zu sehen ist. In Kapitel 4 sprachen wir über Zeichenkettenanteilstypen
-(string slices), die Referenzen auf einige UTF-8-kodierte Zeichenkettendaten
-sind, die anderswo gespeichert sind. Zeichenkettenliterale werden beispielsweise
-in der Binärdatei des Programms gespeichert und sind daher
-Zeichenkettenanteilstypen.
+Zuerst werden wir definieren, was wir mit dem Begriff _String_ meinen. Rust hat
+nur einen einzigen String-Typ in der Kernsprache, nämlich den String Slice
+`str`, der üblicherweise in seiner Borrow-Form `&str` zu sehen ist. In Kapitel 4
+sprachen wir über String Slice, die Referenzen auf einige UTF-8-kodierte
+String-Daten sind, die anderswo gespeichert sind. String-Literale werden
+beispielsweise in der Binärdatei des Programms gespeichert und sind daher String
+Slices.
 
 Der Typ `String`, der von Rusts Standardbibliothek zur Verfügung gestellt wird
 und nicht in die Kernsprache kodiert ist, ist ein größenänderbarer,
-veränderbarer, aneigenbarer, UTF-8-kodierter Zeichenkettentyp. Wenn
-Rust-Entwickler von Zeichenketten in Rust sprechen, meinen sie normalerweise
-den Typ `String` sowie den Zeichenkettenanteilstyp `&str`, nicht nur einen
-dieser Typen. Obwohl es in diesem Abschnitt weitgehend um `String` geht, werden
-beide Typen in Rusts Standardbibliothek stark verwendet, und sowohl `String`
-als auch Zeichenkettenanteilstypen sind UTF-8-kodiert.
+veränderbarer, aneigenbarer, UTF-8-kodierter String-Typ. Wenn Rust-Entwickler
+von Strings in Rust sprechen, meinen sie normalerweise den Typ `String` sowie
+den String Slice `&str`, nicht nur einen dieser Typen. Obwohl es in diesem
+Abschnitt weitgehend um `String` geht, werden beide Typen in Rusts
+Standardbibliothek stark verwendet, und sowohl `String` als auch String Slices
+sind UTF-8-kodiert.
 
-### Erstellen einer neuen Zeichenkette
+### Erstellen eines neuen Strings
 
 Viele der gleichen Operationen, die mit `Vec<T>` verfügbar sind, sind auch mit
-`String` verfügbar, weil `String` eigentlich als Hülle um einen Vektor von
-Bytes mit einigen zusätzlichen Garantien, Einschränkungen und Fähigkeiten
-implementiert ist. Ein Beispiel für eine Funktion, die auf die gleiche Weise
-mit `Vec<T>` und `String` arbeitet, ist die Funktion `new` zum Erstellen einer
+`String` verfügbar, weil `String` eigentlich als Hülle um einen Vektor von Bytes
+mit einigen zusätzlichen Garantien, Einschränkungen und Fähigkeiten
+implementiert ist. Ein Beispiel für eine Funktion, die auf die gleiche Weise mit
+`Vec<T>` und `String` arbeitet, ist die Funktion `new` zum Erstellen einer
 Instanz, die in Listing 8-11 gezeigt wird.
 
 ```rust
 let mut s = String::new();
 ```
 
-<span class="caption">Listing 8-11: Erstellen einer neuen, leeren
-Zeichenkette</span>
+<span class="caption">Listing 8-11: Erstellen eines neuen, leeren Strings</span>
 
-Diese Zeile erzeugt eine neue, leere Zeichenkette namens `s`, in die wir dann
-Daten aufnehmen können. Oft werden wir einige initiale Daten haben, mit denen
-wir die Zeichenkette füllen wollen. Dazu verwenden wir die Methode `to_string`,
-die für jeden Typ verfügbar ist, der das Trait `Display` implementiert, wie es
-bei Zeichenkettenliteralen der Fall ist. Listing 8-12 zeigt zwei Beispiele.
+Diese Zeile erzeugt einen neuen, leeren String namens `s`, in den wir dann Daten
+aufnehmen können. Oft werden wir einige initiale Daten haben, mit denen wir den
+String füllen wollen. Dazu verwenden wir die Methode `to_string`, die für jeden
+Typ verfügbar ist, der das Trait `Display` implementiert, wie es bei
+String-Literalen der Fall ist. Listing 8-12 zeigt zwei Beispiele.
 
 ```rust
 let data = "initialer Inhalt";
@@ -69,30 +67,29 @@ let s = "initialer Inhalt".to_string();
 ```
 
 <span class="caption">Listing 8-12: Verwenden der Methode `to_string` zum
-Erzeugen eines `String` aus einem Zeichenkettenliteral</span>
+Erzeugen eines `String` aus einem String-Literal</span>
 
-Dieser Code erzeugt eine Zeichenkette, die `initialer Inhalt` enthält.
+Dieser Code erzeugt einen String, der `initialer Inhalt` enthält.
 
 Wir können auch die Funktion `String::from` verwenden, um einen `String` aus
-einem Zeichenkettenliteral zu erzeugen. Der Code in Listing 8-13 ist
-äquivalent zum Code in Listing 8-12, der `to_string` verwendet.
+einem String-Literal zu erzeugen. Der Code in Listing 8-13 ist äquivalent zum
+Code in Listing 8-12, der `to_string` verwendet.
 
 ```rust
 let s = String::from("initialer Inhalt");
 ```
 
 <span class="caption">Listing 8-13: Verwenden der Funktion `String::from` zum
-Erzeugen eines `String` aus einem Zeichenkettenliteral</span>
+Erzeugen eines `String` aus einem String-Literal</span>
 
-Da Zeichenketten für so viele Dinge verwendet werden, können wir viele
-verschiedene generische Programmierschnittstellen (APIs) für Zeichenketten
-verwenden, was uns viele Möglichkeiten bietet. Einige von ihnen können
-überflüssig erscheinen, aber sie alle haben ihren Platz! In diesem Fall machen
-`String::from` und `to_string` dasselbe, also ist die Wahl eine Frage des
-Stils und der Lesbarkeit.
+Da Strings für so viele Dinge verwendet werden, können wir viele verschiedene
+generische Programmierschnittstellen (APIs) für Strings verwenden, was uns viele
+Möglichkeiten bietet. Einige von ihnen können überflüssig erscheinen, aber sie
+alle haben ihren Platz! In diesem Fall machen `String::from` und `to_string`
+dasselbe, also ist die Wahl eine Frage des Stils und der Lesbarkeit.
 
-Denke daran, dass Zeichenketten UTF-8-kodiert sind, sodass sie alle
-ordnungsgemäß kodierten Daten aufnehmen können, wie in Listing 8-14 gezeigt.
+Denke daran, dass Strings UTF-8-kodiert sind, sodass sie alle ordnungsgemäß
+kodierten Daten aufnehmen können, wie in Listing 8-14 gezeigt.
 
 ```rust
 let hello = String::from("السلام عليكم");
@@ -110,11 +107,11 @@ let hello = String::from("Hola");
 ```
 
 <span class="caption">Listing 8-14: Speichern von Begrüßungstexten in
-verschiedenen Sprachen in Zeichenketten</span>
+verschiedenen Sprachen in Strings</span>
 
 All dies sind gültige `String`-Werte.
 
-### Aktualisieren einer Zeichenkette
+### Aktualisieren eines Strings
 
 Ein `String` kann an Größe zunehmen und sein Inhalt kann sich ändern, genau wie
 der Inhalt eines `Vec<T>`, wenn du mehr Daten hineinschiebst. Darüber hinaus
@@ -124,22 +121,21 @@ kannst du bequem den Operator `+` oder das Makro `format!` verwenden, um
 #### Anhängen mit `push_str` und `push`
 
 Wir können einen `String` wachsen lassen, indem wir die Methode `push_str`
-verwenden, um einen Zeichenkettenanteilstyp anzuhängen, wie in Listing 8-15
-zu sehen ist.
+verwenden, um einen String Slice anzuhängen, wie in Listing 8-15 zu sehen ist.
 
 ```rust
 let mut s = String::from("foo");
 s.push_str("bar");
 ```
 
-<span class="caption">Listing 8-15: Anhängen eines Zeichenkettenanteilstyps
-an einen `String` mit der Methode `push_str`</span>
+<span class="caption">Listing 8-15: Anhängen eines String Slices an einen
+`String` mit der Methode `push_str`</span>
 
 Nach diesen beiden Zeilen enthält `s` den Wert `foobar`. Die Methode `push_str`
-nimmt einen Zeichenkettenanteilstyp, weil wir nicht unbedingt die
-Eigentümerschaft des Parameters übernehmen wollen. Zum Beispiel wollen wir im
-Code in Listing 8-16 in der Lage sein, `s2` zu verwenden, nachdem wir seinen
-Inhalt an `s1` angehängt haben.
+nimmt einen String Slice, weil wir nicht unbedingt die Eigentümerschaft des
+Parameters übernehmen wollen. Zum Beispiel wollen wir im Code in Listing 8-16 in
+der Lage sein, `s2` zu verwenden, nachdem wir seinen Inhalt an `s1` angehängt
+haben.
 
 ```rust
 let mut s1 = String::from("foo");
@@ -148,8 +144,8 @@ s1.push_str(s2);
 println!("s2 ist {s2}");
 ```
 
-<span class="caption">Listing 8-16: Verwenden eines Zeichenkettenanteilstyps
-nach dem Anhängen seines Inhalts an eine Zeichenkette</span>
+<span class="caption">Listing 8-16: Verwenden eines String Slices nach dem
+Anhängen seines Inhalts an einen String</span>
 
 Wenn die Methode `push_str` die Eigentümerschaft von `s2` übernehmen würde,
 könnten wir ihren Wert nicht in der letzten Zeile ausgeben. Dieser Code
@@ -171,8 +167,8 @@ Als Ergebnis wird `s` den Wert `lol` enthalten.
 
 #### Aneinanderhängen mit `+` und `format!`
 
-Häufig möchtest du zwei vorhandene Zeichenketten kombinieren. Eine Möglichkeit
-das zu tun ist, den Operator `+` zu verwenden, wie in Listing 8-18 gezeigt.
+Häufig möchtest du zwei vorhandene Strings kombinieren. Eine Möglichkeit das zu
+tun ist, den Operator `+` zu verwenden, wie in Listing 8-18 gezeigt.
 
 ```rust
 let s1 = String::from("Hallo ");
@@ -181,14 +177,14 @@ let s3 = s1 + &s2; // Beachte, s1 wurde hierher verschoben und
                    // kann nicht mehr verwendet werden
 ```
 
-<span class="caption">Listing 8-18: Verwenden des Operators `+`, um zwei
-Zeichenketten zu einer neuen zu kombinieren</span>
+<span class="caption">Listing 8-18: Verwenden des Operators `+`, um zwei Strings
+zu einem neuen zu kombinieren</span>
 
-Die Zeichenkette `s3` wird `Hallo Welt!` enthalten. Der Grund, warum `s1` nach
-der Addition nicht mehr gültig ist und warum wir eine Referenz auf `s2`
-verwendet haben, hat mit der Signatur der Methode zu tun, die aufgerufen wird,
-wenn wir den Operator `+` verwenden. Der Operator `+` benutzt die Methode
-`add`, deren Signatur ungefähr so aussieht:
+Der String `s3` wird `Hallo Welt!` enthalten. Der Grund, warum `s1` nach der
+Addition nicht mehr gültig ist und warum wir eine Referenz auf `s2` verwendet
+haben, hat mit der Signatur der Methode zu tun, die aufgerufen wird, wenn wir
+den Operator `+` verwenden. Der Operator `+` benutzt die Methode `add`, deren
+Signatur ungefähr so aussieht:
 
 ```rust,ignore
 fn add(self, s: &str) -> String {
@@ -201,13 +197,12 @@ generische Datentypen in Kapitel 10 besprechen. Diese Signatur gibt uns den
 entscheidenden Hinweis, um die kniffligen Stellen des Operators `+` zu
 verstehen.
 
-Erstens hat `s2` ein `&`, was bedeutet, dass wir eine Referenz der zweiten
-Zeichenkette an die erste Zeichenkette anhängen. Der Grund dafür ist der
-Parameter `s` in der Funktion `add`: Wir können nur einen
-Zeichkettenanteilstyp an einen `String` anhängen; wir können nicht zwei
-`String`-Werte aneinanderhängen. Aber warte &ndash; der Typ von `&s2` ist
-`&String`, nicht `&str`, wie im zweiten Parameter von `add` spezifiziert.
-Warum kompiliert also Listing 8-18?
+Erstens hat `s2` ein `&`, was bedeutet, dass wir eine Referenz des zweiten
+Strings an den ersten String anhängen. Der Grund dafür ist der Parameter `s` in
+der Funktion `add`: Wir können nur einen String Slice an einen `String`
+anhängen; wir können nicht zwei `String`-Werte aneinanderhängen. Aber warte
+&ndash; der Typ von `&s2` ist `&String`, nicht `&str`, wie im zweiten Parameter
+von `add` spezifiziert. Warum kompiliert also Listing 8-18?
 
 Der Grund, warum wir `&s2` im Aufruf von `add` verwenden können, ist, dass der
 Compiler das Argument `&String` in einen `&str` umwandeln (coerce) kann.
@@ -218,16 +213,16 @@ Eigentümerschaft des Parameters `s` übernimmt, ist `s2` auch nach dieser
 Operation immer noch ein gültiger `String`.
 
 Zweitens können wir in der Signatur sehen, dass `add` die Eigentümerschaft von
-`self` übernimmt, weil `self` _kein_ `&` hat. Das bedeutet, dass `s1` in
-Listing 8-18 in den Aufruf von `add` verschoben wird und danach nicht mehr
-gültig ist. Obwohl also `let s3 = s1 + &s2;` so aussieht, als ob beide
-Zeichenketten kopiert und eine neue erzeugt wird, übernimmt diese Anweisung
-tatsächlich die Eigentümerschaft von `s1`, hängt eine Kopie des Inhalts von
-`s2` an und gibt dann die Eigentümerschaft des Ergebnisses zurück. In anderen
-Worten sieht es so aus, als würde es viele Kopien erstellen, das ist aber nicht
-so; die Implementierung ist effizienter als Kopieren.
+`self` übernimmt, weil `self` _kein_ `&` hat. Das bedeutet, dass `s1` in Listing
+8-18 in den Aufruf von `add` verschoben wird und danach nicht mehr gültig ist.
+Obwohl also `let s3 = s1 + &s2;` so aussieht, als ob beide Strings kopiert und
+ein neuer erzeugt wird, übernimmt diese Anweisung tatsächlich die
+Eigentümerschaft von `s1`, hängt eine Kopie des Inhalts von `s2` an und gibt
+dann die Eigentümerschaft des Ergebnisses zurück. In anderen Worten sieht es so
+aus, als würde es viele Kopien erstellen, das ist aber nicht so; die
+Implementierung ist effizienter als Kopieren.
 
-Wenn wir mehrere Zeichenketten aneinanderhängen wollen, wird das Verhalten des
+Wenn wir mehrere Strings aneinanderhängen wollen, wird das Verhalten des
 Operators `+` unhandlich:
 
 ```rust
@@ -239,7 +234,7 @@ let s = s1 + "-" + &s2 + "-" + &s3;
 ```
 
 An diesem Punkt wird `s` den Wert `tic-tac-toe` haben. Bei all den Zeichen `+`
-und `"` ist es schwer zu erkennen, was vor sich geht. Um Zeichenketten auf
+und `"` ist es schwer zu erkennen, was vor sich geht. Um Strings auf
 kompliziertere Weise zu kombinieren, können wir stattdessen das Makro `format!`
 verwenden:
 
@@ -258,13 +253,12 @@ auszugeben, gibt es einen `String` mit dem Inhalt zurück. Die Codevariante mit
 `format!` erzeugte Code verwendet Referenzen, sodass dieser Aufruf keine
 Eigentümerschaft seiner Parameter übernimmt.
 
-### Indexierung von Zeichenketten
+### Indexierung von Strings
 
 In vielen anderen Programmiersprachen ist das Zugreifen auf einzelne Zeichen in
-einer Zeichenkette mittels Index eine gültige und gängige Operation. Wenn du
-jedoch in Rust versuchst, mittels Indexierungssyntax auf Teile einer
-Zeichenkette zuzugreifen, wirst du einen Fehler erhalten. Betrachte den
-ungültigen Code in Listing 8-19.
+einem String mittels Index eine gültige und gängige Operation. Wenn du jedoch in
+Rust versuchst, mittels Indexierungssyntax auf Teile eines Strings zuzugreifen,
+wirst du einen Fehler erhalten. Betrachte den ungültigen Code in Listing 8-19.
 
 ```rust,does_not_compile
 let s1 = String::from("Hallo");
@@ -297,36 +291,35 @@ For more information about this error, try `rustc --explain E0277`.
 error: could not compile `collections` (bin "collections") due to 1 previous error
 ```
 
-Die Fehlermeldung erklärt es: Zeichenketten in Rust unterstützen keine
-Indexierung. Aber warum nicht? Um diese Frage zu beantworten, müssen wir uns
-ansehen, wie Rust Zeichenketten im Speicher ablegt.
+Die Fehlermeldung erklärt es: Strings in Rust unterstützen keine Indexierung.
+Aber warum nicht? Um diese Frage zu beantworten, müssen wir uns ansehen, wie
+Rust Strings im Speicher ablegt.
 
 #### Interne Darstellung
 
 Ein `String` ist eine Hülle um einen `Vec<u8>`. Sehen wir uns einige unserer
-korrekt kodierten UTF-8-Beispielzeichenketten aus Listing 8-14 an. Zuerst
-diese:
+korrekt kodierten UTF-8-Beispiel-Strings aus Listing 8-14 an. Zuerst diesen:
 
 ```rust
 let hello = String::from("Hola");
 ```
 
 In diesem Fall wird `hello.len()` gleich 4 sein, was bedeutet, dass der Vektor,
-der die Zeichenkette „Hola“ speichert, 4 Bytes lang ist. Jeder dieser
-Buchstaben benötigt 1 Byte in UTF-8-Kodierung. Die folgende Zeile mag dich
-jedoch überraschen. (Beachte, dass diese Zeichenkette mit dem kyrillischen
-Großbuchstaben „Ze“ beginnt, nicht mit der Zahl 3.)
+der den String „Hola“ speichert, 4 Bytes lang ist. Jeder dieser Buchstaben
+benötigt 1 Byte in UTF-8-Kodierung. Die folgende Zeile mag dich jedoch
+überraschen. (Beachte, dass dieser String mit dem kyrillischen Großbuchstaben
+„Ze“ beginnt, nicht mit der Zahl 3.)
 
 ```rust
 let hello = String::from("Здравствуйте");
 ```
 
-Auf die Frage, wie lang die Zeichenkette ist, könnte man sagen: 12. Die Antwort
-von Rust lautet jedoch 24: Das ist die Anzahl der Bytes, die benötigt wird, um
-„Здравствуйте“ in UTF-8 zu kodieren, da jeder Unicode-Skalarwert in dieser
-Zeichenkette 2 Bytes Speicherplatz benötigt. Daher wird ein Index auf die Bytes
-der Zeichenkette nicht immer mit einem gültigen Unicode-Skalarwert korrelieren.
-Um das zu erläutern, betrachte diesen ungültigen Rust-Code:
+Auf die Frage, wie lang der String ist, könnte man sagen: 12. Die Antwort von
+Rust lautet jedoch 24: Das ist die Anzahl der Bytes, die benötigt wird, um
+„Здравствуйте“ in UTF-8 zu kodieren, da jeder Unicode-Skalarwert in diesem
+String 2 Bytes Speicherplatz benötigt. Daher wird ein Index auf die Bytes des
+Strings nicht immer mit einem gültigen Unicode-Skalarwert korrelieren. Um das zu
+erläutern, betrachte diesen ungültigen Rust-Code:
 
 ```rust,does_not_compile
 let hello = "Здравствуйте";
@@ -337,12 +330,11 @@ Du weißt bereits, dass `answer` nicht `З`, der erste Buchstabe, sein wird. In
 der UTF-8-Kodierung von `З` ist das erste Byte `208` und das zweite `151`,
 sodass `answer` eigentlich `208` sein müsste, aber `208` ist kein eigenständig
 gültiges Zeichen. Die Rückgabe von `208` ist wahrscheinlich nicht das, was ein
-Nutzer wünschen würde, wenn er nach dem ersten Buchstaben dieser Zeichenkette
-fragte; das sind jedoch die einzigen Daten, die Rust beim Byte-Index 0 hat.
-Nutzer wollen im Allgemeinen nicht, dass der Byte-Wert zurückgegeben wird,
-selbst wenn die Zeichenkette nur lateinische Buchstaben enthält: Wenn
-`&"hi"[0]` gültiger Code wäre, der den Byte-Wert zurückgibt, würde er `104`
-zurückgeben, nicht `h`.
+Nutzer wünschen würde, wenn er nach dem ersten Buchstaben dieses Strings fragte;
+das sind jedoch die einzigen Daten, die Rust beim Byte-Index 0 hat. Nutzer
+wollen im Allgemeinen nicht, dass der Byte-Wert zurückgegeben wird, selbst wenn
+der String nur lateinische Buchstaben enthält: Wenn `&"hi"[0]` gültiger Code
+wäre, der den Byte-Wert zurückgibt, würde er `104` zurückgeben, nicht `h`.
 
 Um zu vermeiden, dass ein unerwarteter Wert zurückgegeben wird und dadurch
 Fehler entstehen, die möglicherweise nicht sofort entdeckt werden, kompiliert
@@ -352,9 +344,9 @@ frühen Stadium des Entwicklungsprozesses.
 #### Bytes, skalare Werte und Graphemgruppen (grapheme clusters)
 
 Ein weiterer Punkt bei UTF-8 ist, dass es eigentlich drei relevante
-Möglichkeiten gibt, Zeichenketten aus Rusts Perspektive zu betrachten: Als
-Bytes, als skalare Werte und als Graphemgruppen (das, was wir am ehesten als
-_Buchstaben_ bezeichnen würden).
+Möglichkeiten gibt, Strings aus Rusts Perspektive zu betrachten: Als Bytes, als
+skalare Werte und als Graphemgruppen (das, was wir am ehesten als _Buchstaben_
+bezeichnen würden).
 
 Wenn wir uns das in der Devanagari-Schrift geschriebene Hindi-Wort „नमस्ते“
 ([_Namaste_](https://de.wikipedia.org/wiki/Namaste)) ansehen, wird es als ein 
@@ -384,28 +376,28 @@ Hindi-Wort besteht:
 ```
 
 Rust bietet verschiedene Möglichkeiten zur Interpretation von rohen
-Zeichenkettendaten, die von Computern gespeichert werden, sodass jedes Programm
-die Interpretation wählen kann, die es benötigt, unabhängig davon, in welcher
+String-Daten, die von Computern gespeichert werden, sodass jedes Programm die
+Interpretation wählen kann, die es benötigt, unabhängig davon, in welcher
 menschlichen Sprache die Daten vorliegen.
 
-Ein letzter Grund, warum Rust uns nicht erlaubt, eine Zeichenkette zu
-indexieren, um ein Zeichen zu erhalten, ist, dass von Indexoperationen erwartet
-wird, dass sie immer in konstanter Zeit (O(1)) erfolgen. Es ist jedoch nicht
-möglich, diese Zeitgarantie bei einem `String` einzuhalten, da Rust den Inhalt
-von Anfang an bis zum Index durchgehen müsste, um festzustellen, wie viele
-gültige Zeichen es gibt.
+Ein letzter Grund, warum Rust uns nicht erlaubt, einen String zu indexieren, um
+ein Zeichen zu erhalten, ist, dass von Indexoperationen erwartet wird, dass sie
+immer in konstanter Zeit (O(1)) erfolgen. Es ist jedoch nicht möglich, diese
+Zeitgarantie bei einem `String` einzuhalten, da Rust den Inhalt von Anfang an
+bis zum Index durchgehen müsste, um festzustellen, wie viele gültige Zeichen es
+gibt.
 
-### Anteilige Zeichenketten
+### String Slices
 
-Die Indexierung einer Zeichenkette ist oft eine schlechte Idee, weil nicht klar
-ist, was der Rückgabetyp der Zeichenketten-Indexoperation sein soll: Ein
-Byte-Wert, ein Zeichen, eine Graphemgruppe oder ein Zeichenkettenanteilstyp.
-Wenn du wirklich Indizes verwenden musst, um Zeichenkettenanteilstypen zu
-erstellen, bittet Rust dich daher, genauer zu sein.
+Die Indexierung eines Strings ist oft eine schlechte Idee, weil nicht klar ist,
+was der Rückgabetyp der String-Indexoperation sein soll: Ein Byte-Wert, ein
+Zeichen, eine Graphemgruppe oder ein String Slice. Wenn du wirklich Indizes
+verwenden musst, um String Slices zu erstellen, bittet Rust dich daher, genauer
+zu sein.
 
 Anstatt `[]` mit einer einzelnen Zahl zu indizieren, kannst du `[]` mit einem
-Bereich verwenden, um ein Zeichenkettenanteilstyp zu erstellen, der bestimmte
-Bytes enthält:
+Bereich verwenden, um einen String Slice zu erstellen, der bestimmte Bytes
+enthält:
 
 ```rust
 let hello = "Здравствуйте";
@@ -413,7 +405,7 @@ let hello = "Здравствуйте";
 let s = &hello[0..4];
 ```
 
-Hier wird `s` ein `&str` sein, das die ersten 4 Bytes der Zeichenkette enthält.
+Hier wird `s` ein `&str` sein, das die ersten 4 Bytes des Strings enthält.
 Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen 2 Bytes lang ist,
 was bedeutet, dass `s` gleich `Зд` ist.
 
@@ -433,17 +425,16 @@ byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здра
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Bei der Verwendung von Bereichen zum Erstellen von Zeichenkettenanteilstypen ist
-Vorsicht geboten, da dies zum Abbruch deines Programms führen kann.
+Bei der Verwendung von Bereichen zum Erstellen von String Slices ist Vorsicht
+geboten, da dies zum Abbruch deines Programms führen kann.
 
-### Iterieren über Zeichenketten
+### Iterieren über Strings
 
-Der beste Weg, um mit Teilen von Zeichenketten zu arbeiten, besteht darin,
-explizit anzugeben, ob du Zeichen oder Bytes benötigst. Für einzelne
-Unicode-Skalarwerte ist die Methode `chars` zu verwenden. Der Aufruf von
-`chars` auf „Зд“ trennt zwei Werte vom Typ `char` heraus und gibt sie
-zurück, und du kannst über das Ergebnis iterieren, um auf jedes Element
-zuzugreifen:
+Der beste Weg, um mit Teilen von Strings zu arbeiten, besteht darin, explizit
+anzugeben, ob du Zeichen oder Bytes benötigst. Für einzelne Unicode-Skalarwerte
+ist die Methode `chars` zu verwenden. Der Aufruf von `chars` auf „Зд“ trennt
+zwei Werte vom Typ `char` heraus und gibt sie zurück, und du kannst über das
+Ergebnis iterieren, um auf jedes Element zuzugreifen:
 
 ```rust
 for c in "Зд".chars() {
@@ -467,7 +458,7 @@ for b in "Зд".bytes() {
 }
 ```
 
-Dieser Code gibt die 4 Bytes aus, aus denen diese Zeichenkette besteht:
+Dieser Code gibt die 4 Bytes aus, aus denen dieser String besteht:
 
 ```text
 208
@@ -479,30 +470,27 @@ Dieser Code gibt die 4 Bytes aus, aus denen diese Zeichenkette besteht:
 Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als 1 Byte bestehen
 können.
 
-Die Ermittlung von Graphemgruppen aus Zeichenketten wie bei der
-Devanagari-Schrift ist komplex, sodass diese Funktionalität nicht von der
-Standardbibliothek bereitgestellt wird. Crates sind unter
-[crates.io](https://crates.io/) verfügbar, falls du diese Funktionalität
-benötigst.
+Die Ermittlung von Graphemgruppen aus Strings wie bei der Devanagari-Schrift ist
+komplex, sodass diese Funktionalität nicht von der Standardbibliothek
+bereitgestellt wird. Crates sind unter [crates.io](https://crates.io/)
+verfügbar, falls du diese Funktionalität benötigst.
 
-### Umgang mit der Komplexität von Zeichenketten
+### Umgang mit der Komplexität von Strings
 
-Zusammenfassend kann man sagen, dass Zeichenketten kompliziert sind.
-Verschiedene Programmiersprachen treffen unterschiedliche Entscheidungen
-darüber, wie diese Komplexität dem Programmierer angezeigt wird. Rust hat sich
-dafür entschieden, den korrekten Umgang mit Zeichenkettendaten zum
-Standardverhalten für alle Rust-Programme zu machen, was bedeutet, dass
-Programmierer sich im Vorfeld mehr Gedanken über den Umgang mit UTF-8-Daten
-machen müssen. Dieser Zielkonflikt macht die Komplexität von Zeichenketten
-größer als in anderen Programmiersprachen, aber er verhindert, dass du später
-in deinem Entwicklungslebenszyklus mit Fehlern umgehen musst, wenn
-Nicht-ASCII-Zeichen vorkommen.
+Zusammenfassend kann man sagen, dass Strings kompliziert sind. Verschiedene
+Programmiersprachen treffen unterschiedliche Entscheidungen darüber, wie diese
+Komplexität dem Programmierer angezeigt wird. Rust hat sich dafür entschieden,
+den korrekten Umgang mit String-Daten zum Standardverhalten für alle
+Rust-Programme zu machen, was bedeutet, dass Programmierer sich im Vorfeld mehr
+Gedanken über den Umgang mit UTF-8-Daten machen müssen. Dieser Zielkonflikt
+macht die Komplexität von Strings größer als in anderen Programmiersprachen,
+aber er verhindert, dass du später in deinem Entwicklungslebenszyklus mit
+Fehlern umgehen musst, wenn Nicht-ASCII-Zeichen vorkommen.
 
-Die gute Nachricht ist, dass die Standardbibliothek eine Vielzahl von
-Funktionen bietet, die auf den Typen `String` und `&str` aufbauen, um diese
-komplexen Situationen korrekt zu behandeln. In der Dokumentation findest du
-nützliche Methoden wie `contains` zum Suchen in einer Zeichenkette und
-`replace` zum Ersetzen von Teilen einer Zeichenkette durch eine andere
-Zeichenkette.
+Die gute Nachricht ist, dass die Standardbibliothek eine Vielzahl von Funktionen
+bietet, die auf den Typen `String` und `&str` aufbauen, um diese komplexen
+Situationen korrekt zu behandeln. In der Dokumentation findest du nützliche
+Methoden wie `contains` zum Suchen in einem String und `replace` zum Ersetzen
+von Teilen eines Strings durch einen anderen String.
 
 Lass uns zu etwas weniger Kompliziertem übergehen: Hashtabellen!

@@ -233,6 +233,7 @@ enum Message {
 #
 # fn main() {}
 ```
+
 Um zu bestimmen, wie viel Speicherplatz für einen `Message`-Wert benötigt wird,
 analysiert Rust alle Varianten, um festzustellen, welche Variante den meisten
 Speicherplatz benötigt. Rust erkennt, dass `Message::Quit` keinen Speicherplatz

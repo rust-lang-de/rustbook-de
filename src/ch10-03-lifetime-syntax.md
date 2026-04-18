@@ -152,12 +152,10 @@ untersuchen.
 
 ### Generische Lebensdauern in Funktionen
 
-Wir schreiben eine Funktion, die den längeren von zwei
-Zeichenkettenanteilstypen zurückgibt. Diese Funktion nimmt zwei
-Zeichenkettenanteilstypen entgegen und gibt einen einzigen
-Zeichenkettenanteilstyp zurück. Nachdem wir die Funktion `longest`
-implementiert haben, sollte der Code in Listing 10-19 `Die längere
-Zeichenkette ist abcd` ausgeben.
+Wir schreiben eine Funktion, die den längeren von zwei String Slices zurückgibt.
+Diese Funktion nimmt zwei String Slices entgegen und gibt einen einzigen String
+Slice zurück. Nachdem wir die Funktion `longest` implementiert haben, sollte der
+Code in Listing 10-19 `Der längere String ist abcd` ausgeben.
 
 <span class="filename">Datei: src/main.rs</span>
 
@@ -167,20 +165,19 @@ fn main() {
     let string2 = "xyz";
 
     let result = longest(string1.as_str(), string2);
-    println!("Die längere Zeichenkette ist {result}");
+    println!("Der längere String ist {result}");
 }
 ```
 
 <span class="caption">Listing 10-19: Eine Funktion `main`, die die Funktion
-`longest` aufruft, um die längere von zwei Zeichenkettenanteilstypen zu
-bestimmen</span>
+`longest` aufruft, um die längere von zwei String Slices zu bestimmen</span>
 
-Beachte, dass wir wollen, dass die Funktion Zeichenkettenanteilstypen nimmt,
-die Referenzen sind und keine Zeichenketten, weil wir nicht wollen, dass die
-Funktion `longest` die Eigentümerschaft ihrer Parameter übernimmt. Lies
-[„Zeichenkettenanteilstypen als Parameter“][string-slices-as-parameters] in
-Kapitel 4, um mehr darüber zu erfahren, warum die Parameter, die wir in
-Listing 10-19 verwenden, die von uns gewünschten sind.
+Beachte, dass wir wollen, dass die Funktion String Slices nimmt, die Referenzen
+sind und keine Strings, weil wir nicht wollen, dass die Funktion `longest` die
+Eigentümerschaft ihrer Parameter übernimmt. Lies [„String Slices als
+Parameter“][string-slices-as-parameters] in Kapitel 4, um mehr darüber zu
+erfahren, warum die Parameter, die wir in Listing 10-19 verwenden, die von uns
+gewünschten sind.
 
 Wenn wir versuchen, die Funktion `longest`, wie in Listing 10-20 gezeigt, zu
 implementieren, wird sie sich nicht kompilieren lassen.
@@ -193,7 +190,7 @@ implementieren, wird sie sich nicht kompilieren lassen.
 #     let string2 = "xyz";
 #
 #     let result = longest(string1.as_str(), string2);
-#     println!("Die längere Zeichenkette ist {result}");
+#     println!("Der längere String ist {result}");
 # }
 #
 fn longest(x: &str, y: &str) -> &str {
@@ -206,8 +203,8 @@ fn longest(x: &str, y: &str) -> &str {
 ```
 
 <span class="caption">Listing 10-20: Eine Implementierung der Funktion
-`longest`, die die längere von zwei Zeichenkettenanteilstypen zurückgibt, aber
-noch nicht kompiliert</span>
+`longest`, die die längere von zwei String Slices zurückgibt, aber noch nicht
+kompiliert</span>
 
 Stattdessen erhalten wir folgenden Fehler, der von Lebensdauern spricht:
 
@@ -303,7 +300,7 @@ Referenz hinzu, wie in Listing 10-21 gezeigt.
 #     let string2 = "xyz";
 #
 #     let result = longest(string1.as_str(), string2);
-#     println!("Die längere Zeichenkette ist {result}");
+#     println!("Der längere String ist {result}");
 # }
 #
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
@@ -323,14 +320,14 @@ Dieser Code sollte kompilierbar sein und das gewünschte Ergebnis liefern, wenn
 wir ihn mit der Funktion `main` in Listing 10-19 verwenden.
 
 Die Funktionssignatur sagt Rust, dass die Funktion für eine gewisse Lebensdauer
-`'a` zwei Parameter benötigt, die beide den Zeichenkettenanteilstyp haben und
-mindestens so lange leben wie die Lebensdauer `'a`. Die Funktionssignatur sagt
-Rust auch, dass der von der Funktion zurückgegebene Zeichenkettenanteilstyp
-mindestens so lange leben wird wie die Lebensdauer `'a`. In der Praxis bedeutet
-dies, dass die Lebensdauer der Referenz, die von der Funktion `longest`
-zurückgegeben wird, der kleineren der Lebensdauern der Werte entspricht, auf
-die sich die Funktionsargumente beziehen. Diese Beziehungen sollen von Rust
-verwendet werden, wenn es diesen Code analysiert.
+`'a` zwei Parameter benötigt, die beide den String Slice haben und mindestens so
+lange leben wie die Lebensdauer `'a`. Die Funktionssignatur sagt Rust auch, dass
+der von der Funktion zurückgegebene String Slice mindestens so lange leben wird
+wie die Lebensdauer `'a`. In der Praxis bedeutet dies, dass die Lebensdauer der
+Referenz, die von der Funktion `longest` zurückgegeben wird, der kleineren der
+Lebensdauern der Werte entspricht, auf die sich die Funktionsargumente beziehen.
+Diese Beziehungen sollen von Rust verwendet werden, wenn es diesen Code
+analysiert.
 
 Denke daran, indem wir die Lebensdauerparameter in dieser Funktionssignatur
 angeben, ändern wir nicht die Lebensdauer der übergebenen oder zurückgegebenen
@@ -369,12 +366,12 @@ beschränken, indem wir Referenzen mit unterschiedlichen konkreten Lebensdauern
 
 ```rust
 fn main() {
-    let string1 = String::from("lange Zeichenkette ist lang");
+    let string1 = String::from("langer String ist lang");
 
     {
         let string2 = String::from("xyz");
         let result = longest(string1.as_str(), string2.as_str());
-        println!("Die längere Zeichenkette ist {result}");
+        println!("Der längere String ist {result}");
     }
 }
 #
@@ -388,15 +385,14 @@ fn main() {
 ```
 
 <span class="caption">Listing 10-22: Verwenden der Funktion `longest` mit
-Referenzen auf Zeichenketten, die unterschiedliche konkrete Lebensdauern
-haben</span>
+Referenzen auf Strings, die unterschiedliche konkrete Lebensdauern haben</span>
 
 In diesem Beispiel ist `string1` bis zum Ende des äußeren Gültigkeitsbereichs
 gültig, `string2` ist bis zum Ende des inneren Gültigkeitsbereichs gültig, und
 `result` referenziert auf etwas, das bis zum Ende des inneren
 Gültigkeitsbereichs gültig ist. Führe diesen Code aus und du wirst sehen, dass
-der Borrow Checker diesen Code akzeptiert; er kompiliert und gibt `Die längere
-Zeichenkette ist lange Zeichenkette ist lang` aus.
+der Borrow Checker diesen Code akzeptiert; er kompiliert und gibt `Der längere
+String ist langer String ist lang` aus.
 
 Versuchen wir als nächstes ein Beispiel, das zeigt, dass die Lebensdauer der
 Referenz in `result` die kürzere Lebensdauer der beiden Argumente sein muss. 
@@ -410,13 +406,13 @@ Der Code in Listing 10-23 lässt sich nicht kompilieren.
 
 ```rust,does_not_compile
 fn main() {
-    let string1 = String::from("lange Zeichenkette ist lang");
+    let string1 = String::from("langer String ist lang");
     let result;
     {
         let string2 = String::from("xyz");
         result = longest(string1.as_str(), string2.as_str());
     }
-    println!("Die längere Zeichenkette ist {result}");
+    println!("Der längere String ist {result}");
 }
 #
 # fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
@@ -445,8 +441,8 @@ error[E0597]: `string2` does not live long enough
   |                                            ^^^^^^^ borrowed value does not live long enough
 7 |     }
   |     - `string2` dropped here while still borrowed
-8 |     println!("Die längere Zeichenkette ist {result}");
-  |                                            -------- borrow later used here
+8 |     println!("Der längere String ist {result}");
+  |                                      -------- borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
@@ -475,12 +471,11 @@ kompilierst; prüfe dann, ob du Recht hast!
 
 ### Beziehungen
 
-Die Art und Weise, in der du Lebensdauerparameter angeben musst, hängt davon
-ab, was deine Funktion tut. Wenn wir zum Beispiel die Implementierung der
-Funktion `longest` so ändern würden, dass sie immer den ersten Parameter
-zurückgibt und nicht den längsten Zeichenkettenanteilstyp, bräuchten wir keine
-Lebensdauer für den Parameter `y` anzugeben. Der folgende Code wird
-kompilieren:
+Die Art und Weise, in der du Lebensdauerparameter angeben musst, hängt davon ab,
+was deine Funktion tut. Wenn wir zum Beispiel die Implementierung der Funktion
+`longest` so ändern würden, dass sie immer den ersten Parameter zurückgibt und
+nicht den längsten String Slice, bräuchten wir keine Lebensdauer für den
+Parameter `y` anzugeben. Der folgende Code wird kompilieren:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -490,7 +485,7 @@ kompilieren:
 #     let string2 = "efghijklmnopqrstuvwxyz";
 #
 #     let result = longest(string1.as_str(), string2);
-#     println!("Die längere Zeichenkette ist {result}");
+#     println!("Der längere String ist {result}");
 # }
 #
 fn longest<'a>(x: &'a str, y: &str) -> &'a str {
@@ -519,11 +514,11 @@ Implementierung der Funktion `longest`, die sich nicht kompilieren lässt:
 #     let string2 = "xyz";
 #
 #     let result = longest(string1.as_str(), string2);
-#     println!("Die längere Zeichenkette ist {result}");
+#     println!("Der längere String ist {result}");
 # }
 #
 fn longest<'a>(x: &str, y: &str) -> &'a str {
-    let result = String::from("wirklich lange Zeichenkette");
+    let result = String::from("wirklich langer String");
     result.as_str()
 }
 ```
@@ -570,7 +565,7 @@ Bisher haben wir nur Strukturen (structs) definiert, die aneigenbare Typen
 enthalten. Es ist möglich, dass Strukturen Referenzen enthalten, aber in diesem
 Fall müssten wir Lebensdauer-Annotationen zu jeder Referenz in der
 Strukturdefinition angeben. Listing 10-24 hat eine Struktur namens
-`ImportantExcerpt`, die einen Zeichenkettenanteilstyp enthält.
+`ImportantExcerpt`, die einen String Slice enthält.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -591,10 +586,10 @@ fn main() {
 <span class="caption">Listing 10-24: Eine Struktur, die eine Referenz
 enthält, sodass ihre Definition eine Lebensdauer-Annotationen benötigt</span>
 
-Diese Struktur hat das einzige Feld `part`, das einen Zeichenkettenanteilstyp
-enthält, der eine Referenz ist. Wie bei generischen Datentypen deklarieren wir
-den Namen des generischen Lebensdauerparameters innerhalb spitzer Klammern
-hinter dem Strukturnamen, damit wir den Lebensdauerparameter im Rumpf der
+Diese Struktur hat das einzige Feld `part`, das einen String Slice enthält, der
+eine Referenz ist. Wie bei generischen Datentypen deklarieren wir den Namen des
+generischen Lebensdauerparameters innerhalb spitzer Klammern hinter dem
+Strukturnamen, damit wir den Lebensdauerparameter im Rumpf der
 Strukturdefinition verwenden können. Diese Annotation bedeutet, dass eine
 Instanz von `ImportantExcerpt` die Referenz, die sie in ihrem Feld `part`
 enthält, nicht überleben kann.
@@ -633,16 +628,16 @@ fn first_word(s: &str) -> &str {
 # fn main() {
 #     let my_string = String::from("Hallo Welt");
 #
-#     // first_word funktioniert mit Anteilstypen von `String`
+#     // first_word funktioniert mit Slices von `String`
 #     let word = first_word(&my_string[..]);
 #
 #     let my_string_literal = "Hallo Welt";
 #
-#     // first_word funktioniert mit Anteilstypen von Zeichenkettenliteralen
+#     // first_word funktioniert mit Slices von String-Literale
 #     let word = first_word(&my_string_literal[..]);
 #
-#     // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
-#     // funktioniert dies auch ohne die Anteilstypensyntax!
+#     // Da String-Literale bereits String Slices sind,
+#     // funktioniert dies auch ohne Slices-Syntax!
 #     let word = first_word(my_string_literal);
 # }
 ```
@@ -868,16 +863,16 @@ berücksichtigt worden.
 
 Eine besondere Lebensdauer, die wir besprechen müssen, ist `'static`, was
 bedeutet, dass diese Referenz während der gesamten Dauer des Programms bestehen
-kann. Alle Zeichenkettenliterale haben die Lebensdauer `'static`. Sie wird wie
-folgt annotiert:
+kann. Alle String-Literale haben die Lebensdauer `'static`. Sie wird wie folgt
+annotiert:
 
 ```rust
 let s: &'static str = "Ich habe eine statische Lebensdauer.";
 ```
 
-Der Text dieser Zeichenkette wird direkt in der Binärdatei des Programms
-gespeichert, die immer verfügbar ist. Daher ist die Lebensdauer aller
-Zeichenkettenliterale `'static`.
+Der Text dieses Strings wird direkt in der Binärdatei des Programms gespeichert,
+die immer verfügbar ist. Daher ist die Lebensdauer aller String-Literale
+`'static`.
 
 Möglicherweise siehst du in Fehlermeldungen Hinweise zur Verwendung der
 Lebensdauer `'static`. Aber bevor du `'static` als Lebensdauer für eine
@@ -904,7 +899,7 @@ und Lebensdauern in einer Funktion an!
 #         string2,
 #         "Heute hat jemand Geburtstag!",
 #     );
-#     println!("Die längere Zeichenkette ist {result}");
+#     println!("Der längere String ist {result}");
 # }
 #
 use std::fmt::Display;
@@ -927,14 +922,14 @@ where
 ```
 
 Dies ist die Funktion `longest` aus Listing 10-21, die die längere von zwei
-Zeichenkettenanteilstypen zurückgibt. Aber jetzt hat sie einen zusätzlichen
-Parameter namens `ann` vom generischen Typ `T`, der jeder beliebige Typ sein
-kann, der das Trait `Display` implementiert, wie in der `where`-Klausel
-spezifiziert ist. Dieser zusätzliche Parameter wird unter Verwendung von
-`{ann}` ausgegeben, weshalb die Trait Bound `Display` erforderlich ist.
-Da die Lebensdauer ein generischer Typ ist, stehen die Deklarationen des
-Lebensdauer-Parameters `'a` und des generischen Typ-Parameters `T` in der
-gleichen Liste innerhalb spitzer Klammern hinter dem Funktionsnamen.
+String Slices zurückgibt. Aber jetzt hat sie einen zusätzlichen Parameter namens
+`ann` vom generischen Typ `T`, der jeder beliebige Typ sein kann, der das Trait
+`Display` implementiert, wie in der `where`-Klausel spezifiziert ist. Dieser
+zusätzliche Parameter wird unter Verwendung von `{ann}` ausgegeben, weshalb die
+Trait Bound `Display` erforderlich ist. Da die Lebensdauer ein generischer Typ
+ist, stehen die Deklarationen des Lebensdauer-Parameters `'a` und des
+generischen Typ-Parameters `T` in der gleichen Liste innerhalb spitzer Klammern
+hinter dem Funktionsnamen.
 
 ## Zusammenfassung
 
@@ -958,5 +953,5 @@ Tests in Rust schreibt, damit du sicherstellen kannst, dass dein Code so
 funktioniert, wie er es soll.
 
 [references-and-borrowing]: ch04-02-references-and-borrowing.html
-[string-slices-as-parameters]: ch04-03-slices.html#zeichenkettenanteilstypen-als-parameter
+[string-slices-as-parameters]: ch04-03-slices.html#string-slices-als-parameter
 [reference]: https://doc.rust-lang.org/reference/trait-bounds.html

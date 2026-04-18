@@ -44,8 +44,8 @@ Kapitel 20 behandelt wird.
 ### `Debug` für die Programmierer-Ausgabe
 
 Das Trait `Debug` ermöglicht das Debuggen von Formatierungen in
-Formatierungszeichenketten, die du durch Angeben von `:?` innerhalb Platzhalter
-`{}` angibst.
+Formatierungs-Strings, die du durch `:?` innerhalb von Platzhaltern `{}`
+angibst.
 
 Das Trait `Debug` erlaubt es dir, Instanzen eines Typs zu Debugging-Zwecken
 auszugeben, sodass du und andere Programmierer, die deinen Typ verwenden, eine
@@ -134,10 +134,10 @@ aufruft. Das bedeutet, dass alle Felder oder Werte des Typs auch `Clone`
 implementieren müssen, um `Clone` abzuleiten.
 
 Ein Beispiel dafür, wann `Clone` erforderlich ist, ist der Aufruf der Methode
-`to_vec` auf einem Anteilstyp. Der Anteilstyp besitzt die Typ-Instanzen nicht,
-die er enthält, aber der von `to_vec` zurückgegebene Vektor muss seine
-Instanzen besitzen, also ruft `to_vec` bei jedem Element `clone` auf. Daher
-muss der im Anteilstyp gespeicherte Typ `Clone` implementieren.
+`to_vec` auf einem Slice. Der Slice besitzt die Typ-Instanzen nicht, die er
+enthält, aber der von `to_vec` zurückgegebene Vektor muss seine Instanzen
+besitzen, also ruft `to_vec` bei jedem Element `clone` auf. Daher muss der im
+Slice gespeicherte Typ `Clone` implementieren.
 
 Das Trait `Copy` erlaubt es dir, einen Wert zu duplizieren, indem nur die auf
 dem Stack gespeicherten Bits kopiert werden; es ist kein spezieller Code

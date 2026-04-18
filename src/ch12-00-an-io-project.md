@@ -11,10 +11,10 @@ plattformübergreifende Unterstützung machen es zu einer idealen Sprache zum
 Erstellen von Kommandozeilenwerkzeugen. Für unser Projekt werden wir daher eine
 eigene Version des klassischen Kommandozeilenwerkzeugs `grep` (**g**lobally
 search a **r**egular **e**xpression and **p**rint) erstellen. Im einfachsten
-Anwendungsfall durchsucht `grep` eine angegebene Datei nach einer bestimmten
-Zeichenkette. Dazu nimmt `grep` als Argumente einen Dateipfad und eine
-Zeichenkette. Dann liest es die Datei, findet Zeilen in dieser Datei, die das
-Zeichenketten-Argument enthalten, und gibt diese Zeilen aus.
+Anwendungsfall durchsucht `grep` eine angegebene Datei nach einem bestimmten
+String. Dazu nimmt `grep` als Argumente einen Dateipfad und einen String. Dann
+liest es die Datei, findet Zeilen in dieser Datei, die das String-Argument
+enthalten, und gibt diese Zeilen aus.
 
 Auf dem Weg dorthin werden wir zeigen, wie wir unser Kommandozeilenwerkzeug
 dazu bringen können, Funktionalitäten des Terminals zu nutzen, die viele
@@ -35,7 +35,7 @@ Unser `grep`-Projekt wird eine Reihe von Konzepten kombinieren, die du bisher
 gelernt hast:
 
 - Code organisieren ([Kapitel 7][chap7])
-- Verwenden von Vektoren und Zeichenketten ([Kapitel 8][chap8])
+- Verwenden von Vektoren und Strings ([Kapitel 8][chap8])
 - Fehlerbehandlung ([Kapitel 9][chap9])
 - Verwenden von Traits und Lebensdauer (lifetimes) soweit möglich ([Kapitel
   10][chap10])

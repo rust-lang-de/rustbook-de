@@ -191,22 +191,22 @@ Rückgabe einer Instanz einer `Config`-Struktur</span>
 Wir haben eine Struktur namens `Config` hinzugefügt, die so definiert ist, dass
 sie Felder mit den Namen `query` und `file_path` enthält. Die Signatur von
 `parse_config` zeigt nun an, dass sie einen `Config`-Wert zurückgibt. Im Rumpf
-von `parse_config`, wo wir früher Zeichenkettenanteilstypen (string slices)
-zurückgegeben haben, die auf `String`-Werte in `args` referenzieren, definieren
-wir `Config` jetzt so, dass es aneigenbare (owned) `String`-Werte enthält. Die
-`args`-Variable in `main` ist der Eigentümer der Argumentwerte und lässt die
-Funktion `parse_config` diese nur ausleihen, was bedeutet, dass wir Rusts Regeln
-für das Borrowing verletzen würden, wenn `Config` versucht, die Eigentümerschaft
-für die Werte in `args` zu nehmen.
+von `parse_config`, wo wir früher String Slices zurückgegeben haben, die auf
+`String`-Werte in `args` referenzieren, definieren wir `Config` jetzt so, dass
+es aneigenbare (owned) `String`-Werte enthält. Die `args`-Variable in `main` ist
+der Eigentümer der Argumentwerte und lässt die Funktion `parse_config` diese nur
+ausleihen, was bedeutet, dass wir Rusts Regeln für das Borrowing verletzen
+würden, wenn `Config` versucht, die Eigentümerschaft für die Werte in `args` zu
+nehmen.
 
 Wir könnten die `String`-Daten auf verschiedene Weise verwalten, aber der
 einfachste, wenn auch etwas ineffiziente Weg ist es, die Methode `clone` der
 Werte aufzurufen. Dadurch wird eine vollständige Kopie der Daten erstellt, die
 die `Config`-Instanz besitzen soll, was mehr Zeit und Speicherplatz in Anspruch
-nimmt als das Speichern einer Referenz auf die Zeichenkettendaten. Das Klonen
-der Daten macht unseren Code jedoch auch sehr unkompliziert, weil wir die
-Lebensdauer der Referenzen nicht verwalten müssen; unter diesen Umständen ist
-es ein lohnender Kompromiss, ein wenig Leistung aufzugeben, um Einfachheit zu
+nimmt als das Speichern einer Referenz auf die String-Daten. Das Klonen der
+Daten macht unseren Code jedoch auch sehr unkompliziert, weil wir die
+Lebensdauer der Referenzen nicht verwalten müssen; unter diesen Umständen ist es
+ein lohnender Kompromiss, ein wenig Leistung aufzugeben, um Einfachheit zu
 bekommen.
 
 > ### Die Kompromisse beim Verwenden von `clone`
@@ -214,14 +214,13 @@ bekommen.
 > Viele Rust-Entwickler neigen dazu, das Verwenden von `clone` zur Lösung von
 > Eigentümerschaftsproblemen wegen der Laufzeitkosten zu vermeiden. In [Kapitel
 > 13][ch13] erfährst du, wie du in solchen Situationen effizientere Methoden
-> einsetzen kannst. Aber für den Moment ist es in Ordnung, ein paar
-> Zeichenketten zu kopieren, um weiter voranzukommen, da du diese Kopien nur
-> einmal erstellen wirst und dein Dateipfad und deine Suchzeichenkette sehr
-> klein sind. Es ist besser, ein funktionierendes Programm zu haben, das ein
-> bisschen ineffizient ist, als zu versuchen, den Code beim ersten Durchgang zu
-> hyperoptimieren. Je mehr Erfahrung du mit Rust sammelst, desto einfacher wird
-> es, mit der effizientesten Lösung zu beginnen, aber im Moment ist es völlig
-> akzeptabel, `clone` aufzurufen.
+> einsetzen kannst. Aber für den Moment ist es in Ordnung, ein paar Strings zu
+> kopieren, um weiter voranzukommen, da du diese Kopien nur einmal erstellen wirst
+> und dein Dateipfad und deinen Such-String sehr klein sind. Es ist besser, ein
+> funktionierendes Programm zu haben, das ein bisschen ineffizient ist, als zu
+> versuchen, den Code beim ersten Durchgang zu hyperoptimieren. Je mehr Erfahrung
+> du mit Rust sammelst, desto einfacher wird es, mit der effizientesten Lösung zu
+> beginnen, aber im Moment ist es völlig akzeptabel, `clone` aufzurufen.
 
 Wir haben `main` aktualisiert, sodass es die Instanz von `Config`, die von
 `parse_config` zurückgegeben wird, in eine Variable namens `config` setzt, und
@@ -329,9 +328,9 @@ korrigieren.
 #### Verbessern der Fehlermeldung
 
 In Listing 12-8 fügen wir eine Prüfung in der Funktion `new` hinzu, die
-überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und Index 2
-zugegriffen wird. Wenn der Anteilstyp nicht lang genug ist, bricht das Programm
-ab und zeigt eine bessere Fehlermeldung an.
+überprüft, ob der Slice lang genug ist, bevor auf Index 1 und Index 2
+zugegriffen wird. Wenn der Slice nicht lang genug ist, bricht das Programm ab
+und zeigt eine bessere Fehlermeldung an.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -469,8 +468,8 @@ impl Config {
 `Config::build`</span>
 
 Unsere Funktion `build` liefert ein `Result` mit einer `Config`-Instanz im
-Erfolgsfall und ein Zeichenkettenliteral im Fehlerfall. Unsere Fehlerwerte
-werden immer Zeichenketten-Literale sein, die eine `'static` Lebensdauer haben.
+Erfolgsfall und ein String-Literal im Fehlerfall. Unsere Fehlerwerte werden
+immer String-Literale sein, die eine `'static` Lebensdauer haben.
 
 Wir haben zwei Änderungen im Rumpf der Funktion vorgenommen: Anstatt `panic!`
 aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben wir jetzt
@@ -550,11 +549,11 @@ gibt den inneren Wert von `Ok` zurück. Wenn der Wert jedoch ein `Err`-Wert ist,
 ruft diese Methode den Code im Closure auf, die eine anonyme Funktion ist, die
 wir definieren und als Argument an `unwrap_or_else` übergeben. Auf Closures
 gehen wir ausführlicher in [Kapitel 13][ch13] ein. Im Moment musst du nur
-wissen, dass `unwrap_or_else` den inneren Wert des `Err`, in diesem Fall die
-statische Zeichenkette `Nicht genügend Argumente`, die wir in Listing 12-9
-hinzugefügt haben, an unseren Closure im Argument `err`, das zwischen den
-senkrechten Strichen erscheint, weitergibt. Der Code im Closure kann dann den
-`err`-Wert verwenden, wenn sie ausgeführt wird.
+wissen, dass `unwrap_or_else` den inneren Wert von `Err`, in diesem Fall der
+statische String `Nicht genügend Argumente`, den wir in Listing 12-9 hinzugefügt
+haben, an unseren Closure im Argument `err`, das zwischen den senkrechten
+Strichen erscheint, weitergibt. Der Code im Closure kann dann den `err`-Wert
+verwenden, wenn sie ausgeführt wird.
 
 Wir haben eine neue Zeile `use` hinzugefügt, um `process` aus der
 Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code im Closure,

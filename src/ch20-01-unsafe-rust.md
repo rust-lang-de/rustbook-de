@@ -242,15 +242,14 @@ möglicherweise nicht im gesamten Funktionsrumpf benötigt werden.
 
 #### Erstellen einer sicheren Abstraktion von unsicherem Code
 
-Nur weil eine Funktion unsicheren Code enthält, bedeutet das nicht, dass wir
-die gesamte Funktion als unsicher markieren müssen. Tatsächlich ist das
-Einpacken von unsicherem Codes in eine sichere Funktion eine gängige
-Abstraktion. Als Beispiel betrachten wir die Funktion `split_at_mut` aus der
-Standardbibliothek, die unsicheren Code verwendet. Wir untersuchen, wie wir sie
-implementieren könnten. Diese sichere Methode ist auf veränderbaren
-Anteilstypen definiert: Sie nimmt einen Anteilstyp und macht zwei daraus, indem
-sie den Anteilstyp an dem als Argument angegebenen Index teilt. Listing 20-4
-zeigt, wie man `split_at_mut` verwendet.
+Nur weil eine Funktion unsicheren Code enthält, bedeutet das nicht, dass wir die
+gesamte Funktion als unsicher markieren müssen. Tatsächlich ist das Einpacken
+von unsicherem Codes in eine sichere Funktion eine gängige Abstraktion. Als
+Beispiel betrachten wir die Funktion `split_at_mut` aus der Standardbibliothek,
+die unsicheren Code verwendet. Wir untersuchen, wie wir sie implementieren
+könnten. Diese sichere Methode ist auf veränderbaren Slices definiert: Sie nimmt
+einen Slice und macht zwei daraus, indem sie den Slice an dem als Argument
+angegebenen Index teilt. Listing 20-4 zeigt, wie man `split_at_mut` verwendet.
 
 ```rust
 let mut v = vec![1, 2, 3, 4, 5, 6];
@@ -267,10 +266,10 @@ assert_eq!(b, &mut [4, 5, 6]);
 `split_at_mut`</span>
 
 Wir können diese Funktion nicht nur mit sicherem Rust implementieren. Ein
-Versuch könnte in etwa wie in Listing 20-5 aussehen, der sich nicht
-kompilieren lässt. Der Einfachheit halber implementieren wir `split_at_mut` als
-Funktion und nicht als Methode und nur für Anteilstypen von `i32`-Werten, nicht
-für einen generischen Typ `T`.
+Versuch könnte in etwa wie in Listing 20-5 aussehen, der sich nicht kompilieren
+lässt. Der Einfachheit halber implementieren wir `split_at_mut` als Funktion und
+nicht als Methode und nur für Slices von `i32`-Werten, nicht für einen
+generischen Typ `T`.
 
 ```rust,does_not_compile
 fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
@@ -290,16 +289,16 @@ fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
 <span class="caption">Listing 20-5: Versuch einer Implementierung von
 `split_at_mut` unter ausschließlicher Verwendung von sicherem Rust</span>
 
-Diese Funktion ermittelt zunächst die Gesamtlänge des Anteilstypen. Dann stellt
-sie fest, dass der als Parameter angegebene Index innerhalb des Anteilstypen
-liegt, indem sie prüft, ob er kleiner oder gleich der Länge ist. Die Zusicherung
-(assertion) bedeutet, dass die Funktion abbricht, wenn wir einen Index
-übergeben, der größer als die Länge ist, bei der der Anteilstyp geteilt werden
-soll, bevor sie versucht, diesen Index zu verwenden.
+Diese Funktion ermittelt zunächst die Gesamtlänge des Slices. Dann stellt sie
+fest, dass der als Parameter angegebene Index innerhalb des Slices liegt, indem
+sie prüft, ob er kleiner oder gleich der Länge ist. Die Zusicherung (assertion)
+bedeutet, dass die Funktion abbricht, wenn wir einen Index übergeben, der größer
+als die Länge ist, bei der der Slice geteilt werden soll, bevor sie versucht,
+diesen Index zu verwenden.
 
-Dann geben wir zwei veränderbare Anteilstypen in einem Tupel zurück: Einen vom
-Anfang des ursprünglichen Anteilstyps bis zum Index `mid` und einen weiteren
-von `mid` bis zum Ende des Anteilstyps.
+Dann geben wir zwei veränderbare Slices in einem Tupel zurück: Einen vom Anfang
+des ursprünglichen Slices bis zum Index `mid` und einen weiteren von `mid` bis
+zum Ende des Slices.
 
 Wenn wir versuchen, den Code in Listing 20-5 zu kompilieren, erhalten wir
 einen Fehler.
@@ -325,11 +324,11 @@ error: could not compile `unsafe-example` (bin "unsafe-example") due to 1 previo
 ```
 
 Der Borrow Checker von Rust kann nicht verstehen, dass wir verschiedene Teile
-des Anteilstyps ausleihen; er weiß nur, dass wir zweimal vom selben Anteilstyp
-ausleihen. Das Borrowing verschiedener Teile eines Anteilstyps ist grundsätzlich
-in Ordnung, weil sich die beiden Anteilstypen nicht überlappen, aber Rust ist
-nicht schlau genug, um das zu wissen. Wenn wir wissen, dass der Code in Ordnung
-ist, Rust aber nicht, ist es an der Zeit, unsicheren Code zu verwenden.
+des Slices ausleihen; er weiß nur, dass wir zweimal vom selben Slice ausleihen.
+Das Borrowing verschiedener Teile eines Slices ist grundsätzlich in Ordnung,
+weil sich die beiden Slices nicht überlappen, aber Rust ist nicht schlau genug,
+um das zu wissen. Wenn wir wissen, dass der Code in Ordnung ist, Rust aber
+nicht, ist es an der Zeit, unsicheren Code zu verwenden.
 
 Listing 20-6 zeigt, wie man einen `unsafe`-Block, einen Rohzeiger und einige
 Aufrufe unsicherer Funktionen verwendet, um die Implementierung von
@@ -361,33 +360,33 @@ fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
 <span class="caption">Listing 20-6: Verwenden von unsicherem Codes bei der
 Implementierung der Funktion `split_at_mut`</span>
 
-Erinnere dich an den Abschnitt [„Der Anteilstyp (slice)“][the-slice-type] in
-Kapitel 4, dass Anteilstypen Zeiger auf Daten und die Länge des Anteilstyps
-sind. Wir verwenden die Methode `len`, um die Länge eines Anteilstyps zu
-erhalten, und die Methode `as_mut_ptr`, um auf den Rohzeiger eines Anteilstyps
-zuzugreifen. Da wir in diesem Fall einen veränderbaren Anteilstyp von
-`i32`-Werten haben, gibt `as_mut_ptr` einen Rohzeiger vom Typ `*mut i32`
-zurück, den wir in der Variable `ptr` gespeichert haben.
+Erinnere dich an den Abschnitt [„Der Slice-Typ“][the-slice-type] in Kapitel 4,
+dass Slices Zeiger auf Daten und die Länge des Slices sind. Wir verwenden die
+Methode `len`, um die Länge eines Slices zu erhalten, und die Methode
+`as_mut_ptr`, um auf den Rohzeiger eines Slices zuzugreifen. Da wir in diesem
+Fall einen veränderbaren Slice von `i32`-Werten haben, gibt `as_mut_ptr` einen
+Rohzeiger vom Typ `*mut i32` zurück, den wir in der Variable `ptr` gespeichert
+haben.
 
-Wir halten an der Zusicherung fest, dass der Index `mid` innerhalb des
-Anteilstyps liegt. Dann kommen wir zum unsicheren Code: Die Funktion
+Wir halten an der Zusicherung fest, dass der Index `mid` innerhalb des Slices
+liegt. Dann kommen wir zum unsicheren Code: Die Funktion
 `slice::from_raw_parts_mut` nimmt einen Rohzeiger und eine Länge und erzeugt
-einen Anteilstyp. Wir verwenden diese Funktion, um einen Anteilstyp zu
-erstellen, der mit `ptr` beginnt und `mid` Elemente lang ist. Dann rufen wir
-die Methode `add` auf `ptr` mit `mid` als Argument auf, um einen Rohzeiger
-zu erhalten, der bei `mid` beginnt, und wir erzeugen einen Anteilstyp mit
-diesem Zeiger und der verbleibenden Anzahl von Elementen nach `mid`.
+einen Slice. Wir verwenden diese Funktion, um einen Slice zu erstellen, der mit
+`ptr` beginnt und `mid` Elemente lang ist. Dann rufen wir die Methode `add` auf
+`ptr` mit `mid` als Argument auf, um einen Rohzeiger zu erhalten, der bei `mid`
+beginnt, und wir erzeugen einen Slice mit diesem Zeiger und der verbleibenden
+Anzahl von Elementen nach `mid`.
 
 Die Funktion `slice::from_raw_parts_mut` ist unsicher, weil sie einen Rohzeiger
 nimmt und darauf vertrauen muss, dass dieser Zeiger gültig ist. Die Methode
 `add` auf dem Rohzeiger ist ebenfalls unsicher, weil sie darauf vertrauen muss,
 dass die Offset-Position ebenfalls ein gültiger Zeiger ist. Deshalb mussten wir
-einen `unsafe`-Block um unsere Aufrufe von `slice::from_raw_parts_mut` und
-`add` legen, damit wir sie aufrufen konnten. Wenn wir uns den Code ansehen und
-die Zusicherung hinzufügen, dass `mid` kleiner oder gleich `len` sein muss,
-können wir sagen, dass alle Rohzeiger innerhalb des `unsafe`-Blocks gültige
-Zeiger auf Daten innerhalb des Anteilstyps sind. Dies ist eine akzeptable und
-angemessene Verwendung von `unsafe`.
+einen `unsafe`-Block um unsere Aufrufe von `slice::from_raw_parts_mut` und `add`
+legen, damit wir sie aufrufen konnten. Wenn wir uns den Code ansehen und die
+Zusicherung hinzufügen, dass `mid` kleiner oder gleich `len` sein muss, können
+wir sagen, dass alle Rohzeiger innerhalb des `unsafe`-Blocks gültige Zeiger auf
+Daten innerhalb des Slices sind. Dies ist eine akzeptable und angemessene
+Verwendung von `unsafe`.
 
 Beachte, dass wir die resultierende Funktion `split_at_mut` nicht als `unsafe`
 markieren müssen, und wir können diese Funktion aus dem sicheren Rust aufrufen.
@@ -397,9 +396,9 @@ verwendet, weil sie nur gültige Zeiger aus den Daten erzeugt, auf die diese
 Funktion Zugriff hat.
 
 Im Gegensatz dazu würde die Verwendung von `slice::from_raw_parts_mut` in
-Listing 20-7 wahrscheinlich abbrechen, wenn der Anteilstyp verwendet wird.
-Dieser Code nimmt einen beliebigen Speicherplatz und erzeugt einen Anteilstyp
-mit einer Länge von 10.000 Elementen.
+Listing 20-7 wahrscheinlich abbrechen, wenn der Slice verwendet wird. Dieser
+Code nimmt einen beliebigen Speicherplatz und erzeugt einen Slice mit einer
+Länge von 10.000 Elementen.
 
 ```rust
 use std::slice;
@@ -410,13 +409,13 @@ let r = address as *mut i32;
 let values: &[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
 ```
 
-<span class="caption">Listing 20-7: Erstellen eines Anteilstyps aus einer
-beliebigen Speicherstelle</span>
+<span class="caption">Listing 20-7: Erstellen eines Slices aus einer beliebigen
+Speicherstelle</span>
 
 Wir besitzen den Speicher an dieser beliebigen Stelle nicht und es gibt keine
-Garantie, dass der von diesem Code erzeugte Anteilstyp gültige `i32`-Werte
-enthält. Der Versuch, `values` so zu benutzen, als ob er ein gültiger
-Anteilstyp ist, führt zu undefiniertem Verhalten.
+Garantie, dass der von diesem Code erzeugte Slice gültige `i32`-Werte enthält.
+Der Versuch, `values` so zu benutzen, als ob er ein gültiger Slice ist, führt zu
+undefiniertem Verhalten.
 
 #### Verwenden von `extern`-Funktionen um externen Code aufzurufen
 
@@ -532,9 +531,9 @@ Rust zwar unterstützt, die aber wegen der Eigentumsregeln von Rust problematisc
 sein können. Wenn zwei Threads auf dieselbe veränderbare, globale Variable
 zugreifen, kann dies zu einer Data Race führen.
 
-In Rust werden globale Variablen als _statische_ Variablen bezeichnet.
-Listing 20-10 zeigt ein Beispiel für die Deklaration und Verwendung einer
-statischen Variablen mit einem Zeichenkettenanteilstyp als Wert.
+In Rust werden globale Variablen als _statische_ Variablen bezeichnet. Listing
+20-10 zeigt ein Beispiel für die Deklaration und Verwendung einer statischen
+Variablen mit einem String Slice als Wert.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

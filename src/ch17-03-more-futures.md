@@ -104,6 +104,7 @@ erhältst du diese Ausgabe:
 'b' ist für 350 ms gelaufen
 'a' beendet.
 ```
+
 Wie in Listing 17-5, wo wir `trpl::select` verwendet haben, um Futures beim
 Abrufen von zwei URLs gegeneinander antreten zu lassen, wird `select` immer
 noch beendet, sobald `a` fertig ist. Es gibt jedoch keine Abwechslung zwischen

@@ -15,7 +15,7 @@ werden:
 
 - Ein _Vektor_ erlaubt es dir, eine variable Anzahl von Werten nebeneinander zu
   speichern.
-- Eine _Zeichenkette_ ist eine Kollektion von Zeichen. Wir haben den Typ
+- Ein _String_ ist eine Kollektion von Zeichen. Wir haben den Typ
   `String` bereits kennengelernt, aber in diesem Kapitel werden wir ausführlich
   darauf eingehen.
 - Eine _Hashtabelle_ (hash map) erlaubt es dir, einen Wert mit einem
@@ -26,7 +26,7 @@ werden:
 Informationen über weitere Kollektionsarten, die von der Standardbibliothek
 bereitgestellt werden, findest du in [der Dokumentation][collections].
 
-Wir werden erörtern, wie Vektoren, Zeichenketten und Hashtabellen erstellt und
+Wir werden erörtern, wie Vektoren, Strings und Hashtabellen erstellt und
 aktualisiert werden und was jede einzelne besonders macht.
 
 [collections]: https://doc.rust-lang.org/std/collections/index.html

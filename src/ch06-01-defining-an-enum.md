@@ -223,14 +223,14 @@ enum IpAddr {
 ```
 
 Dieser Code veranschaulicht, dass du jede Art von Daten in eine
-Aufzählungsvariante einfügen kannst: Zeichenketten, numerische Typen,
-Strukturen usw. Du kannst sogar eine weitere Aufzählung einfügen! Außerdem sind
+Aufzählungsvariante einfügen kannst: Strings, numerische Typen, Strukturen usw.
+Du kannst sogar eine weitere Aufzählung einfügen! Außerdem sind
 Standardbibliothekstypen oft nicht viel komplizierter als das, was du dir
 vielleicht ausdenkst. Beachte, dass wir, obwohl die Standardbibliothek eine
-Definition für `IpAddr` enthält, konfliktfrei unsere eigene Definition
-erstellen und verwenden können, da wir die Definition der Standardbibliothek
-nicht in unseren Gültigkeitsbereich aufgenommen haben. Wir werden in Kapitel 7
-mehr darauf eingehen, wie man Typen in den Gültigkeitsbereich aufnimmt.
+Definition für `IpAddr` enthält, konfliktfrei unsere eigene Definition erstellen
+und verwenden können, da wir die Definition der Standardbibliothek nicht in
+unseren Gültigkeitsbereich aufgenommen haben. Wir werden in Kapitel 7 mehr
+darauf eingehen, wie man Typen in den Gültigkeitsbereich aufnimmt.
 
 Schauen wir uns ein weiteres Beispiel für eine Aufzählung in Listing 6-2 an:
 In dieser Aufzählung ist eine Vielzahl von Typen in ihren Varianten eingebettet.

@@ -24,9 +24,9 @@ Codes, der den Test bestehen lässt, trägt dazu bei, während des gesamten
 Entwicklungsprozesses eine hohe Testabdeckung aufrechtzuerhalten.
 
 Wir werden die Implementierung der Funktionalität testen, die tatsächlich die
-Suche nach der Suchzeichenkette im Dateiinhalt durchführt und eine Liste von
-Zeilen erzeugt, die der Suchabfrage entsprechen. Wir werden diese
-Funktionalität in einer Funktion namens `search` hinzufügen.
+Suche nach dem Such-String im Dateiinhalt durchführt und eine Liste von Zeilen
+erzeugt, die der Suchabfrage entsprechen. Wir werden diese Funktionalität in
+einer Funktion namens `search` hinzufügen.
 
 ### Schreiben eines fehlschlagenden Tests
 
@@ -66,12 +66,12 @@ Nimm drei.";
 <span class="caption">Listing 12-15: Erstellen eines fehlschlagenden Tests
 für die Funktion `search`, die wir uns wünschen</span>
 
-Dieser Test sucht nach der Zeichenkette `"dukt"`. Der Text, den wir
-durchsuchen, besteht aus drei Zeilen, von denen nur eine `"dukt"` enthält.
-(Beachte, dass der Backslash nach dem öffnenden doppelten Anführungszeichen
-Rust anweist, keinen Zeilenumbruch an den Anfang des Zeichenkettenliterals zu
-setzen.) Wir verlangen, dass der von der Funktion `search` zurückgegebene Wert
-nur die Zeile enthält, die wir erwarten.
+Dieser Test sucht nach dem String `"dukt"`. Der Text, den wir durchsuchen,
+besteht aus drei Zeilen, von denen nur eine `"dukt"` enthält. (Beachte, dass der
+Backslash nach dem öffnenden doppelten Anführungszeichen Rust anweist, keinen
+Zeilenumbruch an den Anfang des String-Literals zu setzen.) Wir verlangen, dass
+der von der Funktion `search` zurückgegebene Wert nur die Zeile enthält, die wir
+erwarten.
 
 Wir sind noch nicht in der Lage, diesen Test auszuführen und zuzusehen, wie er
 fehlschlägt, weil der Test noch nicht mal kompiliert: Die Funktion `search`
@@ -115,17 +115,15 @@ definieren müssen und diese Lebensdauer beim Argument `contents` und dem
 Rückgabewert verwenden. Erinnere dich in [Kapitel 10][ch10-lifetimes] daran,
 dass die Lebensdauer-Parameter angeben, welche Argument-Lebensdauer mit der
 Lebensdauer des Rückgabewertes verbunden ist. In diesem Fall geben wir an, dass
-der zurückgegebene Vektor Zeichenkettenanteilstypen enthalten sollte, die auf
-Anteilstypen des Arguments `contents` (und nicht auf das Argument `query`)
-referenzieren.
+der zurückgegebene Vektor String Slices enthalten sollte, die auf Slices des
+Arguments `contents` (und nicht auf das Argument `query`) referenzieren.
 
 Mit anderen Worten sagen wir Rust, dass die von der Funktion `search`
 zurückgegebenen Daten so lange leben, wie die Daten, die im Argument `contents`
 an die Funktion `search` übergeben werden. Das ist wichtig! Die Daten, auf die
-durch einen Anteilstyp _referenziert_ wird, müssen gültig sein, damit die
-Referenz gültig ist; wenn der Compiler annimmt, dass wir
-Zeichenkettenanteilstypen aus `query` statt aus `contents` erstellen, wird er
-seine Sicherheitsprüfung falsch durchführen.
+durch einen Slice _referenziert_ wird, müssen gültig sein, damit die Referenz
+gültig ist; wenn der Compiler annimmt, dass wir String Slices aus `query` statt
+aus `contents` erstellen, wird er seine Sicherheitsprüfung falsch durchführen.
 
 Wenn wir die Lebensdauer-Annotationen vergessen und versuchen, diese Funktion
 zu kompilieren, erhalten wir diesen Fehler:
@@ -178,7 +176,7 @@ Zeilen.
 
 #### Iterieren über Zeilen mit der Methode `lines`
 
-Rust hat eine hilfreiche Methode zum zeilenweisen Iterieren von Zeichenketten,
+Rust hat eine hilfreiche Methode zum zeilenweisen Iterieren von Strings,
 bequemerweise `lines` genannt, die wie in Listing 12-17 gezeigt funktioniert.
 Beachte, dass dies noch nicht kompiliert.
 
@@ -219,11 +217,11 @@ benutzt haben, um etwas Code für jedes Element in einer Kollektion auszuführen
 
 #### Durchsuchen aller Zeilen nach dem Abfragetext
 
-Als nächstes prüfen wir, ob die aktuelle Zeile unsere Abfragezeichenkette
-enthält. Glücklicherweise haben Zeichenketten eine hilfreiche Methode namens
-`contains`, die dies für uns erledigt! Füge einen Aufruf der Methode `contains`
-in der Funktion `search` hinzu, wie in Listing 12-18 gezeigt. Beachte, dass
-dies noch nicht kompiliert werden kann.
+Als nächstes prüfen wir, ob die aktuelle Zeile unseren Abfrage-String enthält.
+Glücklicherweise haben Strings eine hilfreiche Methode namens `contains`, die
+dies für uns erledigt! Füge einen Aufruf der Methode `contains` in der Funktion
+`search` hinzu, wie in Listing 12-18 gezeigt. Beachte, dass dies noch nicht
+kompiliert werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -253,8 +251,8 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 # }
 ```
 
-<span class="caption">Listing 12-18: Hinzufügen von Funktionalität, um zu
-sehen, ob die Zeile die Zeichenkette in `query` enthält</span>
+<span class="caption">Listing 12-18: Hinzufügen von Funktionalität, um zu sehen,
+ob die Zeile den String in `query` enthält</span>
 
 Im Moment bauen wir die Funktionalität auf. Damit sie kompiliert werden kann,
 müssen wir einen Wert aus dem Rumpf zurückgeben, wie wir es in der

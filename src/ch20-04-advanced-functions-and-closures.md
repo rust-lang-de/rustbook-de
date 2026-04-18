@@ -69,8 +69,8 @@ Als Beispiel dafür, wo du entweder einen inline definierten Closure oder eine
 benannte Funktion verwenden könntest, sehen wir uns die Verwendung der Methode
 `map` an, die vom Trait `Iterator` in der Standardbibliothek bereitgestellt
 wird. Um die Methode `map` zu verwenden, um einen Vektor von Zahlen in einen
-Vektor von Zeichenketten zu verwandeln, könnten wir einen Closure verwenden, wie
-in Listing 20-29.
+Vektor von Strings zu verwandeln, könnten wir einen Closure verwenden, wie in
+Listing 20-29.
 
 ```rust
 let list_of_numbers = vec![1, 2, 3];
@@ -79,7 +79,7 @@ let list_of_strings: Vec<String> =
 ```
 
 <span class="caption">Listing 20-29: Verwendung eines Closure mit der Methode
-`map` zur Umwandlung von Zahlen in Zeichenketten</span>
+`map` zur Umwandlung von Zahlen in Strings</span>
 
 Oder wir könnten eine Funktion als Argument für `map` angeben anstelle des
 Closures. Listing 20-30 zeigt, wie das aussehen würde.
@@ -90,8 +90,8 @@ let list_of_strings: Vec<String> =
     list_of_numbers.iter().map(ToString::to_string).collect();
 ```
 
-<span class="caption">Listing 20-30: Verwenden der Methode
-`String::to_string` zur Umwandlung von Zahlen in Zeichenketten</span>
+<span class="caption">Listing 20-30: Verwenden der Methode `String::to_string`
+zur Umwandlung von Zahlen in Strings</span>
 
 Beachte, dass wir die vollständig qualifizierte Syntax verwenden müssen, über
 die wir in Abschnitt [„Fortgeschrittene Traits“][advanced-traits] gesprochen

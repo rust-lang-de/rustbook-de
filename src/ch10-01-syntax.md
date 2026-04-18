@@ -17,9 +17,8 @@ Funktion mehr Funktionalität, während gleichzeitig Code-Duplikate verhindert
 werden.
 
 Um mit unserer Funktion `largest` fortzufahren, zeigt Listing 10-4 zwei
-Funktionen, die beide den größten Wert in einem Anteilstyp finden. Wir werden
-diese dann in einer einzigen Funktion kombinieren, die generische Typen
-verwendet.
+Funktionen, die beide den größten Wert in einem Slice finden. Wir werden diese
+dann in einer einzigen Funktion kombinieren, die generische Typen verwendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -67,11 +66,10 @@ fn main() {
 Namen und den Typen in ihren Signaturen unterscheiden</span>
 
 Die Funktion `largest_i32` ist diejenige, die wir in Listing 10-3 extrahiert
-haben und die den größten `i32` in einem Anteilstyp findet. Die Funktion
-`largest_char` findet das größte `char` in einem Anteilstyp. Die
-Funktionsrümpfe haben den gleichen Code, also lass uns die Duplizierung
-eliminieren, indem wir einen generischen Typparameter in einer einzigen
-Funktion einführen.
+haben und die den größten `i32` in einem Slice findet. Die Funktion
+`largest_char` findet das größte `char` in einem Slice. Die Funktionsrümpfe
+haben den gleichen Code, also lass uns die Duplizierung eliminieren, indem wir
+einen generischen Typparameter in einer einzigen Funktion einführen.
 
 Um die Typen in einer neuen, einzigen Funktion zu parametrisieren, müssen wir
 den Typparameter benennen, so wie wir es für die Wertparameter einer Funktion
@@ -93,16 +91,15 @@ Funktionsnamen und der Parameterliste, so wie hier:
 fn largest<T>(list: &[T]) -> &T {
 ```
 
-Wir lesen diese Definition wie folgt: „Die Funktion `largest` ist generisch
-über einen Typ `T`.“ Sie hat einen Parameter namens `list`, der ein Anteilstyp
-von Werten des Typs `T` ist. Die Funktion `largest` gibt eine Referenz auf denn
-Wert des gleichen Typs `T` zurück.
+Wir lesen diese Definition wie folgt: „Die Funktion `largest` ist generisch über
+einen Typ `T`.“ Sie hat einen Parameter namens `list`, der ein Slice von Werten
+des Typs `T` ist. Die Funktion `largest` gibt eine Referenz auf denn Wert des
+gleichen Typs `T` zurück.
 
 Listing 10-5 zeigt die kombinierte Funktionsdefinition `largest`, die den
 generischen Datentyp in ihrer Signatur verwendet. Der Listing zeigt auch, wie
-wir die Funktion entweder mit einem Anteilstyp von `i32`-Werten oder
-`char`-Werten aufrufen können. Beachte, dass sich dieser Code noch nicht
-kompilieren lässt.
+wir die Funktion entweder mit einem Slice von `i32`-Werten oder `char`-Werten
+aufrufen können. Beachte, dass sich dieser Code noch nicht kompilieren lässt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -449,13 +446,12 @@ fn main() {
 der Definition ihrer Struktur anders verwendet</span>
 
 In `main` haben wir einen `Point` definiert, bei dem `x` den Typ `i32` (mit dem
-Wert `5`) und `y` den Typ `f64` (mit dem Wert `10.4`) hat. Die Variable `p2`
-ist eine Struktur `Point`, bei der `x` einen Zeichenkettenanteilstyp (mit dem
-Wert `"Hallo"`) und `y` den Typ `char` (mit dem Wert `c`) hat. Wenn wir `mixup`
-auf `p1` mit dem Argument `p2` aufrufen, erhalten wir `p3`, das ein `i32` für
-`x` haben wird, weil `x` von `p1` kam. Die Variable `p3` wird ein `char` für
-`y` haben, weil `y` von `p2` stammt. Der Makroaufruf `println!` gibt
-`p3.x = 5, p3.y = c` aus.
+Wert `5`) und `y` den Typ `f64` (mit dem Wert `10.4`) hat. Die Variable `p2` ist
+eine Struktur `Point`, bei der `x` einen String Slice (mit dem Wert `"Hallo"`)
+und `y` den Typ `char` (mit dem Wert `c`) hat. Wenn wir `mixup` auf `p1` mit dem
+Argument `p2` aufrufen, erhalten wir `p3`, das ein `i32` für `x` haben wird,
+weil `x` von `p1` kam. Die Variable `p3` wird ein `char` für `y` haben, weil `y`
+von `p2` stammt. Der Makroaufruf `println!` gibt `p3.x = 5, p3.y = c` aus.
 
 Der Zweck dieses Beispiels ist es, eine Situation zu demonstrieren, in der
 einige generische Parameter mit `impl` und einige mit der Methodendefinition

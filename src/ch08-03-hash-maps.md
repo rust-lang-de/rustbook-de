@@ -255,8 +255,8 @@ werden: Du erinnerst dich an [„Zugreifen auf Werte in einer
 Hashtabelle“][access], wo die Iteration über eine Hashtabelle in einer
 willkürlichen Reihenfolge erfolgt.
 
-Die Methode `split_whitespace` gibt einen Iterator über durch Leerzeichen
-getrennte Sub-Anteilstypen des Wertes in `text` zurück. Die Methode `or_insert`
+Die Methode `split_whitespace` gibt einen Iterator über Sub-Slices zurück, die
+durch Leerzeichen getrennte Werte in `text` enthalten. Die Methode `or_insert`
 gibt eine veränderbare Referenz (`&mut V`) auf den Wert für den angegebenen
 Schlüssel zurück. Hier speichern wir diese veränderbaren Referenz in der
 Variablen `count`. Um diesen Wert zuzuweisen, müssen wir also zuerst `count` mit
@@ -284,16 +284,16 @@ implementieren.
 
 ## Zusammenfassung
 
-Vektoren, Zeichenketten und Hashtabellen bieten eine große Menge an
-Funktionalität, die in Programmen benötigt wird, wenn du Daten speichern,
-darauf zugreifen und sie verändern willst. Hier sind einige Übungen, für deren
-Lösung du jetzt gerüstet sein solltest:
+Vektoren, Strings und Hashtabellen bieten eine große Menge an Funktionalität,
+die in Programmen benötigt wird, wenn du Daten speichern, darauf zugreifen und
+sie verändern willst. Hier sind einige Übungen, für deren Lösung du jetzt
+gerüstet sein solltest:
 
 1. Verwende bei einer Liste von ganzen Zahlen einen Vektor und gib den
    Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
    der am häufigsten vorkommt; eine Hashtabelle ist hier hilfreich) der Liste
    zurück.
-2. Wandle Zeichenketten in Schweinelatein (pig latin) um. Der erste Konsonant
+2. Wandle Strings in Schweinelatein (pig latin) um. Der erste Konsonant
    jedes Wortes wird an das Ende des Wortes verschoben und „ay“ angehängt,
    sodass „zuerst“ zu „uerst-zay“ wird. Bei Wörtern, die mit einem Vokal
    beginnen, wird stattdessen „hay“ an das Ende angefügt („ansehen“ wird zu
@@ -306,7 +306,7 @@ Lösung du jetzt gerüstet sein solltest:
    Firma nach Abteilung ausgeben.
 
 Die API-Dokumentation der Standard-Bibliothek beschreibt Methoden für Vektoren,
-Zeichenketten und Hashtabellen, die für diese Übungen hilfreich sind!
+Strings und Hashtabellen, die für diese Übungen hilfreich sind!
 
 Wir steigen in komplexere Programme ein, in denen Operationen fehlschlagen
 können, daher ist es ein perfekter Zeitpunkt, auf die Fehlerbehandlung

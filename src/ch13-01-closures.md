@@ -81,6 +81,7 @@ fn main() {
     println!("Der Benutzer mit Präferenz {user_pref2:?} erhält {giveaway2:?}");
 }
 ```
+
 <span class="caption">Listing 13-1: Werbegeschenk der Shirtfirma</span>
 
 Der in `main` definierte `store` hat zwei blaue Shirts und ein rotes Shirt
@@ -503,15 +504,15 @@ Arten von Closures und ist so flexibel wie nur möglich.
 > `Fn`-Traits, die für eine Funktionsdefinition anwendbar sind.
 
 Schauen wir uns nun die Standard-Bibliotheksmethode `sort_by_key` an, die auf
-Anteilstypen (slices) definiert ist, um zu sehen, wie sie sich von
-`unwrap_or_else` unterscheidet und warum `sort_by_key` `FnMut` statt `FnOnce`
-für die Mermalsabgrenzung verwendet. Der Closure erhält ein Argument, eine
-Referenz auf das aktuelle Element im betrachteten Anteilstyp, und gibt einen
-Wert vom Typ `K` zurück, der geordnet werden kann. Diese Funktion ist nützlich,
-wenn man einen Anteilstyp nach einem bestimmten Attribut der einzelnen Elemente
-sortieren will. In Listing 13-7 haben wir eine Liste von `Rectangle`-Instanzen
-und benutzen `sort_by_key`, um sie nach ihrem `width`-Attribut von niedrig nach
-hoch zu sortieren:
+Slice definiert ist, um zu sehen, wie sie sich von `unwrap_or_else`
+unterscheidet und warum `sort_by_key` `FnMut` statt `FnOnce` für die
+Mermalsabgrenzung verwendet. Der Closure erhält ein Argument, eine Referenz auf
+das aktuelle Element im betrachteten Slice, und gibt einen Wert vom Typ `K`
+zurück, der geordnet werden kann. Diese Funktion ist nützlich, wenn man einen
+Slice nach einem bestimmten Attribut der einzelnen Elemente sortieren will. In
+Listing 13-7 haben wir eine Liste von `Rectangle`-Instanzen und benutzen
+`sort_by_key`, um sie nach ihrem `width`-Attribut von niedrig nach hoch zu
+sortieren:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -562,8 +563,8 @@ $ cargo run
 
 Der Grund, warum `sort_by_key` so definiert ist, dass es einen `FnMut`-Closure
 nimmt, ist, dass es den Closure mehrfach aufruft: Einmal für jedes Element im
-Anteilstyp. Der Closure `|r| r.width` erfasst, verändert oder verschiebt nichts
-aus seiner Umgebung, sodass er die Anforderungen der Trait Bound erfüllt.
+Slice. Der Closure `|r| r.width` erfasst, verändert oder verschiebt nichts aus
+seiner Umgebung, sodass er die Anforderungen der Trait Bound erfüllt.
 
 Im Gegensatz dazu zeigt Listing 13-8 ein Beispiel für einen Closure, der nur
 das Trait `FnOnce` implementiert, weil er einen Wert aus der Umgebung

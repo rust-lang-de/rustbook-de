@@ -133,8 +133,8 @@ In **Kapitel 7** erfährst du mehr über das Modulsystem von Rust und über die
 Datenschutzregeln zum Organisieren deines Codes und dessen öffentlich
 zugängliche Programmierschnittstelle (API). In **Kapitel 8** werden einige
 gängige Kollektionsdatenstrukturen, die die Standardbibliothek zur Verfügung
-stellt, behandelt: Vektoren, Zeichenketten und Hashtabellen. **Kapitel 9**
-befasst sich mit Rusts Philosophie und Techniken der Fehlerbehandlung.
+stellt, behandelt: Vektoren, Strings und Hashtabellen. **Kapitel 9** befasst
+sich mit Rusts Philosophie und Techniken der Fehlerbehandlung.
 
 **Kapitel 10** vertieft generische Datentypen, Traits und Lebensdauern, die dir
 die Möglichkeit geben, Code zu schreiben, der für mehrere Typen passt. In

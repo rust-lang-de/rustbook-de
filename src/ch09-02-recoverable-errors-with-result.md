@@ -475,7 +475,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
 <span class="caption">Listing 9-9: Verwenden von `fs::read_to_string`,
 anstatt die Datei zu öffnen und dann zu lesen</span>
 
-Das Einlesen einer Datei in eine Zeichenkette ist eine ziemlich häufig
+Das Einlesen einer Datei in einen String ist eine ziemlich häufig
 benötigte Operation, daher bringt die Standardbibliothek die praktische Funktion
 `fs::read_to_string` mit, die die Datei öffnet, einen neuen `String` erzeugt,
 den Inhalt der Datei einliest, den Inhalt in den `String` einfügt und ihn
@@ -578,30 +578,29 @@ fn last_char_of_first_line(text: &str) -> Option<char> {
 <span class="caption">Listing 9-11: Verwenden des `?`-Operators auf einem
 `Option<T>`-Wert</span>
 
-Diese Funktion gibt `Option<char>` zurück, weil es möglich ist, dass ein
-Zeichen vorhanden ist, aber es ist auch möglich, dass keines vorhanden ist.
-Dieser Code nimmt das Zeichenkettenanteilstyp-Argument `text` und ruft die
-Methode `lines` darauf auf, die einen Iterator über die Zeilen der Zeichenkette
-zurückgibt. Da diese Funktion die erste Zeile untersuchen will, ruft sie `next`
-auf dem Iterator auf, um den ersten Wert vom Iterator zu erhalten. Wenn `text`
-die leere Zeichenkette ist, gibt dieser Aufruf von `next` `None` zurück, und
-hier können wir `?` benutzen, um zu stoppen und `None` von
-`last_char_of_first_line` zurückgeben, wenn dies der Fall ist. Wenn `text`
-nicht die leere Zeichenkette ist, gibt `next` einen `Some`-Wert zurück, der
-einen Zeichenkettenanteilstyp der ersten Zeile in `text` enthält.
+Diese Funktion gibt `Option<char>` zurück, weil es möglich ist, dass ein Zeichen
+vorhanden ist, aber es ist auch möglich, dass keines vorhanden ist. Dieser Code
+nimmt das String-Slice-Argument `text` und ruft die Methode `lines` darauf auf,
+die einen Iterator über die Zeilen des Strings zurückgibt. Da diese Funktion die
+erste Zeile untersuchen will, ruft sie `next` auf dem Iterator auf, um den
+ersten Wert vom Iterator zu erhalten. Wenn `text` der leere String ist, gibt
+dieser Aufruf von `next` `None` zurück, und hier können wir `?` benutzen, um zu
+stoppen und `None` von `last_char_of_first_line` zurückgeben, wenn dies der Fall
+ist. Wenn `text` nicht der leere String ist, gibt `next` einen `Some`-Wert
+zurück, der einen String Slice der ersten Zeile in `text` enthält.
 
-Das `?` extrahiert den Zeichenkettenanteilstyp, und wir können `chars` auf
-diesem Zeichenkettenanteilstyp aufrufen, um einen Iterator für seine Zeichen zu
-erhalten. Wir sind am letzten Zeichen in dieser ersten Zeile interessiert, also
-rufen wir `last` auf, um das letzte Element im Iterator über die Zeichen
-zurückzugeben. Dies ist eine `Option`, weil die erste Zeile die leere
-Zeichenkette sein kann, wenn `text` mit einer Leerzeile beginnt, aber Zeichen
-in anderen Zeilen enthält, wie in `"\nhi"`. Wenn es jedoch ein letztes Zeichen
-in der ersten Zeile gibt, wird es in der Variante `Some` zurückgegeben. Der
-`?`-Operator in der Mitte gibt uns eine prägnante Möglichkeit, diese Logik
-auszudrücken, und diese Funktion kann in einer Zeile implementiert werden. Wenn
-wir den `?`-Operator nicht auf `Option` verwenden könnten, müssten wir diese
-Logik mit weiteren Methodenaufrufen oder einem Ausdruck implementieren.
+Das `?` extrahiert den String Slice, und wir können `chars` auf diesem String
+Slice aufrufen, um einen Iterator für seine Zeichen zu erhalten. Wir sind am
+letzten Zeichen in dieser ersten Zeile interessiert, also rufen wir `last` auf,
+um das letzte Element im Iterator über die Zeichen zurückzugeben. Dies ist eine
+`Option`, weil die erste Zeile der leere String sein kann, wenn `text` mit einer
+Leerzeile beginnt, aber Zeichen in anderen Zeilen enthält, wie in `"\nhi"`. Wenn
+es jedoch ein letztes Zeichen in der ersten Zeile gibt, wird es in der Variante
+`Some` zurückgegeben. Der `?`-Operator in der Mitte gibt uns eine prägnante
+Möglichkeit, diese Logik auszudrücken, und diese Funktion kann in einer Zeile
+implementiert werden. Wenn wir den `?`-Operator nicht auf `Option` verwenden
+könnten, müssten wir diese Logik mit weiteren Methodenaufrufen oder einem
+Ausdruck implementieren.
 
 Beachte, dass du den `?`-Operator auf ein `Result` in einer Funktion anwenden
 kannst, die `Result` zurückgibt, und du kannst den `?`-Operator auf eine

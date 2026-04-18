@@ -77,10 +77,9 @@ let v: Vec<u32> = vec![1, 2, 3];
 ```
 
 Wir könnten auch das Makro `vec!` verwenden, um einen Vektor aus zwei ganzen
-Zahlen oder einen Vektor aus fünf Zeichenkettenanteilstypen (string slices) zu
-erstellen. Mit einer Funktion wäre das nicht möglich,
-da uns weder die Anzahl noch den Typ der Werte im Voraus bekannt ist.
-
+Zahlen oder einen Vektor aus fünf String Slices zu erstellen. Mit einer Funktion
+wäre das nicht möglich, da uns weder die Anzahl noch den Typ der Werte im Voraus
+bekannt ist.
 
 Listing 20-35 zeigt eine leicht vereinfachte Definition des Makros `vec!`.
 
@@ -388,10 +387,10 @@ nicht zu den Abhängigkeiten in _Cargo.toml_ hinzufügen mussten. Die Crate
 `proc_macro` ist die API des Compilers, die es uns erlaubt, den Rust-Code aus
 unserem Code zu lesen und zu manipulieren.
 
-Die Crate `syn` parst den Rust-Code von einer Zeichenkette in eine
-Datenstruktur, auf der wir Operationen durchführen können. Die Crate `quote`
-wandelt `syn`-Datenstrukturen wieder in Rust-Code um. Diese Crates machen es
-viel einfacher, jede Art von Rust-Code zu parsen, den wir vielleicht verarbeiten
+Die Crate `syn` parst den Rust-Code von einem String in eine Datenstruktur, auf
+der wir Operationen durchführen können. Die Crate `quote` wandelt
+`syn`-Datenstrukturen wieder in Rust-Code um. Diese Crates machen es viel
+einfacher, jede Art von Rust-Code zu parsen, den wir vielleicht verarbeiten
 wollen: Einen vollständigen Parser für Rust-Code zu schreiben, ist keine
 einfache Aufgabe.
 
@@ -406,8 +405,8 @@ Die Funktion `hello_macro_derive` wandelt zunächst `input` aus einem
 Operationen darauf ausführen können. Hier kommt `syn` ins Spiel. Die Funktion
 `parse` in `syn` nimmt einen `TokenStream` und gibt eine `DeriveInput`-Struktur
 zurück, die den geparsten Rust-Code repräsentiert. Listing 20-41 zeigt die
-relevanten Teile der Struktur `DeriveInput`, die wir vom Parsen der
-Zeichenkette `struct Pancakes;` erhalten:
+relevanten Teile der Struktur `DeriveInput`, die wir vom Parsen des Strings
+`struct Pancakes;` erhalten:
 
 ```rust,ignore
 DeriveInput {
@@ -496,11 +495,11 @@ unter Verwendung des geparsten Rust-Codes</span>
 
 Wir erhalten eine `Ident`-Strukturinstanz, die den Namen (Bezeichner) des
 annotierten Typs enthält, indem wir `ast.ident` verwenden. Die Struktur in
-Listing 20-41 zeigt, dass, wenn wir die Funktion `impl_hello_macro` auf den
-Code in Listing 20-37 anwenden, das erhaltene `ident` ein Feld `ident` mit
-dem Wert `"Pancakes"` enthält. So wird die Variable `name` in Listing 20-42
-eine Instanz der Struktur `Ident` enthalten, die die Zeichenkette `"Pancakes"`
-ausgibt, der Name der Struktur in Listing 20-37.
+Listing 20-41 zeigt, dass, wenn wir die Funktion `impl_hello_macro` auf den Code
+in Listing 20-37 anwenden, das erhaltene `ident` ein Feld `ident` mit dem Wert
+`"Pancakes"` enthält. So wird die Variable `name` in Listing 20-42 eine Instanz
+der Struktur `Ident` enthalten, die den String `"Pancakes"` ausgibt, dem Name
+der Struktur in Listing 20-37.
 
 Mit dem Makro `quote!` können wir den Rust-Code definieren, den wir zurückgeben
 wollen. Der Compiler erwartet etwas anderes als das direkte Ergebnis der
@@ -524,12 +523,12 @@ annotierten Typs.
 
 Das hier verwendete Makro `stringify!` ist in Rust eingebaut. Es nimmt einen
 Rust-Ausdruck, z.B. `1 + 2`, und verwandelt diesen zur Kompilierzeit in ein
-Zeichenketten-Literal, z.B. `"1 + 2"`. Dies unterscheidet sich von `format!`
-oder `println!`; Makros, die den Ausdruck auswerten und dann das Ergebnis in
-einen `String` umwandeln. Es besteht die Möglichkeit, dass die Eingabe `#Name`
-ein Ausdruck ist, der literal auszugeben ist, also verwenden wir `stringify!`.
-Die Verwendung von `stringify!` erspart zudem eine Speicherzuweisung, indem
-`#name` zur Kompilierzeit in ein Zeichenketten-Literal umgewandelt wird.
+String-Literal, z.B. `"1 + 2"`. Dies unterscheidet sich von `format!` oder
+`println!`; Makros, die den Ausdruck auswerten und dann das Ergebnis in einen
+`String` umwandeln. Es besteht die Möglichkeit, dass die Eingabe `#Name` ein
+Ausdruck ist, der literal auszugeben ist, also verwenden wir `stringify!`. Die
+Verwendung von `stringify!` erspart zudem eine Speicherzuweisung, indem `#name`
+zur Kompilierzeit in ein String-Literal umgewandelt wird.
 
 An diesem Punkt sollte `cargo build` sowohl bei `hello_macro` als auch bei
 `hello_macro_derive` erfolgreich durchlaufen. Schließen wir diese Crates an den

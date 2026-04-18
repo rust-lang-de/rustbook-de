@@ -114,6 +114,7 @@ test src/lib.rs - add_one (line 5) ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
+
 Wenn wir nun entweder die Funktion oder das Beispiel so ändern, dass `assert_eq!`
 im Beispiel `panic` aufruft und erneut `cargo test` aufrufen, werden wir
 bemerken, das `cargo test` feststellt, dass das Beispiel und der Code nicht
@@ -438,6 +439,7 @@ Veröffentlichung zu verwenden:
 [package]
 name = "guessing_game"
 ```
+
 Selbst wenn du einen eindeutigen Namen gewählt hast, wird beim Ausführen von
 `cargo publish` zum Veröffentlichen der Crate an dieser Stelle eine Warnung und
 anschließend ein Fehler angezeigt:

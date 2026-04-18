@@ -119,14 +119,13 @@ an, die bestanden oder nicht bestanden wurden.
 
 Es ist möglich, einen Test als ignoriert zu markieren, sodass er in einer
 bestimmten Instanz nicht ausgeführt wird; wir werden dies im Abschnitt [„Tests
-ignorieren, die nicht ausdrücklich verlangt werden“][ignoring] später in
-diesem Kapitel behandeln. Da wir das hier nicht getan haben, zeigt die
-Zusammenfassung `0 ignored`. Wir können auch ein Argument an den Befehl `cargo
- test` übergeben, um nur Tests auszuführen, deren Name mit einer Zeichenkette
-übereinstimmt; dies wird _Filtern_ genannt und wir werden dies in [„Ausführen
-einer Test-Teilmenge mittels Name“][subset] behandeln. Außerdem haben wir die
-durchgeführten Tests nicht gefiltert, sodass am Ende der Zusammenfassung `0
-filtered out` steht.
+ignorieren, die nicht ausdrücklich verlangt werden“][ignoring] später in diesem
+Kapitel behandeln. Da wir das hier nicht getan haben, zeigt die Zusammenfassung
+`0 ignored`. Wir können auch ein Argument an den Befehl `cargo test` übergeben,
+um nur Tests auszuführen, deren Name mit einem String übereinstimmt; dies wird
+_Filtern_ genannt und wir werden dies in [„Ausführen einer Test-Teilmenge
+mittels Name“][subset] behandeln. Außerdem haben wir die durchgeführten Tests
+nicht gefiltert, sodass am Ende der Zusammenfassung `0 filtered out` steht.
 
 Die Statistik `0 measured` ist für Benchmark-Tests, die die Performanz messen.
 Benchmark-Tests sind zum Zeitpunkt, als dieser Text verfasst wurde, nur im
@@ -713,12 +712,11 @@ Du kannst den Makros `assert!`, `assert_eq!` und `assert_ne!` optional auch eine
 benutzerdefinierte Nachricht mitgeben, die mit der Fehlermeldungen ausgegeben
 wird. Alle Argumente, die nach den erforderlichen Argumenten angegeben werden,
 werden an das Makro `format!` übergeben (siehe [„Aneinanderhängen mit `+` und
-`format!`“][concatenation-plus-format] in Kapitel 8), sodass du eine
-Formatierungs-Zeichenkette übergeben kannst, die Platzhalter `{}` und Werte
-enthält, die in diese Platzhalter gehören. Benutzerdefinierte Nachrichten sind
-nützlich, um zu dokumentieren, was eine Zusicherung bedeutet; wenn ein Test
-fehlschlägt, hast du eine bessere Vorstellung davon, wo das Problem im Code
-liegt.
+`format!`“][concatenation-plus-format] in Kapitel 8), sodass du einen
+Formatierungs-String übergeben kannst, die Platzhalter `{}` und Werte enthält,
+die in diese Platzhalter gehören. Benutzerdefinierte Nachrichten sind nützlich,
+um zu dokumentieren, was eine Zusicherung bedeutet; wenn ein Test fehlschlägt,
+hast du eine bessere Vorstellung davon, wo das Problem im Code liegt.
 
 Nehmen wir zum Beispiel an, wir haben eine Funktion, die Leute mit Namen
 begrüßt, und wir wollen testen, ob der Name, den wir an die Funktion übergeben,
@@ -801,9 +799,8 @@ error: test failed, to rerun pass `--lib`
 Dieses Ergebnis zeigt nur an, dass die Zusicherung fehlgeschlagen ist und in
 welcher Zeile die Zusicherung steht. Eine nützlichere Fehlermeldung würde den
 Wert der Funktion `greeting` ausgeben. Fügen wir eine benutzerdefinierte
-Fehlermeldung hinzu, die aus einer Formatierungszeichenkette mit einem
-Platzhalter besteht, der mit dem tatsächlichen Wert aus der Funktion `greeting`
-gefüllt ist:
+Fehlermeldung hinzu, die aus einen Formatierungs-String mit einem Platzhalter
+besteht, der mit dem tatsächlichen Wert aus der Funktion `greeting` gefüllt ist:
 
 ```rust
 # pub fn greeting(name: &str) -> String {
@@ -1032,18 +1029,18 @@ mod tests {
 }
 ```
 
-<span class="caption">Listing 11-9: Testen eines Programmabbruchs mit einer
-bestimmten Teilzeichenkette in der Meldung</span>
+<span class="caption">Listing 11-9: Testen eines Programmabbruchs mit einem
+bestimmten Teil-String in der Meldung</span>
 
 Dieser Test wird bestanden werden, weil der Wert, den wir beim Parameter
-`expected` des `should_panic`-Attributs angeben, eine Teilzeichenkette der
-Nachricht ist, mit der die Funktion `Guess::new` das Programm abbricht. Wir
-hätten die gesamte erwartete Abbruchsnachricht angeben können, in diesem Fall
-also `Schätzwert muss kleiner oder gleich 100 sein, ist 200`. Was du angibst,
-hängt davon ab, wie viel von der Abbruchsnachricht eindeutig oder dynamisch ist
-und wie präzise dein Test sein soll. In diesem Fall reicht eine
-Teilzeichenkette der Abbruchsnachricht aus, um sicherzustellen, dass der Code
-in der Testfunktion den Fall `else if value > 100` ausführt.
+`expected` des `should_panic`-Attributs angeben, ein Teil-String der Nachricht
+ist, mit der die Funktion `Guess::new` das Programm abbricht. Wir hätten die
+gesamte erwartete Abbruchsnachricht angeben können, in diesem Fall also
+`Schätzwert muss kleiner oder gleich 100 sein, ist 200`. Was du angibst, hängt
+davon ab, wie viel von der Abbruchsnachricht eindeutig oder dynamisch ist und
+wie präzise dein Test sein soll. In diesem Fall reicht ein Teil-String der
+Abbruchsnachricht aus, um sicherzustellen, dass der Code in der Testfunktion den
+Fall `else if value > 100` ausführt.
 
 Um zu sehen, was passiert, wenn ein Test mit `should_panic` und einer
 `expected`-Nachricht fehlschlägt, wollen wir wieder einen Fehler in unseren
@@ -1109,10 +1106,10 @@ error: test failed, to rerun pass `--lib`
 ```
 
 Die Fehlermeldung zeigt an, dass dieser Test tatsächlich wie erwartet das
-Programm abgebrochen hat, aber die Abbruchsmeldung enthielt nicht die erwartete
-Zeichenkette `"kleiner oder gleich 100"`. Die Abbruchsmeldung, die wir in
-diesem Fall erhielten, lautete: `Schätzwert muss größer oder gleich 1 sein, ist
-200.` Jetzt können wir anfangen herauszufinden, wo unser Fehler liegt!
+Programm abgebrochen hat, aber die Abbruchsmeldung enthielt nicht den erwarteten
+String `"kleiner oder gleich 100"`. Die Abbruchsmeldung, die wir in diesem Fall
+erhielten, lautete: `Schätzwert muss größer oder gleich 1 sein, ist 200.` Jetzt
+können wir anfangen herauszufinden, wo unser Fehler liegt!
 
 ### Verwenden von `Result<T, E>` in Tests
 

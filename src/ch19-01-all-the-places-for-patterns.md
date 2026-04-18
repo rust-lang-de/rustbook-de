@@ -181,9 +181,9 @@ let` und `else`</span>
 Wenn der Benutzer eine Lieblingsfarbe angibt, ist diese Farbe die
 Hintergrundfarbe. Wenn keine Lieblingsfarbe angegeben wurde und heute Dienstag
 ist, ist die Hintergrundfarbe grün. Ansonsten, wenn der Benutzer sein Alter als
-Zeichenkette angibt und wir es erfolgreich als Zahl parsen können, ist die
-Farbe entweder violett oder orange, je nach dem Wert der Zahl. Wenn keine
-dieser Bedingungen zutrifft, ist die Hintergrundfarbe blau.
+String angibt und wir ihn erfolgreich als Zahl parsen können, ist die Farbe
+entweder violett oder orange, je nach dem Wert der Zahl. Wenn keine dieser
+Bedingungen zutrifft, ist die Hintergrundfarbe blau.
 
 Mit dieser bedingten Struktur können wir komplexe Anforderungen unterstützen.
 Mit den hartkodierten Werten, die wir hier haben, wird dieses Beispiel

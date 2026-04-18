@@ -6,5 +6,4 @@ Rust, Speichersicherheitsgarantien ohne Einsatz einer automatischen
 Speicherbereinigung (garbage collector) zu geben, deshalb ist es wichtig zu
 verstehen, wie Eigentümerschaft in Rust funktioniert. In diesem Kapitel werden
 wir uns neben der Eigentümerschaft weitere diesbezügliche Funktionalitäten
-ansehen: Borrowing, Anteilstypen (slices) und wie Rust Daten im Speicher
-anordnet.
+ansehen: Borrowing, Slices und wie Rust Daten im Speicher anordnet.

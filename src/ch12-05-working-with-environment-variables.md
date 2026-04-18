@@ -170,26 +170,25 @@ pub fn search_case_insensitive<'a>(
 `search_case_insensitive`, um den Abfragetext und die Zeile vor dem Vergleich
 in Kleinbuchstaben umzuwandeln</span>
 
-Zuerst wandeln wir die Zeichenkette `query` in Kleinbuchstaben um und speichern
-ihn in einer neuen Variablen mit dem gleichen Namen, die die ursprüngliche
-Variable `query` verschattetet. Der Aufruf von `to_lowercase` beim Abfragetext
-ist notwendig, sodass wir unabhängig davon, ob die Abfrage des Benutzers
-`"rust"`, `"RUST"`, `"RUST"` oder `"rUsT"` ist, die Abfrage so behandeln, als
-ob sie `"rust"` wäre, und die Groß-/Kleinschreibung nicht beachten. Obwohl
+Zuerst wandeln wir den String `query` in Kleinbuchstaben um und speichern ihn in
+einer neuen Variablen mit dem gleichen Namen, die die ursprüngliche Variable
+`query` verschattetet. Der Aufruf von `to_lowercase` beim Abfragetext ist
+notwendig, sodass wir unabhängig davon, ob die Abfrage des Benutzers `"rust"`,
+`"RUST"`, `"RUST"` oder `"rUsT"` ist, die Abfrage so behandeln, als ob sie
+`"rust"` wäre, und die Groß-/Kleinschreibung nicht beachten. Obwohl
 `to_lowercase` mit einfachem Unicode umgehen kann, wird es nicht 100 Prozent
 genau sein. Wenn wir eine echte Anwendung schreiben würden, würden wir hier
 etwas mehr Arbeit spendieren wollen, aber in diesem Abschnitt geht es um
 Umgebungsvariablen, nicht um Unicode, also belassen wir es hier dabei.
 
-Beachte, dass `query` jetzt ein `String` und nicht mehr ein
-Zeichenkettenanteilstyp ist, weil der Aufruf von `to_lowercase` neue Daten
-erzeugt, anstatt auf bestehende Daten zu referenzieren. Nehmen wir als Beispiel
-an, der Abfragetext sei `"rUsT"`, dieser Zeichenkettenanteilstyp enthält kein
-kleingeschriebenes `u` oder `t`, das wir verwenden könnten, also müssen wir
-einen neuen `String` zuweisen, der `"rust"` enthält. Wenn wir nun `query` als
-Argument an die Methode `contains` übergeben, müssen wir ein `&`-Zeichen
-angeben, weil die Signatur von `contains` so definiert ist, dass sie einen
-Zeichenkettenanteilstyp nimmt.
+Beachte, dass `query` jetzt ein `String` und nicht mehr ein String Slice ist,
+weil der Aufruf von `to_lowercase` neue Daten erzeugt, anstatt auf bestehende
+Daten zu referenzieren. Nehmen wir als Beispiel an, der Abfragetext sei
+`"rUsT"`, dieser String Slice enthält kein kleingeschriebenes `u` oder `t`, das
+wir verwenden könnten, also müssen wir einen neuen `String` zuweisen, der
+`"rust"` enthält. Wenn wir nun `query` als Argument an die Methode `contains`
+übergeben, müssen wir ein `&`-Zeichen angeben, weil die Signatur von `contains`
+so definiert ist, dass sie einen String Slice nimmt.
 
 Als nächstes fügen wir einen Aufruf von `to_lowercase` für jede `line` ein,
 um alle Zeichen kleinzuschreiben. Da wir nun `line` und `query` in

@@ -422,15 +422,15 @@ einpacken, wie in Abbildung 17-8. Allerdings implementiert `String` automatisch
 <img alt="Concurrent work flow" src="img/trpl17-08.svg" />
 
 <span class="caption">Abbildung 17-8: Anheften eines `String`; die gestrichelte
-Linie deutet an, dass die Zeichenkette das Trait `Unpin` implementiert und daher
-nicht angeheftet ist.</span>
+Linie deutet an, dass String das Trait `Unpin` implementiert und daher nicht
+angeheftet ist.</span>
 
-Infolgedessen können wir Dinge tun, die illegal wären, wenn `String`
-stattdessen `!Unpin` implementiert hätte, wie zum Beispiel das Ersetzen einer
-Zeichenkette durch eine andere an der exakt gleichen Stelle im Speicher, wie in
-Abbildung 17-9. Dies verletzt nicht den `Pin`-Vertrag, weil `String` keine
-internen Referenzen hat, die es unsicher machen, es zu verschieben! Das ist
-genau der Grund, warum es `Unpin` und nicht `!Unpin` implementiert.
+Infolgedessen können wir Dinge tun, die illegal wären, wenn `String` stattdessen
+`!Unpin` implementiert hätte, wie zum Beispiel das Ersetzen eines Strings durch
+einen anderen an der exakt gleichen Stelle im Speicher, wie in Abbildung 17-9.
+Dies verletzt nicht den `Pin`-Vertrag, weil `String` keine internen Referenzen
+hat, die es unsicher machen, ihn zu verschieben! Das ist genau der Grund, warum
+er `Unpin` und nicht `!Unpin` implementiert.
 
 <img alt="Concurrent work flow" src="img/trpl17-09.svg" />
 

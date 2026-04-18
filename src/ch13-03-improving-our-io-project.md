@@ -7,12 +7,11 @@ Funktion `Config::build` und der Funktion `search` optimieren können.
 
 ### Ein `clone` durch Verwendung eines Iterators entfernen
 
-Im Listing 12-6 haben wir Programmcode hinzugefügt, der einen Anteilstyp
-(slice) von `Zeichenketten`-Werten (String values) nimmt, und erzeugten eine
-`Config`-Struktur indem wir den Anteilstyp indexierten und die Werte klonten
-und der `Config`-Struktur die Eigentümerschaft dieser Werte gaben. Im Listing
-13-17 haben wir die Implementierung der Funktion `Config::build` so reproduziert 
-wie sie im Listing 12-23 aussah.
+Im Listing 12-6 haben wir Programmcode hinzugefügt, der einen Slice von
+`String`-Werten nimmt, und erzeugten eine `Config`-Struktur indem wir den Slice
+indexierten und die Werte klonten und der `Config`-Struktur die Eigentümerschaft
+dieser Werte gaben. Im Listing 13-17 haben wir die Implementierung der Funktion
+`Config::build` so reproduziert wie sie im Listing 12-23 aussah.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -87,19 +86,18 @@ Zu diesem Zeitpunkt sagten wir, dass man sich keine Gedanken wegen der
 ineffizienten `clone`-Aufrufe machen soll, da sie zu einem späteren Zeitpunkt
 entfernt werden. Jetzt ist es an der Zeit, dass wir uns darum kümmern!
 
-Wir haben `clone` benutzt, da wir einen Anteilstyp mit `String`-Elementen im
+Wir haben `clone` benutzt, da wir einen Slice mit `String`-Elementen im
 Parameter `args` haben, aber die Funktion `build` besitzt `args` nicht. Um die
-Eigentümerschaft einer `Config`-Instanz zurückzugeben, mussten wir die Werte
-aus den Feldern `query` und `file_path` von `Config` klonen, damit die
+Eigentümerschaft einer `Config`-Instanz zurückzugeben, mussten wir die Werte aus
+den Feldern `query` und `file_path` von `Config` klonen, damit die
 `Config`-Instanz ihre Werte besitzen kann.
 
 Mithilfe unserer neuen Kenntnisse über Iteratoren können wir die Funktion
 `build` so ändern, dass sie die Eigentümerschaft eines Iterators als Argument
-nimmt anstatt sich einen Anteilstyp auszuleihen. Wir werden die
-`Iterator`-Funktionalität benutzen und nicht mehr den Programmcode der die
-Länge des Anteilstyps überprüft und an bestimmte Stellen indiziert. Dadurch
-wird deutlich, was die Funktion `Config::build` bewirkt, da der Iterator auf
-Werte zugreift.
+nimmt anstatt sich einen Slice auszuleihen. Wir werden die
+`Iterator`-Funktionalität benutzen und nicht mehr den Programmcode der die Länge
+des Slices überprüft und an bestimmte Stellen indiziert. Dadurch wird deutlich,
+was die Funktion `Config::build` bewirkt, da der Iterator auf Werte zugreift.
 
 Sobald `Config::build` die Eigentümerschaft des Iterators hat und keine
 Indexierungsoperationen mehr verwendet, die ausleihen, können wir die
@@ -252,8 +250,8 @@ fn main() {
 <span class="caption">Listing 13-18: Übergabe des Rückgabewerts von 
 `env::args` an `Config::build`</span>
 	
-Die Funktion `env::arg` gibt einen Iterator zurück! Anstatt die Werte des Iterators
-in einem Vektor zu sammeln und dann einen Anteilstyp an `Config::build` zu
+Die Funktion `env::arg` gibt einen Iterator zurück! Anstatt die Werte des
+Iterators in einem Vektor zu sammeln und dann einen Slice an `Config::build` zu
 übergeben, geben wir nun die Eigentümerschaft des Iterators, der von `env::args`
 zurückgegeben wird, direkt an `Config::build`.
 
@@ -390,7 +388,7 @@ impl Config {
 
         let query = match args.next() {
             Some(arg) => arg,
-            None => return Err("Keine Abfragezeichenkette erhalten"),
+            None => return Err("Keinen Abfragestring erhalten"),
         };
 
         let file_path = match args.next() {
@@ -548,6 +546,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 #     }
 # }
 ```
+
 <span class="caption">Listing 13-22: Verwendung von Iteratoradapter-Methoden
 bei der Implementierung der Funktion `search`</span>
 

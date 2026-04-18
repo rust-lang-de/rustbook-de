@@ -86,6 +86,7 @@ CustomSmartPointers erzeugt.
 CustomSmartPointer mit Daten aufräumen: `andere Sachen`!
 CustomSmartPointer mit Daten aufräumen: `meine Sache`!
 ```
+
 Rust hat für uns automatisch `drop` und den von uns angegebenen Programmcode 
 aufgerufen, als unsere Instanzen den Gültigkeitsbereich verlassen haben.
 Variablen werden in umgekehrter Reihenfolge ihrer Erstellung aufgeräumt, daher
