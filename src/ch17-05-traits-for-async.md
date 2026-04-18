@@ -125,7 +125,7 @@ nicht bereit ist.
 ### Der Typ `Pin` und das Trait `Unpin`
 
 In Listing 17-13 haben wir das Makro `trpl::join!` verwendet, um auf drei
-Futures zu warten. Es ist jedoch üblich, eine Sammlung wie einen Vektor zu
+Futures zu warten. Es ist jedoch üblich, eine Kollektion wie einen Vektor zu
 verwenden, der eine bestimmte Anzahl von Futures enthält, die erst zur Laufzeit
 bekannt sind. Ändern wir Listing 17-13 zum Code in Listing 17-23, der die
 drei Futures in einen Vektor einfügt und stattdessen die Funktion
@@ -185,7 +185,7 @@ drei Futures in einen Vektor einfügt und stattdessen die Funktion
 ```
 
 <span class="caption">Listing 17-23: Warten auf Futures in einer
-Sammlung</span>
+Kollektion</span>
 
 Wir legen jedes Future in eine `Box`, um es zu _Trait-Objekten_ zu machen, genau
 wie wir es im Abschnitt [„Fehlerrückgabe aus `run`”][returning-errors] in
@@ -202,7 +202,7 @@ Genauso wie du nicht zwei verschiedene handgeschriebene Strukturen in einen
 `Vec` einfügen kannst, kannst du auch keine vom Compiler generierten
 Aufzählungen mischen.
 
-Dann übergeben wir die Sammlung von Futures an die Funktion `trpl::join_all`
+Dann übergeben wir die Kollektion von Futures an die Funktion `trpl::join_all`
 und warten auf das Ergebnis. Dies lässt sich jedoch nicht kompilieren. Hier ist
 der relevante Teil der Fehlermeldung:
 

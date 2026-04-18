@@ -204,5 +204,5 @@ Tabelle B-10 zeigt die Kontexte, in denen eckige Klammern verwendet werden.
 | `[...]` | Array-Literal |
 | `[expr; len]` | Array-Literal mit `len` Kopien von `expr` |
 | `[type; len]` | Array-Typ mit `len` Instanzen von `type` |
-| `expr[expr]` | Sammlungs-Indexierung, ist überladbar (`Index`, `IndexMut`) |
-| `expr[..]`,<br> `expr[a..]`,<br> `expr[..b]`,<br> `expr[a..b]` | Sammlungs-Indexierung, die wie ein Sammlungs-Slice aussieht, unter Verwendung von `Range`, `RangeFrom`, `RangeTo` oder `RangeFull` als „Index“ |
+| `expr[expr]` | Kollektions-Indexierung, ist überladbar (`Index`, `IndexMut`) |
+| `expr[..]`,<br> `expr[a..]`,<br> `expr[..b]`,<br> `expr[a..b]` | Kollektions-Indexierung, die wie ein Kollektions-Slice aussieht, unter Verwendung von `Range`, `RangeFrom`, `RangeTo` oder `RangeFull` als „Index“ |

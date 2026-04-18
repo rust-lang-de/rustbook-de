@@ -183,13 +183,13 @@ test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 error: test failed, to rerun pass `--lib`
 ```
 
-### Ausführen einer Test-Teilmenge mittels Name
+### Ausführen einer Teilmenge der Tests mittels Name
 
-Manchmal kann die Ausführung einer vollständigen Testsammlung sehr lange
-dauern. Wenn du an Code in einem bestimmten Bereich arbeitest, solltest du
-vielleicht nur die Tests ausführen, die diesen Code betreffen. Du kannst
-wählen, welche Tests ausgeführt werden sollen, indem du `cargo test` den oder
-die Namen der Tests, die du ausführen willst, als Argument übergibst.
+Manchmal kann die Ausführung aller Tests sehr lange dauern. Wenn du an Code in
+einem bestimmten Bereich arbeitest, solltest du vielleicht nur die Tests
+ausführen, die diesen Code betreffen. Du kannst wählen, welche Tests ausgeführt
+werden sollen, indem du `cargo test` den oder die Namen der Tests, die du
+ausführen willst, als Argument übergibst.
 
 Um zu demonstrieren, wie man eine Teilmenge von Tests ausführt, werden wir
 zuerst drei Tests für unsere Funktion `add_two` erstellen, wie in Listing

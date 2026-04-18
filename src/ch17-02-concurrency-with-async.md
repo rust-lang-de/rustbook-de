@@ -574,12 +574,13 @@ Reihenfolge, in der sie erstellt werden.
 Die beiden asynchronen Blöcke zum Senden von Nachrichten müssen `async
 move`-Blöcke sein, sodass sowohl `tx` als auch `tx1` aufgeräumt werden, wenn
 diese Blöcke zu Ende sind. Sonst landen wir wieder in der gleichen
-Endlosschleife, mit der wir angefangen haben. Schließlich wechseln wir von
-`trpl::join` zu `trpl::join!`, um das zusätzliche Future zu behandeln: Das
-Makro `join!` wartet auf eine beliebige Anzahl von Futures, wobei die Anzahl
-der Futures zum Zeitpunkt der Kompilierung bekannt sein muss. Das Warten auf
-eine Sammlung von Futures mit unbekannter Anzahl wird später in diesem Kapitel
-behandelt.
+Endlosschleife, mit der wir angefangen haben.
+
+Schließlich wechseln wir von `trpl::join` zu `trpl::join!`, um das zusätzliche
+Future zu behandeln: Das Makro `join!` wartet auf eine beliebige Anzahl von
+Futures, wobei die Anzahl der Futures zum Zeitpunkt der Kompilierung bekannt
+sein muss. Das Warten auf eine Kollektion von Futures mit unbekannter Anzahl
+wird später in diesem Kapitel behandelt.
 
 Jetzt sehen wir alle Nachrichten der beiden sendenden Futures. Da die sendenden
 Futures leicht unterschiedliche Verzögerungen nach dem Senden verwenden, werden

@@ -113,7 +113,7 @@ wenn du `1000` angegeben hättest.
 Woher weist du also, welcher Ganzzahltyp zu verwenden ist? Wenn du dir unsicher
 bist, sind Rusts Standards im Allgemeinen ein guter Ausgangspunkt: Ganzzahlige
 Typen sind standardmäßig `i32`. Die primäre Situation, in der du `isize` oder
-`usize` verwendest, ist beim Indizieren einer Art Sammlung.
+`usize` verwendest, ist beim Indizieren einer Art Kollektion.
 
 > ##### Ganzzahlüberlauf
 >
