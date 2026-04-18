@@ -1,4 +1,4 @@
-## Strukturen (structs) definieren und instanziieren
+## Strukturen definieren und instanziieren
 
 Strukturen (structs) ähneln Tupeln, die im Abschnitt [„Der Tupel-Typ“][tuples]
 besprochen wurden. Wie bei Tupeln können die Teile einer Struktur verschiedene

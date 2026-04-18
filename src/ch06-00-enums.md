@@ -1,4 +1,4 @@
-# Aufzählungen (enums) und Musterabgleich (pattern matching)
+# Aufzählungen und Musterabgleich (pattern matching)
 
 In diesem Kapitel werden wir uns mit Aufzählungen (enumerations, kurz: enums)
 befassen. Aufzählungen erlauben es, einen Typ durch Aufzählung seiner möglichen

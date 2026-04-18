@@ -1,4 +1,4 @@
-### Abgeben (yielding) der Kontrolle an die Laufzeitumgebung
+### Abgeben der Kontrolle an die Laufzeitumgebung
 
 Erinnere dich an den Abschnitt [„Unser erstes asynchrones
 Programm“][async-program], bei dem Rust der Laufzeitumgebung an jedem

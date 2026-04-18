@@ -1,4 +1,4 @@
-## Ströme (streams): Sequenz von Futures
+## Ströme: Sequenz von Futures
 
 Erinnere dich daran, wie wir den Empfänger unseres asynchronen Kanals
 weiter in Abschnitt [„Datenaustausch zwischen zwei Aufgaben mit

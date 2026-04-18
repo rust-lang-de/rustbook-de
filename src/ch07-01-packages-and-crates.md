@@ -1,4 +1,4 @@
-## Pakete (packages) und Crates
+## Pakete und Crates
 
 Die ersten Teile des Modulsystems, die wir behandeln werden, sind Pakete und
 Crates.

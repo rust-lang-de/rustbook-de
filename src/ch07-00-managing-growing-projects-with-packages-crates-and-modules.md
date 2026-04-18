@@ -1,4 +1,4 @@
-# Pakete (packages), Crates und Module
+# Pakete, Crates und Module
 
 Wenn du große Programme schreibst, wird die Organisation deines Codes immer
 wichtiger. Durch die Gruppierung verwandter Funktionen und die Trennung von

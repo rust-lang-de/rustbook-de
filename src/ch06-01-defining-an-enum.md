@@ -1,4 +1,4 @@
-## Eine Aufzählung (enum) definieren
+## Eine Aufzählung definieren
 
 Während Strukturen (structs) eine Möglichkeit bieten, zusammengehörige Felder
 und Daten zu gruppieren, wie ein `Rectangle` mit seiner `width` und `height`,

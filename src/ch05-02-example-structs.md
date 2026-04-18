@@ -1,4 +1,4 @@
-## Beispielprogramm mit Strukturen (structs)
+## Beispielprogramm mit Strukturen
 
 Um besser zu verstehen, wann wir Strukturen verwenden können, schreiben wir ein
 Programm, das die Fläche eines Rechtecks berechnet. Wir beginnen mit einzelnen
