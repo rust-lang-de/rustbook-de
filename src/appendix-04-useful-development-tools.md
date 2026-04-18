@@ -167,7 +167,7 @@ eingeblendete Fehlermeldungen erhalten.
 
 [appendix-e]: appendix-05-editions.html
 [clippy]: https://github.com/rust-lang/rust-clippy
-[lsp]: http://langserver.org/
+[lsp]: https://langserver.org/
 [rustfmt]: https://github.com/rust-lang/rustfmt
 [rust-analyzer]: https://rust-analyzer.github.io
 [vscode]: https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer

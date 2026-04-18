@@ -1,10 +1,10 @@
 ## Crates auf crates.io veröffentlichen
 
 Wir haben Pakete von [crates.io][crates] als Abhängigkeiten (dependencies)
-unseres Projekts verwendet. Du kannst deinen Programmcode jedoch auch für
-andere Personen freigeben, indem du eigene Pakete veröffentlichst. Die
-Registrierung von Crates auf [crates.io][crates] verteilt den Quellcode deiner
-Pakete, daher wird primär Open Source Programmcode gehostet.
+unseres Projekts verwendet. Du kannst deinen Programmcode jedoch auch für andere
+Personen freigeben, indem du eigene Pakete veröffentlichst. Die Registrierung
+von Crates auf crates.io verteilt den Quellcode deiner Pakete, daher wird primär
+Open Source Programmcode gehostet.
 
 Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern,
 ihr veröffentlichtes Paket zu finden und zu verwenden. Wir werden nun über
@@ -399,10 +399,10 @@ sie intern strukturiert sind und ob sich ihre interne Struktur von der
 
 Bevor man eine Crate veröffentlichen kann, muss man einen Account auf
 [crates.io][crates] erstellen, um ein API-Token zu erhalten. Besuche dazu die
-Homepage auf [crates.io][crates] und melde dich über einen GitHub-Account an.
-(Derzeit ist ein GitHub-Account eine Voraussetzung, aber die Seite wird
-möglicherweise in Zukunft andere Wege anbieten, um einen Account zu erstellen.)
-Sobald du angemeldet bist, gehe zu Kontoeinstellungen (account settings) auf
+Homepage auf crates.io und melde dich über einen GitHub-Account an. (Derzeit ist
+ein GitHub-Account eine Voraussetzung, aber die Seite wird möglicherweise in
+Zukunft andere Wege anbieten, um einen Account zu erstellen.) Sobald du
+angemeldet bist, gehe zu Kontoeinstellungen (account settings) auf
 [https://crates.io/me/][crates-me] und erhalte deinen API-Schlüssel. Rufe
 anschließend das Kommando `cargo login` mit deinem API-Schlüssel auf:
 
@@ -413,9 +413,8 @@ abcdefghijklmnopqrstuvwxyz012345
 
 Dieses Kommando informiert Cargo über dein API-Token und speichert es lokal in
 _~/.cargo/credentials.toml_. Beachte, dass dieses Token ein _eheimnis ist: Gib
-es nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem
-geteils hast, solltest du es widerrufen und ein neues Token auf
-[crates.io][crates] erzeugen.
+es nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem geteils
+hast, solltest du es widerrufen und ein neues Token auf crates.io erzeugen.
 
 ### Metadaten zu einer neuen Crate hinzufügen
 
@@ -425,13 +424,13 @@ der Datei _Cargo.toml_ der Crate hinzufügen.
 
 Deine Crate benötigt einen eindeutigen Namen. Während du vor Ort an einer Crate
 arbeitest, kannst du eine Crate beliebig benennen. Allerdings werden Crate-Namen
-auf [crates.io][crates] nach Verfügbarkeit vergeben. Sobald ein Crate-Name
-vergeben ist, kann niemand mehr eine Crate mit diesem Namen veröffentlichen.
-Suche vor dem Versuch, eine Crate zu veröffentlichen, nach dem Namen, den du
-verwenden möchtest. Wenn der Name von einer anderen Crate verwendet wurde, wirst
-du einen anderen Namen suchen müssen und das Feld `name` in der Datei
-_Cargo.toml_ im Abschnitt `[package]` bearbeiten, um den neuen Namen für die
-Veröffentlichung zu verwenden:
+auf crates.io nach Verfügbarkeit vergeben. Sobald ein Crate-Name vergeben ist,
+kann niemand mehr eine Crate mit diesem Namen veröffentlichen. Suche vor dem
+Versuch, eine Crate zu veröffentlichen, nach dem Namen, den du verwenden
+möchtest. Wenn der Name von einer anderen Crate verwendet wurde, wirst du einen
+anderen Namen suchen müssen und das Feld `name` in der Datei _Cargo.toml_ im
+Abschnitt `[package]` bearbeiten, um den neuen Namen für die Veröffentlichung zu
+verwenden:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -512,15 +511,15 @@ verwenden können.
 Nachdem man einen Account erstellt, den API-Token gespeichert, einen Namen für
 seine Crate ausgewählt und die erforderlichen Metadaten angegeben hat, kann man
 sie veröffentlichen! Durch das Veröffentlichen einer Crate wird eine bestimmte
-Version auf [crates.io][crates] hochgeladen, damit andere sie verwenden können.
+Version auf crates.io hochgeladen, damit andere sie verwenden können.
 
 Sei vorsichtig, da eine Veröffentlichung _dauerhaft_ ist. Die Version kann
 niemals überschrieben und der Programmcode nur in spezielle Fällen gelöscht
 werden. Ein Hauptziel von crates.io ist es, als permanentes Archiv von Code zu
-fungieren, sodass alle Projekte die erstellt werden und von Crates aus
-[crates.io][crates] abhängen weiter funktionieren werden. Das Zulassen von
-Versionslöschungen würde das Erreichen dieses Ziels unmöglich machen. Die Anzahl
-der Crate-Versionen, die man veröffentlichen kann, ist jedoch unbegrenzt.
+fungieren, sodass alle Projekte die erstellt werden und von Crates aus crates.io
+abhängen weiter funktionieren werden. Das Zulassen von Versionslöschungen würde
+das Erreichen dieses Ziels unmöglich machen. Die Anzahl der Crate-Versionen, die
+man veröffentlichen kann, ist jedoch unbegrenzt.
 
 Rufe `cargo publish` erneut auf. Diesmal sollte es funktionieren:
 
