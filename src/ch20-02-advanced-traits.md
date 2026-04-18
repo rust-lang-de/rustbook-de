@@ -481,7 +481,7 @@ Diese Ausgabe ist nicht das, was wir wollten. Wir wollen die Funktion
 implementiert haben, sodass der Code `Ein Hundebaby wird Welpe genannt` ausgibt.
 Die Technik der Angabe des Trait-Namens, die wir in Listing 20-19 verwendet
 haben, hilft hier nicht weiter; wenn wir `main` in den Code in Listing 20-21
-ändern, erhalten wir einen Kompilierfehler.
+ändern, erhalten wir einen Compilerfehler.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -517,7 +517,7 @@ verwenden soll</span>
 Da `Animal::baby_name` keinen `self`-Parameter hat, und es andere Typen geben
 könnte, die das Trait `Animal` implementieren, kann Rust nicht herausfinden,
 welche Implementierung von `Animal::baby_name` wir wollen. Wir werden diesen
-Kompilierfehler erhalten:
+Compilerfehler erhalten:
 
 ```console
 $ cargo run

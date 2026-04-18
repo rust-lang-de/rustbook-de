@@ -170,7 +170,7 @@ fn main() {
 <span class="caption">Listing 15-9: Versuch, `MyBox<T>` auf die gleiche Weise
 wie `Box<T>` und Referenzen zu benutzen</span>
 
-Hier ist der Kompilierfehler den wir erhalten:
+Hier ist der Compilerfehler den wir erhalten:
 
 ```console
 $ cargo run

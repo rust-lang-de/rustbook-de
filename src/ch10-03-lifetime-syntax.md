@@ -53,7 +53,7 @@ deren Wert außerhalb des Gültigkeitsbereichs liegt</span>
 > Gültigkeitsbereich existiert. Auf den ersten Blick mag dies im Widerspruch
 > dazu stehen, dass Rust keine Nullwerte hat. Wenn wir jedoch versuchen, eine
 > Variable zu verwenden, bevor wir ihr einen Wert geben, erhalten wir einen
-> Kompilierfehler, der zeigt, dass Rust tatsächlich keine Nullwerte zulässt.
+> Compilerfehler, der zeigt, dass Rust tatsächlich keine Nullwerte zulässt.
 
 Der äußere Gültigkeitsbereich deklariert eine Variable `r` ohne Initialwert und
 der innere Gültigkeitsbereich deklariert eine Variable `x` mit dem Initialwert

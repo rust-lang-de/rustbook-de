@@ -223,11 +223,11 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 ```
 
 Großartig! Sie haben bestanden. Lass uns nun die neue Funktion
-`search_case_insensitive` von der Funktion `run` aufrufen. Zuerst fügen wir
-eine Konfigurationsoption zur `Config`-Struktur hinzu, um zwischen der Suche
-mit und ohne Berücksichtigung der Groß- und Kleinschreibung umzuschalten. Das
-Hinzufügen dieses Feldes führt zu Kompilierfehlern, da wir dieses Feld noch
-nirgendwo initialisiert haben:
+`search_case_insensitive` von der Funktion `run` aufrufen. Zuerst fügen wir eine
+Konfigurationsoption zur `Config`-Struktur hinzu, um zwischen der Suche mit und
+ohne Berücksichtigung der Groß- und Kleinschreibung umzuschalten. Das Hinzufügen
+dieses Feldes führt zu Compilerfehlern, da wir dieses Feld noch nirgendwo
+initialisiert haben:
 
 <span class="filename">Dateiname: src/main.rs</span>
 

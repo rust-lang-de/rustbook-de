@@ -311,7 +311,7 @@ keine unmittelbaren Fehler. Die Probleme würden sich später zeigen, wenn wir
 weiterhin versuchen würden, den ersten Wortindex mit einem leeren String zu
 verwenden. Slices machen diesen Fehler unmöglich und lassen uns viel früher
 wissen, dass wir ein Problem mit unserem Code haben. Die Slice-Variante von
-`first_word` führt zu einem Kompilierfehler:
+`first_word` führt zu einem Compilerfehler:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -339,7 +339,7 @@ fn main() {
 }
 ```
 
-Hier ist der Kompilierfehler:
+Hier ist der Compilerfehler:
 
 ```console
 $ cargo run

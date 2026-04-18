@@ -674,10 +674,10 @@ Es ist für Rust unmöglich zu bestimmen, wie viele Werte im Tupel zu ignorieren
 sind, bevor ein Wert zu `second` passt, und wie viele weitere Werte danach zu
 ignorieren sind. Dieser Code könnte bedeuten, dass wir `2` ignorieren wollen,
 `second` an `4` binden und dann `8`, `16` und `32` ignorieren wollen; oder dass
-wir `2` und `4` ignorieren wollen, `second` an `8` binden und dann `16` und
-`32` ignorieren wollen; und so weiter. Der Variablenname `second` bedeutet für
-Rust nichts Besonderes, sodass wir einen Kompilierfehler erhalten, weil das
-Verwenden von `..` an zwei Stellen wie dieser mehrdeutig ist.
+wir `2` und `4` ignorieren wollen, `second` an `8` binden und dann `16` und `32`
+ignorieren wollen; und so weiter. Der Variablenname `second` bedeutet für Rust
+nichts Besonderes, sodass wir einen Compilerfehler erhalten, weil das Verwenden
+von `..` an zwei Stellen wie dieser mehrdeutig ist.
 
 ### Abgleichsbedingungen hinzufügen
 

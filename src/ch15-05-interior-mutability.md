@@ -63,7 +63,7 @@ Borrowing-Regeln entspricht, der Compiler dies jedoch nicht verstehen und
 garantieren kann.
 
 Ähnlich wie `Rc<T>` ist `RefCell<T>` nur für die Verwendung in single-threaded
-Szenarien vorgesehen und verursacht einen Kompilierfehler, wenn man versucht, es
+Szenarien vorgesehen und verursacht einen Compilerfehler, wenn man versucht, es
 in einem multi-threaded Kontext zu verwenden. Wir werden in Kapitel 16 darüber
 sprechen, wie man die Funktionalität von `RefCell<T>` in einem multi-threaded
 Programm erhält.
@@ -128,7 +128,7 @@ zur inneren Veränderbarkeit zu erhalten, allerdings umgeht `RefCell<T>` die
 Borrowing-Regeln nicht vollständig: Der Borrow Checker im Compiler ermöglicht
 diese innere Veränderbarkeit, und die Borrowing-Regeln werden stattdessen zur
 Laufzeit überprüft. Wenn man gegen die Regeln verstößt, führt das zu `panic!`
-anstelle eines Kompilierfehlers.
+anstelle eines Compilerfehler.
 
 Lass uns ein praktisches Beispiel durcharbeiten, in dem wir `RefCell<T>`
 verwenden, um einen unveränderbaren Wert zu ändern und um herauszufinden, warum
@@ -493,7 +493,7 @@ mit `RefCell<T>` zu jedem Zeitpunkt viele unveränderbare Borrows oder eine
 veränderbare Borrow haben.
 
 Wenn wir versuchen, diese Regeln zu verletzen, erhalten wir keinen
-Kompilierfehler wie bei Referenzen, sondern die Implementierung von `RefCell<T>`
+Compilerfehler wie bei Referenzen, sondern die Implementierung von `RefCell<T>`
 wird zur Laufzeit abbrechen. Listing 15-23 zeigt eine Modifikation der
 Implementierung von `send` in Listing 15-22. Wir versuchen absichtlich, zwei
 veränderbare Borrows im selben Gültigkeitsbereich zu erstellen, um zu

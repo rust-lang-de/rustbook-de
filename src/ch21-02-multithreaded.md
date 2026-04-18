@@ -289,8 +289,8 @@ damit der Compiler uns anleiten kann, wie wir das Problem beheben können.
 
 #### Aufbau von `ThreadPool` mit compilergetriebener Entwicklung
 
-Nimm die Änderungen in Listing 21-12 an _src/main.rs_ vor und lass uns dann
-die Kompilierfehler von `cargo check` verwenden, um unsere Entwicklung
+Nimm die Änderungen in Listing 21-12 an _src/main.rs_ vor und lass uns dann die
+Compilerfehler von `cargo check` verwenden, um unsere Entwicklung
 voranzutreiben. Hier ist der erste Fehler, den wir erhalten:
 
 ```console

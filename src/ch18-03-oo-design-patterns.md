@@ -796,10 +796,9 @@ Kompilierzeitfehler verwandeln können.
 Wir werden dir zeigen, wie du das Zustandsmuster überdenken kannst, um andere
 Kompromisse zu erzielen. Anstatt die Zustände und Übergänge vollständig zu
 kapseln, sodass Außenstehende keine Kenntnis von ihnen haben, werden wir die
-Zustände in verschiedene Typen kodieren. Folglich wird Rusts
-Typprüfungssystem Versuche verhindern, Entwurfsbeiträge zu verwenden, bei denen
-nur veröffentlichte Beiträge erlaubt sind, indem ein Kompilierfehler ausgegeben
-wird.
+Zustände in verschiedene Typen kodieren. Folglich wird Rusts Typprüfungssystem
+Versuche verhindern, Entwurfsbeiträge zu verwenden, bei denen nur
+veröffentlichte Beiträge erlaubt sind, indem ein Compilerfehler ausgegeben wird.
 
 Betrachten wir den ersten Teil von `main` in Listing 18-11:
 
@@ -828,7 +827,7 @@ Text hinzuzufügen. Aber anstatt eine Methode `content` bei einem Beitragsentwur
 zu haben, die einen leeren String zurückgibt, werden wir es so einrichten, dass
 Beitragsentwürfe überhaupt keine Methode `content` haben. Wenn wir auf diese
 Weise versuchen, den Inhalt eines Beitragsentwurfs zu erhalten, erhalten wir
-einen Kompilierfehler, der uns sagt, dass die Methode nicht existiert.
+einen Compilerfehler, der uns sagt, dass die Methode nicht existiert.
 Infolgedessen wird es für uns unmöglich, versehentlich den Inhalt eines
 Beitragsentwurfs in der Produktion anzuzeigen, weil sich dieser Code nicht
 einmal kompilieren lässt. Listing 18-19 zeigt die Definition einer Struktur
@@ -879,12 +878,12 @@ Wir haben immer noch die Funktion `Post::new`, aber anstatt eine Instanz von
 `content` privat ist und es keine Funktion gibt, die `Post` zurückgibt, ist es
 im Moment nicht möglich, eine Instanz von `Post` zu erzeugen.
 
-Die Struktur `DraftPost` hat eine Methode `add_text`, sodass wir wie bisher
-Text zum `content` hinzufügen können, aber beachte, dass `DraftPost` keine
-Methode `content` definiert hat! Daher stellt das Programm jetzt sicher, dass
-alle Beiträge als Beitragsentwürfe beginnen und dass der Inhalt von
-Beitragsentwürfen nicht zur Anzeige verfügbar ist. Jeder Versuch, diese
-Einschränkungen zu umgehen, führt zu einem Kompilierfehler.
+Die Struktur `DraftPost` hat eine Methode `add_text`, sodass wir wie bisher Text
+zum `content` hinzufügen können, aber beachte, dass `DraftPost` keine Methode
+`content` definiert hat! Daher stellt das Programm jetzt sicher, dass alle
+Beiträge als Beitragsentwürfe beginnen und dass der Inhalt von Beitragsentwürfen
+nicht zur Anzeige verfügbar ist. Jeder Versuch, diese Einschränkungen zu
+umgehen, führt zu einem Compilerfehler.
 
 Wie bekommen wir also einen veröffentlichten Beitrag? Wir wollen die Regel
 durchsetzen, dass ein Beitragsentwurf geprüft und genehmigt werden muss, bevor
@@ -951,12 +950,12 @@ Aufrufen von `request_review` auf `DraftPost` erzeugt wird, und eine Methode
 verwandelt</span>
 
 Die Methoden `request_review` und `approve` übernehmen die Eigentümerschaft von
-`self`, wodurch die Instanzen `DraftPost` und `PendingReviewPost` verbraucht
-und in einen `PendingReviewPost` bzw. einen veröffentlichten `Post` umgewandelt
+`self`, wodurch die Instanzen `DraftPost` und `PendingReviewPost` verbraucht und
+in einen `PendingReviewPost` bzw. einen veröffentlichten `Post` umgewandelt
 werden. Auf diese Weise werden wir keine `DraftPost`-Instanzen mehr haben,
 nachdem wir `request_review` darauf aufgerufen haben, und so weiter. Die
 `PendingReviewPost`-Struktur hat keine Methode `content` definiert, sodass der
-Versuch, ihren Inhalt zu lesen, zu einem Kompilierfehler führt, wie bei
+Versuch, ihren Inhalt zu lesen, zu einem Compilerfehler führt, wie bei
 `DraftPost`. Da der einzige Weg, eine veröffentlichte `Post`-Instanz zu
 erhalten, die eine Methode `content` definiert hat, der Aufruf der Methode
 `approve` auf einem `PendingReviewPost` ist, und der einzige Weg, einen

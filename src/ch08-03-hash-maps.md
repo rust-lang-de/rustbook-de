@@ -120,7 +120,7 @@ let field_value = String::from("Blau");
 let mut map = HashMap::new();
 map.insert(field_name, field_value);
 // field_name und field_value sind nach diesem Zeitpunkt ungültig.
-// Versuche, sie zu benutzen und beobachte, welchen Kompilierfehler du erhältst!
+// Versuche, sie zu benutzen und beobachte, welchen Compilerfehler du erhältst!
 ```
 
 <span class="caption">Listing 8-22: Zeigt, dass Schlüssel und Werte nach dem

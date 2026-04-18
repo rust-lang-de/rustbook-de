@@ -68,7 +68,7 @@ error: could not compile `patterns` (bin "patterns") due to 1 previous error
 ```
 
 Da wir nicht jeden gültigen Wert mit dem Muster `Some(x)` abgedeckt haben (und
-auch nicht abdecken konnten!), erzeugt Rust zu Recht einen Kompilierfehler.
+auch nicht abdecken konnten!), erzeugt Rust zu Recht einen Compilerfehler.
 
 Wenn wir ein abweisbares Muster haben, obwohl ein unabweisbares Muster benötigt
 wird, können wir den Code, der das Muster verwendet, korrigieren: Anstatt `let`

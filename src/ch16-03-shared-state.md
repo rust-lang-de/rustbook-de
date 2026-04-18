@@ -117,10 +117,10 @@ sehen, dass wir den inneren `i32` in 6 ändern konnten.
 
 Versuchen wir nun, einen Wert zwischen mehreren Threads mit `Mutex<T>` zu
 teilen. Wir starten 10 Threads und lassen sie jeweils einen Zählerwert um 1
-erhöhen, sodass der Zähler von 0 auf 10 geht. Das Beispiel in Listing 16-13
-wird einen Kompilierfehler haben und wir werden diesen Fehler verwenden, um mehr
-über die Verwendung von `Mutex<T>` zu erfahren und darüber, wie Rust uns hilft,
-ihn korrekt zu verwenden.
+erhöhen, sodass der Zähler von 0 auf 10 geht. Das Beispiel in Listing 16-13 wird
+einen Compilerfehler haben und wir werden diesen Fehler verwenden, um mehr über
+die Verwendung von `Mutex<T>` zu erfahren und darüber, wie Rust uns hilft, ihn
+korrekt zu verwenden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -201,7 +201,7 @@ error: could not compile `shared-state` (bin "shared-state") due to 1 previous e
 Die Fehlermeldung besagt, dass der Wert `counter` in der vorherigen Iteration
 der Schleife verschoben wurde. Rust sagt uns, dass wir die Eigentümerschaft von
 `counter` nicht in mehrere Threads verschieben können. Lass uns den
-Kompilierfehler mit einer Mehrfacheigentums-Methode beheben, die wir in Kapitel
+Compilerfehler mit einer Mehrfacheigentums-Methode beheben, die wir in Kapitel
 15 besprochen haben.
 
 #### Mehrfacheigentum mit mehreren Threads

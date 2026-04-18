@@ -327,8 +327,8 @@ Inneren, aber der Haupt-Thread räumt `v` sofort auf, indem er die Funktion
 Thread dann mit der Ausführung beginnt, ist `v` nicht mehr gültig, sodass eine
 Referenz darauf ebenfalls ungültig ist. Oh nein!
 
-Um den Kompilierfehler in Listing 16-3 zu beheben, können wir die Hinweise
-der Fehlermeldung verwenden:
+Um den Compilerfehler in Listing 16-3 zu beheben, können wir die Hinweise der
+Fehlermeldung verwenden:
 
 ```text
 help: to force the closure to take ownership of `v` (and any other referenced variables), use the `move` keyword
@@ -369,7 +369,7 @@ verwenden. Diese Lösung wird jedoch nicht funktionieren, weil das, was Listing
 16-4 versucht, aus einem anderen Grund nicht erlaubt ist. Wenn wir dem Closure
 `move` hinzufügen, würden wir `v` in die Umgebung des Closures verschieben, und
 wir könnten im Haupt-Thread nicht mehr `drop` darauf aufrufen. Wir würden
-stattdessen diesen Kompilierfehler erhalten:
+stattdessen diesen Compilerfehler erhalten:
 
 ```console
 $ cargo run

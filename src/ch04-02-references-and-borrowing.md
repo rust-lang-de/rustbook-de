@@ -331,8 +331,8 @@ niemals hängende Referenzen sein können: Wenn du eine Referenz auf Daten hast,
 stellt der Compiler sicher, dass die Daten nicht den Gültigkeitsbereich
 verlassen, bevor die Referenz auf die Daten dies tut.
 
-Versuchen wir, eine hängende Referenz zu erstellen, um zu sehen wie Rust das
-mit einem Kompilierfehler verhindert:
+Versuchen wir, eine hängende Referenz zu erstellen, um zu sehen wie Rust das mit
+einem Compilerfehler verhindert:
 
 <span class="filename">Dateiname: src/main.rs</span>
 

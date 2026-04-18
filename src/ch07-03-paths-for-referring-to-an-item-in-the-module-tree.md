@@ -124,8 +124,7 @@ For more information about this error, try `rustc --explain E0603`.
 error: could not compile `restaurant` (lib) due to 2 previous errors
 ```
 
-<span class="caption">Listing 7-4: Kompilierfehler im Code in Listing
-7-3</span>
+<span class="caption">Listing 7-4: Compilerfehler im Code in Listing 7-3</span>
 
 Die Fehlermeldungen besagen, dass das Modul `hosting` privat ist. Mit anderen
 Worten, wir haben die korrekten Pfade für das Modul `hosting` und die Funktion
@@ -182,8 +181,8 @@ mod front_of_house {
 <span class="caption">Listing 7-5: Deklarieren des Moduls `hosting` als
 `pub`, um es von `eat_at_restaurant` aus zu benutzen</span>
 
-Leider führt der Code in Listing 7-5 immer noch zu Kompilierfehlern, wie
-Listing 7-6 zeigt.
+Leider führt der Code in Listing 7-5 immer noch zu Compilerfehlern, wie Listing
+7-6 zeigt.
 
 ```console
 $ cargo build
@@ -216,8 +215,7 @@ For more information about this error, try `rustc --explain E0603`.
 error: could not compile `restaurant` (lib) due to 2 previous errors
 ```
 
-<span class="caption">Listing 7-6: Kompilierfehler im Code in Listing
-7-5</span>
+<span class="caption">Listing 7-6: Compilerfehler im Code in Listing 7-5</span>
 
 Was ist passiert? Das Hinzufügen des Schlüsselworts `pub` vor `mod hosting`
 macht das Modul öffentlich. Wenn wir auf `front_of_house` zugreifen können,

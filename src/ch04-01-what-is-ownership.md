@@ -524,7 +524,7 @@ Rust lässt uns einen Typ nicht mit dem Trait `Copy` annotieren, wenn der Typ
 oder einer seiner Teile das Trait `Drop` implementiert. Wenn der Typ eine
 Sonderbehandlung benötigt, wenn der Wert den Gültigkeitsbereich verlässt und wir
 die Annotation `Copy` zu diesem Typ hinzufügen, erhalten wir einen
-Kompilierfehler. Um zu erfahren, wie du die `Copy`-Annotation zu deinem Typ
+Compilerfehler. Um zu erfahren, wie du die `Copy`-Annotation zu deinem Typ
 hinzufügen kannst, siehe [„Ableitbare Traits“][derivable-traits] in Anhang C.
 
 Welche Typen unterstützen also `Copy`? Du kannst die Dokumentation für einen
@@ -583,10 +583,10 @@ fn makes_copy(some_integer: i32) { // some_integer kommt in den Gültigkeitsbere
 Eigentümerschaft und Gültigkeitsbereich</span>
 
 Wenn wir versuchen würden, `s` nach dem Aufruf von `takes_ownership` zu
-verwenden, würde Rust einen Kompilierfehler anzeigen. Diese statischen
-Prüfungen schützen uns vor Fehlern. Versuche, weiteren Code zu `main`
-hinzuzufügen, der `s` und `x` verwendet, um zu sehen, wo du sie verwenden
-kannst und wo die Eigentumsregeln dich daran hindern.
+verwenden, würde Rust einen Compilerfehler anzeigen. Diese statischen Prüfungen
+schützen uns vor Fehlern. Versuche, weiteren Code zu `main` hinzuzufügen, der
+`s` und `x` verwendet, um zu sehen, wo du sie verwenden kannst und wo die
+Eigentumsregeln dich daran hindern.
 
 ### Rückgabewerte und Gültigkeitsbereich
 
