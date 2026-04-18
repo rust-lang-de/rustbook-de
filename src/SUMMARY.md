@@ -114,7 +114,7 @@
   - [Mustersyntax](ch19-03-pattern-syntax.md)
 
 - [Fortgeschrittene Sprachelemente](ch20-00-advanced-features.md)
-  - [Unsicheres (unsafe) Rust](ch20-01-unsafe-rust.md)
+  - [Unsafe Rust](ch20-01-unsafe-rust.md)
   - [Fortgeschrittene Traits](ch20-02-advanced-traits.md)
   - [Fortgeschrittene Typen](ch20-03-advanced-types.md)
   - [Erweiterte Funktionen und Closures](ch20-04-advanced-functions-and-closures.md)

@@ -11,7 +11,7 @@ Funktionen von Rust kennst.
 
 In diesem Kapitel werden wir behandeln:
 
-- Unsicheres Rust: Wie kann man einige der Garantien von Rust ausschalten und
+- Unsafe Rust: Wie kann man einige der Garantien von Rust ausschalten und
   Verantwortung für das manuelle Aufrechterhalten dieser Garantien übernehmen?
 - Fortgeschrittene Traits: Assoziierte Typen, Standardtypparameter, voll
   qualifizierte Syntax, Supertraits und das Newtype-Muster in Bezug auf Traits

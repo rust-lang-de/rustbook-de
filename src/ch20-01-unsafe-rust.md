@@ -1,51 +1,50 @@
-## Unsicheres (unsafe) Rust
+## Unsafe Rust
 
 Bei allem Code, den wir bisher besprochen haben, wurden Rusts
-Speichersicherheitsgarantien zur Kompilierzeit erzwungen. Allerdings ist in
-Rust eine zweite Sprache versteckt, die diese Speichersicherheitsgarantien
-nicht erzwingt: Sie heißt _unsicheres Rust_ (unsafe Rust) und funktioniert
-genau wie das normale Rust, gibt uns aber zusätzliche Superkräfte.
+Speichersicherheitsgarantien zur Kompilierzeit erzwungen. Allerdings ist in Rust
+eine zweite Sprache versteckt, die diese Speichersicherheitsgarantien nicht
+erzwingt: Sie heißt _unsafe Rust_ und funktioniert genau wie normales Rust, gibt
+uns aber zusätzliche Superkräfte.
 
-Unsicheres Rust existiert, weil die statische Analyse von Natur aus konservativ
-ist. Wenn der Compiler versucht festzustellen, ob der Code die Garantien
-einhält oder nicht, ist es besser für ihn, einige gültige Programme
-zurückzuweisen, als einige ungültige Programme zu akzeptieren. Obwohl der Code
-_möglicherweise_ in Ordnung ist, wird der Rust-Compiler den Code ablehnen, wenn
-er nicht genügend Informationen hat, um sicher zu sein. In diesen Fällen kannst
-du unsicheren Code verwenden, um dem Compiler zu sagen: „Vertraue mir, ich
-weiß, was ich tue.“ Sei jedoch gewarnt, dass du unsicheres Rust auf eigenes
-Risiko verwendest: Wenn du unsicheren Code falsch verwendest, können Probleme
-aufgrund von Speicherunsicherheiten auftreten, z.B. Dereferenzierung von
-Null-Zeigern.
+Unsafe Rust existiert, weil die statische Analyse von Natur aus konservativ ist.
+Wenn der Compiler versucht festzustellen, ob der Code die Garantien einhält oder
+nicht, ist es besser für ihn, einige gültige Programme zurückzuweisen, als
+einige ungültige Programme zu akzeptieren. Obwohl der Code _möglicherweise_ in
+Ordnung ist, wird der Rust-Compiler den Code ablehnen, wenn er nicht genügend
+Informationen hat, um sicher zu sein. In diesen Fällen kannst du unsicheren Code
+verwenden, um dem Compiler zu sagen: „Vertraue mir, ich weiß, was ich tue.“ Sei
+jedoch gewarnt, dass du unsafe Rust auf eigenes Risiko verwendest: Wenn du
+unsicheren Code falsch verwendest, können Probleme aufgrund von
+Speicherunsicherheiten auftreten, z.B. Dereferenzierung von Null-Zeigern.
 
-Ein weiterer Grund, warum Rust ein unsicheres zweites Ich hat, ist, dass die
+Ein weiterer Grund, warum Rust ein unsafe zweites Ich hat, ist, dass die
 zugrunde liegende Computer-Hardware von Natur aus unsicher ist. Wenn Rust dich
 keine unsicheren Operationen durchführen ließe, könntest du bestimmte Aufgaben
-nicht ausführen. Rust muss es dir ermöglichen, Low-Level-Systemprogrammierung
-zu machen, z.B. direkt mit dem Betriebssystem zu interagieren oder sogar dein
-eigenes Betriebssystem zu schreiben. Arbeiten mit
-Low-Level-Systemprogrammierung ist eines der Ziele der Sprache. Lass uns
-untersuchen, was wir mit unsicherem Rust tun können und wie wir es tun können.
+nicht ausführen. Rust muss es dir ermöglichen, Low-Level-Systemprogrammierung zu
+machen, z.B. direkt mit dem Betriebssystem zu interagieren oder sogar dein
+eigenes Betriebssystem zu schreiben. Arbeiten mit Low-Level-Systemprogrammierung
+ist eines der Ziele der Sprache. Lass uns untersuchen, was wir mit unsafe Rust
+tun können und wie wir es tun können.
 
-### Unsichere Superkräfte einsetzen
+### Unsafe-Superkräfte einsetzen
 
-Um auf unsicheres Rust umzuschalten, verwendest du das Schlüsselwort `unsafe`
-und startest dann einen neuen Block, der den unsicheren Code enthält. In
-unsicherem Rust kannst du fünf Aktionen ausführen, die du in sicherem Rust
-nicht ausführen kannst, die wir _unsichere Superkräfte_ nennen. Zu diesen
-Superkräften gehören folgende Fähigkeiten:
+Um auf unsafe Rust umzuschalten, verwendest du das Schlüsselwort `unsafe` und
+startest dann einen neuen Block, der den unsicheren Code enthält. In unsafe Rust
+kannst du fünf Aktionen ausführen, die du in sicherem Rust nicht ausführen
+kannst, die wir _Unsafe-Superkräfte_ nennen. Zu diesen Superkräften gehören
+folgende Fähigkeiten:
 
 1. Dereferenzieren eines Rohzeigers
-2. Aufrufen einer unsicheren Funktion oder Methode
+2. Aufrufen einer unsicher Funktion oder Methode
 3. Zugreifen auf oder Ändern einer veränderbaren statischen Variablen
-4. Implementieren eines unsicheren Traits
+4. Implementieren eines unsafe Traits
 5. Zugreifen auf Feldern in `union`
 
 Es ist wichtig zu verstehen, dass `unsafe` weder den Borrow Checker abschaltet
 noch andere Sicherheitsprüfungen von Rust deaktiviert: Wenn du eine Referenz in
-einem unsicheren Code verwendest, wird diese trotzdem geprüft. Das Schlüsselwort
+einem Unsafe-Code verwendest, wird diese trotzdem geprüft. Das Schlüsselwort
 `unsafe` gibt dir nur Zugriff auf diese fünf Funktionalitäten, die dann vom
-Compiler nicht auf Speichersicherheit geprüft werden. In einem unsicheren Block
+Compiler nicht auf Speichersicherheit geprüft werden. In einem Unsafe-Block
 erhältst du immer noch ein gewisses Maß an Sicherheit.
 
 Darüber hinaus bedeutet `unsafe` nicht, dass der Code innerhalb des Blocks
@@ -55,35 +54,35 @@ sicherstellst, dass der Code innerhalb eines `unsafe`-Blocks auf gültige Weise
 auf den Speicher zugreifen wird.
 
 Menschen sind fehlbar und Fehler werden passieren, aber wenn du verlangst, dass
-diese fünf unsicheren Operationen innerhalb von Blöcken mit dem Vermerk
-`unsafe` durchgeführt werden müssen, weißt du, dass alle Fehler im Zusammenhang
-mit der Speichersicherheit innerhalb eines `unsafe`-Blocks liegen müssen. Halte
+diese fünf unsichere Operationen innerhalb von Blöcken mit dem Vermerk `unsafe`
+durchgeführt werden müssen, weißt du, dass alle Fehler im Zusammenhang mit der
+Speichersicherheit innerhalb eines `unsafe`-Blocks liegen müssen. Halte
 `unsafe`-Blöcke klein; du wirst später dankbar sein, wenn du Speicherfehler
 untersuchst.
 
 Um unsicheren Code so weit wie möglich zu isolieren, ist es am besten, solchen
 Code in eine sichere Abstraktion einzupacken und eine sichere API
 bereitzustellen, auf die wir später im Kapitel eingehen werden, wenn wir
-unsichere Funktionen und Methoden untersuchen. Teile der Standardbibliothek
-sind als sichere Abstraktionen über unsicheren, geprüften Code implementiert.
-Das Einpacken von unsicherem Code in eine sichere Abstraktion verhindert, dass
-sich die Verwendung von `unsafe` auf alle Stellen auswirkt, an denen du oder
-deine Benutzer die mit `unsafe`-Code implementierte Funktionalität verwenden
-möchtest, da das Verwenden einer sicheren Abstraktion sicher ist.
+unsichere Funktionen und Methoden untersuchen. Teile der Standardbibliothek sind
+als sichere Abstraktionen über unsicheren, geprüften Code implementiert. Das
+Einpacken von unsicherem Code in eine sichere Abstraktion verhindert, dass sich
+die Verwendung von `unsafe` auf alle Stellen auswirkt, an denen du oder deine
+Benutzer die mit `unsafe`-Code implementierte Funktionalität verwenden möchtest,
+da das Verwenden einer sicheren Abstraktion sicher ist.
 
-Betrachten wir der Reihe nach jede der fünf unsicheren Superkräfte. Wir werden
-uns auch einige Abstraktionen ansehen, die eine sichere Schnittstelle zu
-unsicheren Codes bieten.
+Betrachten wir der Reihe nach jede der fünf Unsafe-Superkräfte. Wir werden uns
+auch einige Abstraktionen ansehen, die eine sichere Schnittstelle zu unsicheren
+Codes bieten.
 
 ### Dereferenzieren eines Rohzeigers
 
-Im Abschnitt [„Hängende Referenzen“][dangling-references] in Kapitel 4 haben
-wir erwähnt, dass der Compiler sicherstellt, dass Referenzen immer gültig sind.
-Unsicheres Rust hat zwei neue Typen namens _Rohzeiger_ (raw pointers), die
-ähnlich wie Referenzen sind. Wie bei Referenzen können Rohzeiger unveränderbar
-oder veränderbar sein und werden als `_const T` bzw. `_mut T` geschrieben. Das
-Sternchen ist nicht der Dereferenzierungsoperator (dereference operator); es
-ist Teil des Typnamens. Im Zusammenhang mit Rohzeigern bedeutet _unveränderbar_
+Im Abschnitt [„Hängende Referenzen“][dangling-references] in Kapitel 4 haben wir
+erwähnt, dass der Compiler sicherstellt, dass Referenzen immer gültig sind.
+Unsafe Rust hat zwei neue Typen namens _Rohzeiger_ (raw pointers), die ähnlich
+wie Referenzen sind. Wie bei Referenzen können Rohzeiger unveränderbar oder
+veränderbar sein und werden als `_const T` bzw. `_mut T` geschrieben. Das
+Sternchen ist nicht der Dereferenzierungsoperator (dereference operator); es ist
+Teil des Typnamens. Im Zusammenhang mit Rohzeigern bedeutet _unveränderbar_
 (immutable), dass der Zeiger nach der Dereferenzierung nicht direkt zugewiesen
 werden kann.
 
@@ -114,9 +113,9 @@ let r2 = &raw mut num;
 <span class="caption">Listing 20-1: Erstellen von Rohzeigern aus
 Referenzen</span>
 
-Beachte, dass wir das Schlüsselwort `unsafe` in diesem Code nicht verwenden.
-Wir können Rohzeiger in sicherem Code erzeugen; wir können nur keine Rohzeiger
-außerhalb eines unsicheren Blocks dereferenzieren, wie du gleich sehen wirst.
+Beachte, dass wir das Schlüsselwort `unsafe` in diesem Code nicht verwenden. Wir
+können Rohzeiger in sicherem Code erzeugen; wir können nur keine Rohzeiger
+außerhalb eines Unsafe-Blocks dereferenzieren, wie du gleich sehen wirst.
 
 Wir haben Rohzeiger mit Hilfe des Operators `&raw` erstellt: `&raw const num`
 erzeugt einen unveränderbaren Rohzeiger `*const i32`, und `&raw mut num`
@@ -189,16 +188,16 @@ verwendet.
 
 ### Aufrufen einer unsicheren Funktion oder Methode
 
-Die zweite Art von Operationen, die du in einem unsicheren Block ausführen
-kannst, sind Aufrufe von unsicheren Funktionen. Unsichere Funktionen und
-Methoden sehen genau wie reguläre Funktionen und Methoden aus, aber sie haben
-ein zusätzliches `unsafe` vor dem Rest der Definition. Das Schlüsselwort
-`unsafe` weist in diesem Zusammenhang darauf hin, dass die Funktion
-Anforderungen hat, die wir einhalten müssen, wenn wir diese Funktion aufrufen,
-denn Rust kann nicht garantieren, dass wir diese Anforderungen erfüllt haben.
-Indem wir eine unsichere Funktion innerhalb eines `unsafe`-Blocks aufrufen,
-sagen wir, dass wir die Dokumentation dieser Funktion gelesen haben und wir die
-Verantwortung für die Einhaltung der Verträge der Funktion übernehmen.
+Die zweite Art von Operationen, die du in einem Unsafe-Block ausführen kannst,
+sind Aufrufe von unsicheren Funktionen. Unsichere Funktionen und Methoden sehen
+genau wie reguläre Funktionen und Methoden aus, aber sie haben ein zusätzliches
+`unsafe` vor dem Rest der Definition. Das Schlüsselwort `unsafe` weist in diesem
+Zusammenhang darauf hin, dass die Funktion Anforderungen hat, die wir einhalten
+müssen, wenn wir diese Funktion aufrufen, denn Rust kann nicht garantieren, dass
+wir diese Anforderungen erfüllt haben. Indem wir eine unsichere Funktion
+innerhalb eines `unsafe`-Blocks aufrufen, sagen wir, dass wir die Dokumentation
+dieser Funktion gelesen haben und wir die Verantwortung für die Einhaltung der
+Verträge der Funktion übernehmen.
 
 Hier ist eine unsichere Funktion namens `dangerous`, die in ihrem Rumpf nichts
 tut:
@@ -626,12 +625,12 @@ vorzuziehen, die in Kapitel 16 besprochenen Nebenläufigkeitstechniken und
 Thread-sicheren, intelligenten Zeiger zu verwenden, damit der Compiler prüft, ob
 der Datenzugriff von verschiedenen Threads sicher ist.
 
-### Implementieren eines unsicheren Traits
+### Implementieren eines unsafe Traits
 
-Wir können `unsafe` zum Implementieren eines unsicheren Traits verwenden. Ein
-Trait ist unsicher, wenn mindestens eine ihrer Methoden eine Invariante hat, die
-der Compiler nicht verifizieren kann. Wir können erklären, dass ein Trait
-`unsafe` ist, indem wir das Schlüsselwort `unsafe` vor `trait` einfügen und die
+Wir können `unsafe` zum Implementieren eines unsafe Traits verwenden. Ein Trait
+ist unsicher, wenn mindestens eine ihrer Methoden eine Invariante hat, die der
+Compiler nicht verifizieren kann. Wir können erklären, dass ein Trait `unsafe`
+ist, indem wir das Schlüsselwort `unsafe` vor `trait` einfügen und die
 Implementierung des Traits ebenfalls mit `unsafe` markieren, wie in Listing
 20-12 gezeigt.
 
@@ -647,8 +646,8 @@ unsafe impl Foo for i32 {
 # fn main() {}
 ```
 
-<span class="caption">Listing 20-12: Definition und Implementierung eines
-unsicheren Traits</span>
+<span class="caption">Listing 20-12: Definition und Implementierung eines unsafe
+Traits</span>
 
 Indem wir `unsafe impl` verwenden, versprechen wir, dass wir die Invarianten
 aufrechterhalten, die der Compiler nicht verifizieren kann.
@@ -767,7 +766,7 @@ es einfacher, die Quelle von Problemen aufzuspüren, wenn sie auftreten. Wann
 immer du unsicheren Code schreibst, kannst du Miri verwenden, um dich zu
 vergewissern, dass der von dir geschriebene Code die Rust-Regeln einhält.
 
-Wenn du dich eingehender mit der effektiven Arbeit mit unsicherem Rust befassen
+Wenn du dich eingehender mit der effektiven Arbeit mit unsafe Rust befassen
 möchtest, lies den offiziellen Rust-Leitfaden zum Thema `unsafe`:
 [Rustonomicon][nomicon]
 

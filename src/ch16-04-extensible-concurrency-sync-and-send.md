@@ -62,11 +62,11 @@ Traits haben sie noch nicht einmal irgendwelche Methoden, um sie zu
 implementieren. Sie sind nur nützlich, um Invarianten in Bezug auf die
 Nebenläufigkeit zu erzwingen.
 
-Das manuelle Implementieren dieser Traits beinhaltet das Schreiben von
-unsicherem Rust-Code. Wir werden über das Verwenden von unsicherem Rust-Code in
-Kapitel 20 sprechen; für den Moment ist die wichtige Information, dass das
-Erstellen neuer nebenläufiger Typen, die nicht aus `Send`- und `Sync`-Teilen
-bestehen, sorgfältige Überlegungen erfordert, um die Sicherheitsgarantien
+Das manuelle Implementieren dieser Traits beinhaltet das Schreiben von unsafe
+Rust-Code. Wir werden über das Verwenden von unsafe Rust-Code in Kapitel 20
+sprechen; für den Moment ist die wichtige Information, dass das Erstellen neuer
+nebenläufiger Typen, die nicht aus `Send`- und `Sync`-Teilen bestehen,
+sorgfältige Überlegungen erfordert, um die Sicherheitsgarantien
 aufrechtzuerhalten. [„Das Rustonomicon“][nomicon3] enthält weitere Informationen
 über diese Garantien und wie man sie aufrechterhalten kann.
 

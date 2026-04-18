@@ -164,7 +164,7 @@ objektorientierten Programmierprinzipien, mit denen du vielleicht vertraut bist.
 **Kapitel 19** ist ein Nachschlagewerk zu Muster und Musterabgleich, einem
 mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. **Kapitel 20**
 enthält ein Sammelsurium an interessanten fortgeschrittenen Themen, darunter
-unsicheres Rust, Makros und mehr zu Lebensdauer, Traits, Typen, Funktionen und
+unsafe Rust, Makros und mehr zu Lebensdauer, Traits, Typen, Funktionen und
 Closures.
 
 In *Kapitel 21* werden wir ein Projekt abschließen, bei dem wir einen

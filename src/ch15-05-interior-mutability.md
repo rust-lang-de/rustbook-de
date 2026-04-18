@@ -4,11 +4,11 @@ Die _innere Veränderbarkeit_ (interior mutability) ist ein Entwurfsmuster in
 Rust, mit dem man Daten auch dann verändern kann, wenn unveränderbare Referenzen
 auf diese Daten vorhanden sind. Normalerweise ist diese Aktion nach den
 Borrowing-Regeln nicht zulässig. Um Daten zu verändern, verwendet das Muster
-„unsicheren Programmcode“ (`unsafe` code) innerhalb einer Datenstruktur, um
-Rusts übliche Regeln, die Veränderbarkeit und Borrowing betreffen, zu verändern.
-Unsicherer Code zeigt dem Compiler an, dass wir die Regeln manuell überprüfen,
-anstatt uns darauf zu verlassen, dass der Compiler sie für uns überprüft; wir
-werden unsicheren Code in Kapitel 20 genauer besprechen.
+„unsafe Programmcode“ innerhalb einer Datenstruktur, um Rusts übliche Regeln,
+die Veränderbarkeit und Borrowing betreffen, zu verändern. Unsafe Code zeigt dem
+Compiler an, dass wir die Regeln manuell überprüfen, anstatt uns darauf zu
+verlassen, dass der Compiler sie für uns überprüft; wir werden unsicheren Code
+in Kapitel 20 genauer besprechen.
 
 Wir können Typen verwenden, die das innere Veränderbarkeitsmuster verwenden,
 wenn wir sicherstellen können, dass die Borrowing-Regeln zur Laufzeit

@@ -85,10 +85,10 @@ verwenden:
   Fehler auftreten können, dies kann für Aufrufende hilfreich sein, um
   Programmcode zu schreiben der die verschiedenen Arten von Fehlern auf
   unterschiedliche Art behandelt.
-- **Safety:** Wenn die Funktion aufzurufen unsicher (`unsafe`) ist (wir
-  behandeln die Unsicherheit im Kapitel 20), sollte ein Abschnitt existieren,
-  in dem erläutert wird, warum die Funktion unsicher ist, und die Invarianten
-  behandelt werden die die Funktion vom Aufrufenden erwartet.
+- **Safety:** Wenn der Aufruf der Funktion unsicher (`unsafe`) ist (wir
+  behandeln Unsafe im Kapitel 20), sollte ein Abschnitt existieren, in dem
+  erläutert wird, warum die Funktion unsicher ist, und die Invarianten behandelt
+  werden die die Funktion vom Aufrufenden erwartet.
 
 Die meisten Dokumentationskommentare benötigen nicht alle Abschnitte, aber dies
 ist eine gute Checkliste um dich an die Aspekte deines Programmcodes erinnern,
