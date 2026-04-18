@@ -592,7 +592,5 @@ Wenn du bereit bist, weiterzumachen, werden wir in Rust über ein Konzept
 sprechen, das es in anderen Programmiersprachen üblicherweise _nicht_ gibt:
 Eigentümerschaft (ownership).
 
-[comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
-[quitting-after-a-correct-guess]:
-ch02-00-guessing-game-tutorial.html#beenden-nach-einer-korrekten-schätzung
+[comparing-the-guess-to-the-secret-number]: ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
+[quitting-after-a-correct-guess]: ch02-00-guessing-game-tutorial.html#beenden-nach-einer-korrekten-schätzung

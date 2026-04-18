@@ -138,9 +138,9 @@ einzugeben. Das wäre benutzerfreundlicher, als das Programm wegen eines
 Tippfehlers abzubrechen!
 
 Wenn das Programm über eine gültige Referenz verfügt, stellt der Borrow Checker
-mittels Eigentümerschafts- und Borrowing-Regeln (siehe Kapitel 4) sicher, dass
-diese Referenz und alle anderen Referenzen auf den Inhalt des Vektors gültig
-bleiben. Erinnere dich an die Regel, die besagt, dass du keine veränderbaren und
+mittels Eigentums- und Borrowing-Regeln (siehe Kapitel 4) sicher, dass diese
+Referenz und alle anderen Referenzen auf den Inhalt des Vektors gültig bleiben.
+Erinnere dich an die Regel, die besagt, dass du keine veränderbaren und
 unveränderbaren Referenzen im gleichen Gültigkeitsbereich haben kannst. Diese
 Regel trifft in Listing 8-6 zu, wo wir eine unveränderbare Referenz auf das
 erste Element in einem Vektor halten und versuchen, am Ende ein Element

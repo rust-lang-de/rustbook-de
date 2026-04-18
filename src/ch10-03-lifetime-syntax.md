@@ -173,8 +173,8 @@ fn main() {
 `longest` aufruft, um die längere von zwei String Slices zu bestimmen</span>
 
 Beachte, dass wir wollen, dass die Funktion String Slices nimmt, die Referenzen
-sind und keine Strings, weil wir nicht wollen, dass die Funktion `longest` die
-Eigentümerschaft ihrer Parameter übernimmt. Lies [„String Slices als
+sind und keine Strings, weil wir nicht wollen, dass die Funktion `longest` das
+Eigentum ihrer Parameter übernimmt. Lies [„String Slices als
 Parameter“][string-slices-as-parameters] in Kapitel 4, um mehr darüber zu
 erfahren, warum die Parameter, die wir in Listing 10-19 verwenden, die von uns
 gewünschten sind.

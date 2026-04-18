@@ -307,7 +307,7 @@ dem nächsten await-Punkt oder dem Ende des asynchronen Blocks benötigt werden.
 Anschließend wird eine entsprechende Variante in der kompilierten
 Zustandsmaschine erstellt. Jede Variante erhält den erforderlichen Zugriff auf
 die Daten, die in diesem Abschnitt des Quellcodes verwendet werden, entweder
-durch Übernahme der Eigentümerschaft an diesen Daten oder durch Erhalt einer
+durch Übernahme des Eigentums an diesen Daten oder durch Erhalt einer
 veränderbaren oder unveränderbaren Referenz darauf.
 
 So weit, so gut: Wenn wir bei der Eigentümerschaft oder den Referenzen in einem

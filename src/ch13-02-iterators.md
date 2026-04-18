@@ -121,16 +121,16 @@ verwendet wird, um festzustellen, wo sich der Iterator in der Sequenz befindet.
 Mit anderen Worten _verbraucht_ dieser Programmcode den Iterator. Jeder Aufruf
 von `next` isst ein Element des Iterators auf. Als wir die `for`-Schleife
 benutzten, mussten wir `v1_iter` nicht veränderbar machen, da dies schon hinter
-den Kulissen geschah, als die Schleife die Eigentümerschaft (ownership) von
-`v1_iter` übernahm.
+den Kulissen geschah, als die Schleife das Eigentum (ownership) an `v1_iter`
+übernahm.
 
 Merke auch, dass die Werte, die wir von den Aufrufen von `next` erhalten,
 unveränderbare Referenzen (immutable references) auf die Werte im Vektor sind.
 Die Methode `iter` erzeugt einen Iterator über unveränderbare Referenzen. Wenn
-wir einen Iterator erzeugen möchten der die Eigentümerschaft von `v1` übernimmt
-und angeeignete Werte (owned values) zurückgibt, können wir die Methode
-`into_iter` anstelle von `iter` benutzen, und wenn wir über veränderbare
-Referenzen iterieren möchten, können wir `iter_mut` statt `iter` aufrufen.
+wir einen Iterator erzeugen möchten der das Eigentum an `v1` übernimmt und
+angeeignete Werte (owned values) zurückgibt, können wir die Methode `into_iter`
+anstelle von `iter` benutzen, und wenn wir über veränderbare Referenzen
+iterieren möchten, können wir `iter_mut` statt `iter` aufrufen.
 
 ### Methoden die den Iterator verbrauchen
 
@@ -143,11 +143,11 @@ Methode `next` bei der Implementierung des Trait `Iterator` einbauen.
 
 Methoden die `next` aufrufen werden als _konsumierende Adapter_ (consuming
 adapters) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
-die Methode `sum`, sie übernimmt die Eigentümerschaft des Iterators und
-durchläuft die Elemente durch wiederholtes Aufrufen von `next`, wodurch der
-Iterator verbraucht wird. Jedes Element wird während der Iteration zu einer
-Summe hinzugefügt, die zurückgegeben wird, sobald die Iteration abgeschlossen
-ist. Listing 13-13 enthält einen Test, der die Methode `sum` veranschaulicht:
+die Methode `sum`, sie übernimmt das Eigentum am Iterators und durchläuft die
+Elemente durch wiederholtes Aufrufen von `next`, wodurch der Iterator verbraucht
+wird. Jedes Element wird während der Iteration zu einer Summe hinzugefügt, die
+zurückgegeben wird, sobald die Iteration abgeschlossen ist. Listing 13-13
+enthält einen Test, der die Methode `sum` veranschaulicht:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -172,8 +172,8 @@ ist. Listing 13-13 enthält einen Test, der die Methode `sum` veranschaulicht:
 <span class="caption">Listing 13-13: Aufruf der Methode `sum` um den Wert der
 Summe aller Elemente zu erhalten</span>
 
-Man kann `v1_iter` nach dem Aufruf von `sum` nicht verwenden, da `sum` die
-Eigentümerschaft des Iterators übernimmt, auf dem sie aufgerufen wird.
+Man kann `v1_iter` nach dem Aufruf von `sum` nicht verwenden, da `sum` das
+Eigentum am Iterators übernimmt, auf dem es aufgerufen wird.
 
 ### Methoden die andere Iteratoren erzeugen
 
@@ -331,13 +331,13 @@ mod tests {
 <span class="caption">Listing 13-16: Die Methode `filter` mit einen Closure
 benutzen, der `shoe_size` erfasst</span>
 
-Die Funktion `shoes_in_size` übernimmt die Eigentümerschaft über einen Vektor
-aus Schuhen mit der Schuhgröße als Parameter und gibt einen Vektor zurück, der
-nur Schuhe einer bestimmten Größe enthält.
+Die Funktion `shoes_in_size` übernimmt das Eigentum am Vektor aus Schuhen mit
+der Schuhgröße als Parameter und gibt einen Vektor zurück, der nur Schuhe einer
+bestimmten Größe enthält.
 
 Im Funktionsrumpf von `shoes_in_size` rufen wir `into_iter` auf, um einen
-Iterator zu erzeugen, der die Eigentümerschaft vom Vektor übernimmt. Im Anschluss
-rufen wir den `filter`-Adapter auf, um einen neuen Iterator zu erzeugen, der nur
+Iterator zu erzeugen, der das Eigentum am Vektor übernimmt. Im Anschluss rufen
+wir den `filter`-Adapter auf, um einen neuen Iterator zu erzeugen, der nur
 Elemente enthält, für die der Closure `true` zurückgibt.
 
 Der Closure erfasst den `shoe_size`-Parameter aus seiner Umgebung und vergleicht

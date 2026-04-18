@@ -59,24 +59,23 @@ Argumenten.
 In der Signatur von `area` verwenden wir `&self` anstelle von `rectangle:
 &Rectangle`. Das `&self` ist eigentlich die Abkürzung für `self: &Self`.
 Innerhalb eines `impl`-Blocks ist der Typ `Self` ein Alias für den Typ, für den
-der `impl`-Block steht. Methoden müssen einen Parameter mit dem Namen `self`
-vom Typ `Self` als ihren ersten Parameter haben, Rust lässt dich dies abkürzen,
+der `impl`-Block steht. Methoden müssen einen Parameter mit dem Namen `self` vom
+Typ `Self` als ihren ersten Parameter haben, Rust lässt dich dies abkürzen,
 indem du nur den Namen `self` an der Stelle des ersten Parameters angibst.
 Beachte, dass wir immer noch das `&` vor der Abkürzung `self` verwenden müssen,
 um anzuzeigen, dass diese Methode die Instanz `Self` ausleiht, genau wie in
-`rectangle: &Rectangle`. Methoden können die Eigentümerschaft von `self`
-übernehmen, `self` unveränderbar ausleihen, wie wir es hier getan haben, oder
-`self` veränderbar ausleihen, so wie bei jedem anderen Parameter auch.
+`rectangle: &Rectangle`. Methoden können das Eigentum an `self` übernehmen,
+`self` unveränderbar ausleihen, wie wir es hier getan haben, oder `self`
+veränderbar ausleihen, so wie bei jedem anderen Parameter auch.
 
 Wir haben hier `&self` aus dem gleichen Grund gewählt wie `&Rectangle` in der
-Funktionsvariante: Wir wollen keine Eigentümerschaft übernehmen, wir wollen die
-Daten der Struktur nur lesen, nicht schreiben. Wenn wir die Instanzdaten ändern
-wollten, müssten wir `&mut self` als ersten Parameter verwenden. Es kommt nur
-selten vor, dass eine Methode die Eigentümerschaft der Instanz übernimmt, indem
-sie `self` als ersten Parameter verwendet. Diese Technik wird typischerweise
-dann verwendet, wenn die Methode `self` in etwas anderes transformiert und man
-verhindern will, dass der Aufrufer nach der Transformation die ursprüngliche
-Instanz verwendet.
+Funktionsvariante: Wir wollen kein Eigentum übernehmen, wir wollen die Daten der
+Struktur nur lesen, nicht schreiben. Wenn wir die Instanzdaten ändern wollten,
+müssten wir `&mut self` als ersten Parameter verwenden. Es kommt nur selten vor,
+dass eine Methode das Eigentum an der Instanz übernimmt, indem sie `self` als
+ersten Parameter verwendet. Diese Technik wird typischerweise dann verwendet,
+wenn die Methode `self` in etwas anderes transformiert und man verhindern will,
+dass der Aufrufer nach der Transformation die ursprüngliche Instanz verwendet.
 
 Der Hauptgrund für Methoden gegenüber Funktionen liegt abgesehen davon, dass
 bei jeder Methodendeklaration der Typ von `self` nicht ständig wiederholt
@@ -232,12 +231,12 @@ den Typ des Parameters erkennen, indem wir uns den Code ansehen, der die Methode
 aufruft: `rect1.can_hold(&rect2)` nimmt `&rect2` entgegen, also eine
 unveränderbare Borrow von `rect2` vom Typ `Rectangle`. Das macht Sinn, da wir
 `rect2` nur lesen müssen (anstatt zu schreiben, wofür wir eine veränderbare
-Borrow bräuchten) und `main` die Eigentümerschaft an `rect2` zurückerhalten
-soll, sodass wir es nach dem Aufruf der Methode `can_hold` weiter verwenden
-können. Der Rückgabewert von `can_hold` ist ein boolescher Wert und die
-Implementierung prüft, ob Breite und Höhe von `self` jeweils größer als von
-`Rectangle` sind. Fügen wir die neue Methode `can_hold` zum Block `impl` aus
-Listing 5-13 hinzu, wie in Listing 5-15 gezeigt.
+Borrow bräuchten) und `main` das Eigentum an `rect2` zurückerhalten soll, sodass
+wir es nach dem Aufruf der Methode `can_hold` weiter verwenden können. Der
+Rückgabewert von `can_hold` ist ein boolescher Wert und die Implementierung
+prüft, ob Breite und Höhe von `self` jeweils größer als von `Rectangle` sind.
+Fügen wir die neue Methode `can_hold` zum Block `impl` aus Listing 5-13 hinzu,
+wie in Listing 5-15 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

@@ -1,16 +1,16 @@
-## Was ist Eigentümerschaft (ownership)?
+## Was ist Eigentümerschaft?
 
-_Eigentümerschaft_ ist eine Reihe von Regeln, die bestimmen, wie ein
+_Eigentümerschaft_ (ownership) ist eine Reihe von Regeln, die bestimmen, wie ein
 Rust-Programm den Speicher verwaltet. Alle Programme müssen den Arbeitsspeicher
 eines Rechners verwalten, während sie ausgeführt werden. Einige Sprachen
 verfügen über eine automatische Speicherbereinigung, die während der
-Programmausführung ständig nach nicht mehr genutztem Speicher sucht. Bei
-anderen Sprachen muss der Programmierer selbst den Speicher explizit
-reservieren und freigeben. Rust verwendet einen dritten Ansatz: Der Speicher
-wird durch ein System aus Eigentümerschaft und einer Reihe von Regeln
-verwaltet, die der Compiler überprüft. Wenn eine der Regeln verletzt wird,
-lässt sich das Programm nicht kompilieren. Keine der
-Eigentümerschaftsfunktionalitäten verlangsamt dein Programm, während es läuft.
+Programmausführung ständig nach nicht mehr genutztem Speicher sucht. Bei anderen
+Sprachen muss der Programmierer selbst den Speicher explizit reservieren und
+freigeben. Rust verwendet einen dritten Ansatz: Der Speicher wird durch ein
+System aus Eigentümerschaft und einer Reihe von Regeln verwaltet, die der
+Compiler überprüft. Wenn eine der Regeln verletzt wird, lässt sich das Programm
+nicht kompilieren. Keine der Eigentümerschaftsfunktionalitäten verlangsamt dein
+Programm, während es läuft.
 
 Da die Eigentümerschaft für viele Programmierer ein neues Konzept ist, braucht
 es etwas Zeit, sich daran zu gewöhnen. Die gute Nachricht ist, je mehr
@@ -579,8 +579,8 @@ fn makes_copy(some_integer: i32) { // some_integer kommt in den Gültigkeitsbere
   // Es passiert nichts Besonderes.
 ```
 
-<span class="caption">Listing 4-3: Funktionen mit kommentierter
-Eigentümerschaft und Gültigkeitsbereich</span>
+<span class="caption">Listing 4-3: Funktionen mit kommentiertem Eigentum und
+Gültigkeitsbereich</span>
 
 Wenn wir versuchen würden, `s` nach dem Aufruf von `takes_ownership` zu
 verwenden, würde Rust einen Compilerfehler anzeigen. Diese statischen Prüfungen
@@ -590,9 +590,9 @@ Eigentumsregeln dich daran hindern.
 
 ### Rückgabewerte und Gültigkeitsbereich
 
-Rückgabewerte können auch Eigentümerschaft übertragen. Listing 4-4 ist ein
-Beispiel für eine Funktion mit einem Rückgabewert mit ähnlichen Anmerkungen wie
-die in Listing 4-3.
+Rückgabewerte können auch das Eigentum übertragen. Listing 4-4 ist ein Beispiel
+für eine Funktion mit einem Rückgabewert mit ähnlichen Anmerkungen wie die in
+Listing 4-3.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -631,21 +631,21 @@ fn takes_and_gives_back(a_string: String) -> String { // a_string kommt in den
 }
 ```
 
-<span class="caption">Listing 4-4: Übertragen der Eigentümerschaft an Rückgabewerten</span>
+<span class="caption">Listing 4-4: Übertragen des Eigentums an
+Rückgabewerten</span>
 
-Die Eigentümerschaft an einer Variable folgt jedes Mal dem gleichen Muster: Das
-Zuweisen eines Wertes an eine andere Variable verschiebt diese. Wenn eine
-Variable, die Daten im Heap enthält, den Gültigkeitsbereich verlässt, wird der
-Wert durch `drop` aufgeräumt, es sei denn, die Eigentümerschaft wurde auf eine
-andere Variable verschoben.
+Das Eigentum an einer Variable folgt jedes Mal dem gleichen Muster: Das Zuweisen
+eines Wertes an eine andere Variable verschiebt diese. Wenn eine Variable, die
+Daten im Heap enthält, den Gültigkeitsbereich verlässt, wird der Wert durch
+`drop` aufgeräumt, es sei denn, das Eigentum wurde auf eine andere Variable
+verschoben.
 
-Dies funktioniert zwar, allerdings ist es etwas mühsam, die Eigentümerschaft zu
+Dies funktioniert zwar, allerdings ist es etwas mühsam, das Eigentum zu
 übernehmen und in jeder Funktion zurückzugeben. Was ist, wenn wir eine Funktion
-einen Wert nutzen lassen wollen, aber nicht die Eigentümerschaft übergeben
-wollen? Es ist ziemlich lästig, dass alles, was wir übergeben, auch wieder
-zurückgegeben werden muss, wenn wir es wieder verwenden wollen, zusätzlich zu
-den Daten, die sich aus dem Funktionsrumpf ergeben, die wir vielleicht auch
-zurückgeben wollen.
+einen Wert nutzen lassen wollen, aber nicht das Eigentum übergeben wollen? Es
+ist ziemlich lästig, dass alles, was wir übergeben, auch wieder zurückgegeben
+werden muss, wenn wir es wieder verwenden wollen, zusätzlich zu den Daten, die
+sich aus dem Funktionsrumpf ergeben, die wir vielleicht auch zurückgeben wollen.
 
 Rust macht es es möglich, mehrere Werte mit Hilfe eines Tupels zurückzugeben,
 wie in Listing 4-5 gezeigt.
@@ -668,13 +668,11 @@ fn calculate_length(s: String) -> (String, usize) {
 }
 ```
 
-<span class="caption">Listing 4-5: Rückgeben der Eigentümerschaft an
-Parametern</span>
+<span class="caption">Listing 4-5: Rückgeben des Eigentums an Parametern</span>
 
 Aber das ist zu viel Zeremonie und zu viel Arbeit für ein Konzept, das
 gebräuchlich sein sollte. Zum Glück gibt es in Rust eine Funktion, mit der man
-einen Wert verwenden kann, ohne die Eigentümerschaft zu übertragen:
-_Referenzen_ (references)
+einen Wert verwenden kann, ohne das Eigentum zu übertragen: _Referenzen_
 
 [ch8]: ch08-02-strings.html
 [data-types]: ch03-02-data-types.html

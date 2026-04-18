@@ -151,9 +151,9 @@ die beide den Typ `u32` haben. Dann erzeugten wir in `main` eine Instanz von
 Unsere Funktion `area` hat nun einen Parameter, den wir `rectangle` genannt
 haben und dessen Typ eine unveränderbare Borrow einer Strukturinstanz
 `Rectangle` ist. Wie in Kapitel 4 erwähnt, wollen wir die Struktur nur
-ausleihen, nicht aber deren Eigentümerschaft (ownership) übernehmen. Auf diese
-Weise behält `main` seine Eigentümerschaft und kann weiterhin `rect1` verwenden,
-weshalb wir `&` in der Funktionssignatur und an der Aufrufstelle verwenden.
+ausleihen, nicht aber deren Eigentum übernehmen. Auf diese Weise behält `main`
+das Eigentum und kann weiterhin `rect1` verwenden, weshalb wir `&` in der
+Funktionssignatur und an der Aufrufstelle verwenden.
 
 Die Funktion `area` greift auf die Felder `width` und `height` der Instanz
 `Rectangle` zu. (Beachte, dass der Zugriff auf Felder einer ausgeliehenen
@@ -296,11 +296,11 @@ rect1 ist Rectangle {
 ```
 
 Eine andere Möglichkeit, einen Wert im `Debug`-Format auszugeben, ist die
-Verwendung des [Makros `dbg!`][dbg], das die Eigentümerschaft eines Ausdrucks
-übernimmt (im Gegensatz zu `println!`, das eine Referenz nimmt), die Datei und
+Verwendung des [Makros `dbg!`][dbg], das das Eigentum eines Ausdrucks übernimmt
+(im Gegensatz zu `println!`, das eine Referenz nimmt), die Datei und
 Zeilennummer, in der der `dbg!`-Makroaufruf in deinem Code vorkommt, zusammen
-mit dem resultierenden Wert des Ausdrucks ausgibt und die Eigentümerschaft am
-Wert zurückgibt.
+mit dem resultierenden Wert des Ausdrucks ausgibt und das Eigentum am Wert
+zurückgibt.
 
 > Hinweis: Der Aufruf des Makros `dbg!` schreibt in die
 > Standardfehlerausgabe (`stderr`), im Gegensatz zu `println!`, das in
@@ -329,12 +329,11 @@ fn main() {
 }
 ```
 
-Wir können `dbg!` um den Ausdruck `30 * scale` setzen, und da `dbg!` die
-Eigentümerschaft des Werts des Ausdrucks zurückgibt, erhält das Feld `width`
-denselben Wert, als wenn wir den `dbg!`-Aufruf dort nicht hätten. Wir wollen
-nicht, dass `dbg!` die Eigentümerschaft von `rect1` übernimmt, also übergeben
-wir eine Referenz auf `rect1` im nächsten Aufruf. So sieht die Ausgabe dieses
-Beispiels aus:
+Wir können `dbg!` um den Ausdruck `30 * scale` setzen, und da `dbg!` das
+Eigentum am Wert des Ausdrucks zurückgibt, erhält das Feld `width` denselben
+Wert, als wenn wir den `dbg!`-Aufruf dort nicht hätten. Wir wollen nicht, dass
+`dbg!` das Eigentum an `rect1` übernimmt, also übergeben wir eine Referenz auf
+`rect1` im nächsten Aufruf. So sieht die Ausgabe dieses Beispiels aus:
 
 ```console
 $ cargo run

@@ -556,8 +556,8 @@ println!("{s:?}");
 ```
 
 <span class="caption">Listing 19-21: Eine unbenutzte Variable, die mit einem
-Unterstrich beginnt, bindet immer noch den Wert, der die Eigentümerschaft des
-Wertes übernehmen könnte</span>
+Unterstrich beginnt, bindet immer noch den Wert, der das Eigentum am Wert
+übernehmen könnte</span>
 
 Wir werden einen Fehler erhalten, weil der Wert `s` immer noch in `_s`
 verschoben wird, was uns daran hindert, `s` wieder zu verwenden. Das Verwenden

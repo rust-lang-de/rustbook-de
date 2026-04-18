@@ -132,10 +132,9 @@ s.push_str("bar");
 `String` mit der Methode `push_str`</span>
 
 Nach diesen beiden Zeilen enthält `s` den Wert `foobar`. Die Methode `push_str`
-nimmt einen String Slice, weil wir nicht unbedingt die Eigentümerschaft des
-Parameters übernehmen wollen. Zum Beispiel wollen wir im Code in Listing 8-16 in
-der Lage sein, `s2` zu verwenden, nachdem wir seinen Inhalt an `s1` angehängt
-haben.
+nimmt einen String Slice, weil wir nicht unbedingt das Eigentum am Parameter
+übernehmen wollen. Zum Beispiel wollen wir im Code in Listing 8-16 in der Lage
+sein, `s2` zu verwenden, nachdem wir seinen Inhalt an `s1` angehängt haben.
 
 ```rust
 let mut s1 = String::from("foo");
@@ -147,9 +146,9 @@ println!("s2 ist {s2}");
 <span class="caption">Listing 8-16: Verwenden eines String Slices nach dem
 Anhängen seines Inhalts an einen String</span>
 
-Wenn die Methode `push_str` die Eigentümerschaft von `s2` übernehmen würde,
-könnten wir ihren Wert nicht in der letzten Zeile ausgeben. Dieser Code
-funktioniert jedoch wie erwartet!
+Wenn die Methode `push_str` das Eigentum an `s2` übernehmen würde, könnten wir
+ihren Wert nicht in der letzten Zeile ausgeben. Dieser Code funktioniert jedoch
+wie erwartet!
 
 Die Methode `push` nimmt ein einzelnes Zeichen als Parameter und fügt es dem
 `String` hinzu. Listing 8-17 fügt den Buchstaben `l` mit der Methode `push`
@@ -205,22 +204,21 @@ anhängen; wir können nicht zwei `String`-Werte aneinanderhängen. Aber warte
 von `add` spezifiziert. Warum kompiliert also Listing 8-18?
 
 Der Grund, warum wir `&s2` im Aufruf von `add` verwenden können, ist, dass der
-Compiler das Argument `&String` in einen `&str` umwandeln (coerce) kann.
-Wenn wir die Methode `add` aufrufen, benutzt Rust eine automatische Umwandlung
-(deref coercion), die hier `&s2` in `&s2[...]` umwandelt. Auf die automatische
-Umwandlung werden wir in Kapitel 15 tiefer eingehen. Da `add` nicht die
-Eigentümerschaft des Parameters `s` übernimmt, ist `s2` auch nach dieser
-Operation immer noch ein gültiger `String`.
+Compiler das Argument `&String` in einen `&str` umwandeln (coerce) kann. Wenn
+wir die Methode `add` aufrufen, benutzt Rust eine automatische Umwandlung (deref
+coercion), die hier `&s2` in `&s2[...]` umwandelt. Auf die automatische
+Umwandlung werden wir in Kapitel 15 tiefer eingehen. Da `add` nicht das Eigentum
+am Parameter `s` übernimmt, ist `s2` auch nach dieser Operation immer noch ein
+gültiger `String`.
 
-Zweitens können wir in der Signatur sehen, dass `add` die Eigentümerschaft von
-`self` übernimmt, weil `self` _kein_ `&` hat. Das bedeutet, dass `s1` in Listing
-8-18 in den Aufruf von `add` verschoben wird und danach nicht mehr gültig ist.
-Obwohl also `let s3 = s1 + &s2;` so aussieht, als ob beide Strings kopiert und
-ein neuer erzeugt wird, übernimmt diese Anweisung tatsächlich die
-Eigentümerschaft von `s1`, hängt eine Kopie des Inhalts von `s2` an und gibt
-dann die Eigentümerschaft des Ergebnisses zurück. In anderen Worten sieht es so
-aus, als würde es viele Kopien erstellen, das ist aber nicht so; die
-Implementierung ist effizienter als Kopieren.
+Zweitens können wir in der Signatur sehen, dass `add` das Eigentum an `self`
+übernimmt, weil `self` _kein_ `&` hat. Das bedeutet, dass `s1` in Listing 8-18
+in den Aufruf von `add` verschoben wird und danach nicht mehr gültig ist. Obwohl
+also `let s3 = s1 + &s2;` so aussieht, als ob beide Strings kopiert und ein
+neuer erzeugt wird, übernimmt diese Anweisung tatsächlich das Eigentum an `s1`,
+hängt eine Kopie des Inhalts von `s2` an und gibt dann das Eigentum am Ergebnis
+zurück. In anderen Worten sieht es so aus, als würde es viele Kopien erstellen,
+das ist aber nicht so; die Implementierung ist effizienter als Kopieren.
 
 Wenn wir mehrere Strings aneinanderhängen wollen, wird das Verhalten des
 Operators `+` unhandlich:
@@ -249,9 +247,9 @@ let s = format!("{s1}-{s2}-{s3}");
 Auch bei diesem Code wird `s` den Wert `tic-tac-toe` haben. Das Makro `format!`
 funktioniert wie `println!`, aber anstatt das Ergebnis auf den Bildschirm
 auszugeben, gibt es einen `String` mit dem Inhalt zurück. Die Codevariante mit
-`format!` ist viel leichter lesbar, und der durch das Makro
-`format!` erzeugte Code verwendet Referenzen, sodass dieser Aufruf keine
-Eigentümerschaft seiner Parameter übernimmt.
+`format!` ist viel leichter lesbar, und der durch das Makro `format!` erzeugte
+Code verwendet Referenzen, sodass dieser Aufruf kein Eigentum an seinen
+Parametern übernimmt.
 
 ### Indexierung von Strings
 

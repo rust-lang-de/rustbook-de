@@ -21,10 +21,10 @@ ansehen, der dem inneren Veränderbarkeitsmuster folgt.
 
 ### Sicherstellen der Borrowing-Regeln zur Laufzeit
 
-Im Gegensatz zu `Rc<T>` repräsentiert der Typ `RefCell<T>` die ungeteilte
-Eigentümerschaft (ownership) für die darin enthaltenen Daten. Was unterscheidet
-`RefCell<T>` von einem Typ wie `Box<T>`? Erinnere dich an die Borrowing-Regeln,
-die wir im Kapitel 4 gelernt haben:
+Im Gegensatz zu `Rc<T>` repräsentiert der Typ `RefCell<T>` das ungeteilte
+Eigentum an den darin enthaltenen Daten. Was unterscheidet `RefCell<T>` von
+einem Typ wie `Box<T>`? Erinnere dich an die Borrowing-Regeln, die wir im
+Kapitel 4 gelernt haben:
 
 - Zu jeder Zeit kann man _entweder_ eine veränderbare Referenz oder eine
   beliebige Anzahl unveränderbarer Referenzen haben (nicht aber beides).
@@ -685,10 +685,9 @@ fn main() {
 Wir erstellen einen Wert, der eine Instanz von `Rc<RefCell<i32>>` ist, und
 speichern ihn dann in einer Variable mit dem Namen `value`, damit wir später
 direkt darauf zugreifen können. Dann erstellen wir eine Liste `a` mit einer
-`Cons`-Variante, die `value` enthält. Wir müssen `value` klonen, damit sowohl 
-`a` als auch `value` die Eigentümerschaft am inneren Wert `5` haben, anstatt
-die Eigentümerschaft von `value` auf `a` zu übertragen oder `a` von `value`
-auszuleihen.
+`Cons`-Variante, die `value` enthält. Wir müssen `value` klonen, damit sowohl
+`a` als auch `value` das Eigentum am inneren Wert `5` haben, anstatt das
+Eigentum an `value` auf `a` zu übertragen oder `a` von `value` auszuleihen.
 
 Wir wickeln die Liste `a` in ein `Rc<T>` ein. Wenn wir also die Listen `b` und
 `c` erstellen, können beide auf `a` verweisen, was wir in Listing 15-18 getan

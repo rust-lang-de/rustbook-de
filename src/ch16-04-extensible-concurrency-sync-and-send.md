@@ -11,13 +11,13 @@ Zu den wichtigsten Nebenläufigkeitskonzepten, die in die Sprache und nicht in
 die Standardbibliothek eingebettet sind, gehören jedoch die Traits `Send` und
 `Sync` in `std::marker`.
 
-### Übertragen der Eigentümerschaft zwischen Threads
+### Übertragen des Eigentums zwischen Threads
 
-Das Marker Trait `Send` zeigt an, dass die Eigentümerschaft an Werten des Typs,
-der `Send` implementiert, zwischen Threads übertragen werden kann. Fast jeder
+Das Marker Trait `Send` zeigt an, dass das Eigentum an Werten des Typs, der
+`Send` implementiert, zwischen Threads übertragen werden kann. Fast jeder
 Rust-Typ implementiert `Send`, aber es gibt einige Ausnahmen, einschließlich
 `Rc<T>`: Dieser kann nicht `Send` sein, denn wenn du einen `Rc<T>`-Wert geklont
-hast und versucht hast, die Eigentümerschaft am Klon auf einen anderen Thread zu
+hast und versucht hast, das Eigentum am Klon auf einen anderen Thread zu
 übertragen, könnten beide Threads gleichzeitig den Referenzzähler aktualisieren.
 Aus diesem Grund ist `Rc<T>` für die Verwendung in single-threaded Situationen
 implementiert, in denen du nicht die Thread-sichere Performanzeinbuße zahlen

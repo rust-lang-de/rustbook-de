@@ -123,7 +123,7 @@ Programmiersprachen ähneln. Anschließend kannst du zu Kapitel 2 zurückkehren,
 wenn du an einem Projekt arbeiten möchtest, bei dem du die gelernten Details
 anwenden kannst.
 
-In **Kapitel 4** lernst du den Eigentümerschaftsansatz von Rust kennen.
+In **Kapitel 4** lernst du die Eigentümerschaft in Rust kennen.
 **Kapitel 5** bespricht Strukturen und Methoden, und **Kapitel 6** behandelt
 Aufzählungen, `match`-Ausdrücke und die Kontrollflusskonstrukte `if let` und
 `let...else`. Du wirst Strukturen und Aufzählungen verwenden, um

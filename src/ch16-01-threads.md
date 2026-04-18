@@ -220,13 +220,12 @@ Threads zur gleichen Zeit laufen oder nicht.
 ### Verwenden von `move`-Closures mit Threads
 
 Wir werden oft das Schlüsselwort `move` mit Closures verwenden, die an
-`thread::spawn` übergeben werden, weil der Closure dann die Eigentümerschaft an
-den Werten, die sie benutzt, von der Umgebung übernimmt und damit die
-Eigentümerschaft an diesen Werten von einem Thread auf einen anderen überträgt.
-In [„Erfassen von Referenzen oder Verschieben der Eigentümerschaft“][capture] in
-Kapitel 13 haben wir `move` im Zusammenhang mit Closures besprochen. Jetzt
-werden wir uns mehr auf die Interaktion zwischen `move` und `thread::spawn`
-konzentrieren.
+`thread::spawn` übergeben werden, weil der Closure dann das Eigentum an den
+Werten, die sie benutzt, von der Umgebung übernimmt und damit das Eigentum an
+diesen Werten von einem Thread auf einen anderen überträgt. In [„Erfassen von
+Referenzen oder Verschieben des Eigentums“][capture] in Kapitel 13 haben wir
+`move` im Zusammenhang mit Closures besprochen. Jetzt werden wir uns mehr auf
+die Interaktion zwischen `move` und `thread::spawn` konzentrieren.
 
 Beachte in Listing 16-1, dass der Closure, den wir an `thread::spawn`
 übergeben, keine Argumente erfordert: Wir verwenden keine Daten aus dem
@@ -338,10 +337,10 @@ help: to force the closure to take ownership of `v` (and any other referenced va
 ```
 
 Indem wir vor dem Closure das Schlüsselwort `move` hinzufügen, zwingen wir den
-Closure dazu, die Eigentümerschaft der Werte zu übernehmen, die er benutzt,
-anstatt zuzulassen, dass Rust daraus ableitet, dass er sich die Werte ausleihen
-sollte. Die in Listing 16-5 gezeigte Änderung an Listing 16-3 wird wie von
-uns beabsichtigt kompilieren und ausgeführt.
+Closure dazu, das Eigentum an den Werten zu übernehmen, die er benutzt, anstatt
+zuzulassen, dass Rust daraus ableitet, dass er sich die Werte ausleihen sollte.
+Die in Listing 16-5 gezeigte Änderung an Listing 16-3 wird wie von uns
+beabsichtigt kompilieren und ausgeführt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -360,7 +359,7 @@ fn main() {
 ```
 
 <span class="caption">Listing 16-5: Durch Verwenden des Schlüsselwortes `move`
-zwigen wir den Closure, die Eigentümerschaft der von ihm verwendeten Werte zu
+zwigen wir den Closure, das Eigentum an den von ihm verwendeten Werten zu
 übernehmen</span>
 
 Wir könnten versuchen, den Code in Listing 16-4 auf diesselbe Weise zu
@@ -403,10 +402,10 @@ Die Eigentumsregeln von Rust haben uns wieder einmal gerettet! Wir haben einen
 Fehler im Code in Listing 16-3 erhalten, weil Rust konservativ war und nur `v`
 für den Thread auslieh, was bedeutete, dass der Haupt-Thread theoretisch die
 Referenz des erzeugte Threads ungültig machen konnte. Indem wir Rust anweisen,
-die Eigentümerschaft von `v` in den erzeugte Thread zu verlagern, garantieren
-wir Rust, dass der Haupt-Thread `v` nicht mehr benutzen wird. Wenn wir Listing
-16-4 auf die gleiche Weise ändern, verletzen wir die Eigentumsregeln, wenn wir
-versuchen, `v` im Haupt-Thread zu benutzen. Das Schlüsselwort `move` setzt Rusts
+das Eigentum an `v` in den erzeugte Thread zu verschieben, garantieren wir Rust,
+dass der Haupt-Thread `v` nicht mehr benutzen wird. Wenn wir Listing 16-4 auf
+die gleiche Weise ändern, verletzen wir die Eigentumsregeln, wenn wir versuchen,
+`v` im Haupt-Thread zu benutzen. Das Schlüsselwort `move` setzt Rusts
 konservativen Borrowing-Standard außer Kraft; es lässt uns nicht gegen die
 Eigentumsregeln verstoßen.
 
@@ -414,4 +413,4 @@ Nachdem wir uns nun damit beschäftigt haben, was Threads sind und welche
 Methoden die Thread-API bietet, wollen wir uns nun einige Situationen ansehen,
 in denen wir Threads verwenden können.
 
-[capture]: ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-der-eigentümerschaft
+[capture]: ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-des-eigentums

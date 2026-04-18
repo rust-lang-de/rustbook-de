@@ -12,7 +12,7 @@ Wert eines bestimmten Typs zeigt.
 
 Im Folgenden siehst du, wie du eine Funktion `calculate_length` definieren und
 verwenden kannst, die eine Referenz auf ein Objekt als Parameter hat, anstatt
-die Eigentümerschaft (ownership) des Wertes zu übernehmen:
+das Eigentum am Wert zu übernehmen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -31,11 +31,11 @@ fn calculate_length(s: &String) -> usize {
 ```
 
 Beachte, dass der gesamte Tupelcode aus der Variablendeklaration und dem
-Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
-`&s1` an `calculate_length` übergeben und in seiner Definition `&String` statt
-`String` steht. Das `&`-Zeichen steht für eine Referenz, und sie ermöglicht
-es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
-übernehmen. Abbildung 4-6 zeigt die Speicherdarstellung.
+Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir `&s1`
+an `calculate_length` übergeben und in seiner Definition `&String` statt
+`String` steht. Das `&`-Zeichen steht für eine Referenz, und sie ermöglicht es
+dir, sich auf einen Wert zu beziehen, ohne dessen Eigentum zu übernehmen.
+Abbildung 4-6 zeigt die Speicherdarstellung.
 
 <img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
 Tabelle für s1. Die Tabelle für s1 enthält die Stack-Daten für s1 und zeigt auf
@@ -86,16 +86,16 @@ Anmerkungen ergänzen:
 fn calculate_length(s: &String) -> usize { // s ist eine Referenz
                                            // auf einen String
     s.len()
-} // Hier verlässt s den Gültigkeitsbereich. Aber weil es keine
-  // Eigentümerschaft an dem hat, worauf es referenziert, passiert nichts.
+} // Hier verlässt s den Gültigkeitsbereich. Aber weil es kein
+  // Eigentum daran hat, worauf es referenziert, passiert nichts.
 ```
 
 Der Gültigkeitsbereich, in dem die Variable `s` gültig ist, ist derselbe wie der
 Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
 Referenz zeigt, wird nicht aufgeräumt, wenn `s` nicht mehr verwendet wird, weil
-`s` keine Eigentümerschaft hat. Wenn Funktionen statt der tatsächlichen Werte
-Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
-die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.
+`s` kein Eigentum hat. Wenn Funktionen statt der tatsächlichen Werte Referenzen
+als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um das Eigentum
+zurückzugeben, denn wir hatten nie das Eigentum.
 
 Wir nennen den Vorgang des Erstellens einer Referenz _Borrowing_ (engl.
 Ausleihen). Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von
@@ -423,8 +423,8 @@ fn no_dangle() -> String {
 }
 ```
 
-Dies funktioniert ohne Probleme. Die Eigentümerschaft wird nach außen
-verschoben, und nichts wird freigegeben.
+Dies funktioniert ohne Probleme. Das Eigentum wird nach außen verschoben, und
+nichts wird freigegeben.
 
 ### Regeln für Referenzen
 

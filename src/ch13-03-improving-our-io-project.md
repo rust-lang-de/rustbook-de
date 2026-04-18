@@ -9,8 +9,8 @@ Funktion `Config::build` und der Funktion `search` optimieren können.
 
 Im Listing 12-6 haben wir Programmcode hinzugefügt, der einen Slice von
 `String`-Werten nimmt, und erzeugten eine `Config`-Struktur indem wir den Slice
-indexierten und die Werte klonten und der `Config`-Struktur die Eigentümerschaft
-dieser Werte gaben. Im Listing 13-17 haben wir die Implementierung der Funktion
+indexierten und die Werte klonten und der `Config`-Struktur das Eigentum an
+diesen Werten gaben. Im Listing 13-17 haben wir die Implementierung der Funktion
 `Config::build` so reproduziert wie sie im Listing 12-23 aussah.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -87,19 +87,19 @@ ineffizienten `clone`-Aufrufe machen soll, da sie zu einem späteren Zeitpunkt
 entfernt werden. Jetzt ist es an der Zeit, dass wir uns darum kümmern!
 
 Wir haben `clone` benutzt, da wir einen Slice mit `String`-Elementen im
-Parameter `args` haben, aber die Funktion `build` besitzt `args` nicht. Um die
-Eigentümerschaft einer `Config`-Instanz zurückzugeben, mussten wir die Werte aus
-den Feldern `query` und `file_path` von `Config` klonen, damit die
-`Config`-Instanz ihre Werte besitzen kann.
+Parameter `args` haben, aber die Funktion `build` besitzt `args` nicht. Um das
+Eigentum an einer `Config`-Instanz zurückzugeben, mussten wir die Werte aus den
+Feldern `query` und `file_path` von `Config` klonen, damit die `Config`-Instanz
+ihre Werte besitzen kann.
 
 Mithilfe unserer neuen Kenntnisse über Iteratoren können wir die Funktion
-`build` so ändern, dass sie die Eigentümerschaft eines Iterators als Argument
-nimmt anstatt sich einen Slice auszuleihen. Wir werden die
-`Iterator`-Funktionalität benutzen und nicht mehr den Programmcode der die Länge
-des Slices überprüft und an bestimmte Stellen indiziert. Dadurch wird deutlich,
-was die Funktion `Config::build` bewirkt, da der Iterator auf Werte zugreift.
+`build` so ändern, dass sie das Eigentum am Iterator als Argument übernimmt
+anstatt sich einen Slice auszuleihen. Wir werden die `Iterator`-Funktionalität
+benutzen und nicht mehr den Programmcode der die Länge des Slices überprüft und
+an bestimmte Stellen indiziert. Dadurch wird deutlich, was die Funktion
+`Config::build` bewirkt, da der Iterator auf Werte zugreift.
 
-Sobald `Config::build` die Eigentümerschaft des Iterators hat und keine
+Sobald `Config::build` das Eigentum am Iterator hat und keine
 Indexierungsoperationen mehr verwendet, die ausleihen, können wir die
 `String`-Werte vom `Iterator` in `Config` verschieben anstatt `clone` aufzurufen
 und eine neue Zuweisung vorzunehmen.
@@ -252,7 +252,7 @@ fn main() {
 	
 Die Funktion `env::arg` gibt einen Iterator zurück! Anstatt die Werte des
 Iterators in einem Vektor zu sammeln und dann einen Slice an `Config::build` zu
-übergeben, geben wir nun die Eigentümerschaft des Iterators, der von `env::args`
+übergeben, geben wir nun das Eigentum am Iterator, der von `env::args`
 zurückgegeben wird, direkt an `Config::build`.
 
 Als Nächstes müssen wir die Definition von `Config::build` aktualisieren.
@@ -341,9 +341,9 @@ die wir im Abschnitt [„Traits als Parameter verwenden“][impl-trait] in Kapit
 10 besprochen haben, bedeutet, dass `args` jeder Typ sein kann, der das Trait
 `Iterator` implementiert und `String`-Elemente zurückgibt.
 
-Da wir die Eigentümerschaft von `args` übernehmen und `args` beim Iterieren
-verändern werden, können wir das Schlüsselwort `mut` in die Spezifikation des
-Parameters `args` eintragen, um ihn veränderbar (mutable) zu machen.
+Da wir das Eigentum an `args` übernehmen und `args` beim Iterieren verändern
+werden, können wir das Schlüsselwort `mut` in die Spezifikation des Parameters
+`args` eintragen, um ihn veränderbar (mutable) zu machen.
 
 #### Verwenden von `Iterator`-Trait-Methoden
 

@@ -199,18 +199,17 @@ error: could not compile `shared-state` (bin "shared-state") due to 1 previous e
 ```
 
 Die Fehlermeldung besagt, dass der Wert `counter` in der vorherigen Iteration
-der Schleife verschoben wurde. Rust sagt uns, dass wir die Eigentümerschaft von
-`counter` nicht in mehrere Threads verschieben können. Lass uns den
-Compilerfehler mit einer Mehrfacheigentums-Methode beheben, die wir in Kapitel
-15 besprochen haben.
+der Schleife verschoben wurde. Rust sagt uns, dass wir das Eigentum an `counter`
+nicht in mehrere Threads verschieben können. Lass uns den Compilerfehler mit
+einer Mehrfacheigentums-Methode beheben, die wir in Kapitel 15 besprochen haben.
 
 #### Mehrfacheigentum mit mehreren Threads
 
 In Kapitel 15 gaben wir einen Wert an mehrere Eigentümer, indem wir den
 intelligenten Zeiger `Rc<T>` verwendet haben, um einen Referenzzählwert zu
-erstellen. Lass uns hier das Gleiche tun und sehen, was passiert. Wir packen
-den `Mutex<T>` in `Rc<T>` in Listing 16-14 ein und klonen `Rc<T>`, bevor wir
-die Eigentümerschaft an den Thread übertragen.
+erstellen. Lass uns hier das Gleiche tun und sehen, was passiert. Wir packen den
+`Mutex<T>` in `Rc<T>` in Listing 16-14 ein und klonen `Rc<T>`, bevor wir das
+Eigentum an den Thread übertragen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -351,8 +350,7 @@ fn main() {
 ```
 
 <span class="caption">Listing 16-15: Verwenden von `Arc<T>`, um den `Mutex<T>`
-einzupacken, um die Eigentümerschaft mit mehreren Threads teilen zu
-können</span>
+einzupacken, um das Eigentum mit mehreren Threads teilen zu können</span>
 
 Dieser Code gibt folgendes aus:
 

@@ -18,8 +18,8 @@
   - [Kommentare](ch03-04-comments.md)
   - [Kontrollfluss](ch03-05-control-flow.md)
 
-- [Eigentümerschaft (ownership) verstehen](ch04-00-understanding-ownership.md)
-  - [Was ist Eigentümerschaft (ownership)?](ch04-01-what-is-ownership.md)
+- [Eigentümerschaft verstehen](ch04-00-understanding-ownership.md)
+  - [Was ist Eigentümerschaft?](ch04-01-what-is-ownership.md)
   - [Referenzen und Borrowing](ch04-02-references-and-borrowing.md)
   - [Der Slice-Typ](ch04-03-slices.md)
 
@@ -75,7 +75,7 @@
   - [Performanz von Schleifen vs. Iteratoren](ch13-04-performance.md)
 
 - [Mehr über Cargo und Crates.io](ch14-00-more-about-cargo.md)
-  - [Bauvorgang anpassen mit Freigabeprofilen (release profiles)](ch14-01-release-profiles.md)
+  - [Bauvorgang anpassen mit Freigabeprofilen](ch14-01-release-profiles.md)
   - [Crates auf crates.io veröffentlichen](ch14-02-publishing-to-crates-io.md)
   - [Cargo-Arbeitsbereiche](ch14-03-cargo-workspaces.md)
   - [Installieren von Binärdateien mit  `cargo install`](ch14-04-installing-binaries.md)
@@ -108,9 +108,9 @@
   - [Verwendung von Trait-Objekten zur Abstraktion über gemeinsames Verhalten](ch18-02-trait-objects.md)
   - [Ein objektorientiertes Entwurfsmuster implementieren](ch18-03-oo-design-patterns.md)
 
-- [Muster (patterns) und Abgleich (matching)](ch19-00-patterns.md)
-  - [Alle Stellen an denen Muster (patterns) verwendet werden können](ch19-01-all-the-places-for-patterns.md)
-  - [Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt](ch19-02-refutability.md)
+- [Muster und Pattern Matching](ch19-00-patterns.md)
+  - [Alle Stellen an denen Muster verwendet werden können](ch19-01-all-the-places-for-patterns.md)
+  - [Abweisbarkeit: Falls ein Muster mal nicht passt](ch19-02-refutability.md)
   - [Mustersyntax](ch19-03-pattern-syntax.md)
 
 - [Fortgeschrittene Sprachelemente](ch20-00-advanced-features.md)

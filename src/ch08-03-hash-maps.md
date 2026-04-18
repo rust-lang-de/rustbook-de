@@ -104,7 +104,7 @@ Gelb: 50
 Blau: 10
 ```
 
-### Verwalten der Eigentümerschaft in Hashtabellen
+### Verwalten des Eigentums in Hashtabellen
 
 Bei Typen wie `i32`, die das Trait `Copy` implementieren, werden die Werte in
 die Hashtabelle kopiert. Bei aneigenbaren Werten wie `String` werden die Werte

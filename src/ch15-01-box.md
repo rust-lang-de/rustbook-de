@@ -14,17 +14,16 @@ Situationen verwendet:
 - Wenn man einen Typ hat, dessen Größe zum Zeitpunkt der Kompilierung nicht
   bekannt ist, und man einen Wert dieses Typs in einem Kontext verwenden
   möchte, für den eine genaue Größe erforderlich ist.
-- Wenn man über eine große Datenmenge verfügt und die Eigentümerschaft
-  (ownership) übertragen möchte und sicherstellen will, dass die Daten dabei
-  nicht kopiert werden.
+- Wenn man über eine große Datenmenge verfügt und das Eigentum übertragen möchte
+  und sicherstellen will, dass die Daten dabei nicht kopiert werden.
 - Wenn man einen Wert besitzen und sich nur darum kümmern möchte, dass es sich
   um einen Typ handelt, der ein bestimmtes Trait implementiert, anstatt den Typ
   zu spezifizieren.
 
 Wir werden die erste Situation in [„Ermöglichen rekursiver Typen mit
 Boxen“](#ermöglichen-rekursiver-typen-mit-boxen) zeigen. Im zweiten Fall kann
-die Übertragung der Eigentümerschaft einer großen Datenmenge lange dauern, da
-die Daten auf dem Stack kopiert werden. Um die Performanz in dieser Situation zu
+die Übertragung das Eigentums an einer großen Datenmenge lange dauern, da die
+Daten auf dem Stack kopiert werden. Um die Performanz in dieser Situation zu
 verbessern, können wir die große Datenmenge auf dem Heap in einer Box speichern.
 Dann wird nur die kleine Menge von Zeigerdaten auf dem Stack kopiert, während
 die Daten, auf die referenziert wird, im Heap an einer Stelle verbleiben. Der
@@ -54,14 +53,14 @@ fn main() {
 <span class="caption">Listing 15-1: Speichern eines `i32`-Wertes in einer Box
 im Heap</span>
 
-Wir definieren die Variable `b` so, dass sie den Wert einer `Box` hat, die
-auf den Wert `5` zeigt, der auf dem Heap allokiert ist. Dieses Programm gibt
-`b = 5` aus, in diesem Fall können wir auf die Daten in der Box zugreifen,
-ähnlich als würden sich die Daten im Stack befinden. Genau wie bei Werten mit
-Eigentümerschaft wird auch eine Box freigegeben, wenn sie den
-Gültigkeitsbereich verlässt, wie dies bei `b` am Ende von `main` der Fall ist.
-Die Freigabe erfolgt sowohl für die Box (gespeichert im Stack) als auch für die
-Daten, auf die sie zeigt (gespeichert im Heap).
+Wir definieren die Variable `b` so, dass sie den Wert einer `Box` hat, die auf
+den Wert `5` zeigt, der auf dem Heap allokiert ist. Dieses Programm gibt `b = 5`
+aus, in diesem Fall können wir auf die Daten in der Box zugreifen, ähnlich als
+würden sich die Daten im Stack befinden. Genau wie bei Werten mit Eigentum wird
+auch eine Box freigegeben, wenn sie den Gültigkeitsbereich verlässt, wie dies
+bei `b` am Ende von `main` der Fall ist. Die Freigabe erfolgt sowohl für die Box
+(gespeichert im Stack) als auch für die Daten, auf die sie zeigt (gespeichert im
+Heap).
 
 Es ist nicht besonders hilfreich, einen einzelnen Wert im Heap zu speichern,
 daher verwendet man Boxen selten alleine. Meistens ist es besser, Werte wie

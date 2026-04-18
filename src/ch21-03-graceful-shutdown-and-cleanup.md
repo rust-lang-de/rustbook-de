@@ -135,17 +135,17 @@ error: could not compile `hello` (lib) due to 1 previous error
 ```
 
 Der Fehler sagt uns, dass wir `join` nicht aufrufen können, weil wir nur eine
-veränderbare Borrow von jedem `worker` haben und `join` die Eigentümerschaft für
-sein Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Thread
-`thread` aus der `Worker`-Instanz herausnehmen, damit `join` den Thread
-konsumieren kann. Eine Möglichkeit, dies zu tun, besteht darin, den gleichen
-Ansatz wie in Listing 18-15 zu verfolgen. Wenn `Worker` ein
-`Option<Thread::JoinHandle<()>>` hielte, könnten wir die Methode `take` auf
-`Option` aufrufen, um den Wert aus der Variante `Some` herauszuverschieben und
-eine Variante `None` an ihrer Stelle zu belassen. Mit anderen Worten, ein
-`Worker`, der läuft, würde eine Variante `Some` in `thread` haben, und wenn wir
-einen `Worker` aufräumen wollten, würden wir `Some` durch `None` ersetzen,
-sodass der `Worker` keinen Thread zum Laufen haben würde.
+veränderbare Borrow von jedem `worker` haben und `join` das Eigentum an seinem
+Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Thread `thread`
+aus der `Worker`-Instanz herausnehmen, damit `join` den Thread konsumieren kann.
+Eine Möglichkeit, dies zu tun, besteht darin, den gleichen Ansatz wie in Listing
+18-15 zu verfolgen. Wenn `Worker` ein `Option<Thread::JoinHandle<()>>` hielte,
+könnten wir die Methode `take` auf `Option` aufrufen, um den Wert aus der
+Variante `Some` herauszuverschieben und eine Variante `None` an ihrer Stelle zu
+belassen. Mit anderen Worten, ein `Worker`, der läuft, würde eine Variante
+`Some` in `thread` haben, und wenn wir einen `Worker` aufräumen wollten, würden
+wir `Some` durch `None` ersetzen, sodass der `Worker` keinen Thread zum Laufen
+haben würde.
 
 Das _einzige_ Mal, dass dies der Fall wäre, wäre, wenn man den `Worker`
 aufräumt. Im Gegenzug müssten wir überall, wo wir auf `Worker.thread`

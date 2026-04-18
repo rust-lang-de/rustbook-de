@@ -166,7 +166,7 @@ Erhalten: hallo
 
 Perfekt!
 
-### Übertragen der Eigentümerschaft durch Kanäle
+### Übertragen des Eigentums durch Kanäle
 
 Die Eigentumsregeln spielen beim Nachrichtenversand eine entscheidende Rolle,
 da sie dir helfen, sicheren, nebenläufigen Code zu schreiben. Die Vermeidung
@@ -230,10 +230,10 @@ error: could not compile `message-passing` (bin "message-passing") due to 1 prev
 ```
 
 Unser Nebenläufigkeitsfehler hat einen Kompilierzeitfehler verursacht. Die
-Funktion `send` übernimmt die Eigentümerschaft an ihrem Parameter und wenn der
-Wert verschoben wird, übernimmt der Empfänger die Eigentümerschaft an ihm.
-Dadurch wird verhindert, dass wir den Wert nach dem Senden versehentlich wieder
-verwenden; das Eigentumssystem prüft, ob alles in Ordnung ist.
+Funktion `send` übernimmt das Eigentum an ihrem Parameter und wenn der Wert
+verschoben wird, übernimmt der Empfänger das Eigentum an ihm. Dadurch wird
+verhindert, dass wir den Wert nach dem Senden versehentlich wieder verwenden;
+das Eigentumssystem prüft, ob alles in Ordnung ist.
 
 ### Senden mehrerer Werte
 

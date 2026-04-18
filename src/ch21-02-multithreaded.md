@@ -1020,12 +1020,12 @@ um `receiver` gemeinsam zu nutzen und zu modifizieren; andernfalls könnten wir
 Race Conditions erhalten (wie in Kapitel 16 behandelt).
 
 Erinnere dich an die Thread-sicheren intelligenten Zeiger, die in Kapitel 16
-besprochen wurden: Um die Eigentümerschaft über mehrere Threads zu teilen und
-den Threads zu erlauben, den Wert zu mutieren, müssen wir `Arc<Mutex<T>>`
-verwenden. Der Typ `Arc` ermöglicht es mehreren `Worker`-Instanzen, den
-Empfänger zu besitzen, und `Mutex` stellt sicher, dass immer nur ein `Worker`
-zur gleichen Zeit einen Auftrag vom Empfänger erhält. Der Listing 21-18 zeigt
-die Änderungen, die wir vornehmen müssen.
+besprochen wurden: Um das Eigentum über mehrere Threads zu teilen und den
+Threads zu erlauben, den Wert zu mutieren, müssen wir `Arc<Mutex<T>>` verwenden.
+Der Typ `Arc` ermöglicht es mehreren `Worker`-Instanzen, den Empfänger zu
+besitzen, und `Mutex` stellt sicher, dass immer nur ein `Worker` zur gleichen
+Zeit einen Auftrag vom Empfänger erhält. Der Listing 21-18 zeigt die Änderungen,
+die wir vornehmen müssen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -1099,10 +1099,9 @@ impl Worker {
 <span class="caption">Listing 21-18: Den Empfänger unter den `Worker`
 teilen, die `Arc` und `Mutex` benutzen</span>
 
-In `ThreadPool::new` setzen wir den Empfänger in einen `Arc` und einen
-`Mutex`. Für jeden neuen `Worker` klonen wir den `Arc`, um die Referenzzählung
-zu erhöhen, sodass die `Worker`-Instanzen die Eigentümerschaft des Empfängers
-teilen können.
+In `ThreadPool::new` setzen wir den Empfänger in einen `Arc` und einen `Mutex`.
+Für jeden neuen `Worker` klonen wir den `Arc`, um die Referenzzählung zu
+erhöhen, sodass die `Worker`-Instanzen das Eigentum am Empfänger teilen können.
 
 Mit diesen Änderungen kompiliert der Code! Wir haben es geschafft!
 
@@ -1433,9 +1432,9 @@ impl Worker {
 Dieser Code wird kompiliert und ausgeführt, führt aber nicht zum gewünschten
 Thread-Verhalten: Eine langsame Anfrage führt immer noch dazu, dass andere
 Anfragen auf ihre Bearbeitung warten. Der Grund dafür ist etwas subtil: Die
-Struktur `Mutex` hat keine öffentliche Methode `unlock`, weil die
-Eigentümerschaft der Sperre auf der Lebensdauer von `MutexGuard<T>` innerhalb
-von `LockResult<MutexGuard<T>>` basiert, die die Methode `lock` zurückgibt. Zur
+Struktur `Mutex` hat keine öffentliche Methode `unlock`, weil das Eigentum an
+der Sperre auf der Lebensdauer von `MutexGuard<T>` innerhalb von
+`LockResult<MutexGuard<T>>` basiert, die die Methode `lock` zurückgibt. Zur
 Kompilierzeit kann der Borrow Checker dann die Regel durchsetzen, dass auf eine
 von einem `Mutex` bewachte Ressource nicht zugegriffen werden kann, wenn wir die
 Sperre nicht halten. Diese Implementierung kann aber auch dazu führen, dass die

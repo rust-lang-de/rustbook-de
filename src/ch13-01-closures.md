@@ -283,14 +283,13 @@ den Closure `example_closure` festgeschrieben. Daher bekommen wir eine
 Fehlermeldung, wenn wir versuchen einen anderen Typ mit dem gleichen Closure zu
 benutzen.
 
-### Erfassen von Referenzen oder Verschieben der Eigentümerschaft
+### Erfassen von Referenzen oder Verschieben des Eigentums
 
 Closures können Werte aus ihrer Umgebung auf drei Arten erfassen, die direkt den
 drei Möglichkeiten entsprechen, wie eine Funktion einen Parameter aufnehmen
-kann: Unveränderbare Borrows, veränderbare Borrows und Eigentümerschaft
-übernehmen (taking ownership). Der Closure entscheidet, welche dieser
-Möglichkeiten verwendet wird, je nachdem, was der Rumpf der Funktion mit den
-erfassten Werten macht.
+kann: Unveränderbare Borrows, veränderbare Borrows und Eigentum übernehmen. Der
+Closure entscheidet, welche dieser Möglichkeiten verwendet wird, je nachdem, was
+der Rumpf der Funktion mit den erfassten Werten macht.
 
 In Listing 13-4 definieren wir einen Closure, der eine unveränderbare Referenz
 an den Vektor mit dem Namen `list` erfasst, weil er nur eine unveränderbare
@@ -376,10 +375,10 @@ Ausgabe nicht erlaubt, weil keine anderen Borrows erlaubt sind, wenn es eine
 veränderbare Borrow gibt. Versuche, dort ein `println!` hinzuzufügen, um zu
 sehen, welche Fehlermeldung du erhältst!
 
-Wenn du den Closure zwingen willst, die Eigentümerschaft der Werte, die er in
-der Umgebung verwendet, zu übernehmen, obwohl der Rumpf des Closures nicht
-unbedingt Eigentümer sein muss, kannst du das Schlüsselwort `move` vor der
-Parameterliste verwenden.
+Wenn du den Closure zwingen willst, das Eigentum an den Werten, die er in der
+Umgebung verwendet, zu übernehmen, obwohl der Closure-Rumpf nicht unbedingt
+Eigentümer sein muss, kannst du das Schlüsselwort `move` vor der Parameterliste
+verwenden.
 
 Diese Technik ist vor allem nützlich, wenn ein Closure an einen neuen Thread
 übergeben wird, um die Daten zu verschieben, sodass sie dem neuen Thread
@@ -406,7 +405,7 @@ fn main() {
 ```
 
 <span class="caption">Listing 13-6: Verwenden von `move`, um den Closure des
-Threads zu zwingen, die Eigentümerschaft an `list` zu übernehmen</span>
+Threads zu zwingen, das Eigentum an `list` zu übernehmen</span>
 
 Wir starten einen neuen Thread und geben ihm einen Closure als Argument mit. Der
 Rumps des Closures gibt die Liste aus. In Listing 13-4 hat der Closure nur
@@ -419,17 +418,17 @@ das Schlüsselwort `move` an den Anfang der Closure-Definition setzen.
 Wenn der Haupt-Thread vor dem Aufruf von `join` für den neuen Thread weitere
 Operationen ausgeführt hat, könnte der neue Thread beendet werden, bevor der
 Rest des Haupt-Threads beendet wird, oder der Haupt-Thread könnte zuerst beendet
-werden. Wenn der Haupt-Thread die Eigentümerschaft von `list` beibehält, aber
-vor dem neuen Thread endet und `list` aufräumt, wäre die unveränderbare Referenz
-im Thread ungültig. Daher verlangt der Compiler, dass `list` in den Closure im
-neuen Thread verschoben wird, damit die Referenz gültig bleibt. Versuche, das
+werden. Wenn der Haupt-Thread das Eigentum an `list` behält, aber vor dem neuen
+Thread endet und `list` aufräumt, wäre die unveränderbare Referenz im Thread
+ungültig. Daher verlangt der Compiler, dass `list` in den Closure im neuen
+Thread verschoben wird, damit die Referenz gültig bleibt. Versuche, das
 Schlüsselwort `move` zu entfernen oder `list` im Haupt-Thread zu verwenden,
 nachdem der Closure definiert wurde, um zu sehen, welche Compilerfehler du
 erhältst!
 
 ### Verschieben erfasster Werte aus Closures
 
-Sobald ein Closure eine Referenz oder die Eigentümerschaft eines Werts aus der
+Sobald ein Closure eine Referenz oder das Eigentum an einem Wert aus der
 Umgebung, in der der Closure definiert ist, erfasst hat (und damit beeinflusst,
 was _in_ den Closure verschoben wird), definiert der Code im Rumpf des Closures,
 was mit den Referenzen oder Werten passiert, wenn der Closure später ausgewertet
@@ -606,13 +605,13 @@ versucht die Anzahl der Aufrufe des Closures durch `sort_by_key` beim Sortieren
 von `list` zu zählen. Dieser Code versucht diese Zählung durchzuführen, indem er
 den `String` `value` aus der Umgebung des Closures in den Vektor
 `sort_operations` verschiebt. Der Closure erfasst `value` und verschiebt dann
-`value` aus dem Closure heraus, indem er die Eigentümerschaft von `value` an den
-Vektor `sort_operations` überträgt. Dieser Closure kann einmal aufgerufen
-werden; ein zweiter Aufruf würde nicht funktionieren, da `value` nicht mehr in
-der Umgebung wäre, um erneut in `sort_operations` verschoben zu werden! Daher
-implementiert dieser Closure nur `FnOnce`. Wenn wir versuchen, diesen Code zu
-kompilieren, erhalten wir die Fehlermeldung, dass `value` nicht aus dem Closure
-verschoben werden kann, weil der Closure `FnMut` implementieren muss:
+`value` aus dem Closure heraus, indem er das Eigentum an `value` an den Vektor
+`sort_operations` überträgt. Dieser Closure kann einmal aufgerufen werden; ein
+zweiter Aufruf würde nicht funktionieren, da `value` nicht mehr in der Umgebung
+wäre, um erneut in `sort_operations` verschoben zu werden! Daher implementiert
+dieser Closure nur `FnOnce`. Wenn wir versuchen, diesen Code zu kompilieren,
+erhalten wir die Fehlermeldung, dass `value` nicht aus dem Closure verschoben
+werden kann, weil der Closure `FnMut` implementieren muss:
 
 ```console
 $ cargo run

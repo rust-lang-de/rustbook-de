@@ -264,13 +264,13 @@ Rust-Funktionalität können wir Code schreiben, der unabhängig davon
 funktioniert, ob wir eine reguläre Referenz haben oder einen Typ, der `Deref`
 implementiert.
 
-Der Grund, warum die Methode `deref` eine Referenz auf einen Wert zurückgibt
-und die einfache Dereferenzierung außerhalb der Klammern in `*(y.deref())`
-weiterhin erforderlich ist, hat mit der Eigentümerschaft (ownership) zu tun.
-Wenn die Methode `deref` den Wert direkt anstelle einer Referenz auf den Wert
-zurückgibt, wird der Wert aus `self` herausverschoben. Wenn wir den
-Dereferenzierungsoperator verwenden, wollen wir meistens, wie auch hier, nicht
-die Eigentümerschaft des inneren Wertes von `MyBox<T>` übernehmen.
+Der Grund, warum die Methode `deref` eine Referenz auf einen Wert zurückgibt und
+die einfache Dereferenzierung außerhalb der Klammern in `*(y.deref())` weiterhin
+erforderlich ist, hat mit dem Eigentum zu tun. Wenn die Methode `deref` den Wert
+direkt anstelle einer Referenz auf den Wert zurückgibt, wird der Wert aus `self`
+herausverschoben. Wenn wir den Dereferenzierungsoperator verwenden, wollen wir
+meistens, wie auch hier, nicht das Eigentum am inneren Wertes von `MyBox<T>`
+übernehmen.
 
 Beachte, dass der `*`-Operator durch einen Aufruf der Methode `deref` und dann
 einem Aufruf des `*`-Operators ersetzt wird. Da die Ersetzung des `*`-Operators

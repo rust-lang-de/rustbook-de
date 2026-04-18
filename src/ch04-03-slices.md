@@ -2,7 +2,7 @@
 
 Mit _Slices_ kannst du auf eine zusammenhängende Folge von Elementen in einer
 [Kollektion][collection] referenzieren. Ein Slice ist eine Art Referenz und hat
-daher keine Eigentümerschaft.
+daher kein Eigentum.
 
 Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die einen
 String mit durch Leerzeichen getrennte Wörter entgegennimmt und das erste Wort
@@ -23,12 +23,12 @@ fn first_word(s: &String) -> ?
 ```
 
 Die Funktion `first_word` hat einen Parameter vom Typ `&String`. Wir benötigen
-keine Eigentümerschaft, also ist das in Ordnung. (In idiomatischem Rust
-übernehmen Funktionen nicht die Eigentümerschaft an ihren Argumenten, es sei
-denn, sie müssen es, und die Gründe dafür werden im weiteren Verlauf klar
-werden.) Aber was sollen wir zurückgeben? Wir haben nicht wirklich die Mittel,
-_einen Teil_ eines Strings zu referenzieren. Wir könnten jedoch den Index des
-Wortendes zurückgeben. Versuchen wir das, wie in Listing 4-7 gezeigt.
+kein Eigentum, also ist das in Ordnung. (In idiomatischem Rust übernehmen
+Funktionen nicht das Eigentum an ihren Argumenten, es sei denn, sie müssen es,
+und die Gründe dafür werden im weiteren Verlauf klar werden.) Aber was sollen
+wir zurückgeben? Wir haben nicht wirklich die Mittel, _einen Teil_ eines Strings
+zu referenzieren. Wir könnten jedoch den Index des Wortendes zurückgeben.
+Versuchen wir das, wie in Listing 4-7 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

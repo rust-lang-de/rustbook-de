@@ -1,4 +1,4 @@
-# Eigentümerschaft (ownership) verstehen
+# Eigentümerschaft verstehen
 
 Eigentümerschaft (ownership) ist das wichtigste Alleinstellungsmerkmal von Rust
 und hat tiefgreifende Auswirkungen auf den Rest der Sprache. Sie ermöglicht es

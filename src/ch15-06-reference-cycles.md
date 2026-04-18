@@ -178,16 +178,15 @@ automatisierter Tests, Codeüberprüfungen und anderer Methoden zur
 Softwareentwicklung minimieren solltest.
 
 Eine andere Lösung zur Vermeidung von Referenzzyklen besteht darin, deine
-Datenstrukturen so zu reorganisieren, dass einige Referenzen die
-Eigentümerschaft (ownership) erhalten und andere nicht. Infolgedessen können
-Zyklen entstehen, die aus Beziehungen mit und ohne Eigentümerschaft bestehen,
-und nur die Beziehungen mit Eigentümerschaft beeinflussen, ob ein
-Wert aufgeräumt wird oder nicht. In Listing 15-25 möchten wir immer, dass
-`Cons`-Varianten ihre Liste besitzen, sodass eine Neuorganisation der
-Datenstruktur nicht möglich ist. Schauen wir uns ein Beispiel an, in dem
-Diagramme aus übergeordneten und untergeordneten Knoten verwendet werden, um
-festzustellen, wann Beziehungen ohne Eigentümerschaft ein geeigneter Weg sind,
-um Referenzzyklen zu verhindern.
+Datenstrukturen so zu reorganisieren, dass einige Referenzen das Eigentum
+erhalten und andere nicht. Infolgedessen können Zyklen entstehen, die aus
+Beziehungen mit und ohne Eigentum bestehen, und nur die Beziehungen mit Eigentum
+beeinflussen, ob ein Wert aufgeräumt wird oder nicht. In Listing 15-25 möchten
+wir immer, dass `Cons`-Varianten ihre Liste besitzen, sodass eine
+Neuorganisation der Datenstruktur nicht möglich ist. Schauen wir uns ein
+Beispiel an, in dem Diagramme aus übergeordneten und untergeordneten Knoten
+verwendet werden, um festzustellen, wann Beziehungen ohne Eigentum ein
+geeigneter Weg sind, um Referenzzyklen zu verhindern.
 
 ### Verhindern von Referenzzyklen mit `Weak<T>`
 
@@ -196,12 +195,12 @@ einer `Rc<T>`-Instanz erhöht und eine `Rc<T>`-Instanz nur dann aufgeräumt wird
 wenn ihr `strong_count` 0 ist. Man kann auch eine schwache Referenz (weak
 reference) auf den Wert innerhalb einer `Rc<T>`-Instanz erstellen, indem man
 `Rc::downgrade` aufruft und eine Referenz auf den `Rc<T>` übergibt. Starke
-Referenzen sind die Art und Weise, wie man die Eigentümerschaft an einer
-`Rc<T>`-Instanz teilen kann. Schwache Referenzen drücken keine
-Eigentumsbeziehung aus, und ihre Anzahl hat keinen Einfluss darauf, wann eine
-`Rc<T>` Instanz aufgeräumt wird. Sie werden keinen Referenzzyklus verursachen,
-weil jeder Zyklus, der schwache Referenzen beinhaltet, unterbrochen wird,
-sobald die Anzahl der starken Referenzen der beteiligten Werte 0 ist.
+Referenzen sind die Art und Weise, wie man das Eigentum an einer `Rc<T>`-Instanz
+teilen kann. Schwache Referenzen drücken kein Eigentum aus, und ihre Anzahl hat
+keinen Einfluss darauf, wann eine `Rc<T>` Instanz aufgeräumt wird. Sie werden
+keinen Referenzzyklus verursachen, weil jeder Zyklus, der schwache Referenzen
+beinhaltet, unterbrochen wird, sobald die Anzahl der starken Referenzen der
+beteiligten Werte 0 ist.
 
 Wenn man `Rc::downgrade` aufruft, erhält man einen intelligenten Zeiger vom Typ
 `Weak<T>`. Anstatt den `strong_count` in der `Rc<T>`-Instanz um 1 zu erhöhen,
@@ -254,9 +253,9 @@ struct Node {
 # }
 ```
 
-Wir möchten, dass ein `Node` seine Kind-Elemente besitzt, und wir möchten diese
-Eigentümerschaft mit Variablen teilen, damit wir direkt auf jeden `Node` in
-der Baumstruktur zugreifen können. Zu diesem Zweck definieren wir die
+Wir möchten, dass ein `Node` seine Kind-Elemente besitzt, und wir möchten dieses
+Eigentum mit Variablen teilen, damit wir direkt auf jeden `Node` in der
+Baumstruktur zugreifen können. Zu diesem Zweck definieren wir die
 `Vec<T>`-Elemente als Werte vom Typ `Rc<Node>`. Wir möchten auch ändern, welche
 Knoten Kind-Knoten eines anderen Knotens sind, sodass wir ein `RefCell<T>` in
 `children` um den `Vec<Rc<Node>>` haben.
@@ -312,11 +311,11 @@ dem `leaf.parent` auf `branch` und `branch.children` auf `leaf` zeigt, was dazu
 führen würde, dass die `strong_count`-Werte niemals 0 sein würden.
 
 Wenn man die Beziehungen auf andere Weise betrachtet, sollte ein Eltern-Knoten
-die Eigentümerschaft seiner Kind-Knoten besitzen: Wenn ein Eltern-Knoten
-aufgeräumt wird, sollten auch seine Kind-Knoten aufgeräumt werden. Ein
-Kind-Knoten sollte jedoch keine Eigentümerschaft seines Eltern-Elementes haben:
-Wenn wir einen Kind-Knoten aufräumen, sollte das Eltern-Element weiterhin
-existieren. Dies ist ein Fall für schwache Referenzen!
+das Eigentum an seinen Kind-Knoten besitzen: Wenn ein Eltern-Knoten aufgeräumt
+wird, sollten auch seine Kind-Knoten aufgeräumt werden. Ein Kind-Knoten sollte
+jedoch kein Eigentum an seinem Eltern-Element haben: Wenn wir einen Kind-Knoten
+aufräumen, sollte das Eltern-Element weiterhin existieren. Dies ist ein Fall für
+schwache Referenzen!
 
 Anstelle von `Rc<T>` wird `parent` den Typ `Weak<T>` verwenden, im Speziellen
 einen `RefCell<Weak<Node>>`. Nun sieht unsere `Node`-Strukturdefinition

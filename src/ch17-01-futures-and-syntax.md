@@ -383,7 +383,7 @@ Den Code für den Übergang zwischen den einzelnen Zuständen von Hand zu
 schreiben, wäre allerdings mühsam und fehleranfällig, vor allem, wenn dem Code
 später mehr Funktionalität und mehr Zustände hinzugefügt werden. Stattdessen
 erstellt und verwaltet der Rust-Compiler die Zustandsmaschinen-Datenstrukturen
-für asynchronen Code automatisch. Die normalen Regeln für Borrowing und die
+für asynchronen Code automatisch. Die normalen Regeln für Borrowing und
 Eigentümerschaft von Datenstrukturen gelten auch hier. Erfreulicherweise
 übernimmt der Compiler auch die Überprüfung dieser Regeln für uns und gibt
 hilfreiche Fehlermeldungen aus. Ein paar davon werden wir später im Kapitel

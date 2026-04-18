@@ -341,24 +341,24 @@ das Trait implementieren, müssen nun die Methode `request_review`
 implementieren. Beachte, dass wir statt `self`, `&self` oder `&mut self` als
 ersten Parameter der Methode `self: Box<Self>` haben. Diese Syntax bedeutet,
 dass die Methode nur gültig ist, wenn sie auf einer `Box` mit dem Typ aufgerufen
-wird. Diese Syntax übernimmt die Eigentümerschaft von `Box<Self>`, wodurch der
-alte Zustand ungültig wird, sodass der Zustandswert von `Post` in einen neuen
-Zustand transformiert werden kann.
+wird. Diese Syntax übernimmt das Eigentum an `Box<Self>`, wodurch der alte
+Zustand ungültig wird, sodass der Zustandswert von `Post` in einen neuen Zustand
+transformiert werden kann.
 
-Um den alten Zustand zu konsumieren, muss die Methode `request_review` die
-Eigentümerschaft des Zustandswerts übernehmen. Hier kommt die `Option` im Feld
-`state` von `Post` ins Spiel: Wir rufen die Methode `take` auf, um den
-`Some`-Wert aus dem `state`-Feld zu nehmen und an seiner Stelle ein `None` zu
-hinterlassen, weil Rust es nicht zulässt, dass wir unbestückte Felder in
-Strukturen haben. Dadurch können wir den Wert `state` aus `Post`
-herausverschieben, anstatt ihn auszuleihen. Dann setzen wir den Wert `state`
-des Beitrags auf das Ergebnis dieser Operation.
+Um den alten Zustand zu konsumieren, muss die Methode `request_review` das
+Eigentum am Zustandswert übernehmen. Hier kommt die `Option` im Feld `state` von
+`Post` ins Spiel: Wir rufen die Methode `take` auf, um den `Some`-Wert aus dem
+`state`-Feld zu nehmen und an seiner Stelle ein `None` zu hinterlassen, weil
+Rust es nicht zulässt, dass wir unbestückte Felder in Strukturen haben. Dadurch
+können wir den Wert `state` aus `Post` herausverschieben, anstatt ihn
+auszuleihen. Dann setzen wir den Wert `state` des Beitrags auf das Ergebnis
+dieser Operation.
 
 Wir müssen `state` vorübergehend auf `None` setzen, anstatt es direkt mit Code
-wie `self.state = self.state.request_review();` zu setzen, um die
-Eigentümerschaft des Wertes in `state` zu erhalten. Das stellt sicher, dass
-`Post` nicht den alten Wert in `state` verwenden kann, nachdem wir ihn in einen
-neuen Zustand transformiert haben.
+wie `self.state = self.state.request_review();` zu setzen, um das Eigentum am
+Wert in `state` zu erhalten. Das stellt sicher, dass `Post` nicht den alten Wert
+in `state` verwenden kann, nachdem wir ihn in einen neuen Zustand transformiert
+haben.
 
 Die Methode `request_review` auf `Draft` gibt eine neue, in einer Box
 gespeicherte Instanz einer neuen Struktur `PendingReview` zurück, die den
@@ -576,8 +576,8 @@ geben wir den Wert zurück, der von der Verwendung der Methode `content` für de
 Wert `state` zurückgegeben wird.
 
 Wir rufen die Methode `as_ref` auf `Option` auf, weil wir eine Referenz auf den
-Wert innerhalb `Option` wollen und nicht die Eigentümerschaft am Wert. Weil
-`State` eine `Option<Box<dyn State>>` ist, wird beim Aufruf von `as_ref` eine
+Wert innerhalb `Option` wollen und nicht das Eigentum am Wert. Weil `State` eine
+`Option<Box<dyn State>>` ist, wird beim Aufruf von `as_ref` eine
 `Option<&Box<dyn State>>` zurückgegeben. Würden wir nicht `as_ref` aufrufen,
 bekämen wir einen Fehler, weil wir `state` nicht aus dem ausgeliehenen `&self`
 im Funktionsparameter herausverschieben können.
@@ -949,11 +949,11 @@ Aufrufen von `request_review` auf `DraftPost` erzeugt wird, und eine Methode
 `approve`, die einen `PendingReviewPost` in einen veröffentlichten `Post`
 verwandelt</span>
 
-Die Methoden `request_review` und `approve` übernehmen die Eigentümerschaft von
-`self`, wodurch die Instanzen `DraftPost` und `PendingReviewPost` verbraucht und
-in einen `PendingReviewPost` bzw. einen veröffentlichten `Post` umgewandelt
-werden. Auf diese Weise werden wir keine `DraftPost`-Instanzen mehr haben,
-nachdem wir `request_review` darauf aufgerufen haben, und so weiter. Die
+Die Methoden `request_review` und `approve` übernehmen das Eigentum an `self`,
+wodurch die Instanzen `DraftPost` und `PendingReviewPost` verbraucht und in
+einen `PendingReviewPost` bzw. einen veröffentlichten `Post` umgewandelt werden.
+Auf diese Weise werden wir keine `DraftPost`-Instanzen mehr haben, nachdem wir
+`request_review` darauf aufgerufen haben, und so weiter. Die
 `PendingReviewPost`-Struktur hat keine Methode `content` definiert, sodass der
 Versuch, ihren Inhalt zu lesen, zu einem Compilerfehler führt, wie bei
 `DraftPost`. Da der einzige Weg, eine veröffentlichte `Post`-Instanz zu

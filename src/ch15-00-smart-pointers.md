@@ -24,7 +24,7 @@ Eigentümer mehr vorhanden sind.
 Da Rust das Konzept der Eigentümerschaft (ownership) und Borrowing verwendet,
 besteht ein zusätzlicher Unterschied zwischen Referenzen und intelligenten
 Zeigern: Während Referenzen Zeiger sind, die Daten nur ausleihen, _besitzen_
-intelligente Zeiger in vielen Fällen die Eigentümerschaft der Daten, auf die sie
+intelligente Zeiger in vielen Fällen das Eigentum an den Daten, auf die sie
 zeigen.
 
 Intelligente Zeiger werden normalerweise mithilfe von Strukturen implementiert.
@@ -46,7 +46,7 @@ die am häufigsten verwendeten intelligenten Zeiger der Standardbibliothek
 behandeln:
 
 - `Box<T>` zum Zuweisen von Werten auf dem Heap
-- `Rc<T>`, ein Typ der Referenzen zählt und dadurch mehrfache Eigentümerschaft
+- `Rc<T>`, ein Typ der Referenzen zählt und dadurch mehrfaches Eigentum
   ermöglicht
 - `Ref<T>` und `RefMut<T>` mit Zugriff über `RefCell<T>`, ein Typ, der das
   Einhalten der Borrowing-Regeln zur Laufzeit statt zur Kompilierzeit erzwingt.

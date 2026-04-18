@@ -425,7 +425,7 @@ Mit dem aktualisierten Code in Listing 17-11 werden die Nachrichten in
 Abständen von 500 Millisekunden ausgegeben und nicht mehr alle auf einmal nach
 zwei Sekunden.
 
-#### Verschieben der Eigentümerschaft in einen asynchronen Block
+#### Verschieben des Eigentums in einen asynchronen Block
 
 Das Programm beendet sich aber trotzdem nicht, weil die `while let`-Schleife
 mit `trpl::join` interagiert:
@@ -447,16 +447,16 @@ mit `trpl::join` interagiert:
   an den Anfang dieser Liste bringt.
 
 Im Moment _leiht_ sich der async-Block, in dem wir die Nachrichten senden, nur
-`tx` aus, weil das Senden einer Nachricht keine Eigentümerschaft erfordert. Wenn
-wir `tx` aber in den async-Block _verschieben_ könnten, würde es aufgeräumt
-werden, sobald der Block endet. Im Abschnitt [„Erfassen von Referenzen oder
-Verschieben der Eigentümerschaft“][capture-or-move] in Kapitel 13 haben wir
-gelernt, wie man das Schlüsselwort `move` mit Closures verwendet, und im
-Abschnitt [„Verwenden von `move`-Closures mit Threads“][move-threads] in Kapitel
-16 haben wir gesehen, dass wir oft Daten in Closures verschieben müssen, wenn
-wir mit Threads arbeiten. Für asynchrone Blöcke gilt dieselbe grundlegende
-Dynamik, sodass das Schlüsselwort `move` mit asynchronen Blöcken genauso
-funktioniert wie mit Closures.
+`tx` aus, weil das Senden einer Nachricht kein Eigentum erfordert. Wenn wir `tx`
+aber in den async-Block _verschieben_ könnten, würde es aufgeräumt werden,
+sobald der Block endet. Im Abschnitt [„Erfassen von Referenzen oder Verschieben
+des Eigentums“][capture-or-move] in Kapitel 13 haben wir gelernt, wie man das
+Schlüsselwort `move` mit Closures verwendet, und im Abschnitt [„Verwenden von
+`move`-Closures mit Threads“][move-threads] in Kapitel 16 haben wir gesehen,
+dass wir oft Daten in Closures verschieben müssen, wenn wir mit Threads
+arbeiten. Für asynchrone Blöcke gilt dieselbe grundlegende Dynamik, sodass das
+Schlüsselwort `move` mit asynchronen Blöcken genauso funktioniert wie mit
+Closures.
 
 In Listing 17-12 ändern wir den Block zum Senden von Nachrichten von `async`
 zu `async move`.
@@ -597,14 +597,14 @@ Erhalten: 'für'
 Erhalten: 'dich'
 ```
 
-Wir haben untersucht, wie man mit Nachrichtenübermittlung Daten zwischen
-Futures sendet, wie Code innerhalb eines asynchronen Blocks sequenziell
-ausgeführt wird, wie man die Eigentümerschaft in einen asynchronen Block
-verschiebt und wie man auf mehrere Futures wartet. Als Nächstes wollen wir uns
-damit befassen, wie und warum man der Laufzeitumgebung mitteilt, dass sie zu
-einer anderen Aufgabe wechseln kann.
+Wir haben untersucht, wie man mit Nachrichtenübermittlung Daten zwischen Futures
+sendet, wie Code innerhalb eines asynchronen Blocks sequenziell ausgeführt wird,
+wie man das Eigentum in einen asynchronen Block verschiebt und wie man auf
+mehrere Futures wartet. Als Nächstes wollen wir uns damit befassen, wie und
+warum man der Laufzeitumgebung mitteilt, dass sie zu einer anderen Aufgabe
+wechseln kann.
 
-[capture-or-move]: ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-der-eigentümerschaft
+[capture-or-move]: ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-des-eigentums
 [if-let]: ch06-03-if-let.html
 [join-handles]: ch16-01-threads.html#warten-auf-das-ende-aller-threads
 [message-passing-threads]: ch16-02-message-passing.html

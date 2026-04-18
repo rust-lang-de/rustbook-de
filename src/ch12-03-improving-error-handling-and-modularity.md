@@ -196,8 +196,8 @@ von `parse_config`, wo wir früher String Slices zurückgegeben haben, die auf
 es aneigenbare (owned) `String`-Werte enthält. Die `args`-Variable in `main` ist
 der Eigentümer der Argumentwerte und lässt die Funktion `parse_config` diese nur
 ausleihen, was bedeutet, dass wir Rusts Regeln für das Borrowing verletzen
-würden, wenn `Config` versucht, die Eigentümerschaft für die Werte in `args` zu
-nehmen.
+würden, wenn `Config` versucht, das Eigentum an den Werte in `args` zu
+übernehmen.
 
 Wir könnten die `String`-Daten auf verschiedene Weise verwalten, aber der
 einfachste, wenn auch etwas ineffiziente Weg ist es, die Methode `clone` der
@@ -212,11 +212,11 @@ bekommen.
 > ### Die Kompromisse beim Verwenden von `clone`
 >
 > Viele Rust-Entwickler neigen dazu, das Verwenden von `clone` zur Lösung von
-> Eigentümerschaftsproblemen wegen der Laufzeitkosten zu vermeiden. In [Kapitel
-> 13][ch13] erfährst du, wie du in solchen Situationen effizientere Methoden
-> einsetzen kannst. Aber für den Moment ist es in Ordnung, ein paar Strings zu
-> kopieren, um weiter voranzukommen, da du diese Kopien nur einmal erstellen wirst
-> und dein Dateipfad und deinen Such-String sehr klein sind. Es ist besser, ein
+> Eigentumsproblemen wegen der Laufzeitkosten zu vermeiden. In [Kapitel 13][ch13]
+> erfährst du, wie du in solchen Situationen effizientere Methoden einsetzen
+> kannst. Aber für den Moment ist es in Ordnung, ein paar Strings zu kopieren, um
+> weiter voranzukommen, da du diese Kopien nur einmal erstellen wirst und dein
+> Dateipfad und deinen Such-String sehr klein sind. Es ist besser, ein
 > funktionierendes Programm zu haben, das ein bisschen ineffizient ist, als zu
 > versuchen, den Code beim ersten Durchgang zu hyperoptimieren. Je mehr Erfahrung
 > du mit Rust sammelst, desto einfacher wird es, mit der effizientesten Lösung zu
