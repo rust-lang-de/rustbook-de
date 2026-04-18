@@ -719,11 +719,10 @@ Diese Technik ist ganz ordentlich! Durch die Verwendung von `RefCell<T>` haben
 wir einen nach außen unveränderbaren `List`-Wert. Wir können jedoch die Methoden
 für `RefCell<T>` verwenden, die den Zugriff auf die innere Veränderbarkeit
 ermöglichen, damit wir unsere Daten bei Bedarf ändern können. Die
-Laufzeitprüfungen der Borrowing-Regeln schützen uns vor
-Daten-Wettlaufsituationen (data races), und manchmal lohnt es sich, ein wenig
-Geschwindigkeit für diese Flexibilität in unseren Datenstrukturen einzutauschen.
-Beachte, dass `RefCell<T>` nicht bei nebenläufigem Code funktioniert! `Mutex<T>`
-ist die Thread-sichere (thread-safe) Version von `RefCell<T>` und wir werden
-`Mutex<T>` in Kapitel 16 besprechen.
+Laufzeitprüfungen der Borrowing-Regeln schützen uns vor Data Races, und manchmal
+lohnt es sich, ein wenig Geschwindigkeit für diese Flexibilität in unseren
+Datenstrukturen einzutauschen. Beachte, dass `RefCell<T>` nicht bei
+nebenläufigem Code funktioniert! `Mutex<T>` ist die Thread-sichere (thread-safe)
+Version von `RefCell<T>` und wir werden `Mutex<T>` in Kapitel 16 besprechen.
 
 [wheres-the-operator]: ch05-03-method-syntax.html#wo-ist-der-operator--

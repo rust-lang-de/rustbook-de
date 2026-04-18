@@ -88,12 +88,12 @@ Die Rust-Standardbibliothek bietet Kanäle (channels) für die
 Nachrichtenübermittlung und intelligente Zeigertypen wie `Mutex<T>` und
 `Arc<T>`, die sicher in nebenläufigen Kontexten verwendet werden können. Das
 Typsystem und der Borrow Checker stellen sicher, dass der Code, der diese
-Lösungen verwendet, nicht mit Daten-Wettlaufsituationen (data races) oder
-ungültigen Referenzen endet. Sobald du deinen Code zum Kompilieren gebracht
-hast, kannst du sicher sein, dass er problemlos mit mehreren Threads läuft, ohne
-die schwer aufspürbaren Fehler, die in anderen Sprachen üblich sind.
-Nebenläufige Programmierung ist kein Konzept mehr, vor dem man sich fürchten
-muss: Gehe hinaus und mache deine Programme nebenläufig &ndash; furchtlos!
+Lösungen verwendet, nicht mit Data Races oder ungültigen Referenzen endet.
+Sobald du deinen Code zum Kompilieren gebracht hast, kannst du sicher sein, dass
+er problemlos mit mehreren Threads läuft, ohne die schwer aufspürbaren Fehler,
+die in anderen Sprachen üblich sind. Nebenläufige Programmierung ist kein
+Konzept mehr, vor dem man sich fürchten muss: Gehe hinaus und mache deine
+Programme nebenläufig &ndash; furchtlos!
 
 [sharing-mutext]: ch16-03-shared-state.html#gemeinsamer-zugriff-auf-mutext
 [nomicon3]: https://doc.rust-lang.org/nomicon/index.html

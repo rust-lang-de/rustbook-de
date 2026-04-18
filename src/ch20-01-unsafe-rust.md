@@ -170,15 +170,15 @@ Wert zuzugreifen, auf den er zeigt, könnten wir es am Ende mit einem ungültige
 Wert zu tun haben.
 
 Beachte auch, dass wir in den Codeblöcken 20-1 und 20-3 die Rohzeiger `*const
- i32` und `*mut i32` erstellt haben, die beide auf die gleiche Speicherstelle
+i32` und `*mut i32` erstellt haben, die beide auf die gleiche Speicherstelle
 zeigten, in der `num` gespeichert ist. Wenn wir stattdessen versucht hätten,
 eine unveränderbare und einen veränderbare Referenz auf `num` zu erstellen,
 hätte sich der Code nicht kompilieren lassen, weil die Eigentumsregeln von Rust
 eine veränderbare Referenz nicht gleichzeitig mit unveränderbaren Referenzen
 zulassen. Mit Rohzeigern können wir einen veränderbaren und einen
 unveränderbaren Zeiger auf denselben Ort erstellen und Daten über den
-veränderbaren Zeiger ändern, wodurch möglicherweise eine
-Daten-Wettlaufsituation (data race) entsteht. Sei vorsichtig!
+veränderbaren Zeiger ändern, wodurch möglicherweise eine Data Race entsteht. Sei
+vorsichtig!
 
 Warum solltest du bei all diesen Gefahren jemals Rohzeiger verwenden? Ein
 Hauptanwendungsfall ist die Kopplung mit C-Code, wie du im nächsten Abschnitt
@@ -530,7 +530,7 @@ Diese Verwendung von `extern` erfordert `unsafe` nur im Attribut, nicht im
 In diesem Buch haben wir noch nicht über _globale Variablen_ gesprochen, die
 Rust zwar unterstützt, die aber wegen der Eigentumsregeln von Rust problematisch
 sein können. Wenn zwei Threads auf dieselbe veränderbare, globale Variable
-zugreifen, kann dies zu einer Daten-Wettlaufsituation (data race) führen.
+zugreifen, kann dies zu einer Data Race führen.
 
 In Rust werden globale Variablen als _statische_ Variablen bezeichnet.
 Codeblock 20-10 zeigt ein Beispiel für die Deklaration und Verwendung einer
@@ -598,8 +598,8 @@ Schlüsselwort `mut`. Jeder Code, der `COUNTER` liest oder schreibt, muss
 innerhalb eines `unsafe`-Blocks liegen. Der Code in Codeblock 20-11 kompiliert
 und gibt `COUNTER: 3` so, wie wir es erwarten würden, weil er nur einen einzigen
 Thread hat. Wenn mehrere Threads auf `COUNTER` zugreifen, würde dies
-wahrscheinlich zu einer Daten-Wettlaufsituation führen, es handelt sich also um
-ein undefiniertes Verhalten. Daher müssen wir die gesamte Funktion als `unsafe`
+wahrscheinlich zu einer Data Race führen, es handelt sich also um ein
+undefiniertes Verhalten. Daher müssen wir die gesamte Funktion als `unsafe`
 kennzeichnen und die Sicherheitseinschränkung dokumentieren, damit jeder, der
 die Funktion aufruft, weiß, was er sicher tun darf und was nicht.
 
@@ -621,9 +621,9 @@ veränderbare Variablen über Roh-Zeiger erstellt werden müssen, trägt dazu be
 die Sicherheitsanforderungen deutlicher zu machen.
 
 Bei veränderbaren Daten, die global zugänglich sind, ist es schwierig,
-sicherzustellen, dass es keine Daten-Wettlaufsituationen gibt, weshalb Rust
-veränderbare, statische Variablen als unsicher betrachtet. Wann immer möglich,
-ist es vorzuziehen, die in Kapitel 16 besprochenen Nebenläufigkeitstechniken und
+sicherzustellen, dass es keine Data Races gibt, weshalb Rust veränderbare,
+statische Variablen als unsicher betrachtet. Wann immer möglich, ist es
+vorzuziehen, die in Kapitel 16 besprochenen Nebenläufigkeitstechniken und
 Thread-sicheren, intelligenten Zeiger zu verwenden, damit der Compiler prüft, ob
 der Datenzugriff von verschiedenen Threads sicher ist.
 

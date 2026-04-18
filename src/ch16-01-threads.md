@@ -14,7 +14,7 @@ auch die Komplexität. Da Threads gleichzeitig laufen können, gibt es keine
 inhärente Garantie für die Reihenfolge, in der Teile deines Codes in
 verschiedenen Threads ausgeführt werden. Dies kann zu Problemen führen wie:
 
-- Wettlaufsituationen (race conditions), bei denen Threads auf Daten oder
+- Race Conditions, bei denen Threads auf Daten oder
   Ressourcen in einer inkonsistenten Reihenfolge zugreifen.
 - Deadlocks, bei denen zwei Threads auf den jeweils anderen warten, sodass
   beide Threads nicht fortgesetzt werden können.

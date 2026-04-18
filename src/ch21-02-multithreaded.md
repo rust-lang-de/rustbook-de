@@ -1018,7 +1018,7 @@ wollen wir die Aufträge auf mehrere Threads verteilen, indem wir den einzigen
 Außerdem erfordert das Entfernen eines Auftrags aus der Warteschlange des Kanals
 eine Mutation von `receiver`, sodass die Threads einen sicheren Weg benötigen,
 um `receiver` gemeinsam zu nutzen und zu modifizieren; andernfalls könnten wir
-Wettlaufsituationen (race conditions) erhalten (wie in Kapitel 16 behandelt).
+Race Conditions erhalten (wie in Kapitel 16 behandelt).
 
 Erinnere dich an die Thread-sicheren intelligenten Zeiger, die in Kapitel 16
 besprochen wurden: Um die Eigentümerschaft über mehrere Threads zu teilen und

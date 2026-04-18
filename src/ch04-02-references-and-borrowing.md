@@ -216,22 +216,21 @@ Referenz und ihrer Verwendung haben wir versucht, eine andere veränderbare
 Referenz in `r2` zu erstellen, der die gleichen Daten wie `r1` ausleiht.
 
 Die Beschränkung, die mehrere veränderbare Referenz auf dieselben Daten zur
-gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr
-kontrollierten Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn
-in den meisten Sprachen kann man verändern wann immer man will. Diese
-Beschränkung hat den Vorteil, dass Rust Daten-Wettlaufsituation zur
-Kompilierzeit verhindern kann. Eine _Daten-Wettlaufsituation_ (data race) ist
-ähnlich einer Wettlaufsituation (race condition) und tritt auf, wenn diese drei
-Verhaltensweisen auftreten:
+gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr kontrollierten
+Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn in den meisten
+Sprachen kann man verändern wann immer man will. Diese Beschränkung hat den
+Vorteil, dass Rust Data Races zur Kompilierzeit verhindern kann. Eine _Data
+Race_ ist ähnlich einer Race Condition (engl. Wettlaufsituation) und tritt auf,
+wenn diese drei Verhaltensweisen vorliegen:
 
 - Zwei oder mehr Zeiger greifen gleichzeitig auf die gleichen Daten zu.
 - Mindestens einer der Zeiger wird zum Schreiben auf die Daten verwendet.
 - Es gibt keinen Mechanismus, um den Zugriff auf die Daten zu synchronisieren.
 
-Daten-Wettlaufsituationen verursachen undefiniertes Verhalten und können
-schwierig zu diagnostizieren und zu beheben sein, wenn du versuchst, sie zur
-Laufzeit aufzuspüren; Rust verhindert dieses Problem, indem es Code mit
-Daten-Wettlaufsituationen gar nicht erst kompiliert!
+Data Races verursachen undefiniertes Verhalten und können schwierig zu
+diagnostizieren und zu beheben sein, wenn du versuchst, sie zur Laufzeit
+aufzuspüren; Rust verhindert dieses Problem, indem es Code mit Data Races gar
+nicht erst kompiliert!
 
 Wie immer können wir geschweifte Klammern verwenden, um einen neuen
 Gültigkeitsbereich zu schaffen, der mehrere veränderbare Referenzen erlaubt,
