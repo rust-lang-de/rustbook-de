@@ -28,7 +28,7 @@
   - [Beispielprogramm mit Strukturen](ch05-02-example-structs.md)
   - [Methoden](ch05-03-method-syntax.md)
 
-- [Aufzählungen und Musterabgleich (pattern matching)](ch06-00-enums.md)
+- [Aufzählungen und Pattern Matching](ch06-00-enums.md)
   - [Eine Aufzählung definieren](ch06-01-defining-an-enum.md)
   - [Das Kontrollflusskonstrukt `match`](ch06-02-match.md)
   - [Prägnanter Kontrollfluss mit `if let` und `let...else`](ch06-03-if-let.md)

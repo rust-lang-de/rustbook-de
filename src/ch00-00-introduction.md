@@ -161,7 +161,7 @@ ermöglichen, untersuchen.
 
 **Kapitel 18** befasst sich mit dem Vergleich von Rust-Idiomen mit
 objektorientierten Programmierprinzipien, mit denen du vielleicht vertraut bist.
-**Kapitel 19** ist ein Nachschlagewerk zu Muster und Musterabgleich, einem
+**Kapitel 19** ist ein Nachschlagewerk zu Muster und Pattern Matching, einem
 mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. **Kapitel 20**
 enthält ein Sammelsurium an interessanten fortgeschrittenen Themen, darunter
 unsafe Rust, Makros und mehr zu Lebensdauer, Traits, Typen, Funktionen und

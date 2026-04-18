@@ -23,7 +23,7 @@ Im Einzelnen wird Folgendes behandelt:
   als du vielleicht denken magst!)
 
 Wir haben uns bereits andere Rust-Funktionalitäten wie Aufzählungen (enums) und
-Musterabgleich (pattern matching) angesehen, die ebenfalls vom funktionalen Stil
-beeinflusst sind. Da das Beherrschen von Closures und Iteratoren ein wichtiger
-Bestandteil für das Schreiben von schnellem, idiomatischem Rust-Programmcode
-ist, wird ihnen das gesamte Kapitel gewidmet.
+Pattern Matching angesehen, die ebenfalls vom funktionalen Stil beeinflusst
+sind. Da das Beherrschen von Closures und Iteratoren ein wichtiger Bestandteil
+für das Schreiben von schnellem, idiomatischem Rust-Programmcode ist, wird ihnen
+das gesamte Kapitel gewidmet.

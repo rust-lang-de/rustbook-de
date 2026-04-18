@@ -284,8 +284,8 @@ fn main() {
 
 Die Variable `tup` bindet das gesamte Tupel, da ein Tupel als ein einziges
 Verbundelement betrachtet wird. Um die einzelnen Werte aus einem Tupel
-herauszubekommen, können wir den Musterabgleich verwenden, um einen Tupelwert
-zu destrukturieren, etwa so:
+herauszubekommen, können wir Pattern Matching verwenden, um einen Tupelwert zu
+destrukturieren, etwa so:
 
 <span class="filename">Dateiname: src/main.rs</span>
 

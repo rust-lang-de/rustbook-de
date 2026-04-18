@@ -681,13 +681,12 @@ von `..` an zwei Stellen wie dieser mehrdeutig ist.
 
 ### Abgleichsbedingungen hinzufügen
 
-Eine _Abgleichsbedingung_ (match guard) ist eine zusätzliche `if`-Bedingung,
-die nach dem Muster in einem `match`-Zweig angegeben wird und die zusammen mit
-dem Musterabgleich ebenfalls übereinstimmen muss, damit dieser Zweig ausgewählt
+Eine _Abgleichsbedingung_ (match guard) ist eine zusätzliche `if`-Bedingung, die
+nach dem Muster in einem `match`-Zweig angegeben wird und die zusammen mit
+Pattern Matching ebenfalls übereinstimmen muss, damit dieser Zweig ausgewählt
 wird. Abgleichsbedingungen sind nützlich, um komplexere Ideen auszudrücken, als
-es ein Muster allein erlaubt. Beachte jedoch, dass sie nur in
-`match`-Ausdrücken verfügbar sind, nicht in `if let`- oder `while
- let`-Ausdrücken.
+es ein Muster allein erlaubt. Beachte jedoch, dass sie nur in `match`-Ausdrücken
+verfügbar sind, nicht in `if let`- oder `while let`-Ausdrücken.
 
 Die Bedingung kann Variablen verwenden, die im Muster erstellt wurden.
 Listing 19-26 zeigt ein `match`, wobei der erste Zweig das Muster `Some(x)`

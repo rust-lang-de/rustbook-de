@@ -74,9 +74,8 @@ was hier übereinstimmt, an die Variable `x`.“ Da der Name `x` das gesamte
 Muster ist, bedeutet dieses Muster effektiv: „Binde alles an die Variable `x`,
 unabhängig vom Wert.“
 
-Um den Aspekt des Musterabgleichs (pattern matching) von `let` besser zu
-verstehen, betrachte Listing 19-1, der ein Muster mit `let` verwendet, um ein
-Tupel zu destrukturieren.
+Um Pattern Matching von `let` besser zu verstehen, betrachte Listing 19-1, der
+ein Muster mit `let` verwendet, um ein Tupel zu destrukturieren.
 
 ```rust
 let (x, y, z) = (1, 2, 3);
