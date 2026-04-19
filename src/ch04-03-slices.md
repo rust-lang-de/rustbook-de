@@ -225,7 +225,7 @@ zeigt." src="img/trpl04-07.svg" class="center" style="width: 50%;" />
 
 Wenn du mit der Bereichssyntax `..` in Rust beim Index 0 beginnen willst, kannst
 du den Wert vor den zwei Punkten weglassen. Mit anderen Worten sind diese
-Audrücke gleich:
+Ausdrücke gleich:
 
 ```rust
 let s = String::from("Hallo");

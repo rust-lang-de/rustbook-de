@@ -110,7 +110,7 @@ erscheinen). Der Rumpf des Closures ruft `self.most_stocked()` auf. Wir
 definieren den Closure hier, und die Implementierung von `unwrap_or_else` wird
 den Closure später auswerten, wenn das Ergebnis benötigt wird.
 
-Die Ausführung dieses Codes gibt folgendes aus:
+Die Ausführung dieses Codes gibt Folgendes aus:
 
 ```console
 $ cargo run
@@ -321,7 +321,7 @@ Variablenname ein Funktionsname wäre.
 Da wir mehrere unveränderbare Referenzen auf `list` zur gleichen Zeit haben
 können, ist `list` immer noch vom Code vor der Closure-Definition zugreifbar,
 sowie nach der Closure-Definition und vor dem Aufruf des Closures, und nach dem
-Aufruf des Closures. Dieser Code kompiliert, läuft und gibt folgendes aus:
+Aufruf des Closures. Dieser Code kompiliert, läuft und gibt Folgendes aus:
 
 ```console
 $ cargo run

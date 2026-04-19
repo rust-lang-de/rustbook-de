@@ -339,12 +339,12 @@ würde, wenn sie bei `break` ankommt.
 
 ### Dynamisch große Typen und das Trait `Sized`
 
-Rusts muss bestimmte Details über seine Typen kennen, z.B. wie viel Platz für
+Rust muss bestimmte Details über seine Typen kennen, z.B. wie viel Platz für
 einen Wert eines bestimmten Typs zuzuweisen ist. Das lässt eine Ecke des
 Typsystems zunächst etwas verwirrend erscheinen: Das Konzept der _dynamisch
 großen Typen_ (dynamically sized types). Diese Typen, die manchmal als _DSTs_
-oder _Typen ohne Größe_ (unsized types) bezeichnet werden, erlauben es uns,
-Code mit Werten zu schreiben, deren Größe wir nur zur Laufzeit kennen können.
+oder _Typen ohne Größe_ (unsized types) bezeichnet werden, erlauben es uns, Code
+mit Werten zu schreiben, deren Größe wir nur zur Laufzeit kennen können.
 
 Schauen wir uns die Details eines dynamisch großen Typs namens `str` an, den wir
 im ganzen Buch verwendet haben. Das stimmt, nicht `&str`, sondern `str` an sich

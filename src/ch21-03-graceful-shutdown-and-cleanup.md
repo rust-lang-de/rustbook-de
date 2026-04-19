@@ -245,7 +245,7 @@ impl Drop for ThreadPool {
 ```
 
 Dadurch wird der Compilerfehler behoben, und es sind keine weiteren Änderungen
-an unserem Code erforderlich. Beachte, das `drop` bei einem Programmabbruch
+an unserem Code erforderlich. Beachte, dass `drop` bei einem Programmabbruch
 aufgerufen werden kann, und wenn dann auch `unwrap` abbricht, eine doppelte
 Fehlersituation verursacht werden könnte, was sofort zum Programmende und zum
 Abbruch aller laufenden Bereinigungsvorgänge führen würde. Für ein
@@ -268,7 +268,7 @@ Um dieses Problem zu beheben, brauchen wir eine Änderung in der Implementierung
 von `drop` in `ThreadPool` und dann eine Änderung in der `Worker`-Schleife.
 
 Zuerst ändern wir die Implementierung von `drop` in `ThreadPool`, um den
-`sender` explizit zu aufzuräumen, bevor wir auf das Ende der Threads warten.
+`sender` explizit aufzuräumen, bevor wir auf das Ende der Threads warten.
 Listing 21-23 zeigt die Änderungen an `ThreadPool`, um den `sender` explizit
 aufzuräumen. Anders als beim Thread, _müssen_ wir hier eine `Option` verwenden,
 um den `sender` mit `Option::take` aus dem `ThreadPool` herausnehmen zu können.
@@ -571,7 +571,7 @@ zu beenden. Die `Worker`-Instanzen geben jeweils eine Nachricht aus, wenn sie
 die Verbindung trennen, und dann ruft der Thread-Pool `join` auf, um das Ende
 jedes `Worker`-Threads zu warten.
 
-Beachte einen interessanten Aspekt diesem speziellen Programmlauf: Der
+Beachte einen interessanten Aspekt in diesem speziellen Programmlauf: Der
 `ThreadPool` hat den `sender` aufgeräumt, und bevor ein `Worker` einen Fehler
 erhalten hat, haben wir versucht, auf `Worker 0` zu warten. `Worker 0` hatte
 noch keinen Fehler von `recv` erhalten, also blockierte der Haupt-Thread und

@@ -10,7 +10,7 @@ In diesem Anhang findest du eine Referenz aller Traits in der
 Standardbibliothek, die du mit `derive` verwenden kannst. Jeder Abschnitt
 umfasst:
 
-- Welche Operatoren und Methoden nach Ableiten dieses Traits ermöglicht werden
+- Welche Operatoren und Methoden nach dem Ableiten dieses Traits ermöglicht werden
 - Was die Implementierung des durch `derive` bereitgestellten Traits bewirkt
 - Was die Implementierung des Traits über den Typ aussagt
 - Die Bedingungen, unter denen du das Trait implementieren darfst oder nicht
@@ -38,7 +38,7 @@ Die Liste der ableitbaren Traits in diesem Anhang ist nicht vollständig:
 Bibliotheken können `derive` für ihre eigenen Traits implementieren, sodass die
 Liste der Traits, die du mit `derive` verwenden kannst, wahrlich unbegrenzt ist.
 Das Implementieren von `derive` verwendet ein prozedurales Makro, das im
-Abschnitt [„Benutzerdefinierte Makro mit `derive`“][custom-derive-macros] in
+Abschnitt [„Benutzerdefinierte `derive`-Makros“][custom-derive-macros] in
 Kapitel 20 behandelt wird.
 
 ### `Debug` für die Programmierer-Ausgabe
@@ -152,7 +152,7 @@ dass das Kopieren eines Wertes sehr schnell gehen wird.
 Du kannst `Copy` auf jeden Typ ableiten, dessen Teile alle `Copy`
 implementieren. Du kannst das Trait `Copy` nur auf Typen anwenden, die auch
 `Clone` implementieren, weil ein Typ, der `Copy` implementiert, eine triviale
-Implementierung von `Clone` hat, das die gleiche Aufgabe wie `Copy` erfüllt.
+Implementierung von `Clone` hat, die die gleiche Aufgabe wie `Copy` erfüllt.
 
 Das Trait `Copy` ist selten erforderlich; Typen, die `Copy` implementieren,
 verfügen über Optimierungen, d.h. du musst nicht `clone` aufrufen, was den Code
@@ -194,7 +194,7 @@ z.B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
 `None` hat, gibt die Methode `unwrap_or_default` das Ergebnis von
 `Default::default` für den Typ `T` zurück, der in `Option<T>` gespeichert ist.
 
-[custom-derive-macros]: ch20-05-macros.html#benutzerdefinierte-makro-mit-derive
+[custom-derive-macros]: ch20-05-macros.html#benutzerdefinierte-derive-makros
 [stack-only-data-copy]: ch04-01-what-is-ownership.html#reine-stack-daten-copy
 [std-lib]: https://doc.rust-lang.org/std/index.html
 [struct-update-syntax]: ch05-01-defining-structs.html#instanzen-erzeugen-mit-der-strukturaktualisierungssyntax

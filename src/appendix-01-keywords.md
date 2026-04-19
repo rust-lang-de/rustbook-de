@@ -54,7 +54,7 @@ einer Beschreibung ihrer Funktion.
 - `true` &ndash; Boolesches Literal für „wahr“
 - `type` &ndash; einen Typ-Alias oder assoziierten Typ definieren
 - `union` &ndash; eine [Vereinigung (union)][union] definieren; ist nur ein
-  Schlüsselwort innerhalb einer Vereinigungdeklaration
+  Schlüsselwort innerhalb einer Vereinigungsdeklaration
 - `unsafe` &ndash; Code, Funktionen, Trait und Implementierungen als unsicher
   kennzeichnen
 - `use` &ndash; Symbole in den Gültigkeitsbereich bringen; genaue Spezifikation
@@ -134,17 +134,16 @@ Funktionsnamen in seiner Definition sowie an der Stelle, an der die Funktion in
 
 Roh-Bezeichner erlauben es dir, jedes beliebige Wort als Bezeichner zu
 verwenden, auch wenn dieses Wort ein reserviertes Schlüsselwort ist. Dies gibt
-uns mehr Freiheit bei der Wahl der Bezeichner und ermöglicht uns die
-Integration in Programme, die in einer Sprache geschrieben wurden, in der diese
-Wörter keine Schlüsselwörter sind. Darüber hinaus ermöglicht dir der
-Roh-Bezeichner das Verwenden von Bibliotheken, die in einer anderen
-Rust-Edition, als deine Crate verwendet, geschrieben wurden. Zum Beispiel ist
-`try` in Edition 2015 kein Schlüsselwort, in den Editionen 2018, 2021 und 2024
-aber schon. Wenn du auf eine Bibliothek angewiesen bist, die mit Edition 2015
-geschrieben wurde und eine Funktion `try` hat, musst du die
-Roh-Bezeichner-Syntax verwenden, in diesem Fall `r#try`, um diese Funktion von
-deinem Code in einer neueren Edition aus aufzurufen. Siehe [Anhang
-E][appendix-e] für weitere Informationen zu Editionen.
+uns mehr Freiheit bei der Wahl der Bezeichner und ermöglicht uns die Integration
+in Programme, die in einer Sprache geschrieben wurden, in der diese Wörter keine
+Schlüsselwörter sind. Darüber hinaus ermöglicht dir der Roh-Bezeichner das
+Verwenden von Bibliotheken, die in einer anderen Rust-Edition als deine Crate
+verwendet, geschrieben wurden. Zum Beispiel ist `try` in Edition 2015 kein
+Schlüsselwort, in den Editionen 2018, 2021 und 2024 aber schon. Wenn du auf eine
+Bibliothek angewiesen bist, die mit Edition 2015 geschrieben wurde und eine
+Funktion `try` hat, musst du die Roh-Bezeichner-Syntax verwenden, in diesem Fall
+`r#try`, um diese Funktion von deinem Code in einer neueren Edition aufzurufen.
+Siehe [Anhang E][appendix-e] für weitere Informationen zu Editionen.
 
 [appendix-e]: appendix-05-editions.html
 [raw-identifiers]: #roh-bezeichner

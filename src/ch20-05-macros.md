@@ -66,11 +66,11 @@ werden mit der Struktur dieses Quellcodes verglichen. Bei Übereinstimmung erset
 der mit dem Muster verknüpfte Code den an das Makro übergebenen Code. Dies alles
 geschieht während der Kompilierung.
 
-Um ein Makro zu definieren, verwendest du das Konstrukt `macro_rules!`. Lass
-uns untersuchen, wie man `macro_rules!` benutzt, indem wir uns ansehen, wie das
+Um ein Makro zu definieren, verwendest du das Konstrukt `macro_rules!`. Lass uns
+untersuchen, wie man `macro_rules!` benutzt, indem wir uns ansehen, wie das
 Makro `vec!` definiert wird. Kapitel 8 behandelte, wie wir das Makro `vec!`
 verwenden können, um einen neuen Vektor mit bestimmten Werten zu erzeugen. Zum
-Beispiel erzeugt das folgende Makro einen neuen Vektor mit drei ganze Zahlen:
+Beispiel erzeugt das folgende Makro einen neuen Vektor mit drei ganzen Zahlen:
 
 ```rust
 let v: Vec<u32> = vec![1, 2, 3];
@@ -217,7 +217,7 @@ Schauen wir uns die verschiedenen Arten prozeduraler Makros an. Wir beginnen
 mit einem benutzerdefinierten `derive`-Makro und erklären dann die kleinen
 Unterschiede, in denen sich die anderen Formen unterscheiden.
 
-### Benutzerdefinierte Makro mit `derive`
+### Benutzerdefinierte `derive`-Makros
 
 Lass uns eine Crate namens `hello_macro` erstellen, die ein Trait namens
 `HelloMacro` mit einer assoziierten Funktion namens `hello_macro` definiert.
@@ -498,7 +498,7 @@ annotierten Typs enthält, indem wir `ast.ident` verwenden. Die Struktur in
 Listing 20-41 zeigt, dass, wenn wir die Funktion `impl_hello_macro` auf den Code
 in Listing 20-37 anwenden, das erhaltene `ident` ein Feld `ident` mit dem Wert
 `"Pancakes"` enthält. So wird die Variable `name` in Listing 20-42 eine Instanz
-der Struktur `Ident` enthalten, die den String `"Pancakes"` ausgibt, dem Name
+der Struktur `Ident` enthalten, die den String `"Pancakes"` ausgibt, dem Namen
 der Struktur in Listing 20-37.
 
 Mit dem Makro `quote!` können wir den Rust-Code definieren, den wir zurückgeben

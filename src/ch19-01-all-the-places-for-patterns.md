@@ -74,8 +74,8 @@ was hier übereinstimmt, an die Variable `x`.“ Da der Name `x` das gesamte
 Muster ist, bedeutet dieses Muster effektiv: „Binde alles an die Variable `x`,
 unabhängig vom Wert.“
 
-Um Pattern Matching von `let` besser zu verstehen, betrachte Listing 19-1, der
-ein Muster mit `let` verwendet, um ein Tupel zu destrukturieren.
+Um Pattern Matching mit `let` besser zu verstehen, betrachte Listing 19-1, das
+`let` mit einem Muster verwendet, um ein Tupel zu destrukturieren.
 
 ```rust
 let (x, y, z) = (1, 2, 3);
@@ -101,7 +101,7 @@ funktioniert.
 let (x, y) = (1, 2, 3);
 ```
 
-<span class="caption">Listing 19-2: Fehlerhaft aufgebautes Musters, dessen
+<span class="caption">Listing 19-2: Fehlerhaft aufgebautes Muster, dessen
 Variablen nicht mit der Anzahl der Elemente im Tupel übereinstimmen</span>
 
 Der Versuch, diesen Code zu kompilieren, führt zu folgendem Typfehler:
@@ -129,7 +129,7 @@ oder `..` ignorieren, wie du im Abschnitt [„Ignorieren von Werten in einem
 Muster“][ignoring-values-in-a-pattern] sehen wirst. Wenn das Problem darin
 besteht, dass wir zu viele Variablen im Muster haben, besteht die Lösung darin,
 die Typen aufeinander abzustimmen, indem Variablen entfernt werden, sodass die
-Anzahl der Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.
+Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.
 
 ### Bedingte `if let`-Ausdrücke
 
@@ -208,8 +208,8 @@ haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.
 Analog zu `if let` ermöglicht die bedingte Schleife `while let`, dass eine
 `while`-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Auf
 ähnliche Weise zeigen wir in Listing 19-4 eine `while let`-Schleife, die auf
-Nachrichten wartet, die zwischen Threads gesendet werden. In aktuellen Fall
-prüfen wir ein `Result` statt einer einer `Option`.
+Nachrichten wartet, die zwischen Threads gesendet werden. Im aktuellen Fall
+prüfen wir ein `Result` statt einer `Option`.
 
 ```rust
 let (tx, rx) = std::sync::mpsc::channel();

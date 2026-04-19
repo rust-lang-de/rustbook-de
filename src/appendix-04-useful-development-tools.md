@@ -94,11 +94,11 @@ E][appendix-e] aufgeführt.
 
 ### Mehr statische Codeanalyse mit Clippy
 
-Das Tool Clippy ist eine Sammlung von Tools zur statischen Codeanalyse, mit dem
+Das Tool Clippy ist eine Sammlung von Tools zur statischen Codeanalyse, mit der
 du häufige Fehler aufspüren und deinen Rust-Code verbessern kannst. Clippy ist
 in den Standardinstallationen von Rust enthalten.
 
-Um Clippy bei einem Cargo-Projekt auszuführen, gib folgendes ein:
+Um Clippy bei einem Cargo-Projekt auszuführen, gib Folgendes ein:
 
 ```console
 $ cargo clippy

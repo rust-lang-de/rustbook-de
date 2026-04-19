@@ -352,7 +352,7 @@ fn main() {
 <span class="caption">Listing 16-15: Verwenden von `Arc<T>`, um den `Mutex<T>`
 einzupacken, um das Eigentum mit mehreren Threads teilen zu können</span>
 
-Dieser Code gibt folgendes aus:
+Dieser Code gibt Folgendes aus:
 
 ```text
 Ergebnis: 10

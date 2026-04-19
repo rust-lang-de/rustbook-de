@@ -78,7 +78,7 @@
   - [Bauvorgang anpassen mit Freigabeprofilen](ch14-01-release-profiles.md)
   - [Crates auf crates.io veröffentlichen](ch14-02-publishing-to-crates-io.md)
   - [Cargo-Arbeitsbereiche](ch14-03-cargo-workspaces.md)
-  - [Installieren von Binärdateien mit  `cargo install`](ch14-04-installing-binaries.md)
+  - [Installieren von Binärdateien mit `cargo install`](ch14-04-installing-binaries.md)
   - [Cargo um benutzerdefinierte Befehle erweitern](ch14-05-extending-cargo.md)
 
 - [Intelligente Zeiger](ch15-00-smart-pointers.md)
@@ -132,4 +132,4 @@
   - [D - Nützliche Entwicklungswerkzeuge](appendix-04-useful-development-tools.md)
   - [E - Editionen](appendix-05-editions.md)
   - [F - Übersetzungen des Buchs](appendix-06-translation.md)
-  - [G - Wie Rust erstellt wird und „nächtliches Rust“](appendix-07-nightly-rust.md)
+  - [G - Wie Rust erstellt wird und „nightly Rust“](appendix-07-nightly-rust.md)

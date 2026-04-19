@@ -67,7 +67,7 @@ unterscheiden. In einer Struktur oder Aufzählung sind die Daten in den
 Struktur-Feldern vom Verhalten in `impl`-Blöcken getrennt, während in anderen
 Sprachen die Daten und das Verhalten, die in einem Konzept zusammengefasst sind,
 oft als ein Objekt bezeichnet werden. Trait-Objekte unterscheiden sich von
-Objekten in anderen Sprachen dadurch, dass wir einem Trait-Objekte keine Daten
+Objekten in anderen Sprachen dadurch, dass wir einem Trait-Objekt keine Daten
 hinzufügen können. Trait-Objekte sind nicht so allgemein einsetzbar wie Objekte
 in anderen Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion über
 allgemeines Verhalten zu ermöglichen.

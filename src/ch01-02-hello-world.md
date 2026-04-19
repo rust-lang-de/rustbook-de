@@ -145,7 +145,7 @@ Drittens beenden wir die Zeile mit einem Semikolon (`;`), was anzeigt, dass
 dieser Ausdruck beendet ist und der nächste beginnen kann. Die meisten Zeilen
 eines Rust-Codes enden mit einem Semikolon.
 
-### Compilierung und Ausführung
+### Kompilierung und Ausführung
 
 Du hast gerade ein neu erstelltes Programm ausgeführt, also lass uns jeden
 Schritt in diesem Prozess untersuchen.
@@ -172,7 +172,7 @@ main  main.rs
 
 Unter Linux und macOS siehst du zwei Dateien. Mit PowerShell unter Windows
 siehst du die gleichen drei Dateien, die du mit CMD sehen würdest. Bei CMD
-unter Windows würdest du folgendes eingeben:
+unter Windows würdest du Folgendes eingeben:
 
 ```cmd
 > dir /B %= die Option /B bewirkt, dass nur die Dateinamen angezeigt werden =%

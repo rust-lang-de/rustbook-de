@@ -89,7 +89,7 @@ finde heraus, ob dessen Möglichkeiten für dich geeignet sind.
 ## Für wen dieses Buch gedacht ist
 
 In diesem Buch wird davon ausgegangen, dass du bereits Code in einer anderen
-Programmiersprache geschrieben hast, es spielt aber keine Rolle in welcher. Wir
+Programmiersprache geschrieben hast, es spielt aber keine Rolle, in welcher. Wir
 haben versucht, das Material einem breiten Publikum mit unterschiedlichem
 Programmierhintergrund zugänglich zu machen. Wir verbringen nicht viel Zeit
 damit, darüber zu sprechen, was Programmieren _ist_ oder wie man darüber denkt.
@@ -156,8 +156,8 @@ In **Kapitel 16** gehen wir durch verschiedene Modelle der nebenläufigen
 Programmierung und sprechen darüber, wie Rust dir hilft, furchtlos mit mehreren
 Threads zu programmieren. In **Kapitel 17** bauen wir darauf auf, indem wir die
 async- und await-Syntax von Rust zusammen mit Aufgaben (tasks), Futures und
-Strömen (streams) und dem leichtgewichtigen Nebenläufigkeitsmodell, das sie
-ermöglichen, untersuchen.
+Streams und dem leichtgewichtigen Nebenläufigkeitsmodell, das sie ermöglichen,
+untersuchen.
 
 **Kapitel 18** befasst sich mit dem Vergleich von Rust-Idiomen mit
 objektorientierten Programmierprinzipien, mit denen du vielleicht vertraut bist.

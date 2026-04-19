@@ -859,7 +859,7 @@ Rust einen String und einen Zahlentyp nicht vergleichen kann.
 
 Letztendlich wollen wir den `String`, den das Programm als Eingabe liest, in
 einen Zahlentyp umwandeln, damit wir ihn numerisch mit der Geheimzahl
-vergleichen können. Das tun wir, indem wir folgendes zum `main`-Funktionsrumpf
+vergleichen können. Das tun wir, indem wir Folgendes zum `main`-Funktionsrumpf
 hinzufügen:
 
 <span class="filename">Dateiname: src/main.rs</span>

@@ -207,7 +207,7 @@ fn main() {
 <span class="caption">Listing 15-16: `std::mem::drop` aufrufen, um einen Wert
 explizit aufzuräumen, bevor er den Gültigkeitsbereich verlässt</span>
 
-Wenn wir den Programmcode aufrufen, wird folgendes ausgegeben:
+Wenn wir den Programmcode aufrufen, wird Folgendes ausgegeben:
 
 ```console
 $ cargo run

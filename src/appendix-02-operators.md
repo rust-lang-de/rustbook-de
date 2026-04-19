@@ -19,8 +19,8 @@ aufgeführt, mit dem dieser Operator überladen werden kann.
 | `!` | `ident!(...)`,<br> `ident!{...}`,<br> `ident![...]` | Makro-Expansion | |
 | `!` | `!expr` | Bitweises oder logisches Komplement | `Not` |
 | `!=` | `expr != expr` | Vergleich auf Ungleichheit | `PartialEq` |
-| `%` | `expr % expr` | Arithmetischer Restbetrag | `Rem` |
-| `%=` | `var %= expr` | Arithmetischer Restbetrag und Zuweisung | `RemAssign` |
+| `%` | `expr % expr` | Divisionsrest | `Rem` |
+| `%=` | `var %= expr` | Divisionsrest und Zuweisung | `RemAssign` |
 | `&` | `&expr`,<br> `&mut expr` | Borrow | |
 | `&` | `&type`,<br> `&mut type`,<br> `&'a type`,<br> `&'a mut type` | Borrowed-Zeigertyp | |
 | `&` | `expr & expr` | Bitweises UND | `BitAnd` |
@@ -109,7 +109,7 @@ Modulhierarchie eines Elements vorkommen.
 | `self::path` | Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad) |
 | `super::path` | Pfad relativ zum Elternmodul |
 | `type::ident`,<br> `<type as trait>::ident` | Zugehörige Konstanten, Funktionen<br> und Typen |
-| `<type>::...` | Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. `<&T>::...`, `<[T]>:::...` usw.) |
+| `<type>::...` | Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. `<&T>::...`, `<[T]>::...` usw.) |
 | `trait::method(...)` | Methodenaufruf durch Angeben des<br> Traits eindeutig machen |
 | `type::method(...)` | Methodenaufruf durch Angeben des<br> Typs eindeutig machen |
 | `<type as trait>::method(...)` | Methodenaufruf durch Angeben des<br> Traits und Typs eindeutig machen |

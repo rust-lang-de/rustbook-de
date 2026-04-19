@@ -440,7 +440,7 @@ for c in "Зд".chars() {
 }
 ```
 
-Dieser Code wird folgendes ausgeben:
+Dieser Code wird Folgendes ausgeben:
 
 ```text
 З

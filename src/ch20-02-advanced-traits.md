@@ -425,7 +425,7 @@ voll-qualifizierte Syntax. In Listing 20-20 erstellen wir zum Beispiel ein
 Trait für ein Tierheim, das alle Hundebabys Spot nennen möchte. Wir erstellen
 ein Trait `Animal` mit einer assoziierten Nicht-Methodenfunktion `baby_name`.
 Das Trait `Animal` ist für die Struktur `Dog` implementiert, für die wir auch
-direkt eine assoziierte Nicht-Methodenfunktionen `baby_name` bereitstellen.
+direkt eine assoziierte Nicht-Methodenfunktion `baby_name` bereitstellen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -619,7 +619,7 @@ Methode `outline_print` erstellen, das einen bestimmten Wert so formatiert, dass
 er in Sternchen eingerahmt ausgegeben wird. Das heißt, wenn wir eine Struktur
 `Point` haben, die `Display` so implementiert, dass sie `(x, y)` ausgibt, dann
 gibt der Aufruf von `outline_print` einer `Point`-Instanz, die `1` für `x` und
-`3` für `y` hat, folgendes aus:
+`3` für `y` hat, Folgendes aus:
 
 ```text
 **********

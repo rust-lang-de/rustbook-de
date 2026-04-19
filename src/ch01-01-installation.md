@@ -53,7 +53,7 @@ du einen C-Compiler installieren, der in der Regel auch einen Linker enthält.
 Ein C-Compiler ist auch deshalb nützlich, weil einige gängige Rust-Pakete von
 C-Code abhängen und daher einen C-Compiler benötigen.
 
-Unter macOS erhältst du einen C-Compiler, indem du folgendes ausführst:
+Unter macOS erhältst du einen C-Compiler, indem du Folgendes ausführst:
 
 ```console
 $ xcode-select --install

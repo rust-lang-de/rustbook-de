@@ -590,7 +590,7 @@ Futures“][streams] gesehen haben, haben wir allerdings nicht `poll_next` _oder
 `poll_next`-API arbeiten, indem wir unsere eigenen `Stream`-Zustandsautomaten
 schreiben, genauso wie wir mit Futures direkt über deren Methode `poll` arbeiten
 _können_. Die Verwendung von `await` ist jedoch viel schöner, und das Trait
-`StreamExt` stellt die Methode `next` bereit, sodass wir folgendes tun können:
+`StreamExt` stellt die Methode `next` bereit, sodass wir Folgendes tun können:
 
 ```rust
 # use std::pin::Pin;

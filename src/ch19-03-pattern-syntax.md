@@ -181,18 +181,18 @@ fn main() {
 <span class="caption">Listing 19-12: Destrukturieren der Felder einer
 Struktur in separate Variablen</span>
 
-Dieser Code erzeugt die Variablen `a` und `b`, die den Werten der Felder `x`
-und `y` der Struktur `p` entsprechen. Dieses Beispiel zeigt, dass die Namen der
+Dieser Code erzeugt die Variablen `a` und `b`, die den Werten der Felder `x` und
+`y` der Struktur `p` entsprechen. Dieses Beispiel zeigt, dass die Namen der
 Variablen im Muster nicht mit den Feldnamen der Struktur übereinstimmen müssen.
 Aber es ist üblich, dass die Variablennamen mit den Feldnamen übereinstimmen,
 damit man sich leichter merken kann, welche Variablen aus welchen Feldern
 stammen. Wegen dieser häufigen Verwendung und weil das Schreiben von `let Point
-{ x: x, y: y } = p;` eine Menge Duplikation enthält, hat Rust eine Kurzform
-für Muster, die mit Strukturfeldern übereinstimmen: Du musst nur die Namen des
-Struktur-Felder auflisten, und die Variablen, die aus dem Muster erzeugt
-werden, haben die gleichen Namen. Listing 19-13 zeigt Code, der sich gleich
-verhält wie der Code in Listing 19-12, aber die Variablen, die im Muster
-`let` erzeugt werden, sind `x` und `y` anstelle von `a` und `b`.
+{ x: x, y: y } = p;` eine Menge Duplikation enthält, hat Rust eine Kurzform für
+Muster, die mit Strukturfeldern übereinstimmen: Du musst nur die Namen der
+Struktur-Felder auflisten, und die Variablen, die aus dem Muster erzeugt werden,
+haben die gleichen Namen. Listing 19-13 zeigt Code, der sich gleich verhält wie
+der Code in Listing 19-12, aber die Variablen, die im Muster `let` erzeugt
+werden, sind `x` und `y` anstelle von `a` und `b`.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

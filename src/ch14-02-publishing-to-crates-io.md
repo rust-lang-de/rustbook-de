@@ -572,7 +572,7 @@ Um eine Version einer Crate herauszuziehen, rufe `cargo yank` auf und
 spezifiziere welche Version du herausziehen möchtest. Wenn wir zum Beispiel eine
 Crate mit dem Namen `guessing_game` in Version 1.0.1 veröffentlicht haben und
 sie herausziehen wollen, würden wir im Projektverzeichnis für `guessing_game`
-folgendes ausführen:
+Folgendes ausführen:
 
 ```console
 $ cargo yank --vers 1.0.1

@@ -1,4 +1,4 @@
-## Installieren von Binärdateien mit  `cargo install`
+## Installieren von Binärdateien mit `cargo install`
 
 Mit dem Befehl `cargo install` kannst du binäre Crates installieren und
 verwenden. Dies soll keine Systempakete ersetzen, sondern soll Rust-Entwicklern

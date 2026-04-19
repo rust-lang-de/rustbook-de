@@ -5,13 +5,12 @@ in deiner Datei _Cargo.toml_ hinzufügt. Dieser Anhang erläutert, was das
 bedeutet!
 
 Die Sprache Rust und der Compiler haben einen sechswöchigen
-Veröffentlichungszyklus, was bedeutet, dass die Nutzer einen konstanten Strom
+Veröffentlichungszyklus, was bedeutet, dass die Nutzer einen konstanten Zuwachs
 neuer Funktionen erhalten. Andere Programmiersprachen geben weniger oft größere
 Änderungen heraus; Rust gibt häufiger kleinere Aktualisierungen heraus. Nach
 einer Weile summieren sich all diese kleinen Änderungen. Aber von
-Veröffentlichung zu Veröffentlichung kann es schwierig sein, zurückzublicken
-und zu sagen: Wow, zwischen Rust 1.10 und Rust 1.31 hat sich Rust sehr
-verändert!
+Veröffentlichung zu Veröffentlichung kann es schwierig sein, zurückzublicken und
+zu sagen: Wow, zwischen Rust 1.10 und Rust 1.31 hat sich Rust sehr verändert!
 
 Etwa alle drei Jahre gibt das Rust-Team eine neue _Rust-Edition_
 heraus. Jede Edition fasst die neuen Funktionalitäten in einem übersichtlichen
@@ -29,9 +28,9 @@ Editionen dienen unterschiedlichen Zwecken für verschiedene Menschen:
 - Für diejenigen, die Rust entwickeln, stellt eine neue Edition einen
   Treffpunkt für das gesamte Projekt dar.
 
-Zum Verfassungszeitpunkt dieses Artikels sind vier Rust-Editionen verfügbar:
-Rust 2015, Rust 2018, Rust 2021 und Rust 2024. Dieses Buch wurde unter
-Verwendung der Rust-Edition 2024 geschrieben.
+Zum Zeitpunkt der Fertigstellung dieses Buches sind vier Rust-Editionen
+verfügbar: Rust 2015, Rust 2018, Rust 2021 und Rust 2024. Dieses Buch wurde
+unter Verwendung der Rust-Edition 2024 geschrieben.
 
 Der Schlüssel `edition` in _Cargo.toml_ gibt an, welche Edition der Compiler
 für deinen Code verwenden soll. Wenn der Schlüssel nicht existiert, verwendet

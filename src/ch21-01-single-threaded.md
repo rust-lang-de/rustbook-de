@@ -264,7 +264,7 @@ unserem Programm will.
 
 ### Ein genauerer Blick auf eine HTTP-Anfrage
 
-HTTP ist ein textbasiertes Protokoll und eine Anfrage hat dieses Format an:
+HTTP ist ein textbasiertes Protokoll und eine Anfrage hat dieses Format:
 
 ```text
 Method Request-URI HTTP-Version CRLF

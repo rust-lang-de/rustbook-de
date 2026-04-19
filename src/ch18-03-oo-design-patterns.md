@@ -48,7 +48,7 @@ Problem zu lösen, wobei jede davon unterschiedliche Vor- und Nachteile hat. Die
 Implementierung in diesem Abschnitt entspricht eher einem traditionellen
 objektorientierten Stil, der zwar in Rust geschrieben werden kann, aber einige
 der Stärken von Rust nicht nutzt. Später werden wir eine andere Lösung
-vorstellen, die zwar ebenfalls das objektorientierte Entwurfsnmuster verwendet,
+vorstellen, die zwar ebenfalls das objektorientierte Entwurfsmuster verwendet,
 aber so strukturiert ist, dass sie Programmierern mit objektorientierter
 Erfahrung möglicherweise weniger vertraut erscheint. Wir werden die beiden
 Lösungen vergleichen, um die Vor- und Nachteile einer anderen Gestaltung von
@@ -769,7 +769,7 @@ Entwurfsmuster zu wechseln.
 
 Ein weiterer Nachteil ist, dass wir eine gewisse Logik dupliziert haben. Um
 einen Teil der Duplikation zu eliminieren, könnten wir versuchen,
-Standard-Implementierungen für die Methoden `request_review` und `approval` für
+Standard-Implementierungen für die Methoden `request_review` und `approve` für
 das Trait `State` zu erstellen, die `self` zurückgeben; dies würde jedoch nicht
 funktionieren: Bei der Verwendung von `State` als Trait-Objekt weiß das Trait
 nicht, was das konkrete `self` genau sein wird, sodass der Rückgabetyp zur

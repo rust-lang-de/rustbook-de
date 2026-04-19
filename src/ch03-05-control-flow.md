@@ -14,7 +14,7 @@ Bedingung erfüllt ist, führe diesen Codeblock aus. Wenn die Bedingung nicht
 erfüllt ist, darf dieser Codeblock nicht ausgeführt werden.“
 
 Erstelle in deinem _projects_-Verzeichnis ein neues Projekt namens _branches_,
-um den `if`-Ausdruck zu erforschen. Gibt in der Datei _src/main.rs_ Folgendes
+um den `if`-Ausdruck zu erforschen. Gib in der Datei _src/main.rs_ Folgendes
 ein:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -410,7 +410,7 @@ Die äußere Schleife hat das Label `'counting_up` und zählt von 0 bis 2
 aufwärts. Die innere Schleife ohne Label zählt von 10 bis 9 herunter. Das erste
 `break`, das kein Label angibt, beendet nur die innere Schleife. Mit der
 Anweisung `break 'counting_up;` wird die äußere Schleife verlassen. Dieser Code
-gibt folgendes aus:
+gibt Folgendes aus:
 
 ```console
 $ cargo run

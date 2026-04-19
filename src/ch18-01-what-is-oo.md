@@ -158,15 +158,15 @@ Du würdest dich aus zwei Hauptgründen für die Vererbung entscheiden. Einer is
 die Wiederverwendung von Code: Du kannst ein bestimmtes Verhalten für einen Typ
 implementieren und die Vererbung ermöglicht es dir, diese Implementierung für
 einen anderen Typ wiederzuverwenden. Du kannst das auf begrenzte Weise in
-Rust-Code unter Verwendung von Standard-Trait-Mmethodenimplementierungen tun,
-was du in Listing 10-14 gesehen hast, als wir eine Standard-Implementierung
-der Methode `summarize` für das Trait `Summary` hinzugefügt haben. Jeder Typ,
-der das Trait `Summary` implementiert, hätte die Methode `summarize` ohne
-weiteren Code darauf zur Verfügung. Dies ist vergleichbar mit einer
-Elternklasse, die eine Implementierung einer Methode hat, und einer erbenden
-Kindklasse, die ebenfalls die Implementierung der Methode hat. Wir können auch
-die Standard-Implementierung der Methode `summarize` überschreiben, wenn wir das
-Markmal `Summary` implementieren, die einer Kindklasse ähnelt, die die
+Rust-Code unter Verwendung von Standard-Trait-Methodenimplementierungen tun, was
+du in Listing 10-14 gesehen hast, als wir eine Standard-Implementierung der
+Methode `summarize` für das Trait `Summary` hinzugefügt haben. Jeder Typ, der
+das Trait `Summary` implementiert, hätte die Methode `summarize` ohne weiteren
+Code darauf zur Verfügung. Dies ist vergleichbar mit einer Elternklasse, die
+eine Implementierung einer Methode hat, und einer erbenden Kindklasse, die
+ebenfalls die Implementierung der Methode hat. Wir können auch die
+Standard-Implementierung der Methode `summarize` überschreiben, wenn wir das
+Trait `Summary` implementieren, die einer Kindklasse ähnelt, die die
 Implementierung einer von einer Elternklasse geerbten Methode überschreibt.
 
 Der andere Grund, Vererbung zu verwenden, bezieht sich auf das Typsystem: Ein

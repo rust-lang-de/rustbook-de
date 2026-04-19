@@ -35,7 +35,7 @@ kannst, die wir _Unsafe-Superkräfte_ nennen. Zu diesen Superkräften gehören
 folgende Fähigkeiten:
 
 1. Dereferenzieren eines Rohzeigers
-2. Aufrufen einer unsicher Funktion oder Methode
+2. Aufrufen einer unsicheren Funktion oder Methode
 3. Zugreifen auf oder Ändern einer veränderbaren statischen Variablen
 4. Implementieren eines unsafe Traits
 5. Zugreifen auf Feldern in `union`
@@ -54,7 +54,7 @@ sicherstellst, dass der Code innerhalb eines `unsafe`-Blocks auf gültige Weise
 auf den Speicher zugreifen wird.
 
 Menschen sind fehlbar und Fehler werden passieren, aber wenn du verlangst, dass
-diese fünf unsichere Operationen innerhalb von Blöcken mit dem Vermerk `unsafe`
+diese fünf unsicheren Operationen innerhalb von Blöcken mit dem Vermerk `unsafe`
 durchgeführt werden müssen, weißt du, dass alle Fehler im Zusammenhang mit der
 Speichersicherheit innerhalb eines `unsafe`-Blocks liegen müssen. Halte
 `unsafe`-Blöcke klein; du wirst später dankbar sein, wenn du Speicherfehler
@@ -171,9 +171,9 @@ Wert zu tun haben.
 Beachte auch, dass wir in den Codeblöcken 20-1 und 20-3 die Rohzeiger `*const
 i32` und `*mut i32` erstellt haben, die beide auf die gleiche Speicherstelle
 zeigten, in der `num` gespeichert ist. Wenn wir stattdessen versucht hätten,
-eine unveränderbare und einen veränderbare Referenz auf `num` zu erstellen,
-hätte sich der Code nicht kompilieren lassen, weil die Eigentumsregeln von Rust
-eine veränderbare Referenz nicht gleichzeitig mit unveränderbaren Referenzen
+eine unveränderbare und eine veränderbare Referenz auf `num` zu erstellen, hätte
+sich der Code nicht kompilieren lassen, weil die Eigentumsregeln von Rust eine
+veränderbare Referenz nicht gleichzeitig mit unveränderbaren Referenzen
 zulassen. Mit Rohzeigern können wir einen veränderbaren und einen
 unveränderbaren Zeiger auf denselben Ort erstellen und Daten über den
 veränderbaren Zeiger ändern, wodurch möglicherweise eine Data Race entsteht. Sei
@@ -243,7 +243,7 @@ möglicherweise nicht im gesamten Funktionsrumpf benötigt werden.
 
 Nur weil eine Funktion unsicheren Code enthält, bedeutet das nicht, dass wir die
 gesamte Funktion als unsicher markieren müssen. Tatsächlich ist das Einpacken
-von unsicherem Codes in eine sichere Funktion eine gängige Abstraktion. Als
+von unsicheren Codes in eine sichere Funktion eine gängige Abstraktion. Als
 Beispiel betrachten wir die Funktion `split_at_mut` aus der Standardbibliothek,
 die unsicheren Code verwendet. Wir untersuchen, wie wir sie implementieren
 könnten. Diese sichere Methode ist auf veränderbaren Slices definiert: Sie nimmt
@@ -356,7 +356,7 @@ fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
 # }
 ```
 
-<span class="caption">Listing 20-6: Verwenden von unsicherem Codes bei der
+<span class="caption">Listing 20-6: Verwenden von unsicheren Codes bei der
 Implementierung der Funktion `split_at_mut`</span>
 
 Erinnere dich an den Abschnitt [„Der Slice-Typ“][the-slice-type] in Kapitel 4,
@@ -427,8 +427,8 @@ Programmiersprache zu ermöglichen, diese Funktionen aufzurufen.
 
 In Listing 20-8 wird gezeigt, wie eine Integration der Funktion `abs` aus der
 C-Standardbibliothek erfolgt. Funktionen, die in `extern`-Blöcken deklariert
-sind, sind normalerweise unsicher, wenn sie aus Rust Code aufgerufen werden,
-und müssen daher mit `unsafe` gekennzeichnet werden. Der Grund dafür ist, dass
+sind, sind normalerweise unsicher, wenn sie aus Rust-Code aufgerufen werden, und
+müssen daher mit `unsafe` gekennzeichnet werden. Der Grund dafür ist, dass
 andere Sprachen die Regeln und Garantien von Rust nicht erzwingen und Rust sie
 nicht überprüfen kann, sodass die Verantwortung für die Sicherheit beim
 Programmierer liegt.
@@ -450,14 +450,13 @@ fn main() {
 <span class="caption">Listing 20-8: Deklarieren und Aufrufen einer
 `extern`-Funktion, die in einer anderen Sprache definiert wurde</span>
 
-Innerhalb des Blocks `unsafe extern "C"` listen wir die Namen und Signaturen
-von externen Funktionen aus einer anderen Sprache auf, die wir aufrufen wollen.
-Der Teil `"C"` definiert, welche _Binärschnittstelle_ (application binary
-interface, kurz ABI) die externe Funktion benutzt: Die ABI definiert, wie die
-Funktion auf der technischen Ebene (assembly level) aufgerufen wird. Die ABI
-`"C"` ist die gebräuchlichste und folgt der ABI der Programmiersprache C.
-Informationen über alle von Rust unterstützten ABIs finden Sie in der
-[Rust-Referenz][ABI].
+Innerhalb des Blocks `unsafe extern "C"` listen wir die Namen und Signaturen von
+externen Funktionen aus einer anderen Sprache auf, die wir aufrufen wollen. Der
+Teil `"C"` definiert, welche _Binärschnittstelle_ (application binary interface,
+kurz ABI) die externe Funktion benutzt: Die ABI definiert, wie die Funktion auf
+der technischen Ebene (assembly level) aufgerufen wird. Die ABI `"C"` ist die
+gebräuchlichste und folgt der ABI der Programmiersprache C. Informationen über
+alle von Rust unterstützten ABIs findest du in der [Rust-Referenz][ABI].
 
 Jedes Element, das innerhalb eines `unsafe extern`-Blocks deklariert wird, ist
 implizit `unsafe`. Einige FFI-Funktionen sind jedoch _sicher aufrufbar_. Zum
@@ -628,7 +627,7 @@ der Datenzugriff von verschiedenen Threads sicher ist.
 ### Implementieren eines unsafe Traits
 
 Wir können `unsafe` zum Implementieren eines unsafe Traits verwenden. Ein Trait
-ist unsicher, wenn mindestens eine ihrer Methoden eine Invariante hat, die der
+ist unsicher, wenn mindestens eine seiner Methoden eine Invariante hat, die der
 Compiler nicht verifizieren kann. Wir können erklären, dass ein Trait `unsafe`
 ist, indem wir das Schlüsselwort `unsafe` vor `trait` einfügen und die
 Implementierung des Traits ebenfalls mit `unsafe` markieren, wie in Listing
