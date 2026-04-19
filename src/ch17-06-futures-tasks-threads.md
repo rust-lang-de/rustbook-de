@@ -3,9 +3,9 @@
 Wie wir in [Kapitel 16][ch16] gesehen haben, bieten Threads einen Ansatz für
 Nebenläufigkeit (concurrency). In diesem Kapitel haben wir einen anderen Ansatz
 für Nebenläufigkeit gesehen: Verwenden von asynchronem Code mit Futures und
-Strömen (streams). Wenn du dich fragst, wann du eine Methode der anderen
-vorziehen solltest, lautet die Antwort: Es kommt darauf an! Und in vielen Fällen
-ist die Wahl nicht Threads _oder_ asynchroner Code, sondern eher Threads _und_
+Streams. Wenn du dich fragst, wann du eine Methode der anderen vorziehen
+solltest, lautet die Antwort: Es kommt darauf an! Und in vielen Fällen ist die
+Wahl nicht Threads _oder_ asynchroner Code, sondern eher Threads _und_
 asynchroner Code.
 
 Viele Betriebssysteme bieten schon seit Jahrzehnten Thread-basierte
@@ -21,7 +21,7 @@ Das asynchrone Modell bietet eine andere &ndash; und letztlich ergänzende
 &ndash; Reihe von Kompromissen. Im asynchronen Modell benötigen nebenläufige
 Vorgänge keine eigenen Threads. Stattdessen können sie in Aufgaben laufen, so
 wie wir `trpl::spawn_task` verwendet haben, um die Arbeit von einer synchronen
-Funktion im Abschnitt „Ströme“ zu starten. Eine Aufgabe ähnelt einem Thread,
+Funktion im Abschnitt „Streams“ zu starten. Eine Aufgabe ähnelt einem Thread,
 wird aber nicht vom Betriebssystem, sondern von einem Code auf Bibliotheksebene
 verwaltet: der Laufzeitumgebung.
 

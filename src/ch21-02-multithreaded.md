@@ -158,8 +158,8 @@ einen funktionierenden multi-threaded Server zu erhalten. Dann fügen wir den
 Thread-Pool als Verbesserung hinzu, und es wird einfacher, die beiden Lösungen
 zu vergleichen.
 
-Listing 21-11 zeigt die Änderungen, die an `main` vorgenommen werden müssen,
-um einen neuen Thread zu erzeugen, der jeden Strom innerhalb der `for`-Schleife
+Listing 21-11 zeigt die Änderungen, die an `main` vorgenommen werden müssen, um
+einen neuen Thread zu erzeugen, der jeden Stream innerhalb der `for`-Schleife
 verarbeitet.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -209,7 +209,7 @@ fn main() {
 ```
 
 <span class="caption">Listing 21-11: Erstellen eines neuen Threads für jeden
-Strom</span>
+Stream</span>
 
 Wie du in Kapitel 16 gelernt hast, wird `thread::spawn` einen neuen Thread
 erstellen und dann den Code im Closure im neuen Thread ausführen. Wenn du diesen
@@ -281,7 +281,7 @@ Wir verwenden `ThreadPool::new`, um einen neuen Thread-Pool mit einer
 konfigurierbaren Anzahl von Threads zu erstellen, in diesem Fall vier. In der
 `for`-Schleife hat `pool.execute` eine ähnliche Schnittstelle wie
 `thread::spawn`, indem es einen Closure entgegennimmt, den der Pool für jeden
-Strom ausführen soll. Wir müssen `pool.execute` implementieren, sodass es den
+Stream ausführen soll. Wir müssen `pool.execute` implementieren, sodass es den
 Closure entgegennimmt und ihn einem Thread im Pool zur Ausführung übergibt.
 Dieser Code lässt sich noch nicht kompilieren, aber wir werden es versuchen,
 damit der Compiler uns anleiten kann, wie wir das Problem beheben können.

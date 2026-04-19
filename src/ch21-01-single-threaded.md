@@ -37,8 +37,8 @@ $ cd hello
 
 Gib nun den Code in Listing 21-1 in _src/main.rs_ ein, um zu beginnen. Dieser
 Code lauscht unter der lokalen Adresse `127.0.0.1:7878` auf eingehende
-TCP-Ströme (TCP streams). Wenn er einen eingehenden Strom erhält, wird er
-`Verbindung hergestellt!` ausgeben.
+TCP-Anfragen. Wenn er eine eingehende Anfrage erhält, wird er `Verbindung
+hergestellt!` ausgeben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -56,8 +56,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 21-1: Warten auf eingehende Ströme und Ausgeben
-einer Nachricht, wenn wir einen Strom empfangen</span>
+<span class="caption">Listing 21-1: Warten auf eingehende Anfragen und Ausgeben
+einer Nachricht, wenn wir eine Anfrage empfangen</span>
 
 Mit `TcpListener` können wir unter der Adresse `127.0.0.1:7878` auf
 TCP-Verbindungen warten. In der Adresse ist der Abschnitt vor dem Doppelpunkt
@@ -82,29 +82,28 @@ kümmern; stattdessen verwenden wir `unwrap`, um das Programm zu stoppen, wenn
 Fehler auftreten.
 
 Die Methode `incoming` von `TcpListener` gibt einen Iterator zurück, der uns
-eine Sequenz von Strömen (genauer gesagt Ströme vom Typ `TcpStream`) liefert.
-Ein einzelner _Strom_ (stream) stellt eine offene Verbindung zwischen dem
-Client und dem Server dar. Eine _Verbindung_ (connection) ist der Name für den
-vollständigen Anfrage- und Antwortprozess, bei dem sich ein Client mit dem
-Server verbindet, der Server eine Antwort erzeugt und der Server die Verbindung
-schließt. Daher werden wir aus dem `TcpStream` lesen, um zu sehen, was der
-Client gesendet hat, und dann unsere Antwort in den Strom schreiben, um Daten
-zurück an den Client zu senden. Insgesamt wird diese `for`-Schleife jede
-Verbindung der Reihe nach verarbeiten und eine Reihe von Strömen erzeugen, die
-wir verarbeiten müssen.
+eine Sequenz von Streams (genauer gesagt Streams vom Typ `TcpStream`) liefert.
+Ein einzelner _Stream_ stellt eine offene Verbindung zwischen dem Client und dem
+Server dar. Eine _Verbindung_ (connection) ist der Name für den vollständigen
+Anfrage- und Antwortprozess, bei dem sich ein Client mit dem Server verbindet,
+der Server eine Antwort erzeugt und der Server die Verbindung schließt. Daher
+werden wir aus dem `TcpStream` lesen, um zu sehen, was der Client gesendet hat,
+und dann unsere Antwort in den Stream schreiben, um Daten zurück an den Client
+zu senden. Insgesamt wird diese `for`-Schleife jede Verbindung der Reihe nach
+verarbeiten und eine Reihe von Streams erzeugen, die wir verarbeiten müssen.
 
-Im Moment besteht unsere Behandlung des Stroms darin, dass wir `unwrap`
-aufrufen, um unser Programm abzubrechen, wenn der Strom Fehler aufweist; wenn
+Im Moment besteht unsere Behandlung des Streams darin, dass wir `unwrap`
+aufrufen, um unser Programm abzubrechen, wenn der Stream Fehler aufweist; wenn
 keine Fehler vorliegen, gibt das Programm eine Nachricht aus. Wir werden im
-nächsten Listing mehr Funktionalität für den Erfolgsfall hinzufügen. Der
-Grund, warum wir Fehler von der Methode `incoming` erhalten könnten, wenn sich
-ein Client mit dem Server verbindet, ist, dass wir nicht wirklich über
-Verbindungen iterieren. Stattdessen iterieren wir über _Verbindungsversuche_.
-Die Verbindung kann aus einer Reihe von Gründen nicht erfolgreich sein, viele
-davon sind betriebssystemspezifisch. Zum Beispiel haben viele Betriebssysteme
-ein Limit für die Anzahl der gleichzeitig offenen Verbindungen, die sie
-unterstützen können; neue Verbindungsversuche über diese Anzahl hinaus führen zu
-einem Fehler, bis einige der offenen Verbindungen geschlossen werden.
+nächsten Listing mehr Funktionalität für den Erfolgsfall hinzufügen. Der Grund,
+warum wir Fehler von der Methode `incoming` erhalten könnten, wenn sich ein
+Client mit dem Server verbindet, ist, dass wir nicht wirklich über Verbindungen
+iterieren. Stattdessen iterieren wir über _Verbindungsversuche_. Die Verbindung
+kann aus einer Reihe von Gründen nicht erfolgreich sein, viele davon sind
+betriebssystemspezifisch. Zum Beispiel haben viele Betriebssysteme ein Limit für
+die Anzahl der gleichzeitig offenen Verbindungen, die sie unterstützen können;
+neue Verbindungsversuche über diese Anzahl hinaus führen zu einem Fehler, bis
+einige der offenen Verbindungen geschlossen werden.
 
 Lass uns versuchen, diesen Code auszuführen! Rufe `cargo run` im Terminal auf
 und öffne dann _127.0.0.1:7878_ in einem Web-Browser. Der Browser sollte eine
@@ -150,11 +149,11 @@ sicherzustellen, dass du den neuesten Code ausführst.
 
 ### Lesen der Anfrage
 
-Lass uns die Funktionalität zum Lesen der Anfrage vom Browser implementieren!
-Um die Zuständigkeiten zu trennen, also zuerst eine Verbindung entgegenzunehmen
-und dann mit der Verbindung etwas zu machen, werden wir eine neue Funktion zur
+Lass uns die Funktionalität zum Lesen der Anfrage vom Browser implementieren! Um
+die Zuständigkeiten zu trennen, also zuerst eine Verbindung entgegenzunehmen und
+dann mit der Verbindung etwas zu machen, werden wir eine neue Funktion zur
 Verarbeitung von Verbindungen anfangen. In dieser neuen Funktion
-`handle_connection` lesen wir Daten aus dem TCP-Strom und geben sie aus, sodass
+`handle_connection` lesen wir Daten aus dem TCP-Stream und geben sie aus, sodass
 wir sehen können, welche Daten vom Browser gesendet werden. Ändere den Code so,
 dass er wie Listing 21-2 aussieht.
 
@@ -193,7 +192,7 @@ der Daten</span>
 
 Wir bringen `std::io::BufReader` und `std::io::prelude` in den
 Gültigkeitsbereich, um Zugang zu Traits und Typen zu erhalten, die es uns
-ermöglichen, aus dem Strom zu lesen und in den Strom zu schreiben. In der
+ermöglichen, aus dem Stream zu lesen und in den Stream zu schreiben. In der
 `for`-Schleife in der Funktion `main` rufen wir jetzt, statt eine Nachricht
 auszugeben, dass wir eine Verbindung hergestellt haben, die neue Funktion
 `handle_connection` auf und übergeben ihr den `stream`.
@@ -213,12 +212,12 @@ std::io::Error>` zurück, indem sie den Datenstrom immer dann aufteilt, wenn sie
 ein Neue-Zeile-Byte sieht. Um jeden `String` zu erhalten, wird jedes `Result`
 mit `map` abgebildet und `unwrap` aufgerufen. Das `Result` könnte einen Fehler
 darstellen, wenn die Daten kein gültiges UTF-8 sind oder wenn es ein Problem
-beim Lesen aus dem Strom gab. Auch hier sollte ein Produktivprogramm diese
+beim Lesen aus dem Stream gab. Auch hier sollte ein Produktivprogramm diese
 Fehler besser behandeln, aber der Einfachheit halber brechen wir das Programm im
 Fehlerfall ab.
 
-Der Browser signalisiert das Ende einer HTTP-Anfrage, indem er zwei
-Zeilenumbrüche hintereinander sendet. Um also eine Anfrage aus dem Strom zu
+Der Browser signalisiert das Ende eines HTTP-Headers, indem er zwei
+Zeilenumbrüche hintereinander sendet. Um also eine Anfrage aus dem Stream zu
 erhalten, nehmen wir so lange Zeilen an, bis wir eine leere Zeile erhalten.
 Sobald wir die Zeilen im Vektor gesammelt haben, geben wir sie mit einer
 hübschen Debug-Formatierung aus, damit wir einen Blick auf die Anweisungen
@@ -334,7 +333,7 @@ HTTP/1.1 200 OK\r\n\r\n
 
 Der Statuscode 200 ist die Standard-Erfolgsantwort. Der Text ist eine winzige
 erfolgreiche HTTP-Antwort. Lass uns dies als Antwort auf eine erfolgreiche
-Anfrage in den Strom schreiben! Entferne aus der Funktion `handle_connection`
+Anfrage in den Stream schreiben! Entferne aus der Funktion `handle_connection`
 das `println!`, das die Anfragedaten ausgegeben hat, und ersetze es durch den
 Code in Listing 21-3.
 
@@ -371,7 +370,7 @@ fn handle_connection(mut stream: TcpStream) {
 ```
 
 <span class="caption">Listing 21-3: Schreiben einer kleinen erfolgreichen
-HTTP-Antwort in den Strom</span>
+HTTP-Antwort in den Stream</span>
 
 Die erste neue Zeile definiert die Variable `response`, die die Daten der
 Erfolgsmeldung enthält. Dann rufen wir `as_bytes` auf unserer `response` auf,
@@ -647,9 +646,9 @@ zurückgeben.
 
 ### Refactoring
 
-Im Moment haben die `if`- und `else`-Blöcke eine Menge Wiederholungen: Sie
-lesen beide Dateien und schreiben den Inhalt der Dateien in den Strom. Die
-einzigen Unterschiede sind die Statuszeile und der Dateiname. Lass uns den Code
+Im Moment haben die `if`- und `else`-Blöcke eine Menge Wiederholungen: Sie lesen
+beide Dateien und schreiben den Inhalt der Dateien in den Stream. Die einzigen
+Unterschiede sind die Statuszeile und der Dateiname. Lass uns den Code
 prägnanter gestalten, indem wir diese Unterschiede in separate `if`- und
 `else`-Zeilen herausziehen, die die Werte der Statuszeile und des Dateinamens
 Variablen zuweisen; wir können diese Variablen dann bedingungslos im Code

@@ -431,8 +431,8 @@ seltener mit Funktionen wie `select` und Makros wie `join!`, um die Ausführung
 der äußersten Futures zu steuern.
 
 Wir haben nun verschiedene Möglichkeiten kennengelernt, wie man mit mehreren
-Futures gleichzeitig arbeiten kann. Als Nächstes werden wir uns ansehen, wie
-wir mit _Strömen_ (streams) mehrere Futures in einer zeitlichen Abfolge
-arbeiten können.
+Futures gleichzeitig arbeiten kann. Als Nächstes werden wir uns ansehen, wie wir
+mittels _Streams_ mit mehreren Futures in einer zeitlichen Abfolge arbeiten
+können.
 
 [async-program]: ch17-01-futures-and-syntax.html#unser-erstes-asynchrones-programm

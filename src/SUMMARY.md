@@ -95,11 +95,11 @@
   - [Nebenläufigkeit mit gemeinsamem Zustand](ch16-03-shared-state.md)
   - [Erweiterbare Nebenläufigkeit mit `Send` und `Sync`](ch16-04-extensible-concurrency-sync-and-send.md)
 
-- [Grundlagen der asynchronen Programmierung: Async, Await, Futures und Ströme](ch17-00-async-await.md)
+- [Grundlagen der asynchronen Programmierung: Async, Await, Futures und Streams](ch17-00-async-await.md)
   - [Futures und die asynchrone Syntax](ch17-01-futures-and-syntax.md)
   - [Anwenden von Nebenläufigkeit mit async](ch17-02-concurrency-with-async.md)
   - [Abgeben der Kontrolle an die Laufzeitumgebung](ch17-03-more-futures.md)
-  - [Ströme: Sequenz von Futures](ch17-04-streams.md)
+  - [Streams: Sequenz von Futures](ch17-04-streams.md)
   - [Ein genauerer Blick auf die Traits für Async](ch17-05-traits-for-async.md)
   - [Futures, Aufgaben und Threads](ch17-06-futures-tasks-threads.md)
 

@@ -539,7 +539,7 @@ jetzt eine bessere Vorstellung davon, wie du deinen Code korrigieren kannst!
 
 Nachdem du nun ein tieferes Verständnis für die Traits `Future`, `Pin` und
 `Unpin` hast, können wir uns dem Trait `Stream` zuwenden. Wie du bereits in
-diesem Kapitel gelernt hast, sind Ströme ähnlich wie asynchrone Iteratoren. Im
+diesem Kapitel gelernt hast, sind Streams ähnlich wie asynchrone Iteratoren. Im
 Gegensatz zu `Iterator` und `Future` hat `Stream` derzeit keine Definition in
 der Standardbibliothek, aber es _gibt_ eine sehr verbreitete Definition in der
 Crate `futures`, die im gesamten Ökosystem verwendet wird.
@@ -567,7 +567,7 @@ trait Stream {
 ```
 
 Das Trait `Stream` definiert einen zugehörigen Typ namens `Item` für den Typ der
-vom Strom erzeugten Elemente. Dies ist ähnlich wie bei `Iterator`, wo es
+vom Stream erzeugten Elemente. Dies ist ähnlich wie bei `Iterator`, wo es
 beliebig viele Elemente geben kann, anders als bei `Future`, wo es immer nur
 einen einzigen `Output` gibt, selbst wenn es der Einheitstyp `()` ist.
 
@@ -584,13 +584,13 @@ Standardbibliothek von Rust werden. In der Zwischenzeit ist es Teil des
 Werkzeugkoffers der meisten Laufzeitumgebungen, sodass du dich darauf verlassen
 kannst, und alles, was wir als nächstes behandeln, allgemein gilt!
 
-Im Beispiel, das wir im Abschnitt [„Ströme (streams): Sequenz von
-Futures“][streams] gesehen haben, haben wir allerdings nicht `poll_next` _oder_
-`Stream` benutzt, sondern `next` und `StreamExt`. Wir _könnten_ direkt mit der
-`poll_next`-API arbeiten, indem wir unsere eigenen `Stream`-Zustandsautomaten
-schreiben, genauso wie wir mit Futures direkt über deren Methode `poll` arbeiten
-_können_. Die Verwendung von `await` ist jedoch viel schöner, und das Trait
-`StreamExt` stellt die Methode `next` bereit, sodass wir Folgendes tun können:
+Im Beispiel, das wir im Abschnitt [„Streams: Sequenz von Futures“][streams]
+gesehen haben, haben wir allerdings nicht `poll_next` _oder_ `Stream` benutzt,
+sondern `next` und `StreamExt`. Wir _könnten_ direkt mit der `poll_next`-API
+arbeiten, indem wir unsere eigenen `Stream`-Zustandsautomaten schreiben, genauso
+wie wir mit Futures direkt über deren Methode `poll` arbeiten _können_. Die
+Verwendung von `await` ist jedoch viel schöner, und das Trait `StreamExt` stellt
+die Methode `next` bereit, sodass wir Folgendes tun können:
 
 ```rust
 # use std::pin::Pin;
@@ -626,7 +626,7 @@ trait StreamExt: Stream {
 > sodass `await` mit dieser Methode arbeiten kann!
 
 Das Trait `StreamExt` ist auch die Heimat aller interessanten Methoden, die für
-die Verwendung mit Strömen zur Verfügung stehen. `StreamExt` wird automatisch
+die Verwendung mit Streams zur Verfügung stehen. `StreamExt` wird automatisch
 für jeden Typ implementiert, der `Stream` implementiert, aber diese Traits
 werden separat definiert, um der Rust-Gemeinschaft die Möglichkeit zu geben,
 Komfort-APIs zu entwickeln, ohne die grundlegenden Traits zu beeinflussen.
@@ -641,7 +641,7 @@ ihm verwenden.
 
 Das ist alles, was wir für die tieferen Details zu diesen Traits behandeln
 werden. Zum Abschluss wollen wir uns ansehen, wie Futures (einschließlich
-Ströme), Aufgaben und Threads zusammenpassen!
+Streams), Aufgaben und Threads zusammenpassen!
 
 [ch-18]: ch18-00-oop.html
 [message-passing]: ch17-02-concurrency-with-async.md#datenaustausch-zwischen-zwei-aufgaben-mit-nachrichtenübermittlung
