@@ -60,15 +60,15 @@ in diesem Fall nur der Wert `1`. Jeder Zweig wird durch ein Komma vom nächsten
 getrennt.
 
 Wenn der `match`-Ausdruck ausgeführt wird, gleicht er den Ergebniswert mit dem
-Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum Wert
-passt, wird der zu diesem Muster gehörende Code ausgeführt. Wenn das Muster
-nicht zum Wert passt, wird die Ausführung beim nächsten Zweig fortgesetzt,
-ähnlich wie bei einer Münzsortiermaschine. Wir können so viele Zweige haben,
-wie wir brauchen: In Listing 6-3 hat unser `match`-Ausdruck vier Zweige.
+Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum Wert passt,
+wird der zu diesem Muster gehörige Code ausgeführt. Wenn das Muster nicht zum
+Wert passt, wird die Ausführung beim nächsten Zweig fortgesetzt, ähnlich wie bei
+einer Münzsortiermaschine. Wir können so viele Zweige haben, wie wir brauchen:
+In Listing 6-3 hat unser `match`-Ausdruck vier Zweige.
 
-Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der Ergebniswert des
-Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
-`match`-Ausdruck zurückgegeben wird. 
+Der zu jedem Zweig gehörige Code ist ein Ausdruck, und der Ergebniswert des
+Ausdrucks im zugehörigen Zweig ist der Wert, der für den gesamten
+`match`-Ausdruck zurückgegeben wird.
 
 Wir verwenden üblicherweise keine geschweiften Klammern, wenn der Zweig-Code
 kurz ist, so wie in Listing 6-3, wo jeder Zweig nur einen Wert zurückgibt.
@@ -276,12 +276,12 @@ Er passt! Es gibt keinen Wert zum Hinzufügen, also stoppt das Programm und gibt
 den Wert `None` auf der rechten Seite von `=>` zurück. Da der erste Zweig
 passt, werden keine anderen Zweige abgeglichen.
 
-Die Kombination von `match` und Aufzählungen ist in vielen Situationen
-nützlich. Du wirst dieses Muster häufig in Rust-Code sehen: `match` mit einer
-Aufzählung, eine Variable an die darin enthaltenen Daten binden und dann
-dazugehörenden Code ausführen. Am Anfang ist es etwas knifflig, aber wenn man
-sich erst einmal daran gewöhnt hat, wird man sich wünschen, es in allen
-Sprachen zu haben. Es ist durchweg ein beliebtes Werkzeug.
+Die Kombination von `match` und Aufzählungen ist in vielen Situationen nützlich.
+Du wirst dieses Muster häufig in Rust-Code sehen: `match` mit einer Aufzählung,
+eine Variable an die darin enthaltenen Daten binden und dann zugehörigen Code
+ausführen. Am Anfang ist es etwas knifflig, aber wenn man sich erst einmal daran
+gewöhnt hat, wird man sich wünschen, es in allen Sprachen zu haben. Es ist
+durchweg ein beliebtes Werkzeug.
 
 ### Abgleiche sind vollständig
 

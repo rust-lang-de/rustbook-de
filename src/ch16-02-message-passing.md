@@ -17,14 +17,13 @@ Wasserkanal vorstellen, z.B. einen Bach oder einen Fluss. Wenn du etwas wie
 eine Gummiente in einen Fluss setzt, wird sie stromabwärts bis zum Ende des
 Wasserwegs reisen.
 
-Ein Kanal hat zwei Hälften: Einen Sender und einen Empfänger. Die Senderhälfte
+Ein Kanal hat zwei Hälften: einen Sender und einen Empfänger. Die Senderhälfte
 ist die stromaufwärts gelegene Stelle, an der du die Gummiente in den Fluss
-setzt, und die Empfängerhälfte ist die Stelle, an der die Gummiente
-stromabwärts ankommt. Ein Teil deines Codes ruft Methoden auf dem Sender mit
-den Daten auf, die du senden möchtest, und ein anderer Teil überprüft die
-Empfangsseite auf ankommende Nachrichten. Ein Kanal gilt als _geschlossen_
-(closed), wenn entweder die Sender- oder die Empfängerhälfte aufgeräumt
-(dropped) wird.
+setzt, und die Empfängerhälfte ist die Stelle, an der die Gummiente stromabwärts
+ankommt. Ein Teil deines Codes ruft Methoden auf dem Sender mit den Daten auf,
+die du senden möchtest, und ein anderer Teil überprüft die Empfangsseite auf
+ankommende Nachrichten. Ein Kanal gilt als _geschlossen_ (closed), wenn entweder
+die Sender- oder die Empfängerhälfte aufgeräumt (dropped) wird.
 
 Hier erarbeiten wir uns ein Programm, das einen Thread hat, um Werte zu
 generieren und sie über einen Kanal zu senden, und einen anderen Thread, der die
@@ -73,7 +72,7 @@ Verwendung von Mustern in `let`-Anweisungen und die Destrukturierung in Kapitel
 `let`-Anweisung auf diese Weise ein bequemer Ansatz ist, um die Teile des
 Tupels zu extrahieren, die von `mpsc::channel` zurückgegeben werden.
 
-Verschieben wir das sendende Ende in einen erzeugten Thread und lassen es einen
+Verschieben wir das sendende Ende in einen erzeugten Thread und lassen ihn einen
 String senden, sodass der erzeugte Thread mit dem Haupt-Thread kommuniziert, wie
 in Listing 16-7 gezeigt. Das ist so, als würde man eine Gummiente flussaufwärts
 in den Fluss setzen oder eine Chat-Nachricht von einem Thread zum anderen
@@ -108,8 +107,8 @@ wollen. Die Methode `send` gibt ein `Result<T, E>` zurück; wenn also die
 empfangende Seite bereits aufgeräumt wurde und es keinen Ort gibt, an den ein
 Wert gesendet werden kann, wird die Sendeoperation einen Fehler zurückgeben. In
 diesem Beispiel rufen wir `unwrap` auf, um im Falle eines Fehlers abzubrechen.
-Aber in einer echten Anwendung würden wir es ordentlich handhaben: Kehre zu
-Kapitel 9 zurück, um Strategien für eine korrekte Fehlerbehandlung anzusehen.
+Aber in einer echten Anwendung würden wir es ordentlich handhaben: Schlag in
+Kapitel 9 nach, um Strategien für eine korrekte Fehlerbehandlung anzusehen.
 
 In Listing 16-8 erhalten wir den Wert vom Empfänger im Haupt-Thread. Das ist
 so, als würde man die Gummiente am Ende des Flusses aus dem Wasser holen oder
@@ -364,7 +363,7 @@ Produzenten</span>
 
 Bevor wir den ersten Thread erzeugen, rufen wir dieses Mal `clone` auf dem
 Sender auf. Dadurch erhalten wir einen weiteren Sender, den wir an den ersten
-erzeugten Thread weitergeben können. Wir übergeben den ursprüngliche Sender an
+erzeugten Thread weitergeben können. Wir übergeben den ursprünglichen Sender an
 einen zweiten erzeugten Thread. Dadurch erhalten wir zwei Threads, die jeweils
 unterschiedliche Nachrichten an den Empfänger senden.
 

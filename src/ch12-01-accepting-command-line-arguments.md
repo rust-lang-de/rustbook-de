@@ -11,7 +11,7 @@ $ cd minigrep
 ```
 
 Die erste Aufgabe besteht darin, `minigrep` dazu zu bringen, seine beiden
-Kommandozeilenargumente entgegennehmen: Den Dateipfad und einen String, nach dem
+Kommandozeilenargumente entgegennehmen: den Dateipfad und einen String, nach dem
 gesucht werden soll. Das heißt, wir wollen in der Lage sein, unser Programm mit
 `cargo run`, einem zu suchenden String und einem Pfad zu einer Datei, in der
 gesucht werden soll, auszuführen:

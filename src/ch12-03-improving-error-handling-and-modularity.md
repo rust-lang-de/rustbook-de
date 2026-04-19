@@ -7,10 +7,9 @@ und liest Dateien. Für eine so kleine Funktion ist dies kein großes Problem.
 Wenn wir jedoch unser Programm innerhalb der Funktion `main` weiter ausbauen,
 wird die Anzahl der einzelnen Aufgaben, die die Funktion `main` bearbeitet,
 zunehmen. In dem Maße, wie eine Funktion an Verantwortung hinzugewinnt, wird es
-schwieriger sie zu verstehen, schwieriger sie zu testen und schwieriger sie zu
-ändern, ohne dass eines ihrer Teile kaputtgeht. Am besten ist es, die
-Funktionalität so aufzuteilen, dass jede Funktion für eine Aufgabe zuständig
-ist.
+schwieriger, sie zu verstehen, sie zu testen und sie zu ändern, ohne dass eines
+ihrer Teile kaputtgeht. Am besten ist es, die Funktionalität so aufzuteilen,
+dass jede Funktion für eine Aufgabe zuständig ist.
 
 Diese Frage hängt auch mit dem zweiten Problem zusammen: Obwohl `query` und
 `file_path` Konfigurationsvariablen unseres Programms sind, werden Variablen
@@ -193,7 +192,7 @@ sie Felder mit den Namen `query` und `file_path` enthält. Die Signatur von
 `parse_config` zeigt nun an, dass sie einen `Config`-Wert zurückgibt. Im Rumpf
 von `parse_config`, wo wir früher String Slices zurückgegeben haben, die auf
 `String`-Werte in `args` referenzieren, definieren wir `Config` jetzt so, dass
-es aneigenbare (owned) `String`-Werte enthält. Die `args`-Variable in `main` ist
+es besitzende (owned) `String`-Werte enthält. Die `args`-Variable in `main` ist
 der Eigentümer der Argumentwerte und lässt die Funktion `parse_config` diese nur
 ausleihen, was bedeutet, dass wir Rusts Regeln für das Borrowing verletzen
 würden, wenn `Config` versucht, das Eigentum an den Werten in `args` zu
@@ -546,14 +545,14 @@ behandelt haben: `unwrap_or_else`, die in der Standardbibliothek unter
 eine benutzerdefinierte nicht-`panic!`-Fehlerbehandlung zu definieren. Wenn das
 `Result` ein `Ok`-Wert ist, verhält sich diese Methode ähnlich wie `unwrap`: Sie
 gibt den inneren Wert von `Ok` zurück. Wenn der Wert jedoch ein `Err`-Wert ist,
-ruft diese Methode den Code im Closure auf, die eine anonyme Funktion ist, die
+ruft diese Methode den Code im Closure auf, der eine anonyme Funktion ist, die
 wir definieren und als Argument an `unwrap_or_else` übergeben. Auf Closures
 gehen wir ausführlicher in [Kapitel 13][ch13] ein. Im Moment musst du nur
 wissen, dass `unwrap_or_else` den inneren Wert von `Err`, in diesem Fall der
 statische String `Nicht genügend Argumente`, den wir in Listing 12-9 hinzugefügt
 haben, an unseren Closure im Argument `err`, das zwischen den senkrechten
 Strichen erscheint, weitergibt. Der Code im Closure kann dann den `err`-Wert
-verwenden, wenn sie ausgeführt wird.
+verwenden, wenn der ausgeführt wird.
 
 Wir haben eine neue Zeile `use` hinzugefügt, um `process` aus der
 Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code im Closure,
@@ -951,7 +950,7 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 <span class="caption">Listing 12-14: Verwenden der Bibliotheks-Crate
 `minigrep` in _src/main.rs_</span>
 
-Wir fügen eine Zeile `use minigrep::Config` hinzu, um den Typ `Config` aus der
+Wir fügen eine Zeile `use minigrep::search` hinzu, um den Typ `Config` aus der
 Bibliotheks-Crate in den Gültigkeitsbereich der binären Crate zu bringen. Dann
 rufen wir in der Funktion `run` anstatt den Inhalt der Datei auszugeben die
 Funktion `search` auf und übergeben den Wert `config.query` und `contents` als

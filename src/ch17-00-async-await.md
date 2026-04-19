@@ -1,18 +1,18 @@
 # Grundlagen der asynchronen Programmierung: Async, Await, Futures und Streams
 
-Viele Operationen, die wir einen Computer ausführen lassen, können eine Weile
-dauern, bis sie erledigt sind. Es wäre schön, wenn wir etwas anderes tun
-könnten, während wir darauf warten, bis diese lang dauernden Prozesse
-abgeschlossen sind. Moderne Computer bieten zwei Techniken, um mehr als einen
-Vorgang gleichzeitig zu bearbeiten: Parallelität und Nebenläufigkeit. Die Logik
-unserer Programme ist jedoch meist linear geschrieben. Wir möchten gerne 
-festlegen können, welche Operationen ein Programm ausführen soll und an welchen
-Punkten eine Funktion pausieren und stattdessen ein anderer Teil des Programms
-ausgeführt werden kann, ohne dass wir im Voraus genau festlegen müssen, in
-welcher Reihenfolge und auf welche Weise jeder einzelne Codeausschnitt
-ausgeführt werden soll. _Asynchrone Programmierung_ ist eine Abstraktion, mit
-der wir unseren Code in Form von potenziellen Haltepunkten und Endergebnissen
-ausdrücken können, die die Details der Koordination für uns übernehmen.
+Viele Operationen, die ein Computer ausführt, können eine Weile dauern, bis sie
+erledigt sind. Es wäre schön, wenn wir etwas anderes tun könnten, während wir
+darauf warten, bis diese lang dauernden Prozesse abgeschlossen sind. Moderne
+Computer bieten zwei Techniken, um mehr als einen Vorgang gleichzeitig zu
+bearbeiten: Parallelität und Nebenläufigkeit. Die Logik unserer Programme ist
+jedoch meist linear geschrieben. Wir möchten gerne festlegen können, welche
+Operationen ein Programm ausführen soll und an welchen Punkten eine Funktion
+pausieren und stattdessen ein anderer Teil des Programms ausgeführt werden kann,
+ohne dass wir im Voraus genau festlegen müssen, in welcher Reihenfolge und auf
+welche Weise jeder einzelne Codeausschnitt ausgeführt werden soll. _Asynchrone
+Programmierung_ ist eine Abstraktion, mit der wir unseren Code in Form von
+potenziellen Haltepunkten und Endergebnissen ausdrücken können, die die Details
+der Koordination für uns übernehmen.
 
 Dieses Kapitel baut auf Kapitel 16 auf, in dem Threads für Parallelität und
 Nebenläufigkeit verwendet werden, und stellt einen alternativen Ansatz zum
@@ -48,11 +48,11 @@ sie auf den Abschluss des Netzwerkvorgangs wartet.
 Der Videoexport ist ein Beispiel für einen _CPU-gebundenen_ (CPU-bound) oder
 _rechengebunden_ (compute-bound) Vorgang. Er ist durch die potenzielle
 Datenverarbeitungsgeschwindigkeit der CPU oder GPU des Computers begrenzt und
-dadurch, wie viel von dieser Geschwindigkeit er für den Vorgang nutzen kann.
-Der Videodownload ist ein Beispiel für einen _E/A-gebunden_ (IO-bound) Vorgang,
-da er durch die Geschwindigkeit der _Eingabe und Ausgabe_ des Computers
-begrenzt ist; er kann nur so schnell sein, wie die Daten über das Netzwerk
-gesendet werden können.
+dadurch, wie viel von dieser Geschwindigkeit der Vorgang nutzen kann. Der
+Videodownload ist ein Beispiel für einen _E/A-gebunden_ (IO-bound) Vorgang, da
+er durch die Geschwindigkeit der _Eingabe und Ausgabe_ des Computers begrenzt
+ist; er kann nur so schnell sein, wie die Daten über das Netzwerk gesendet
+werden können.
 
 In beiden Beispielen stellen die unsichtbaren Unterbrechungen durch das
 Betriebssystem eine Form der Nebenläufigkeit dar. Diese Nebenläufigkeit findet
@@ -78,13 +78,13 @@ sie verarbeiten, vollständig verfügbar sind.
 > wäre.
 
 Wir könnten das Blockieren unseres Haupt-Threads (main thread) vermeiden, indem
-wir einen dedizierten Thread zum Herunterladen jeder Datei erstellen.
-Allerdings würde der Overhead der von diesen Thread verwendeten
-Systemressourcen letztendlich zu einem Problem werden. Es wäre besser, wenn der
-Aufruf gar nicht erst blockiert würde und wir stattdessen eine Reihe von
-Aufgaben definieren könnten, die unser Programm ausführen soll, und es der
-Laufzeitumgebung überlassen könnten, die beste Reihenfolge und Art und Weise
-für deren Ausführung zu wählen.
+wir einen dedizierten Thread zum Herunterladen jeder Datei erstellen. Allerdings
+würde der Overhead der von diesen Threads verwendeten Systemressourcen
+letztendlich zu einem Problem werden. Es wäre besser, wenn der Aufruf gar nicht
+erst blockiert würde und wir stattdessen eine Reihe von Aufgaben definieren
+könnten, die unser Programm ausführen soll, und es der Laufzeitumgebung
+überlassen könnten, die beste Reihenfolge und Art und Weise für deren Ausführung
+zu wählen.
 
 Genau das bietet uns die _async_ (kurz für _asynchronous_) Abstraktion von
 Rust. In diesem Kapitel wirst du alles über async lernen, indem wir die

@@ -9,7 +9,7 @@ Restaurantmodule enthält. Wir verschieben das Modul `front_of_house` in seine
 eigene Datei _src/front_of_house.rs_, indem wir die Crate-Wurzeldatei so ändern,
 dass sie den in Listing 7-21 gezeigten Code enthält. In diesem Fall ist die
 Crate-Wurzeldatei _src/lib.rs_, aber diese Vorgehensweise funktioniert auch mit
-binären Crate, deren Crate-Wurzeldatei _src/main.rs_ ist.
+binären Crates, deren Crate-Wurzeldatei _src/main.rs_ ist.
 
 Zuerst extrahieren wir das Modul `front_of_house` in eine eigene Datei.
 Entferne den Code innerhalb der geschweiften Klammern des Moduls
@@ -132,14 +132,14 @@ dem Code, der zu diesem Modul gehört.
 
 ## Zusammenfassung
 
-Mit Rust kannst du ein Paket in mehrere Crates und eine Crate in Module
-aufteilen, sodass du auf in einem Modul definierte Elemente aus einem anderen
-Modul verweisen kannst. Du kannst dies tun, indem du absolute oder relative
-Pfade angibst. Diese Pfade können mit einer `use`-Anweisung in den
-Gültigkeitsbereich gebracht werden, sodass du einen kürzeren Pfad für mehrere
-Verwendungen des Elements in diesem Gültigkeitsbereich angeben kannst. Der
-Modulcode ist standardmäßig privat, aber du kannst Definitionen öffentlich
-machen, indem du das Schlüsselwort `pub` angibst.
+Rust erlaubt es dir, ein Paket in mehrere Crates und eine Crate in Module
+aufzuteilen, damit du auf Elemente, die in einem Modul definiert sind, von einem
+anderen Modul aus verweisen kannst. Dazu gibst du absolute oder relative Pfade
+an. Diese Pfade kannst du mit einer `use`-Anweisung in den Gültigkeitsbereich
+bringen, sodass du in diesem Gültigkeitsbereich einen kürzeren Pfad verwenden
+kannst, wenn du das Element mehrfach brauchst. Modulcode ist standardmäßig
+privat; mit dem Schlüsselwort `pub` kannst du Definitionen jedoch öffentlich
+machen.
 
 Im nächsten Kapitel werden wir uns einige Kollektionsdatenstrukturen in der
 Standardbibliothek ansehen, die du in deinem ordentlich organisierten Code

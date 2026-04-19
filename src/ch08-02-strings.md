@@ -27,13 +27,13 @@ String-Daten sind, die anderswo gespeichert sind. String-Literale werden
 beispielsweise in der Binärdatei des Programms gespeichert und sind daher String
 Slices.
 
-Der Typ `String`, der von Rusts Standardbibliothek zur Verfügung gestellt wird
-und nicht in die Kernsprache kodiert ist, ist ein größenänderbarer,
-veränderbarer, aneigenbarer, UTF-8-kodierter String-Typ. Wenn Rust-Entwickler
-von Strings in Rust sprechen, meinen sie normalerweise den Typ `String` sowie
-den String Slice `&str`, nicht nur einen dieser Typen. Obwohl es in diesem
-Abschnitt weitgehend um `String` geht, werden beide Typen in Rusts
-Standardbibliothek stark verwendet, und sowohl `String` als auch String Slices
+Der Typ `String`, der von Rusts Standardbibliothek bereitgestellt wird und nicht
+in die Kernsprache eingebaut ist, ist ein in der Größe veränderbarer,
+veränderbarer, besitzender (owned), UTF-8-kodierter String-Typ. Wenn
+Rust-Entwickler von Strings in Rust sprechen, meinen sie normalerweise den Typ
+`String` sowie den String Slice `&str`, nicht nur einen dieser Typen. Obwohl es
+in diesem Abschnitt überwiegend um `String` geht, werden beide Typen in Rusts
+Standardbibliothek intensiv genutzt, und sowohl `String` als auch String Slices
 sind UTF-8-kodiert.
 
 ### Erstellen eines neuen Strings
@@ -196,8 +196,8 @@ generische Datentypen in Kapitel 10 besprechen. Diese Signatur gibt uns den
 entscheidenden Hinweis, um die kniffligen Stellen des Operators `+` zu
 verstehen.
 
-Erstens hat `s2` ein `&`, was bedeutet, dass wir eine Referenz des zweiten
-Strings an den ersten String anhängen. Der Grund dafür ist der Parameter `s` in
+Erstens hat `s2` ein `&`, was bedeutet, dass wir eine Referenz auf den zweiten
+String an den ersten String anhängen. Der Grund dafür ist der Parameter `s` in
 der Funktion `add`: Wir können nur einen String Slice an einen `String`
 anhängen; wir können nicht zwei `String`-Werte aneinanderhängen. Aber warte
 &ndash; der Typ von `&s2` ist `&String`, nicht `&str`, wie im zweiten Parameter
@@ -217,8 +217,8 @@ in den Aufruf von `add` verschoben wird und danach nicht mehr gültig ist. Obwoh
 also `let s3 = s1 + &s2;` so aussieht, als ob beide Strings kopiert und ein
 neuer erzeugt wird, übernimmt diese Anweisung tatsächlich das Eigentum an `s1`,
 hängt eine Kopie des Inhalts von `s2` an und gibt dann das Eigentum am Ergebnis
-zurück. In anderen Worten sieht es so aus, als würde es viele Kopien erstellen,
-das ist aber nicht so; die Implementierung ist effizienter als Kopieren.
+zurück. Mit anderen Worten sieht es so aus, als würde es viele Kopien erstellen
+&ndash; das ist aber nicht so; die Implementierung ist effizienter als Kopieren.
 
 Wenn wir mehrere Strings aneinanderhängen wollen, wird das Verhalten des
 Operators `+` unhandlich:
@@ -313,7 +313,7 @@ let hello = String::from("Здравствуйте");
 ```
 
 Auf die Frage, wie lang der String ist, könnte man sagen: 12. Die Antwort von
-Rust lautet jedoch 24: Das ist die Anzahl der Bytes, die benötigt wird, um
+Rust lautet jedoch 24: Das ist die Anzahl der Bytes, die benötigt werden, um
 „Здравствуйте“ in UTF-8 zu kodieren, da jeder Unicode-Skalarwert in diesem
 String 2 Bytes Speicherplatz benötigt. Daher wird ein Index auf die Bytes des
 Strings nicht immer mit einem gültigen Unicode-Skalarwert korrelieren. Um das zu
@@ -355,9 +355,9 @@ Vektor von `u8`-Werten gespeichert, der wie folgt aussieht:
 224, 165, 135]
 ```
 
-Das sind 18 Bytes, so wie ein Computer diese Daten letztendlich speichert. Wenn
-wir sie als Unicode-Skalarwerte betrachten, also als das, was der Typ `char` in
-Rust ist, sehen diese Bytes wie folgt aus:
+Das sind 18 Bytes, so wie ein Computer diese Daten letztlich speichert. Wenn wir
+sie als Unicode-Skalarwerte betrachten, also als das, was der Typ `char` in Rust
+ist, sehen diese Bytes wie folgt aus:
 
 ```text
 ['न', 'म', 'स', '्', 'त', 'े']

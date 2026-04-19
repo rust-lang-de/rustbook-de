@@ -6,7 +6,7 @@ diese drei Aktionen aus:
 
 - Bereite die benötigten Daten und Zustände vor.
 - Führe den Code aus, den du testen möchtest.
-- Stelle sicher, dass die Ergebnisse die sind, was du erwartest.
+- Stelle sicher, dass die Ergebnisse die sind, die du erwartest.
 
 Schauen wir uns die Funktionalität an, die Rust speziell für das Schreiben von
 Tests bereitstellt, die diese Aktionen ausführen. Dazu gehören das Attribut
@@ -23,7 +23,7 @@ verwendet haben. Um eine Funktion in eine Testfunktion zu verwandeln, füge
 runner binary), die die annotierten Funktionen ausführt und darüber berichtet,
 ob jede Testfunktion erfolgreich war oder nicht.
                                            
-Wann immer wir ein neues Bibliotheksprojekt mit Cargo durchführen, wird für uns
+Wann immer wir ein neues Bibliotheksprojekt mit Cargo erstellen, wird
 automatisch ein Testmodul mit einer Testfunktion darin generiert. Dieses Modul
 gibt dir eine Vorlage, um deine Tests zu schreiben, sodass du nicht jedes Mal,
 wenn du ein neues Projekt startest, die genaue Struktur und Syntax nachschlagen
@@ -307,11 +307,11 @@ impl Rectangle {
 <span class="caption">Listing 11-5: Verwenden der Struktur `Rectangle` und
 ihrer Methode `can_hold` aus Kapitel 5</span>
 
-Die Methode `can_hold` gibt ein Boolean zurück, was bedeutet, dass es ein
-perfekter Anwendungsfall für das Makro `assert!` ist. In Listing 11-6
+Die Methode `can_hold` gibt einen booleschen Wert zurück, was bedeutet, dass es
+ein perfekter Anwendungsfall für das Makro `assert!` ist. In Listing 11-6
 schreiben wir einen Test, der die Methode `can_hold` überprüft, indem wir eine
 `Rectangle`-Instanz mit einer Breite von 8 und einer Höhe von 7 erstellen und
-sicherstellen, dass es eine weitere `Rectangle`-Instanz mit einer Breite von 5
+sicherstellen, dass sie eine weitere `Rectangle`-Instanz mit einer Breite von 5
 und einer Höhe von 1 enthalten kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -386,7 +386,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 ```
 
 Es funktioniert! Fügen wir noch einen weiteren Test hinzu, diesmal mit der
-Zusicherung, dass ein kleineres Rechteck nicht in ein größeres Rechteck passt:
+Zusicherung, dass ein kleineres Rechteck kein größeres enthalten kann:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -562,8 +562,8 @@ erkennen, _warum_ der Test fehlgeschlagen ist; umgekehrt zeigt das Makro
 `assert!` nur an, dass der Ausdruck `==` den Wert `false` ergeben hat, ohne die
 Werte auszugeben, die zum falschen Testergebnis geführt haben.
 
-In Listing 11-7 schreiben wir eine Funktion namens `add_two`, die zu ihrem
-Parameter `2` addiert, und dann testen wir diese Funktion mit dem Makro
+In Listing 11-7 schreiben wir eine Funktion namens `add_two`, die `2` zu ihrem
+Parameter addiert, und dann testen wir diese Funktion mit dem Makro
 `assert_eq!`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -664,13 +664,13 @@ test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 error: test failed, to rerun pass `--lib`
 ```
 
-Unser Test hat den Fehler entdeckt! Der Test `tests::it_adds_two` schlug fehl
-und die Meldung sagt uns, dass die fehlgeschlagene Zusicherung ``assertion
- `left == right` failed`` ist und welche Werte `left` und `right` hatten. Diese
-Nachricht hilft uns, mit der Fehlersuche zu beginnen: Das Argument `left` mit
-dem Ergebnis von `add_two(2)` war `5`, aber das Argument `right` war `4`. Du
-kannst dir vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
-durchführen.
+Unser Test hat den Fehler entdeckt! Der Test `tests::it_adds_two` ist
+fehlgeschlagen und die Meldung sagt uns, dass die fehlgeschlagene Zusicherung
+``assertion `left == right` failed`` ist und welche Werte `left` und `right`
+hatten. Diese Nachricht hilft uns, mit der Fehlersuche zu beginnen: Das Argument
+`left` mit dem Ergebnis von `add_two(2)` war `5`, aber das Argument `right` war
+`4`. Du kannst dir vorstellen, dass dies besonders hilfreich ist, wenn wir viele
+Tests durchführen.
 
 Beachte, dass in einigen Sprachen und Test-Bibliotheken die Parameter der
 Gleichheitszusicherung `expected` und `actual` genannt werden und deren
@@ -1042,8 +1042,8 @@ Abbruchsnachricht aus, um sicherzustellen, dass der Code in der Testfunktion den
 Fall `else if value > 100` ausführt.
 
 Um zu sehen, was passiert, wenn ein Test mit `should_panic` und einer
-`expected`-Nachricht fehlschlägt, wollen wir wieder einen Fehler in unseren
-Code einbringen, indem wir die Zweige `if value < 1`  und `else if value > 100`
+`expected`-Nachricht fehlschlägt, wollen wir wieder einen Fehler in unseren Code
+einbringen, indem wir die Zweige `if value < 1` und `else if value > 100`
 vertauschen:
 
 ```rust,not_desired_behavior

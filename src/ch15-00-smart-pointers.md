@@ -4,9 +4,9 @@ Ein Zeiger ist im Allgemeinen ein Konzept für eine Variable, die eine
 Speicheradresse enthält. Diese Adresse referenziert oder „zeigt“ auf andere
 Daten. Die häufigste Art von Zeigern in Rust ist eine Referenz, die wir bereits
 in Kapitel 4 kennengelernt haben. Referenzen werden durch das Symbol `&`
-gekennzeichnet und leihen (borrow) den Wert auf den sie zeigen aus. Sie haben
-außer dem Referenzieren auf Daten keine besondere Funktionalität und
-verursachen keinen Mehraufwand (overhead).
+gekennzeichnet und leihen (borrow) den Wert, auf den sie zeigen aus. Sie haben
+außer dem Referenzieren auf Daten keine besondere Funktionalität und verursachen
+keinen Mehraufwand (overhead).
 
 _Intelligente Zeiger_ (smart pointers) sind hingegen Datenstrukturen, die wie
 ein Zeiger funktionieren, und über zusätzliche Metadaten und Funktionalitäten
@@ -46,7 +46,7 @@ die am häufigsten verwendeten intelligenten Zeiger der Standardbibliothek
 behandeln:
 
 - `Box<T>` zum Zuweisen von Werten auf dem Heap
-- `Rc<T>`, ein Typ der Referenzen zählt und dadurch mehrfaches Eigentum
+- `Rc<T>`, ein Typ, der Referenzen zählt und dadurch mehrfaches Eigentum
   ermöglicht
 - `Ref<T>` und `RefMut<T>` mit Zugriff über `RefCell<T>`, ein Typ, der das
   Einhalten der Borrowing-Regeln zur Laufzeit statt zur Kompilierzeit erzwingt.

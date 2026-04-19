@@ -22,8 +22,8 @@ Das asynchrone Modell bietet eine andere &ndash; und letztlich ergänzende
 Vorgänge keine eigenen Threads. Stattdessen können sie in Aufgaben laufen, so
 wie wir `trpl::spawn_task` verwendet haben, um die Arbeit von einer synchronen
 Funktion im Abschnitt „Streams“ zu starten. Eine Aufgabe ähnelt einem Thread,
-wird aber nicht vom Betriebssystem, sondern von einem Code auf Bibliotheksebene
-verwaltet: der Laufzeitumgebung.
+wird aber nicht vom Betriebssystem, sondern auf Bibliotheksebene verwaltet: der
+Laufzeitumgebung.
 
 Es gibt einen Grund dafür, dass die APIs zum Erzeugen von Threads und zum
 Erzeugen von Aufgaben so ähnlich sind. Threads dienen als Grenze für Gruppen von
@@ -106,7 +106,7 @@ bis 10 und schlafen dazwischen jeweils eine Sekunde lang. Schließlich führen w
 ein Future aus, das mit einem asynchronen Block erstellt wurde, der an
 `trpl::block_on` übergeben wurde, so wie wir es im ganzen Kapitel getan haben.
 In diesem Future warten wir auf diese Nachrichten, genau wie in den anderen
-Beispielen mit Nachrichten-Weitergabe, die wir gesehen haben.
+Beispielen mit Nachrichtenaustausch, die wir gesehen haben.
 
 Um zu den Szenarien zurückzukehren, mit denen wir das Kapitel eröffnet haben,
 könnte man sich vorstellen, dass eine Reihe von Videokodierungsaufgaben über

@@ -2,12 +2,12 @@
 
 Methoden sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort `fn`
 und ihrem Namen deklariert, sie können Parameter und einen Rückgabewert haben,
-und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden.
-Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
-einer Struktur (struct) (oder einer Aufzählung (enum) oder eines Trait-Objekts,
-die wir in [Kapitel 6][enums] und [Kapitel 18][trait-objects] behandeln)
-definiert werden und ihr erster Parameter stets `self` ist. `self` repräsentiert
-die Instanz der Struktur, auf der die Methode aufgerufen wird.
+und sie enthalten etwas Programmcode, der ausgeführt wird, wenn sie aufgerufen
+werden. Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im
+Kontext einer Struktur (struct) (oder einer Aufzählung (enum) oder eines
+Trait-Objekts, die wir in [Kapitel 6][enums] und [Kapitel 18][trait-objects]
+behandeln) definiert werden und ihr erster Parameter stets `self` ist. `self`
+repräsentiert die Instanz der Struktur, auf der die Methode aufgerufen wird.
 
 ### Methoden-Syntax
 
@@ -134,11 +134,11 @@ wir in [Kapitel 7][public] behandeln.
 
 > ### Wo ist der Operator `->`?
 >
-> In C und C++ werden zwei verschiedene Operatoren für den Aufruf von Methoden
-> verwendet: Man verwendet `.`, wenn eine Methode direkt auf dem Objekt
-> aufgerufen wird, und `->`, wenn die Methode auf einem Zeiger auf das Objekt
-> aufrufen und der Zeiger zuerst dereferenziert werden muss. Anders gesagt,
-> wenn `object` ein Zeiger ist, ist `object->something()` ähnlich zu
+> In C und C++ werden zwei verschiedene Operatoren verwendet, um Methoden
+> aufzurufen: Du verwendest `.`, wenn du eine Methode direkt auf dem Objekt
+> aufrufst, und `->`, wenn du die Methode über einen Zeiger auf das Objekt
+> aufrufst und den Zeiger zuerst dereferenzieren musst. Mit anderen Worten: Wenn
+> `object` ein Zeiger ist, entspricht `object->something()` in etwa
 > `(*object).something()`.
 >
 > Rust hat kein Äquivalent zum Operator `->`. Stattdessen hat Rust eine
@@ -173,12 +173,12 @@ wir in [Kapitel 7][public] behandeln.
 > ```
 >
 > Der erste Aufruf sieht viel sauberer aus. Die automatische Referenzierung
-> funktioniert, weil Methoden einen eindeutigen Empfänger haben - den Typ von
-> `self`. Wenn man den Empfänger und den Namen einer Methode angibt, kann Rust
-> eindeutig herausfinden, ob die Methode lesend (`&self`), veränderbar
-> (`&mut self`) oder konsumierend (`self`) ist. Die Tatsache, dass Rust das
-> Borrowing für die Methodenempfänger implizit macht, ist ein großer Beitrag
-> zur Ergonomie der Eigentümerschaft in der Praxis.
+> funktioniert, weil Methoden einen eindeutigen Empfänger haben &ndash; den
+> Typ von `self`. Wenn man den Empfänger und den Namen einer Methode angibt,
+> kann Rust eindeutig herausfinden, ob die Methode lesend (`&self`),
+> veränderbar (`&mut self`) oder konsumierend (`self`) ist. Die Tatsache, dass
+> Rust das Borrowing für die Methodenempfänger implizit macht, ist ein großer
+> Beitrag zur Ergonomie der Eigentümerschaft in der Praxis.
 
 ### Methoden mit mehreren Parametern
 

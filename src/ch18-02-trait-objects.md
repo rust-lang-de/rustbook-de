@@ -48,7 +48,7 @@ Um das Verhalten zu implementieren, das wir in `gui` haben wollen, werden wir
 ein Trait namens `Draw` definieren, das eine Methode namens `draw` haben wird.
 Dann können wir einen Vektor definieren, der ein Trait-Objekt annimmt. Ein
 _Trait-Objekt_ verweist sowohl auf eine Instanz eines Typs, der das von uns
-spezifizierte Trait implementiert, und eine Tabelle, in der Trait-Methoden
+spezifizierte Trait implementiert, als auch eine Tabelle, in der Trait-Methoden
 dieses Typs zur Laufzeit nachgeschlagen werden können. Wir erstellen ein
 Trait-Objekt, indem wir eine Art Zeiger angeben, z.B. eine Referenz `&` oder
 einen intelligenten Zeiger `Box<T>`, dann das Schlüsselwort `dyn` und dann das
@@ -57,7 +57,7 @@ verwenden müssen, in [„Dynamisch große Typen und das Trait
 `Sized`“][dynamically-sized] in Kapitel 20 sprechen.) Wir können Trait-Objekte
 an Stelle eines generischen oder konkreten Typs verwenden. Wo immer wir ein
 Trait-Objekt verwenden, stellt Rusts Typsystem zur Kompilierzeit sicher, dass
-jeder in diesem Kontext verwendete Wert das Trait des Trait-Objekts
+jeder in diesem Kontext verwendete Wert das vom Trait-Objekts verlangte Trait
 implementiert. Folglich müssen wir zur Kompilierzeit nicht alle möglichen Typen
 kennen.
 
@@ -329,12 +329,11 @@ Wert reagiert, und nicht mit dem konkreten Typ des Wertes &ndash; ähnelt dem
 Konzept des _Duck-Typing_ in dynamisch typisierten Sprachen: Wenn es wie eine
 Ente läuft und wie eine Ente quakt, dann muss es eine Ente sein! Bei der
 Implementierung von `run` auf `Screen` in Listing 18-5 braucht `run` nicht zu
-wissen, was der konkrete Typ jeder Komponente ist. Es prüft nicht, ob eine
+wissen, was der konkrete Typ jeder Komponente ist. Es weiß nicht, ob eine
 Komponente eine Instanz eines `Buttons` oder einer `SelectBox` ist, es ruft nur
-die Methode `draw` auf der Komponente auf. Durch die Spezifikation von
-`Box<dyn Draw>` als Typ der Werte im Vektor `components` haben wir `Screen` so
-definiert, dass wir Werte benötigen, auf denen wir die Methode `draw` aufrufen
-können.
+die Methode `draw` auf der Komponente auf. Durch die Spezifikation von `Box<dyn
+Draw>` als Typ der Werte im Vektor `components` haben wir `Screen` so definiert,
+dass wir Werte benötigen, auf denen wir die Methode `draw` aufrufen können.
 
 Der Vorteil der Verwendung von Trait-Objekten und des Rust-Typsystems zum
 Schreiben von Code, der dem Code mit Duck-Typing ähnelt, besteht darin, dass wir
@@ -390,14 +389,14 @@ ist, `Draw` darauf aufzurufen.
 
 ### Dynamischen Aufruf durchführen
 
-Erinnere dich [„Code-Performanz beim Verwenden generischer
+Erinnere dich an [„Code-Performanz beim Verwenden generischer
 Datentypen“][performance-of-code-using-generics] in Kapitel 10 an unsere
 Diskussion über den Monomorphisierungsprozess bei generischen Typen, den der
 Compiler durchführt: Der Compiler generiert nicht-generische Implementierungen
 von Funktionen und Methoden für jeden konkreten Typ, den wir anstelle eines
 generischen Typparameters verwenden. Der Code, der sich aus der
-Monomorphisierung ergibt, macht _statische Aufrufe_ (static dispatch), d.h.
-der Compiler weiß, welche Methode du zur Kompilierzeit aufrufst. Dies steht im
+Monomorphisierung ergibt, macht _statische Aufrufe_ (static dispatch), d.h. der
+Compiler weiß, welche Methode du zur Kompilierzeit aufrufst. Dies steht im
 Gegensatz zum _dynamischen Aufruf_ (dynamic dispatch), bei dem der Compiler zur
 Kompilierzeit nicht weiß, welche Methode du aufrufst. In Fällen von dynamischem
 Aufruf erzeugt der Compiler Code, der zur Laufzeit herausfindet, welche Methode

@@ -16,7 +16,7 @@ Kommentar reicht dann bis zum Ende der Zeile. Für Kommentare, die über eine
 einzelne Zeile hinausgehen, musst du bei jedem Zeilenanfang `//` angeben:
 
 ```rust
-// Hier passiert etwas kompliziertes, so komplex dass wir
+// Hier passiert etwas kompliziertes, so komplex, dass wir
 // mehrere Kommentarzeilen brauchen! Puh! Hoffentlich erklärt
 // dieser Kommentar, was hier passiert.
 ```

@@ -34,7 +34,7 @@ Beachte, dass der gesamte Tupelcode aus der Variablendeklaration und dem
 Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir `&s1`
 an `calculate_length` übergeben und in seiner Definition `&String` statt
 `String` steht. Das `&`-Zeichen steht für eine Referenz, und sie ermöglicht es
-dir, sich auf einen Wert zu beziehen, ohne dessen Eigentum zu übernehmen.
+dir, dich auf einen Wert zu beziehen, ohne dessen Eigentum zu übernehmen.
 Abbildung 4-6 zeigt die Speicherdarstellung.
 
 <img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
@@ -148,9 +148,9 @@ Referenz haben.
 
 ### Veränderbare Referenzen
 
-Wir können den Code aus Listing 4-6 so ändern, dass wir einen geliehenen Wert
-mit ein paar kleinen Änderungen ändern können, die stattdessen eine
-_veränderbare Referenz_ verwenden:
+Wir können den Code aus Listing 4-6 mit nur wenigen kleinen Anpassungen so
+ändern, dass wir einen ausgeliehenen Wert verändern können; dabei setzen wir
+stattdessen eine _veränderbare Referenz_ ein:
 
 <span class="filename">Dateiname: src/main.rs</span>
 

@@ -197,12 +197,12 @@ deklarieren wir den Namen des Typparameters innerhalb spitzer Klammern direkt
 nach dem Namen der Struktur. Dann verwenden wir den generischen Typ in der
 Strukturdefinition, wo wir sonst konkrete Datentypen angeben würden.
 
-Beachte, da wir nur einen generischen Typ zur Definition von `Point<T>`
-verwendet haben, besagt diese Definition, dass die Struktur `Point<T>`
-generisch über einen Typ `T` ist, und die beiden Felder `x` und `y` _denselben_
-Typ haben, welcher Typ das auch immer sein mag. Wenn wir eine Instanz von
-`Point<T>` erzeugen, die Werte unterschiedlichen Typs hat, wie in Listing
-10-7, wird sich unser Code nicht kompilieren lassen.
+Beachte: Da wir nur einen generischen Typ zur Definition von `Point<T>`
+verwendet haben, besagt diese Definition, dass die Struktur `Point<T>` generisch
+über einen Typ `T` ist, und die beiden Felder `x` und `y` _denselben_ Typ haben,
+welcher Typ das auch immer sein mag. Wenn wir eine Instanz von `Point<T>`
+erzeugen, die Werte unterschiedlichen Typs hat, wie in Listing 10-7, wird sich
+unser Code nicht kompilieren lassen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -240,10 +240,10 @@ error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 ```
 
 Um eine Struktur `Point` zu definieren, bei der `x` und `y` generische, aber
-unterschiedliche, Typen haben können, können wir mehrere generische
-Typparameter verwenden. Zum Beispiel ändern wir in Listing 10-8 die
-Definition von `Point` so, dass sie über den Typen `T` und `U` generisch ist,
-wobei `x` vom Typ `T` und `y` vom Typ `U` ist.
+unterschiedliche, Typen haben können, können wir mehrere generische Typparameter
+verwenden. Zum Beispiel ändern wir in Listing 10-8 die Definition von `Point`
+so, dass die Typen `T` und `U` generisch sind, wobei `x` vom Typ `T` und `y` vom
+Typ `U` ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -401,11 +401,10 @@ Struktur mit einem bestimmten konkreten Typ für den generischen Typparameter
 `T` gilt</span>
 
 Dieser Code bedeutet, dass der Typ `Point<f32>` eine Methode
-`distance_from_origin` hat und andere Instanzen von `Point<T>`, bei denen `T`
-nicht vom Typ `f32` ist, haben diese Methode nicht. Die Methode misst, wie weit
-unser Punkt vom Punkt mit den Koordinaten (0,0, 0,0) entfernt ist, und
-verwendet mathematische Operationen, die nur für Fließkomma-Typen zur Verfügung
-stehen.
+`distance_from_origin` hat; andere Instanzen von `Point<T>`, bei denen `T` nicht
+vom Typ `f32` ist, haben diese Methode nicht. Die Methode misst, wie weit unser
+Punkt vom Punkt mit den Koordinaten (0.0, 0.0) entfernt ist, und verwendet
+mathematische Operationen, die nur für Fließkomma-Typen zur Verfügung stehen.
 
 Generische Typparameter in einer Strukturdefinition sind nicht immer die
 gleichen wie die, die du in denselben Methodensignaturen für diese Struktur
@@ -485,12 +484,12 @@ let float = Some(5.0);
 ```
 
 Wenn Rust diesen Code kompiliert, führt es eine Codeduplizierung durch. Während
-dieses Vorgangs liest der Compiler die Werte ein, die in
-`Option<T>`-Instanzen verwendet wurden, und identifiziert zwei Arten von
-`Option<T>`: Eine verwendet den Typ `i32` und die andere `f64`. Als solches
-erweitert es die allgemeine Definition von `Option<T>` in zwei auf `i32` und
-`f64` spezialisierte Definitionen, wodurch die allgemeine Definition durch die
-spezifische ersetzt wird.
+dieses Vorgangs liest der Compiler die Werte ein, die in `Option<T>`-Instanzen
+verwendet wurden, und identifiziert zwei Arten von `Option<T>`: Eine verwendet
+den Typ `i32` und die andere `f64`. Deshalb erweitert es die allgemeine
+Definition von `Option<T>` in zwei auf `i32` und `f64` spezialisierte
+Definitionen, wodurch die allgemeine Definition durch die spezifische ersetzt
+wird.
 
 Die duplizierte Codeversion sieht ähnlich aus wie die folgende (der Compiler
 verwendet andere Namen als die, die wir hier zur Veranschaulichung verwenden):

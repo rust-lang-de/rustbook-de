@@ -14,10 +14,10 @@ werden.
 
 Es gibt zwei Arten von Crates: Binäre Crates und Bibliotheks-Crates. _Binäre
 Crates_ (binary crates) sind Programme, die du zu einer ausführbaren Datei
-kompilieren und starten kannst, z.B. ein Befehlszeilenprogramm
-oder einen Server. Jede muss eine Funktion namens `main` haben, die definiert,
-was passiert, wenn die ausführbare Datei läuft. Alle Crates, die wir bisher
-erstellt haben, waren binäre Crates.
+kompilieren und starten kannst, z.B. ein Befehlszeilenprogramm oder einen
+Server. Diese müssen eine Funktion namens `main` haben, die definiert, was
+passiert, wenn die ausführbare Datei läuft. Alle Crates, die wir bisher erstellt
+haben, waren binäre Crates.
 
 _Bibliotheks-Crates_ (library crates) haben keine Funktion `main` und sie werden
 nicht zu einer ausführbaren Datei kompiliert. Stattdessen definieren sie
@@ -28,8 +28,8 @@ meinen sie meistens „Bibliotheks-Crates“, und sie verwenden „Crate“ aust
 mit dem allgemeinen Programmierkonzept einer „Bibliothek“.
 
 Die _Crate-Wurzel_ ist eine Quelldatei, von der der Rust-Compiler ausgeht und
-die das Wurzel-Modul deiner Crate bildet (Module werden in [„Kontrollumfang und
-Datenschutz mit Modulen“][modules] ausführlich erklärt).
+die das Wurzel-Modul deiner Crate bildet (Module werden in [„Gültigkeitsbereich
+und Sichtbarkeit mit Modulen steuern“][modules] ausführlich erklärt).
 
 Ein _Paket_ ist ein Bündel von einer oder mehreren Crates, die eine Reihe von
 Funktionalitäten bereitstellen. Ein Paket enthält eine Datei _Cargo.toml_, die
@@ -63,9 +63,9 @@ _Cargo.toml_, die uns ein Paket gibt. Es gibt auch ein Verzeichnis _src_, das
 _main.rs_ enthält. Öffne _Cargo.toml_ in deinem Texteditor und beachte, dass
 _src/main.rs_ nicht erwähnt wird. Cargo folgt der Konvention, dass _src/main.rs_
 die Crate-Wurzel einer binären Crate mit dem gleichen Namen wie das Paket ist.
-Ebenso weiß Cargo, dass, wenn das Paketverzeichnis _src/lib.rs_ enthält, das
-Paket eine Bibliotheks-Crate mit dem gleichen Namen wie das Paket enthält, und
-_src/lib.rs_ deren Crate-Wurzel ist. Cargo übergibt die Crate-Wurzeldateien an
+Ebenso weiß Cargo: Wenn das Paketverzeichnis _src/lib.rs_ enthält, enthält das
+Paket eine Bibliotheks-Crate mit dem gleichen Namen wie das Paket, und
+_src/lib.rs_ ist deren Crate-Wurzel. Cargo übergibt die Crate-Wurzeldateien an
 `rustc`, um die Bibliothek oder Binärdatei zu bauen.
 
 Hier haben wir ein Paket, das nur _src/main.rs_ enthält, d.h. es enthält nur

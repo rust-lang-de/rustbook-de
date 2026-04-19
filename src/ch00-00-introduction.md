@@ -1,13 +1,13 @@
 # Einführung
 
-Willkommen bei _Die Programmiersprache Rust_, einem einführenden Buch über
+Willkommen im Buch _Die Programmiersprache Rust_, einem einführenden Buch über
 Rust. Die Programmiersprache Rust hilft dir, schnellere und zuverlässigere
 Software zu schreiben. Ergonomie und systemnahe Kontrolle stehen beim Entwurf
 von Programmiersprachen oft im Widerspruch &ndash; Rust stellt sich diesem
 Konflikt. Durch den Ausgleich zwischen leistungsstarken, technischen
 Möglichkeiten und einer großartigen Entwicklererfahrung bietet dir Rust die
-Möglichkeit, Details systemnah (z.B. Speichernutzung) zu kontrollieren, ohne
-den ganzen Ärger, der damit typischerweise einhergeht.
+Möglichkeit, Details systemnah (z.B. Speichernutzung) zu kontrollieren, ohne den
+ganzen Ärger, der damit typischerweise einhergeht.
 
 ## Für wen Rust ist
 
@@ -71,17 +71,16 @@ Rust ist für Menschen, die sich nach Geschwindigkeit und Stabilität einer
 Sprache sehnen. Mit Geschwindigkeit meinen wir sowohl die Geschwindigkeit, mit
 der Rust-Code ausgeführt werden kann, als auch die Geschwindigkeit, mit der du
 mit Rust Programme schreiben kannst. Die Prüfungen des Rust-Compilers
-gewährleisten Stabilität während du neue Funktionen hinzufügst und deinen Code
+gewährleisten Stabilität, während du neue Funktionen hinzufügst und deinen Code
 änderst. Dies steht im Gegensatz zu brüchigen Code-Altlasten in Sprachen ohne
-diese Prüfungen, die Entwickler sich oft scheuen zu verändern. Durch das
-Streben nach kostenneutralen Abstraktionen, also Funktionalität auf höherer
-Ebene, die zu genauso schnellem Code wie manuell geschriebener Code auf
-niedrigerer Ebene kompiliert, bemüht sich Rust, sicheren Code auch zu schnellem
-Code zu machen.
+diese Prüfungen, die Entwickler sich oft scheuen zu verändern. Durch das Streben
+nach kostenneutralen Abstraktionen, also Funktionalität auf höherer Ebene, die
+zu genauso schnellem Code wie manuell geschriebener Code auf niedrigerer Ebene
+kompiliert, bemüht sich Rust, sicheren Code auch zu schnellem Code zu machen.
 
 Die Sprache Rust hofft, auch viele andere Nutzer zu unterstützen; die hier
-genannten sind nur einige der größten Interessensgruppen. Insgesamt ist es
-Rusts größtes Bestreben, den Zielkonflikt zu beseitigen, den Programmierer
+genannten sind nur einige der größten Interessensgruppen. Insgesamt ist es Rusts
+größtes Bestreben, den Zielkonflikt zu beseitigen, den die Programmierer
 jahrzehntelang hingenommen haben, wenn sie Sicherheit _und_ Produktivität bzw.
 Geschwindigkeit _und_ Ergonomie erreichen wollten. Versuche es mit Rust und
 finde heraus, ob dessen Möglichkeiten für dich geeignet sind.
@@ -130,7 +129,7 @@ Aufzählungen, `match`-Ausdrücke und die Kontrollflusskonstrukte `if let` und
 benutzerdefinierte Typen zu erstellen.
 
 In **Kapitel 7** erfährst du mehr über das Modulsystem von Rust und über die
-Datenschutzregeln zum Organisieren deines Codes und dessen öffentlich
+Sichtbarkeitregeln zum Organisieren deines Codes und dessen öffentlich
 zugängliche Programmierschnittstelle (API). In **Kapitel 8** werden einige
 gängige Kollektionsdatenstrukturen, die die Standardbibliothek zur Verfügung
 stellt, behandelt: Vektoren, Strings und Hashtabellen. **Kapitel 9** befasst

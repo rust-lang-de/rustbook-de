@@ -348,15 +348,15 @@ fn main() {
 ```
 
 Um `AlwaysEqual` zu definieren, verwenden wir das Schlüsselwort `struct`, den
-gewünschten Namen und dann ein Semikolon. Geschweifte Klammern und Klammern sind
-nicht erforderlich! Dann können wir eine Instanz von `AlwaysEqual` in der
-Variable `subject` auf ähnliche Weise erhalten: Mit dem Namen, den wir definiert
-haben, ohne geschweifte Klammern oder Klammern. Stell dir vor, wir
-implementieren ein Verhalten für diesen Typ, bei dem jede Instanz immer gleich
-ist mit jeder Instanz jedes anderen Typs, vielleicht um ein bekanntes Ergebnis
-für Testzwecke zu haben. Wir bräuchten keine Daten, um dieses Verhalten
-umzusetzen! In Kapitel 10 wirst du sehen, wie man Traits definiert und sie für
-jeden Typ implementiert, auch für unit-ähnliche Strukturen.
+gewünschten Namen und anschließend ein Semikolon. Geschweifte und runde Klammern
+sind nicht nötig! Dann können wir eine Instanz von `AlwaysEqual` in der Variable
+`subject` auf ähnliche Weise erhalten: mit dem von uns definierten Namen, wieder
+ohne geschweifte oder runde Klammern. Stell dir vor, dass wir später Verhalten
+für diesen Typ implementieren, bei dem jede Instanz von `AlwaysEqual` immer
+gleich jeder Instanz eines beliebigen anderen Typs ist &ndash; vielleicht, um
+für Tests ein bekanntes Ergebnis zu haben. Dafür bräuchten wir keine Daten! In
+Kapitel 10 wirst du sehen, wie man Traits definiert und sie für beliebige Typen
+implementiert, einschließlich unit-artiker Strukturen.
 
 > ### Eigentümerschaft von Strukturdaten
 >

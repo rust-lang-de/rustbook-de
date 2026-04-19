@@ -25,16 +25,16 @@ fn another_function() {
 ```
 
 Wir definieren eine Funktion in Rust durch die Eingabe von `fn`, gefolgt von
-einem Funktionsnamen und einem Satz Klammern. Die geschweiften Klammern teilen
+einem Funktionsnamen und einem Klammernpaar. Die geschweiften Klammern teilen
 dem Compiler mit, wo der Funktionsrumpf beginnt und endet.
 
 Wir können jede Funktion, die wir definiert haben, aufrufen, indem wir ihren
-Namen gefolgt von einem Satz Klammern eingeben. Da `another_function` im
-Programm definiert ist, kann sie von innerhalb der Funktion `main` aufgerufen
-werden. Beachte, dass wir `another_function` _nach_ der Funktion `main` im
-Quellcode definiert haben; wir hätten sie auch vorher definieren können. Rust
-interessiert es nicht, wo du deine Funktionen definierst, nur dass sie irgendwo
-definiert sind.
+Namen gefolgt von einem Klammernpaar eingeben. Da `another_function` im Programm
+definiert ist, kann sie von innerhalb der Funktion `main` aufgerufen werden.
+Beachte, dass wir `another_function` _nach_ der Funktion `main` im Quellcode
+definiert haben; wir hätten sie auch vorher definieren können. Rust interessiert
+es nicht, wo du deine Funktionen definierst, nur dass sie irgendwo definiert
+sind.
 
 Lass uns ein neues Binärprojekt namens „functions“ anfangen, um Funktionen
 weiter zu erforschen. Platziere das Beispiel `another_function` in

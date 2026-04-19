@@ -117,10 +117,10 @@ error: could not compile `branches` (bin "branches") due to 1 previous error
 
 Der Fehler gibt an, dass Rust ein `bool` erwartet, aber eine ganze Zahl erhalten
 hat. Im Gegensatz zu Sprachen wie Ruby und JavaScript wird Rust nicht
-automatisch versuchen, nicht-boolsche Typen in ein Boolean zu konvertieren. Du
-musst explizit sein und immer `if` mit einer Booleschen Bedingung versehen. Wenn
-wir beispielsweise wollen, dass der `if`-Codeblock nur ausgeführt wird, wenn
-eine Zahl ungleich `0` ist, können wir den `if`-Ausdruck wie folgt ändern:
+automatisch versuchen, nicht-boolsche Typen zu Boolean zu konvertieren. Du musst
+explizit sein und immer `if` mit einer Booleschen Bedingung versehen. Wenn wir
+beispielsweise wollen, dass der `if`-Codeblock nur ausgeführt wird, wenn eine
+Zahl ungleich `0` ist, können wir den `if`-Ausdruck wie folgt ändern:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -161,7 +161,7 @@ fn main() {
 ```
 
 Dieses Programm hat vier mögliche Wege, die es nehmen kann. Nachdem du es
-ausgeführt hast, solltest du folgende Ausgabe sehen:
+ausgeführt hast, solltest du die folgende Ausgabe sehen:
 
 ```console
 $ cargo run

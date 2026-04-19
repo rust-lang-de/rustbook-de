@@ -11,7 +11,8 @@ du `cargo build` ausführst, und das Profil `release`, das Cargo verwendet, wenn
 Standardeinstellungen für die Entwicklung (development) definiert und `release`
 hat gute Standardeinstellungen für Releasebuilds. [^1]
 
-Profilnamen die dir möglicherweise aus der Ausgabe beim Bauvorgang bekannt sind:
+Profilnamen, die dir möglicherweise aus der Ausgabe beim Bauvorgang bekannt
+sind:
 
 ```console
 $ cargo build

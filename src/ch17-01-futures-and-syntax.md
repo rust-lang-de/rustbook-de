@@ -6,7 +6,7 @@ die Rust-Schlüsselwörter `async` und `await`.
 Ein _Future_ ist ein Wert, der vielleicht noch nicht verfügbar ist, aber
 irgendwann in der Zukunft verfügbar sein wird. (Das gleiche Konzept taucht in
 vielen Programmiersprachen auf, manchmal unter anderen Namen wie „task“ oder
-„promise“.) Rust hat ein Trait `Future` als Baustein, sodass verschiedene
+„promise“.) Rust definiert das Trait `Future` als Baustein, sodass verschiedene
 asynchrone Operationen mit verschiedenen Datenstrukturen, aber mit einer
 gemeinsamen Schnittstelle implementiert werden können. In Rust sind Futures
 Typen, die das Trait `Future` implementieren. Jedes Future hält seine eigenen
@@ -62,7 +62,7 @@ deine Zwecke evtl. besser geeignet sind. Wir verwenden unter der Haube die Crate
 
 In einigen Fällen nennt `trpl` die ursprünglichen APIs um oder umschließt sie,
 damit wir uns auf die für dieses Kapitel relevanten Details konzentrieren
-können. Wenn du verstehen willst, was die Crate tut, empfehlen wir dir, sich den
+können. Wenn du verstehen willst, was die Crate tut, empfehlen wir dir, den
 [trpl-Quellcode][crate-source] anzusehen. Du wirst sehen können, aus welcher
 Crate jeder Re-Export stammt, und wir haben ausführliche Kommentare angegeben,
 die erklären, was die Crate tut.
@@ -218,11 +218,11 @@ fn page_title(url: &str) -> impl Future<Output = Option<String>> {
 Gehen wir die einzelnen Teile der umgewandelten Version durch:
 
 - Sie verwendet die Syntax `impl Trait`, die wir bereits in [„Traits als
-  Parameter verwenden“][impl-trait] in Kapitel 10 besprochen haben. - Das
-  zurückgegebene Wert implementiert das Trait `Future` mit dem assoziierten Typ
-  von `Output`. Beachte, dass der `Output`-Typ `Option<String>` ist, was dem
+  Parameter verwenden“][impl-trait] in Kapitel 10 besprochen haben.
+- Der zurückgegebene Wert implementiert das Trait `Future` mit dem assoziierten
+  Typ von `Output`. Beachte, dass der `Output`-Typ `Option<String>` ist, was dem
   ursprünglichen Rückgabetyp der `async fn`-Version von `page_title` entspricht.
-- Der gesamte im Rumpf der ursprünglichen Funktion wird in einen `async
+- Der gesamte Code im Rumpf der ursprünglichen Funktion wird in einen `async
   move`-Block eingepackt. Denke daran, dass Blöcke Ausdrücke sind. Dieser ganze
   Block ist der Ausdruck, der von der Funktion zurückgegeben wird.
 - Dieser asynchrone Block erzeugt einen Wert vom Typ `Option<String>`, wie eben
@@ -296,7 +296,7 @@ Laufzeitumgebung, Rust hat das nicht. Stattdessen gibt es viele verschiedene
 asynchrone Laufzeitumgebungen, von denen jede für den jeweiligen Anwendungsfall
 unterschiedliche Kompromisse eingeht. Ein Webserver mit hohem Durchsatz, vielen
 CPU-Kernen und einer großen Menge an RAM hat zum Beispiel ganz andere
-Anforderungen als einen Mikrocontroller mit einem einzigen Kern, einer kleinen
+Anforderungen als ein Mikrocontroller mit einem einzigen Kern, einer kleinen
 Menge an RAM und keiner Möglichkeit, Heap-Allokationen durchzuführen. Die
 Crates, die diese Laufzeitumgebungen bereitstellen, bieten oft auch asynchrone
 Versionen gängiger Funktionen wie Datei- oder Netzwerkkommunikation.
@@ -362,11 +362,11 @@ Puh &ndash; wir haben endlich funktionierenden asynchronen Code! Bevor wir aber
 den Code hinzufügen, um zwei Webseiten gegeneinander antreten zu lassen, wollen
 wir uns noch einmal kurz der Funktionsweise von Futures zuwenden.
 
-Jede Codestelle mit dem Schlüsselwort `await` stellt einen Punkt dar, an dem
-die Kontrolle an die Laufzeitumgebung abgegeben wird. Damit das funktioniert,
-muss Rust den Zustand des asynchronen Blocks verwalten, sodass die
-Laufzeitumgebung eine andere Arbeit starten und dann zurückkommen kann, wenn
-er bereit ist, diese Arbeit wieder fortzusetzen. Dies ist eine unsichtbare
+Jede Codestelle mit dem Schlüsselwort `await` stellt einen Punkt dar, an dem die
+Kontrolle an die Laufzeitumgebung abgegeben wird. Damit das funktioniert, muss
+Rust den Zustand des asynchronen Blocks verwalten, sodass die Laufzeitumgebung
+eine andere Arbeit starten und dann zurückkommen kann, wenn der asynchrone Block
+bereit ist, seine Arbeit wieder fortzusetzen. Dies ist eine unsichtbare
 Zustandsmaschine, so als ob du eine Aufzählung auf diese Weise geschrieben
 hättest, um den aktuellen Zustand an jedem `await`-Punkt zu speichern:
 

@@ -121,9 +121,9 @@ Arguments `contents` (und nicht auf das Argument `query`) referenzieren.
 Mit anderen Worten sagen wir Rust, dass die von der Funktion `search`
 zurückgegebenen Daten so lange leben, wie die Daten, die im Argument `contents`
 an die Funktion `search` übergeben werden. Das ist wichtig! Die Daten, auf die
-durch einen Slice _referenziert_ wird, müssen gültig sein, damit die Referenz
-gültig ist; wenn der Compiler annimmt, dass wir String Slices aus `query` statt
-aus `contents` erstellen, wird er seine Sicherheitsprüfung falsch durchführen.
+ein Slice _referenziert_, müssen gültig sein, damit die Referenz gültig ist;
+wenn der Compiler annimmt, dass wir String Slices aus `query` statt aus
+`contents` erstellen, wird er seine Sicherheitsprüfung falsch durchführen.
 
 Wenn wir die Lebensdauer-Annotationen vergessen und versuchen, diese Funktion
 zu kompilieren, erhalten wir diesen Fehler:
@@ -210,10 +210,10 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 `contents`</span>
 
 Die Methode `lines` gibt einen Iterator zurück. Wir werden in [Kapitel
-13][ch13-iterators] ausführlich über Iteratoren sprechen, aber erinnere dich
+13][ch13-iterators] ausführlich über Iteratoren sprechen; aber erinnere dich
 daran, dass du diese Art der Verwendung eines Iterators in [Listing
 3-5][ch3-iter] gesehen hast, wo wir eine `for`-Schleife mit einem Iterator
-benutzt haben, um etwas Code für jedes Element in einer Kollektion auszuführen.
+benutzt haben, um Code für jedes Element in einer Kollektion auszuführen.
 
 #### Durchsuchen aller Zeilen nach dem Abfragetext
 
@@ -328,7 +328,7 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-Unser Test war erfolgreich, also wissen wir, dass es funktioniert!
+Unser Test war erfolgreich, also wissen wir, dass der Code funktioniert!
 
 An diesem Punkt könnten wir Möglichkeiten für eine Refaktorierung der
 Implementierung der Suchfunktion in Betracht ziehen, während die Tests

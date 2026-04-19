@@ -2,8 +2,8 @@
 
 Mit diesem Wissen über Iteratoren können wir unser E/A-Projekt in Kapitel 12
 verbessern. Wir werden Bereiche im Code klarer und prägnanter gestalten. Lass
-uns herausfinden wie Iteratoren unsere Implementierung der
-Funktion `Config::build` und der Funktion `search` optimieren können.
+uns herausfinden, wie Iteratoren unsere Implementierung der Funktion
+`Config::build` und der Funktion `search` optimieren können.
 
 ### Ein `clone` durch Verwendung eines Iterators entfernen
 
@@ -95,7 +95,7 @@ ihre Werte besitzen kann.
 Mithilfe unserer neuen Kenntnisse über Iteratoren können wir die Funktion
 `build` so ändern, dass sie das Eigentum am Iterator als Argument übernimmt
 anstatt sich einen Slice auszuleihen. Wir werden die `Iterator`-Funktionalität
-benutzen und nicht mehr den Programmcode der die Länge des Slices überprüft und
+benutzen und nicht mehr den Programmcode, der die Länge des Slices überprüft und
 an bestimmte Stellen indiziert. Dadurch wird deutlich, was die Funktion
 `Config::build` bewirkt, da der Iterator auf Werte zugreift.
 
@@ -247,20 +247,20 @@ fn main() {
 # }
 ```
 
-<span class="caption">Listing 13-18: Übergabe des Rückgabewerts von 
-`env::args` an `Config::build`</span>
+<span class="caption">Listing 13-18: Übergabe des Rückgabewerts von `env::args`
+an `Config::build`</span>
 	
 Die Funktion `env::args` gibt einen Iterator zurück! Anstatt die Werte des
 Iterators in einem Vektor zu sammeln und dann einen Slice an `Config::build` zu
 übergeben, geben wir nun das Eigentum am Iterator, der von `env::args`
 zurückgegeben wird, direkt an `Config::build`.
 
-Als Nächstes müssen wir die Definition von `Config::build` aktualisieren.
-Ändere die Signatur von `Config::build`, damit sie so wie in Listing 13-26
-aussieht. Dies wird noch immer nicht kompilieren, da der Funktionsrumpf
-aktualisiert werden muss.
+Als Nächstes müssen wir die Definition von `Config::build` aktualisieren. Ändere
+die Signatur von `Config::build`, damit sie so wie in Listing 13-19 aussieht.
+Dies wird noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert
+werden muss.
 
-<span class="filename">Dateiname src/main.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 # use std::env;
@@ -427,7 +427,7 @@ impl Config {
 Iterator-Methoden zu verwenden</span>
 
 Denke daran, dass der erste Wert des Rückgabewerts von `env::args` der Name des
-Programms ist, wir wollen das ignorieren und rufen daher gleich `next` auf um
+Programms ist, wir wollen das ignorieren und rufen daher gleich `next` auf, um
 zum nächsten Wert zu gelangen und den ersten Rückgabewert zu überspringen. Als
 Nächstes rufen wir `next` auf, um den Wert zu erhalten, den wir in das Feld
 `query` von `Config` einfügen möchten. Falls `next` ein `Some` zurückgibt,
@@ -479,10 +479,10 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 aus Listing 12-19</span>
 
 Wir können diesen Programmcode durch die Verwendung von Iteratoradaptern
-prägnanter gestalten und vermeiden, einen veränderbaren Vektor `results` für
-die Zwischenergebnisse zu haben. Bevorzugt wird im funktionalen Programmierstil
-die Menge der veränderbaren Werte reduziert, um den Code übersichtlicher zu
-machen. Das Entfernen des veränderbar-Status kann uns eventuell zukünftige
+prägnanter gestalten und vermeiden, einen veränderbaren Vektor `results` für die
+Zwischenergebnisse zu haben. Bevorzugt wird im funktionalen Programmierstil die
+Menge der veränderbaren Werte reduziert, um den Code übersichtlicher zu machen.
+Der Verzicht auf die Veränderbarkeit kann uns eventuell zukünftige
 Verbesserungen ermöglichen, um die Suche parallel auszuführen, da wir uns nicht
 um die Verwaltung des simultanen Zugriffs auf den Vektor `results` kümmern
 müssen. Listing 13-22 zeigt diese Änderung.
@@ -573,8 +573,8 @@ der Änderung werden die Ergebnisse jedoch ausgegeben, sobald eine
 
 Die nächste logische Frage wäre, welchen Stil du in deinem eigenen Programmcode
 wählen solltest und warum. Die ursprüngliche Implementierung in Listing 13-21
-oder die Version die Iteratoren verwendet in Listing 13-22 (vorausgesetzt,
-wir sammeln alle Ergebnisse, bevor wir sie zurückgeben, anstatt den Iterator
+oder die Version, die Iteratoren verwendet in Listing 13-22 (vorausgesetzt, wir
+sammeln alle Ergebnisse, bevor wir sie zurückgeben, anstatt den Iterator
 zurückzugeben). Die meisten Rust-Programmierer bevorzugen den Iterator-Stil.
 Zunächst ist es zwar schwieriger, den Überblick zu behalten, aber sobald du ein
 Gefühl für die verschiedenen Iteratoradapter und deren Funktionsweise hast,
@@ -582,7 +582,7 @@ können Iteratoren einfacher zu verstehen sein. Statt mit verschiedensten
 Schleifen herumzuspielen und Vektoren zu erstellen, konzentriert sich der
 Programmcode auf das höhere Ziel der Schleife. Dadurch wird ein Teil des
 gewöhnlichen Programmcodes abstrahiert und die einzigartigen Konzepte, z.B. die
-Filterbedingung die jedes Element bestehen muss um durch den Iterator zu
+Filterbedingung, die jedes Element bestehen muss0 um durch den Iterator zu
 kommen, werden leichter erkennbar.
 
 Aber sind beide Implementierungen wirklich gleichwertig? Die intuitive Annahme

@@ -2,7 +2,7 @@
 
 Cargo ist das Bau-System (build system) und der Paketmanager von Rust. Die
 meisten Rust-Entwickler verwenden dieses Werkzeug, um ihre Rust-Projekte zu
-verwalten, weil Cargo viele Aufgaben für dich erledigt, z.B. Bauen deines
+verwalten, weil Cargo viele Aufgaben für dich erledigt, z.B. das Bauen deines
 Codes, Herunterladen der Bibliotheken, von denen dein Code abhängt, und das
 Bauen dieser Bibliotheken. (Wir nennen Bibliotheken, die dein Code benötigt,
 _Abhängigkeiten_ (dependencies).)
@@ -205,7 +205,7 @@ Programms regelmäßig `cargo check` aus, um sicherzustellen, dass das Programm
 kompiliert. Dann lassen sie `cargo build` laufen, wenn sie bereit sind, die
 ausführbare Datei zu benutzen.
 
-Lasse uns zusammenfassen, was wir bisher über Cargo gelernt haben:
+Lass uns zusammenfassen, was wir bisher über Cargo gelernt haben:
 
 - Wir können ein Projekt mit `cargo new` erstellen.
 - Wir können ein Projekt mit `cargo build` bauen.
@@ -269,11 +269,11 @@ gelernt, wie es geht:
 - Schreibe und führe ein „Hallo Welt!“-Programm aus, direkt mittels `rustc`.
 - Schreibe und führe ein neues Projekt aus mittels Cargo-Konventionen.
 
-Dies ist ein guter Zeitpunkt, ein umfangreicheres Programm zu erstellen, um
-sich an das Lesen und Schreiben von Rust-Code zu gewöhnen. In Kapitel 2 werden
-wir also ein Ratespielprogramm erstellen. Wenn du lieber damit beginnen
-möchtest, zu lernen, wie gängige Programmierkonzepte in Rust funktionieren,
-lies Kapitel 3 und kehre dann zu Kapitel 2 zurück.
+Dies ist ein guter Zeitpunkt, ein umfangreicheres Programm zu erstellen, um dich
+an das Lesen und Schreiben von Rust-Code zu gewöhnen. In Kapitel 2 werden wir
+also ein Ratespielprogramm erstellen. Wenn du lieber damit beginnen möchtest, zu
+lernen, wie gängige Programmierkonzepte in Rust funktionieren, lies Kapitel 3
+und kehre dann zu Kapitel 2 zurück.
 
 [appendix-e]: appendix-05-editions.html
 [cargo-doc]: https://doc.rust-lang.org/cargo/

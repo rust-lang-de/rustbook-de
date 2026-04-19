@@ -344,7 +344,7 @@ use std::collections::HashMap;
 ```
 
 Dies ist ein absoluter Pfad, der mit `std`, dem Namen der
-Standard-Bibliotheks-Crate, beginnt.
+Standardbibliotheks-Crate, beginnt.
 
 ### Verschachtelte Pfade verwenden, um `use`-Listen zu vereinfachen
 
@@ -440,7 +440,7 @@ deiner Definitionen im gleichen Bereich hinzufügst.
 Der Stern-Operator wird oft beim Testen verwendet, um alles, was getestet wird,
 in das Modul `tests` zu bringen. Wir werden darüber in [„Tests
 schreiben“][writing-tests] in Kapitel 11 sprechen. Der Stern-Operator wird
-manchmal auch als Teil des Präludiumsmusters (prelude pattern) verwendet: Siehe
+manchmal auch als Teil des Prelude-Musters verwendet: Siehe
 [Standardbibliotheksdokumentation][std-lib-preludes] für weitere Informationen
 zu diesem Muster.
 

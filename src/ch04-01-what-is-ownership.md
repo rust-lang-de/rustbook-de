@@ -128,7 +128,7 @@ let s = "Hallo";
 Die Variable `s` bezieht sich auf ein String-Literal, wobei der Wert des Strings
 fest in den Text unseres Programms kodiert ist. Die Variable ist ab der Stelle,
 an der sie deklariert wurde, bis zum Ende des aktuellen Gültigkeitsbereichs
-gültig. Listing 4-1 zeigt ein Programm mit Kommentaren, die zeigen wo die
+gültig. Listing 4-1 zeigt ein Programm mit Kommentaren, die zeigen, wo die
 Variable `s` gültig ist.
 
 ```rust
@@ -257,23 +257,22 @@ Variante unseres Gültigkeitsbereich-Beispiels aus Listing 4-1, bei der ein
 
 Es gibt eine natürliche Stelle, an der wir den Speicher, den unser `String`
 benötigt, an den Speicher-Allokator zurückgeben können: Wenn `s` den
-Gültigkeitsbereich verlässt. Wenn eine Variable den Gültigkeitsbereich
-verlässt, ruft Rust für uns eine spezielle Funktion auf: Diese Funktion heißt
+Gültigkeitsbereich verlässt. Wenn eine Variable den Gültigkeitsbereich verlässt,
+ruft Rust für uns eine spezielle Funktion auf: Diese Funktion heißt
 [`drop`][drop-doc] und an dieser Stelle kann der Autor von `String` Code
 einfügen, um den Speicher zurückzugeben. Rust ruft `drop` automatisch an der
 schließenden geschweiften Klammer auf.
 
-> Hinweis: In C++ wird dieses Muster der Freigabe von Ressourcen am Ende der
-> Lebensdauer eines Elements manchmal als _Ressourcenbelegung ist
-> Initialisierung_ (resource acquisition is initialization, RAII) bezeichnet.
-> Die Funktion `drop` in Rust wird dir vertraut vorkommen, wenn du bereits
+> Hinweis: In C++ wird dieses Muster, Ressourcen am Ende der Lebensdauer eines
+> Elements freizugeben, manchmal Resource Acquisition Is Initialization (RAII)
+> genannt. Die Funktion drop in Rust wird dir vertraut vorkommen, wenn du schon
 > RAII-Muster verwendet hast.
 
 Dieses Muster hat einen tiefgreifenden Einfluss auf die Art und Weise, wie
 Rust-Code geschrieben wird. Es mag im Moment einfach erscheinen, aber das
-Verhalten von Code kann in komplizierteren Situationen unerwartet sein, wenn
-wir wollen, dass mehrere Variablen Daten verwenden, die wir im dynamischen
-Speicher allokiert haben. Lass uns jetzt einige dieser Situationen untersuchen.
+Verhalten von Code kann in komplizierteren Situationen unerwartet sein, wenn wir
+wollen, dass mehrere Variablen Daten verwenden, die wir im dynamischen Speicher
+allokiert haben. Lass uns jetzt einige dieser Situationen untersuchen.
 
 #### Variablen und Daten im Zusammenspiel mit Move
 

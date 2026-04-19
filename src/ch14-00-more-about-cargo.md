@@ -13,7 +13,7 @@ tun kann:
 - Cargo erweitern mit benutzerdefinierten Befehlen
 
 Cargo kann noch einiges mehr als die Funktionalität, die wir in diesem Kapitel
-behandeln, eine vollständige Erklärung aller Funktionen findest du in der
+behandeln. Eine vollständige Erklärung aller Funktionen findest du in der
 [Cargo-Dokumentation][cargo].
 
 [cargo]: https://doc.rust-lang.org/cargo/

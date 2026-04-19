@@ -45,8 +45,8 @@ fn main() {
 <span class="caption">Listing 17-6: Erstellen einer neuen Aufgabe, die etwas
 ausgibt, während die Hauptaufgabe etwas anderes ausgibt</span>
 
-Als Ausgangspunkt rufen wir in unserer Funktion `trpl::block_on` auf, sodass
-unsere Top-Level-Funktion asynchron sein kann.
+Als Ausgangspunkt rufen wir in unserer Funktion `trpl::block_on` auf, um
+asynchronen Code auszuführen.
 
 > Hinweis: Im weiteren Verlauf dieses Kapitels wird jedes Beispiel genau den
 > gleichen Rahmen-Code mit `trpl::block_on` in `main` enthalten, also werden
@@ -266,20 +266,20 @@ separaten Thread oder gar eine Aufgabe erzeugen müssen; wir müssen lediglich a
 den Aufruf von `rx.recv` warten.
 
 Die synchrone Methode `Receiver::recv` in `std::mpsc::channel` blockiert, bis
-sie eine Nachricht erhält. Die Methode `trpl::Receiver::recv` tut dies nicht,
-da sie asynchron ist. Anstatt zu blockieren, übergibt sie die Kontrolle zurück
-an die Laufzeitumgebung, bis entweder eine Nachricht empfangen wird oder die
+sie eine Nachricht erhält. Die Methode `trpl::Receiver::recv` tut dies nicht, da
+sie asynchron ist. Anstatt zu blockieren, übergibt sie die Kontrolle zurück an
+die Laufzeitumgebung, bis entweder eine Nachricht empfangen wird oder die
 Sendeseite des Kanals geschlossen wurde. Im Gegensatz dazu warten wir nicht auf
 den `send`-Aufruf, weil er nicht blockiert. Das ist auch nicht nötig, denn der
-Kanal, in den wir die Nachricht senden, ist unlimitiert.
+Kanal, in den wir die Nachricht senden, ist unbegrenzt.
 
 > Anmerkung: Da der gesamte asynchrone Code in einem asynchronen Block in einem
-> `trpl::block_on`-Aufruf läuft, kann alles innerhalb dieses Blocks ein
-> Blockieren vermeiden. Allerdings wird der Code _außerhalb_ des Blocks
-> blockieren, wenn die Funktion `block_on` zurückkehrt. Das ist der ganze Sinn
-> der Funktion`trpl::block_on`: Sie lässt dich _wählen_, wo du bei einer Menge
-> von asynchronem Code blockieren willst, und somit wo du zwischen synchronem
-> und asynchronem Code wechseln willst.
+> `trpl::block_on`-Aufruf läuft, kann alles innerhalb dieses Blocks ein Blockieren
+> vermeiden. Allerdings wird der Code _außerhalb_ des Blocks blockieren, wenn die
+> Funktion `block_on` zurückkehrt. Das ist der ganze Sinn der Funktion
+> `trpl::block_on`: Sie lässt dich _wählen_, wo du bei einer Menge von asynchronem
+> Code blockieren willst, und somit wo du zwischen synchronem und asynchronem Code
+> wechseln willst.
 
 Beachte bei diesem Beispiel zwei Dinge. Erstens: Die Nachricht wird sofort
 ankommen! Zweitens: Obwohl wir hier ein Future verwenden, gibt es noch keine
@@ -501,7 +501,7 @@ Listing 17-11, die den Code korrekt beendet, wenn er fertig ist</span>
 
 Wenn wir _diese_ Version des Codes ausführen, beendet sie sich ordnungsgemäß,
 nachdem die letzte Nachricht gesendet und empfangen wurde. Als Nächstes wollen
-wir uns ansehen, was geändert werden müsste, um Daten aus mehr als ein Future
+wir uns ansehen, was geändert werden müsste, um Daten aus mehr als einem Future
 zu senden.
 
 #### Auf mehrere Futures warten mit dem Makro `join!`

@@ -9,8 +9,8 @@ neu zu implementieren.
 Die Iteratoren in Rust sind _faul_ (lazy), das bedeutet, dass sie erst durch
 Methodenaufrufe konsumiert werden müssen, um einen Effekt zu haben. Der
 Programmcode in Listing 13-10 erstellt beispielsweise einen Iterator über die
-Elemente im Vektor `v1` indem die in `Vec<T>` definierte Methode `iter`
-aufgerufen wird. Dieser Programmcode macht nichts Sinnvolles.
+Elemente im Vektor `v1`, indem die in `Vec<T>` definierte Methode `iter`
+aufgerufen wird. Dieser Programmcode bevirkt nichts Sinnvolles.
 
 
 ```rust
@@ -52,7 +52,7 @@ startet und diese zum Indizieren im Vektor verwendet und den Wert der
 Indexvariable bei jedem Schleifendurchlauf erhöht bis die Gesamtzahl der
 Elemente im Vektor erreicht ist.
 
-Iteratoren übernehmen derartige Logik für dich und reduzieren dadurch sich
+Iteratoren übernehmen derartige Logik für dich und verringern so den
 wiederholenden Code, der zusätzliche Fehlerquellen beinhalten kann. Iteratoren
 geben dir mehr Flexibilität bei der Verwendung derselben Logik für viele
 verschiedene Arten von Sequenzen, nicht nur für Datenstrukturen, die du wie
@@ -76,12 +76,12 @@ pub trait Iterator {
 ```
 
 Beachte, dass in der Definition eine neue Syntax verwendet wird: `type Item` und
-`Self::Item` die einen zugeordneten Typ (associated type) mit diesem Trait
+`Self::Item`, die einen zugeordneten Typ (associated type) mit diesem Trait
 definieren. Wir werden zugeordnete Typen im Kapitel 20 besprechen. Im Moment
 musst du nur wissen, dass dieser Programmcode bedeutet, dass die Implementierung
-des `Iterator`-Traits erfordert, dass du auch einen `Item`-Typ definierst und
-dieser `Item`-Typ im Rückgabetyp der Methode `next` benutzt wird. Mit anderen
-Worten wird der `Item`-Typ der vom Iterator zurückgegebene Typ sein.
+des `Iterator`-Traits erfordert, dass du auch einen `Item`-Typ definieren muss
+und dieser `Item`-Typ im Rückgabetyp der Methode `next` benutzt wird. Mit
+anderen Worten wird der `Item`-Typ der vom Iterator zurückgegebene Typ sein.
 
 Für das `Iterator`-Trait muss man bei der Implementierung nur eine Methode
 definieren: Die Methode `next`, die jeweils ein Element des Iterators verpackt
@@ -119,7 +119,7 @@ Beachte, dass wir `v1_iter` veränderbar (mutable) machen mussten: Beim Aufrufen
 der Methode `next` auf einen Iterator wird dessen interner Status geändert, der
 verwendet wird, um festzustellen, wo sich der Iterator in der Sequenz befindet.
 Mit anderen Worten _verbraucht_ dieser Programmcode den Iterator. Jeder Aufruf
-von `next` isst ein Element des Iterators auf. Als wir die `for`-Schleife
+von `next` verbraucht ein Element des Iterators. Als wir die `for`-Schleife
 benutzten, mussten wir `v1_iter` nicht veränderbar machen, da dies schon hinter
 den Kulissen geschah, als die Schleife das Eigentum (ownership) an `v1_iter`
 übernahm.
@@ -132,7 +132,7 @@ angeeignete Werte (owned values) zurückgibt, können wir die Methode `into_iter
 anstelle von `iter` benutzen, und wenn wir über veränderbare Referenzen
 iterieren möchten, können wir `iter_mut` statt `iter` aufrufen.
 
-### Methoden die den Iterator verbrauchen
+### Methoden, die den Iterator verbrauchen
 
 Das Trait `Iterator` verfügt über eine Vielzahl von Methoden, die in der
 Standardbibliothek bereitgestellt werden. Du kannst dich über diese Methoden
@@ -141,7 +141,7 @@ library API documentation) nach dem Trait `Iterator` suchst. Einige dieser
 Methoden rufen in ihrer Definition die Methode `next` auf, daher musst du die
 Methode `next` bei der Implementierung des Trait `Iterator` einbauen.
 
-Methoden die `next` aufrufen werden als _konsumierende Adapter_ (consuming
+Methoden, die `next` aufrufen werden als _konsumierende Adapter_ (consuming
 adapters) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
 die Methode `sum`, sie übernimmt das Eigentum am Iterator und durchläuft die
 Elemente durch wiederholtes Aufrufen von `next`, wodurch der Iterator verbraucht
@@ -175,7 +175,7 @@ Summe aller Elemente zu erhalten</span>
 Man kann `v1_iter` nach dem Aufruf von `sum` nicht verwenden, da `sum` das
 Eigentum am Iterator übernimmt, auf dem es aufgerufen wird.
 
-### Methoden die andere Iteratoren erzeugen
+### Methoden, die andere Iteratoren erzeugen
 
 _Iterator-Adaptoren_ sind Methoden, die auf dem Trait `Iterator` definiert
 sind und den Iterator nicht verbrauchen. Stattdessen erzeugen sie andere
@@ -232,7 +232,7 @@ data type).
 
 In Listing 13-15 sammeln wir die Resultate der Iterationen über den Iterator,
 der vom Aufruf der Methode `map` zurückgegeben wird, in einem Vektor. Dieser
-Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.
+Vektor wird dann alle Elemente des Originalvektors erhöht um 1 enthalten.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -328,7 +328,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Listing 13-16: Die Methode `filter` mit einen Closure
+<span class="caption">Listing 13-16: Die Methode `filter` mit einem Closure
 benutzen, der `shoe_size` erfasst</span>
 
 Die Funktion `shoes_in_size` übernimmt das Eigentum am Vektor aus Schuhen mit

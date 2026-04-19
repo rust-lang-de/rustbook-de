@@ -1,8 +1,8 @@
 ## Mit Pfaden auf ein Element im Modulbaum verweisen
 
 Um Rust zu zeigen, wo ein Element in einem Modulbaum zu finden ist, verwenden
-wir einen Pfad, auf gleiche Weise wie beim Navigieren durch ein Dateisystem.
-Um eine Funktion aufzurufen, müssen wir ihren Pfad kennen.
+wir einen Pfad, in gleicher Weise wie beim Navigieren durch ein Dateisystem. Um
+eine Funktion aufzurufen, müssen wir ihren Pfad kennen.
 
 Ein Pfad kann zwei Formen annehmen:
 
@@ -85,9 +85,9 @@ werden. Wir bevorzugen generell die Angabe absoluter Pfade, da es
 wahrscheinlicher ist, dass Codedefinitionen und Elementaufrufe unabhängig
 voneinander verschoben werden.
 
-Lass uns versuchen, Listing 7-3 zu kompilieren, und herausfinden, warum er
-sich noch nicht kompilieren lässt! Die Fehler, die wir erhalten, sind in
-Listing 7-4 zu sehen.
+Lass uns versuchen, Listing 7-3 zu kompilieren, und herausfinden, warum es sich
+noch nicht kompilieren lässt! Die Fehler, die wir erhalten, sind in Listing 7-4
+zu sehen.
 
 ```console
 $ cargo build
@@ -135,14 +135,14 @@ standardmäßig privat für übergeordnete Module. Wenn du ein Element wie eine
 Funktion oder Struktur privat machen willst, setze es in ein Modul.
 
 Objekte in einem übergeordneten Modul können die privaten Objekte in
-untergeordneten Modulen nicht verwenden, aber Objekte in untergeordneten
-Modulen können die Objekte in ihren übergeordneten Modulen verwenden. Der Grund
-dafür ist, dass untergeordnete Module ihre Implementierungsdetails ein- und
-ausblenden, aber die untergeordneten Module können den Gültigkeitsbereich
-sehen, in dem sie definiert sind. Um mit unserer Metapher fortzufahren, stelle
-dir die Datenschutzregeln wie das Backoffice eines Restaurants vor: Was dort
-drinnen passiert, ist für Restaurantkunden privat, aber Büroleiter können alles
-im Restaurant, in dem sie arbeiten, sehen und tun.
+untergeordneten Modulen nicht verwenden, aber Objekte in untergeordneten Modulen
+können die Objekte in ihren übergeordneten Modulen verwenden. Der Grund dafür
+ist, dass untergeordnete Module ihre Implementierungsdetails ein- und
+ausblenden, aber die untergeordneten Module können den Gültigkeitsbereich sehen,
+in dem sie definiert sind. Um mit unserer Metapher fortzufahren, stelle dir die
+Sichtbarkeitsregeln wie das Backoffice eines Restaurants vor: Was dort drinnen
+passiert, ist für Restaurantkunden privat, aber Büroleiter können alles im
+Restaurant, in dem sie arbeiten, sehen und tun.
 
 Rust entschied sich dafür, das Modulsystem auf diese Weise funktionieren zu
 lassen, sodass das Ausblenden innerer Implementierungsdetails die Vorgabe ist.
@@ -229,7 +229,7 @@ müssen weiter gehen und eines oder mehrere der Elemente innerhalb des Moduls
 ebenfalls öffentlich machen.
 
 Die Fehler in Listing 7-6 besagen, dass die Funktion `add_to_waitlist` privat
-ist. Die Datenschutzregeln gelten für Strukturen, Aufzählungen, Funktionen und
+ist. Die Sichtbarkeitsregeln gelten für Strukturen, Aufzählungen, Funktionen und
 Methoden sowie für Module.
 
 Lass uns auch die Funktion `add_to_waitlist` öffentlich machen, indem wir das
@@ -260,8 +260,8 @@ mod front_of_house {
 
 Jetzt kompiliert der Code! Um zu sehen, warum das Hinzufügen des Schlüsselworts
 `pub` uns erlaubt, diese Pfade in `eat_at_restaurant` im Hinblick auf die
-Datenschutzregeln zu verwenden, sehen wir uns die absoluten und relativen Pfade
-an.
+Sichtbarkeitsregeln zu verwenden, sehen wir uns die absoluten und relativen
+Pfade an.
 
 Auf dem absoluten Pfad beginnen wir mit `crate`, der Wurzel des Modulbaums
 unserer Crate. Dann wird das Modul `front_of_house` in der Crate-Wurzel

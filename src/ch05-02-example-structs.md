@@ -197,18 +197,18 @@ Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:
 error[E0277]: `Rectangle` doesn't implement `std::fmt::Display`
 ```
 
-Das Makro `println!` kann diverse Formatierungen vornehmen. Die geschweiften
+Das Makro `println!` kann viele Arten von Formatierung. Die geschweiften
 Klammern weisen `println!` an, die Formatierung `Display` zu verwenden, bei der
 die Ausgabe direkt für den Endbenutzer bestimmt ist. Die primitiven Typen, die
-wir bisher gesehen haben, implementieren `Display` standardmäßig, denn es gibt
-nur eine Möglichkeit, dem Benutzer eine `1` oder einen anderen primitiven Typ
-zu zeigen. Aber bei Strukturen ist die Formatierung, die `println!` verwenden
-soll, weniger klar, da es mehrere Darstellungsmöglichkeiten gibt: Möchtest du
-Kommas oder nicht? Möchtest du die geschweiften Klammern ausgeben? Sollen alle
-Felder angezeigt werden? Aufgrund der vielen Möglichkeiten versucht Rust nicht
-zu erraten, was wir wollen. Strukturen haben daher keine
-Standardimplementierung von `Display`, um die mit `println!` und dem
-Platzhalter `{}` verwenden zu können.
+wir bisher gesehen haben, implementieren standardmäßig `Display`, weil es nur
+eine sinnvolle Art gibt, dem Benutzer eine `1` oder einen anderen primitiven Typ
+anzuzeigen. Bei Strukturen ist dagegen weniger klar, wie `println!` die Ausgabe
+formatieren soll, weil es mehr Darstellungsmöglichkeiten gibt: Sollen Kommas
+verwendet werden oder nicht? Sollen die geschweiften Klammern mit ausgegeben
+werden? Sollen alle Felder angezeigt werden? Aufgrund der vielen Möglichkeiten
+versucht Rust nicht zu erraten, was wir wollen. Strukturen haben daher keine
+Standardimplementierung von `Display`, die man mit `println!` und dem
+Platzhalter `{}` verwenden könnte.
 
 Wenn wir die Fehlerausgabe weiterlesen, werden wir diesen hilfreichen Hinweis
 finden:

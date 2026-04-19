@@ -75,7 +75,7 @@ in einem Paar von Futures zu emulieren.
             println!("'b' beendet.");
         };
 
-        trpl::race(a, b).await;
+        trpl::select(a, b).await;
 #     });
 # }
 #
@@ -118,9 +118,9 @@ abgeben können. Das heißt, wir brauchen etwas, auf das wir warten können!
 
 Wir können diese Art der Übergabe bereits in Listing 17-15 sehen: Wenn wir
 `trpl::sleep` am Ende des Futures `a` entfernen, würde es fertig werden, ohne
-dass das Future `b` _überhaupt_ läuft. Versuchen wir, die Funktion
-`trpl::sleep` als Ausgangspunkt zu verwenden, um Operationen am Fortschritt zu
-hindern, wie in Listing 17-16 gezeigt.
+dass das Future `b` _überhaupt_ läuft. Versuchen wir, die Funktion `trpl::sleep`
+als Ausgangspunkt zu verwenden, um den Fortschritt der Operation zu behindern,
+wie in Listing 17-16 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -155,7 +155,7 @@ hindern, wie in Listing 17-16 gezeigt.
             println!("'b' beendet.");
         };
 #
-#         trpl::race(a, b).await;
+#         trpl::select(a, b).await;
 #     });
 # }
 #
@@ -226,7 +226,7 @@ durch `trpl::yield_now`.
             println!("'b' beendet.");
         };
 #
-#         trpl::race(a, b).await;
+#         trpl::select(a, b).await;
 #     });
 # }
 #
@@ -388,7 +388,7 @@ async fn timeout<F: Future>(
     future_to_try: F,
     max_time: Duration,
 ) -> Result<F::Output, Duration> {
-    match trpl::race(future_to_try, trpl::sleep(max_time)).await {
+    match trpl::select(future_to_try, trpl::sleep(max_time)).await {
         Either::Left(output) => Ok(output),
         Either::Right(_) => Err(max_time),
     }

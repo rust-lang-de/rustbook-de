@@ -105,10 +105,9 @@ erhalten wir eine `Option<&T>`, die wir mit `match` verwenden können.
 
 Rust bietet diese beiden Möglichkeiten, um auf ein Element zu referenzieren. Du
 kannst nun ausprobieren, wie sich das Programm verhält, wenn du einen Indexwert
-außerhalb des Bereichs der vorhandenen Elemente zu verwendest. Als Beispiel
-wollen wir sehen, was passiert, wenn wir bei einem Vektor mit fünf Elementen
-versuchen, auf ein Element mit Index 100 zuzugreifen, wie in Listing 8-5 zu
-sehen ist.
+außerhalb des Bereichs der vorhandenen Elemente verwendest. Als Beispiel wollen
+wir sehen, was passiert, wenn wir bei einem Vektor mit fünf Elementen versuchen,
+auf ein Element mit Index 100 zuzugreifen, wie in Listing 8-5 zu sehen ist.
 
 ```rust,should_panic,panics
 let v = vec![1, 2, 3, 4, 5];
@@ -144,8 +143,8 @@ Erinnere dich an die Regel, die besagt, dass du keine veränderbaren und
 unveränderbaren Referenzen im gleichen Gültigkeitsbereich haben kannst. Diese
 Regel trifft in Listing 8-6 zu, wo wir eine unveränderbare Referenz auf das
 erste Element in einem Vektor halten und versuchen, am Ende ein Element
-hinzuzufügen. Das wird nicht funktionieren, wenn wir später in der Funktion
-versuchen auch auf dieses Element zuzugreifen.
+hinzuzufügen. Das wird nicht funktionieren, wenn wir später in der Funktion auch
+versuchen, auf dieses Element zuzugreifen.
 
 ```rust,does_not_compile
 let mut v = vec![1, 2, 3, 4, 5];
@@ -181,15 +180,15 @@ For more information about this error, try `rustc --explain E0502`.
 error: could not compile `collections` (bin "collections") due to 1 previous error
 ```
 
-Der Code in Listing 8-6 sieht so aus, als könnte er funktionieren: Warum
-sollte sich eine Referenz auf das erste Element darum kümmern, was sich am Ende
-des Vektors ändert? Dieser Fehler ist in der Funktionsweise von Vektoren
-begründet: Weil Vektoren die Werte nebeneinander im Speicher ablegen, könnte das
-Hinzufügen eines neuen Elements am Ende des Vektors die Allokation neuen
-Speichers und das Kopieren der alten Elemente an die neue Stelle erfordern, wenn
-nicht genügend Platz vorhanden ist, um alle Elemente nebeneinander an der
-aktuellen Stelle des Vektors zu platzieren. In diesem Fall würde die Referenz
-auf das erste Element auf einen freigegebenen Speicherplatz verweisen. Die
+Der Code in Listing 8-6 sieht so aus, als könnte er funktionieren: Warum sollte
+sich eine Referenz auf das erste Element darum kümmern, was sich am Ende des
+Vektors ändert? Dieser Fehler ist in der Funktionsweise von Vektoren begründet:
+Weil Vektoren die Werte nebeneinander im Speicher ablegen, könnte das Hinzufügen
+eines neuen Elements am Ende des Vektors die Allokation von neuem Speicher und
+das Kopieren der alten Elemente an die neue Stelle erfordern, wenn nicht
+genügend Platz vorhanden ist, um alle Elemente nebeneinander an der aktuellen
+Stelle des Vektors zu platzieren. In diesem Fall würde die Referenz auf das
+erste Element auf einen freigegebenen Speicherplatz verweisen. Die
 Borrowing-Regeln verhindern, dass Programme in diese Situation geraten.
 
 > Anmerkung: Weitere Einzelheiten zu den Implementierungsdetails des Typs
@@ -213,9 +212,9 @@ for i in &v {
 <span class="caption">Listing 8-7: Ausgeben aller Elemente eines Vektors
 durch Iterieren über die Elemente mittels `for`-Schleife</span>
 
-Wir können auch über veränderbare Referenzen der Elemente eines veränderbaren
-Vektors iterieren, um Änderungen an allen Elementen vorzunehmen. Die
-`for`-Schleife in Listing 8-8 addiert zu jedem Element `50`.
+Wir können auch über veränderbare Referenzen auf die Elemente eines
+veränderbaren Vektors iterieren, um Änderungen an allen Elementen vorzunehmen.
+Die `for`-Schleife in Listing 8-8 addiert zu jedem Element `50`.
 
 ```rust
 let mut v = vec![100, 32, 57];
@@ -235,8 +234,8 @@ in Kapitel 15 sprechen.
 
 Die Iteration über einen Vektor, ob unveränderbar oder veränderbar, ist aufgrund
 der Regeln des Borrow Checkers sicher. Wenn wir versuchen würden, Elemente in
-den `for`-Schleifenrümpfen in Listing 8-7 und Listing 8-8 einzufügen oder zu
-entfernen, würden wir einen Compilerfehler erhalten, ähnlich dem, den wir mit
+den Rümpfen der `for`-Schleifen in Listing 8-7 und Listing 8-8 einzufügen oder
+zu entfernen, würden wir einen Compilerfehler erhalten, ähnlich dem, den wir mit
 dem Code in Listing 8-6 erhalten haben. Die Referenz auf den Vektor, den die
 `for`-Schleife enthält, verhindert eine gleichzeitige Änderung des gesamten
 Vektors.
@@ -250,7 +249,7 @@ Varianten einer Aufzählung unter dem gleichen Aufzählungstyp definiert. Wenn
 wir also Elemente eines anderen Typs in einem Vektor speichern wollen, können
 wir eine Aufzählung definieren und verwenden!
 
-Angenommen, wir möchten Werte aus einer Zeile einer Tabellenkalkulationstabelle
+Angenommen, wir möchten Werte aus einer Zeile einer Tabellenkalkulation
 erhalten, in der einige Spalten der Zeile ganze Zahlen, Fließkommazahlen und
 Strings enthalten. Wir können eine Aufzählung definieren, deren Varianten die
 verschiedenen Werttypen enthalten, und alle Aufzählungsvarianten werden als
@@ -275,15 +274,14 @@ let row = vec![
 <span class="caption">Listing 8-9: Definieren eines `enum`, um Werte
 verschiedener Typen in einem Vektor zu speichern</span>
 
-Rust muss wissen, welche Typen zur Kompilierzeit im Vektor enthalten sein
-werden, damit es genau weiß, wie viel Speicherplatz im Heap benötigt wird, um
-alle Elemente zu speichern. Wir müssen auch eindeutig festlegen, welche Typen
-in diesem Vektor zulässig sind. Wenn Rust einen Vektor mit beliebigen Typen
-zuließe, bestünde die Möglichkeit, dass einer oder mehrere Typen Fehler bei den
-an den Elementen des Vektors durchgeführten Operationen verursachen würden. Das
-Verwenden einer Aufzählung zusammen mit einem `match`-Ausdruck bedeutet, dass
-Rust zur Kompilierzeit sicherstellt, dass jeder mögliche Fall behandelt wird,
-wie in Kapitel 6 besprochen.
+Rust muss zur Kompilierzeit wissen, welche Typen im Vektor enthalten sein
+werden, damit es genau berechnen kann, wie viel Speicherplatz auf dem Heap für
+jedes Element nötig ist. Wir müssen außerdem ausdrücklich festlegen, welche
+Typen in diesem Vektor zulässig sind. Würde Rust zulassen, dass ein Vektor
+beliebige Typen enthält, bestünde die Gefahr, dass einer oder mehrere dieser
+Typen bei den Operationen auf die Vektorelemente zu Fehlern führen. Mit einer
+Aufzählung zusammen mit einem `match`-Ausdruck stellt Rust zur Kompilierzeit
+sicher, dass jeder mögliche Fall behandelt wird, wie in Kapitel 6 besprochen.
 
 Wenn du nicht weißt, welche Typen ein Programm zur Laufzeit in einem Vektor
 speichern kann, funktioniert der Aufzählungsansatz nicht. Stattdessen kannst du

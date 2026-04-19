@@ -5,9 +5,9 @@ Der Kernpunkt des Musters besteht darin, dass wir eine Reihe von Zuständen
 definieren, die ein Wert intern annehmen kann. Die Zustände werden durch eine
 Reihe von _Zustandsobjekten_ (state objects) dargestellt, und das Verhalten des
 Wertes ändert sich je nach Zustand. Wir werden ein Beispiel für eine
-Blog-Beitrags-Struktur durcharbeiten, die ein Feld für ihren Status hat, das
-ein Statusobjekt mit den Möglichkeiten „Entwurf“, „Überprüfung“ und
-„Veröffentlicht“ sein wird.
+Blogbeitrags-Struktur durcharbeiten, die ein Feld für ihren Status hat, das ein
+Statusobjekt mit den Möglichkeiten „Entwurf“, „Überprüfung“ und „Veröffentlicht“
+sein wird.
 
 Die Zustandsobjekte haben eine gemeinsame Funktionalität: In Rust verwenden wir
 Strukturen (structs) und Traits und nicht Objekte und Vererbung. Jedes
@@ -17,7 +17,7 @@ enthält, weiß nichts über das unterschiedliche Verhalten der Zustände oder d
 Zeitpunkt des Übergangs zwischen den Zuständen.
 
 Der Vorteil der Verwendung des Zustandsmusters besteht darin, dass wir, wenn
-sich die geschäftlichen Anforderungen des Programms ändern, weder den Code des
+sich die fachlichen Anforderungen des Programms ändern, weder den Code des
 Werts, der den Zustand hält, noch den Code, der den Wert verwendet, ändern
 müssen. Wir müssen nur den Code in einem der Zustandsobjekte aktualisieren, um
 seine Regeln zu ändern oder vielleicht weitere Zustandsobjekte hinzuzufügen.
@@ -25,8 +25,7 @@ seine Regeln zu ändern oder vielleicht weitere Zustandsobjekte hinzuzufügen.
 Zunächst werden wir das Zustandsmuster auf eine traditionellere
 objektorientierte Weise implementieren. Dann werden wir einen Ansatz verwenden,
 der in Rust etwas natürlicher ist. Beginnen wir mit der inkrementellen
-Implementierung eines Blogbeitrag-Workflows unter Verwendung des
-Zustandsmusters.
+Implementierung eines Blogbeitrag-Workflow unter Verwendung des Zustandsmusters.
 
 Die finale Funktionalität des Blogs wird wie folgt aussehen:
 
@@ -349,10 +348,9 @@ Um den alten Zustand zu konsumieren, muss die Methode `request_review` das
 Eigentum am Zustandswert übernehmen. Hier kommt die `Option` im Feld `state` von
 `Post` ins Spiel: Wir rufen die Methode `take` auf, um den `Some`-Wert aus dem
 `state`-Feld zu nehmen und an seiner Stelle ein `None` zu hinterlassen, weil
-Rust es nicht zulässt, dass wir unbestückte Felder in Strukturen haben. Dadurch
-können wir den Wert `state` aus `Post` herausverschieben, anstatt ihn
-auszuleihen. Dann setzen wir den Wert `state` des Beitrags auf das Ergebnis
-dieser Operation.
+Rust keine leeren Felder in Strukturen erlaubt. Dadurch können wir den Wert
+`state` aus `Post` herausverschieben, anstatt ihn auszuleihen. Dann setzen wir
+den Wert `state` des Beitrags auf das Ergebnis dieser Operation.
 
 Wir müssen `state` vorübergehend auf `None` setzen, anstatt es direkt mit Code
 wie `self.state = self.state.request_review();` zu setzen, um das Eigentum am
@@ -475,7 +473,7 @@ Struktur `Published` hinzu, die das Trait `State` implementiert.
 Ähnlich wie `request_review` bei `PendingReview` funktioniert, hat der Aufruf
 der Methode `approve` bei einem `Draft` keine Wirkung, weil `approve` den Wert
 `self` zurückgibt. Wenn wir die Methode `approve` bei `PendingReview` aufrufen,
-gibt sie eine neue, geschlossene Instanz der Struktur `Published` zurück. Die
+gibt sie eine neue, eingeschlossene Instanz der Struktur `Published` zurück. Die
 Struktur `Published` implementiert das Trait `State` und sowohl bei der Methode
 `request_review` als auch bei der Methode `approve` gibt sie sich selbst zurück,
 weil der Beitrag in diesen Fällen im Zustand `Published` bleiben sollte.
@@ -739,9 +737,9 @@ Beitrags überprüfen und das Verhalten an diesen Stellen ändern. Das würde
 bedeuten, dass wir an mehreren Stellen nachschauen müssten, um alle
 Auswirkungen eines Beitrags im veröffentlichten Zustand zu verstehen!
 
-Mit dem Zustandsmuster, den `Post`-Methoden und den Stellen, an denen wir `Post`
-verwenden, brauchen wir keine `match`-Ausdrücke, und um einen neuen Zustand
-hinzuzufügen, müssten wir nur eine neue Struktur hinzufügen und die
+Durch das Zustandsmuster, den `Post`-Methoden und den Stellen, an denen wir
+`Post` verwenden, brauchen wir keine `match`-Ausdrücke, und um einen neuen
+Zustand hinzuzufügen, müssten wir nur eine neue Struktur hinzufügen und die
 Trait-Methoden auf dieser einen Struktur an einer Stelle implementieren.
 
 Die Implementierung unter Verwendung des Zustandsmusters ist leicht zu
@@ -754,7 +752,7 @@ Vorschläge aus:
 - Verlange zwei `approve`-Aufrufe, bevor der Zustand in `Published` geändert
   werden kann.
 - Erlaube Benutzern das Hinzufügen von Textinhalten nur dann, wenn sich ein
-  Beitrag im Zustand `Draft` befindet. Hinweis: Lasse das Zustandsobjekt dafür
+  Beitrag im Zustand `Draft` befindet. Hinweis: Lass das Zustandsobjekt dafür
   verantwortlich sein, was sich am Inhalt ändern könnte, aber nicht für die
   Änderung des `Post`.
 

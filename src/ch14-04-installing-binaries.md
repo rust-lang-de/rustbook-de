@@ -6,9 +6,9 @@ eine bequeme Möglichkeit bieten, Tools zu installieren, die andere auf
 [crates.io][crates] veröffentlicht haben. Beachte, dass du nur binäre Pakete
 installieren kannst, das heißt in der Crate muss eine Datei _src/main.rs_ oder
 eine andere als binär spezifizierte Datei vorhanden sein, und nicht nur eine
-Bibliothek, die alleine nicht ausführbar ist sondern zur Aufnahme in andere
+Bibliothek, die alleine nicht ausführbar ist, sondern zur Aufnahme in andere
 Programme geeignet ist. Für gewöhnlich enthalten Crates eine README-Datei mit
-Informationen darüber ob die Datei ausführbar ist, eine Bibliothek enthält oder
+Informationen darüber, ob die Datei ausführbar ist, eine Bibliothek enthält oder
 beides.
 
 Alle mit `cargo install` installierten Binärdateien werden im Verzeichnis _bin_

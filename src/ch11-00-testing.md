@@ -28,7 +28,7 @@ Wir können Tests schreiben, die zum Beispiel sicherstellen, dass der
 Rückgabewert `5` ist, wenn wir `3` an die Funktion `add_two` übergeben. Wir
 können diese Tests immer dann durchführen, wenn wir Änderungen an unserem Code
 vornehmen, um sicherzustellen, dass sich ein bestehendes korrektes Verhalten
- nicht geändert hat.
+nicht geändert hat.
 
 Testen ist eine komplexe Fähigkeit: Obwohl wir in einem Kapitel nicht jedes
 Detail, wie man gute Tests schreibt, behandeln können, werden wir in diesem

@@ -1,19 +1,18 @@
 ## Wann `panic!` aufrufen und wann nicht?
 
 Wie entscheidest du also, wann du `panic!` aufrufen und wann `Result`
-zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit sich vom
+zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit, sich vom
 Fehler zu erholen. Du könntest `panic!` in jeder Fehlersituation aufrufen,
 unabhängig davon, ob es eine Möglichkeit zur Fehlerbehebung gibt oder nicht,
 aber dann triffst du die Entscheidung für den aufrufenden Code, dass eine
 Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
 `Result`-Wert zurückzugeben, überlässt du dem aufrufenden Code die
 Wahlmöglichkeit, anstatt die Entscheidung für ihn zu treffen. Der aufrufende
-Code könnte sich dafür entscheiden, sich vom Fehler auf eine sinnvolle Weise
-zu erholen, oder er könnte sich dafür entscheiden, dass ein `Err`-Wert in
-diesem Fall nicht behebbar ist und `panic!` aufrufen, und so deinen behebbaren
-Fehler in einen nicht behebbaren verwandeln. Daher ist die Rückgabe von
-`Result` eine gute Standardwahl, wenn du eine Funktion definierst, die
-fehlschlagen könnte.
+Code könnte sich dafür entscheiden, sich vom Fehler auf eine sinnvolle Weise zu
+erholen, oder er könnte sich dafür entscheiden, dass ein `Err`-Wert in diesem
+Fall nicht behebbar ist und `panic!` aufrufen, und so deinen behebbaren Fehler
+in einen nicht behebbaren verwandeln. Daher ist die Rückgabe von `Result` eine
+gute Standardwahl, wenn du eine Funktion definierst, die fehlschlagen könnte.
 
 In Beispielen, Prototyp-Code und Tests ist es sinnvoller, Code zu schreiben,
 der das Programm abbricht, anstatt ein `Result` zurückzugeben. Lass uns
@@ -287,7 +286,7 @@ Es ist wichtig, dass das Feld `value` privat ist, damit Code, der die Struktur
 `Guess` verwendet, `value` nicht direkt setzen kann: Code außerhalb des Moduls
 `guessing_game` _muss_ die Funktion `Guess::new` verwenden, um eine Instanz von
 `Guess` zu erzeugen, wodurch sichergestellt wird, dass es keine Möglichkeit
-gibt, dass `Guess` einen `Wert` hat, der nicht durch die Bedingungen in der
+gibt, dass `Guess` einen `value` hat, der nicht durch die Bedingungen in der
 Funktion `Guess::new` überprüft wurde.
 
 Eine Funktion, die einen Parameter hat oder nur Zahlen zwischen 1 und 100

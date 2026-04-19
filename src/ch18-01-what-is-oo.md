@@ -32,25 +32,24 @@ dieselbe Funktionalität gemäß der Definition von Objekten der Gang of Four.
 
 Ein weiterer Aspekt, der gemeinhin mit OOP in Verbindung gebracht wird, ist die
 Idee der _Kapselung_ (encapsulation), was bedeutet, dass die
-Implementierungsdetails eines Objekts nicht zugänglich sind für Code, der
-dieses Objekt verwendet. Daher ist die einzige Möglichkeit, mit einem Objekt zu
+Implementierungsdetails eines Objekts für Code, der dieses Objekt verwendet,
+nicht zugänglich sind. Daher ist die einzige Möglichkeit, mit einem Objekt zu
 interagieren, seine öffentliche API; Code, der das Objekt verwendet, sollte
 nicht in der Lage sein, in die Interna des Objekts vorzudringen und Daten oder
 Verhalten direkt zu ändern. Dies ermöglicht es dem Programmierer, die Interna
 eines Objekts zu ändern und umzugestalten, ohne Code ändern zu müssen, der das
 Objekt verwendet.
 
-Wie man die Kapselung steuert, haben wir in Kapitel 7 besprochen: Wir können
+Wie die Kapselung gesteuert wird, haben wir in Kapitel 7 besprochen: Wir können
 das Schlüsselwort `pub` benutzen, um zu entscheiden, welche Module, Typen,
-Funktionen und Methoden in unserem Code öffentlich sein sollen, alles andere
-ist standardmäßig privat. Zum Beispiel können wir eine Struktur
-`AveragedCollection` definieren, die ein Feld hat, das einen Vektor mit
-`i32`-Werten enthält. Die Struktur kann auch ein Feld haben, das den Mittelwert
-der Werte im Vektor enthält, was bedeutet, dass der Mittelwert nicht auf
-Anfrage berechnet werden muss, wenn jemand ihn braucht. Mit anderen Worten:
-`AveragedCollection` wird den errechneten Durchschnitt für uns
-zwischenspeichern. Listing 18-1 zeigt die Definition der Struktur
-`AveragedCollection`.
+Funktionen und Methoden in unserem Code öffentlich sein sollen, alles andere ist
+standardmäßig privat. Zum Beispiel können wir eine Struktur `AveragedCollection`
+definieren, die ein Feld hat, das einen Vektor mit `i32`-Werten enthält. Die
+Struktur kann auch ein Feld haben, das den Mittelwert der Werte im Vektor
+enthält, was bedeutet, dass der Mittelwert nicht auf Anfrage berechnet werden
+muss, wenn jemand ihn braucht. Mit anderen Worten: `AveragedCollection` wird den
+errechneten Durchschnitt für uns zwischenspeichern. Listing 18-1 zeigt die
+Definition der Struktur `AveragedCollection`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -108,7 +107,7 @@ impl AveragedCollection {
 ```
 
 <span class="caption">Listing 18-2: Implementierungen der öffentlichen
-Methoden `add`, `remove` und `average` auf  `AveragedCollection`</span>
+Methoden `add`, `remove` und `average` auf `AveragedCollection`</span>
 
 Die öffentlichen Methoden `add`, `remove` und `average` sind die einzigen
 Möglichkeiten, auf Daten in einer `AveragedCollection`-Instanz zuzugreifen oder
@@ -128,11 +127,11 @@ haben, können wir Aspekte wie die Datenstruktur in Zukunft leicht ändern. Zum
 Beispiel könnten wir ein `HashSet<i32>` anstelle eines `Vec<i32>` für das Feld
 `list` verwenden. Solange die Signaturen der öffentlichen Methoden `add`,
 `remove` und `average` gleich bleiben, würde Code, der `AveragedCollection`
-verwendet, nicht geändert werden müssen damit er kompiliert. Wenn wir
-stattdessen `list` öffentlich machen würden, wäre dies nicht unbedingt der
-Fall: `HashSet<i32>` und `Vec<i32>` haben unterschiedliche Methoden zum
-Hinzufügen und Entfernen von Elementen, sodass externer Code wahrscheinlich
-geändert werden müsste, wenn er `list` direkt modifizieren würde.
+verwendet, nicht geändert werden müssen, damit er kompiliert. Wenn wir
+stattdessen `list` öffentlich machen würden, wäre dies nicht unbedingt der Fall:
+`HashSet<i32>` und `Vec<i32>` haben unterschiedliche Methoden zum Hinzufügen und
+Entfernen von Elementen, sodass externer Code wahrscheinlich geändert werden
+müsste, wenn er `list` direkt modifizieren würde.
 
 Wenn die Kapselung ein erforderlicher Aspekt ist, damit eine Sprache als
 objektorientiert betrachtet werden kann, dann erfüllt Rust diese Anforderung.
@@ -182,8 +181,8 @@ wenn sie bestimmte Eigenschaften gemeinsam haben.
 > Daten unterschiedlichen Typs arbeiten kann. Für die Vererbung sind diese
 > Typen im Allgemeinen Unterklassen.
 >
-> Rust verwendet stattdessen generische Datentypen (generics), um über
-> verschiedene mögliche Typen und Trait Bounds zu abstrahieren, um
+> Rust verwendet stattdessen generische Datentypen (generics), um von
+> verschiedenen möglichen Typen und Trait Bounds zu abstrahieren, und um
 > Beschränkungen für das aufzuerlegen, was diese Typen bieten müssen. Dies wird
 > manchmal als _begrenzter parametrischer Polymorphismus_ (bounded parametric
 > polymorphism) bezeichnet.

@@ -41,7 +41,7 @@ impl List {
 fn main() {}
 ```
 
-<span class="caption">Listing 15-25: Definition einer Cons-Liste die ein
+<span class="caption">Listing 15-25: Definition einer Cons-Liste, die ein
 `RefCell<T>` hält, damit man ändern kann, worauf eine `Cons`-Variante
 referenziert</span>
 
@@ -210,10 +210,10 @@ verwendet `weak_count`, um den Überblick zu behalten, wie viele
 Unterschied besteht darin, dass `weak_count` nicht 0 sein muss, damit die
 `Rc<T>`-Instanz aufgeräumt wird.
 
-Da der Wert, auf den `Weak<T>` referenziert, möglicherweise aufgeräumt wurde,
-musst du sicherstellen, dass der Wert noch vorhanden ist, um etwas mit dem Wert
-zu tun, auf den ein `Weak<T>` zeigt. Ruft man dazu die Methode `upgrade` für
-eine `Weak<T>`-Instanz auf, die eine `Option<Rc<T>>`zurückgibt, erhält man ein
+Da der Wert, den `Weak<T>` referenziert, möglicherweise aufgeräumt wurde, musst
+du sicherstellen, dass der Wert noch vorhanden ist, um etwas mit dem Wert zu
+tun, auf den ein `Weak<T>` zeigt. Ruft man dazu die Methode `upgrade` für eine
+`Weak<T>`-Instanz auf, die eine `Option<Rc<T>>` zurückgibt, erhält man ein
 `Some` als Ergebnis, wenn der Wert `Rc<T>` noch nicht aufgeräumt wurde, und das
 Ergebnis `None`, wenn der `Rc<T>`-Wert aufgeräumt wurde. Da `upgrade` eine
 `Option<Rc<T>>` zurückgibt, stellt Rust sicher, dass der Fall `Some` und der
@@ -222,7 +222,7 @@ Fall `None` behandelt werden und es keine ungültigen Zeiger gibt.
 Anstatt eine Liste zu verwenden, deren Elemente nur das nächste Element kennen,
 erstellen wir eine Baumstruktur, deren Elemente die Kind-Elemente _und_ die
 Eltern-Elemente kennen.
-	
+
 #### Baumdatenstruktur erstellen
 
 Zunächst erstellen wir eine Baumstruktur mit Knoten (nodes), die ihre
@@ -421,9 +421,8 @@ verwenden dann die Funktion `Rc::downgrade`, um eine `Weak<Node>`-Referenz auf
 Wenn wir das Eltern-Element von `leaf` erneut ausgeben, erhalten wir diesmal
 eine `Some`-Variante mit `branch`: Jetzt kann `leaf` auf das Eltern-Element
 zugreifen! Wenn wir `leaf` ausgeben, vermeiden wir auch den Zyklus, der
-schließlich zu einem Stack führte, wie wir ihn in Listing 15-26 hatten. Die
-`Weak<Node>`-Referenzen werden als `(Weak)` ausgegeben:
-
+schließlich zu einem Stacküberlauf führte, wie wir ihn in Listing 15-26 hatten.
+Die `Weak<Node>`-Referenzen werden als `(Weak)` ausgegeben:
 
 ```text
 leaf parent = Some(Node { value: 5, parent: RefCell { value: (Weak) },
@@ -505,24 +504,24 @@ Gültigkeitsbereich und Prüfen der starken und schwachen Referenzzähler</span>
 
 Nachdem `leaf` erstellt wurde, hat `Rc<Node>` einen `strong_count` von 1 und
 einen `weak_count` von 0. Im inneren Gültigkeitsbereich erstellen wir `branch`
-und ordnen ihm `leaf` zu. Zum Zeitpunkt des Ausgebens der Zähler, hat der
-`Rc<Node>` in `branch` einen `strong_count` von 1 und einen `weak_count` von 1
-(da `leaf.parent` mit einen `Weak<Node>` auf `branch` zeigt). Wenn wir den
-Zähler in `leaf` ausgeben, werden wir sehen, dass er einen `strong_count` von 2
-hat, da `branch` jetzt einen Klon des `Rc<Node>` von `leaf` in
-`branch.children` gespeichert hat, aber immer noch einen `weak_count`von 0 hat.
+und ordnen ihm `leaf` zu. Wenn wir die Zähler ausgeben, hat der `Rc<Node>` in
+`branch` einen `strong_count` von 1 und einen `weak_count` von 1 (da
+`leaf.parent` per `Weak<Node>` auf `branch` zeigt). Wenn wir den Zähler in
+`leaf` ausgeben, werden wir sehen, dass er einen `strong_count` von 2 hat, da
+`branch` jetzt einen Klon des `Rc<Node>` von `leaf` in `branch.children`
+gespeichert hat, aber immer noch einen `weak_count` von 0 hat.
 
 Wenn der innere Gültigkeitsbereich endet, verlässt `branch` den
 Gültigkeitsbereich und der `strong_count` von `Rc<Node>` sinkt auf 0, sodass
-sein `Node` aufgeräumt wird. Der `weak_count` von 1 aus `leaf_parent` hat keinen
+sein `Node` aufgeräumt wird. Der `weak_count` von 1 aus `leaf.parent` hat keinen
 Einfluss darauf, ob `Node` aufgeräumt wird oder nicht, sodass wir kein
 Speicherleck bekommen!
 
-Wenn wir nach dem Ende des Gültigkeitsbereichs versuchen, auf das
-Eltern-Element von `leaf` zuzugreifen, erhalten wir erneut `None`. Am Ende des
-Programms hat der `Rc<Node>` in `branch` einen `strong_count` von 1 und einen
-`weak_count` von 0, da die Variable `branch` jetzt wieder die einzige Referenz
-auf `Rc<Node>` ist.
+Wenn wir nach dem Ende des Gültigkeitsbereichs versuchen, auf das Eltern-Element
+von `leaf` zuzugreifen, erhalten wir erneut `None`. Am Ende des Programms hat
+der `Rc<Node>` in `branch` einen `strong_count` von 1 und einen `weak_count` von
+0, da die Variable `branch` jetzt wieder die einzige Referenz auf `Rc<Node>`
+ist.
 
 Die gesamte Logik, die die Zähler und das Aufräumen des Wertes verwaltet, ist in
 `Rc<T>` und `Weak<T>` und deren Implementierung des Traits `Drop` integriert.
@@ -536,7 +535,7 @@ Referenzzyklus oder Speicherlecks zu erzeugen.
 In diesem Kapitel wurde beschrieben, wie man mithilfe intelligenter Zeiger
 andere Garantien und Kompromisse eingehen kann, als es standardmäßig mit
 gewöhnlichen Referenzen in Rust möglich ist. Der Typ `Box<T>` hat eine bekannte
-Größe und zeigt auf Daten die auf dem Heap allokiert sind. Der Typ `Rc<T>`
+Größe und zeigt auf Daten, die auf dem Heap allokiert sind. Der Typ `Rc<T>`
 verfolgt die Anzahl der Referenzen von Daten auf dem Heap, sodass Daten mehrere
 Eigentümer haben können. Der Typ `RefCell<T>` mit seiner inneren Veränderbarkeit
 stellt uns einen Typ zur Verfügung, den wir verwenden können, wenn wir einen

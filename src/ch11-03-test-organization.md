@@ -4,7 +4,7 @@ Wie zu Beginn des Kapitels erwähnt, ist das Testen eine komplexe Disziplin, und
 verschiedene Personen verwenden unterschiedliche Terminologien und
 Organisationen. Die Rust-Gemeinschaft teilt Tests in zwei Hauptkategorien ein:
 Modultests und Integrationstests. _Modultests_ (unit tests) sind klein und
-zielgerichteter, testen jeweils ein Modul isoliert und können private
+zielgerichtet, testen jeweils ein Modul isoliert und können private
 Schnittstellen testen. _Integrationstests_ (integration tests) sind völlig
 außerhalb deiner Bibliothek und verwenden deinen Code auf die gleiche Weise wie
 jeder andere externe Code, wobei nur die öffentliche Schnittstelle verwendet
@@ -69,9 +69,9 @@ befinden könnten, zusätzlich zu den mit `#[test]` annotierten Funktionen.
 #### Testen privater Funktionen
 
 In der Testgemeinschaft wird darüber diskutiert, ob private Funktionen direkt
-getestet werden sollten oder nicht, und andere Sprachen machen es schwierig
-oder gar unmöglich, private Funktionen zu testen. Unabhängig davon, an welcher
-Testideologie du festhältst, erlauben dir Rusts Datenschutzregeln, private
+getestet werden sollten oder nicht, und andere Sprachen machen es schwierig oder
+gar unmöglich, private Funktionen zu testen. Unabhängig davon, an welcher
+Testideologie du festhältst, erlauben dir Rusts Sichtbarkeitsregeln, private
 Funktionen zu testen. Betrachte den Code in Listing 11-12 mit der privaten
 Funktion `internal_adder`.
 
@@ -256,7 +256,7 @@ Integrationstestdateien verwendest, und du versuchst, die Schritte in [„Module
 in verschiedene Dateien aufteilen“][separating-modules-into-files] in Kapitel 7
 zu befolgen, um sie in ein gemeinsames Modul zu extrahieren. Wenn wir zum
 Beispiel _tests/common.rs_ erstellen und eine Funktion namens `setup` darin
-platzieren, können wir `setup` etwas Code hinzufügen, den wir von mehreren
+platzieren, können wir zu `setup` etwas Code hinzufügen, den wir von mehreren
 Testfunktionen in mehreren Testdateien aufrufen wollen:
 
 <span class="filename">Dateiname: tests/common.rs</span>
@@ -368,8 +368,8 @@ gedacht.
 Dies ist einer der Gründe, warum Rust-Projekte, die eine Binärdatei
 bereitstellen, eine einfache _src/main.rs_-Datei haben, die Logik aufruft, die
 in der _src/lib.rs_-Datei lebt. Unter Verwendung dieser Struktur können
-Integrationstests die Bibliotheks-Crate mit `use` testen, um wichtige
-Funktionalität verfügbar zu machen. Wenn die Hauptfunktionalität korrekt ist,
+Integrationstests die Bibliotheks-Crate mit `use` testen, und dabei wichtige
+Funktionalität verfügbar machen. Wenn die Hauptfunktionalität korrekt ist,
 funktionieren auch die kleinen Codestücke in der Datei _src/main.rs_, und diese
 kleinen Codestücke müssen nicht getestet werden.
 

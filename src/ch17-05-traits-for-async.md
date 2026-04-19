@@ -4,10 +4,10 @@ Im Laufe des Kapitels haben wir die Traits `Future`, `Stream` und `StreamExt`
 auf verschiedene Weise verwendet. Bis jetzt haben wir es jedoch vermieden, zu
 sehr ins Detail zu gehen, wie sie funktionieren oder wie sie zusammenpassen.
 Wenn wir Rust für den Alltag schreiben, ist das meist ausreichend. Manchmal
-stößt man jedoch auf Situationen, in denen du weitergehende Details dieser
-Traits verstehen musst, beispielsweise zum Typ `Pin` und zum Trait `Unpin`. In
-diesem Abschnitt werden wir nur so weit ins Detail gehen, wie es für diese
-Szenarien nötig ist, und überlassen die _wirklich_ tiefen Einblicke der weiteren
+stößt du jedoch auf Situationen, in denen du weitergehende Details dieser Traits
+verstehen musst, beispielsweise zum Typ `Pin` und zum Trait `Unpin`. In diesem
+Abschnitt werden wir nur so weit ins Detail gehen, wie es für diese Szenarien
+nötig ist, und überlassen die _wirklich_ tiefen Einblicke der weiteren
 Dokumentation.
 
 ### Das Trait `Future`
@@ -107,7 +107,7 @@ eine der Hauptaufgaben einer Laufzeitumgebung.
 Im Abschnitt [“Datenaustausch zwischen zwei Aufgaben mit
 Nachrichtenübermittlung”][message-passing] haben wir das Warten auf `rx.recv`
 beschrieben. Der Aufruf `recv` gibt ein Future zurück und zum Warten darauf wird
-es es abgefragt. Wir haben angemerkt, dass eine Laufzeitumgebung das Future
+es abgefragt. Wir haben angemerkt, dass eine Laufzeitumgebung das Future
 pausieren wird, bis es entweder mit `Some(message)` oder `None` bereit ist, wenn
 der Kanal geschlossen wird. Mit unserem tieferen Verständnis des Traits `Future`
 und insbesondere von `Future::poll` können wir sehen, wie das funktioniert. Die
@@ -365,12 +365,12 @@ _nicht_ den Zeiger `Box`. Abbildung 17-6 veranschaulicht dies:
 selbstreferenzierenden Future-Typ zeigt</span>
 
 In der Tat kann der Zeiger in `Box` immer noch verschoben werden. Denke daran:
-Wir wollen sicherstellen, dass die Daten, auf die letztlich referenziert wird,
-an ihrem Platz bleiben. Wenn ein Zeiger verschoben wird, aber die Daten, auf
-die er zeigt, an der gleichen Stelle sind, wie in Abbildung 17-7, gibt es kein
-potenzielles Problem. (Schau dir als unabhängige Übung die Dokumentationen der
-Typen sowie des Moduls `std::pin` an und versuche herauszufinden, wie du das
-mit einem `Pin` machst, der eine `Box` umhüllt.) Der Schlüssel ist, dass der
+Wir wollen sicherstellen, dass die Daten, auf die referenziert wird, an ihrem
+Platz bleiben. Wenn ein Zeiger verschoben wird, aber die Daten, auf die er
+zeigt, an der gleichen Stelle sind, wie in Abbildung 17-7, gibt es kein
+potenzielles Problem. (Schau dir als unabhängige Übung die Dokumentation der
+Typen sowie des Moduls `std::pin` an und versuche herauszufinden, wie du das mit
+einem `Pin` machst, der eine `Box` umhüllt.) Der Schlüssel ist, dass der
 selbstreferenzierende Typ selbst nicht verschoben werden kann, weil er immer
 noch angeheftet ist.
 
@@ -419,7 +419,7 @@ Unicode-Zeichen, aus denen er besteht. Wir können einen `String` in einen `Pin`
 einpacken, wie in Abbildung 17-8. Allerdings implementiert `String` automatisch
 `Unpin`, wie die meisten anderen Typen in Rust.
 
-<img alt="Concurrent work flow" src="img/trpl17-08.svg" />
+<img alt="Nebenläufiger Ablauf" src="img/trpl17-08.svg" />
 
 <span class="caption">Abbildung 17-8: Anheften eines `String`; die gestrichelte
 Linie deutet an, dass String das Trait `Unpin` implementiert und daher nicht
@@ -432,7 +432,7 @@ Dies verletzt nicht den `Pin`-Vertrag, weil `String` keine internen Referenzen
 hat, die es unsicher machen, ihn zu verschieben! Das ist genau der Grund, warum
 er `Unpin` und nicht `!Unpin` implementiert.
 
-<img alt="Concurrent work flow" src="img/trpl17-09.svg" />
+<img alt="Nebenläufiger Ablauf" src="img/trpl17-09.svg" />
 
 <span class="caption">Abbildung 17-9: Ersetzen eines `String` durch einen
 völlig anderen `String` im Speicher.</span>

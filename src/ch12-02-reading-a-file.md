@@ -97,6 +97,6 @@ warten, wenn jede Funktion nur für eine Idee verantwortlich ist. Das andere
 Problem ist, dass wir mit Fehlern nicht so gut umgehen, wie wir es könnten. Das
 Programm ist noch klein, sodass diese Fehler kein großes Problem darstellen,
 aber je größer das Programm wird, desto schwieriger wird es, sie sauber zu
-beheben. Es ist eine gute Praxis, schon früh mit dem Umformen (refactor) zu
-beginnen, wenn man ein Programm entwickelt, denn es ist viel einfacher,
-kleinere Code-Mengen umzuformen. Das werden wir als Nächstes tun.
+beheben. Es ist eine gute Praxis, schon früh mit dem Refactoring zu beginnen,
+wenn man ein Programm entwickelt, denn es ist viel einfacher, kleinere
+Code-Mengen umzuformen. Das werden wir als Nächstes tun.

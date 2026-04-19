@@ -111,12 +111,12 @@ Und wir können diese Funktion mit beiden Varianten aufrufen:
 # fn route(ip_kind: IpAddrKind) {}
 ```
 
-Aufzählungen haben noch weitere Vorteile. Wenn wir weiter über unseren
-IP-Adresstyp nachdenken, haben wir im Moment keine Möglichkeit, den _Wert_ der
-tatsächlichen IP-Adresse zu speichern; wir wissen nur, um welche _Variante_ es
-sich handelt. Mit dem was du gerade erst in Kapitel 5 über Strukturen gelernt
-hast, könntest du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
-Listing 6-1.
+Aufzählungen haben noch weitere Vorteile. Wenn wir noch einmal über unseren
+IP-Adresstyp nachdenken: Im Moment haben wir keine Möglichkeit, den _Wert_ der
+tatsächlichen IP-Adresse abzulegen; wir wissen nur, um welche _Variante_ es sich
+handelt. Da du in Kapitel 5 gerade Strukturen kennengelernt hast, könntest du in
+Versuchung geraten, dieses Problem mit Strukturen anzugehen, wie in Listing 6-1
+gezeigt.
 
 ```rust
 enum IpAddrKind {
@@ -178,13 +178,13 @@ Funktionsaufruf der ein `String`-Argument entgegennimmt und eine Instanz des
 Typs `IpAddr` zurückgibt. Diese Konstruktorfunktion wird automatisch definiert
 als Ergebnis der Definition der Aufzählung.
 
-Es gibt noch einen weiteren Vorteil, eine Aufzählung statt einer Struktur zu
+Es gibt noch einen weiteren Vorteil, eine Aufzählung anstelle einer Struktur zu
 verwenden: Jede Variante kann verschiedene Typen und verschieden viele
-zugehöriger Daten haben. IP-Adressen der Version vier haben stets vier
-numerische Komponenten, die Werte zwischen 0 und 255 haben. Wenn wir
-`V4`-Adressen als vier `u8`-Werte speichern und `V6`-Adressen als einen
-`String`-Wert ausdrücken wollten, wäre das mit einer Struktur nicht möglich.
-Aufzählungen lösen diesen Fall ganz einfach:
+zugehörige Daten haben. IP-Adressen der Version vier haben stets vier numerische
+Komponenten, die Werte zwischen 0 und 255 haben. Wenn wir `V4`-Adressen als vier
+`u8`-Werte speichern und `V6`-Adressen als einen `String`-Wert ausdrücken
+wollten, wäre das mit einer Struktur nicht möglich. Aufzählungen lösen diesen
+Fall ganz einfach:
 
 ```rust
 enum IpAddr {
@@ -305,11 +305,10 @@ wir für unsere Aufzählung `Message` definieren könnten:
 # }
 ```
 
-Der Methodenrumpf würde `self` benutzen, um den Wert zu erhalten, auf den wir
-die Methode aufgerufen haben. In diesem Beispiel haben wir eine Variable `m`
-erstellt, die den Wert `Message::Write(String::from("hallo"))` hat. Genau
-diesen Wert wird `self` im Rumpf der Methode `call` haben, wenn `m.call()`
-ausgeführt wird.
+Der Methodenrumpf würde `self` verwenden, um den Wert zu erhalten, für den die
+Methode aufgerufen wurde. In diesem Beispiel haben wir eine Variable `m` mit dem
+Wert `Message::Write(String::from("hallo"))` angelegt. Genau diesen Wert wird
+`self` im Rumpf der Methode `call` haben, wenn `m.call()` ausgeführt wird.
 
 Sehen wir uns eine weitere Aufzählung in der Standardbibliothek an, die sehr
 verbreitet und hilfreich ist: `Option`
@@ -323,7 +322,7 @@ kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.
 Wenn du zum Beispiel das erste Element einer nichtleeren Liste anforderst,
 erhältst du einen Wert. Wenn du das erste Element einer leeren Liste abfragst,
 erhältst du nichts. Im Sinne des Typsystems bedeutet das, dass der Compiler
-überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt haben solltest.
+überprüfen kann, ob du alle Fälle behandelt hast, die du behandeln solltest.
 Diese Funktionalität kann Fehler vermeiden, die in anderen Programmiersprachen
 extrem häufig auftreten.
 
@@ -369,12 +368,12 @@ enum Option<T> {
 }
 ```
 
-Die Aufzählung `Option<T>` ist so nützlich, dass sie sogar im Präludium
-enthalten ist; du musst sie nicht explizit in den Gültigkeitsbereich bringen.
-Ihre Varianten sind ebenfalls im Präludium enthalten: Du kannst `Some` und
-`None` direkt ohne Präfix `Option::` verwenden. Die Aufzählung `Option<T>` ist
-dennoch nur eine normale Aufzählung, und `Some(T)` und `None` sind nur
-Varianten des Typs `Option<T>`.
+Die Aufzählung `Option<T>` ist so nützlich, dass sie sogar im Prelude enthalten
+ist; du musst sie nicht explizit in den Gültigkeitsbereich bringen. Ihre
+Varianten sind ebenfalls im Prelude enthalten: Du kannst `Some` und `None`
+direkt verwenden, ohne das Präfix `Option::`. Die Aufzählung `Option<T>` ist
+dennoch nur eine normale Aufzählung, und `Some(T)` und `None` sind nur Varianten
+des Typs `Option<T>`.
 
 Die Syntax `<T>` ist eine Funktionalität von Rust, über die wir noch nicht
 gesprochen haben. Es handelt sich um einen generischen Typparameter, auf den
@@ -406,10 +405,10 @@ bedeutet das in gewisser Weise dasselbe wie Null: Wir haben keinen gültigen
 Wert. Warum ist nun besser `Option<T>` anstelle von Null zu verwenden?
 
 Kurz gesagt, weil `Option<T>` und `T` (wobei `T` ein beliebiger Typ sein kann)
-unterschiedliche Typen sind, erlaubt es der Compiler nicht `Option<T>` so zu
-verwenden als wäre es definitiv ein gültiger Wert. Beispielsweise lässt sich
-dieser Code nicht kompilieren, weil er versucht, ein `i8` mit einem
-`Option<i8>` zu addieren:
+unterschiedliche Typen sind, erlaubt es der Compiler nicht, `Option<T>` so zu
+verwenden, als ob es definitiv ein gültiger Wert wäre. Beispielsweise lässt sich
+dieser Code nicht kompilieren, weil er versucht, ein `i8` zu einem `Option<i8>`
+zu addieren:
 
 ```rust,does_not_compile
 let x: i8 = 5;

@@ -171,8 +171,7 @@ zwei Listen zu finden</span>
 
 Die Funktion `largest` hat einen Parameter `list`, der einen beliebigen Slice
 von `i32`-Werten repräsentiert, die wir an die Funktion übergeben könnten. Wenn
-wir die Funktion aufrufen, läuft der Code also auf den spezifischen Werten, die
-wir übergeben.
+wir die Funktion aufrufen, verarbeitet der Code die übergebenen Werte.
 
 Zusammenfassend hier die Schritte, die wir unternommen haben, um den Code aus
 Listing 10-2 in Listing 10-3 zu überführen:

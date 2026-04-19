@@ -11,11 +11,11 @@ Datei. Wenn ein Projekt wächst, solltest du den Code organisieren, indem du ihn
 in mehrere Module und dann in mehrere Dateien aufteilst. Ein Paket (package)
 kann mehrere binäre Crates und optional eine Bibliotheks-Crate (library crate)
 enthalten. Wenn ein Paket wächst, kannst du Teile in separate Crates
-extrahieren, die zu externen Abhängigkeiten werden. Dieses Kapitel behandelt all
-diese Techniken. Für sehr große Projekte aus einer Reihe von zusammenhängenden
-Paketen, die sich gemeinsam weiterentwickeln, stellt Cargo Arbeitsbereiche zur
-Verfügung, die wir in [„Cargo-Arbeitsbereiche“][workspaces] in Kapitel 14
-behandeln werden.
+extrahieren, die zu externen Abhängigkeiten werden. Dieses Kapitel behandelt
+alle diese Techniken. Für sehr große Projekte aus einer Reihe von
+zusammenhängenden Paketen, die sich gemeinsam weiterentwickeln, stellt Cargo
+Arbeitsbereiche zur Verfügung, die wir in [„Cargo-Arbeitsbereiche“][workspaces]
+in Kapitel 14 behandeln werden.
 
 Wir werden auch die Kapselung von Implementierungsdetails besprechen, wodurch
 du Code auf einer höheren Ebene wiederverwenden kannst: Sobald du eine
@@ -50,14 +50,14 @@ manchmal kollektiv als _Modulsystem_ bezeichnet werden, gehören:
 - **Crates:** Ein Baum von Modulen, der eine Bibliothek oder ein ausführbares
   Programm erzeugt.
 - **Module und `use`:** Ermöglicht dir, die Organisation, den
-  Gültigkeitsbereich und den Datenschutz von Pfaden zu steuern.
+  Gültigkeitsbereich und die Sichtbarkeit von Pfaden zu steuern.
 - **Pfade:** Eine Möglichkeit, ein Element zu benennen, z.B. eine Struktur,
   eine Funktion oder ein Modul.
 
-In diesem Kapitel gehen wir auf all diese Funktionalitäten ein, besprechen, wie
-sie zusammenwirken, und erklären, wie sie zur Verwaltung der
-Gültigkeitsbereiche eingesetzt werden können. Am Ende solltest du ein solides
-Verständnis des Modulsystems haben und in der Lage sein, mit den
-Gültigkeitsbereichen wie ein Profi zu arbeiten!
+In diesem Kapitel gehen wir auf alle diese Funktionalitäten ein, besprechen, wie
+sie zusammenwirken, und erklären, wie sie zur Verwaltung der Gültigkeitsbereiche
+eingesetzt werden können. Am Ende solltest du ein solides Verständnis des
+Modulsystems haben und in der Lage sein, mit den Gültigkeitsbereichen wie ein
+Profi zu arbeiten!
 
 [workspaces]: ch14-03-cargo-workspaces.html

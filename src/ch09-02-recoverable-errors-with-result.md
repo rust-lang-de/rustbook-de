@@ -2,10 +2,10 @@
 
 Die meisten Fehler sind nicht so schwerwiegend, dass das Programm ganz
 abgebrochen werden müsste. Manchmal, wenn eine Funktion fehlschlägt, hat das
-einen Grund, den man leicht erkennen und darauf reagieren kann. Wenn du
-beispielsweise versuchst, eine Datei zu öffnen, und dieser Vorgang schlägt fehl,
-weil die Datei nicht existiert, könntest du die Datei erstellen, anstatt den
-Vorgang abzubrechen.
+einen Grund, den man leicht erkennen kann und auf den man reagieren kann. Wenn
+du beispielsweise versuchst, eine Datei zu öffnen, und dieser Vorgang schlägt
+fehl, weil die Datei nicht existiert, könntest du die Datei erstellen, anstatt
+den Vorgang abzubrechen.
 
 Erinnere dich an [„Behandeln potentieller Fehler mit `Result`“][handle_failure]
 in Kapitel 2, das die Aufzählung `Result` mit zwei Varianten `Ok` und `Err`
@@ -162,7 +162,7 @@ enthält Varianten, die die verschiedenen Fehlerarten repräsentieren, die bei
 einer `io`-Operation auftreten können. Die Variante, die wir verwenden wollen,
 ist `ErrorKind::NotFound`, was bedeutet, dass die Datei, die wir zu öffnen
 versuchen, noch nicht existiert. Wir werten also `greeting_file_result` aus,
-als auch `error.kind()`.
+zusätzlich aber auch `error.kind()`.
 
 Die Bedingung, die wir beim inneren Abgleich überprüfen wollen, ist, ob der von
 `error.kind()` zurückgegebene Wert die Variante `NotFound` der Aufzählung
@@ -330,15 +330,14 @@ Fehlerwertes ist, der von beiden Operationen zurückgegeben wird, die wir im
 Funktionsrumpf aufrufen und fehlschlagen könnten: Die Funktion `File::open` und
 die Methode `read_to_string`.
 
-Der Funktionsrumpf beginnt mit dem Aufruf der Funktion `File::open`. Dann
-behandeln wir den `Result`-Wert, der von `match` zurückgegeben wird, auf
-ähnliche Weise wie bei `match` in Listing 9-4. Wenn `File::open` erfolgreich
-ist, erhält die Dateiressource in der Mustervariablen `file` den Wert in der
-veränderbaren Variablen `username_file` und die Funktion wird fortgesetzt. Im
-Fall von `Err` verwenden wir das Schlüsselwort `return`, anstatt `panic!`
-aufzurufen, um die Funktion vorzeitig ganz zu verlassen und den Fehlerwert von
-`File::open` in der Mustervariablen `e` als Fehlerwert dieser Funktion an den
-aufrufenden Code zurückzugeben.
+Der Funktionsrumpf beginnt mit dem Aufruf der Funktion `File::open`.
+Anschließend behandeln wir den `Result`-Wert mit einem `match`-Ausdruck, ähnlich
+wie in Listing 9-4. Wenn `File::open` erfolgreich ist, wird die Dateiressource
+aus der Mustervariablen `file` an die veränderbare Variable `username_file`
+zugewiesen und die Funktion wird fortgesetzt. Im `Err`-Fall rufen wir statt
+`panic!` das Schlüsselwort `return` auf, verlassen die Funktion damit vorzeitig
+und geben den Fehlerwert von `File::open`, der nun in der Mustervariablen `e`
+steht, an den aufrufenden Code als Fehlerwert dieser Funktion zurück.
 
 Wenn wir also eine Dateiressource in `username_file` haben, erzeugt die
 Funktion einen neuen `String` in der Variablen `username` und ruft die Methode
@@ -358,12 +357,11 @@ Der Code, der diesen Code aufruft, wird dann damit zurechtkommen, entweder einen
 `Ok`-Wert zu erhalten, der einen Benutzernamen enthält, oder einen `Err`-Wert,
 der einen `io::Error` enthält. Es ist Sache des aufrufenden Codes, zu
 entscheiden, was mit diesen Werten geschehen soll. Wenn der aufrufende Code
-einen `Err`-Wert erhält, könnte er `panic!` aufrufen und das Programm
-abzubrechen, einen Standardbenutzernamen verwenden oder den Benutzernamen von
-irgendwo anders als z.B. einer Datei nachschlagen. Wir haben nicht genug
-Informationen darüber, was der aufrufende Code tatsächlich versucht, also
-propagieren wir alle Erfolgs- und Fehlerinformationen nach oben, damit sie
-angemessen behandelt werden.
+einen `Err`-Wert erhält, könnte er `panic!` aufrufen, um das Programm
+abzubrechen, einen Standardbenutzernamen verwenden oder den Benutzernamen z.B.
+aus einer Datei auslesen. Wir haben nicht genug Informationen darüber, was der
+aufrufende Code tatsächlich versucht, also propagieren wir alle Erfolgs- und
+Fehlerinformationen nach oben, damit sie angemessen behandelt werden.
 
 Dieses Muster der Fehlerweitergabe ist in Rust so verbreitet, dass Rust den
 Fragezeichen-Operator `?` bereitstellt, um dies zu erleichtern.
@@ -410,12 +408,12 @@ eine Funktion einen einzigen Fehlertyp zurückgibt, um alle möglichen Fehlerart
 einer Funktion darzustellen, auch wenn Teile aus vielen verschiedenen Gründen
 versagen könnten.
 
-Wir könnten zum Beispiel die Funktion `read_username_from_file` in Listing
-9-7 so ändern, dass sie einen von uns definierten Fehlertyp namens `OurError`
+Wir könnten zum Beispiel die Funktion `read_username_from_file` in Listing 9-7
+so ändern, dass sie einen von uns definierten Fehlertyp namens `OurError`
 zurückgibt. Wenn wir auch `impl From<io::Error> for OurError` definieren, um
 eine Instanz von `OurError` aus einem `io::Error` zu konstruieren, dann werden
-die `?`-Operator-Aufrufe im Rumpf von `read_username_from_file` `from` aufrufen
-und die Fehlertypen konvertieren, ohne dass weiterer Code zur Funktion
+die Aufrufe des `?`-Operators im Rumpf von `read_username_from_file` `from`
+aufrufen und die Fehlertypen konvertieren, ohne dass weiterer Code zur Funktion
 hinzugefügt werden muss.
 
 Im Zusammenhang mit Listing 9-7 gibt das `?` am Ende des Aufrufs von
@@ -549,15 +547,15 @@ Methoden von `Result<T, E>` zu verwenden, um `Result<T, E>` in geeigneter Weise
 zu behandeln.
 
 Die Fehlermeldung hat auch erwähnt, dass `?` ebenso mit `Option<T>`-Werten
-verwendet werden kann. Wie bei der Verwendung von `?` für `Result`, kannst du
-`?` für `Option` nur in einer Funktion verwenden, die eine `Option` zurückgibt.
-Das Verhalten des `?`-Operators beim Aufruf auf eine `Option<T>` ist ähnlich
-dem Verhalten, wenn er auf ein `Result<T, E>` aufgerufen wird: Wenn der Wert
-`None` ist, wird `None` zu diesem Zeitpunkt von der Funktion zurückgegeben.
-Wenn der Wert `Some` ist, ist der Wert innerhalb von `Some` der resultierende
-Wert des Ausdrucks und die Funktion wird fortgesetzt. Listing 9-11 zeigt ein
-Beispiel für eine Funktion, die das letzte Zeichen der ersten Zeile in einem
-gegebenen Text findet.
+verwendet werden kann. Wie bei der Verwendung von `?` für `Result` kannst du `?`
+für `Option` nur in einer Funktion verwenden, die eine `Option` zurückgibt. Das
+Verhalten des `?`-Operators beim Aufruf auf eine `Option<T>` ist ähnlich dem
+Verhalten, wenn er auf ein `Result<T, E>` aufgerufen wird: Wenn der Wert `None`
+ist, wird `None` zu diesem Zeitpunkt von der Funktion zurückgegeben. Wenn der
+Wert `Some` ist, ist der Wert innerhalb von `Some` der resultierende Wert des
+Ausdrucks und die Funktion wird fortgesetzt. Listing 9-11 zeigt ein Beispiel für
+eine Funktion, die das letzte Zeichen der ersten Zeile in einem gegebenen Text
+findet.
 
 ```rust
 fn last_char_of_first_line(text: &str) -> Option<char> {
@@ -590,17 +588,17 @@ ist. Wenn `text` nicht der leere String ist, gibt `next` einen `Some`-Wert
 zurück, der einen String Slice der ersten Zeile in `text` enthält.
 
 Das `?` extrahiert den String Slice, und wir können `chars` auf diesem String
-Slice aufrufen, um einen Iterator für seine Zeichen zu erhalten. Wir sind am
-letzten Zeichen in dieser ersten Zeile interessiert, also rufen wir `last` auf,
-um das letzte Element im Iterator über die Zeichen zurückzugeben. Dies ist eine
-`Option`, weil die erste Zeile der leere String sein kann, wenn `text` mit einer
-Leerzeile beginnt, aber Zeichen in anderen Zeilen enthält, wie in `"\nhi"`. Wenn
-es jedoch ein letztes Zeichen in der ersten Zeile gibt, wird es in der Variante
-`Some` zurückgegeben. Der `?`-Operator in der Mitte gibt uns eine prägnante
-Möglichkeit, diese Logik auszudrücken, und diese Funktion kann in einer Zeile
-implementiert werden. Wenn wir den `?`-Operator nicht auf `Option` verwenden
-könnten, müssten wir diese Logik mit weiteren Methodenaufrufen oder einem
-Ausdruck implementieren.
+Slice aufrufen, um einen Iterator für seine Zeichen zu erhalten. Uns
+interessiert das letzte Zeichen in dieser ersten Zeile, also rufen wir `last`
+auf, um das letzte Element im Iterator über die Zeichen zurückzugeben. Dies ist
+eine `Option`, weil die erste Zeile der leere String sein kann, wenn `text` mit
+einer Leerzeile beginnt, aber Zeichen in anderen Zeilen enthält, wie in
+`"\nhi"`. Wenn es jedoch ein letztes Zeichen in der ersten Zeile gibt, wird es
+in der Variante `Some` zurückgegeben. Der `?`-Operator in der Mitte gibt uns
+eine prägnante Möglichkeit, diese Logik auszudrücken, und diese Funktion kann in
+einer Zeile implementiert werden. Wenn wir den `?`-Operator nicht auf `Option`
+verwenden könnten, müssten wir diese Logik mit weiteren Methodenaufrufen oder
+einem Ausdruck implementieren.
 
 Beachte, dass du den `?`-Operator auf ein `Result` in einer Funktion anwenden
 kannst, die `Result` zurückgibt, und du kannst den `?`-Operator auf eine
@@ -649,14 +647,14 @@ diese Signatur durch die Angabe von `Box<dyn Error>` auch dann noch korrekt,
 wenn weiterer Code, der andere Fehler zurückgibt, dem Rumpf von `main`
 hinzugefügt wird.
 
-Wenn eine Funktion `main` ein `Result<(), E>` zurückgibt, beendet sich die
-ausführbare Datei mit einem Wert von `0`, wenn `main` den Wert `Ok(())`
-zurückgibt, und mit einem Wert ungleich Null, wenn `main` einen `Err`-Wert
-zurückgibt. In C geschriebene ausführbare Programme geben beim Beenden ganze
-Zahlen zurück: Programme, die erfolgreich beendet werden, geben die Zahl `0`
-zurück, und Programme, die einen Fehler machen, geben eine Zahl ungleich `0`
-zurück. Rust gibt ebenfalls ganze Zahlen aus ausführbaren Dateien zurück, um
-mit dieser Konvention kompatibel zu sein.
+Wenn die Funktion `main` den Rückgabetyp `Result<(), E>` hat, beendet sich die
+ausführbare Datei mit dem Wert `0`, wenn `main` `Ok(())` zurückgibt, und mit
+einem von Null verschiedenen Wert, wenn `main` einen `Err`-Wert zurückgibt. In C
+geschriebene ausführbare Programme geben beim Beenden eine ganze Zahl zurück:
+Programme, die erfolgreich enden, geben die Zahl `0` zurück, und Programme, die
+mit einem Fehler enden, geben eine Zahl ungleich `0` zurück. Rust gibt aus
+ausführbaren Programmen ebenfalls ganze Zahlen zurück, um mit dieser Konvention
+kompatibel zu sein.
 
 Die Funktion `main` kann jeden Typ zurückgeben, der das [Trait
 `std::process::Termination`][termination] implementiert, das eine Funktion

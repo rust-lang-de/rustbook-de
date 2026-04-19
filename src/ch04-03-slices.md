@@ -4,11 +4,11 @@ Mit _Slices_ kannst du auf eine zusammenhängende Folge von Elementen in einer
 [Kollektion][collection] referenzieren. Ein Slice ist eine Art Referenz und hat
 daher kein Eigentum.
 
-Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die einen
-String mit durch Leerzeichen getrennten Wörtern entgegennimmt und das erste Wort
-zurückgibt, das sie in diesem String findet. Wenn die Funktion kein Leerzeichen
-im String findet, muss der gesamte String ein Wort sein, also sollte der gesamte
-String zurückgegeben werden.
+Hier ist eine kleine Programmieraufgabe: Schreibe eine Funktion, die einen
+String aus Wörtern entgegennimmt, die durch Leerzeichen getrennt sind, und das
+erste Wort in diesem String zurückgibt. Wenn die Funktion im String kein
+Leerzeichen findet, muss der gesamte String ein einziges Wort sein; in diesem
+Fall soll der komplette String zurückgegeben werden.
 
 > Hinweis: Zur Einführung in Slices gehen wir in diesem Abschnitt nur von ASCII
 > aus. Eine ausführlichere Erörterung der UTF-8-Verarbeitung findest du im

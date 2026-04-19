@@ -124,15 +124,15 @@ use std::io;
 # }
 ```
 
-Standardmäßig hat Rust einige Elemente in der Standardbibliothek definiert,
-die es in den Gültigkeitsbereich jedes Programms bringt. Diese Menge wird
-_Präludium_ genannt, und du kannst deren Inhalt [in der Dokumentation der
+Standardmäßig hat Rust einige Elemente in der Standardbibliothek definiert, die
+es in den Gültigkeitsbereich jedes Programms bringt. Diese Menge wird _Prelude_
+genannt, und du kannst deren Inhalt in der [Dokumentation der
 Standardbibliothek][prelude] sehen.
 
-Wenn ein Typ, den du verwenden willst, nicht im Präludium enthalten ist, musst
-du diesen Typ explizit mit einer `use`-Anweisung in den Gültigkeitsbereich
-bringen. Das Verwenden der Bibliothek `std::io` bietet dir eine Reihe von
-nützlichen Funktionalitäten, einschließlich der Möglichkeit, Benutzereingaben
+Wenn ein Typ, den du verwenden willst, nicht im Prelude enthalten ist, musst du
+diesen Typ explizit mit einer `use`-Anweisung in den Gültigkeitsbereich bringen.
+Das Verwenden der Bibliothek `std::io` bietet dir eine Reihe von nützlichen
+Funktionalitäten, einschließlich der Möglichkeit, Benutzereingaben
 entgegenzunehmen.
 
 Wie du in Kapitel 1 gesehen hast, ist die Funktion `main` der Einstiegspunkt in
@@ -241,7 +241,7 @@ Instanz eines `String` zurückgibt. [`String`][string] ist ein von der
 Standardbibliothek bereitgestellter String-Typ, der ein wachstumsfähiges,
 UTF-8-kodiertes Stück Text ist.
 
-Die Syntax `::` in der Zeile `::new` zeigt an, dass `new` eine assoziierte
+Die Syntax `::` in der Zeile `String::new` zeigt an, dass `new` eine assoziierte
 Funktion (associated function) vom Typ `String` ist. Eine _assoziierte Funktion_
 ist eine Funktion, die auf einem Typ, in diesem Fall `String`, implementiert
 ist. Diese Funktion `new` erzeugt einen neuen, leeren String. Du wirst eine
@@ -423,7 +423,7 @@ hinzugefügten Code nur noch eine weitere Zeile zu besprechen:
 ```
 
 Diese Zeile gibt den String aus, der jetzt die Eingabe des Benutzers enthält.
-Der Satz geschweifte Klammern `{}` ist ein Platzhalter: Stelle dir `{}` wie
+Das Paar geschweifter Klammern `{}` ist ein Platzhalter: Stelle dir `{}` wie
 kleine Krebszangen vor, die einen Wert an Ort und Stelle halten. Wenn du den
 Wert einer Variablen ausgibst, kann der Variablenname innerhalb der geschweiften
 Klammern stehen. Wenn du das Ergebnis der Auswertung eines Ausdrucks ausgeben
@@ -542,11 +542,11 @@ Möglicherweise siehst du unterschiedliche Versionsnummern (aber dank SemVer
 sind sie alle mit dem Code kompatibel!) und unterschiedliche Zeilen (je nach
 Betriebssystem), und die Zeilen können in einer anderen Reihenfolge erscheinen.
 
-Wenn wir eine externe Abhängigkeit einfügen, holt Cargo die neuesten
-Versionen von allem was die Abhängigkeit aus der _Registry_ benötigt, was eine
-Kopie der Daten von [Crates.io][cratesio] ist. Crates.io ist der Ort, an dem
-die Menschen im Rust-Ökosystem ihre Open-Source-Rustprojekte für andere zur
-Nutzung bereitstellen.
+Wenn wir eine externe Abhängigkeit einfügen, holt Cargo die neuesten Versionen
+von allem, was die Abhängigkeit aus der _Registry_ benötigt, was eine Kopie der
+Daten von [Crates.io][cratesio] ist. Crates.io ist der Ort, an dem die Menschen
+im Rust-Ökosystem ihre Open-Source-Rustprojekte für andere zur Nutzung
+bereitstellen.
 
 Nach dem Aktualisieren der Registry überprüft Cargo den Abschnitt
 `[dependencies]` und lädt alle aufgelisteten Crates herunter, die noch nicht
@@ -633,12 +633,11 @@ Wenn du das nächste Mal `cargo build` ausführst, wird Cargo die Registry der
 verfügbaren Crates aktualisieren und deine `rand`-Anforderungen entsprechend der
 von dir angegebenen neuen Version neu bewerten.
 
-Es gibt noch viel mehr über [Cargo][doccargo] und [seinem
-Ökosystem][doccratesio] zu sagen, das wir in Kapitel 14 besprechen werden, aber
-für den Moment ist das alles, was du wissen musst. Cargo macht es sehr einfach,
-Bibliotheken wiederzuverwenden, sodass die Rust-Entwickler in der Lage sind,
-kleinere Projekte zu schreiben, die aus einer Reihe von Paketen
-zusammengestellt werden.
+Es gibt noch viel mehr über [Cargo][doccargo] und [sein Ökosystem][doccratesio]
+zu sagen, das wir in Kapitel 14 besprechen werden, aber für den Moment ist das
+alles, was du wissen musst. Cargo macht es sehr einfach, Bibliotheken
+wiederzuverwenden, sodass die Rust-Entwickler in der Lage sind, kleinere
+Projekte zu schreiben, die aus einer Reihe von Paketen zusammengestellt werden.
 
 ### Generieren einer Zufallszahl
 
@@ -844,18 +843,18 @@ For more information about this error, try `rustc --explain E0308`.
 error: could not compile `guessing_game` (bin "guessing_game") due to 1 previous error
 ```
 
-Die Kernbotschaft des Fehlers besagt, dass es _nicht übereinstimmende Typen_
-(mismatched types) gibt. Rust hat ein starkes, statisches Typsystem. Es hat
-jedoch auch eine Typ-Inferenz. Als wir `let mut guess = String::new()`
-schrieben, konnte Rust daraus schließen, dass `guess` ein `String` sein sollte,
-und zwang uns nicht, den Typ anzugeben. Die `secret_number` hingegen ist ein
-Zahlentyp. Einige Zahlentypen können einen Wert zwischen 1 und 100 haben: `i32`,
-eine 32-Bit-Zahl; `u32`, eine 32-Bit-Zahl ohne Vorzeichen; `i64`, eine
-64-Bit-Zahl; sowie andere. Solange nicht anders angegeben, verwendet Rust
-standardmäßig `i32`, was der Typ von `secret_number` ist, es sei denn, du fügst
-an anderer Stelle Typinformationen hinzu, die Rust veranlassen würden, auf einen
-anderen numerischen Typ zu schließen. Der Grund für den Fehler liegt darin, dass
-Rust einen String und einen Zahlentyp nicht vergleichen kann.
+Der Kern der Fehlermeldung besagt, dass die Typen nicht übereinstimmen. Rust hat
+ein starkes, statisches Typsystem. Es hat jedoch auch eine Typ-Inferenz. Als wir
+`let mut guess = String::new()` schrieben, konnte Rust daraus schließen, dass
+`guess` ein `String` sein sollte, und zwang uns nicht, den Typ anzugeben. Die
+`secret_number` hingegen ist ein Zahlentyp. Einige Zahlentypen können einen Wert
+zwischen 1 und 100 haben: `i32`, eine 32-Bit-Zahl; `u32`, eine 32-Bit-Zahl ohne
+Vorzeichen; `i64`, eine 64-Bit-Zahl; sowie andere. Solange nicht anders
+angegeben, verwendet Rust standardmäßig `i32`, was der Typ von `secret_number`
+ist, es sei denn, du fügst an anderer Stelle Typinformationen hinzu, die Rust
+veranlassen würden, auf einen anderen numerischen Typ zu schließen. Der Grund
+für den Fehler liegt darin, dass Rust einen String und einen Zahlentyp nicht
+vergleichen kann.
 
 Letztendlich wollen wir den `String`, den das Programm als Eingabe liest, in
 einen Zahlentyp umwandeln, damit wir ihn numerisch mit der Geheimzahl

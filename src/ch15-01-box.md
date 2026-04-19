@@ -22,11 +22,11 @@ Situationen verwendet:
 
 Wir werden die erste Situation in [„Ermöglichen rekursiver Typen mit
 Boxen“](#ermöglichen-rekursiver-typen-mit-boxen) zeigen. Im zweiten Fall kann
-die Übertragung das Eigentums an einer großen Datenmenge lange dauern, da die
+die Übertragung des Eigentums an einer großen Datenmenge lange dauern, da die
 Daten auf dem Stack kopiert werden. Um die Performanz in dieser Situation zu
 verbessern, können wir die große Datenmenge auf dem Heap in einer Box speichern.
 Dann wird nur die kleine Menge von Zeigerdaten auf dem Stack kopiert, während
-die Daten, auf die referenziert wird, im Heap an einer Stelle verbleiben. Der
+die Daten, die referenziert werden, im Heap an einer Stelle verbleiben. Der
 dritte Fall ist als _Trait-Objekt_ bekannt, und [„Verwendung von Trait-Objekten
 zur Abstraktion über gemeinsames Verhalten“][trait-objects] in Kapitel 18 widmet
 sich diesem Thema. Was du hier lernst, wirst du in diesem Abschnitt erneut
@@ -102,7 +102,7 @@ Liste `1, 2, 3` enthält, wobei jedes Paar in Klammern steht:
 (1, (2, (3, Nil)))
 ```
 
-Jedes Element in einer Cons-Liste enthält zwei Elemente: Den Wert des aktuellen
+Jedes Element in einer Cons-Liste enthält zwei Elemente: den Wert des aktuellen
 Elements und das nächste Element. Das letzte Element in der Liste enthält nur
 ein Element namens `Nil` ohne ein nächstes Element. Eine Cons-Liste wird durch
 rekursives Aufrufen der Funktion `cons` erstellt. Der kanonische Name für den
@@ -131,7 +131,7 @@ enum List {
 # fn main() {}
 ```
 
-<span class="caption">Listing 15-2: Der erste Versuch eine Aufzählung zu
+<span class="caption">Listing 15-2: Der erste Versuch, eine Aufzählung zu
 definieren, um eine Datenstruktur der Cons-Liste von `i32`-Werten
 darzustellen</span>
 
@@ -160,7 +160,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 15-3: Verwendung der `List`-Aufzählung um die 
+<span class="caption">Listing 15-3: Verwendung der `List`-Aufzählung, um die
 Liste `1, 2, 3` zu speichern</span>
 
 Der erste `Cons`-Wert enthält `1` und einen anderen `List`-Wert. Dieser
@@ -169,8 +169,8 @@ enthält. Dieser `List`-Wert ist wiederum ein `Cons`-Wert, der `3` enthält und
 ein `List`, das schließlich `Nil` ist &ndash; die nicht-rekursive Variante, die
 das Ende der Liste signalisiert.
 
-Wenn wir versuchen den Programmcode in Listing 15-3 zu kompilieren,
-erhalten wir den Fehler der in Listing 15-4 gezeigt wird.
+Wenn wir versuchen, den Programmcode in Listing 15-3 zu kompilieren, erhalten
+wir den Fehler der in Listing 15-4 gezeigt wird.
 
 <span class="filename">Dateiname: output.txt</span>
 
@@ -205,8 +205,8 @@ For more information about an error, try `rustc --explain E0072`.
 error: could not compile `cons-list` (bin "cons-list") due to 2 previous errors
 ```
 
-<span class="caption">Listing 15-4: Der Fehler den wir erhalten wenn wir
-versuchen eine rekursive Aufzählung zu definieren</span>
+<span class="caption">Listing 15-4: Fehler, den wir erhalten, wenn wir
+versuchen, eine rekursive Aufzählung zu definieren</span>
 
 Der Fehler zeigt, dass dieser Typ „unendlich groß“ ist. Der Grund dafür ist,
 dass wir `List` mit einer rekursiven Variante definiert haben, sie enthält
@@ -235,7 +235,7 @@ enum Message {
 Um zu bestimmen, wie viel Speicherplatz für einen `Message`-Wert benötigt wird,
 analysiert Rust alle Varianten, um festzustellen, welche Variante den meisten
 Speicherplatz benötigt. Rust erkennt, dass `Message::Quit` keinen Speicherplatz
-benötigt, und `Message::Move` so viel Speicherplatz braucht um zwei `i32`-Werte
+benötigt, und `Message::Move` so viel Speicherplatz braucht, um zwei `i32`-Werte
 zu speichern, und so weiter. Da nur eine Variante verwendet wird, ist der
 Speicherbedarf, den ein `Message`-Wert benötigt, gleich dem Speicherplatz, der
 zum Speichern der größten Variante benötigt wird.
@@ -252,7 +252,7 @@ Vorgang wird wie in Abbildung 15-1 dargestellt, unendlich fortgesetzt.
 
 <img alt="Eine unendliche Cons-Liste" src="img/trpl15-01.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Abbildung 15-1: Ein unendlicher `List`-Typ der aus
+<span class="caption">Abbildung 15-1: Ein unendlicher `List`-Typ, der aus
 unendlichen `Cons`-Varianten besteht</span>
 
 #### Einen rekursiven Typ mit einer bekannten Größe erhalten

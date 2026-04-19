@@ -7,7 +7,7 @@ du wissen, welche Implementierung schneller ist: Die Version der Funktion
 Wir haben einen Benchmark durchgeführt, der den gesamten Inhalt von _The
 Adventures of Sherlock Holmes_ von Sir Arthur Conan Doyle in einen `String` lädt
 und nach dem Wort „the“ im Inhalt sucht. Hier sind die Ergebnisse des Benchmarks
-für die Version von `search` mit `for`-Schleife und der Version die Iteratoren
+für die Version von `search` mit `for`-Schleife und der Version, die Iteratoren
 verwendet:
 
 ```text
@@ -18,7 +18,7 @@ test bench_search_iter ... bench:  19,234,900 ns/iter (+/- 657,200)
 Die Version mit Iteratoren war ein wenig schneller! Wir werden den Programmcode
 des Benchmarks hier nicht erläutern, da es nicht darum geht, nachzuweisen, dass
 die beiden Versionen gleichwertig sind, sondern einen allgemeinen Eindruck davon
-zu bekommen, wie diese beiden Versionen im Bezug auf Performanz verglichen
+zu bekommen, wie diese beiden Versionen in Bezug auf Performanz verglichen
 werden.
 
 Für einen umfassenderen Benchmark würde man verschiedene Texte

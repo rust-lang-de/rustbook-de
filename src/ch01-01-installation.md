@@ -20,13 +20,12 @@ dieses Buchs funktionieren.
 
 > ### Kommandozeilen-Schreibweise
 >
-> In diesem Kapitel und im ganzen Buch werden wir einige Befehle auf dem
-> Terminal zeigen. Alle Zeilen, die du in das Terminal eingeben sollst,
-> beginnen mit `$`. Du brauchst das `$`-Zeichen nicht einzugeben;
-> es weist nur auf den Beginn jedes Befehls hin. Zeilen, die nicht mit
-> `$` beginnen, zeigen normalerweise die Ausgabe eines vorherigen Befehls.
-> PowerShell-spezifische Beispiele werden außerdem `>` anstelle von `$`
-> verwenden.
+> In diesem Kapitel und im ganzen Buch werden wir einige Befehle auf dem Terminal
+> zeigen. Alle Zeilen, die du in das Terminal eingeben sollst, beginnen mit `$`.
+> Du brauchst das `$`-Zeichen nicht einzugeben; es weist nur auf den Beginn jedes
+> Befehls hin. Zeilen, die nicht mit `$` beginnen, zeigen normalerweise die
+> Ausgabe eines vorherigen Befehls. PowerShell-spezifische Beispiele verwenden
+> außerdem `>` anstelle von `$`.
 
 ### Installation von `rustup` unter Linux und macOS
 
@@ -46,8 +45,8 @@ Installation erscheint folgende Zeile:
 Rust is installed now. Great!
 ```
 
-Außerdem benötigst du einen _Linker_ (engl. Bindelader), ein Programm, das Rust
-verwendet, um die kompilierten Dateien in eine Datei zusammenzuführen.
+Außerdem benötigst du einen _Linker_ (engl. Programm-Binder), ein Programm, das
+Rust verwendet, um die kompilierten Dateien in eine Datei zusammenzuführen.
 Wahrscheinlich hast du bereits einen. Wenn du Linker-Fehler erhältst, solltest
 du einen C-Compiler installieren, der in der Regel auch einen Linker enthält.
 Ein C-Compiler ist auch deshalb nützlich, weil einige gängige Rust-Pakete von

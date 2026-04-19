@@ -54,7 +54,7 @@ einer Beschreibung ihrer Funktion.
 - `true` &ndash; Boolesches Literal für „wahr“
 - `type` &ndash; einen Typ-Alias oder assoziierten Typ definieren
 - `union` &ndash; eine [Vereinigung (union)][union] definieren; ist nur ein
-  Schlüsselwort innerhalb einer Vereinigungsdeklaration
+  Schlüsselwort innerhalb einer Union-Deklaration
 - `unsafe` &ndash; Code, Funktionen, Trait und Implementierungen als unsicher
   kennzeichnen
 - `use` &ndash; Symbole in den Gültigkeitsbereich bringen; genaue Spezifikation

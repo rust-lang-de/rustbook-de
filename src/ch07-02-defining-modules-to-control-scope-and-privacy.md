@@ -1,4 +1,4 @@
-## Kontrollumfang und Datenschutz mit Modulen
+## Gültigkeitsbereich und Sichtbarkeit mit Modulen steuern
 
 In diesem Abschnitt werden wir über Module und andere Teile des Modulsystems
 sprechen, nämlich _Pfade_, die es dir erlauben, Elemente zu benennen; das
@@ -38,10 +38,10 @@ erinnern, wie Module funktionieren.
     - In der Datei _src/garden/vegetables/mod.rs_
 - **Pfade zum Code in Modulen:** Sobald ein Modul Teil deiner Crate ist, kannst
   du auf den Code in diesem Modul von jedem anderen Ort in derselben Crate aus
-  referenzieren, solange die Datenschutzregeln dies zulassen, indem du den Pfad
-  zum Code verwendest. Zum Beispiel würde ein Typ `Asparagus` (engl. Spargel)
-  im Gartengemüse-Modul unter `crate::garden::vegetables::Asparagus` zu finden
-  sein.
+  referenzieren, solange die Sichtbarkeitsregeln dies zulassen, indem du den
+  Pfad zum Code verwendest. Zum Beispiel würde ein Typ `Asparagus` (engl.
+  Spargel) im Gartengemüse-Modul unter `crate::garden::vegetables::Asparagus` zu
+  finden sein.
 - **Privat vs. öffentlich:** Der Code innerhalb eines Moduls ist standardmäßig
   für seine übergeordneten Module nicht zugänglich. Um ein Modul öffentlich zu
   machen, deklariere es mit `pub mod` anstelle von `mod`. Um Elemente innerhalb
@@ -107,8 +107,8 @@ Lass uns nun auf die Einzelheiten dieser Regeln eingehen und sie in der Praxis d
 ### Gruppierung von zugehörigem Code in Modulen
 
 _Module_ ermöglichen es uns, den Code innerhalb einer Crate zu organisieren,
-damit er lesbar und leicht wiederverwendbar ist. Mit Modulen können wir auch den
-_Datenschutz_ (privacy) von Elementen kontrollieren, da Code innerhalb eines
+damit er lesbar und leicht wiederverwendbar ist. Mit Modulen können wir auch die
+_Sichtbarkeit_ (privacy) von Elementen kontrollieren, da Code innerhalb eines
 Moduls standardmäßig privat ist. Private Elemente sind interne
 Implementierungsdetails, die nicht für die externe Nutzung zur Verfügung stehen.
 Wir können uns dafür entscheiden, Module und die darin enthaltenen Elemente

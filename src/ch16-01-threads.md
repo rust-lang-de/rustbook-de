@@ -11,8 +11,8 @@ Anfragen gleichzeitig reagieren kann.
 Das Aufteilen der Berechnung in deinem Programm in mehrere Threads, um mehrere
 Aufgaben gleichzeitig auszuführen, kann die Performanz erhöhen, aber es erhöht
 auch die Komplexität. Da Threads gleichzeitig laufen können, gibt es keine
-inhärente Garantie für die Reihenfolge, in der Teile deines Codes in
-verschiedenen Threads ausgeführt werden. Dies kann zu Problemen führen wie:
+Garantie für die Reihenfolge, in der Teile deines Codes in verschiedenen Threads
+ausgeführt werden. Dies kann zu Problemen führen wie:
 
 - Race Conditions, bei denen Threads auf Daten oder
   Ressourcen in einer inkonsistenten Reihenfolge zugreifen.
@@ -108,7 +108,7 @@ erzeugte Thread überhaupt zum Laufen kommt!
 Wir können das Problem, dass der erzeugte Thread nicht läuft oder vorzeitig
 beendet wird, beheben, indem wir den Rückgabewert von `thread::spawn` in einer
 Variable speichern. Der Rückgabetyp von `thread::spawn` ist `JoinHandle<T>`. Ein
-`JoinHandle<T>` ist ein aneigenbarer (owned) Wert, der, wenn wir die Methode
+`JoinHandle<T>` ist ein besitzender (owned) Wert, der, wenn wir die Methode
 `join` darauf aufrufen, darauf wartet, bis sich sein Thread beendet. Listing
 16-2 zeigt, wie der `JoinHandle<T>` des Threads, den wir in Listing 16-1
 erstellt haben, verwendet und wie `join` aufgerufen wird, um sicherzustellen,
@@ -164,9 +164,9 @@ Hallo Zahl 8 aus dem erzeugten Thread!
 Hallo Zahl 9 aus dem erzeugten Thread!
 ```
 
-Die beiden Threads setzen abwechselnd fort, aber der Haupt-Thread wartet wegen
-des Aufrufs von `handle.join()` und endet nicht, bis der erzeugte Thread beendet
-ist.
+Die beiden Threads setzen die Ausführung abwechselnd fort, aber der Haupt-Thread
+wartet wegen des Aufrufs von `handle.join()` und endet nicht, bis der erzeugte
+Thread beendet ist.
 
 Aber lass uns sehen, was passiert, wenn wir stattdessen `handle.join()` vor die
 `for`-Schleife in `main` schieben, etwa so:
@@ -254,11 +254,10 @@ fn main() {
 <span class="caption">Listing 16-3: Versuch, einen im Haupt-Thread erzeugten
 Vektor in einem anderen Thread zu verwenden</span>
 
-Der Closure verwendet `v`, sodass er `v` erfasst und zum Teil der Umgebung des
-Closures macht. Da `thread::spawn` diesen Closure in einem neuen Thread
-ausführt, sollten wir in der Lage sein, auf `v` innerhalb dieses neuen Threads
-zuzugreifen. Aber wenn wir dieses Beispiel kompilieren, erhalten wir den
-folgenden Fehler:
+Der Closure verwendet `v`, sodass `v` Teil der Umgebung des Closures wird. Da
+`thread::spawn` diesen Closure in einem neuen Thread ausführt, sollten wir in
+der Lage sein, auf `v` innerhalb dieses neuen Threads zuzugreifen. Aber wenn wir
+dieses Beispiel kompilieren, erhalten wir den folgenden Fehler:
 
 ```console
 $ cargo run
@@ -401,7 +400,7 @@ error: could not compile `threads` (bin "threads") due to 1 previous error
 Die Eigentumsregeln von Rust haben uns wieder einmal gerettet! Wir haben einen
 Fehler im Code in Listing 16-3 erhalten, weil Rust konservativ war und nur `v`
 für den Thread auslieh, was bedeutete, dass der Haupt-Thread theoretisch die
-Referenz des erzeugte Threads ungültig machen konnte. Indem wir Rust anweisen,
+Referenz des erzeugten Threads ungültig machen konnte. Indem wir Rust anweisen,
 das Eigentum an `v` in den erzeugten Thread zu verschieben, garantieren wir
 Rust, dass der Haupt-Thread `v` nicht mehr benutzen wird. Wenn wir Listing 16-4
 auf die gleiche Weise ändern, verletzen wir die Eigentumsregeln, wenn wir

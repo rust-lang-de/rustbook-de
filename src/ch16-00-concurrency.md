@@ -37,13 +37,13 @@ Fehler zu erzeugen.
 
 Viele Sprachen sind dogmatisch, was die Lösungen betrifft, die sie zur
 Behandlung von Nebenläufigkeitsproblemen anbieten. Beispielsweise verfügt Erlang
-über elegante Funktionen für die nachrichtenübermittelnde Nebenläufigkeit
+über elegante Funktionen für die Nebenläufigkeit mit Nachrichtenaustausch
 (message-passing concurrency), hat aber nur obskure Möglichkeiten, einen
 gemeinsamen Status mit mehreren Threads zu teilen. Die Unterstützung nur einer
 Teilmenge möglicher Lösungen ist eine vernünftige Strategie für Hochsprachen, da
-eine Hochsprache Vorteile verspricht, wenn sie eine gewisse Kontrolle aufgibt,
-um Abstraktionen zu erhalten. Es wird jedoch erwartet, dass Sprachen auf
-niedrigeren Ebenen in jeder Situation die Lösung mit der besten Performanz
+eine Hochsprache Vorteile verspricht, wenn sie auf einen Teil der Kontrolle
+verzichtet, um Abstraktionen zu erhalten. Es wird jedoch erwartet, dass Sprachen
+auf niedrigeren Ebenen in jeder Situation die Lösung mit der besten Performanz
 bieten und weniger Abstraktionen der Hardware haben. Daher bietet Rust eine
 Vielzahl von Werkzeugen zur Modellierung von Problemen in der Art und Weise, die
 für deine Situation und deine Anforderungen geeignet ist.

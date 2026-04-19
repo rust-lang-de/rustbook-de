@@ -3,8 +3,8 @@
 Die letzte unserer allgemeinen Kollektionen ist die Hashtabelle (hash map). Der
 Typ `HashMap<K, V>` speichert eine Zuordnung von Schlüsseln vom Typ `K` zu
 Werten vom Typ `V` mittels einer _Hashfunktion_ (hash function), die bestimmt,
-wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
-unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
+wie sie diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
+unterstützen diese Art von Datenstruktur, aber sie verwenden oft einen anderen
 Namen wie _Hash_, _Abbildung_ (map), _Objekt_, _Hashtabelle_ (hash table),
 _Wörterbuch_ (dictionary) oder _assoziatives Array_ (associative array), um nur
 einige zu nennen.
@@ -24,9 +24,9 @@ Standardbibliotheksdokumentation.
 
 ### Erstellen einer neuen Hashtabelle
 
-Ein Weg um eine leere Hashtabelle zu erzeugen ist mit `new` und um Elemente
-hinzuzufügen mit `insert`. In Listing 8-20 verfolgen wir die Ergebnisse
-zweier Mannschaften mit den Namen Blau und Gelb. Das Team Blau startet mit 10
+Eine Möglichkeit, um eine leere Hashtabelle zu erzeugen, ist mit `new`. Elemente
+können mit `insert` eingefügt werden. In Listing 8-20 halten wir die Punktzahlen
+zweier Mannschaften fest, die Blau und Gelb heißen. Das Team Blau startet mit 10
 Punkten, das Team Gelb mit 50 Punkten.
 
 ```rust
@@ -107,9 +107,9 @@ Blau: 10
 ### Verwalten des Eigentums in Hashtabellen
 
 Bei Typen wie `i32`, die das Trait `Copy` implementieren, werden die Werte in
-die Hashtabelle kopiert. Bei aneigenbaren Werten wie `String` werden die Werte
-verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Listing
-8-22 gezeigt wird.
+die Hashtabelle kopiert. Bei besitzenden Werten wie `String` werden die Werte
+verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Listing 8-22
+gezeigt wird.
 
 ```rust
 use std::collections::HashMap;
@@ -270,7 +270,7 @@ Standardmäßig verwendet `HashMap` eine Hash-Funktion namens _SipHash_, die
 robust gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen[^siphash] ist.
 Dies ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der
 Kompromiss zugunsten einer höheren Sicherheit gegenüber einer geringeren
-Performanz ist es Wert. Wenn du eine Performanzanalyse deines Codes machst und
+Performanz lohnt sich. Wenn du eine Performanzanalyse deines Codes machst und
 feststellst, dass die Standard-Hash-Funktion für deine Zwecke zu langsam ist,
 kannst du zu einer anderen Funktion wechseln, indem du eine andere Hash-Funktion
 angibst. Eine _Hash-Funktion_ ist ein Typ, der das Trait `BuildHasher`
@@ -305,7 +305,7 @@ gerüstet sein solltest:
    sortierte Liste aller Personen in einer Abteilung oder aller Personen in der
    Firma nach Abteilung ausgeben.
 
-Die API-Dokumentation der Standard-Bibliothek beschreibt Methoden für Vektoren,
+Die API-Dokumentation der Standardbibliothek beschreibt Methoden für Vektoren,
 Strings und Hashtabellen, die für diese Übungen hilfreich sind!
 
 Wir steigen in komplexere Programme ein, in denen Operationen fehlschlagen

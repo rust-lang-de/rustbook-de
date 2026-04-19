@@ -3,7 +3,7 @@
 In Kapitel 12 haben wir ein Paket erstellt, das eine binäre Crate und eine
 Bibliotheks-Crate enthält. Während dein Projekt entwickelt wird, wirst du
 möglicherweise feststellen, dass die Bibliotheks-Crate immer größer wird und du
-dein Paket weiter in mehrere Bibliotheks-Crate aufteilen möchtest. Cargo bietet
+dein Paket weiter in mehrere Bibliotheks-Crates aufteilen möchtest. Cargo bietet
 eine Funktion namens _Arbeitsbereiche_ (workspaces), mit denen mehrere verwandte
 Pakete verwaltet werden können, die gemeinsam entwickelt werden.
 
@@ -82,9 +82,9 @@ noch immer in _add/target_ und nicht in _add/adder/target_. Cargo strukturiert
 das _Zielverzeichnis_ in einem derartigen Arbeitsverzeichnis, da die Crates
 voneinander abhängig sein sollen. Wenn jede Crate ihr eigenes _Zielverzeichnis_
 hätte, müssten für jede Crate die anderen Crates im Arbeitsbereich neu
-kompiliert werden, damit die Artefakte ein eigenes _Zielverzeichnis_ haben
-könnten. Durch die gemeinsame Nutzung eines Verzeichnisses können die Crates
-unnötig wiederholte Erstellung vermeiden.
+kompiliert werden, um die Artefakte in ihrem eigenen _Zielverzeichnis_
+abzulegen. Durch die gemeinsame Nutzung eines einzigen Verzeichnisses können die
+Crates unnötiges Neuaufbauen vermeiden.
 
 ### Erstellen des zweiten Pakets im Arbeitsbereich
 
@@ -124,7 +124,7 @@ Dein Verzeichnis _add_ sollte nun so aussehen:
 └── target
 ```
 
-Lass uns in der Datei _add_one/src/lib.rs_, eine Funktion `add_one` hinzufügen.
+Lass uns in der Datei _add_one/src/lib.rs_ eine Funktion `add_one` hinzufügen.
 
 <span class="filename">Dateiname: add_one/src/lib.rs</span>
 
@@ -167,7 +167,7 @@ Crate `adder` verwenden</span>
 Erstellen wir den Arbeitsbereich, indem wir `cargo build` im obersten
 Verzeichnis _add_ ausführen!
 
- ```console
+```console
 $ cargo build
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
    Compiling adder v0.1.0 (file:///projects/add/adder)
@@ -344,7 +344,7 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-Die Ausgabe zeigt, dass `cargo test` nur die Tests der Crate `add_one` aber
+Die Ausgabe zeigt, dass `cargo test` nur die Tests der Crate `add_one`, aber
 nicht der Crate `adder` ausgeführt hat.
 
 Wenn du die Crates im Arbeitsbereich unter [crates.io][crates] veröffentlichst,

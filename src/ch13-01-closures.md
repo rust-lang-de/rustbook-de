@@ -17,7 +17,7 @@ exklusives T-Shirt in limitierter Auflage an jemanden aus unserer Mailingliste
 als Werbeaktion. Die Personen auf der Mailingliste können optional ihre
 Lieblingsfarbe zu ihrem Profil hinzufügen. Wenn die Person, die das kostenlose
 Shirt erhalten soll, ihre Lieblingsfarbe in ihrem Profil angegeben hat, erhält
-sie das Hemd in dieser Farbe. Wenn die Person keine Lieblingsfarbe angegeben
+sie das Shirt in dieser Farbe. Wenn die Person keine Lieblingsfarbe angegeben
 hat, erhält sie die Farbe, in der das Unternehmen derzeit die meisten Exemplare
 hat.
 
@@ -26,10 +26,10 @@ wir eine Aufzählung namens `ShirtColor` verwenden, die die Varianten `Red` und
 `Blue` hat (der Einfachheit halber wird die Anzahl der verfügbaren Farben
 begrenzt). Das Inventar des Unternehmens wird durch eine Struktur `Inventory`
 repräsentiert, die ein Feld mit dem Namen `shirts` hat, das ein
-`Vec<ShirtColor>` mit den derzeit vorrätigen Hemden enthält. Die Methode
-`giveaway`, die auf `Inventory` definiert ist, erhält die optionale
-Shirtfarbe der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe
-zurück, die die Person erhalten wird. Dies wird in Listing 13-1 gezeigt.
+`Vec<ShirtColor>` mit den derzeit vorrätigen Shirts enthält. Die Methode
+`giveaway`, die auf `Inventory` definiert ist, erhält die optionale Shirtfarbe
+der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe zurück, die
+die Person erhalten wird. Dies wird in Listing 13-1 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -86,7 +86,7 @@ fn main() {
 
 Der in `main` definierte `store` hat zwei blaue Shirts und ein rotes Shirt
 übrig, die für diese limitierte Aktion verteilt werden sollen. Wir rufen die
-Methode `giveaway` für einen Benutzer mit einer Präferenz für ein rotes Hemd
+Methode `giveaway` für einen Benutzer mit einer Präferenz für ein rotes Shirt
 und einen Benutzer ohne jegliche Präferenz auf.
 
 Auch dieser Code könnte auf viele Arten implementiert werden. Um uns auf
@@ -96,7 +96,7 @@ Closure verwendet. In der Methode `giveaway` erhalten wir die Benutzerpräferenz
 als einen Parameter vom Typ `Option<ShirtColor>` und rufen die Methode
 `unwrap_or_else` auf `user_preference` auf. Die [Methode `unwrap_or_else` auf
 `Option<T>`][unwrap-or-else] ist in der Standardbibliothek definiert. Sie nimmt
-ein Argument entgegen: Einen Closure ohne Argument, der einen Wert `T`
+ein Argument entgegen: einen Closure ohne Argument, der einen Wert `T`
 zurückgibt (denselben Typ, der in der Variante `Some` von `Option<T>`
 gespeichert ist, in diesem Fall `ShirtColor`). Wenn `Option<T>` die Variante
 `Some` ist, gibt `unwrap_or_else` den Wert aus `Some` zurück. Wenn `Option<T>`
@@ -104,9 +104,9 @@ die Variante `None` ist, ruft `unwrap_or_else` den Closure auf und gibt den Wert
 zurück, der vom Closure zurückgegeben wurde.
 
 Wir geben den Closure-Ausdruck `|| self.most_stocked()` als Argument bei
-`unwrap_or_else` an. Dies ist ein Closure, der selbst keine Parameter hat (wenn
+`unwrap_or_else` an. Dies ist ein Closure, der selbst keine Parameter hat. (Wenn
 der Closure Parameter hätte, würden sie zwischen den beiden vertikalen Strichen
-erscheinen). Der Rumpf des Closures ruft `self.most_stocked()` auf. Wir
+erscheinen.) Der Rumpf des Closures ruft `self.most_stocked()` auf. Wir
 definieren den Closure hier, und die Implementierung von `unwrap_or_else` wird
 den Closure später auswerten, wenn das Ergebnis benötigt wird.
 
@@ -154,9 +154,9 @@ Wie bei Variablen können wir Typ-Annotationen hinzufügen, wenn wir die
 Explizitheit und Klarheit erhöhen wollen, auch wenn wir dafür ausführlicher sind
 als unbedingt nötig. Die Annotation der Typen für einen Closure würde wie die in
 Listing 13-2 gezeigte Definition aussehen. In diesem Beispiel definieren wir
-einen Closure und speichern ihn in einer Variablen, anstatt den Closure an der
-Stelle zu definieren, an der wir ihn als Argument übergeben, wie wir es in
-Listing 13-1 getan haben.
+einen Closure und speichern ihn in einer Variablen, anstatt den Closure dort zu
+definieren, wo wir ihn als Argument übergeben, wie wir es in Listing 13-1 getan
+haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -216,8 +216,8 @@ eines Closures mit allen Datentypangaben. In der dritten Zeile werden die
 Datentypangaben aus der Closure-Definition entfernt, und in der vierten Zeile
 werden die geschweiften Klammern weggelassen, die optional sind, da der
 Closure-Rumpf nur einen Ausdruck beinhaltet. All diese Ausdrücke sind gültig und
-verhalten sich beim Aufruf gleich. Von `add_one_v3` und `add_one_v4` wird ein
-Aufruf zum Kompilieren des Codes benötigt, da hier die Typen abhängig von der
+verhalten sich beim Aufruf gleich. Bei `add_one_v3` und `add_one_v4` ist ein
+Aufruf nötig, damit der Code kompiliert, da hier die Typen abhängig von der
 Verwendung abgeleitet werden. Dies ist vergleichbar mit `let v = Vec::new();`,
 bei dem entweder Typ-Annotationen oder Werte eines bestimmten Typs in den `Vec`
 eingefügt werden müssen, damit Rust den Typ ableiten kann.
@@ -240,8 +240,8 @@ let s = example_closure(String::from("hallo"));
 let n = example_closure(5);
 ```
 
-<span class="caption">Listing 13-3: Versuchter Aufruf eines Closure, dem zwei
-unterschiedliche Typen übergeben wurden</span>
+<span class="caption">Listing 13-3: Versuchter Aufruf von einem Closure, dem
+zwei unterschiedliche Typen übergeben wurden</span>
 
 Der Compiler gibt diesen Fehler aus:
 
@@ -280,7 +280,7 @@ error: could not compile `closure-example` (bin "closure-example") due to 1 prev
 Beim ersten Aufruf von `example_closure` wird dem Typ von `x` und dem
 Rückgabewert des Closures der Typ `String` zugewiesen. Diese Typen sind dann für
 den Closure `example_closure` festgeschrieben. Daher bekommen wir eine
-Fehlermeldung, wenn wir versuchen einen anderen Typ mit dem gleichen Closure zu
+Fehlermeldung, wenn wir versuchen, einen anderen Typ mit dem gleichen Closure zu
 benutzen.
 
 ### Erfassen von Referenzen oder Verschieben des Eigentums
@@ -334,9 +334,8 @@ Im Closure: [1, 2, 3]
 Nach dem Closure-Aufruf: [1, 2, 3]
 ```
 
-In Listing 13-5 wird die Definition des Closures so geändert, dass er ein
-Element zum Vektor `list` hinzufügt. Der Closure erfasst nun eine veränderbare
-Referenz.
+In Listing 13-5 wird der Closure so geändert, dass er ein Element zum Vektor
+`list` hinzufügt. Der Closure erfasst nun eine veränderbare Referenz.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -452,7 +451,7 @@ der Closure-Rumpf die Werte behandelt:
 * `FnMut` gilt für Closures, die die erfassten Werte nicht aus ihrem Rumpf
   herausverschieben, aber die erfassten Werte möglicherweise verändern. Diese
   Closures können mehr als einmal aufgerufen werden.
-* `Fn` gilt für Closure, die die erfassten Werte nicht aus ihrem Rumpf
+* `Fn` gilt für Closures, die die erfassten Werte nicht aus ihrem Rumpf
   herausverschieben und die erfassten Werte nicht verändern, sowie Closures, die
   nichts aus ihrer Umgebung erfassen. Diese Closures können mehr als einmal
   aufgerufen werden, ohne ihre Umgebung zu verändern, was wichtig ist, wenn z.B.
@@ -485,15 +484,15 @@ zusätzlichen generischen Typ-Parameter `F` hat. Der Typ `F` ist der Typ des
 Parameters namens `f`, der der Closure ist, den wir beim Aufruf von
 `unwrap_or_else` bereitstellen.
 
-Die für den generischen Typ `F` spezifizierte Trait Bound ist `FnOnce()
--> T`, was bedeutet, dass `F` mindestens einmal aufgerufen werden können muss,
-keine Argumente annimmt und ein `T` zurückgeben muss. Die Verwendung von
-`FnOnce` in der Trait Bound drückt die Einschränkung aus, dass
-`unwrap_or_else` `f` nicht mehr als ein Mal aufrufen wird. Im Rumpf von
-`unwrap_or_else` können wir sehen, dass, wenn die `Option` `Some` ist, `f` nicht
-aufgerufen wird. Wenn die `Option` `None` ist, wird `f` einmal aufgerufen. Da
-alle Closures `FnOnce` implementieren, akzeptiert `unwrap_or_else` alle drei
-Arten von Closures und ist so flexibel wie nur möglich.
+Die für den generischen Typ `F` spezifizierte Trait Bound ist `FnOnce() -> T`,
+was bedeutet, dass `F` mindestens einmal aufgerufen werden können muss, keine
+Argumente annimmt und ein `T` zurückgeben muss. Die Verwendung von `FnOnce` in
+der Trait Bound drückt die Einschränkung aus, dass `unwrap_or_else` `f` nicht
+mehr als ein Mal aufrufen wird. Im Rumpf von `unwrap_or_else` können wir sehen,
+dass, wenn die `Option` `Some` ist, `f` nicht aufgerufen wird. Wenn die `Option`
+`None` ist, wird `f` einmal aufgerufen. Da alle Closures `FnOnce`
+implementieren, akzeptiert `unwrap_or_else` alle drei Arten von Closures und ist
+so flexibel wie nur möglich.
 
 > Anmerkung: Wenn das, was wir tun wollen, keine Werte aus der Umgebung
 > erfassen muss, können wir einen Funktionsnamen anstelle eines Closures
@@ -502,7 +501,7 @@ Arten von Closures und ist so flexibel wie nur möglich.
 > wenn der Wert `None` ist. Der Compiler implementiert automatisch die
 > `Fn`-Traits, die für eine Funktionsdefinition anwendbar sind.
 
-Schauen wir uns nun die Standard-Bibliotheksmethode `sort_by_key` an, die auf
+Schauen wir uns nun die Standardbibliotheksmethode `sort_by_key` an, die auf
 Slice definiert ist, um zu sehen, wie sie sich von `unwrap_or_else`
 unterscheidet und warum `sort_by_key` `FnMut` statt `FnOnce` für die Trait Bound
 verwendet. Der Closure erhält ein Argument, eine Referenz auf das aktuelle

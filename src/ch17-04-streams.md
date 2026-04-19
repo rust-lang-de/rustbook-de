@@ -15,7 +15,7 @@ Beispielsweise können wir Ereignisse bündeln, um zu viele Netzwerkaufrufe zu
 vermeiden, Zeitlimits für lang andauernde Vorgänge festlegen oder Ereignisse der
 Benutzeroberfläche drosseln, um unnötige Arbeit zu vermeiden.
 
-Wir haben eine Sequenz von Elementen in Kapitel 13 gesehen, als das Trait
+Wir haben eine Sequenz von Elementen in Kapitel 13 gesehen, als wir das Trait
 `Iterator` im Abschnitt [„Das Trait `Iterator` und die Methode
 `next`“][iterator] betrachtet haben. Es gibt jedoch zwei Unterschiede zwischen
 Iteratoren und dem asynchronen Kanalempfänger. Der erste ist die Zeit:
@@ -95,10 +95,10 @@ zu erweitern.
 
 Das Trait `Stream` definiert eine Low-Level-Schnittstelle, die die Traits
 `Iterator` und `Future` effektiv kombiniert. `StreamExt` bietet eine Reihe von
-APIs auf höherer Ebene ab, die auf `Stream` basieren, darunter die Methode
-`next` sowie andere Hilfsmethoden, die denen des Traits `Iterator` ähneln.
-`Stream` und `StreamExt` sind noch nicht Teil der Standardbibliothek von Rust,
-aber die meisten Crates des Ökosystems verwenden ähnliche Definitionen.
+APIs auf höherer Ebene, die auf `Stream` basieren, darunter die Methode `next`
+sowie andere Hilfsmethoden, die denen des Traits `Iterator` ähneln. `Stream` und
+`StreamExt` sind noch nicht Teil der Standardbibliothek von Rust, aber die
+meisten Crates des Ökosystems verwenden ähnliche Definitionen.
 
 Um den Compilerfehler zu beheben, fügen wir eine `use`-Anweisung für
 `trpl::StreamExt` hinzu, wie in Listing 17-22.

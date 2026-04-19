@@ -60,8 +60,8 @@ fn main() {
 das Trait `Drop` implementiert, wo wir unseren Programmcode für das Aufräumen
 platzieren würden</span>
 
-Das Trait `Drop` ist im Präludium (prelude) enthalten, daher müssen wir es nicht
-in den Gültigkeitsbereich bringen. Wir implementieren das Trait `Drop` in
+Das Trait `Drop` ist im Prelude enthalten, daher müssen wir es nicht in den
+Gültigkeitsbereich bringen. Wir implementieren das Trait `Drop` in
 `CustomSmartPointer` und stellen eine Implementierung für die Methode `drop`
 bereit, die `println!` aufruft. Im Hauptteil der Methode `drop` kannst du jede
 Logik platzieren, die du ausführen möchtest, wenn eine Instanz deines Typs den
@@ -87,7 +87,7 @@ CustomSmartPointer mit Daten aufräumen: `andere Sachen`!
 CustomSmartPointer mit Daten aufräumen: `meine Sache`!
 ```
 
-Rust hat für uns automatisch `drop` und den von uns angegebenen Programmcode 
+Rust hat für uns automatisch `drop` und den von uns angegebenen Programmcode
 aufgerufen, als unsere Instanzen den Gültigkeitsbereich verlassen haben.
 Variablen werden in umgekehrter Reihenfolge ihrer Erstellung aufgeräumt, daher
 wurde `d` vor `c` aufgeräumt. Der Zweck dieses Beispiels ist, dir eine visuelle
@@ -178,7 +178,7 @@ verwenden wir die Funktion `std::mem::drop`.
 Die Funktion `std::mem::drop` unterscheidet sich von der Methode `drop` im Trait
 `Drop`. Wir rufen sie auf, indem wir den Wert, dessen vorzeitiges Aufräumen wir
 erzwingen möchten, der Funktion als Argument mitgeben. Die Funktion befindet
-sich im Präludium, daher können wir `main` in Listing 15-15 ändern, um die
+sich im Prelude, daher können wir `main` in Listing 15-15 ändern, um die
 Funktion `drop` wie in Listing 15-16 gezeigt aufzurufen.
 
 <span class="filename">Dateiname: src/main.rs</span>

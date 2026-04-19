@@ -223,7 +223,7 @@ können ändern, was wir für den Parameter `value` übergeben, aber `set_value`
 gibt nichts zurück, auf das wir Zusicherungen machen können. Wir wollen in der
 Lage sein zu sagen, dass, wenn wir einen `LimitTracker` mit etwas erstellen, das
 das Trait `Messenger` und einen bestimmten Wert für `max` implementiert, der
-Messenger angewiesen wird, die entsprechenden Nachrichten zu senden. wenn wir
+Messenger angewiesen wird, die entsprechenden Nachrichten zu senden, wenn wir
 verschiedene Zahlen für `value` übergeben.
 
 Wir benötigen ein Mock-Objekt, das anstelle einer E-Mail oder einer
@@ -311,7 +311,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Listing 15-21: Der Versuch einen `MockMessenger` zu
+<span class="caption">Listing 15-21: Der Versuch, einen `MockMessenger` zu
 implementieren, der vom Borrow Checker nicht erlaubt wird</span>
 
 Dieser Testcode definiert eine Struktur `MockMessenger` mit einem Feld
@@ -368,8 +368,8 @@ funktioniert.
 
 Dies ist eine Situation, in der innere Veränderbarkeit helfen kann! Wir
 speichern die `sent_messages` in einer `RefCell<T>` und dann kann die Methode
-`send` den Wert `sent_messages` ändern, um Nachrichten zu speichern, die wir
-gesehen haben. Listing 15-22 zeigt, wie das aussieht.
+`send` den Inhalt von `sent_messages` ändern, um Nachrichten zu speichern, die
+wir gesehen haben. Listing 15-22 zeigt, wie das aussieht.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -621,7 +621,7 @@ Beachte, dass der Programmcode mit der Meldung `already borrowed:
 BorrowMutError` abbricht. Auf diese Weise behandelt `RefCell<T>` zur Laufzeit
 Verstöße gegen die Borrowing-Regeln.
 
-Wenn du dich dafür entscheidest, Borrowing-fehler zur Laufzeit und nicht zur
+Wenn du dich dafür entscheidest, Borrowing-Fehler zur Laufzeit und nicht zur
 Kompilierzeit abzufangen, wie wir es hier getan haben, bedeutet das, dass du
 Fehler in deinem Code möglicherweise erst später im Entwicklungsprozess findest:
 Möglicherweise erst, wenn dein Code in der Produktion eingesetzt wird. Außerdem
@@ -629,10 +629,10 @@ würde dieser Programmcode eine kleine Beeinträchtigung der Laufzeitperformanz
 verursachen, da die Borrows zur Laufzeit und nicht zur Kompilierzeit
 nachverfolgt werden. Die Verwendung von `RefCell<T>` ermöglicht es jedoch, ein
 Mock-Objekt zu schreiben, das sich selbst ändern kann, um die Nachrichten zu
-verfolgen, die es gesehen hat, während man es in einem Kontext verwendet, in dem
-nur unveränderbare Werte zulässig sind. Man kann `RefCell<T>` trotz seiner
-Kompromisse verwenden, um mehr Funktionen zu erhalten, als reguläre Referenzen
-bieten.
+protokollieren, die es empfangen hat, während man es in einem Kontext verwendet,
+in dem nur unveränderbare Werte zulässig sind. Man kann `RefCell<T>` trotz
+seiner Kompromisse verwenden, um mehr Funktionen zu erhalten, als reguläre
+Referenzen bieten.
 
 ### Mehrere Eigentümer veränderbarer Daten erlauben
 
@@ -642,13 +642,13 @@ haben kann, aber nur unveränderbaren Zugriff auf diese Daten erhält. Wenn
 man eine `Rc<T>` hat, das eine `RefCell<T>` enthält, kann man einen Wert
 erhalten, der mehrere Eigentümer hat _und_ veränderbar ist!
 
-Erinnern wir uns beispielsweise an die Cons-Liste in Listing 15-18, in dem
-wir `Rc<T>` verwendet haben, um mehreren Listen die gemeinsame Nutzung einer
-anderen Liste zu ermöglichen. Da `Rc<T>` nur unveränderbare Werte enthält,
-können wir keinen der Werte in der Liste ändern, sobald wir sie erstellt haben.
-Fügen wir `RefCell<T>` hinzu, um die Werte in den Listen ändern zu können.
-Listing 15-24 zeigt, dass wir durch Verwendung einer `RefCell<T>` in der
-Cons-Definition den in allen Listen gespeicherten Wert ändern können:
+Erinnern wir uns beispielsweise an die Cons-Liste in Listing 15-18, in dem wir
+`Rc<T>` verwendet haben, um mehreren Listen die gemeinsame Nutzung einer anderen
+Liste zu ermöglichen. Da `Rc<T>` nur unveränderbare Werte enthält, können wir
+keinen der Werte in der Liste ändern, sobald wir sie erstellt haben. Fügen wir
+`RefCell<T>` hinzu, um die Werte in den Listen ändern zu können. Listing 15-24
+zeigt, dass wir durch Verwendung einer `RefCell<T>` in der Cons-Definition den
+in allen Listen gespeicherten Wert ändern können:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -679,8 +679,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 15-24: Verwenden von `Rc<RefCell<i32>>` um
-`List` zu erstellen, die wir verändern können</span>
+<span class="caption">Listing 15-24: Verwenden von `Rc<RefCell<i32>>`, um `List`
+zu erstellen, die wir verändern können</span>
 
 Wir erstellen einen Wert, der eine Instanz von `Rc<RefCell<i32>>` ist, und
 speichern ihn dann in einer Variable mit dem Namen `value`, damit wir später

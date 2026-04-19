@@ -93,10 +93,10 @@ fn main() {
 <span class="caption">Listing 15-7: Verwenden des Dereferenzierungsoperators auf
 ein `Box<i32>`</span>
 
-Der Hauptunterschied zwischen Listing 15-7 und 15-6 besteht darin, dass wir
-hier `y` als Instanz einer `Box<T>` festlegen, das auf einen kopierten Wert von
-`x` zeigt, und nicht als Referenz, die auf den Wert `x` zeigt. In der letzten
-Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden um
+Der Hauptunterschied zwischen Listing 15-7 und 15-6 besteht darin, dass wir hier
+`y` als Instanz einer `Box<T>` festlegen, die auf einen kopierten Wert von `x`
+zeigt, und nicht als Referenz, die auf den Wert `x` zeigt. In der letzten
+Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden, um
 dem Zeiger in `Box<T>` auf die gleiche Weise zu folgen, wie wir es getan haben,
 als `y` eine Referenz war. Als Nächstes werden wir ergründen, was das Besondere
 an `Box<T>` ist, wodurch der Dereferenzierungsoperator verwendet werden kann,
@@ -134,7 +134,7 @@ impl<T> MyBox<T> {
 # fn main() {}
 ```
 
-<span class="caption">Listing 15-8: Definition des Type `MyBox<T>`</span>
+<span class="caption">Listing 15-8: Definition des Typs `MyBox<T>`</span>
 
 Wir definieren eine Struktur mit dem Namen `MyBox` und deklarieren einen
 generischen Parameter `T`, da unser Typ Werte jedes beliebigen Typs enthalten
@@ -170,7 +170,7 @@ fn main() {
 <span class="caption">Listing 15-9: Versuch, `MyBox<T>` auf die gleiche Weise
 wie `Box<T>` und Referenzen zu benutzen</span>
 
-Hier ist der Compilerfehler den wir erhalten:
+Hier ist der Compilerfehler, den wir erhalten:
 
 ```console
 $ cargo run
@@ -269,11 +269,11 @@ die einfache Dereferenzierung außerhalb der Klammern in `*(y.deref())` weiterhi
 erforderlich ist, hat mit dem Eigentum zu tun. Wenn die Methode `deref` den Wert
 direkt anstelle einer Referenz auf den Wert zurückgibt, wird der Wert aus `self`
 herausverschoben. Wenn wir den Dereferenzierungsoperator verwenden, wollen wir
-meistens, wie auch hier, nicht das Eigentum am inneren Wertes von `MyBox<T>`
+meistens, wie auch hier, nicht das Eigentum am inneren Wert von `MyBox<T>`
 übernehmen.
 
 Beachte, dass der `*`-Operator durch einen Aufruf der Methode `deref` und dann
-einem Aufruf des `*`-Operators ersetzt wird. Da die Ersetzung des `*`-Operators
+den Aufruf des `*`-Operators ersetzt wird. Da die Ersetzung des `*`-Operators
 nicht unendlich rekursiv ist, erhalten wir Daten vom Typ `i32`, die mit der `5`
 in `assert_eq!` in Listing 15-9 übereinstimmen.
 
@@ -400,8 +400,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 15-13: Programmcode den wir schreiben
-müssten wenn Rust keine automatische Umwandlung hätte</span>
+<span class="caption">Listing 15-13: Programmcode, den wir schreiben müssten,
+wenn Rust keine automatische Umwandlung hätte</span>
 
 Das `(*m)` dereferenziert `MyBox<String>` zu einem `String`. Dann nehmen `&` und
 `[..]` einen Slice des `String`, der gleich des gesamten Strings ist, um der

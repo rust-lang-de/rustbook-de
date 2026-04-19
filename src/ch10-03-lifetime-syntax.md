@@ -147,7 +147,7 @@ Referenz in `r` immer gültig sein wird, solange `x` gültig ist.
 
 Da du nun weißt, wo die Lebensdauern von Referenzen sind und wie Rust die
 Lebensdauer analysiert, um sicherzustellen, dass Referenzen immer gültig sind,
-lass uns generischen Lebensdauern von Funktionsparametern und Rückgabewerten
+lass uns die generischen Lebensdauern von Funktionsparametern und Rückgabewerten
 untersuchen.
 
 ### Generische Lebensdauern in Funktionen
@@ -389,10 +389,10 @@ Referenzen auf Strings, die unterschiedliche konkrete Lebensdauern haben</span>
 
 In diesem Beispiel ist `string1` bis zum Ende des äußeren Gültigkeitsbereichs
 gültig, `string2` ist bis zum Ende des inneren Gültigkeitsbereichs gültig, und
-`result` referenziert auf etwas, das bis zum Ende des inneren
-Gültigkeitsbereichs gültig ist. Führe diesen Code aus und du wirst sehen, dass
-der Borrow Checker diesen Code akzeptiert; er kompiliert und gibt `Der längere
-String ist langer String ist lang` aus.
+`result` referenziert etwas, das bis zum Ende des inneren Gültigkeitsbereichs
+gültig ist. Führe diesen Code aus und du wirst sehen, dass der Borrow Checker
+diesen Code akzeptiert; er kompiliert und gibt `Der längere String ist langer
+String ist lang` aus.
 
 Versuchen wir als nächstes ein Beispiel, das zeigt, dass die Lebensdauer der
 Referenz in `result` die kürzere Lebensdauer der beiden Argumente sein muss. 
@@ -561,7 +561,7 @@ würden.
 
 ### In Struktur-Definitionen
 
-Bisher haben wir nur Strukturen (structs) definiert, die aneigenbare Typen
+Bisher haben wir nur Strukturen (structs) definiert, die besitzende Typen
 enthalten. Es ist möglich, dass Strukturen Referenzen enthalten, aber in diesem
 Fall müssten wir Lebensdauer-Annotationen zu jeder Referenz in der
 Strukturdefinition angeben. Listing 10-24 hat eine Struktur namens
@@ -633,7 +633,7 @@ fn first_word(s: &str) -> &str {
 #
 #     let my_string_literal = "Hallo Welt";
 #
-#     // first_word funktioniert mit Slices von String-Literale
+#     // first_word funktioniert mit Slices von String-Literalen
 #     let word = first_word(&my_string_literal[..]);
 #
 #     // Da String-Literale bereits String Slices sind,
@@ -886,8 +886,8 @@ Lebensdauer als `'static` festzulegen.
 
 ## Generische Typparameter, Trait Bounds und Lebensdauern
 
-Schauen wir uns kurz die Syntax zu Angabe generischer Typparameter, Trait Bounds
-und Lebensdauern in einer Funktion an!
+Schauen wir uns kurz die Syntax zur Angabe generischer Typparameter, Trait
+Bounds und Lebensdauern in einer Funktion an!
 
 ```rust
 # fn main() {
@@ -933,15 +933,15 @@ hinter dem Funktionsnamen.
 
 ## Zusammenfassung
 
-Wir haben in diesem Kapitel viel behandelt! Jetzt, da du über generische
-Typparameter, Traits und Trait Bounds sowie generische Lebensdauerparameter
-Bescheid weißt, bist du bereit, Code ohne Wiederholungen zu schreiben, der in
-vielen verschiedenen Situationen funktioniert. Traits und Trait Bounds stellen
-sicher, dass die Typen, auch wenn sie generisch sind, das Verhalten haben, das
-der Code benötigt. Du hast gelernt, wie man Lebensdauer-Annotationen verwendet,
-um sicherzustellen, dass dieser flexible Code keine hängenden Referenzen hat.
-Und all diese Analysen finden zur Kompilierzeit statt, was die
-Laufzeitperformanz nicht beeinträchtigt!
+Wir haben in diesem Kapitel viel behandelt! Da du jetzt mit generischen
+Typparametern, Traits und Trait Bounds sowie generischen Lebensdauerparametern
+vertraut bist, kannst du Code ohne Wiederholungen schreiben, der in vielen
+verschiedenen Situationen funktioniert. Traits und Trait Bounds stellen sicher,
+dass die Typen, auch wenn sie generisch sind, das Verhalten haben, das der Code
+benötigt. Du hast gelernt, wie man Lebensdauer-Annotationen verwendet, um
+sicherzustellen, dass dieser flexible Code keine hängenden Referenzen hat. Und
+all diese Analysen finden zur Kompilierzeit statt, was die Laufzeitperformanz
+nicht beeinträchtigt!
 
 Ob du es glaubst oder nicht, es gibt zu den Themen, die wir in diesem Kapitel
 besprochen haben, noch viel mehr zu sagen: In Kapitel 18 werden Trait-Objekte

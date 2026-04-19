@@ -2,9 +2,9 @@
 
 Dieses Kapitel ist eine Zusammenfassung der vielen Fähigkeiten, die du bisher
 gelernt hast, und eine Erkundung einiger weiterer
-Standard-Bibliotheks-Funktionalitäten. Wir werden ein Kommandozeilenwerkzeug
-erstellen, das mit der Datei- und der Terminal-Ein- und -Ausgabe interagiert,
-um einige der Rust-Konzepte zu üben, die du bereits gelernt hast.
+Standardbibliotheks-Funktionalitäten. Wir werden ein Kommandozeilenwerkzeug
+erstellen, das mit der Datei- und der Terminal-Ein- und -Ausgabe interagiert, um
+einige der Rust-Konzepte zu üben, die du bereits gelernt hast.
 
 Rusts Geschwindigkeit, Sicherheit, Ausgabe in eine einzelne Binärdatei und
 plattformübergreifende Unterstützung machen es zu einer idealen Sprache zum
@@ -42,7 +42,7 @@ gelernt hast:
 - Schreiben von Tests ([Kapitel 11][chap11])
 
 Wir werden auch kurz Closures, Iteratoren und Trait-Objekte vorstellen, die in
-den [Kapitel 13][chap13] und [Kapitel 18][chap18] ausführlich behandelt werden.
+[Kapitel 13][chap13] und [Kapitel 18][chap18] ausführlich behandelt werden.
 
 [chap7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
 [chap8]: ch08-00-common-collections.html

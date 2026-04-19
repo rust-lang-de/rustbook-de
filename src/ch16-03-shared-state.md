@@ -5,7 +5,7 @@ Nebenläufigkeit, aber sie ist nicht die einzige. Eine andere Methode wäre, das
 mehrere Threads auf dieselben gemeinsamen Daten zugreifen. Betrachte folgenden
 Teil des Slogans aus der Go-Sprachdokumentation noch einmal: „Kommuniziere
 nicht, indem du Arbeitsspeicher teilst.“
-                                                    
+
 Wie würde Kommunikation durch gemeinsame Nutzung von Arbeitsspeicher aussehen?
 Und warum sollten Liebhaber der Nachrichtenübermittlung davor warnen,
 gemeinsamen Arbeitsspeicher zu verwenden?
@@ -28,10 +28,10 @@ _Mutex_ ist eine Abkürzung für _mutual exclusion_ (engl. wechselseitiger
 Ausschluss), da ein Mutex zu einem bestimmten Zeitpunkt nur einem Thread
 (thread) den Zugriff auf Daten erlaubt. Um auf die Daten in einem Mutex
 zuzugreifen, muss ein Thread zunächst signalisieren, dass er Zugriff wünscht,
-indem er darum bittet, die _Sperre_ (lock) des Mutex zu erwerben. Die Sperre
-ist eine Datenstruktur, die Teil des Mutex ist, die verfolgt, wer derzeit
-exklusiven Zugriff auf die Daten hat. Daher wird der Mutex als _Schutz_ der
-Daten beschrieben, die er über das Sperrsystem hält.
+indem er darum bittet, die _Sperre_ (lock) des Mutex zu erwerben. Die Sperre ist
+eine Datenstruktur, die Teil des Mutex ist, der verfolgt, wer derzeit exklusiven
+Zugriff auf die Daten hat. Daher wird der Mutex als _Schutz_ der Daten
+beschrieben, die er über das Sperrsystem hält.
 
 Mutexe haben den Ruf, dass sie schwierig anzuwenden sind, weil man sich zwei
 Regeln merken muss:
@@ -119,8 +119,8 @@ Versuchen wir nun, einen Wert zwischen mehreren Threads mit `Mutex<T>` zu
 teilen. Wir starten 10 Threads und lassen sie jeweils einen Zählerwert um 1
 erhöhen, sodass der Zähler von 0 auf 10 geht. Das Beispiel in Listing 16-13 wird
 einen Compilerfehler haben und wir werden diesen Fehler verwenden, um mehr über
-die Verwendung von `Mutex<T>` zu erfahren und darüber, wie Rust uns hilft, ihn
-korrekt zu verwenden.
+die Verwendung von `Mutex<T>` zu erfahren und wie Rust uns hilft, ihn korrekt zu
+verwenden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -243,8 +243,8 @@ fn main() {
 <span class="caption">Listing 16-14: Versuch, `Rc<T>` zu verwenden, um
 mehreren Threads zu erlauben, den `Mutex<T>` zu besitzen</span>
 
-Wir kompilieren erneut und bekommen verschiedene Fehler! Der Compiler lehrt uns
-eine Menge.
+Wir kompilieren erneut und bekommen verschiedene Fehler! Der Compiler teilt uns
+viel mit.
 
 ```console
 $ cargo run
@@ -350,7 +350,7 @@ fn main() {
 ```
 
 <span class="caption">Listing 16-15: Verwenden von `Arc<T>`, um den `Mutex<T>`
-einzupacken, um das Eigentum mit mehreren Threads teilen zu können</span>
+einzupacken und das Eigentum mit mehreren Threads zu teilen</span>
 
 Dieser Code gibt Folgendes aus:
 
@@ -394,7 +394,7 @@ wenn eine Operation zwei Ressourcen sperren muss und zwei Threads jeweils eine
 der Sperren erworben haben, was dazu führt, dass sie ewig aufeinander warten.
 Wenn du an Deadlocks interessiert bist, versuche ein Programm in Rust zu
 schreiben, das einen Deadlock hat; dann recherchiere Strategien zur Vermeidung
-von Deadlocks mit Mutexe in einer beliebigen Sprache und versuche, sie in Rust
+von Deadlocks mit Mutexes in einer beliebigen Sprache und versuche, sie in Rust
 zu implementieren. Die Standardbibliotheks-API-Dokumentation für `Mutex<T>` und
 `MutexGuard` bietet nützliche Informationen.
 

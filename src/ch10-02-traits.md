@@ -31,7 +31,7 @@ erstellen, die Zusammenfassungen von Daten anzeigen kann, die in einer
 `NewsArticle`- oder `SocialPost`-Instanz gespeichert sein könnten. Dazu brauchen
 wir eine Zusammenfassung von jedem Typ, und wir werden diese Zusammenfassung
 anfordern, indem wir eine Methode `summarize` auf einer Instanz aufrufen.
-Listing 10-12 zeigt die Definition eines öffentlichen Traits `Summary`, das
+Listing 10-12 zeigt die Definition eines öffentlichen Traits `Summary`, die
 dieses Verhalten zum Ausdruck bringt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -149,8 +149,8 @@ wahrscheinlich schon weißt` aus.
 Andere Crates, die von der Crate `aggregator` abhängen, können auch das Trait
 `Summary` in den Gültigkeitsbereich bringen, um `Summary` auf ihren eigenen
 Typen zu implementieren. Eine Einschränkung ist, dass wir ein Trait für einen
-Typ nur dann implementieren können, wenn entweder das Trait und/oder der Typ
-lokal in unserer Crate vorhanden ist. Zum Beispiel können wir
+Typ nur dann implementieren können, wenn entweder das Trait oder der Typ lokal
+in unserer Crate vorhanden ist. Zum Beispiel können wir
 Standardbibliotheks-Traits wie `Display` auf einem benutzerdefinierten Typ wie
 `SocialPost` als Teil unserer `aggregator`-Crate-Funktionalität implementieren,
 weil der Typ `SocialPost` lokal zu unserer Crate `aggregator` gehört. Wir können

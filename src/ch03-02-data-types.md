@@ -18,9 +18,9 @@ ergänzen, wie hier:
 let guess: u32 = "42".parse().expect("Keine Zahl!");
 ```
 
-Wenn wir diese Typ-Annotation nicht angeben, zeigt Rust den folgenden Fehler
-an, was bedeutet, dass der Compiler mehr Informationen von uns benötigt, um
-zu wissen welchen Typ wir verwenden wollen:
+Wenn wir diese Typ-Annotation nicht angeben, zeigt Rust den folgenden Fehler an,
+was bedeutet, dass der Compiler mehr Informationen von uns benötigt, um zu
+wissen, welchen Typ wir verwenden wollen:
 
 ```console
 $ cargo build
@@ -73,10 +73,10 @@ verwenden, um den Typ eines ganzzahligen Wertes zu deklarieren.
 Jede Variante kann entweder vorzeichenbehaftet oder vorzeichenlos sein und hat
 eine explizite Größe. _Vorzeichenbehaftet_ (signed) und _vorzeichenlos_
 (unsigned) beziehen sich darauf, ob es möglich ist, dass die Zahl negativ ist
-&ndash; in anderen Worten, ob die Zahl ein Vorzeichen haben muss
+&ndash; mit anderen Worten, ob die Zahl ein Vorzeichen haben muss
 (vorzeichenbehaftet) oder ob sie immer nur positiv sein wird und daher ohne
-Vorzeichen dargestellt werden kann (vorzeichenlos). Es ist wie das Schreiben
-von Zahlen auf Papier: Wenn das Vorzeichen eine Rolle spielt, wird die Zahl mit
+Vorzeichen dargestellt werden kann (vorzeichenlos). Es ist wie das Schreiben von
+Zahlen auf Papier: Wenn das Vorzeichen eine Rolle spielt, wird die Zahl mit
 einem Plus- oder Minuszeichen geschrieben; wenn man jedoch davon ausgehen kann,
 dass die Zahl positiv ist, wird sie ohne Vorzeichen geschrieben.
 Vorzeichenbehaftete Zahlen werden unter Verwendung der
@@ -131,7 +131,7 @@ Typen sind standardmäßig `i32`. Die primäre Situation, in der du `isize` oder
 > Wenn du mit dem Schalter `--release` im Freigabemodus (release mode)
 > kompilierst, fügt Rust _keine_ Prüfungen auf Ganzzahlüberläufe, die das
 > Programm abbrechen, ein. Wenn ein Überlauf auftritt, führt Rust stattdessen
-> einen _Zweier-Komplement-Umbruch_ durch. Kurz gesagt, Werte die größer als
+> einen _Zweier-Komplement-Umbruch_ durch. Kurz gesagt, Werte, die größer als
 > der Maximalwert den der Typ enthalten kann sind, werden umgebrochen zum
 > kleinsten Wert den der Typ enthalten kann. Im Falle eines `u8` wird der Wert
 > 256 zu 0, der Wert 257 zu 1 und so weiter. Das Programm wird nicht abbrechen,
@@ -227,7 +227,7 @@ fn main() {
 ```
 
 Hauptsächlich werden boolesche Werte in Bedingungen verwendet, z.B. im
-`if`-Ausdruck. Wie `if`-Ausdrücke in Rust funktionieren werden wir im Abschnitt
+`if`-Ausdruck. Wie `if`-Ausdrücke in Rust funktionieren, werden wir im Abschnitt
 [„Kontrollfluss“][control-flow] erläutern.
 
 #### Der Zeichen-Typ
@@ -340,7 +340,7 @@ einem _Array_. Im Gegensatz zu einem Tupel muss jedes Element eines Arrays den
 gleichen Typ haben. Anders als Arrays in einigen anderen Sprachen haben Arrays
 in Rust eine feste Länge.
 
-Wir schreiben die Werte in einem Array als kommagetrennte Liste in eckigen
+Wir schreiben die Werte in einem Array als komma-getrennte Liste in eckigen
 Klammern:
 
 <span class="filename">Dateiname: src/main.rs</span>

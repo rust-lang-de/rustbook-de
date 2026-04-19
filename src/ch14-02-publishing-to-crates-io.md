@@ -14,14 +14,14 @@ veröffentlicht wird.
 ### Sinnvolle Dokumentationskommentare erstellen
 
 Die genaue Dokumentation deiner Pakete hilft anderen Benutzern zu verstehen, wie
-diese zu verwenden sind, daher lohnt es sich, Zeit in das Schreiben von
-Dokumentationen zu investieren. In Kapitel 3 haben wir besprochen, wie man
-Rust-Code mit zwei Schrägstrichen `//` kommentiert. Rust hat auch eine eigene
-Art von Kommentar für die Dokumentation, die passenderweise als
-_Dokumentationskommentar_ bezeichnet wird und HTML-Dokumentation generiert. Der
-HTML-Code zeigt den Inhalt von Dokumentationskommentaren für öffentliche
-API-Elemente an, die für Programmierer bestimmt sind, die wissen möchten, wie
-deine Crate _benutzt_ wird, und nicht, wie deine Crate _implementiert_ ist.
+diese zu verwenden sind, daher lohnt es sich, Zeit in die Dokumentationen zu
+investieren. In Kapitel 3 haben wir besprochen, wie man Rust-Code mit zwei
+Schrägstrichen `//` kommentiert. Rust hat auch eine eigene Art von Kommentar für
+die Dokumentation, die passenderweise als _Dokumentationskommentar_ bezeichnet
+wird und HTML-Dokumentation generiert. Der HTML-Code zeigt den Inhalt von
+Dokumentationskommentaren für öffentliche API-Elemente an, die für Programmierer
+bestimmt sind, die wissen möchten, wie deine Crate _benutzt_ wird, und nicht,
+wie deine Crate _implementiert_ ist.
 
 Dokumentationskommentare verwenden drei Schrägstriche `///` anstelle von zwei
 und unterstützen Markdown-Notation zum Formatieren des Textes. Platziere
@@ -61,8 +61,8 @@ _target/doc_ ab.
 Wenn du `cargo doc --open` ausführst, wird der HTML-Code für die Dokumentation
 deiner aktuellen Crate (und auch die Dokumentation aller Abhängigkeiten
 (dependencies) deiner Crate) erstellt und das Ergebnis in einem Webbrowser
-geöffnet. Wenn du zur Funktion `add_one` navigierst, wirst du sehen wie der Text
-in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1.
+geöffnet. Wenn du zur Funktion `add_one` navigierst, wirst du sehen, wie der
+Text in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1.
 
 <img alt="Gerenderte HTML-Dokumentation für die Funktion `add_one` von `my_crate`" src="img/trpl14-01.png" class="center" />
 
@@ -71,7 +71,7 @@ in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1.
 
 #### Häufig verwendete Abschnitte
 
-Wir haben die Markdown-Überschrift `# Examples` in Listing 14-1 verwendet um
+Wir haben die Markdown-Überschrift `# Examples` in Listing 14-1 verwendet, um
 einen Abschnitt im HTML-Code mit dem Titel `Examples` zu erstellen. Hier sind
 einige andere Abschnitte, die Autoren von Crates häufig in ihrer Dokumentation
 verwenden:
@@ -80,18 +80,17 @@ verwenden:
   abbricht. Aufrufer der Funktion, die nicht möchten, dass ihre Programme
   abbrechen, sollten sicherstellen, dass sie die Funktion in solchen
   Situationen nicht aufrufen.
-- **Errors:** Wenn die Funktion einen Typ `Result` zurückgibt, der die Arten von
-  Fehlern die auftreten können beschreibt und unter welchen Bedingungen diese
-  Fehler auftreten können, dies kann für Aufrufende hilfreich sein, um
-  Programmcode zu schreiben der die verschiedenen Arten von Fehlern auf
-  unterschiedliche Art behandelt.
+- **Errors:** Wenn die Funktion ein `Result` zurückgibt, kann die Beschreibung
+  der möglichen Fehlerarten und der Bedingungen, unter denen diese Fehler
+  zurückgegeben werden, den Aufrufenden dabei helfen, Code zu schreiben, der die
+  verschiedenen Fehlerarten jeweils anders behandelt.
 - **Safety:** Wenn der Aufruf der Funktion unsicher (`unsafe`) ist (wir
   behandeln Unsafe im Kapitel 20), sollte ein Abschnitt existieren, in dem
   erläutert wird, warum die Funktion unsicher ist, und die Invarianten behandelt
-  werden die die Funktion vom Aufrufenden erwartet.
+  werden, die die Funktion vom Aufrufenden erwartet.
 
 Die meisten Dokumentationskommentare benötigen nicht alle Abschnitte, aber dies
-ist eine gute Checkliste um dich an die Aspekte deines Programmcodes erinnern,
+ist eine gute Checkliste, um dich an die Aspekte deines Programmcodes erinnern,
 die für Benutzer interessant sein werden.
 
 #### Dokumentationskommentare als Tests
@@ -101,7 +100,7 @@ dabei hilfreich sein, die Verwendung deiner Programmbibliothek darzustellen.
 Dies hat einen zusätzlichen Bonus: Das Ausführen von `cargo test` führt die
 Codeblöcke in deiner Dokumentation als Test aus! Nichts ist besser als eine
 Dokumentation mit Beispielen, aber nichts ist schlimmer als eine Dokumentation
-mit Beispielen die nicht funktionieren, da sich der Code seit dem Schreiben der
+mit Beispielen, die nicht funktionieren, da sich der Code seit dem Schreiben der
 Dokumentation geändert hat. Wenn wir `cargo test` für die Dokumentation der
 Funktion `add_one` aus Listing 14-1 aufrufen, sehen wir folgenden Abschnitt in
 den Testergebnissen:
@@ -117,20 +116,20 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
 Wenn wir nun entweder die Funktion oder das Beispiel so ändern, dass `assert_eq!`
 im Beispiel `panic` aufruft und erneut `cargo test` aufrufen, werden wir
-bemerken, das `cargo test` feststellt, dass das Beispiel und der Code nicht
+bemerken, dass `cargo test` feststellt, dass das Beispiel und der Code nicht
 synchron miteinander sind!
 
 #### Enthaltene Elemente kommentieren
 
 Der Stil des Dokumentationskommentars `//!` fügt dem Element, das die
-Kommentare *enthält*, Dokumentation hinzu, anstatt den Elementen die auf die
+Kommentare *enthält*, Dokumentation hinzu, anstatt den Elementen, die auf die
 Kommentare *folgen*. Wir verwenden diese Dokumentationskommentare üblicherweise
 in der Wurzeldatei (laut Konvention _src/lib.rs_) oder in einem Modul, um die
 Crate oder das Modul als Ganzes zu dokumentieren.
 
 Um beispielsweise eine Dokumentation hinzuzufügen, die den Zweck der Crate
 `my_crate` beschreibt, die die Funktion `add_one` enthält, können wir am Anfang
-der Datei _src/lib.rs_ Dokumentationskommentare hinzufügen die mit `//!`
+der Datei _src/lib.rs_ Dokumentationskommentare hinzufügen, die mit `//!`
 beginnen. Siehe Listing 14-2.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -173,7 +172,7 @@ veröffentlichten Elemente in der Crate. Siehe Abbildung 14-2.
 
 Dokumentationskommentare innerhalb von Elementen sind besonders nützlich, um
 Crates und Module zu beschreiben. Erkläre anhand dieser Informationen den
-allgemeinen Zweck des Containers, damit seine Benutzer die Aufteilung der Crate
+allgemeinen Zweck des Elements, damit seine Benutzer die Aufteilung der Crate
 besser verstehen können.
 
 <img alt="Gerenderte HTML-Dokumentation mit einem Kommentar für die gesamte Crate" src="img/trpl14-02.png" class="center" />
@@ -213,7 +212,7 @@ anderen Speicherort definiert worden wäre.
 Nehmen wir zum Beispiel an, wir haben eine Bibliothek mit dem Namen `art`
 erstellt, um künstlerische Konzepte zu modellieren. In dieser Bibliothek sind
 zwei Module enthalten: Ein Modul `kinds` mit zwei Aufzählungen (enums) namens
-`PrimaryColor` und `SecondaryColor` und ein Modul `utils` das eine Funktion
+`PrimaryColor` und `SecondaryColor` und ein Modul `utils`, das eine Funktion
 namens `mix` beinhaltet. Siehe Listing 14-3.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -251,10 +250,10 @@ pub mod utils {
 }
 ```
 
-<span class="caption">Listing 14-3: Eine Bibliothek `art` mit Elementen die in
+<span class="caption">Listing 14-3: Eine Bibliothek `art` mit Elementen, die in
 Modulen `kinds` und `utils` organisiert sind</span>
 
-Abbildung 14-3 zeigt wie die Startseite der Dokumentation für diese Crate
+Abbildung 14-3 zeigt, wie die Startseite der Dokumentation für diese Crate
 generiert von `cargo doc` aussehen würde.
 
 <img alt="Gerenderte Dokumentation für die Crate `art` mit den Modulen `kinds` und `utils`" src="img/trpl14-03.png" class="center" />
@@ -264,7 +263,7 @@ mit den Modulen `kinds` und `utils` auflistet</span>
 
 Beachte, dass die Typen `PrimaryColor`, `SecondaryColor` und die Funktion `mix`
 nicht auf der Startseite angeführt sind. Wir müssen auf `kinds` und `utils`
-klicken um sie zu sehen.
+klicken, um sie zu sehen.
 
 Eine Crate, die von dieser Bibliothek abhängt, würde `use`-Anweisungen
 benötigen, die die Elemente aus `art` in den Gültigkeitsbereich bringen und die
@@ -285,16 +284,16 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 14-4: Eine Crate, die die Gegenstände der Crate
-`art` mit ihrer internen Struktur exportiert</span>
+<span class="caption">Listing 14-4: Eine Crate, die die Elemente der Crate `art`
+mit ihrer internen Struktur exportiert</span>
 
 Der Autor des Programmcodes in Listing 14-4, der die Crate `art` verwendet,
 musste herausfinden, dass sich `PrimaryColor` im Modul `kinds` und `mix` im
 Modul `utils` befindet. Die Modulstruktur der Crate `art` ist für Entwickler,
-die an der Crate `art` arbeiten, relevanter als für Entwickler die die Crate
+die an der Crate `art` arbeiten, relevanter als für Entwickler, die die Crate
 `art` verwenden. Die interne Struktur enthält keine nützlichen Informationen für
 jemanden, der diese benutzen möchte, sondern sorgt für Verwirrung, da diese
-herausfinden müssen wo sie suchen müssen und die Struktur ist unpraktisch, da
+herausfinden müssen, wo sie suchen müssen und die Struktur ist unpraktisch, da
 Entwickler die Modulnamen in den `use`-Anweisungen angeben müssen.
 
 Um die interne Organisation aus der öffentlichen API zu entfernen, können wir
@@ -342,8 +341,8 @@ pub mod utils {
 }
 ```
 
-<span class="caption">Listing 14-5: Hinzufügen von `pub use`-Anmerkungen um
-Elemente erneut zu exportieren</span>
+<span class="caption">Listing 14-5: Hinzufügen von `pub use`, um Elemente erneut
+zu exportieren</span>
 
 Die Dokumentation der API, die von `cargo doc` generiert wurde, wird nun
 aufgelistet und die erneut exportierten Links werden auf der Startseite, wie in
@@ -390,7 +389,7 @@ eine Wissenschaft, und du kannst iterieren, um die API zu finden, die für
 Benutzer am besten geeignet ist. Wenn man `pub use` wählt, erhält man
 Flexibilität bei der internen Strukturierung einer Crate und entkoppelt diese
 interne Struktur von dem, was man ihren Benutzern präsentiert. Sieh dir einige
-der Programmcodes von Crates an die du installiert hast, um festzustellen, ob
+der Programmcodes von Crates an, die du installiert hast, um festzustellen, ob
 sie intern strukturiert sind und ob sich ihre interne Struktur von der
 öffentlichen API unterscheidet.
 
@@ -460,7 +459,7 @@ und eine Lizenz sind erforderlich, damit die Benutzer wissen, was deine Crate
 tut und unter welchen Bedingungen man sie verwenden kann. Ergänze in der Datei
 _Cargo.toml_ eine Beschreibung hinzu, die nur ein oder zwei Sätze umfasst, da
 sie zusammen mit deiner Crate in den Suchergebnissen angezeigt wird. Für das
-Feld `license` musst du einen _Lizenzkennungswert_ (licence identifier value)
+Feld `license` musst du einen _Lizenzkennungswert_ (license identifier value)
 angeben. In [Linux Foundation's Software Package Data Exchange (SPDX)][spdx]
 sind die Bezeichner aufgeführt, die Sie für diesen Wert verwenden können. Um
 beispielsweise anzugeben, dass du deine Crate mit der MIT-Lizenz lizenziert
@@ -476,8 +475,8 @@ license = "MIT"
 
 Wenn man eine Lizenz verwenden möchte, die nicht in SPDX angezeigt wird, muss
 man den Text dieser Lizenz in eine Datei einfügen, die Datei in das Projekt
-aufnehmen und dann `license-file` verwenden um den Namen dieser Lizenz zu
-spezifizieren anstelle der Verwendung des `license`-Schlüssels.
+aufnehmen und dann den Dateinamen unter `license-file` angeben, anstelle der
+Verwendung des `license`-Schlüssels.
 
 Die Anleitung, welche Lizenz für dein Projekt geeignet ist, geht über den
 Rahmen dieses Buches hinaus. Viele Leute in der Rust-Gemeinschaft lizenzieren
@@ -516,10 +515,10 @@ Version auf crates.io hochgeladen, damit andere sie verwenden können.
 Sei vorsichtig, da eine Veröffentlichung _dauerhaft_ ist. Die Version kann
 niemals überschrieben und der Programmcode nur in speziellen Fällen gelöscht
 werden. Ein Hauptziel von crates.io ist es, als permanentes Archiv von Code zu
-fungieren, sodass alle Projekte die erstellt werden und von Crates aus crates.io
-abhängen weiter funktionieren werden. Das Zulassen von Versionslöschungen würde
-das Erreichen dieses Ziels unmöglich machen. Die Anzahl der Crate-Versionen, die
-man veröffentlichen kann, ist jedoch unbegrenzt.
+fungieren, sodass alle Projekte, die erstellt werden und von Crates aus
+crates.io abhängen, weiter funktionieren werden. Das Zulassen von
+Versionslöschungen würde das Erreichen dieses Ziels unmöglich machen. Die Anzahl
+der Crate-Versionen, die man veröffentlichen kann, ist jedoch unbegrenzt.
 
 Rufe `cargo publish` erneut auf. Diesmal sollte es funktionieren:
 
@@ -546,12 +545,11 @@ für sein Projekt hinzufügen.
 
 ### Veröffentlichen einer neuen Version einer vorhandenen Crate
 
-Wenn du Änderungen an deiner Crate vorgenommen hast und bereit bist, eine neue
-Version zu veröffentlichen, ändere den in der _Cargo.toml_-Datei angegebenen
-Versionswert und veröffentliche ihn erneut. Verwende die [Regeln für die
-semantische Versionierung][semver], um auf den von dir vorgenommenen Änderungen
-basierend welche neue Versionsnummer geeignet ist. Führe dann `cargo publish`
-aus, um die neue Version hochzuladen.
+Wenn du Änderungen an deiner Crate vorgenommen hast und eine neue Version
+veröffentlichen möchtest, passt du den in deiner _Cargo.toml_ angegebenen
+Versionswert an und veröffentlichst erneut. Entscheide anhand der [Regeln für
+die semantische Versionierung][semver], welche nächste Versionsnummer angemessen
+ist. Führe anschließend `cargo publish` aus, um die neue Version hochzuladen.
 
 ### Versionen auf crates.io als veraltet kennzeichnen
 
@@ -580,7 +578,7 @@ $ cargo yank --vers 1.0.1
         Yank guessing_game@1.0.1
 ```
 
-Durch Hinzufügen von `--undo`, kann man das Herausziehen rückgängig machen und
+Durch Hinzufügen von `--undo` kann man das Herausziehen rückgängig machen und
 Projekten wieder erlauben von der Version abzuhängen:
 
 ```console
@@ -590,7 +588,7 @@ $ cargo yank --vers 1.0.1 --undo
 ```
 
 Das Herausziehen löscht _keinen_ Programmcode. Es kann zum Beispiel keine
-versehentlich hochgeladenen Geheimnisse löschen. Falls das passieren sollte
+versehentlich hochgeladenen Geheimnisse löschen. Falls das passiert sein sollte,
 musst du diese Geheimnisse sofort zurücksetzen.
 
 [cargo-doc]: https://doc.rust-lang.org/cargo/

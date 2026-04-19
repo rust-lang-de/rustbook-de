@@ -48,10 +48,10 @@ Der intelligente Zeiger `Rc<T>` implementiert ebenfalls nicht `Sync`, aus
 denselben Gründen, warum er nicht `Send` implementiert. Der Typ `RefCell<T>`
 (über den wir in Kapitel 15 gesprochen haben) und die Familie der verwandten
 `Cell<T>`-Typen implementieren nicht `Sync`. Die Implementierung des Borrow
-Checking, die `RefCell<T>` zur Laufzeit durchführt, ist nicht Thread-sicher. Der
-intelligente Zeiger `Mutex<T>` implementiert `Sync` und kann verwendet werden,
-um den Zugriff mit mehreren Threads zu teilen, wie du in [„Gemeinsamer Zugriff
-auf `Mutex<T>`“][sharing-mutext] gesehen hast.
+Checkings, die `RefCell<T>` zur Laufzeit durchführt, ist nicht Thread-sicher.
+Der intelligente Zeiger `Mutex<T>` implementiert `Sync` und kann verwendet
+werden, um den Zugriff mit mehreren Threads zu teilen, wie du in [„Gemeinsamer
+Zugriff auf `Mutex<T>`“][sharing-mutext] gesehen hast.
 
 ### Manuelles Implementieren von `Send` und `Sync` ist unsicher
 

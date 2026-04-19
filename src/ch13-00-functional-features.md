@@ -2,7 +2,7 @@
 
 Das Design von Rust wurde von einer Vielzahl von vorhandenen Programmiersprachen
 und Techniken beeinflusst; einen signifikanten Einfluss hat die _funktionale
-Programmierung_. Programmieren im funktionalen Stil beinhaltet oft das Verwenden
+Programmierung_. Programmieren im funktionalen Stil umfasst oft das Verwenden
 von Funktionen als Werte, die in Argumenten übergeben, von anderen Funktionen
 zurückgegeben, Variablen zur späteren Ausführung zugewiesen werden und so
 weiter.

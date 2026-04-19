@@ -5,13 +5,12 @@ Datenstrukturen, die _Kollektionen_ (collections) genannt werden. Die meisten
 anderen Datentypen repräsentieren einen bestimmten Wert, aber Kollektionen
 können mehrere Werte enthalten. Im Gegensatz zu den eingebauten Array- und
 Tupel-Typen werden die Daten, auf die diese Kollektionen zeigen, im dynamischen
-Speicher abgelegt. Somit muss die Datenmenge zum Kompilierzeitpunkt nicht
-bekannt sein und kann während der Programmausführung wachsen oder schrumpfen.
-Jede Kollektionsart hat unterschiedliche Fähigkeiten und Kosten, und die
-Auswahl einer für deine aktuelle Situation geeigneten Kollektion ist eine
-Fähigkeit, die du im Laufe der Zeit entwickeln wirst. In diesem Kapitel
-besprechen wir drei Kollektionen, die sehr häufig in Rust-Programmen verwendet
-werden:
+Speicher abgelegt. Somit muss die Datenmenge zur Kompilierzeit nicht bekannt
+sein und kann während der Programmausführung wachsen oder schrumpfen. Jede
+Kollektionsart hat unterschiedliche Fähigkeiten und Kosten, und die Auswahl
+einer für deine aktuelle Situation geeigneten Kollektion ist eine Fähigkeit, die
+du im Laufe der Zeit entwickeln wirst. In diesem Kapitel besprechen wir drei
+Kollektionen, die sehr häufig in Rust-Programmen verwendet werden:
 
 - Ein _Vektor_ erlaubt es dir, eine variable Anzahl von Werten nebeneinander zu
   speichern.

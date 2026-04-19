@@ -3,7 +3,7 @@
 Nachdem du Rust installiert hast, lass uns dein erstes Rust-Programm schreiben.
 Wenn man eine neue Sprache lernt, ist es üblich, ein kleines Programm zu
 schreiben, das den Text `Hallo Welt!` auf dem Bildschirm ausgibt, also werden
-wir hier das gleiche tun!
+wir hier dasselbe tun!
 
 > Hinweis: Dieses Buch setzt grundlegende Vertrautheit mit der Kommandozeile
 > voraus. Rust stellt keine besonderen Anforderungen an deine Textbearbeitung
@@ -94,7 +94,7 @@ ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
 
 ### Die Anatomie eines Rust-Programms
 
-Lass uns im Detail Revue passieren, was gerade in deinem „Hallo Welt!“-Programm
+Lass uns im Detail anschauen, was gerade in deinem „Hallo Welt!“-Programm
 passiert ist. Hier ist das erste Teil des Puzzles:
 
 ```rust
@@ -110,7 +110,7 @@ Funktion mit dem Namen `main`, die keine Parameter hat und nichts zurückgibt.
 Wenn es Parameter gäbe, würden sie innerhalb der Klammern `()` stehen.
 
 Der Funktionsrumpf ist in geschweifte Klammern `{}` eingehüllt. Rust erfordert
-diese um alle Funktionsrümpfe. Es ist guter Stil, die öffnende geschweifte
+diese für alle Funktionsrümpfe. Es ist guter Stil, die öffnende geschweifte
 Klammer in dieselbe Zeile wie die Funktionsdeklaration zu platzieren und
 dazwischen ein Leerzeichen einzufügen.
 

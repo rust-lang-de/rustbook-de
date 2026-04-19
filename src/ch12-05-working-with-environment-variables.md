@@ -291,11 +291,11 @@ pub struct Config {
 # }
 ```
 
-Wir haben das Feld `ignore_case` hinzugefügt, das ein Boolean enthält. Als
-Nächstes benötigen wir die Funktion `run`, um den Wert des Feldes `ignore_case`
-auszuwerten, und verwenden diese, um zu entscheiden, ob die Funktion `search`
-oder die Funktion `search_case_insensitive` aufgerufen werden soll, wie in
-Listing 12-22 gezeigt. Dies kompiliert noch immer nicht.
+Wir haben das Feld `ignore_case` hinzugefügt, das einen booleschen Wert enthält.
+Als Nächstes benötigen wir die Funktion `run`, um den Wert des Feldes
+`ignore_case` auszuwerten und zu entscheiden, ob die Funktion `search` oder die
+Funktion `search_case_insensitive` aufgerufen werden soll, wie in Listing 12-22
+gezeigt. Dies kompiliert noch immer nicht.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -366,7 +366,7 @@ Schließlich müssen wir nach der Umgebungsvariablen suchen. Die Funktionen zum
 Arbeiten mit Umgebungsvariablen befinden sich im Modul `env` in der
 Standardbibliothek, die bereits im Gültigkeitsbereich am Anfang von
 _src/main.rs_ ist. Dann werden wir die Funktion `var` aus dem Modul `env`
-verwenden, um zu prüfen ob eine Umgebungsvariable namens `IGNORE_CASE` einen
+verwenden, um zu prüfen, ob eine Umgebungsvariable namens `IGNORE_CASE` einen
 Wert hat, wie in Listing 12-23 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -488,8 +488,8 @@ das Ausführen des Programms separate Befehle:
 PS> $Env:IGNORE_CASE=1; cargo run to poem.txt
 ```
 
-Dadurch bleibt `IGNORE_CASE` für den Rest deiner Shell-Sitzung bestehen. Sie
-kann mit `Remove-Item` zurückgesetzt werden:
+Dadurch bleibt `IGNORE_CASE` für den Rest deiner Shell-Sitzung bestehen. Die
+Umgebungsvariable kann mit `Remove-Item` zurückgesetzt werden:
 
 ```console
 PS> Remove-Item Env:IGNORE_CASE
