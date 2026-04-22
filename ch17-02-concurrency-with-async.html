@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -163,23 +163,21 @@
                     <main>
                         <h2 id="anwenden-von-nebenläufigkeit-mit-async"><a class="header" href="#anwenden-von-nebenläufigkeit-mit-async">Anwenden von Nebenläufigkeit mit async</a></h2>
 <p>In diesem Abschnitt werden wir async auf einige Nebenläufigkeitsprobleme
-anwenden, die wir in Kapitel 16 mit Strängen (threads) angegangen sind. Da wir
-dort bereits über viele Schlüsselideen gesprochen haben, werden wir uns in
-diesem Abschnitt auf die Unterschiede zwischen Strängen und Futures
-konzentrieren.</p>
+anwenden, die wir in Kapitel 16 mit Threads angegangen sind. Da wir dort bereits
+über viele Schlüsselideen gesprochen haben, werden wir uns in diesem Abschnitt
+auf die Unterschiede zwischen Threads und Futures konzentrieren.</p>
 <p>In vielen Fällen sind die APIs für den Umgang mit Nebenläufigkeit mittels async
-sehr ähnlich zu denen mit Strängen. In anderen Fällen sind sie am Ende ganz
-anders. Selbst wenn die APIs von Strängen und async <em>ähnlich</em> aussehen, haben
-sie oft ein anderes Verhalten und fast immer unterschiedliche
-Leistungsmerkmale.</p>
+sehr ähnlich zu denen mit Threads. In anderen Fällen sind sie am Ende ganz
+anders. Selbst wenn die APIs von Threads und async <em>ähnlich</em> aussehen, haben sie
+oft ein anderes Verhalten und fast immer unterschiedliche Leistungsmerkmale.</p>
 <h3 id="erstellen-einer-neuen-aufgabe-mit-spawn_task"><a class="header" href="#erstellen-einer-neuen-aufgabe-mit-spawn_task">Erstellen einer neuen Aufgabe mit <code>spawn_task</code></a></h3>
-<p>Die erste Operation, die wir im Abschnitt <a href="ch16-01-threads.html#erstellen-eines-neuen-strangs-mit-spawn">„Erstellen eines neuen Strangs mit
+<p>Die erste Operation, die wir im Abschnitt <a href="ch16-01-threads.html#erstellen-eines-neuen-threads-mit-spawn">„Erstellen eines neuen Threads mit
 <code>spawn</code>“</a> in Kapitel 16 in Angriff genommen haben, war das
-Hochzählen in zwei separaten Strängen. Lass uns das Gleiche mit async machen.
-Die Kiste <code>trpl</code> enthält eine Funktion <code>spawn_task</code>, die der API
-<code>thread::spawn</code> sehr ähnlich ist, und eine Funktion <code>sleep</code>, die eine
-async-Version der API <code>thread::sleep</code> ist. Wir können diese zusammen verwenden,
-um das Zählbeispiel zu implementieren, siehe Codeblock 17-6.</p>
+Hochzählen in zwei separaten Threads. Lass uns das Gleiche mit async machen. Die
+Crate <code>trpl</code> enthält eine Funktion <code>spawn_task</code>, die der API <code>thread::spawn</code>
+sehr ähnlich ist, und eine Funktion <code>sleep</code>, die eine async-Version der API
+<code>thread::sleep</code> ist. Wir können diese zusammen verwenden, um das Zählbeispiel zu
+implementieren, siehe Listing 17-6.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::time::Duration;
 
@@ -198,10 +196,10 @@ fn main() {
         }
     });
 }</code></pre>
-<p><span class="caption">Codeblock 17-6: Erstellen einer neuen Aufgabe, die etwas
+<p><span class="caption">Listing 17-6: Erstellen einer neuen Aufgabe, die etwas
 ausgibt, während die Hauptaufgabe etwas anderes ausgibt</span></p>
-<p>Als Ausgangspunkt rufen wir in unserer Funktion <code>trpl::block_on</code> auf, sodass
-unsere Top-Level-Funktion asynchron sein kann.</p>
+<p>Als Ausgangspunkt rufen wir in unserer Funktion <code>trpl::block_on</code> auf, um
+asynchronen Code auszuführen.</p>
 <blockquote>
 <p>Hinweis: Im weiteren Verlauf dieses Kapitels wird jedes Beispiel genau den
 gleichen Rahmen-Code mit <code>trpl::block_on</code> in <code>main</code> enthalten, also werden
@@ -213,7 +211,7 @@ deinem Code einzubauen!</p>
 die nächste Nachricht gesendet wird. Wir platzieren die eine Schleife in den
 Rumpf des <code>trpl::spawn_task</code>-Aufrufs und die andere in eine <code>for</code>-Schleife auf
 oberster Ebene. Wir fügen auch ein <code>await</code> nach den <code>sleep</code>-Aufrufen ein.</p>
-<p>Dieser Code funktioniert ähnlich wie die Strang-basierte Implementierung
+<p>Dieser Code funktioniert ähnlich wie die Thread-basierte Implementierung
 – einschließlich der Tatsache, dass die Meldungen in deinem Terminal in
 einer anderen Reihenfolge erscheinen, wenn du es ausführst:</p>
 <pre><code class="language-text">Hallo Nummer 1 von der zweiten Aufgabe!
@@ -230,10 +228,10 @@ Hallo Nummer 5 von der ersten Aufgabe!
 Blocks beendet ist, da die von <code>spawn_task</code> erzeugte Aufgabe beendet wird, wenn
 die Funktion <code>main</code> endet. Wenn du die Aufgabe bis zum Ende ausführen willst,
 musst du <code>JoinHandle</code> verwenden, um auf das Ende der ersten Aufgabe zu warten.
-Bei Strängen haben wir die Methode <code>join</code> verwendet, um zu „blockieren“, bis
-der Strang fertig ist. In Codeblock 17-7 können wir <code>await</code> verwenden, um
-dasselbe zu tun, weil <code>JoinHandle</code> selbst ein Future ist. Sein <code>Output</code>-Typ ist
-<code>Result</code>, also entpacken wir es ebenfalls, nachdem wir darauf gewartet haben.</p>
+Bei Threads haben wir die Methode <code>join</code> verwendet, um zu „blockieren“, bis der
+Thread fertig ist. In Listing 17-7 können wir <code>await</code> verwenden, um dasselbe
+zu tun, weil <code>JoinHandle</code> selbst ein Future ist. Sein <code>Output</code>-Typ ist <code>Result</code>,
+also entpacken wir es ebenfalls, nachdem wir darauf gewartet haben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::time::Duration;
 </span><span class="boring">
@@ -254,7 +252,7 @@ dasselbe zu tun, weil <code>JoinHandle</code> selbst ein Future ist. Sein <code>
         handle.await.unwrap();
 <span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-7: Verwenden von <code>await</code> mit einem
+<p><span class="caption">Listing 17-7: Verwenden von <code>await</code> mit einem
 <code>JoinHandle</code>, um eine Aufgabe bis zum Ende auszuführen</span></p>
 <p>Diese aktualisierte Version läuft, bis <em>beide</em> Schleifen beendet sind:</p>
 <pre><code class="language-text">Hallo Nummer 1 von der zweiten Aufgabe!
@@ -271,26 +269,25 @@ Hallo Nummer 7 von der ersten Aufgabe!
 Hallo Nummer 8 von der ersten Aufgabe!
 Hallo Nummer 9 von der ersten Aufgabe!
 </code></pre>
-<p>Bisher sieht es so aus, als ob async und Stränge zu ähnlichen Ergebnissen
-führen, nur mit einer anderen Syntax: Verwenden von <code>await</code> anstelle des
-Aufrufs von <code>join</code> auf <code>JoinHandle</code> und Abwarten der <code>sleep</code>-Aufrufe.</p>
+<p>Bisher sieht es so aus, als ob async und Threads zu ähnlichen Ergebnissen
+führen, nur mit einer anderen Syntax: Verwenden von <code>await</code> anstelle des Aufrufs
+von <code>join</code> auf <code>JoinHandle</code> und Abwarten der <code>sleep</code>-Aufrufe.</p>
 <p>Der größere Unterschied ist, dass wir dafür keinen weiteren
-Betriebssystem-Strang starten müssen. Tatsächlich brauchen wir hier nicht
+Betriebssystem-Thread starten müssen. Tatsächlich brauchen wir hier nicht
 einmal eine Aufgabe zu starten. Da asynchrone Blöcke zu anonymen Futures
 kompiliert werden, können wir beide Schleifen in einen asynchronen Block packen
 und von der Laufzeitumgebung mittels der Funktion <code>trpl::join</code> bis zum Ende
 ausführen lassen.</p>
-<p>Im Abschnitt <a href="ch16-01-threads.html#warten-auf-das-ende-aller-stränge">„Warten auf das Ende aller Stränge“</a> in Kapitel 16
-haben wir gezeigt, wie man die Methode <code>join</code> auf den Typ <code>JoinHandle</code>
-anwendet, der beim Aufruf von <code>std::thread::spawn</code> zurückgegeben wird. Die
-Funktion <code>trpl::join</code> ist ähnlich, aber für Futures. Wenn du ihr zwei Futures
-gibst, erzeugt sie ein neues Future, dessen Ausgabe ein Tupel mit der Ausgabe
-der beiden übergebenen Futures ist, sobald <em>beide</em> abgeschlossen sind. In
-Codeblock 17-8 verwenden wir also <code>trpl::join</code>, um darauf zu warten, dass
-sowohl <code>fut1</code> als auch <code>fut2</code> fertig sind. Wir warten <em>nicht</em> auf <code>fut1</code> und
-<code>fut2</code>, sondern auf das neue Future, das von <code>trpl::join</code> erzeugt wurde. Wir
-ignorieren die Ausgabe, da es sich nur um ein Tupel mit zwei Einheitswerten
-handelt.</p>
+<p>Im Abschnitt <a href="ch16-01-threads.html#warten-auf-das-ende-aller-threads">„Warten auf das Ende aller Threads“</a> in Kapitel 16
+haben wir gezeigt, wie man die Methode <code>join</code> auf den Typ <code>JoinHandle</code> anwendet,
+der beim Aufruf von <code>std::thread::spawn</code> zurückgegeben wird. Die Funktion
+<code>trpl::join</code> ist ähnlich, aber für Futures. Wenn du ihr zwei Futures gibst,
+erzeugt sie ein neues Future, dessen Ausgabe ein Tupel mit der Ausgabe der
+beiden übergebenen Futures ist, sobald <em>beide</em> abgeschlossen sind. In Listing
+17-8 verwenden wir also <code>trpl::join</code>, um darauf zu warten, dass sowohl <code>fut1</code>
+als auch <code>fut2</code> fertig sind. Wir warten <em>nicht</em> auf <code>fut1</code> und <code>fut2</code>, sondern
+auf das neue Future, das von <code>trpl::join</code> erzeugt wurde. Wir ignorieren die
+Ausgabe, da es sich nur um ein Tupel mit zwei Einheitswerten handelt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::time::Duration;
 </span><span class="boring">
@@ -313,7 +310,7 @@ handelt.</p>
         trpl::join(fut1, fut2).await;
 <span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-8: Verwenden von <code>trpl::join</code>, um auf zwei
+<p><span class="caption">Listing 17-8: Verwenden von <code>trpl::join</code>, um auf zwei
 anonyme Futures zu warten</span></p>
 <p>Wenn wir dies ausführen, sehen wir, dass beide Futures bis zum Ende laufen:</p>
 <pre><code class="language-text">Hallo Nummer 1 von der ersten Aufgabe!
@@ -331,19 +328,19 @@ Hallo Nummer 8 von der ersten Aufgabe!
 Hallo Nummer 9 von der ersten Aufgabe!
 </code></pre>
 <p>Nun siehst du jedes Mal genau dieselbe Reihenfolge, was sich sehr von dem
-unterscheidet, was wir bei Strängen und mit <code>trpl::spawn_task</code> in Codeblock
-17-7 gesehen haben. Das liegt daran, dass die Funktion <code>trpl::join</code> <em>fair</em> ist,
-d.h. sie prüft jedes Future gleich oft, wechselt zwischen ihnen ab und lässt
-nie eines vorauslaufen, wenn das andere bereit ist. Bei Strängen entscheidet
-das Betriebssystem, welcher Strang geprüft wird und wie lange er laufen darf.
-Bei asynchronem Rust entscheidet die Laufzeitumgebung, welche Aufgabe geprüft
-werden soll. (In der Praxis sind die Details komplizierter, weil eine
-asynchrone Laufzeitumgebung unter der Haube Betriebssystem-Stränge für die
-Verwaltung der Nebenläufigkeit verwenden könnte, sodass das Einhalten der
-Fairness mehr Aufwand für eine Laufzeitumgebung sein kann – aber es ist
-immer noch möglich!) Laufzeitumgebungen müssen nicht für jede beliebige
-Operation Fairness garantieren, und sie stellen oft mehrere APIs bereit, mit
-denen du wählen kannst, ob du Fairness wünschst oder nicht.</p>
+unterscheidet, was wir bei Threads und mit <code>trpl::spawn_task</code> in Listing 17-7
+gesehen haben. Das liegt daran, dass die Funktion <code>trpl::join</code> <em>fair</em> ist, d.h.
+sie prüft jedes Future gleich oft, wechselt zwischen ihnen ab und lässt nie
+eines vorauslaufen, wenn das andere bereit ist. Bei Threads entscheidet das
+Betriebssystem, welcher Thread geprüft wird und wie lange er laufen darf. Bei
+asynchronem Rust entscheidet die Laufzeitumgebung, welche Aufgabe geprüft werden
+soll. (In der Praxis sind die Details komplizierter, weil eine asynchrone
+Laufzeitumgebung unter der Haube Betriebssystem-Threads für die Verwaltung der
+Nebenläufigkeit verwenden könnte, sodass das Einhalten der Fairness mehr Aufwand
+für eine Laufzeitumgebung sein kann – aber es ist immer noch möglich!)
+Laufzeitumgebungen müssen nicht für jede beliebige Operation Fairness
+garantieren, und sie stellen oft mehrere APIs bereit, mit denen du wählen
+kannst, ob du Fairness wünschst oder nicht.</p>
 <p>Probiere einige dieser Varianten des Wartens auf das Future aus und sieh, was
 sie bewirken:</p>
 <ul>
@@ -359,11 +356,11 @@ jedem Fall aussehen wird, <em>bevor</em> du den Code ausführst!</p>
 Wir werden wieder die Nachrichtenübermittlung (message passing) verwenden,
 diesmal jedoch mit asynchronen Versionen der Typen und Funktionen. Wir werden
 einen etwas anderen Weg einschlagen als im Abschnitt <a href="ch16-02-message-passing.html">„Nachrichtenaustausch
-zwischen Strängen (threads)“</a> in Kapitel 16, um einige
-der wichtigsten Unterschiede zwischen Strang-basierter und Future-basierter
-Nebenläufigkeit zu veranschaulichen. In Codeblock 17-9 beginnen wir mit einem
-einzigen asynchronen Block – <em>ohne</em> eine separate Aufgabe zu erstellen,
-da wir einen separaten Strang erstellt haben.</p>
+zwischen Threads“</a> in Kapitel 16, um einige der
+wichtigsten Unterschiede zwischen Thread-basierter und Future-basierter
+Nebenläufigkeit zu veranschaulichen. In Listing 17-9 beginnen wir mit einem
+einzigen asynchronen Block – <em>ohne</em> eine separate Aufgabe zu erstellen, da
+wir einen separaten Thread erstellt haben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    trpl::block_on(async {
@@ -376,38 +373,38 @@ da wir einen separaten Strang erstellt haben.</p>
         println!("Erhalten: {received}");
 <span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-9: Erstellen eines asynchronen Kanals und
+<p><span class="caption">Listing 17-9: Erstellen eines asynchronen Kanals und
 Zuweisen der beiden Enden an <code>tx</code> und <code>rx</code></span></p>
 <p>Hier verwenden wir <code>trpl::channel</code>, eine asynchrone Version des Kanals wie mit
-Strängen in Kapitel 16. Die asynchrone Version der API unterscheidet sich nur
-geringfügig von der Strang-basierten Version: Sie verwendet einen veränderbaren
-statt eines unveränderbaren Empfängers <code>rx</code>, und ihre Methode <code>recv</code> erzeugt
-ein Future, auf das wir warten müssen, anstatt den Wert direkt zu erzeugen.
-Jetzt können wir Nachrichten vom Sender zum Empfänger senden. Beachte, dass wir
-keinen separaten Strang oder gar eine Aufgabe erzeugen müssen; wir müssen
-lediglich auf den Aufruf von <code>rx.recv</code> warten.</p>
+Threads in Kapitel 16. Die asynchrone Version der API unterscheidet sich nur
+geringfügig von der Thread-basierten Version: Sie verwendet einen veränderbaren
+statt eines unveränderbaren Empfängers <code>rx</code>, und ihre Methode <code>recv</code> erzeugt ein
+Future, auf das wir warten müssen, anstatt den Wert direkt zu erzeugen. Jetzt
+können wir Nachrichten vom Sender zum Empfänger senden. Beachte, dass wir keinen
+separaten Thread oder gar eine Aufgabe erzeugen müssen; wir müssen lediglich auf
+den Aufruf von <code>rx.recv</code> warten.</p>
 <p>Die synchrone Methode <code>Receiver::recv</code> in <code>std::mpsc::channel</code> blockiert, bis
-sie eine Nachricht erhält. Die Methode <code>trpl::Receiver::recv</code> tut dies nicht,
-da sie asynchron ist. Anstatt zu blockieren, übergibt sie die Kontrolle zurück
-an die Laufzeitumgebung, bis entweder eine Nachricht empfangen wird oder die
+sie eine Nachricht erhält. Die Methode <code>trpl::Receiver::recv</code> tut dies nicht, da
+sie asynchron ist. Anstatt zu blockieren, übergibt sie die Kontrolle zurück an
+die Laufzeitumgebung, bis entweder eine Nachricht empfangen wird oder die
 Sendeseite des Kanals geschlossen wurde. Im Gegensatz dazu warten wir nicht auf
 den <code>send</code>-Aufruf, weil er nicht blockiert. Das ist auch nicht nötig, denn der
-Kanal, in den wir die Nachricht senden, ist unlimitiert.</p>
+Kanal, in den wir die Nachricht senden, ist unbegrenzt.</p>
 <blockquote>
 <p>Anmerkung: Da der gesamte asynchrone Code in einem asynchronen Block in einem
-<code>trpl::block_on</code>-Aufruf läuft, kann alles innerhalb dieses Blocks ein
-Blockieren vermeiden. Allerdings wird der Code <em>außerhalb</em> des Blocks
-blockieren, wenn die Funktion <code>block_on</code> zurückkehrt. Das ist der ganze Sinn
-der Funktion<code>trpl::block_on</code>: Sie lässt dich <em>wählen</em>, wo du bei einer Menge
-von asynchronem Code blockieren willst, und somit wo du zwischen synchronem
-und asynchronem Code wechseln willst.</p>
+<code>trpl::block_on</code>-Aufruf läuft, kann alles innerhalb dieses Blocks ein Blockieren
+vermeiden. Allerdings wird der Code <em>außerhalb</em> des Blocks blockieren, wenn die
+Funktion <code>block_on</code> zurückkehrt. Das ist der ganze Sinn der Funktion
+<code>trpl::block_on</code>: Sie lässt dich <em>wählen</em>, wo du bei einer Menge von asynchronem
+Code blockieren willst, und somit wo du zwischen synchronem und asynchronem Code
+wechseln willst.</p>
 </blockquote>
 <p>Beachte bei diesem Beispiel zwei Dinge. Erstens: Die Nachricht wird sofort
 ankommen! Zweitens: Obwohl wir hier ein Future verwenden, gibt es noch keine
 Nebenläufigkeit. Alles im Codeblock geschieht der Reihe nach, so wie es auch
 geschehen würde, wenn keine Futures beteiligt wären.</p>
 <p>Der erste Teil besteht darin, eine Reihe von Nachrichten zu senden und
-dazwischen zu schlafen, wie in Codeblock 17-10 gezeigt.</p>
+dazwischen zu schlafen, wie in Listing 17-10 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::time::Duration;
 </span><span class="boring">
@@ -432,7 +429,7 @@ dazwischen zu schlafen, wie in Codeblock 17-10 gezeigt.</p>
         }
 <span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-10: Senden und Empfangen mehrerer
+<p><span class="caption">Listing 17-10: Senden und Empfangen mehrerer
 Nachrichten über den asynchronen Kanal und Schlafen mit einem <code>await</code> zwischen
 jeder Nachricht</span></p>
 <p>Wir müssen die Nachrichten nicht nur senden, sondern auch empfangen. In diesem
@@ -441,7 +438,7 @@ ausführen, weil wir wissen, wie viele Nachrichten ankommen werden. In der
 realen Welt werden wir jedoch im Allgemeinen auf eine <em>unbekannte</em> Anzahl von
 Nachrichten warten, wir müssen also so lange warten, bis wir feststellen, dass
 es keine weiteren Nachrichten mehr gibt.</p>
-<p>In Codeblock 16-10 haben wir eine <code>for</code>-Schleife verwendet, um alle Elemente zu
+<p>In Listing 16-10 haben wir eine <code>for</code>-Schleife verwendet, um alle Elemente zu
 verarbeiten, die von einem synchronen Kanal empfangen wurden. In Rust gibt es
 jedoch noch keine Möglichkeit, eine <code>for</code>-Schleife mit einer <em>asynchron
 erzeugten</em> Liste von Elementen zu verwenden. Stattdessen müssen wir eine neue
@@ -474,15 +471,15 @@ der vollen Verzögerung eintreffen, anstatt mit Verzögerungen zwischen den
 einzelnen Nachrichten. Innerhalb eines bestimmten asynchronen Blocks ist die
 Reihenfolge, in der die Schlüsselwörter <code>await</code> im Code erscheinen, auch die
 Reihenfolge, in der sie bei der Ausführung des Programms auftreten.</p>
-<p>In Codeblock 17-10 gibt es nur einen asynchronen Block, sodass alles darin
+<p>In Listing 17-10 gibt es nur einen asynchronen Block, sodass alles darin
 linear abläuft. Es gibt immer noch keine Nebenläufigkeit. Alle Aufrufe von
 <code>tx.send</code> finden statt, unterbrochen von allen <code>trpl::sleep</code>-Aufrufen und
 ihren zugehörigen Wartepunkten. Erst dann durchläuft die <code>while let</code>-Schleife
 einen der <code>await</code> Punkte nach dem Aufruf von <code>recv</code>.</p>
 <p>Um die gewünschte Verzögerung zwischen dem Empfang jeder Nachricht zu
 erreichen, müssen wir die Operationen <code>tx</code> und <code>rx</code> in eigene asynchrone Blöcke
-packen, wie in Codeblock 17-11 gezeigt. Dann kann die Laufzeitumgebung jede
-dieser Operationen separat mit <code>trpl::join</code> ausführen, genau wie in Codeblock
+packen, wie in Listing 17-11 gezeigt. Dann kann die Laufzeitumgebung jede
+dieser Operationen separat mit <code>trpl::join</code> ausführen, genau wie in Listing
 17-8. Auch hier warten wir auf das Ergebnis des Aufrufs von <code>trpl::join</code>, nicht
 auf die einzelnen Futures. Würden wir auf die einzelnen Futures nacheinander
 warten, hätten wir wieder einen sequenziellen Ablauf – genau das, was wir
@@ -517,12 +514,12 @@ warten, hätten wir wieder einen sequenziellen Ablauf – genau das, was wir
         trpl::join(tx_fut, rx_fut).await;
 <span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-11: Aufteilen von <code>send</code> und <code>recv</code> in
+<p><span class="caption">Listing 17-11: Aufteilen von <code>send</code> und <code>recv</code> in
 separate <code>async</code>-Blöcke und Warten auf die Futures dieser Blöcke</span></p>
-<p>Mit dem aktualisierten Code in Codeblock 17-11 werden die Nachrichten in
+<p>Mit dem aktualisierten Code in Listing 17-11 werden die Nachrichten in
 Abständen von 500 Millisekunden ausgegeben und nicht mehr alle auf einmal nach
 zwei Sekunden.</p>
-<h4 id="verschieben-der-eigentümerschaft-in-einen-asynchronen-block"><a class="header" href="#verschieben-der-eigentümerschaft-in-einen-asynchronen-block">Verschieben der Eigentümerschaft in einen asynchronen Block</a></h4>
+<h4 id="verschieben-des-eigentums-in-einen-asynchronen-block"><a class="header" href="#verschieben-des-eigentums-in-einen-asynchronen-block">Verschieben des Eigentums in einen asynchronen Block</a></h4>
 <p>Das Programm beendet sich aber trotzdem nicht, weil die <code>while let</code>-Schleife
 mit <code>trpl::join</code> interagiert:</p>
 <ul>
@@ -530,7 +527,7 @@ mit <code>trpl::join</code> interagiert:</p>
 übergebene Futures erledigt sind.</li>
 <li>Das Future <code>tx_fut</code> ist erledigt, sobald es die Pause nach dem Senden der
 letzten Nachricht in <code>vals</code> beendet hat.</li>
-<li>Das Future <code>tx_fut</code> ist erst nach dem Ende der <code>while let</code>-Schleife erledigt.</li>
+<li>Das Future <code>rx_fut</code> ist erst nach dem Ende der <code>while let</code>-Schleife erledigt.</li>
 <li>Die <code>while let</code>-Schleife endet erst, wenn das Ergebnis von <code>rx.recv</code> <code>None</code>
 ist.</li>
 <li>Das Ergebnis von <code>rx.recv</code> ist nur dann <code>None</code>, wenn das andere Ende des
@@ -543,18 +540,17 @@ Senderseite <code>tx</code> aufgeräumt (dropped) wird.</li>
 an den Anfang dieser Liste bringt.</li>
 </ul>
 <p>Im Moment <em>leiht</em> sich der async-Block, in dem wir die Nachrichten senden, nur
-<code>tx</code> aus, weil das Senden einer Nachricht keine Eigentümerschaft erfordert.
-Wenn wir <code>tx</code> aber in den async-Block <em>verschieben</em> könnten, würde es
-aufgeräumt werden, sobald der Block endet. Im Abschnitt <a href="ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-der-eigentümerschaft">„Erfassen von
-Referenzen oder Verschieben der Eigentümerschaft“</a> in Kapitel
-13 haben wir gelernt, wie man das Schlüsselwort <code>move</code> mit Funktionsabschlüssen
-verwendet, und im Abschnitt <a href="ch16-01-threads.html#verwenden-von-move-funktionsabschlüssen-mit-strängen">„Verwenden von <code>move</code>-Funktionsabschlüssen mit
-Strängen“</a> in Kapitel 16 haben wir gesehen, dass wir oft Daten in
-Funktionsabschlüsse verschieben müssen, wenn wir mit Strängen arbeiten. Für
-asynchrone Blöcke gilt dieselbe grundlegende Dynamik, sodass das Schlüsselwort
-<code>move</code> mit asynchronen Blöcken genauso funktioniert wie mit
-Funktionsabschlüssen.</p>
-<p>In Codeblock 17-12 ändern wir den Block zum Senden von Nachrichten von <code>async</code>
+<code>tx</code> aus, weil das Senden einer Nachricht kein Eigentum erfordert. Wenn wir <code>tx</code>
+aber in den async-Block <em>verschieben</em> könnten, würde es aufgeräumt werden,
+sobald der Block endet. Im Abschnitt <a href="ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-des-eigentums">„Erfassen von Referenzen oder Verschieben
+des Eigentums“</a> in Kapitel 13 haben wir gelernt, wie man das
+Schlüsselwort <code>move</code> mit Closures verwendet, und im Abschnitt <a href="ch16-01-threads.html#verwenden-von-move-closures-mit-threads">„Verwenden von
+<code>move</code>-Closures mit Threads“</a> in Kapitel 16 haben wir gesehen,
+dass wir oft Daten in Closures verschieben müssen, wenn wir mit Threads
+arbeiten. Für asynchrone Blöcke gilt dieselbe grundlegende Dynamik, sodass das
+Schlüsselwort <code>move</code> mit asynchronen Blöcken genauso funktioniert wie mit
+Closures.</p>
+<p>In Listing 17-12 ändern wir den Block zum Senden von Nachrichten von <code>async</code>
 zu <code>async move</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::time::Duration;
@@ -587,16 +583,16 @@ zu <code>async move</code>.</p>
 </span><span class="boring">        trpl::join(tx_fut, rx_fut).await;
 </span><span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-12: Eine Überarbeitung des Codes aus
-Codeblock 17-11, die den Code korrekt beendet, wenn er fertig ist</span></p>
+<p><span class="caption">Listing 17-12: Eine Überarbeitung des Codes aus
+Listing 17-11, die den Code korrekt beendet, wenn er fertig ist</span></p>
 <p>Wenn wir <em>diese</em> Version des Codes ausführen, beendet sie sich ordnungsgemäß,
 nachdem die letzte Nachricht gesendet und empfangen wurde. Als Nächstes wollen
-wir uns ansehen, was geändert werden müsste, um Daten aus mehr als ein Future
+wir uns ansehen, was geändert werden müsste, um Daten aus mehr als einem Future
 zu senden.</p>
 <h4 id="auf-mehrere-futures-warten-mit-dem-makro-join"><a class="header" href="#auf-mehrere-futures-warten-mit-dem-makro-join">Auf mehrere Futures warten mit dem Makro <code>join!</code></a></h4>
 <p>Dieser asynchrone Kanal ist auch ein Kanal für mehrere Erzeuger, sodass wir
 <code>clone</code> auf <code>tx</code> aufrufen können, wenn wir Nachrichten von mehreren Futures
-senden wollen, wie in Codeblock 17-13 gezeigt.</p>
+senden wollen, wie in Listing 17-13 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::time::Duration;
 </span><span class="boring">
@@ -642,7 +638,7 @@ senden wollen, wie in Codeblock 17-13 gezeigt.</p>
         trpl::join3(tx1_fut, tx_fut, rx_fut).await;
 <span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-13: Verwenden mehrerer Produzenten mit
+<p><span class="caption">Listing 17-13: Verwenden mehrerer Produzenten mit
 asynchronen Blöcken</span></p>
 <p>Zuerst klonen wir <code>tx</code> und erstellen <code>tx1</code> außerhalb des ersten asynchronen
 Blocks. Wir verschieben <code>tx1</code> in diesen Block, genau wie wir es zuvor mit <code>tx</code>
@@ -654,12 +650,12 @@ Schlüssel ist die Reihenfolge, in der auf die Futures gewartet wird, nicht die
 Reihenfolge, in der sie erstellt werden.</p>
 <p>Die beiden asynchronen Blöcke zum Senden von Nachrichten müssen <code>async move</code>-Blöcke sein, sodass sowohl <code>tx</code> als auch <code>tx1</code> aufgeräumt werden, wenn
 diese Blöcke zu Ende sind. Sonst landen wir wieder in der gleichen
-Endlosschleife, mit der wir angefangen haben. Schließlich wechseln wir von
-<code>trpl::join</code> zu <code>trpl::join!</code>, um das zusätzliche Future zu behandeln: Das
-Makro <code>join!</code> wartet auf eine beliebige Anzahl von Futures, wobei die Anzahl
-der Futures zum Zeitpunkt der Kompilierung bekannt sein muss. Das Warten auf
-eine Sammlung von Futures mit unbekannter Anzahl wird später in diesem Kapitel
-behandelt.</p>
+Endlosschleife, mit der wir angefangen haben.</p>
+<p>Schließlich wechseln wir von <code>trpl::join</code> zu <code>trpl::join!</code>, um das zusätzliche
+Future zu behandeln: Das Makro <code>join!</code> wartet auf eine beliebige Anzahl von
+Futures, wobei die Anzahl der Futures zum Zeitpunkt der Kompilierung bekannt
+sein muss. Das Warten auf eine Kollektion von Futures mit unbekannter Anzahl
+wird später in diesem Kapitel behandelt.</p>
 <p>Jetzt sehen wir alle Nachrichten der beiden sendenden Futures. Da die sendenden
 Futures leicht unterschiedliche Verzögerungen nach dem Senden verwenden, werden
 die Nachrichten auch in diesen unterschiedlichen Intervallen empfangen:</p>
@@ -672,12 +668,12 @@ Erhalten: 'Future'
 Erhalten: 'für'
 Erhalten: 'dich'
 </code></pre>
-<p>Wir haben untersucht, wie man mit Nachrichtenübermittlung Daten zwischen
-Futures sendet, wie Code innerhalb eines asynchronen Blocks sequenziell
-ausgeführt wird, wie man die Eigentümerschaft in einen asynchronen Block
-verschiebt und wie man auf mehrere Futures wartet. Als Nächstes wollen wir uns
-damit befassen, wie und warum man der Laufzeitumgebung mitteilt, dass sie zu
-einer anderen Aufgabe wechseln kann.</p>
+<p>Wir haben untersucht, wie man mit Nachrichtenübermittlung Daten zwischen Futures
+sendet, wie Code innerhalb eines asynchronen Blocks sequenziell ausgeführt wird,
+wie man das Eigentum in einen asynchronen Block verschiebt und wie man auf
+mehrere Futures wartet. Als Nächstes wollen wir uns damit befassen, wie und
+warum man der Laufzeitumgebung mitteilt, dass sie zu einer anderen Aufgabe
+wechseln kann.</p>
 
                     </main>
 

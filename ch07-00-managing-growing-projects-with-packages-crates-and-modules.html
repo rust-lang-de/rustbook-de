@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Pakete (packages), Kisten (crates) und Module - Die Programmiersprache Rust</title>
+        <title>Pakete, Crates und Module - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,19 +161,19 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="pakete-packages-kisten-crates-und-module"><a class="header" href="#pakete-packages-kisten-crates-und-module">Pakete (packages), Kisten (crates) und Module</a></h1>
+                        <h1 id="pakete-crates-und-module"><a class="header" href="#pakete-crates-und-module">Pakete, Crates und Module</a></h1>
 <p>Wenn du große Programme schreibst, wird die Organisation deines Codes immer
 wichtiger. Durch die Gruppierung verwandter Funktionen und die Trennung von
 Code mit unterschiedlichen Funktionalitäten wird klar, wo der Code zu finden
 ist, der eine bestimmte Funktionalität implementiert, und an welcher Stelle
-die Funktionalität eines Merkmals zu ändern ist.</p>
+die Funktionalität eines Traits zu ändern ist.</p>
 <p>Die Programme, die wir bisher geschrieben haben, waren in einem Modul in einer
 Datei. Wenn ein Projekt wächst, solltest du den Code organisieren, indem du ihn
 in mehrere Module und dann in mehrere Dateien aufteilst. Ein Paket (package)
-kann mehrere Binär-Kisten (binary crates) und optional eine Bibliotheks-Kiste
-(library crate) enthalten. Wenn ein Paket wächst, kannst du Teile in separate
-Kisten extrahieren, die zu externen Abhängigkeiten werden. Dieses Kapitel
-behandelt all diese Techniken. Für sehr große Projekte aus einer Reihe von
+kann mehrere binäre Crates und optional eine Bibliotheks-Crate (library crate)
+enthalten. Wenn ein Paket wächst, kannst du Teile in separate Crates
+extrahieren, die zu externen Abhängigkeiten werden. Dieses Kapitel behandelt
+alle diese Techniken. Für sehr große Projekte aus einer Reihe von
 zusammenhängenden Paketen, die sich gemeinsam weiterentwickeln, stellt Cargo
 Arbeitsbereiche zur Verfügung, die wir in <a href="ch14-03-cargo-workspaces.html">„Cargo-Arbeitsbereiche“</a>
 in Kapitel 14 behandeln werden.</p>
@@ -203,20 +203,20 @@ werden, welche Details privat sind und welche Namen im jeweiligen
 Gültigkeitsbereich deines Programms sind. Zu diesen Funktionalitäten, die
 manchmal kollektiv als <em>Modulsystem</em> bezeichnet werden, gehören:</p>
 <ul>
-<li><strong>Pakete (packages)</strong>: Eine Cargo-Funktionalität, mit der du Kisten bauen,
+<li><strong>Pakete (packages):</strong> Eine Cargo-Funktionalität, mit der du Crates bauen,
 testen und gemeinsam nutzen kannst.</li>
-<li><strong>Kisten (crates)</strong>: Ein Baum von Modulen, der eine Bibliothek oder ein
-ausführbares Programm erzeugt.</li>
-<li><strong>Module und <code>use</code></strong>: Ermöglicht dir, die Organisation, den
-Gültigkeitsbereich und den Datenschutz von Pfaden zu steuern.</li>
-<li><strong>Pfade</strong>: Eine Möglichkeit, ein Element zu benennen, z.B. eine Struktur,
+<li><strong>Crates:</strong> Ein Baum von Modulen, der eine Bibliothek oder ein ausführbares
+Programm erzeugt.</li>
+<li><strong>Module und <code>use</code>:</strong> Ermöglicht dir, die Organisation, den
+Gültigkeitsbereich und die Sichtbarkeit von Pfaden zu steuern.</li>
+<li><strong>Pfade:</strong> Eine Möglichkeit, ein Element zu benennen, z.B. eine Struktur,
 eine Funktion oder ein Modul.</li>
 </ul>
-<p>In diesem Kapitel gehen wir auf all diese Funktionalitäten ein, besprechen, wie
-sie zusammenwirken, und erklären, wie sie zur Verwaltung der
-Gültigkeitsbereiche eingesetzt werden können. Am Ende solltest du ein solides
-Verständnis des Modulsystems haben und in der Lage sein, mit den
-Gültigkeitsbereichen wie ein Profi zu arbeiten!</p>
+<p>In diesem Kapitel gehen wir auf alle diese Funktionalitäten ein, besprechen, wie
+sie zusammenwirken, und erklären, wie sie zur Verwaltung der Gültigkeitsbereiche
+eingesetzt werden können. Am Ende solltest du ein solides Verständnis des
+Modulsystems haben und in der Lage sein, mit den Gültigkeitsbereichen wie ein
+Profi zu arbeiten!</p>
 
                     </main>
 

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Bauvorgang anpassen mit Freigabeprofilen (release profiles) - Die Programmiersprache Rust</title>
+        <title>Bauvorgang anpassen mit Freigabeprofilen - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,17 +161,18 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="bauvorgang-anpassen-mit-freigabeprofilen-release-profiles"><a class="header" href="#bauvorgang-anpassen-mit-freigabeprofilen-release-profiles">Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></h2>
-<p>In Rust sind <em>Freigabeprofile</em> vordefinierte und anpassbare Profile mit
-unterschiedlichen Konfigurationen, durch die ein Programmierer mehr Kontrolle
-über verschiedene Optionen zum Kompilieren von Programmcode hat. Jedes Profil
-wird von den anderen unabhängig konfiguriert.</p>
+                        <h2 id="bauvorgang-anpassen-mit-freigabeprofilen"><a class="header" href="#bauvorgang-anpassen-mit-freigabeprofilen">Bauvorgang anpassen mit Freigabeprofilen</a></h2>
+<p>In Rust sind <em>Freigabeprofile</em> (release profiles) vordefinierte und anpassbare
+Profile mit unterschiedlichen Konfigurationen, durch die ein Programmierer mehr
+Kontrolle über verschiedene Optionen zum Kompilieren von Programmcode hat. Jedes
+Profil wird von den anderen unabhängig konfiguriert.</p>
 <p>Cargo hat zwei Hauptprofile: Das Profil <code>dev</code>, das von Cargo verwendet wird, wenn
 du <code>cargo build</code> ausführst, und das Profil <code>release</code>, das Cargo verwendet, wenn
 <code>cargo build --release</code> ausgeführt wird. <code>dev</code> ist mit guten
 Standardeinstellungen für die Entwicklung (development) definiert und <code>release</code>
 hat gute Standardeinstellungen für Releasebuilds. <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup></p>
-<p>Profilnamen die dir möglicherweise aus der Ausgabe beim Bauvorgang bekannt sind:</p>
+<p>Profilnamen, die dir möglicherweise aus der Ausgabe beim Bauvorgang bekannt
+sind:</p>
 <pre><code class="language-console">$ cargo build
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
 $ cargo build --release
@@ -221,7 +222,7 @@ jedes Profil findest du in der <a href="https://doc.rust-lang.org/cargo/referenc
 <hr>
 <ol class="footnote-definition">
 <li id="footnote-1">
-<p><strong>Release</strong>: Veröffentlichung, <strong>Build</strong>: Kompilierter Quelltext <a href="#fr-1-1">↩</a></p>
+<p><strong>Release:</strong> Veröffentlichung, <strong>Build:</strong> Kompilierter Quelltext <a href="#fr-1-1">↩</a></p>
 </li>
 </ol>
 

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>G - Wie Rust erstellt wird und „nächtliches Rust“ - Die Programmiersprache Rust</title>
+        <title>G - Wie Rust erstellt wird und „nightly Rust“ - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="anhang-g-wie-rust-erstellt-wird-und-nächtliches-rust"><a class="header" href="#anhang-g-wie-rust-erstellt-wird-und-nächtliches-rust">Anhang G: Wie Rust erstellt wird und „nächtliches Rust“</a></h2>
+                        <h2 id="anhang-g-wie-rust-erstellt-wird-und-nightly-rust"><a class="header" href="#anhang-g-wie-rust-erstellt-wird-und-nightly-rust">Anhang G: Wie Rust erstellt wird und „nightly Rust“</a></h2>
 <p>In diesem Anhang geht es darum, wie Rust erstellt wird und wie sich das auf
 dich als Rust-Entwickler auswirkt.</p>
 <h3 id="stabilität-ohne-stillstand"><a class="header" href="#stabilität-ohne-stillstand">Stabilität ohne Stillstand</a></h3>
@@ -173,7 +173,7 @@ wichtige Mängel vielleicht erst nach ihrer Veröffentlichung entdecken, wenn wi
 die Dinge nicht mehr ändern können.</p>
 <p>Unsere Lösung für dieses Problem ist das, was wir „Stabilität ohne Stillstand“
 nennen, und unser Leitsatz lautet: Du solltest niemals Angst vor einem Upgrade
-auf eine neue Version des stabilen Rust haben müssen. Jedes Upgrade sollte
+auf eine neue Stable-Version von Rust haben müssen. Jedes Upgrade sollte
 schmerzlos sein, aber auch neue Funktionalitäten, weniger Fehler und schnellere
 Kompilierzeiten mit sich bringen.</p>
 <h3 id="tüff-tüff-veröffentlichungs-kanäle-und-zugfahren"><a class="header" href="#tüff-tüff-veröffentlichungs-kanäle-und-zugfahren">Tüff, tüff! Veröffentlichungs-Kanäle und Zugfahren</a></h3>
@@ -184,70 +184,69 @@ Software-Veröffentlichungs-Zugmodell, das von Cisco IOS und anderen
 Softwareprojekten verwendet wurde. Es gibt drei <em>Veröffentlichungskanäle</em>
 (release channels) für Rust:</p>
 <ul>
-<li>Nächtlich (nightly)</li>
+<li>Nightly</li>
 <li>Beta</li>
-<li>Stabil (stable)</li>
+<li>Stable</li>
 </ul>
-<p>Die meisten Rust-Entwickler verwenden in erster Linie den stabilen Kanal, aber
+<p>Die meisten Rust-Entwickler verwenden in erster Linie den Kanal Stable, aber
 diejenigen, die experimentelle neue Funktionen ausprobieren wollen, können
-nächtlich oder beta verwenden.</p>
+Nightly oder Beta verwenden.</p>
 <p>Hier ist ein Beispiel dafür, wie der Entwicklungs- und Veröffentlichungsprozess
 funktioniert: Nehmen wir an, das Rust-Team arbeitet an der Veröffentlichung von
 Rust 1.5. Diese Veröffentlichung erfolgte im Dezember 2015, aber sie wird uns
 realistische Versionsnummern liefern. Eine neue Funktionalität wird zu Rust
 hinzugefügt: Eine neue Änderung (commit) kommt in den Hauptzweig. Jede Nacht
-wird eine neue nächtliche Version von Rust produziert. Jeder Tag ist ein
+wird eine neue Nightly-Version von Rust produziert. Jeder Tag ist ein
 Veröffentlichungs-Tag und diese Veröffentlichungen werden automatisch von
 unserer Veröffentlichungs-Infrastruktur erstellt. Mit der Zeit sehen unsere
 Veröffentlichungen also so aus, einmal pro Nacht:</p>
-<pre><code class="language-text">nächtlich: * - - * - - *
+<pre><code class="language-text">nightly: * - - * - - *
 </code></pre>
 <p>Alle sechs Wochen ist es an der Zeit, eine neue Version vorzubereiten! Der
 <code>beta</code>-Zweig der Rust-Versionsverwaltung verzweigt vom Hauptzweig, der von
-„nächtlich“ benutzt wird. Jetzt gibt es zwei Versionen:</p>
-<pre><code class="language-text">nächtlich: * - - * - - *
-                       |
-beta:                  *
+„nightly“ benutzt wird. Jetzt gibt es zwei Versionen:</p>
+<pre><code class="language-text">nightly: * - - * - - *
+                     |
+beta:                *
 </code></pre>
 <p>Die meisten Rust-Nutzer verwenden Beta-Versionen nicht aktiv, sondern testen
 gegen die Beta-Version in ihrem CI-System, um Rust bei der Entdeckung möglicher
 Regressionen zu unterstützen. In der Zwischenzeit gibt es immer noch jede Nacht
-eine nächtliche Veröffentlichung:</p>
-<pre><code class="language-text">nächtlich: * - - * - - * - - * - - *
-                       |
-beta:                  *
+eine Nightly-Veröffentlichung:</p>
+<pre><code class="language-text">nightly: * - - * - - * - - * - - *
+                     |
+beta:                *
 </code></pre>
 <p>Sagen wir, es wird eine Regression gefunden. Gut, dass wir etwas Zeit hatten,
-die Beta-Version zu testen, bevor sich die Regression in eine stabile Version
+die Beta-Version zu testen, bevor sich die Regression in eine Stable-Version
 eingeschlichen hat! Die Fehlerkorrektur wird auf den Hauptzweig angewendet,
-sodass „nächtlich“ korrigiert wird, und dann wird die Fehlerkorrektur in den
+sodass „nightly“ korrigiert wird, und dann wird die Fehlerkorrektur in den
 <code>beta</code>-Zweig zurückportiert und eine neue Version der Beta erzeugt:</p>
-<pre><code class="language-text">nächtlich: * - - * - - * - - * - - * - - *
-                       |
-beta:                  * - - - - - - - - *
+<pre><code class="language-text">nightly: * - - * - - * - - * - - * - - *
+                     |
+beta:                * - - - - - - - - *
 </code></pre>
-<p>Sechs Wochen nachdem die erste Beta-Version erstellt wurde, ist es Zeit für
-eine stabile Veröffentlichung! Der <code>stable</code>-Zweig wird aus dem <code>beta</code>-Zweig
-erstellt:</p>
-<pre><code class="language-text">nächtlich: * - - * - - * - - * - - * - - * - * - *
-                       |
-beta:                  * - - - - - - - - *
-                                         |
-stabil:                                  *
+<p>Sechs Wochen nachdem die erste Beta-Version erstellt wurde, ist es Zeit für eine
+Stable-Veröffentlichung! Der <code>stable</code>-Zweig wird aus dem <code>beta</code>-Zweig erstellt:</p>
+<pre><code class="language-text">nightly: * - - * - - * - - * - - * - - * - * - *
+                     |
+beta:                * - - - - - - - - *
+                                       |
+stable:                                *
 </code></pre>
 <p>Hurra! Rust 1.5 ist geschafft! Eines haben wir jedoch vergessen: Da die sechs
 Wochen vergangen sind, brauchen wir auch eine neue Beta der <em>nächsten</em> Version,
 Rust 1.6. Nachdem also <code>stable</code> von <code>beta</code> abzweigt, zweigt die nächste Version
 von <code>beta</code> wieder von <code>nightly</code> ab:</p>
-<pre><code class="language-text">nächtlich: * - - * - - * - - * - - * - - * - * - *
-                       |                         |
-beta:                  * - - - - - - - - *       *
-                                         |
-stabil:                                  *
+<pre><code class="language-text">nightly: * - - * - - * - - * - - * - - * - * - *
+                     |                         |
+beta:                * - - - - - - - - *       *
+                                       |
+stable:                                *
 </code></pre>
 <p>Dies wird als „Zugmodell“ (train model) bezeichnet, weil alle sechs Wochen eine
 Veröffentlichung „den Bahnhof verlässt“, aber immer noch eine Reise durch den
-Betakanal machen muss, bevor sie als stabile Version ankommt.</p>
+Betakanal machen muss, bevor sie in Stable ankommt.</p>
 <p>Alle sechs Wochen veröffentlicht Rust eine Version, wie ein Uhrwerk. Wenn du
 das Datum einer Rust-Veröffentlichung kennst, kennst du auch das Datum der
 nächsten: Sie ist sechs Wochen später. Ein schöner Aspekt der alle sechs Wochen
@@ -257,44 +256,44 @@ Sorgen zu machen: In kurzer Zeit kommt die nächste! Dies trägt dazu bei, den
 Druck zu verringern, bevor sich möglicherweise unausgefeilte Funktionalitäten
 kurz vor Ablauf der Veröffentlichungsfrist einschleichen.</p>
 <p>Dank dieses Prozesses kannst du jederzeit die nächste Rust-Version ausprobieren
-und dich selbst davon überzeugen, dass ein Upgrade leicht möglich ist: Wenn
-eine Beta-Version nicht wie erwartet funktioniert, kannst du dies dem Team
-melden und sie vor der nächsten stabilen Version korrigieren lassen! Ein Bruch
-in einer Beta-Version ist relativ selten, aber <code>rustc</code> ist immer noch ein Stück
-Software und es gibt Fehler.</p>
+und dich selbst davon überzeugen, dass ein Upgrade leicht möglich ist: Wenn eine
+Beta-Version nicht wie erwartet funktioniert, kannst du dies dem Team melden und
+sie vor der nächsten Stable-Version korrigieren lassen! Ein Bruch in einer
+Beta-Version ist relativ selten, aber <code>rustc</code> ist immer noch ein Stück Software
+und es gibt Fehler.</p>
 <h3 id="wartungsdauer"><a class="header" href="#wartungsdauer">Wartungsdauer</a></h3>
-<p>Das Rust-Projekt unterstützt die neueste stabile Version. Wenn eine neue
-stabile Version veröffentlicht wird, erreicht die alte Version ihr
-Lebensende (engl. end of life, EOL). Das bedeutet, dass jede Version
-sechs Wochen lang unterstützt wird.</p>
+<p>Das Rust-Projekt unterstützt die neueste Stable-Version. Wenn eine neue
+Stable-Version veröffentlicht wird, erreicht die alte Version ihr Lebensende
+(engl. end of life, EOL). Das bedeutet, dass jede Version sechs Wochen lang
+unterstützt wird.</p>
 <h3 id="instabile-funktionalitäten"><a class="header" href="#instabile-funktionalitäten">Instabile Funktionalitäten</a></h3>
 <p>Bei diesem Veröffentlichungsmodell gibt es noch einen weiteren Haken: instabile
 Funktionalitäten. Rust verwendet eine Technik namens „Funktionalitäts-Schalter“
 (feature flags), um festzulegen, welche Funktionalitäten in einer bestimmten
 Version aktiviert sind. Wenn eine neue Funktionalität aktiv entwickelt wird,
-landet sie auf dem Hauptzweig und damit in „nächtlich“, aber hinter einem
+landet sie auf dem Hauptzweig und damit in „nightly“, aber hinter einem
 <em>Funktionalitäts-Schalter</em>. Wenn du als Nutzer eine in Entwicklung befindliche
 Funktionalität ausprobieren möchtest, kannst du dies tun, aber du musst eine
-nächtliche Version von Rust verwenden und deinen Quellcode mit dem
-entsprechenden Schalter versehen, um sie nutzen zu können.</p>
-<p>Wenn du eine Beta- oder stabile Version von Rust verwendest, kannst du keine
+Nightly-Version von Rust verwenden und deinen Quellcode mit dem entsprechenden
+Schalter versehen, um sie nutzen zu können.</p>
+<p>Wenn du eine Beta- oder Stable-Version von Rust verwendest, kannst du keine
 Funktionalitäts-Schalter verwenden. Dies ist der Schlüssel, der es uns
 ermöglicht, neue Funktionen praktisch zu nutzen, bevor wir sie für immer für
 stabil erklären. Diejenigen, die sich für das Allerneueste entscheiden wollen,
 können dies tun, und diejenigen, die eine felsenfeste Erfahrung machen wollen,
-können bei der stabilen Version bleiben und wissen, dass ihr Code nicht brechen
-wird. Stabilität ohne Stillstand.</p>
-<p>Dieses Buch enthält nur Informationen über stabile Funktionalitäten, da sich in
-Entwicklung befindliche Funktionalitäten noch ändern, und sicherlich werden sie
-sich zwischen dem Zeitpunkt, an dem dieses Buch geschrieben wurde, und dem
-Zeitpunkt, an dem sie in stabilen Versionen aktiviert werden, unterscheiden.
-Die Dokumentation für die nur nächtlich verfügbaren Funktionalitäten findest du
+können bei der Stable-Version bleiben und wissen, dass ihr Code nicht
+kaputtgehen wird. Stabilität ohne Stillstand.</p>
+<p>Dieses Buch enthält nur Informationen über Funktionalitäten in Stable, da sich
+in Entwicklung befindliche Funktionalitäten noch ändern, und sicherlich werden
+sie sich zwischen dem Zeitpunkt, an dem dieses Buch veröffentlicht wurde, und
+dem Zeitpunkt, an dem sie in Stable-Versionen aktiviert werden, unterscheiden.
+Die Dokumentation für die nur in Nightly verfügbaren Funktionalitäten findest du
 online.</p>
-<h3 id="rustup-und-die-rolle-des-nächtlichen-rust"><a class="header" href="#rustup-und-die-rolle-des-nächtlichen-rust">Rustup und die Rolle des nächtlichen Rust</a></h3>
+<h3 id="rustup-und-nightly-rust"><a class="header" href="#rustup-und-nightly-rust">Rustup und nightly Rust</a></h3>
 <p>Rustup macht es einfach, zwischen verschiedenen Veröffentlichungskanälen von
 Rust zu wechseln, auf globaler oder projektbezogener Basis. Standardmäßig hast
-du stabiles Rust installiert. Um die nächtliche Version zu installieren, mache
-folgenden Aufruf:</p>
+du Stable-Rust installiert. Um die Nightly-Version zu installieren, rufe
+folgendes Kommando auf:</p>
 <pre><code class="language-console">$ rustup toolchain install nightly
 </code></pre>
 <p>Du kannst auch alle <em>Werkzeugketten</em> (toolchains) (Versionen von Rust und
@@ -305,21 +304,20 @@ stable-x86_64-pc-windows-msvc (default)
 beta-x86_64-pc-windows-msvc
 nightly-x86_64-pc-windows-msvc
 </code></pre>
-<p>Wie du sehen kannst, ist die stabile Werkzeugkette die Standardeinstellung. Die
-meisten Rust-Nutzer verwenden meistens die stabile Version. Vielleicht möchtest
-du die meiste Zeit die stabile Version verwenden, aber für ein bestimmtes
-Projekt mit der nächtlichen Version arbeiten, weil dir eine innovative
-Funktionalität wichtig ist. Um dies zu tun, kannst du <code>rustup override</code> im
-Verzeichnis dieses Projekts benutzen, um die nächtliche Werkzeugkette als
-diejenige zu setzen, die <code>rustup</code> benutzen soll, wenn du dich in diesem
-Verzeichnis befindest:</p>
+<p>Wie du sehen kannst, ist die Stable-Werkzeugkette die Standardeinstellung. Die
+meisten Rust-Nutzer verwenden meistens die Stable-Version. Vielleicht möchtest
+du die meiste Zeit die Stable-Version verwenden, aber für ein bestimmtes Projekt
+mit der Nightly-Version arbeiten, weil dir eine innovative Funktionalität
+wichtig ist. Um dies zu tun, kannst du <code>rustup override</code> im Verzeichnis dieses
+Projekts benutzen, um die Nightly-Werkzeugkette als diejenige zu setzen, die
+<code>rustup</code> benutzen soll, wenn du dich in diesem Verzeichnis befindest:</p>
 <pre><code class="language-console">$ cd ~/projects/needs-nightly
 $ rustup override set nightly
 </code></pre>
 <p>Jedes Mal, wenn du nun <code>rustc</code> oder <code>cargo</code> innerhalb von
-<em>~/projects/needs-nightly</em> aufrufst, stellt <code>rustup</code> sicher, dass du das
-nächtliche Rust verwendest und nicht dein standardmäßiges, stabiles Rust. Das
-ist praktisch, wenn du viele Rust-Projekte hast!</p>
+<em>~/projects/needs-nightly</em> aufrufst, stellt <code>rustup</code> sicher, dass du das nightly
+Rust verwendest und nicht dein standardmäßiges, stable Rust. Das ist praktisch,
+wenn du viele Rust-Projekte hast!</p>
 <h3 id="der-rfc-prozess-und-die-teams"><a class="header" href="#der-rfc-prozess-und-die-teams">Der RFC-Prozess und die Teams</a></h3>
 <p>Wie erfährst du also von diesen neuen Funktionalitäten? Das Entwicklungsmodell
 von Rust folgt einem <em>Bitte-um-Kommentare-Prozess</em> (Request For Comments, RFC).
@@ -334,18 +332,17 @@ Dokumentation und weitere. Das zuständige Team liest den Vorschlag und die
 Kommentare, schreibt einige eigene Kommentare und schließlich gibt es einen
 Konsens, die Funktionalität anzunehmen oder abzulehnen.</p>
 <p>Wenn die Funktionalität angenommen wird, wird ein Ticket (issue) in der
-Rust-Versionsverwaltung eröffnet, und jemand kann es implementieren. Die
-Person, die es sehr gut umsetzt, ist möglicherweise nicht die Person, die die
+Rust-Versionsverwaltung eröffnet, und jemand kann es implementieren. Die Person,
+die es sehr gut umsetzt, ist möglicherweise nicht die Person, die die
 Funktionalität ursprünglich vorgeschlagen hat! Wenn die Implementierung fertig
-ist, landet im Hauptzweig hinter einem Funktionalitäts-Schalter, wie wir im
+ist, landet sie im Hauptzweig hinter einem Funktionalitäts-Schalter, wie wir im
 Abschnitt <a href="#instabile-funktionalitäten">„Instabile Funktionalitäten“</a> besprochen haben.</p>
 <p>Nach einiger Zeit, in der Rust-Entwickler die neue Funktionalität in den
-nächtlichen Veröffentlichungen ausprobieren konnten, werden die Teammitglieder
-die Ausarbeitung der Funktionalität im nächtlichen Zweig diskutieren und
-entscheiden, ob sie ins stabile Rust kommen soll oder nicht. Wenn die
-Entscheidung positiv ist, wird das Funktionalitätstor (feature gate) entfernt
-und die Funktionalität gilt jetzt als stabil! Sie fährt mit den Zügen in eine
-neue stabile Version von Rust.</p>
+Nightly-Veröffentlichungen ausprobieren konnten, werden die Teammitglieder die
+Ausarbeitung der Funktionalität im Nightly-Zweig diskutieren und entscheiden, ob
+sie ins Stable-Rust kommen soll oder nicht. Wenn die Entscheidung positiv ist,
+wird das Funktionalitätstor (feature gate) entfernt und die Funktionalität gilt
+jetzt als stabil! Sie fährt mit den Zügen in eine neue Stable-Version von Rust.</p>
 
                     </main>
 

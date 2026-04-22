@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -166,21 +166,21 @@
 welche Art von Daten angegeben wird, damit es weiß, wie es mit diesen Daten
 arbeiten soll. Wir werden uns zwei Datentyp-Untermengen ansehen: Skalar (scalar) und
 Verbund (compound).</p>
-<p>Denk daran, dass Rust eine <em>statisch typisierte</em> Sprache ist, was bedeutet,
-dass es die Typen von allen Variablen zur Kompilierzeit kennen muss. Der
-Compiler kann normalerweise auf der Grundlage des Wertes und wie wir ihn
-verwenden ableiten, welchen Typ wir verwenden wollen. Wenn mehrere Typen
-möglich sind, wie zum Beispiel als wir im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl">„Vergleichen der Schätzung
-mit der Geheimzahl“</a> eine
-Zeichenkette (<code>String</code>) mittels <code>parse</code> zu einem numerischen Typ umwandelten,
-müssen wir eine Typ-Annotation ergänzen, wie hier:</p>
+<p>Denk daran, dass Rust eine <em>statisch typisierte</em> Sprache ist, was bedeutet, dass
+es die Typen von allen Variablen zur Kompilierzeit kennen muss. Der Compiler
+kann normalerweise auf der Grundlage des Wertes und wie wir ihn verwenden
+ableiten, welchen Typ wir verwenden wollen. Wenn mehrere Typen möglich sind, wie
+zum Beispiel als wir im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl">„Vergleichen der Schätzung mit der
+Geheimzahl“</a> einen String mittels
+<code>parse</code> zu einem numerischen Typ umwandelten, müssen wir eine Typ-Annotation
+ergänzen, wie hier:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let guess: u32 = "42".parse().expect("Keine Zahl!");
 <span class="boring">}</span></code></pre>
-<p>Wenn wir diese Typ-Annotation nicht angeben, zeigt Rust den folgenden Fehler
-an, was bedeutet, dass der Compiler mehr Informationen von uns benötigt, um
-zu wissen welchen Typ wir verwenden wollen:</p>
+<p>Wenn wir diese Typ-Annotation nicht angeben, zeigt Rust den folgenden Fehler an,
+was bedeutet, dass der Compiler mehr Informationen von uns benötigt, um zu
+wissen, welchen Typ wir verwenden wollen:</p>
 <pre><code class="language-console">$ cargo build
    Compiling no_type_annotations v0.1.0 (file:///projects/no_type_annotations)
 error[E0284]: type annotations needed
@@ -230,10 +230,10 @@ verwenden, um den Typ eines ganzzahligen Wertes zu deklarieren.</p>
 <p>Jede Variante kann entweder vorzeichenbehaftet oder vorzeichenlos sein und hat
 eine explizite Größe. <em>Vorzeichenbehaftet</em> (signed) und <em>vorzeichenlos</em>
 (unsigned) beziehen sich darauf, ob es möglich ist, dass die Zahl negativ ist
-– in anderen Worten, ob die Zahl ein Vorzeichen haben muss
+– mit anderen Worten, ob die Zahl ein Vorzeichen haben muss
 (vorzeichenbehaftet) oder ob sie immer nur positiv sein wird und daher ohne
-Vorzeichen dargestellt werden kann (vorzeichenlos). Es ist wie das Schreiben
-von Zahlen auf Papier: Wenn das Vorzeichen eine Rolle spielt, wird die Zahl mit
+Vorzeichen dargestellt werden kann (vorzeichenlos). Es ist wie das Schreiben von
+Zahlen auf Papier: Wenn das Vorzeichen eine Rolle spielt, wird die Zahl mit
 einem Plus- oder Minuszeichen geschrieben; wenn man jedoch davon ausgehen kann,
 dass die Zahl positiv ist, wird sie ohne Vorzeichen geschrieben.
 Vorzeichenbehaftete Zahlen werden unter Verwendung der
@@ -257,7 +257,7 @@ wenn du <code>1000</code> angegeben hättest.</p>
 <div class="table-wrapper">
 <table>
 <thead>
-<tr><th>Ganzahl-Literal</th><th>Beispiel</th></tr>
+<tr><th>Ganzzahl-Literal</th><th>Beispiel</th></tr>
 </thead>
 <tbody>
 <tr><td>Dezimal</td><td><code>98_222</code></td></tr>
@@ -268,10 +268,10 @@ wenn du <code>1000</code> angegeben hättest.</p>
 </tbody>
 </table>
 </div>
-<p>Woher weist du also, welcher Ganzzahltyp zu verwenden ist? Wenn du dir unsicher
+<p>Woher weißt du also, welcher Ganzzahltyp zu verwenden ist? Wenn du dir unsicher
 bist, sind Rusts Standards im Allgemeinen ein guter Ausgangspunkt: Ganzzahlige
 Typen sind standardmäßig <code>i32</code>. Die primäre Situation, in der du <code>isize</code> oder
-<code>usize</code> verwendest, ist beim Indizieren einer Art Sammlung.</p>
+<code>usize</code> verwendest, ist beim Indizieren einer Art Kollektion.</p>
 <blockquote>
 <h5 id="ganzzahlüberlauf"><a class="header" href="#ganzzahlüberlauf">Ganzzahlüberlauf</a></h5>
 <p>Nehmen wir an, du hast eine Variable vom Typ <code>u8</code>, die Werte zwischen 0 und
@@ -287,7 +287,7 @@ Kapitel 9 näher betrachten.</p>
 <p>Wenn du mit dem Schalter <code>--release</code> im Freigabemodus (release mode)
 kompilierst, fügt Rust <em>keine</em> Prüfungen auf Ganzzahlüberläufe, die das
 Programm abbrechen, ein. Wenn ein Überlauf auftritt, führt Rust stattdessen
-einen <em>Zweier-Komplement-Umbruch</em> durch. Kurz gesagt, Werte die größer als
+einen <em>Zweier-Komplement-Umbruch</em> durch. Kurz gesagt, Werte, die größer als
 der Maximalwert den der Typ enthalten kann sind, werden umgebrochen zum
 kleinsten Wert den der Typ enthalten kann. Im Falle eines <code>u8</code> wird der Wert
 256 zu 0, der Wert 257 zu 1 und so weiter. Das Programm wird nicht abbrechen,
@@ -362,7 +362,7 @@ Beispiel:</p>
     let f: bool = false; // mit expliziter Typ-Annotation
 }</code></pre>
 <p>Hauptsächlich werden boolesche Werte in Bedingungen verwendet, z.B. im
-<code>if</code>-Ausdruck. Wie <code>if</code>-Ausdrücke in Rust funktionieren werden wir im Abschnitt
+<code>if</code>-Ausdruck. Wie <code>if</code>-Ausdrücke in Rust funktionieren, werden wir im Abschnitt
 <a href="ch03-05-control-flow.html">„Kontrollfluss“</a> erläutern.</p>
 <h4 id="der-zeichen-typ"><a class="header" href="#der-zeichen-typ">Der Zeichen-Typ</a></h4>
 <p>Rusts Typ <code>char</code> ist der primitivste alphabetische Typ der Sprache. Hier sind
@@ -374,17 +374,17 @@ einige Beispiele für die Deklaration von <code>char</code>-Werten:</p>
     let heart_eyed_cat = '😻';
 }</code></pre>
 <p>Beachte, dass wir <code>char</code>-Literale mit einfachen Anführungszeichen angeben, im
-Gegensatz zu Zeichenketten-Literalen, die doppelte Anführungszeichen verwenden.
-Der Typ <code>char</code> von Rust ist vier Bytes groß und stellt einen Unicode-Skalarwert
-dar, was bedeutet, dass er viel mehr als nur ASCII darstellen kann.
-Akzentuierte Buchstaben, chinesische, japanische und koreanische Zeichen, Emoji
-und Leerzeichen mit Null-Breite sind gültige <code>char</code>-Werte in Rust.
+Gegensatz zu String-Literalen, die doppelte Anführungszeichen verwenden. Der Typ
+<code>char</code> von Rust ist vier Bytes groß und stellt einen Unicode-Skalarwert dar, was
+bedeutet, dass er viel mehr als nur ASCII darstellen kann. Akzentuierte
+Buchstaben, chinesische, japanische und koreanische Zeichen, Emoji und
+Leerzeichen mit Null-Breite sind gültige <code>char</code>-Werte in Rust.
 Unicode-Skalarwerte reichen von <code>U+0000</code> bis <code>U+D7FF</code> und von <code>U+E000</code> bis
 einschließlich <code>U+10FFFF</code>. Ein „Zeichen“ ist jedoch nicht wirklich ein Konzept
 in Unicode, deine menschliche Intuition dafür, was ein „Zeichen“ ist, stimmt
 möglicherweise nicht mit dem überein, was ein <code>char</code> in Rust ist. Wir werden
-dieses Thema in <a href="ch08-02-strings.html">„UTF-8-kodierten Text in Zeichenketten (strings)
-ablegen“</a> in Kapitel 8 im Detail besprechen.</p>
+dieses Thema in <a href="ch08-02-strings.html">„UTF-8-kodierten Text in Strings ablegen“</a> in Kapitel
+8 im Detail besprechen.</p>
 <h3 id="verbund-typen"><a class="header" href="#verbund-typen">Verbund-Typen</a></h3>
 <p><em>Verbund-Typen</em> (compound types) können mehrere Werte zu einem Typ gruppieren.
 Rust hat zwei primitive Verbund-Typen: Tupel (tuples) und Arrays (arrays).</p>
@@ -402,8 +402,8 @@ Beispiel haben wir optionale Typ-Annotationen angegeben:</p>
 }</code></pre>
 <p>Die Variable <code>tup</code> bindet das gesamte Tupel, da ein Tupel als ein einziges
 Verbundelement betrachtet wird. Um die einzelnen Werte aus einem Tupel
-herauszubekommen, können wir den Musterabgleich verwenden, um einen Tupelwert
-zu destrukturieren, etwa so:</p>
+herauszubekommen, können wir Pattern Matching verwenden, um einen Tupelwert zu
+destrukturieren, etwa so:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let tup = (500, 6.4, 1);
@@ -443,23 +443,23 @@ Wert zurückgeben.</p>
 einem <em>Array</em>. Im Gegensatz zu einem Tupel muss jedes Element eines Arrays den
 gleichen Typ haben. Anders als Arrays in einigen anderen Sprachen haben Arrays
 in Rust eine feste Länge.</p>
-<p>Wir schreiben die Werte in einem Array als kommagetrennte Liste in eckigen
+<p>Wir schreiben die Werte in einem Array als komma-getrennte Liste in eckigen
 Klammern:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let a = [1, 2, 3, 4, 5];
 }</code></pre>
-<p>Arrays sind nützlich, wenn du deine Daten eher auf dem Stapelspeicher als im
-Haldenspeicher abgelegt haben möchtest, wie bei den anderen Typen, die wir
-bisher gesehen haben, (auf den Stapelspeicher und den Haldenspeicher gehen wir
-in <a href="ch04-01-what-is-ownership.html#stapelspeicher-stack-und-haldenspeicher-heap">Kapitel 4</a> näher ein) oder wenn du sicherstellen willst,
-dass du immer eine feste Anzahl von Elementen hast. Ein Array ist jedoch nicht
-so flexibel wie der Vektortyp. Ein <em>Vektor</em> ist ein ähnlicher Kollektionstyp,
-der von der Standardbibliothek zur Verfügung gestellt wird und der in seiner
-Größe wachsen oder schrumpfen kann, weil sein Inhalt auf dem Haldenspeicher
-liegt. Wenn du dir nicht sicher bist, ob du ein Array oder einen Vektor
-verwenden sollst, ist es wahrscheinlich, dass du einen Vektor verwenden
-solltest. In <a href="ch08-01-vectors.html">Kapitel 8</a> werden Vektoren ausführlicher besprochen.</p>
+<p>Arrays sind nützlich, wenn du deine Daten eher auf dem Stack als im Heap
+abgelegt haben möchtest, wie bei den anderen Typen, die wir bisher gesehen
+haben, (auf den Stack und den Heap gehen wir in <a href="ch04-01-what-is-ownership.html#stack-und-heap">Kapitel 4</a>
+näher ein) oder wenn du sicherstellen willst, dass du immer eine feste Anzahl
+von Elementen hast. Ein Array ist jedoch nicht so flexibel wie der Vektortyp.
+Ein <em>Vektor</em> ist ein ähnlicher Kollektionstyp, der von der Standardbibliothek
+zur Verfügung gestellt wird und der in seiner Größe wachsen oder schrumpfen
+kann, weil sein Inhalt auf dem Heap liegt. Wenn du dir nicht sicher bist, ob du
+ein Array oder einen Vektor verwenden sollst, ist es wahrscheinlich, dass du
+einen Vektor verwenden solltest. In <a href="ch08-01-vectors.html">Kapitel 8</a> werden Vektoren
+ausführlicher besprochen.</p>
 <p>Arrays sind jedoch hilfreicher, wenn du weißt, dass sich die Anzahl der
 Elemente nicht ändern wird. Wenn du z.B. die Monatsnamen in einem Programm
 verwendest, würdest du wahrscheinlich eher ein Array als einen Vektor
@@ -490,8 +490,8 @@ auf den Wert <code>3</code> gesetzt werden. Dies ist dasselbe wie das Schreiben 
 <code>let a = [3, 3, 3, 3, 3];</code>, aber in einer prägnanteren Weise.</p>
 <h4 id="zugriff-auf-array-elemente"><a class="header" href="#zugriff-auf-array-elemente">Zugriff auf Array-Elemente</a></h4>
 <p>Ein Array ist ein einzelner Speicherbereich mit einer bekannten, festen Größe,
-der auf den Stapelspeicher gelegt wird. Du kannst auf Elemente eines Arrays mit
-Hilfe der Indizierung wie folgt zugreifen:</p>
+der auf den Stack gelegt wird. Du kannst auf Elemente eines Arrays mit Hilfe
+der Indizierung wie folgt zugreifen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let a = [1, 2, 3, 4, 5];
@@ -540,10 +540,10 @@ wie diese:</p>
 index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
-<p>Das Programm führte zu einem Laufzeitfehler an der Stelle, an der ein
-ungültiger Wert in der Index-Operation verwendet wurde. Das Programm wurde mit
-einer Fehlermeldung beendet und hat die abschließende <code>println!</code>-Anweisung
-nicht ausgeführt. Wenn du versuchst, mit Hilfe der Indizierung auf ein Element
+<p>Das Programm führte zu einem Laufzeitfehler an der Stelle, an der ein ungültiger
+Wert in der Index-Operation verwendet wurde. Das Programm wurde mit einer
+Fehlermeldung abgebrochen und hat die abschließende <code>println!</code>-Anweisung nicht
+ausgeführt. Wenn du versuchst, mit Hilfe der Indizierung auf ein Element
 zuzugreifen, prüft Rust, ob der angegebene Index kleiner als die Array-Länge
 ist. Wenn der Index größer oder gleich der Länge ist, wird Rust das Programm
 abbrechen. Diese Prüfung muss zur Laufzeit erfolgen, insbesondere in diesem
@@ -552,10 +552,10 @@ eingeben wird, wenn er den Code ausführt.</p>
 <p>Dies ist ein Beispiel für die Umsetzung der Speichersicherheitsprinzipien von
 Rust. In vielen Low-Level-Sprachen wird diese Art der Überprüfung nicht
 durchgeführt und wenn du einen falschen Index angibst, kann auf ungültigen
-Speicher zugegriffen werden. Rust schützt dich vor dieser Art von Fehlern,
-indem es das Programm sofort beendet, anstatt den Speicherzugriff zuzulassen
-und fortzusetzen. Kapitel 9 behandelt die Fehlerbehandlung in Rust und wie du
-lesbaren, sicheren Code schreiben kannst, der weder abstürzt noch ungültige
+Speicher zugegriffen werden. Rust schützt dich vor dieser Art von Fehlern, indem
+es das Programm sofort abbricht, anstatt den Speicherzugriff zuzulassen und
+fortzusetzen. Kapitel 9 behandelt die Fehlerbehandlung in Rust und wie du
+lesbaren, sicheren Code schreiben kannst, der weder abbricht noch ungültige
 Speicherzugriffe zulässt.</p>
 
                     </main>

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Ströme (streams): Sequenz von Futures - Die Programmiersprache Rust</title>
+        <title>Streams: Sequenz von Futures - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,38 +161,38 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="ströme-streams-sequenz-von-futures"><a class="header" href="#ströme-streams-sequenz-von-futures">Ströme (streams): Sequenz von Futures</a></h2>
-<p>Erinnere dich daran, wie wir den Empfänger unseres asynchronen Kanals
-weiter in Abschnitt <a href="ch17-02-concurrency-with-async.html#datenaustausch-zwischen-zwei-aufgaben-mit-nachrichtenübermittlung">„Datenaustausch zwischen zwei Aufgaben mit
+                        <h2 id="streams-sequenz-von-futures"><a class="header" href="#streams-sequenz-von-futures">Streams: Sequenz von Futures</a></h2>
+<p>Erinnere dich daran, wie wir den Empfänger unseres asynchronen Kanals weiter in
+Abschnitt <a href="ch17-02-concurrency-with-async.html#datenaustausch-zwischen-zwei-aufgaben-mit-nachrichtenübermittlung">„Datenaustausch zwischen zwei Aufgaben mit
 Nachrichtenübermittlung“</a> oben in diesem Kapitel verwendet
 haben. Die asynchrone Methode <code>recv</code> erzeugt eine Sequenz von Elementen. Dies
-ist ein Beispiel eines viel allgemeineren Musters, bekannt als <em>Strom</em>
-(stream). Viele Konzepte lassen sich ganz natürlich als Ströme darstellen:
+ist ein Beispiel eines viel allgemeineren Musters, bekannt als <em>Stream</em> (Strom,
+Fluss). Viele Konzepte lassen sich ganz natürlich als Streams darstellen:
 Elemente, die in einer Warteschlange verfügbar werden, Datenblöcke, die
 schrittweise aus dem Dateisystem eingelesen werden, wenn der gesamte Datensatz
-zu große für den Arbeitsspeicher des Computers ist, oder Daten, die nach und
-nach über das Netzwerk eintreffen. Da Ströme Futures sind, können wir sie mit
-jeder anderen Art von Future verwenden und auf interessante Weise kombinieren.
+zu groß für den Arbeitsspeicher des Computers ist, oder Daten, die nach und nach
+über das Netzwerk eintreffen. Da Streams Futures sind, können wir sie mit jeder
+anderen Art von Future verwenden und auf interessante Weise kombinieren.
 Beispielsweise können wir Ereignisse bündeln, um zu viele Netzwerkaufrufe zu
-vermeiden, Zeitlimits für lang andauernde Vorgänge festlegen oder Ereignisse
-der Benutzeroberfläche drosseln, um unnötige Arbeit zu vermeiden.</p>
-<p>Wir haben eine Sequenz von Elementen in Kapitel 13 gesehen, als das Merkmal
-<code>Iterator</code> im Abschnitt <a href="ch13-02-iterators.html#das-merkmal-trait-iterator-und-die-methode-next">„Das Merkmal (trait) <code>Iterator</code> und die Methode
+vermeiden, Zeitlimits für lang andauernde Vorgänge festlegen oder Ereignisse der
+Benutzeroberfläche drosseln, um unnötige Arbeit zu vermeiden.</p>
+<p>Wir haben eine Sequenz von Elementen in Kapitel 13 gesehen, als wir das Trait
+<code>Iterator</code> im Abschnitt <a href="ch13-02-iterators.html#das-trait-iterator-und-die-methode-next">„Das Trait <code>Iterator</code> und die Methode
 <code>next</code>“</a> betrachtet haben. Es gibt jedoch zwei Unterschiede zwischen
 Iteratoren und dem asynchronen Kanalempfänger. Der erste ist die Zeit:
 Iteratoren sind synchron, während der Kanalempfänger asynchron ist. Der zweite
 ist die API. Wenn wir direkt mit einem <code>Iterator</code> arbeiten, rufen wir seine
-synchrone Methode <code>next</code> auf. Mit dem Strom <code>trpl::Receiver</code> rufen wir
+synchrone Methode <code>next</code> auf. Mit dem Stream <code>trpl::Receiver</code> rufen wir
 stattdessen die asynchrone Methode <code>recv</code> auf. Ansonsten sind sich diese APIs
-sehr ähnlich, und diese Ähnlichkeit ist kein Zufall. Ein Strom ist wie eine
+sehr ähnlich, und diese Ähnlichkeit ist kein Zufall. Ein Stream ist wie eine
 asynchrone Form der Iteration. Während <code>trpl::Receiver</code> jedoch speziell auf den
-Empfang von Nachrichten wartet, ist die allgemeine Strom-API viel breiter
+Empfang von Nachrichten wartet, ist die allgemeine Stream-API viel breiter
 angelegt: Sie liefert das nächste Element auf die gleiche Weise wie <code>Iterator</code>,
 aber asynchron.</p>
-<p>Die Ähnlichkeit zwischen Iteratoren und Strömen in Rust bedeutet, dass wir aus
-jedem Iterator einen Strom erzeugen können. Wie bei einem Iterator können wir
-mit einem Strom arbeiten, indem wir seine Methode <code>next</code> aufrufen und dann auf
-die Ausgabe warten, wie in Codeblock 17-21.</p>
+<p>Die Ähnlichkeit zwischen Iteratoren und Streams in Rust bedeutet, dass wir aus
+jedem Iterator einen Stream erzeugen können. Wie bei einem Iterator können wir
+mit einem Stream arbeiten, indem wir seine Methode <code>next</code> aufrufen und dann auf
+die Ausgabe warten, wie in Listing 17-21.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
 </span><span class="boring">    trpl::block_on(async {
@@ -205,13 +205,12 @@ die Ausgabe warten, wie in Codeblock 17-21.</p>
         }
 <span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-21: Erstellen eines Stroms aus einem
-Iterator und Ausgeben seiner Werte</span></p>
-<p>Wir beginnen mit einem Array von Zahlen, das wir in einen Iterator umwandeln
-und dann <code>map</code> aufrufen, um alle Werte zu verdoppeln. Dann wandeln wir den
-Iterator mit der Funktion <code>trpl::stream_from_iter</code> in einen Strom um.
-Schließlich durchlaufen wir mit der <code>while let</code>-Schleife die Elemente im
-Strom.</p>
+<p><span class="caption">Listing 17-21: Erstellen eines Streams aus einem Iterator
+und Ausgeben seiner Werte</span></p>
+<p>Wir beginnen mit einem Array von Zahlen, das wir in einen Iterator umwandeln und
+dann <code>map</code> aufrufen, um alle Werte zu verdoppeln. Dann wandeln wir den Iterator
+mit der Funktion <code>trpl::stream_from_iter</code> in einen Stream um. Schließlich
+durchlaufen wir mit der <code>while let</code>-Schleife die Elemente im Stream.</p>
 <p>Leider lässt sich der Code nicht kompilieren, sondern wir bekommen die
 Fehlermeldung, dass keine Methode <code>next</code> verfügbar ist:</p>
 <pre><code class="language-text">error[E0599]: no method named `next` found for struct `tokio_stream::iter::Iter` in the current scope
@@ -237,20 +236,20 @@ help: there is a method `try_next` with a similar name
    |                                        ~~~~~~~~
 </code></pre>
 <p>Wie diese Ausgabe erklärt, liegt der Grund für den Compilerfehler darin, dass
-wir das richtige Merkmal im Gültigkeitsbereich benötigen, um die Methode <code>next</code>
+wir das richtige Trait im Gültigkeitsbereich benötigen, um die Methode <code>next</code>
 verwenden zu können. In Anbetracht der bisherigen Diskussion könnte man
-erwarten, dass es sich um das Merkmal <code>Stream</code> handelt, aber ist das Merkmal
-<code>StreamExt</code>. <code>Ext</code> steht hier für „extension“ (engl. Erweiterung): Dies ist
-eine gängige Vorgehensweise in der Rust-Gemeinschaft, um ein Merkmal mit einem
-anderen zu erweitern.</p>
-<p>Das Merkmal <code>Stream</code> definiert eine Low-Level-Schnittstelle, die die Merkmale
+erwarten, dass es sich um das Trait <code>Stream</code> handelt, aber ist das Trait
+<code>StreamExt</code>. <code>Ext</code> steht hier für „extension“ (Erweiterung): Dies ist eine
+gängige Vorgehensweise in der Rust-Gemeinschaft, um ein Trait mit einem anderen
+zu erweitern.</p>
+<p>Das Trait <code>Stream</code> definiert eine Low-Level-Schnittstelle, die die Traits
 <code>Iterator</code> und <code>Future</code> effektiv kombiniert. <code>StreamExt</code> bietet eine Reihe von
-APIs auf höherer Ebene ab, die auf <code>Stream</code> basieren, darunter die Methode
-<code>next</code> sowie andere Hilfsmethoden, die denen des Merkmals <code>Iterator</code> ähneln.
-<code>Stream</code> und <code>StreamExt</code> sind noch nicht Teil der Standardbibliothek von Rust,
-aber die meisten Kisten des Ökosystems verwenden ähnliche Definitionen.</p>
+APIs auf höherer Ebene, die auf <code>Stream</code> basieren, darunter die Methode <code>next</code>
+sowie andere Hilfsmethoden, die denen des Traits <code>Iterator</code> ähneln. <code>Stream</code> und
+<code>StreamExt</code> sind noch nicht Teil der Standardbibliothek von Rust, aber die
+meisten Crates des Ökosystems verwenden ähnliche Definitionen.</p>
 <p>Um den Compilerfehler zu beheben, fügen wir eine <code>use</code>-Anweisung für
-<code>trpl::StreamExt</code> hinzu, wie in Codeblock 17-22.</p>
+<code>trpl::StreamExt</code> hinzu, wie in Listing 17-22.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use trpl::StreamExt;
 
@@ -266,8 +265,8 @@ fn main() {
 </span><span class="boring">        }
 </span><span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-22: Erfolgreiche Verwendung eines Iterators
-als Grundlage für einen Strom</span></p>
+<p><span class="caption">Listing 17-22: Erfolgreiche Verwendung eines Iterators als
+Grundlage für einen Stream</span></p>
 <p>Mit all diesen Teilen zusammen funktioniert der Code so, wie wir es wollen!
 Außerdem können wir jetzt, da wir <code>StreamExt</code> im Gültigkeitsbereich haben, alle
 seine Hilfsmethoden verwenden, genau wie bei Iteratoren.</p>

@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -165,18 +165,18 @@
 <p>Bisher haben alle Beispiele in diesem Kapitel mehrere Module in einer Datei
 definiert. Wenn Module groß werden, solltest du ihre Definitionen in eine
 separate Datei verschieben, um die Navigation im Code zu erleichtern.</p>
-<p>Gehen wir zum Beispiel von dem Code in Codeblock 7-17 aus, der mehrere
+<p>Gehen wir zum Beispiel von dem Code in Listing 7-17 aus, der mehrere
 Restaurantmodule enthält. Wir verschieben das Modul <code>front_of_house</code> in seine
-eigene Datei <em>src/front_of_house.rs</em>, indem wir die Kistenwurzeldatei so
-ändern, dass sie den in Codeblock 7-21 gezeigten Code enthält. In diesem Fall
-ist die Kistenwurzeldatei <em>src/lib.rs</em>, aber diese Vorgehensweise funktioniert
-auch mit binären Kisten, deren Kistenwurzeldatei <em>src/main.rs</em> ist.</p>
+eigene Datei <em>src/front_of_house.rs</em>, indem wir die Crate-Wurzeldatei so ändern,
+dass sie den in Listing 7-21 gezeigten Code enthält. In diesem Fall ist die
+Crate-Wurzeldatei <em>src/lib.rs</em>, aber diese Vorgehensweise funktioniert auch mit
+binären Crates, deren Crate-Wurzeldatei <em>src/main.rs</em> ist.</p>
 <p>Zuerst extrahieren wir das Modul <code>front_of_house</code> in eine eigene Datei.
 Entferne den Code innerhalb der geschweiften Klammern des Moduls
 <code>front_of_house</code> und lasse nur die Deklaration <code>mod front_of_house;</code> übrig,
-sodass <em>src/lib.rs</em> den in Codeblock 7-21 gezeigten Code enthält. Beachte, dass
+sodass <em>src/lib.rs</em> den in Listing 7-21 gezeigten Code enthält. Beachte, dass
 dies nicht kompiliert und wir noch die Datei <em>src/front_of_house.rs</em> in
-Codeblock 7-22 erstellen müssen.</p>
+Listing 7-22 erstellen müssen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile">mod front_of_house;
 
@@ -185,18 +185,18 @@ pub use crate::front_of_house::hosting;
 pub fn eat_at_restaurant() {
     hosting::add_to_waitlist();
 }</code></pre>
-<p><span class="caption">Codeblock 7-21: Deklarieren des Moduls <code>front_of_house</code>,
+<p><span class="caption">Listing 7-21: Deklarieren des Moduls <code>front_of_house</code>,
 dessen Rumpf sich in <em>src/front_of_house.rs</em> befinden wird</span></p>
 <p>Als nächstes fügst du den Code in den geschweiften Klammern in eine neue Datei
-namens <em>src/front_of_house.rs</em> ein, wie in Codeblock 7-22 zu sehen ist. Der
+namens <em>src/front_of_house.rs</em> ein, wie in Listing 7-22 zu sehen ist. Der
 Compiler weiß, dass er in dieser Datei suchen muss, weil er auf die
-Moduldeklaration in der Kistenwurzel mit dem Namen <code>front_of_house</code> gestoßen
+Moduldeklaration in der Crate-Wurzel mit dem Namen <code>front_of_house</code> gestoßen
 ist.</p>
 <p><span class="filename">Dateiname: src/front_of_house.rs</span></p>
 <pre><code class="language-rust ignore">pub mod hosting {
     pub fn add_to_waitlist() {}
 }</code></pre>
-<p><span class="caption">Codeblock 7-22: Definitionen innerhalb des Moduls
+<p><span class="caption">Listing 7-22: Definitionen innerhalb des Moduls
 <code>front_of_house</code> in <em>src/front_of_house.rs</em></span></p>
 <p>Beachte, dass du den Inhalt einer Datei mit einer <code>mod</code>-Deklaration nur
 <em>einmal</em> in deinem Modulbaum laden musst. Sobald der Compiler weiß, dass die
@@ -225,17 +225,17 @@ enthält:</p>
 </span>pub fn add_to_waitlist() {}
 <span class="boring">}</span></code></pre>
 <p>Wenn wir stattdessen <em>hosting.rs</em> in das <em>src</em>-Verzeichnis legen, würde der
-Compiler erwarten, dass der <em>hosting.rs</em>-Code in einem <code>hosting</code>-Modul
-enthalten ist, das im Stammverzeichnis der Kiste deklariert ist, und nicht als
-Kind des <code>front_of_house</code>-Moduls. Die Regeln des Compilers dafür, welche
-Dateien auf den Code welcher Module zu prüfen sind, bedeuten, dass die
-Verzeichnisse und Dateien dem Modulbaum besser entsprechen.</p>
+Compiler erwarten, dass der <em>hosting.rs</em>-Code in einem <code>hosting</code>-Modul enthalten
+ist, das im Stammverzeichnis der Crate deklariert ist, und nicht als Kind des
+<code>front_of_house</code>-Moduls. Die Regeln des Compilers dafür, welche Dateien auf den
+Code welcher Module zu prüfen sind, bedeuten, dass die Verzeichnisse und Dateien
+dem Modulbaum besser entsprechen.</p>
 <blockquote>
 <h3 id="alternative-dateipfade"><a class="header" href="#alternative-dateipfade">Alternative Dateipfade</a></h3>
 <p>Bis jetzt haben wir die idiomatischsten Dateipfade behandelt, die der
 Rust-Compiler verwendet, aber Rust unterstützt auch eine ältere Art von
 Dateipfaden. Für ein Modul mit dem Namen <code>front_of_house</code>, das in der
-Kistenwurzel deklariert ist, sucht der Compiler den Code des Moduls in:</p>
+Crate-Wurzel deklariert ist, sucht der Compiler den Code des Moduls in:</p>
 <ul>
 <li><em>src/front_of_house.rs</em> (was wir behandelt haben)</li>
 <li><em>src/front_of_house/mod.rs</em> (älterer Stil, noch unterstützter Pfad)</li>
@@ -246,7 +246,7 @@ Kistenwurzel deklariert ist, sucht der Compiler den Code des Moduls in:</p>
 <li><em>src/front_of_house/hosting.rs</em> (was wir behandelt haben)</li>
 <li><em>src/front_of_house/hosting/mod.rs</em> (älterer Stil, noch unterstützter Pfad)</li>
 </ul>
-<p>Wenn du beide Stile für dasselbe Modul verwendest, erhältst einen
+<p>Wenn du beide Stile für dasselbe Modul verwendest, erhältst du einen
 Compilerfehler. Die Verwendung einer Mischung beider Stile für verschiedene
 Module im selben Projekt ist zulässig, kann aber für die Benutzer verwirrend
 sein, die durch dein Projekt navigieren.</p>
@@ -262,18 +262,18 @@ Dateien stehen. Mit dieser Technik kannst du Module in neue Dateien
 verschieben, wenn diese größer werden.</p>
 <p>Beachte, dass sich die Anweisung <code>pub use crate::front_of_house::hosting</code> in
 <em>src/lib.rs</em> ebenfalls nicht geändert hat und dass <code>use</code> keinen Einfluss darauf
-hat, welche Dateien als Teil der Kiste kompiliert werden. Das Schlüsselwort
+hat, welche Dateien als Teil der Crate kompiliert werden. Das Schlüsselwort
 <code>mod</code> deklariert Module und Rust sucht in einer Datei mit dem Modulnamen nach
 dem Code, der zu diesem Modul gehört.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
-<p>Mit Rust kannst du ein Paket in mehrere Kisten und eine Kiste in Module
-aufteilen, sodass du auf in einem Modul definierte Elemente aus einem anderen
-Modul verweisen kannst. Du kannst dies tun, indem du absolute oder relative
-Pfade angibst. Diese Pfade können mit einer <code>use</code>-Anweisung in den
-Gültigkeitsbereich gebracht werden, sodass du einen kürzeren Pfad für mehrere
-Verwendungen des Elements in diesem Gültigkeitsbereich angeben kannst. Der
-Modulcode ist standardmäßig privat, aber du kannst Definitionen öffentlich
-machen, indem du das Schlüsselwort <code>pub</code> angibst.</p>
+<p>Rust erlaubt es dir, ein Paket in mehrere Crates und eine Crate in Module
+aufzuteilen, damit du auf Elemente, die in einem Modul definiert sind, von einem
+anderen Modul aus verweisen kannst. Dazu gibst du absolute oder relative Pfade
+an. Diese Pfade kannst du mit einer <code>use</code>-Anweisung in den Gültigkeitsbereich
+bringen, sodass du in diesem Gültigkeitsbereich einen kürzeren Pfad verwenden
+kannst, wenn du das Element mehrfach brauchst. Modulcode ist standardmäßig
+privat; mit dem Schlüsselwort <code>pub</code> kannst du Definitionen jedoch öffentlich
+machen.</p>
 <p>Im nächsten Kapitel werden wir uns einige Kollektionsdatenstrukturen in der
 Standardbibliothek ansehen, die du in deinem ordentlich organisierten Code
 verwenden kannst.</p>

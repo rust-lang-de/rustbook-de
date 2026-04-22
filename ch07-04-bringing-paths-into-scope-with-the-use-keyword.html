@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -163,14 +163,14 @@
                     <main>
                         <h2 id="pfade-in-den-gültigkeitsbereich-bringen-mit-dem-schlüsselwort-use"><a class="header" href="#pfade-in-den-gültigkeitsbereich-bringen-mit-dem-schlüsselwort-use">Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort <code>use</code></a></h2>
 <p>Die Pfade für den Aufruf von Funktionen auszuschreiben, kann lästig sein und
-sich wiederholen. In Codeblock 7-7 mussten wir, unabhängig davon, ob wir den
+sich wiederholen. In Listing 7-7 mussten wir, unabhängig davon, ob wir den
 absoluten oder relativen Pfad zur Funktion <code>add_to_waitlist</code> wählten, jedes
 Mal, wenn wir <code>add_to_waitlist</code> aufrufen wollten, auch <code>front_of_house</code> und
 <code>hosting</code> angeben. Glücklicherweise gibt es eine Möglichkeit, diesen Vorgang zu
 vereinfachen: Wir können eine Verknüpfung zu einem Pfad mit dem Schlüsselwort
 <code>use</code> einmal erstellen und dann den kürzeren Namen überall sonst im
 Gültigkeitsbereich verwenden.</p>
-<p>In Codeblock 7-11 bringen wir das Modul <code>crate::front_of_house::hosting</code> in den
+<p>In Listing 7-11 bringen wir das Modul <code>crate::front_of_house::hosting</code> in den
 Gültigkeitsbereich der Funktion <code>eat_at_restaurant</code>, sodass wir nur noch
 <code>hosting::add_to_waitlist</code> angeben müssen, um die Funktion <code>add_to_waitlist</code> in
 <code>eat_at_restaurant</code> aufzurufen.</p>
@@ -186,17 +186,16 @@ use crate::front_of_house::hosting;
 pub fn eat_at_restaurant() {
     hosting::add_to_waitlist();
 }</code></pre>
-<p><span class="caption">Codeblock 7-11: Ein Modul mit <code>use</code> in den
+<p><span class="caption">Listing 7-11: Ein Modul mit <code>use</code> in den
 Gültigkeitsbereich bringen</span></p>
-<p>Das Angeben von <code>use</code> und einem Pfad in einem Gültigkeitsbereich ist ähnlich
-dem Erstellen eines symbolischen Links im Dateisystem. Durch Hinzufügen von
-<code>use crate::front_of_house::hosting</code> in der Kistenwurzel ist <code>hosting</code> nun ein
+<p>Das Angeben von <code>use</code> und einem Pfad in einem Gültigkeitsbereich ist ähnlich dem
+Erstellen eines symbolischen Links im Dateisystem. Durch Hinzufügen von <code>use crate::front_of_house::hosting</code> in der Crate-Wurzel ist <code>hosting</code> nun ein
 gültiger Name in diesem Gültigkeitsbereich, so als wäre das Modul <code>hosting</code> in
-der Kistenwurzel definiert worden. Pfade, die mit <code>use</code> in den
+der Crate-Wurzel definiert worden. Pfade, die mit <code>use</code> in den
 Gültigkeitsbereich gebracht werden, überprüfen wie alle anderen Pfade auch die
 Privatsphäre.</p>
 <p>Beachte, dass <code>use</code> nur die Verknüpfung für den jeweiligen Gültigkeitsbereich
-erstellt, in dem <code>use</code> vorkommt. Codeblock 7-12 verschiebt die Funktion
+erstellt, in dem <code>use</code> vorkommt. Listing 7-12 verschiebt die Funktion
 <code>eat_at_restaurant</code> in ein neues untergeordnetes Modul namens <code>customer</code>, das
 dann einen anderen Gültigkeitsbereich als die <code>use</code>-Anweisung hat, sodass der
 Funktionsrumpf nicht kompiliert werden kann.</p>
@@ -214,7 +213,7 @@ mod customer {
         hosting::add_to_waitlist();
     }
 }</code></pre>
-<p><span class="caption">Codeblock 7-12: Eine <code>use</code>-Anweisung gilt nur in dem
+<p><span class="caption">Listing 7-12: Eine <code>use</code>-Anweisung gilt nur in dem
 Gültigkeitsbereich, in dem sie steht</span></p>
 <p>Der Compilerfehler zeigt, dass die Verknüpfung innerhalb des Moduls <code>customer</code>
 nicht mehr gilt:</p>
@@ -249,10 +248,10 @@ Gültigkeitsbereich verwendet wird! Um dieses Problem zu beheben, verschiebe
 im übergeordneten Modul mit <code>super::hosting</code> innerhalb des untergeordneten
 Moduls <code>customer</code>.</p>
 <h3 id="idiomatische-use-pfade-erstellen"><a class="header" href="#idiomatische-use-pfade-erstellen">Idiomatische <code>use</code>-Pfade erstellen</a></h3>
-<p>In Codeblock 7-11 hast du dich vielleicht gefragt, warum wir <code>use crate::front_of_house::hosting</code> angegeben und dann <code>hosting::add_to_waitlist</code>
+<p>In Listing 7-11 hast du dich vielleicht gefragt, warum wir <code>use crate::front_of_house::hosting</code> angegeben und dann <code>hosting::add_to_waitlist</code>
 in <code>eat_at_restaurant</code> aufgerufen haben, anstatt den <code>use</code>-Pfad bis hin zur
 Funktion <code>add_to_waitlist</code> anzugeben, um dasselbe Ergebnis zu erzielen wie in
-Codeblock 7-13.</p>
+Listing 7-13.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground test_harness">mod front_of_house {
     pub mod hosting {
@@ -265,19 +264,19 @@ use crate::front_of_house::hosting::add_to_waitlist;
 pub fn eat_at_restaurant() {
     add_to_waitlist();
 }</code></pre>
-<p><span class="caption">Codeblock 7-13: Die Funktion <code>add_to_waitlist</code> mit <code>use</code>
+<p><span class="caption">Listing 7-13: Die Funktion <code>add_to_waitlist</code> mit <code>use</code>
 in den Gültigkeitsbereich bringen ist nicht idiomatisch.</span></p>
-<p>Obwohl sowohl Codeblock 7-11 als auch Codeblock 7-13 die gleiche Aufgabe
-erfüllen, ist Codeblock 7-11 der idiomatische Weg, eine Funktion mit <code>use</code> in
+<p>Obwohl sowohl Listing 7-11 als auch Listing 7-13 die gleiche Aufgabe
+erfüllen, ist Listing 7-11 der idiomatische Weg, eine Funktion mit <code>use</code> in
 den Gültigkeitsbereich zu bringen. Wenn wir das Elternmodul der Funktion mit
 <code>use</code> in den Gültigkeitsbereich bringen, sodass wir das Elternmodul beim Aufruf
 der Funktion angeben müssen, wird klar, dass die Funktion nicht lokal definiert
 ist, während gleichzeitig die Wiederholung des vollständigen Pfades minimiert
-wird. Im Code in Codeblock 7-13 ist unklar, wo <code>add_to_waitlist</code> definiert ist.</p>
+wird. Im Code in Listing 7-13 ist unklar, wo <code>add_to_waitlist</code> definiert ist.</p>
 <p>Wenn andererseits Strukturen, Aufzählungen und andere Elemente mit <code>use</code>
 eingebracht werden, ist es idiomatisch, den vollständigen Pfad anzugeben.
-Codeblock 7-14 zeigt den idiomatischen Weg, die Struktur <code>HashMap</code> der
-Standardbibliothek in den Gültigkeitsbereich einer binären Kiste zu bringen.</p>
+Listing 7-14 zeigt den idiomatischen Weg, die Struktur <code>HashMap</code> der
+Standardbibliothek in den Gültigkeitsbereich einer binären Crate zu bringen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::collections::HashMap;
 
@@ -285,14 +284,14 @@ fn main() {
     let mut map = HashMap::new();
     map.insert(1, 2);
 }</code></pre>
-<p><span class="caption">Codeblock 7-14: <code>HashMap</code> auf idiomatische Weise in den
+<p><span class="caption">Listing 7-14: <code>HashMap</code> auf idiomatische Weise in den
 Gültigkeitsbereich bringen</span></p>
 <p>Es gibt keinen triftigen Grund für dieses Idiom: Es ist einfach eine
 Konvention, die entstanden ist, und die Leute haben sich daran gewöhnt,
 Rust-Code auf diese Weise zu lesen und zu schreiben.</p>
 <p>Die Ausnahme von diesem Idiom ist, wenn wir zwei gleichnamige Elemente mit
 <code>use</code> in den Gültigkeitsbereich bringen, denn das lässt Rust nicht zu. In
-Codeblock 7-15 wird gezeigt, wie zwei <code>Result</code>-Typen mit gleichem Namen, aber
+Listing 7-15 wird gezeigt, wie zwei <code>Result</code>-Typen mit gleichem Namen, aber
 unterschiedlichen Elternmodulen in den Gültigkeitsbereich gebracht werden und
 wie auf sie verwiesen werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -311,7 +310,7 @@ fn function2() -&gt; io::Result&lt;()&gt; {
 <span class="boring">    Ok(())
 </span>}
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 7-15: Um zwei Typen mit dem gleichen Namen in
+<p><span class="caption">Listing 7-15: Um zwei Typen mit dem gleichen Namen in
 denselben Gültigkeitsbereich zu bringen, müssen ihre übergeordneten Module
 angegeben werden.</span></p>
 <p>Wie du sehen kannst, unterscheidet die Verwendung der übergeordneten Module die
@@ -322,8 +321,8 @@ Gültigkeitsbereich und Rust wüsste nicht, welchen wir beim Verwenden von
 <h3 id="mit-dem-schlüsselwort-as-neue-namen-vergeben"><a class="header" href="#mit-dem-schlüsselwort-as-neue-namen-vergeben">Mit dem Schlüsselwort <code>as</code> neue Namen vergeben</a></h3>
 <p>Es gibt eine andere Lösung für das Problem, zwei Typen desselben Namens mit
 <code>use</code> in den gleichen Gültigkeitsbereich zu bringen: Hinter dem Pfad können wir
-<code>as</code> und einen neuen lokalen Namen oder <em>Alias</em> für den Typ angeben. Codeblock
-7-16 zeigt eine weitere Möglichkeit, den Code in Codeblock 7-15 zu schreiben,
+<code>as</code> und einen neuen lokalen Namen oder <em>Alias</em> für den Typ angeben. Listing
+7-16 zeigt eine weitere Möglichkeit, den Code in Listing 7-15 zu schreiben,
 indem einer der beiden <code>Result</code>-Typen mittels <code>as</code> umbenannt wird.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -341,12 +340,12 @@ fn function2() -&gt; IoResult&lt;()&gt; {
 <span class="boring">    Ok(())
 </span>}
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 7-16: Umbenennen eines Typs, wenn er mit dem
+<p><span class="caption">Listing 7-16: Umbenennen eines Typs, wenn er mit dem
 Schlüsselwort <code>as</code> in den Gültigkeitsbereich gebracht wird</span></p>
 <p>In der zweiten <code>use</code>-Anweisung wählten wir den neuen Namen <code>IoResult</code> für den
 Typ <code>std::io::Result</code>, der nicht im Konflikt zum ebenfalls von uns in den
-Gültigkeitsbereich gebrachten <code>Result</code> aus <code>std::fmt</code> steht. Codeblock 7-15
-und Codeblock 7-16 gelten als idiomatisch, die Wahl liegt also bei dir!</p>
+Gültigkeitsbereich gebrachten <code>Result</code> aus <code>std::fmt</code> steht. Listing 7-15
+und Listing 7-16 gelten als idiomatisch, die Wahl liegt also bei dir!</p>
 <h3 id="rück-exportieren-von-namen-mit-pub-use"><a class="header" href="#rück-exportieren-von-namen-mit-pub-use">Rück-Exportieren von Namen mit <code>pub use</code></a></h3>
 <p>Wenn wir einen Namen mit dem Schlüsselwort <code>use</code> in den Gültigkeitsbereich
 bringen, ist der Name privat für den Gültigkeitsbereich, in den wir ihn
@@ -356,7 +355,7 @@ worden, können wir <code>pub</code> und <code>use</code> kombinieren. Diese Tec
 <em>Rück-Exportieren</em> (re-exporting) genannt, weil wir ein Element in den
 Gültigkeitsbereich bringen, dieses Element aber auch anderen zur Verfügung
 stellen, um es in ihren Gültigkeitsbereich zu bringen.</p>
-<p>Codeblock 7-17 zeigt den Code in Codeblock 7-11, wobei <code>use</code> im Wurzelmodul in
+<p>Listing 7-17 zeigt den Code in Listing 7-11, wobei <code>use</code> im Wurzelmodul in
 <code>pub use</code> geändert wurde.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground test_harness">mod front_of_house {
@@ -370,7 +369,7 @@ pub use crate::front_of_house::hosting;
 pub fn eat_at_restaurant() {
     hosting::add_to_waitlist();
 }</code></pre>
-<p><span class="caption">Codeblock 7-17: Bereitstellen eines Namens für externen
+<p><span class="caption">Listing 7-17: Bereitstellen eines Namens für externen
 Code zum Verwenden in einem neuen Gültigkeitsbereich mit <code>pub use</code></span></p>
 <p>Vor dieser Änderung musste externer Code die Funktion <code>add_to_waitlist</code> mit dem
 Pfad <code>restaurant::front_of_house::hosting::add_to_waitlist()</code> aufrufen, was
@@ -379,16 +378,16 @@ ist. Da aber <code>pub use</code> das Modul <code>hosting</code> aus dem Wurzel-
 hat, kann externer Code nun stattdessen den Pfad
 <code>restaurant::hosting::add_to_waitlist()</code> verwenden.</p>
 <p>Der Rück-Export ist nützlich, wenn sich die interne Struktur deines Codes von
-dem unterscheidet, wie Programmierer, die deinen Code
-aufrufen, über die Domäne denken würden. In der Restaurantmetapher denken die
-Betreiber des Restaurants zum Beispiel an die „Vorderseite des Hauses“ und die
-„Rückseite des Hauses“. Mit <code>pub use</code> können wir unseren Code mit einer
-Struktur schreiben, aber eine andere Struktur veröffentlichen. Auf diese Weise
-ist unsere Bibliothek für Programmierer, die an der Bibliothek arbeiten, und
-Programmierer, die die Bibliothek aufrufen, gut organisiert. Ein weiteres
-Beispiel für <code>pub use</code> und wie es sich auf die Dokumentation deiner Kiste
-auswirkt, werden wir in <a href="ch14-02-publishing-to-crates-io.html#exportieren-einer-komfortablen-öffentlichen-api">„Exportieren einer komfortablen öffentlichen
-API“</a> in Kapitel 14 betrachten.</p>
+dem unterscheidet, wie Programmierer, die deinen Code aufrufen, über die Domäne
+denken würden. In der Restaurantmetapher denken die Betreiber des Restaurants
+zum Beispiel an die „Vorderseite des Hauses“ und die „Rückseite des Hauses“. Mit
+<code>pub use</code> können wir unseren Code mit einer Struktur schreiben, aber eine andere
+Struktur veröffentlichen. Auf diese Weise ist unsere Bibliothek für
+Programmierer, die an der Bibliothek arbeiten, und Programmierer, die die
+Bibliothek aufrufen, gut organisiert. Ein weiteres Beispiel für <code>pub use</code> und
+wie es sich auf die Dokumentation deiner Crate auswirkt, werden wir in
+<a href="ch14-02-publishing-to-crates-io.html#exportieren-einer-komfortablen-öffentlichen-api">„Exportieren einer komfortablen öffentlichen API“</a> in Kapitel 14
+betrachten.</p>
 <h3 id="verwenden-externer-pakete"><a class="header" href="#verwenden-externer-pakete">Verwenden externer Pakete</a></h3>
 <p>In Kapitel 2 programmierten wir ein Ratespielprojekt, das ein externes Paket
 namens <code>rand</code> benutzte, um Zufallszahlen zu generieren. Um <code>rand</code> in unserem
@@ -400,12 +399,11 @@ Projekt zu verwenden, fügten wir diese Zeile zu <em>Cargo.toml</em> hinzu:</p>
 Paket <code>rand</code> und alle Abhängigkeiten von <a href="https://crates.io/">crates.io</a>
 herunterzuladen und <code>rand</code> für unser Projekt verfügbar zu machen.</p>
 <p>Um dann Definitionen von <code>rand</code> in den Gültigkeitsbereich unseres Pakets
-aufzunehmen, haben wir eine Zeile mit <code>use</code> hinzugefügt, die mit dem
-Kistennamen <code>rand</code> beginnt und die Elemente auflistet, die wir in den
-Gültigkeitsbereich bringen wollten. Erinnere dich, dass wir in <a href="ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl">„Generieren
-einer Geheimzahl“</a> in Kapitel 2 das Merkmal <code>Rng</code> in den
-Gültigkeitsbereich gebracht und die Funktion <code>rand::thread_rng</code> aufgerufen
-haben:</p>
+aufzunehmen, haben wir eine Zeile mit <code>use</code> hinzugefügt, die mit dem Crate-Namen
+<code>rand</code> beginnt und die Elemente auflistet, die wir in den Gültigkeitsbereich
+bringen wollten. Erinnere dich, dass wir in <a href="ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl">„Generieren einer
+Geheimzahl“</a> in Kapitel 2 das Trait <code>Rng</code> in den Gültigkeitsbereich
+gebracht und die Funktion <code>rand::thread_rng</code> aufgerufen haben:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::io;
 </span>use rand::Rng;
 
@@ -428,10 +426,10 @@ fn main() {
 </span>}</code></pre>
 <p>Mitglieder der Rust-Gemeinschaft haben viele Pakete unter
 <a href="https://crates.io/">crates.io</a> zur Verfügung gestellt und wenn du eines davon
-in dein Paket aufnimmst, sind die gleichen Schritte erforderlich: Liste sie
-in der Datei <em>Cargo.toml</em> deines Pakets auf und verwende <code>use</code>, um Elemente aus
-ihren Kisten in den Gültigkeitsbereich zu bringen.</p>
-<p>Beachte, dass die Standardbibliothek <code>std</code> ebenfalls eine Kiste ist, die nicht
+in dein Paket aufnimmst, sind die gleichen Schritte erforderlich: Liste sie in
+der Datei <em>Cargo.toml</em> deines Pakets auf und verwende <code>use</code>, um Elemente aus
+ihren Crates in den Gültigkeitsbereich zu bringen.</p>
+<p>Beachte, dass die Standardbibliothek <code>std</code> ebenfalls eine Crate ist, die nicht
 zu unserem Paket gehört. Da die Standardbibliothek mit der Sprache Rust
 ausgeliefert wird, brauchen wir <em>Cargo.toml</em> nicht zu ändern, um <code>std</code>
 einzubinden. Aber wir müssen <code>use</code> verwenden, um Elemente von dort in den
@@ -442,13 +440,13 @@ Gültigkeitsbereich unseres Pakets zu bringen. Zum Beispiel würden wir für
 </span>use std::collections::HashMap;
 <span class="boring">}</span></code></pre>
 <p>Dies ist ein absoluter Pfad, der mit <code>std</code>, dem Namen der
-Standard-Bibliothekskiste, beginnt.</p>
+Standardbibliotheks-Crate, beginnt.</p>
 <h3 id="verschachtelte-pfade-verwenden-um-use-listen-zu-vereinfachen"><a class="header" href="#verschachtelte-pfade-verwenden-um-use-listen-zu-vereinfachen">Verschachtelte Pfade verwenden, um <code>use</code>-Listen zu vereinfachen</a></h3>
-<p>Wenn wir mehrere in der gleichen Kiste oder im gleichen Modul definierte
+<p>Wenn wir mehrere in der gleichen Crate oder im gleichen Modul definierte
 Elemente verwenden, kann das Auflisten jedes Elements in einer eigenen Zeile
 viel vertikalen Platz in unseren Dateien einnehmen. Zum Beispiel bringen diese
-beiden <code>use</code>-Anweisungen, die wir im Ratespiel in Codeblock 2-4 hatten,
-Elemente aus <code>std</code> in den Gültigkeitsbereich:</p>
+beiden <code>use</code>-Anweisungen, die wir im Ratespiel in Listing 2-4 hatten, Elemente
+aus <code>std</code> in den Gültigkeitsbereich:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -458,10 +456,10 @@ use std::io;
 // --abschneiden--
 <span class="boring">}</span></code></pre>
 <p>Stattdessen können wir verschachtelte Pfade verwenden, um die gleichen Elemente
-in einer Zeile in den Gültigkeitsbereich zu bringen. Wir tun dies, indem wir
-den gemeinsamen Teil des Pfades angeben, gefolgt von zwei Doppelpunkten und
-dann geschweiften Klammern um Liste der Pfadteile, die sich unterscheiden, wie
-in Codeblock 7-18 gezeigt.</p>
+in einer Zeile in den Gültigkeitsbereich zu bringen. Wir tun dies, indem wir den
+gemeinsamen Teil des Pfades angeben, gefolgt von zwei Doppelpunkten und dann
+geschweiften Klammern um die Liste der Pfadteile, die sich unterscheiden, wie in
+Listing 7-18 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -469,15 +467,15 @@ in Codeblock 7-18 gezeigt.</p>
 use std::{cmp::Ordering, io};
 // --abschneiden--
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 7-18: Angeben eines verschachtelten Pfades, um
+<p><span class="caption">Listing 7-18: Angeben eines verschachtelten Pfades, um
 mehrere Elemente mit demselben Präfix in den Gültigkeitsbereich zu
 bringen</span></p>
-<p>In größeren Programmen kann das Einbeziehen vieler Elemente aus derselben Kiste
+<p>In größeren Programmen kann das Einbeziehen vieler Elemente aus derselben Crate
 oder demselben Modul in den Gültigkeitsbereich durch verschachtelte Pfade die
 Anzahl der separaten <code>use</code>-Anweisungen um ein Vielfaches reduzieren!</p>
 <p>Wir können einen verschachtelten Pfad auf jeder Ebene in einem Pfad verwenden,
 was nützlich ist, wenn zwei <code>use</code>-Anweisungen kombiniert werden, die sich einen
-Teilpfad teilen. Beispielsweise zeigt Codeblock 7-19 zwei <code>use</code>-Anweisungen:
+Teilpfad teilen. Beispielsweise zeigt Listing 7-19 zwei <code>use</code>-Anweisungen:
 Eine, die <code>std::io</code> in den Gültigkeitsbereich bringt, und eine, die
 <code>std::io::Write</code> in den Gültigkeitsbereich bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -486,18 +484,18 @@ Eine, die <code>std::io</code> in den Gültigkeitsbereich bringt, und eine, die
 </span>use std::io;
 use std::io::Write;
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 7-19: Zwei <code>use</code>-Anweisungen, bei denen eine
+<p><span class="caption">Listing 7-19: Zwei <code>use</code>-Anweisungen, bei denen eine
 ein Teilpfad der anderen ist</span></p>
 <p>Der gemeinsame Teil dieser beiden Pfade ist <code>std::io</code> und das ist der
 vollständige erste Pfad. Um diese beiden Pfade zu einer einzigen
 <code>use</code>-Anweisung zu verschmelzen, können wir <code>self</code> im verschachtelten Pfad
-verwenden, wie in Codeblock 7-20 gezeigt wird.</p>
+verwenden, wie in Listing 7-20 gezeigt wird.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::io::{self, Write};
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 7-20: Zusammenfassen der Pfade aus Codeblock
+<p><span class="caption">Listing 7-20: Zusammenfassen der Pfade aus Listing
 7-19 zu einer <code>use</code>-Anweisung</span></p>
 <p>Diese Zeile bringt <code>std::io</code> und <code>std::io::Write</code> in den Gültigkeitsbereich.</p>
 <h3 id="elemente-mit-dem-stern-operator-glob-importieren"><a class="header" href="#elemente-mit-dem-stern-operator-glob-importieren">Elemente mit dem Stern-Operator (glob) importieren</a></h3>
@@ -520,7 +518,7 @@ deiner Definitionen im gleichen Bereich hinzufügst.</p>
 <p>Der Stern-Operator wird oft beim Testen verwendet, um alles, was getestet wird,
 in das Modul <code>tests</code> zu bringen. Wir werden darüber in <a href="ch11-01-writing-tests.html">„Tests
 schreiben“</a> in Kapitel 11 sprechen. Der Stern-Operator wird
-manchmal auch als Teil des Präludiumsmusters (prelude pattern) verwendet: Siehe
+manchmal auch als Teil des Prelude-Musters verwendet: Siehe
 <a href="https://doc.rust-lang.org/std/prelude/index.html#other-preludes">Standardbibliotheksdokumentation</a> für weitere Informationen
 zu diesem Muster.</p>
 

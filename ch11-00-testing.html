@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -173,16 +173,16 @@ Programmen große Bedeutung beigemessen, aber Korrektheit ist komplex und nicht
 leicht zu beweisen. Das Typsystem von Rust trägt einen großen Teil dieser Last,
 aber das Typsystem kann nicht alles erkennen. Rust beinhaltet Unterstützung für
 das Schreiben automatisierter Softwaretests.</p>
-<p>Nehmen wir an, wir schreiben eine Funktion namens <code>add_two</code>, die 2 zu jeder
-Zahl addiert, die ihr übergeben wird. Die Signatur dieser Funktion akzeptiert
-eine ganze Zahl als Parameter und gibt als Ergebnis eine ganze Zahl zurück.
-Wenn wir diese Funktion implementieren und kompilieren, führt Rust die gesamte
-Typ- und Ausleihenprüfung durch, die du bisher kennengelernt hast, um
-sicherzustellen, dass wir z.B. keinen <code>String</code>-Wert oder eine ungültige
-Referenz an diese Funktion übergeben. Aber Rust kann <em>nicht</em> überprüfen, ob
-diese Funktion genau das tut, was wir beabsichtigen, nämlich den Parameter plus
-2 zurückzugeben und nicht etwa den Parameter plus 10 oder den Parameter minus
-50! Hier kommen Tests ins Spiel.</p>
+<p>Nehmen wir an, wir schreiben eine Funktion namens <code>add_two</code>, die 2 zu jeder Zahl
+addiert, die ihr übergeben wird. Die Signatur dieser Funktion akzeptiert eine
+ganze Zahl als Parameter und gibt als Ergebnis eine ganze Zahl zurück. Wenn wir
+diese Funktion implementieren und kompilieren, führt Rust die gesamte Typprüfung
+und Borrow Checking durch, die du bisher kennengelernt hast, um sicherzustellen,
+dass wir z.B. keinen <code>String</code>-Wert oder eine ungültige Referenz an diese
+Funktion übergeben. Aber Rust kann <em>nicht</em> überprüfen, ob diese Funktion genau
+das tut, was wir beabsichtigen, nämlich den Parameter plus 2 zurückzugeben und
+nicht etwa den Parameter plus 10 oder den Parameter minus 50! Hier kommen Tests
+ins Spiel.</p>
 <p>Wir können Tests schreiben, die zum Beispiel sicherstellen, dass der
 Rückgabewert <code>5</code> ist, wenn wir <code>3</code> an die Funktion <code>add_two</code> übergeben. Wir
 können diese Tests immer dann durchführen, wenn wir Änderungen an unserem Code

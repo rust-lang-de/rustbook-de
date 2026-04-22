@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -164,15 +164,14 @@
                         <h2 id="unser-ea-projekt-verbessern"><a class="header" href="#unser-ea-projekt-verbessern">Unser E/A-Projekt verbessern</a></h2>
 <p>Mit diesem Wissen über Iteratoren können wir unser E/A-Projekt in Kapitel 12
 verbessern. Wir werden Bereiche im Code klarer und prägnanter gestalten. Lass
-uns herausfinden wie Iteratoren unsere Implementierung der
-Funktion <code>Config::build</code> und der Funktion <code>search</code> optimieren können.</p>
+uns herausfinden, wie Iteratoren unsere Implementierung der Funktion
+<code>Config::build</code> und der Funktion <code>search</code> optimieren können.</p>
 <h3 id="ein-clone-durch-verwendung-eines-iterators-entfernen"><a class="header" href="#ein-clone-durch-verwendung-eines-iterators-entfernen">Ein <code>clone</code> durch Verwendung eines Iterators entfernen</a></h3>
-<p>Im Codeblock 12-6 haben wir Programmcode hinzugefügt, der einen Anteilstyp
-(slice) von <code>Zeichenketten</code>-Werten (String values) nimmt, und erzeugten eine
-<code>Config</code>-Struktur indem wir den Anteilstyp indexierten und die Werte klonten
-und der <code>Config</code>-Struktur die Eigentümerschaft dieser Werte gaben. Im Codeblock
-13-17 haben wir die Implementierung der Funktion <code>Config::build</code> so reproduziert
-wie sie im Codeblock 12-23 aussah.</p>
+<p>In Listing 12-6 haben wir Programmcode hinzugefügt, der einen Slice von
+<code>String</code>-Werten nimmt, und erzeugten eine <code>Config</code>-Struktur indem wir den Slice
+indexierten und die Werte klonten und der <code>Config</code>-Struktur das Eigentum an
+diesen Werten gaben. In Listing 13-17 haben wir die Implementierung der Funktion
+<code>Config::build</code> so reproduziert wie sie in Listing 12-23 aussah.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;
@@ -235,27 +234,26 @@ wie sie im Codeblock 12-23 aussah.</p>
 </span><span class="boring">
 </span><span class="boring">    Ok(())
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-17: Reproduktion der Funktion <code>Config::build</code>
-vom Codeblock 12-23</span></p>
+<p><span class="caption">Listing 13-17: Reproduktion der Funktion <code>Config::build</code>
+vom Listing 12-23</span></p>
 <p>Zu diesem Zeitpunkt sagten wir, dass man sich keine Gedanken wegen der
 ineffizienten <code>clone</code>-Aufrufe machen soll, da sie zu einem späteren Zeitpunkt
 entfernt werden. Jetzt ist es an der Zeit, dass wir uns darum kümmern!</p>
-<p>Wir haben <code>clone</code> benutzt, da wir einen Anteilstyp mit <code>String</code>-Elementen im
-Parameter <code>args</code> haben, aber die Funktion <code>build</code> besitzt <code>args</code> nicht. Um die
-Eigentümerschaft einer <code>Config</code>-Instanz zurückzugeben, mussten wir die Werte
-aus den Feldern <code>query</code> und <code>file_path</code> von <code>Config</code> klonen, damit die
-<code>Config</code>-Instanz ihre Werte besitzen kann.</p>
+<p>Wir haben <code>clone</code> benutzt, da wir einen Slice mit <code>String</code>-Elementen im
+Parameter <code>args</code> haben, aber die Funktion <code>build</code> besitzt <code>args</code> nicht. Um das
+Eigentum an einer <code>Config</code>-Instanz zurückzugeben, mussten wir die Werte aus den
+Feldern <code>query</code> und <code>file_path</code> von <code>Config</code> klonen, damit die <code>Config</code>-Instanz
+ihre Werte besitzen kann.</p>
 <p>Mithilfe unserer neuen Kenntnisse über Iteratoren können wir die Funktion
-<code>build</code> so ändern, dass sie die Eigentümerschaft eines Iterators als Argument
-nimmt anstatt sich einen Anteilstyp auszuleihen. Wir werden die
-<code>Iterator</code>-Funktionalität benutzen und nicht mehr den Programmcode der die
-Länge des Anteilstyps überprüft und an bestimmte Stellen indiziert. Dadurch
-wird deutlich, was die Funktion <code>Config::build</code> bewirkt, da der Iterator auf
-Werte zugreift.</p>
-<p>Sobald <code>Config::build</code> die Eigentümerschaft des Iterators hat und keine
-ausleihenden Indexierungsoperationen mehr verwendet, können wir die
-<code>String</code>-Werte vom <code>Iterator</code> in <code>Config</code> verschieben anstatt <code>clone</code>
-aufzurufen und eine neue Zuweisung vorzunehmen.</p>
+<code>build</code> so ändern, dass sie das Eigentum am Iterator als Argument übernimmt
+anstatt sich einen Slice auszuleihen. Wir werden die <code>Iterator</code>-Funktionalität
+benutzen und nicht mehr den Programmcode, der die Länge des Slices überprüft und
+an bestimmte Stellen indiziert. Dadurch wird deutlich, was die Funktion
+<code>Config::build</code> bewirkt, da der Iterator auf Werte zugreift.</p>
+<p>Sobald <code>Config::build</code> das Eigentum am Iterator hat und keine
+Indexierungsoperationen mehr verwendet, die ausleihen, können wir die
+<code>String</code>-Werte vom <code>Iterator</code> in <code>Config</code> verschieben anstatt <code>clone</code> aufzurufen
+und eine neue Zuweisung vorzunehmen.</p>
 <h4 id="direktes-verwenden-des-zurückgegebenen-iterators"><a class="header" href="#direktes-verwenden-des-zurückgegebenen-iterators">Direktes Verwenden des zurückgegebenen Iterators</a></h4>
 <p>Öffne die Datei <em>src/main.rs</em> deines E/A-Projekts, sie sollte so aussehen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -322,8 +320,8 @@ aufzurufen und eine neue Zuweisung vorzunehmen.</p>
 </span><span class="boring">
 </span><span class="boring">    Ok(())
 </span><span class="boring">}</span></code></pre>
-<p>Wir werden zuerst den Anfang der Funktion <code>main</code> von Codeblock 12-24 in den
-Programmcode im Codeblock 13-18 ändern, der dieses Mal einen Iterator
+<p>Wir werden zuerst den Anfang der Funktion <code>main</code> von Listing 12-24 in den
+Programmcode in Listing 13-18 ändern, der dieses Mal einen Iterator
 verwendet. Dieser Code wird erst kompilieren, wenn wir auch <code>Config::build</code>
 abgeändert haben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -388,17 +386,17 @@ abgeändert haben.</p>
 </span><span class="boring">
 </span><span class="boring">    Ok(())
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-18: Übergabe des Rückgabewerts von
-<code>env::args</code> an <code>Config::build</code></span></p>
-<p>Die Funktion <code>env::arg</code> gibt einen Iterator zurück! Anstatt die Werte des Iterators
-in einem Vektor zu sammeln und dann einen Anteilstyp an <code>Config::build</code> zu
-übergeben, geben wir nun die Eigentümerschaft des Iterators, der von <code>env::args</code>
+<p><span class="caption">Listing 13-18: Übergabe des Rückgabewerts von <code>env::args</code>
+an <code>Config::build</code></span></p>
+<p>Die Funktion <code>env::args</code> gibt einen Iterator zurück! Anstatt die Werte des
+Iterators in einem Vektor zu sammeln und dann einen Slice an <code>Config::build</code> zu
+übergeben, geben wir nun das Eigentum am Iterator, der von <code>env::args</code>
 zurückgegeben wird, direkt an <code>Config::build</code>.</p>
-<p>Als Nächstes müssen wir die Definition von <code>Config::build</code> aktualisieren.
-Ändere die Signatur von <code>Config::build</code>, damit sie so wie im Codeblock 13-26
-aussieht. Dies wird noch immer nicht kompilieren, da der Funktionsrumpf
-aktualisiert werden muss.</p>
-<p><span class="filename">Dateiname src/main.rs</span></p>
+<p>Als Nächstes müssen wir die Definition von <code>Config::build</code> aktualisieren. Ändere
+die Signatur von <code>Config::build</code>, damit sie so wie in Listing 13-19 aussieht.
+Dies wird noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert
+werden muss.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
@@ -461,25 +459,24 @@ aktualisiert werden muss.</p>
 </span><span class="boring">
 </span><span class="boring">    Ok(())
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-19: Aktualisieren der Funktion
+<p><span class="caption">Listing 13-19: Aktualisieren der Funktion
 <code>Config::build</code> damit sie einen Iterator annimmt</span></p>
 <p>Laut Dokumentation der Standardbibliothek für die Funktion <code>env::args</code> ist der
-Typ des zurückgegebenen Iterators <code>std::env::Args</code>, und dieser Typ
-implementiert das Merkmal <code>Iterator</code> und gibt <code>String</code>-Werte zurück.</p>
+Typ des zurückgegebenen Iterators <code>std::env::Args</code>, und dieser Typ implementiert
+das Trait <code>Iterator</code> und gibt <code>String</code>-Werte zurück.</p>
 <p>Wir haben die Signatur der Funktion <code>Config::build</code> aktualisiert, sodass der
-Parameter <code>args</code> einen generischen Typ mit den Merkmalsabgrenzungen <code>impl Iterator&lt;Item = String&gt;</code> anstelle von <code>&amp;[String]</code> hat. Diese Verwendung der
-Syntax <code>impl Trait</code>, die wir im Abschnitt <a href="ch10-02-traits.html#merkmale-als-parameter-verwenden">„Merkmale als Parameter
-verwenden“</a> in Kapitel 10 besprochen haben, bedeutet, dass <code>args</code>
-jeder Typ sein kann, der das Merkmal <code>Iterator</code> implementiert und
-<code>String</code>-Elemente zurückgibt.</p>
-<p>Da wir die Eigentümerschaft von <code>args</code> übernehmen und <code>args</code> beim Iterieren
-verändern werden, können wir das Schlüsselwort <code>mut</code> in die Spezifikation des
-Parameters <code>args</code> eintragen, um ihn veränderbar (mutable) zu machen.</p>
-<h4 id="verwenden-von-iterator-merkmalsmethoden"><a class="header" href="#verwenden-von-iterator-merkmalsmethoden">Verwenden von <code>Iterator</code>-Merkmalsmethoden</a></h4>
+Parameter <code>args</code> einen generischen Typ mit den Trait Bound <code>impl Iterator&lt;Item = String&gt;</code> anstelle von <code>&amp;[String]</code> hat. Diese Verwendung der Syntax <code>impl Trait</code>,
+die wir im Abschnitt <a href="ch10-02-traits.html#traits-als-parameter-verwenden">„Traits als Parameter verwenden“</a> in Kapitel
+10 besprochen haben, bedeutet, dass <code>args</code> jeder Typ sein kann, der das Trait
+<code>Iterator</code> implementiert und <code>String</code>-Elemente zurückgibt.</p>
+<p>Da wir das Eigentum an <code>args</code> übernehmen und <code>args</code> beim Iterieren verändern
+werden, können wir das Schlüsselwort <code>mut</code> in die Spezifikation des Parameters
+<code>args</code> eintragen, um ihn veränderbar (mutable) zu machen.</p>
+<h4 id="verwenden-von-iterator-trait-methoden"><a class="header" href="#verwenden-von-iterator-trait-methoden">Verwenden von <code>Iterator</code>-Trait-Methoden</a></h4>
 <p>Als Nächstes werden wir den Rumpf von <code>Config::build</code> in Ordnung bringen. Da
-<code>args</code> das Merkmal <code>Iterator</code> implementiert, wissen wir, dass wir die Methode
-<code>next</code> darauf aufrufen können! Codeblock 13-20 aktualisiert den Code aus
-Codeblock 12-23, um die Methode <code>next</code> zu verwenden.</p>
+<code>args</code> das Trait <code>Iterator</code> implementiert, wissen wir, dass wir die Methode
+<code>next</code> darauf aufrufen können! Listing 13-20 aktualisiert den Code aus
+Listing 12-23, um die Methode <code>next</code> zu verwenden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;
@@ -514,7 +511,7 @@ Codeblock 12-23, um die Methode <code>next</code> zu verwenden.</p>
 
         let query = match args.next() {
             Some(arg) =&gt; arg,
-            None =&gt; return Err("Keine Abfragezeichenkette erhalten"),
+            None =&gt; return Err("Keinen Abfragestring erhalten"),
         };
 
         let file_path = match args.next() {
@@ -547,21 +544,21 @@ Codeblock 12-23, um die Methode <code>next</code> zu verwenden.</p>
 </span><span class="boring">
 </span><span class="boring">    Ok(())
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-20: Ändern des Rumpfes von <code>Config::build</code> um
+<p><span class="caption">Listing 13-20: Ändern des Rumpfes von <code>Config::build</code> um
 Iterator-Methoden zu verwenden</span></p>
 <p>Denke daran, dass der erste Wert des Rückgabewerts von <code>env::args</code> der Name des
-Programms ist, wir wollen das ignorieren und rufen daher gleich <code>next</code> auf um
+Programms ist, wir wollen das ignorieren und rufen daher gleich <code>next</code> auf, um
 zum nächsten Wert zu gelangen und den ersten Rückgabewert zu überspringen. Als
 Nächstes rufen wir <code>next</code> auf, um den Wert zu erhalten, den wir in das Feld
 <code>query</code> von <code>Config</code> einfügen möchten. Falls <code>next</code> ein <code>Some</code> zurückgibt,
 benutzen wir <code>match</code>, um den Wert zu extrahieren, wenn es jedoch <code>None</code>
-zurückgibt, bedeutet dies, das nicht genügend Argumente eingegeben wurden und
+zurückgibt, bedeutet dies, dass nicht genügend Argumente eingegeben wurden und
 wir kehren vorzeitig mit einem <code>Err</code> zurück. Dasselbe machen wir für den Wert
 <code>file_path</code>.</p>
 <h3 id="programmcode-mit-iteratorenadapter-klarer-gestalten"><a class="header" href="#programmcode-mit-iteratorenadapter-klarer-gestalten">Programmcode mit Iteratorenadapter klarer gestalten</a></h3>
 <p>Wir können die Vorteile der Iteratoren auch in der Funktion <code>search</code> unseres
-E/A-Projekts nutzen, die hier im Codeblock 13-21 wiedergegeben ist, wie im
-Codeblock 12-19.</p>
+E/A-Projekts nutzen, die hier in Listing 13-21 wiedergegeben ist, wie im
+Listing 12-19.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -593,16 +590,16 @@ Codeblock 12-19.</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-21: Implementierung der Funktion <code>search</code>
-aus Codeblock 12-19</span></p>
+<p><span class="caption">Listing 13-21: Implementierung der Funktion <code>search</code>
+aus Listing 12-19</span></p>
 <p>Wir können diesen Programmcode durch die Verwendung von Iteratoradaptern
-prägnanter gestalten und vermeiden, einen veränderbaren Vektor <code>results</code> für
-die Zwischenergebnisse zu haben. Bevorzugt wird im funktionalen Programmierstil
-die Menge der veränderbaren Werte reduziert, um den Code übersichtlicher zu
-machen. Das Entfernen des veränderbar-Status kann uns eventuell zukünftige
+prägnanter gestalten und vermeiden, einen veränderbaren Vektor <code>results</code> für die
+Zwischenergebnisse zu haben. Bevorzugt wird im funktionalen Programmierstil die
+Menge der veränderbaren Werte reduziert, um den Code übersichtlicher zu machen.
+Der Verzicht auf die Veränderbarkeit kann uns eventuell zukünftige
 Verbesserungen ermöglichen, um die Suche parallel auszuführen, da wir uns nicht
 um die Verwaltung des simultanen Zugriffs auf den Vektor <code>results</code> kümmern
-müssen. Codeblock 13-22 zeigt diese Änderung.</p>
+müssen. Listing 13-22 zeigt diese Änderung.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -661,11 +658,11 @@ müssen. Codeblock 13-22 zeigt diese Änderung.</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-22: Verwendung von Iteratoradapter-Methoden
+<p><span class="caption">Listing 13-22: Verwendung von Iteratoradapter-Methoden
 bei der Implementierung der Funktion <code>search</code></span></p>
 <p>Denke daran, der Zweck der Funktion <code>search</code> besteht darin, alle Zeilen in
 <code>contents</code> zurückzugeben, die die <code>query</code> enthalten. So ähnlich wie im Beispiel
-<code>filter</code> im Codeblock 13-16 verwendet dieser Programmcode den <code>filter</code>-Adapter,
+<code>filter</code> in Listing 13-16 verwendet dieser Programmcode den <code>filter</code>-Adapter,
 um nur die Zeilen beizubehalten, für die <code>line.contains(query)</code> den Wert <code>true</code>
 zurückgibt. Wir sammeln dann die passenden Zeilen mit <code>collect</code> in einen
 anderen Vektor. Viel einfacher! Nimm die gleiche Änderung vor, um
@@ -681,9 +678,9 @@ der Änderung werden die Ergebnisse jedoch ausgegeben, sobald eine
 <code>run</code> die faule Eigenschaft des Iterators nutzen kann.</p>
 <h3 id="zwischen-schleifen-und-iteratoren-wählen"><a class="header" href="#zwischen-schleifen-und-iteratoren-wählen">Zwischen Schleifen und Iteratoren wählen</a></h3>
 <p>Die nächste logische Frage wäre, welchen Stil du in deinem eigenen Programmcode
-wählen solltest und warum. Die ursprüngliche Implementierung im Codeblock 13-21
-oder die Version die Iteratoren verwendet im Codeblock 13-22 (vorausgesetzt,
-wir sammeln alle Ergebnisse, bevor wir sie zurückgeben, anstatt den Iterator
+wählen solltest und warum. Die ursprüngliche Implementierung in Listing 13-21
+oder die Version, die Iteratoren verwendet in Listing 13-22 (vorausgesetzt, wir
+sammeln alle Ergebnisse, bevor wir sie zurückgeben, anstatt den Iterator
 zurückzugeben). Die meisten Rust-Programmierer bevorzugen den Iterator-Stil.
 Zunächst ist es zwar schwieriger, den Überblick zu behalten, aber sobald du ein
 Gefühl für die verschiedenen Iteratoradapter und deren Funktionsweise hast,
@@ -691,7 +688,7 @@ können Iteratoren einfacher zu verstehen sein. Statt mit verschiedensten
 Schleifen herumzuspielen und Vektoren zu erstellen, konzentriert sich der
 Programmcode auf das höhere Ziel der Schleife. Dadurch wird ein Teil des
 gewöhnlichen Programmcodes abstrahiert und die einzigartigen Konzepte, z.B. die
-Filterbedingung die jedes Element bestehen muss um durch den Iterator zu
+Filterbedingung, die jedes Element bestehen muss0 um durch den Iterator zu
 kommen, werden leichter erkennbar.</p>
 <p>Aber sind beide Implementierungen wirklich gleichwertig? Die intuitive Annahme
 könnte sein, dass die weniger abstrakte Schleife schneller ist. Lass uns über

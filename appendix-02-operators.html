@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -162,15 +162,15 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h2 id="anhang-b-operatoren-und-symbole"><a class="header" href="#anhang-b-operatoren-und-symbole">Anhang B: Operatoren und Symbole</a></h2>
-<p>Dieser Anhang enthält ein Glossar der Rust-Syntax, einschließlich Operatoren
-und anderer Symbole, die allein oder im Zusammenhang mit Pfaden, generischen
-Datentypen (generics), Merkmalsabgrenzungen (trait bounds), Makros, Attributen,
-Kommentaren, Tupeln und Klammern auftreten.</p>
+<p>Dieser Anhang enthält ein Glossar der Rust-Syntax, einschließlich Operatoren und
+anderer Symbole, die allein oder im Zusammenhang mit Pfaden, generischen
+Datentypen (generics), Trait Bounds, Makros, Attributen, Kommentaren, Tupeln und
+Klammern auftreten.</p>
 <h3 id="operatoren"><a class="header" href="#operatoren">Operatoren</a></h3>
 <p>Tabelle B-1 enthält die Operatoren in Rust, ein Beispiel, wie der Operator im
 Kontext erscheinen würde, eine kurze Erklärung und ob dieser Operator überladen
-werden kann. Wenn ein Operator überladen werden kann, wird das relevante
-Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
+werden kann. Wenn ein Operator überladen werden kann, wird das relevante Trait
+aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <p><span class="caption">Tabelle B-1: Operatoren</span></p>
 <div class="table-wrapper">
 <table>
@@ -181,10 +181,10 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <tr><td style="text-align: left"><code>!</code></td><td style="text-align: left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td style="text-align: left">Makro-Expansion</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>!</code></td><td style="text-align: left"><code>!expr</code></td><td style="text-align: left">Bitweises oder logisches Komplement</td><td style="text-align: left"><code>Not</code></td></tr>
 <tr><td style="text-align: left"><code>!=</code></td><td style="text-align: left"><code>expr != expr</code></td><td style="text-align: left">Vergleich auf Ungleichheit</td><td style="text-align: left"><code>PartialEq</code></td></tr>
-<tr><td style="text-align: left"><code>%</code></td><td style="text-align: left"><code>expr % expr</code></td><td style="text-align: left">Arithmetischer Restbetrag</td><td style="text-align: left"><code>Rem</code></td></tr>
-<tr><td style="text-align: left"><code>%=</code></td><td style="text-align: left"><code>var %= expr</code></td><td style="text-align: left">Arithmetischer Restbetrag und Zuweisung</td><td style="text-align: left"><code>RemAssign</code></td></tr>
-<tr><td style="text-align: left"><code>&amp;</code></td><td style="text-align: left"><code>&amp;expr</code>,<br> <code>&amp;mut expr</code></td><td style="text-align: left">Ausleihe</td><td style="text-align: left"></td></tr>
-<tr><td style="text-align: left"><code>&amp;</code></td><td style="text-align: left"><code>&amp;type</code>,<br> <code>&amp;mut type</code>,<br> <code>&amp;'a type</code>,<br> <code>&amp;'a mut type</code></td><td style="text-align: left">Ausleih-Referenz-Typ</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>%</code></td><td style="text-align: left"><code>expr % expr</code></td><td style="text-align: left">Divisionsrest</td><td style="text-align: left"><code>Rem</code></td></tr>
+<tr><td style="text-align: left"><code>%=</code></td><td style="text-align: left"><code>var %= expr</code></td><td style="text-align: left">Divisionsrest und Zuweisung</td><td style="text-align: left"><code>RemAssign</code></td></tr>
+<tr><td style="text-align: left"><code>&amp;</code></td><td style="text-align: left"><code>&amp;expr</code>,<br> <code>&amp;mut expr</code></td><td style="text-align: left">Borrow</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>&amp;</code></td><td style="text-align: left"><code>&amp;type</code>,<br> <code>&amp;mut type</code>,<br> <code>&amp;'a type</code>,<br> <code>&amp;'a mut type</code></td><td style="text-align: left">Borrowed-Zeigertyp</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>&amp;</code></td><td style="text-align: left"><code>expr &amp; expr</code></td><td style="text-align: left">Bitweises UND</td><td style="text-align: left"><code>BitAnd</code></td></tr>
 <tr><td style="text-align: left"><code>&amp;=</code></td><td style="text-align: left"><code>var &amp;= expr</code></td><td style="text-align: left">Bitweises UND und Zuweisung</td><td style="text-align: left"><code>BitAndAssign</code></td></tr>
 <tr><td style="text-align: left"><code>&amp;&amp;</code></td><td style="text-align: left"><code>expr &amp;&amp; expr</code></td><td style="text-align: left">Logisches UND mit Kurzschlussauswertung</td><td style="text-align: left"></td></tr>
@@ -199,7 +199,7 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <tr><td style="text-align: left"><code>-</code></td><td style="text-align: left"><code>- expr</code></td><td style="text-align: left">Arithmetische Negation</td><td style="text-align: left"><code>Neg</code></td></tr>
 <tr><td style="text-align: left"><code>-</code></td><td style="text-align: left"><code>expr - expr</code></td><td style="text-align: left">Arithmetische Subtraktion</td><td style="text-align: left"><code>Sub</code></td></tr>
 <tr><td style="text-align: left"><code>-=</code></td><td style="text-align: left"><code>var -= expr</code></td><td style="text-align: left">Arithmetische Subtraktion und Zuweisung</td><td style="text-align: left"><code>SubAssign</code></td></tr>
-<tr><td style="text-align: left"><code>-&gt;</code></td><td style="text-align: left"><code>fn(...) -&gt; type</code>,<br> <code>|…| -&gt; type</code></td><td style="text-align: left">Funktion und Funktionsabschlussrückgabetyp</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>-&gt;</code></td><td style="text-align: left"><code>fn(...) -&gt; type</code>,<br> <code>|…| -&gt; type</code></td><td style="text-align: left">Rückgabetyp einer Funktion und eines Closures</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.ident</code></td><td style="text-align: left">Feldzugriff</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.ident(expr, ...)</code></td><td style="text-align: left">Methodenaufruf</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.0</code>, <code>expr.1</code>, usw.</td><td style="text-align: left">Tupel-Indexzugriff</td><td style="text-align: left"></td></tr>
@@ -251,13 +251,13 @@ Stellen gültig sind.</p>
 <tbody>
 <tr><td style="text-align: left"><code>'ident</code></td><td style="text-align: left">Benannte Lebensdauer oder Schleifenbeschriftung</td></tr>
 <tr><td style="text-align: left"><code>...u8</code>,<br> <code>...i32</code>,<br> <code>...f64</code>,<br> <code>...usize</code><br> usw.</td><td style="text-align: left">Numerisches Literal eines bestimmten Typs</td></tr>
-<tr><td style="text-align: left"><code>"..."</code></td><td style="text-align: left">Zeichenketten-Literal</td></tr>
-<tr><td style="text-align: left"><code>r"..."</code>,<br> <code>r#"..."#</code>,<br> <code>r##"..."##</code><br> usw.</td><td style="text-align: left">Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet</td></tr>
-<tr><td style="text-align: left"><code>b"..."</code></td><td style="text-align: left">Byte-Zeichenkettenliteral, erzeugt ein Byte-Array anstelle einer Zeichenkette</td></tr>
-<tr><td style="text-align: left"><code>br"..."</code>,<br> <code>br#"..."#</code>,<br> <code>br##"..."##</code><br> usw.</td><td style="text-align: left">Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral</td></tr>
+<tr><td style="text-align: left"><code>"..."</code></td><td style="text-align: left">String-Literal</td></tr>
+<tr><td style="text-align: left"><code>r"..."</code>,<br> <code>r#"..."#</code>,<br> <code>r##"..."##</code><br> usw.</td><td style="text-align: left">Roh-String-Literal, Escape-Zeichen werden nicht verarbeitet</td></tr>
+<tr><td style="text-align: left"><code>b"..."</code></td><td style="text-align: left">Byte-String-Literal, erzeugt ein Byte-Array anstelle eines Strings</td></tr>
+<tr><td style="text-align: left"><code>br"..."</code>,<br> <code>br#"..."#</code>,<br> <code>br##"..."##</code><br> usw.</td><td style="text-align: left">Roh-Byte-String-Literal, Kombination aus Roh- und Byte-String-Literal</td></tr>
 <tr><td style="text-align: left"><code>'...'</code></td><td style="text-align: left">Zeichen-Literal</td></tr>
 <tr><td style="text-align: left"><code>b'...'</code></td><td style="text-align: left">ASCII-Byte-Literal</td></tr>
-<tr><td style="text-align: left"><code>|…| expr</code></td><td style="text-align: left">Funktionsabschluss (closure)</td></tr>
+<tr><td style="text-align: left"><code>|…| expr</code></td><td style="text-align: left">Closure</td></tr>
 <tr><td style="text-align: left"><code>!</code></td><td style="text-align: left">Leerer Typ (bottom type) für nicht-endende Funktionen</td></tr>
 <tr><td style="text-align: left"><code>_</code></td><td style="text-align: left">Musterbindung für „sonstige“; wird auch verwendet, um Ganzzahl-Literale lesbar zu machen</td></tr>
 </tbody>
@@ -273,14 +273,14 @@ Modulhierarchie eines Elements vorkommen.</p>
 </thead>
 <tbody>
 <tr><td style="text-align: left"><code>ident::ident</code></td><td style="text-align: left">Namensraum-Pfad</td></tr>
-<tr><td style="text-align: left"><code>::path</code></td><td style="text-align: left">Pfad relativ zur Kistenwurzel, auf dem alle anderen Kisten basieren<br> (d.h. ein explizit absoluter Pfad inklusive Kistenname)</td></tr>
+<tr><td style="text-align: left"><code>::path</code></td><td style="text-align: left">Pfad relativ zur Crate-Wurzel, auf dem alle anderen Crates basieren<br> (d.h. ein explizit absoluter Pfad inklusive Crate-Name)</td></tr>
 <tr><td style="text-align: left"><code>self::path</code></td><td style="text-align: left">Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad)</td></tr>
 <tr><td style="text-align: left"><code>super::path</code></td><td style="text-align: left">Pfad relativ zum Elternmodul</td></tr>
 <tr><td style="text-align: left"><code>type::ident</code>,<br> <code>&lt;type as trait&gt;::ident</code></td><td style="text-align: left">Zugehörige Konstanten, Funktionen<br> und Typen</td></tr>
-<tr><td style="text-align: left"><code>&lt;type&gt;::...</code></td><td style="text-align: left">Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. <code>&lt;&amp;T&gt;::...</code>, <code>&lt;[T]&gt;:::...</code> usw.)</td></tr>
-<tr><td style="text-align: left"><code>trait::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Merkmals eindeutig machen</td></tr>
+<tr><td style="text-align: left"><code>&lt;type&gt;::...</code></td><td style="text-align: left">Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. <code>&lt;&amp;T&gt;::...</code>, <code>&lt;[T]&gt;::...</code> usw.)</td></tr>
+<tr><td style="text-align: left"><code>trait::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Traits eindeutig machen</td></tr>
 <tr><td style="text-align: left"><code>type::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Typs eindeutig machen</td></tr>
-<tr><td style="text-align: left"><code>&lt;type as trait&gt;::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen</td></tr>
+<tr><td style="text-align: left"><code>&lt;type as trait&gt;::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Traits und Typs eindeutig machen</td></tr>
 </tbody>
 </table>
 </div>
@@ -304,9 +304,9 @@ auftreten.</p>
 </tbody>
 </table>
 </div>
-<p>Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
-mit Merkmalsabgrenzung (trait bounds) auftreten.</p>
-<p><span class="caption">Tabelle B-5: Merkmalsabgrenzungen</span></p>
+<p>Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern mit
+Trait Bounds auftreten.</p>
+<p><span class="caption">Tabelle B-5: Trait Bounds</span></p>
 <div class="table-wrapper">
 <table>
 <thead>
@@ -400,8 +400,8 @@ vorkommen.</p>
 <tr><td style="text-align: left"><code>[...]</code></td><td style="text-align: left">Array-Literal</td></tr>
 <tr><td style="text-align: left"><code>[expr; len]</code></td><td style="text-align: left">Array-Literal mit <code>len</code> Kopien von <code>expr</code></td></tr>
 <tr><td style="text-align: left"><code>[type; len]</code></td><td style="text-align: left">Array-Typ mit <code>len</code> Instanzen von <code>type</code></td></tr>
-<tr><td style="text-align: left"><code>expr[expr]</code></td><td style="text-align: left">Sammlungs-Indexierung, ist überladbar (<code>Index</code>, <code>IndexMut</code>)</td></tr>
-<tr><td style="text-align: left"><code>expr[..]</code>,<br> <code>expr[a..]</code>,<br> <code>expr[..b]</code>,<br> <code>expr[a..b]</code></td><td style="text-align: left">Sammlungs-Indexierung, die wie ein Sammlungsanteil aussieht, unter Verwendung von <code>Range</code>, <code>RangeFrom</code>, <code>RangeTo</code> oder <code>RangeFull</code> als „Index“</td></tr>
+<tr><td style="text-align: left"><code>expr[expr]</code></td><td style="text-align: left">Kollektions-Indexierung, ist überladbar (<code>Index</code>, <code>IndexMut</code>)</td></tr>
+<tr><td style="text-align: left"><code>expr[..]</code>,<br> <code>expr[a..]</code>,<br> <code>expr[..b]</code>,<br> <code>expr[a..b]</code></td><td style="text-align: left">Kollektions-Indexierung, die wie ein Kollektions-Slice aussieht, unter Verwendung von <code>Range</code>, <code>RangeFrom</code>, <code>RangeTo</code> oder <code>RangeFull</code> als „Index“</td></tr>
 </tbody>
 </table>
 </div>

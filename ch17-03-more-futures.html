@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Abgeben (yielding) der Kontrolle an die Laufzeitumgebung - Die Programmiersprache Rust</title>
+        <title>Kontrolle an die Laufzeitumgebung abgeben - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h3 id="abgeben-yielding-der-kontrolle-an-die-laufzeitumgebung"><a class="header" href="#abgeben-yielding-der-kontrolle-an-die-laufzeitumgebung">Abgeben (yielding) der Kontrolle an die Laufzeitumgebung</a></h3>
+                        <h3 id="kontrolle-an-die-laufzeitumgebung-abgeben"><a class="header" href="#kontrolle-an-die-laufzeitumgebung-abgeben">Kontrolle an die Laufzeitumgebung abgeben</a></h3>
 <p>Erinnere dich an den Abschnitt <a href="ch17-01-futures-and-syntax.html#unser-erstes-asynchrones-programm">„Unser erstes asynchrones
 Programm“</a>, bei dem Rust der Laufzeitumgebung an jedem
 await-Punkt die Möglichkeit gibt, die Aufgabe anzuhalten und zu einer anderen
@@ -179,7 +179,7 @@ ausführt, musst du darüber nachdenken, wann und wo du die Kontrolle an die
 Laufzeitumgebung abgibst.</p>
 <p>Simulieren wir einen lang andauernden Vorgang, um das Problem des Verhungerns
 (starvation) zu veranschaulichen, und untersuchen wir anschließend, wie es
-gelöst werden kann. Codeblock 17-14 führt eine Funktion <code>slow</code> ein.</p>
+gelöst werden kann. Listing 17-14 führt eine Funktion <code>slow</code> ein.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
@@ -193,13 +193,13 @@ gelöst werden kann. Codeblock 17-14 führt eine Funktion <code>slow</code> ein.
     thread::sleep(Duration::from_millis(ms));
     println!("'{name}' ist für {ms} ms gelaufen");
 }</code></pre>
-<p><span class="caption">Codeblock 17-14: Verwenden von <code>thread::sleep</code> zum
+<p><span class="caption">Listing 17-14: Verwenden von <code>thread::sleep</code> zum
 Simulieren langsamer Abläufe</span></p>
 <p>Dieser Code verwendet <code>std::thread::sleep</code> anstelle von <code>trpl::sleep</code>, sodass
-der Aufruf von <code>slow</code> den aktuellen Strang für eine bestimmte Anzahl von
+der Aufruf von <code>slow</code> den aktuellen Thread für eine bestimmte Anzahl von
 Millisekunden blockiert. Wir können <code>slow</code> benutzen, um reale Abläufe zu
 simulieren, die sowohl langwierig als auch blockierend sind.</p>
-<p>In Codeblock 17-15 verwenden wir <code>slow</code>, um diese Art von CPU-gebundener Arbeit
+<p>In Listing 17-15 verwenden wir <code>slow</code>, um diese Art von CPU-gebundener Arbeit
 in einem Paar von Futures zu emulieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{thread, time::Duration};
@@ -225,7 +225,7 @@ in einem Paar von Futures zu emulieren.</p>
             println!("'b' beendet.");
         };
 
-        trpl::race(a, b).await;
+        trpl::select(a, b).await;
 <span class="boring">    });
 </span><span class="boring">}
 </span><span class="boring">
@@ -233,7 +233,7 @@ in einem Paar von Futures zu emulieren.</p>
 </span><span class="boring">    thread::sleep(Duration::from_millis(ms));
 </span><span class="boring">    println!("'{name}' ist für {ms} ms gelaufen");
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-15: Aufrufen der Funktion <code>slow</code> zum
+<p><span class="caption">Listing 17-15: Aufrufen der Funktion <code>slow</code> zum
 Simulieren langsamer Abläufe</span></p>
 <p>Zunächst gibt jedes Future die Kontrolle erst nach einer Reihe von langsamen
 Abläufen an die Laufzeitumgebung zurück. Wenn du diesen Code ausführst,
@@ -249,7 +249,7 @@ erhältst du diese Ausgabe:</p>
 'b' ist für 350 ms gelaufen
 'a' beendet.
 </code></pre>
-<p>Wie in Codeblock 17-5, wo wir <code>trpl::select</code> verwendet haben, um Futures beim
+<p>Wie in Listing 17-5, wo wir <code>trpl::select</code> verwendet haben, um Futures beim
 Abrufen von zwei URLs gegeneinander antreten zu lassen, wird <code>select</code> immer
 noch beendet, sobald <code>a</code> fertig ist. Es gibt jedoch keine Abwechslung zwischen
 den Aufrufen von <code>slow</code> in den beiden Futures. Das Future <code>a</code> erledigt seine
@@ -259,11 +259,11 @@ erledigt das Future <code>b</code> seine gesamte Arbeit, bis auch dort auf den A
 beide Futures während ihrer langsamen Vorgänge Fortschritte machen können,
 brauchen wir await-Punkte, damit wir die Kontrolle an die Laufzeitumgebung
 abgeben können. Das heißt, wir brauchen etwas, auf das wir warten können!</p>
-<p>Wir können diese Art der Übergabe bereits in Codeblock 17-15 sehen: Wenn wir
+<p>Wir können diese Art der Übergabe bereits in Listing 17-15 sehen: Wenn wir
 <code>trpl::sleep</code> am Ende des Futures <code>a</code> entfernen, würde es fertig werden, ohne
-dass das Future <code>b</code> <em>überhaupt</em> läuft. Versuchen wir, die Funktion
-<code>trpl::sleep</code> als Ausgangspunkt zu verwenden, um Operationen am Fortschritt zu
-hindern, wie in Codeblock 17-16 gezeigt.</p>
+dass das Future <code>b</code> <em>überhaupt</em> läuft. Versuchen wir, die Funktion <code>trpl::sleep</code>
+als Ausgangspunkt zu verwenden, um den Fortschritt der Operation zu behindern,
+wie in Listing 17-16 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
@@ -295,7 +295,7 @@ hindern, wie in Codeblock 17-16 gezeigt.</p>
             println!("'b' beendet.");
         };
 <span class="boring">
-</span><span class="boring">        trpl::race(a, b).await;
+</span><span class="boring">        trpl::select(a, b).await;
 </span><span class="boring">    });
 </span><span class="boring">}
 </span><span class="boring">
@@ -303,7 +303,7 @@ hindern, wie in Codeblock 17-16 gezeigt.</p>
 </span><span class="boring">    thread::sleep(Duration::from_millis(ms));
 </span><span class="boring">    println!("'{name}' ist für {ms} ms gelaufen");
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-16: Verwenden von <code>sleep</code>, um Vorgänge zu
+<p><span class="caption">Listing 17-16: Verwenden von <code>sleep</code>, um Vorgänge zu
 unterbrechen</span></p>
 <p>Wir haben Aufrufe von <code>trpl::sleep</code> mit await-Punkten zwischen den Aufrufen von
 <code>slow</code> eingefügt. Nun wechseln die beiden Futures ihre Arbeit ab:</p>
@@ -325,7 +325,7 @@ könnten die Arbeit so aufteilen, wie es für uns am sinnvollsten ist.</p>
 <p>Wir wollen hier aber nicht wirklich <em>schlafen</em>: Wir wollen so schnell wie
 möglich vorankommen. Wir müssen nur die Kontrolle an die Laufzeitumgebung
 abgeben. Das können wir direkt tun, indem wir die Funktion <code>trpl::yield_now</code>
-verwenden. In Codeblock 17-17 ersetzen wir all diese Aufrufe von <code>trpl::sleep</code>
+verwenden. In Listing 17-17 ersetzen wir all diese Aufrufe von <code>trpl::sleep</code>
 durch <code>trpl::yield_now</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{thread, time::Duration};
@@ -356,7 +356,7 @@ durch <code>trpl::yield_now</code>.</p>
             println!("'b' beendet.");
         };
 <span class="boring">
-</span><span class="boring">        trpl::race(a, b).await;
+</span><span class="boring">        trpl::select(a, b).await;
 </span><span class="boring">    });
 </span><span class="boring">}
 </span><span class="boring">
@@ -364,7 +364,7 @@ durch <code>trpl::yield_now</code>.</p>
 </span><span class="boring">    thread::sleep(Duration::from_millis(ms));
 </span><span class="boring">    println!("'{name}' ist für {ms} ms gelaufen");
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-17: Verwenden von <code>yield_now</code>, um Vorgänge
+<p><span class="caption">Listing 17-17: Verwenden von <code>yield_now</code>, um Vorgänge
 anzuhalten</span></p>
 <p>Dieser Code ist sowohl klarer als auch wesentlich schneller als <code>sleep</code>, weil
 Zeitgeber wie <code>sleep</code> oft Grenzen haben, wie granular sie sein können. Die
@@ -396,7 +396,7 @@ nebenläufig ausgeführt werden!</p>
 können wir eine Funktion <code>timeout</code> mit bereits vorhandenen asynchronen
 Bausteinen erstellen. Wenn wir fertig sind, ist das Ergebnis ein weiterer
 Baustein, mit dem wir weitere asynchrone Abstraktionen erstellen können.</p>
-<p>Codeblock 17-18 zeigt die erwartete Arbeitsweise von <code>timeout</code> bei einem
+<p>Listing 17-18 zeigt die erwartete Arbeitsweise von <code>timeout</code> bei einem
 langsamen Future.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::time::Duration;
@@ -416,8 +416,8 @@ langsamen Future.</p>
         }
 <span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-18: Verwendeng unseres imaginären <code>timeout</code>,
-um eine langsame Operation mit einem Zeitlimit durchzuführen</span></p>
+<p><span class="caption">Listing 17-18: Verwenden unseres imaginären <code>timeout</code>, um
+eine langsame Operation mit einem Zeitlimit durchzuführen</span></p>
 <p>Lass es uns implementieren! Denken wir zunächst über die API für <code>timeout</code>
 nach:</p>
 <ul>
@@ -432,7 +432,7 @@ ist das <code>Result</code> ein <code>Ok</code> mit dem vom Future erzeugten Wer
 Zeitlimit zuerst erreicht wird, wird <code>Result</code> ein <code>Err</code> mit der Wartedauer
 sein.</li>
 </ul>
-<p>Codeblock 17-19 zeigt diese Deklaration.</p>
+<p>Listing 17-19 zeigt diese Deklaration.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::{future::Future, time::Duration};
 </span><span class="boring">
@@ -458,14 +458,14 @@ sein.</li>
 ) -&gt; Result&lt;F::Output, Duration&gt; {
     // Hier kommt die Implementierung hin
 }</code></pre>
-<p><span class="caption">Codeblock 17-19: Definieren der Signatur von
+<p><span class="caption">Listing 17-19: Definieren der Signatur von
 <code>timeout</code></span></p>
 <p>Damit sind unsere Ziele für die Typen erfüllt. Denken wir nun über das
 <em>Verhalten</em> nach, das wir brauchen: Wir wollen die Dauer des übergebenen Future
 überwachen. Wir können mit <code>trpl::sleep</code> einen Timer aus der Dauer machen und
 <code>trpl::select</code> verwenden, um mit diesem Timer das übergebene Future zu
 überwachen.</p>
-<p>In Codeblock 17-20 implementieren wir <code>timeout</code>, indem wir das Ergebnis von
+<p>In Listing 17-20 implementieren wir <code>timeout</code>, indem wir das Ergebnis von
 <code>trpl::select</code> abgleichen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{future::Future, time::Duration};
@@ -494,12 +494,12 @@ async fn timeout&lt;F: Future&gt;(
     future_to_try: F,
     max_time: Duration,
 ) -&gt; Result&lt;F::Output, Duration&gt; {
-    match trpl::race(future_to_try, trpl::sleep(max_time)).await {
+    match trpl::select(future_to_try, trpl::sleep(max_time)).await {
         Either::Left(output) =&gt; Ok(output),
         Either::Right(_) =&gt; Err(max_time),
     }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-20: Definieren von <code>timeout</code> mit <code>select</code> und
+<p><span class="caption">Listing 17-20: Definieren von <code>timeout</code> mit <code>select</code> und
 <code>sleep</code></span></p>
 <p>Die Implementierung von <code>trpl::select</code> ist nicht fair: Sie fragt die Argumente
 immer in der Reihenfolge ab, in der sie übergeben werden (andere
@@ -509,10 +509,10 @@ es auch dann eine Chance hat, abgeschlossen zu werden, wenn <code>max_time</code
 sehr kurze Dauer hat. Wenn <code>future_to_try</code> zuerst fertig ist, gibt <code>select</code>
 <code>Left</code> mit der Ausgabe von <code>future_to_try</code> zurück. Wenn <code>timer</code> zuerst fertig
 ist, gibt <code>select</code> <code>Right</code> mit der Ausgabe des Timers <code>()</code> zurück.</p>
-<p>Wenn <code>Future_to_try</code> erfolgreich war und wir <code>Left(output)</code> erhalten, geben wir
+<p>Wenn <code>future_to_try</code> erfolgreich war und wir <code>Left(output)</code> erhalten, geben wir
 <code>Ok(output)</code> zurück. Wenn stattdessen der Sleep-Timer abgelaufen ist und wir
-<code>Right(())</code> erhalten, ignorieren wir der Wert <code>()</code> mit <code>_</code> und geben
-stattdessen <code>Err(max_time)</code> zurück.</p>
+<code>Right(())</code> erhalten, ignorieren wir der Wert <code>()</code> mit <code>_</code> und geben stattdessen
+<code>Err(max_time)</code> zurück.</p>
 <p>Damit haben wir ein funktionierendes <code>timeout</code>, das aus zwei anderen
 asynchronen Helfern besteht. Wenn wir unseren Code ausführen, wird er als
 Fehlermeldung nach dem Timeout ausgeben:</p>
@@ -522,14 +522,14 @@ Fehlermeldung nach dem Timeout ausgeben:</p>
 kleineren asynchronen Bausteinen wirklich leistungsfähige Werkzeuge erstellen.
 So kannst du beispielsweise mit demselben Ansatz Zeitüberschreitungen mit
 Wiederholungen kombinieren und diese wiederum für Operationen wie
-Netzwerkaufrufe verwenden (so wie in Codeblock 17-5).</p>
+Netzwerkaufrufe verwenden (so wie in Listing 17-5).</p>
 <p>In der Praxis arbeitest du in der Regel direkt mit <code>async</code> und <code>await</code> und
 seltener mit Funktionen wie <code>select</code> und Makros wie <code>join!</code>, um die Ausführung
 der äußersten Futures zu steuern.</p>
 <p>Wir haben nun verschiedene Möglichkeiten kennengelernt, wie man mit mehreren
-Futures gleichzeitig arbeiten kann. Als Nächstes werden wir uns ansehen, wie
-wir mit <em>Strömen</em> (streams) mehrere Futures in einer zeitlichen Abfolge
-arbeiten können.</p>
+Futures gleichzeitig arbeiten kann. Als Nächstes werden wir uns ansehen, wie wir
+mittels <em>Streams</em> mit mehreren Futures in einer zeitlichen Abfolge arbeiten
+können.</p>
 
                     </main>
 

@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -166,13 +166,13 @@
 bereits verwendet haben. Anstatt sicherzustellen, dass ein Typ das von uns
 gewünschte Verhalten hat, stellen wir durch die Lebensdauer sicher, dass
 Referenzen so lange gültig sind, wie wir sie brauchen.</p>
-<p>Ein Detail, das wir im Abschnitt <a href="ch04-02-references-and-borrowing.html">„Referenzen und Ausleihen
-(borrowing)“</a> in Kapitel 4 nicht erörtert haben, ist,
+<p>Ein Detail, das wir im Abschnitt <a href="ch04-02-references-and-borrowing.html">„Referenzen und
+Borrowing“</a> in Kapitel 4 nicht erörtert haben, ist,
 dass jede Referenz in Rust eine Lebensdauer (lifetime) hat, d.h. einen
-Gültigkeitsbereich, in dem diese Referenz gültig ist. In den meisten Fällen
-sind Lebensdauern implizit und abgeleitet, ebenso wie in den meisten Fällen
-Typen abgeleitet werden. Wir müssen Typen nur dann mit Annotationen versehen,
-wenn mehrere Typen möglich sind. In ähnlicher Weise müssen wir Lebensdauern
+Gültigkeitsbereich, in dem diese Referenz gültig ist. In den meisten Fällen sind
+Lebensdauern implizit und abgeleitet, ebenso wie in den meisten Fällen Typen
+abgeleitet werden. Wir müssen Typen nur dann mit Annotationen versehen, wenn
+mehrere Typen möglich sind. In ähnlicher Weise müssen wir Lebensdauern
 annotieren, wenn die Lebensdauern von Referenzen auf verschiedene Weise
 miteinander in Beziehung gesetzt werden könnten. Rust verlangt von uns, die
 Beziehungen mit generischen Lebensdauerparametern zu annotieren, um
@@ -188,7 +188,7 @@ vertraut machen kannst.</p>
 <p>Das Hauptziel der Lebensdauer ist es, hängende Referenzen (dangling references)
 zu verhindern, die dazu führen würden, dass ein Programm auf andere Daten
 referenziert als die, auf die es referenzieren soll. Betrachte das Programm in
-Codeblock 10-16, das einen äußeren und einen inneren Gültigkeitsbereich hat.</p>
+Listing 10-16, das einen äußeren und einen inneren Gültigkeitsbereich hat.</p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let r;
 
@@ -199,7 +199,7 @@ Codeblock 10-16, das einen äußeren und einen inneren Gültigkeitsbereich hat.<
 
     println!("r: {r}");
 }</code></pre>
-<p><span class="caption">Codeblock 10-16: Ein Versuch, eine Referenz zu verwenden,
+<p><span class="caption">Listing 10-16: Ein Versuch, eine Referenz zu verwenden,
 deren Wert außerhalb des Gültigkeitsbereichs liegt</span></p>
 <blockquote>
 <p>Hinweis: Die Beispiele in den Codeblöcken 10-16, 10-17 und 10-23 deklarieren
@@ -207,7 +207,7 @@ Variablen ohne Initialwert, sodass der Variablenname im äußeren
 Gültigkeitsbereich existiert. Auf den ersten Blick mag dies im Widerspruch
 dazu stehen, dass Rust keine Nullwerte hat. Wenn wir jedoch versuchen, eine
 Variable zu verwenden, bevor wir ihr einen Wert geben, erhalten wir einen
-Kompilierfehler, der zeigt, dass Rust tatsächlich keine Nullwerte zulässt.</p>
+Compilerfehler, der zeigt, dass Rust tatsächlich keine Nullwerte zulässt.</p>
 </blockquote>
 <p>Der äußere Gültigkeitsbereich deklariert eine Variable <code>r</code> ohne Initialwert und
 der innere Gültigkeitsbereich deklariert eine Variable <code>x</code> mit dem Initialwert
@@ -242,11 +242,11 @@ sagen wir, dass es „länger lebt“. Wenn Rust diesen Code funktionieren ließ
 würde <code>r</code> auf Speicher verweisen, der freigegeben wurde, als <code>x</code> den
 Gültigkeitsbereich verlassen hat, und alles, was wir mit <code>r</code> tun würden, würde
 nicht korrekt funktionieren. Wie stellt Rust also fest, dass dieser Code
-ungültig ist? Es verwendet einen Ausleihenprüfer (borrow checker).</p>
-<h3 id="der-ausleihenprüfer"><a class="header" href="#der-ausleihenprüfer">Der Ausleihenprüfer</a></h3>
-<p>Der Rust-Compiler verfügt über einen <em>Ausleihenprüfer</em> (borrow checker), der
-Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Ausleihen gültig
-sind. Codeblock 10-17 zeigt den gleichen Code wie Codeblock 10-16, jedoch mit
+ungültig ist? Es verwendet einen Borrow Checker.</p>
+<h3 id="der-borrow-checker"><a class="header" href="#der-borrow-checker">Der Borrow Checker</a></h3>
+<p>Der Rust-Compiler verfügt über einen <em>Borrow Checker</em> (Ausleihenprüfer), der
+Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Borrows gültig sind.
+Listing 10-17 zeigt den gleichen Code wie Listing 10-16, jedoch mit
 Annotationen, die die Lebensdauer der Variablen angeben.</p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let r;                // ---------+-- 'a
@@ -258,7 +258,7 @@ Annotationen, die die Lebensdauer der Variablen angeben.</p>
                           //          |
     println!("r: {r}");   //          |
 }                         // ---------+</code></pre>
-<p><span class="caption">Codeblock 10-17: Annotationen der Lebensdauern von <code>r</code>
+<p><span class="caption">Listing 10-17: Annotationen der Lebensdauern von <code>r</code>
 und <code>x</code>, genannt <code>'a</code> bzw. <code>'b</code></span></p>
 <p>Hier haben wir die Lebensdauer von <code>r</code> mit <code>'a</code> und die Lebensdauer von <code>x</code> mit
 <code>'b</code> vermerkt. Wie du sehen kannst, ist der innere <code>'b</code>-Block viel kleiner als
@@ -267,7 +267,7 @@ der beiden Lebensdauern und stellt fest, dass <code>r</code> eine Lebensdauer vo
 hat, jedoch auf einen Speicherbereich mit Lebensdauern <code>'b</code> referenziert. Das
 Programm wird abgelehnt, weil <code>'b</code> kürzer als <code>'a</code> ist: Der Referenzinhalt lebt
 nicht so lange wie die Referenz selbst.</p>
-<p>Mit Codeblock 10-18 wird der Code so korrigiert, dass er keine hängende
+<p>Mit Listing 10-18 wird der Code so korrigiert, dass er keine hängende
 Referenz hat und fehlerfrei kompiliert werden kann.</p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let x = 5;            // ----------+-- 'b
@@ -277,39 +277,37 @@ Referenz hat und fehlerfrei kompiliert werden kann.</p>
     println!("r: {r}");   //   |       |
                           // --+       |
 }                         // ----------+</code></pre>
-<p><span class="caption">Codeblock 10-18: Eine gültige Referenz, da die Daten eine
+<p><span class="caption">Listing 10-18: Eine gültige Referenz, da die Daten eine
 längere Lebensdauer als die Referenz haben</span></p>
 <p>Hier hat <code>x</code> die Lebensdauer <code>'b</code>, die in diesem Fall größer ist als <code>'a</code>. Das
 bedeutet, dass <code>r</code> auf <code>x</code> referenzieren kann, weil Rust weiß, dass die
 Referenz in <code>r</code> immer gültig sein wird, solange <code>x</code> gültig ist.</p>
 <p>Da du nun weißt, wo die Lebensdauern von Referenzen sind und wie Rust die
 Lebensdauer analysiert, um sicherzustellen, dass Referenzen immer gültig sind,
-lass uns generischen Lebensdauern von Funktionsparametern und Rückgabewerten
+lass uns die generischen Lebensdauern von Funktionsparametern und Rückgabewerten
 untersuchen.</p>
 <h3 id="generische-lebensdauern-in-funktionen"><a class="header" href="#generische-lebensdauern-in-funktionen">Generische Lebensdauern in Funktionen</a></h3>
-<p>Wir schreiben eine Funktion, die den längeren von zwei
-Zeichenkettenanteilstypen zurückgibt. Diese Funktion nimmt zwei
-Zeichenkettenanteilstypen entgegen und gibt einen einzigen
-Zeichenkettenanteilstyp zurück. Nachdem wir die Funktion <code>longest</code>
-implementiert haben, sollte der Code in Codeblock 10-19 <code>Die längere Zeichenkette ist abcd</code> ausgeben.</p>
+<p>Wir schreiben eine Funktion, die den längeren von zwei String Slices zurückgibt.
+Diese Funktion nimmt zwei String Slices entgegen und gibt einen einzigen String
+Slice zurück. Nachdem wir die Funktion <code>longest</code> implementiert haben, sollte der
+Code in Listing 10-19 <code>Der längere String ist abcd</code> ausgeben.</p>
 <p><span class="filename">Datei: src/main.rs</span></p>
 <pre><code class="language-rust ignore">fn main() {
     let string1 = String::from("abcd");
     let string2 = "xyz";
 
     let result = longest(string1.as_str(), string2);
-    println!("Die längere Zeichenkette ist {result}");
+    println!("Der längere String ist {result}");
 }</code></pre>
-<p><span class="caption">Codeblock 10-19: Eine Funktion <code>main</code>, die die Funktion
-<code>longest</code> aufruft, um die längere von zwei Zeichenkettenanteilstypen zu
-bestimmen</span></p>
-<p>Beachte, dass wir wollen, dass die Funktion Zeichenkettenanteilstypen nimmt,
-die Referenzen sind und keine Zeichenketten, weil wir nicht wollen, dass die
-Funktion <code>longest</code> die Eigentümerschaft ihrer Parameter übernimmt. Lies
-<a href="ch04-03-slices.html#zeichenkettenanteilstypen-als-parameter">„Zeichenkettenanteilstypen als Parameter“</a> in
-Kapitel 4, um mehr darüber zu erfahren, warum die Parameter, die wir in
-Codeblock 10-19 verwenden, die von uns gewünschten sind.</p>
-<p>Wenn wir versuchen, die Funktion <code>longest</code>, wie in Codeblock 10-20 gezeigt, zu
+<p><span class="caption">Listing 10-19: Eine Funktion <code>main</code>, die die Funktion
+<code>longest</code> aufruft, um die längere von zwei String Slices zu bestimmen</span></p>
+<p>Beachte, dass wir wollen, dass die Funktion String Slices nimmt, die Referenzen
+sind und keine Strings, weil wir nicht wollen, dass die Funktion <code>longest</code> das
+Eigentum ihrer Parameter übernimmt. Lies <a href="ch04-03-slices.html#string-slices-als-parameter">„String Slices als
+Parameter“</a> in Kapitel 4, um mehr darüber zu
+erfahren, warum die Parameter, die wir in Listing 10-19 verwenden, die von uns
+gewünschten sind.</p>
+<p>Wenn wir versuchen, die Funktion <code>longest</code>, wie in Listing 10-20 gezeigt, zu
 implementieren, wird sie sich nicht kompilieren lassen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">fn main() {
@@ -317,7 +315,7 @@ implementieren, wird sie sich nicht kompilieren lassen.</p>
 </span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
+</span><span class="boring">    println!("Der längere String ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
@@ -327,9 +325,9 @@ implementieren, wird sie sich nicht kompilieren lassen.</p>
         y
     }
 }</code></pre>
-<p><span class="caption">Codeblock 10-20: Eine Implementierung der Funktion
-<code>longest</code>, die die längere von zwei Zeichenkettenanteilstypen zurückgibt, aber
-noch nicht kompiliert</span></p>
+<p><span class="caption">Listing 10-20: Eine Implementierung der Funktion
+<code>longest</code>, die die längere von zwei String Slices zurückgibt, aber noch nicht
+kompiliert</span></p>
 <p>Stattdessen erhalten wir folgenden Fehler, der von Lebensdauern spricht:</p>
 <pre><code class="language-console">$ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
@@ -353,17 +351,17 @@ Lebensdauer-Parameter benötigt, da Rust nicht sagen kann, ob sich die
 zurückgegebene Referenz auf <code>x</code> oder auf <code>y</code> bezieht. Eigentlich wissen wir es
 auch nicht, weil der <code>if</code>-Zweig im Funktionsrumpf eine Referenz auf <code>x</code> und der
 <code>else</code>-Zweig eine Referenz auf <code>y</code> zurückgibt!</p>
-<p>Wenn wir diese Funktion definieren, kennen wir die konkreten Werte nicht, die
-an diese Funktion übergeben werden, also wissen wir nicht, ob der <code>if</code>-Zweig
-oder der <code>else</code>-Zweig ausgeführt wird. Wir kennen auch nicht die konkreten
+<p>Wenn wir diese Funktion definieren, kennen wir die konkreten Werte nicht, die an
+diese Funktion übergeben werden, also wissen wir nicht, ob der <code>if</code>-Zweig oder
+der <code>else</code>-Zweig ausgeführt wird. Wir kennen auch nicht die konkreten
 Lebensdauern der Referenzen, die weitergegeben werden, sodass wir nicht wie in
 den Codeblöcken 10-17 und 10-18 die Gültigkeitsbereiche betrachten können, um
 festzustellen, ob die von uns zurückgegebene Referenz immer gültig sein wird.
-Der Ausleihenprüfer kann dies auch nicht feststellen, weil er nicht weiß, wie
-die Lebensdauer von <code>x</code> und <code>y</code> mit der Lebensdauer des Rückgabewertes
+Der Borrow Checker kann dies auch nicht feststellen, weil er nicht weiß, wie die
+Lebensdauer von <code>x</code> und <code>y</code> mit der Lebensdauer des Rückgabewertes
 zusammenhängt. Um diesen Fehler zu beheben, geben wir generische
 Lebensdauerparameter an, die die Beziehung zwischen den Referenzen definieren,
-damit der Ausleihenprüfer seine Analyse durchführen kann.</p>
+damit der Borrow Checker seine Analyse durchführen kann.</p>
 <h3 id="lebensdauer-annotationssyntax"><a class="header" href="#lebensdauer-annotationssyntax">Lebensdauer-Annotationssyntax</a></h3>
 <p>Lebensdauer-Annotationen ändern nichts daran, wie lange eine Referenz lebt.
 Vielmehr beschreiben sie die Beziehungen der Lebensdauern mehrerer Referenzen
@@ -374,14 +372,14 @@ indem sie einen generischen Lebensdauerparameter angeben.</p>
 <p>Lebensdauer-Annotationen haben eine etwas ungewöhnliche Syntax: Die Namen der
 Lebensdauer-Parameter müssen mit einem Apostroph (<code>'</code>) beginnen und sind
 normalerweise kleingeschrieben und sehr kurz, wie generische Typen. Die meisten
-Menschen verwenden den Namen <code>'a</code> für die erste Lebensdauer-Annotationen. Wir
+Menschen verwenden den Namen <code>'a</code> für die erste Lebensdauer-Annotation. Wir
 platzieren Lebensdauer-Parameter-Annotationen hinter dem <code>&amp;</code> einer Referenz,
 wobei wir ein Leerzeichen verwenden, um die Annotation vom Typ der Referenz zu
 trennen.</p>
 <p>Hier sind einige Beispiele: Eine Referenz auf einen <code>i32</code> ohne
 Lebensdauer-Parameter, eine Referenz auf einen <code>i32</code>, die einen
-Lebensdauer-Parameter namens <code>'a</code> hat, und eine veränderbarer Referenz auf
-einen <code>i32</code>, die ebenfalls die Lebensdauer <code>'a</code> hat:</p>
+Lebensdauer-Parameter namens <code>'a</code> hat, und eine veränderbare Referenz auf einen
+<code>i32</code>, die ebenfalls die Lebensdauer <code>'a</code> hat:</p>
 <pre><code class="language-rust ignore">&amp;i32        // eine Referenz
 &amp;'a i32     // eine Referenz mit expliziter Lebensdauer
 &amp;'a mut i32 // eine veränderbare Referenz mit expliziter Lebensdauer</code></pre>
@@ -399,14 +397,14 @@ generischen Typ-Parametern gemacht haben.</p>
 zurückgegebene Referenz ist gültig, solange die beiden Parameter gültig sind.
 Dies ist die Beziehung zwischen den Lebensdauern der Parameter und des
 Rückgabewerts. Wir nennen die Lebensdauer <code>'a</code> und fügen sie dann jeder
-Referenz hinzu, wie in Codeblock 10-21 gezeigt.</p>
+Referenz hinzu, wie in Listing 10-21 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    let string1 = String::from("abcd");
 </span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
+</span><span class="boring">    println!("Der längere String ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
@@ -416,23 +414,23 @@ Referenz hinzu, wie in Codeblock 10-21 gezeigt.</p>
         y
     }
 }</code></pre>
-<p><span class="caption">Codeblock 10-21: Die Funktionsdefinition <code>longest</code> gibt
+<p><span class="caption">Listing 10-21: Die Funktionsdefinition <code>longest</code> gibt
 an, dass alle Referenzen in der Signatur die gleiche Lebensdauer <code>'a</code> haben
 müssen</span></p>
 <p>Dieser Code sollte kompilierbar sein und das gewünschte Ergebnis liefern, wenn
-wir ihn mit der Funktion <code>main</code> in Codeblock 10-19 verwenden.</p>
+wir ihn mit der Funktion <code>main</code> in Listing 10-19 verwenden.</p>
 <p>Die Funktionssignatur sagt Rust, dass die Funktion für eine gewisse Lebensdauer
-<code>'a</code> zwei Parameter benötigt, die beide den Zeichenkettenanteilstyp haben und
-mindestens so lange leben wie die Lebensdauer <code>'a</code>. Die Funktionssignatur sagt
-Rust auch, dass der von der Funktion zurückgegebene Zeichenkettenanteilstyp
-mindestens so lange leben wird wie die Lebensdauer <code>'a</code>. In der Praxis bedeutet
-dies, dass die Lebensdauer der Referenz, die von der Funktion <code>longest</code>
-zurückgegeben wird, der kleineren der Lebensdauern der Werte entspricht, auf
-die sich die Funktionsargumente beziehen. Diese Beziehungen sollen von Rust
-verwendet werden, wenn es diesen Code analysiert.</p>
+<code>'a</code> zwei Parameter benötigt, die beide den String Slice haben und mindestens so
+lange leben wie die Lebensdauer <code>'a</code>. Die Funktionssignatur sagt Rust auch, dass
+der von der Funktion zurückgegebene String Slice mindestens so lange leben wird
+wie die Lebensdauer <code>'a</code>. In der Praxis bedeutet dies, dass die Lebensdauer der
+Referenz, die von der Funktion <code>longest</code> zurückgegeben wird, der kleineren der
+Lebensdauern der Werte entspricht, auf die sich die Funktionsargumente beziehen.
+Diese Beziehungen sollen von Rust verwendet werden, wenn es diesen Code
+analysiert.</p>
 <p>Denke daran, indem wir die Lebensdauerparameter in dieser Funktionssignatur
 angeben, ändern wir nicht die Lebensdauer der übergebenen oder zurückgegebenen
-Werte. Vielmehr legen wir fest, dass der Ausleihenprüfer alle Werte ablehnen
+Werte. Vielmehr legen wir fest, dass der Borrow Checker alle Werte ablehnen
 soll, die sich nicht an diese Bedingung halten. Beachte, dass die Funktion
 <code>longest</code> nicht genau wissen muss, wie lange <code>x</code> und <code>y</code> leben werden, nur dass
 ein gewisser Gültigkeitsbereich für <code>'a</code> eingesetzt werden kann, der dieser
@@ -458,15 +456,15 @@ haben, wird die zurückgegebene Referenz auch für die Dauer der kürzeren
 Lebensdauer von <code>x</code> und <code>y</code> gültig sein.</p>
 <p>Schauen wir uns an, wie die Lebensdauer-Annotationen die Funktion <code>longest</code>
 beschränken, indem wir Referenzen mit unterschiedlichen konkreten Lebensdauern
-übergeben. Codeblock 10-22 ist ein einfaches Beispiel.</p>
+übergeben. Listing 10-22 ist ein einfaches Beispiel.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
-    let string1 = String::from("lange Zeichenkette ist lang");
+    let string1 = String::from("langer String ist lang");
 
     {
         let string2 = String::from("xyz");
         let result = longest(string1.as_str(), string2.as_str());
-        println!("Die längere Zeichenkette ist {result}");
+        println!("Der längere String ist {result}");
     }
 }
 <span class="boring">
@@ -477,30 +475,29 @@ beschränken, indem wir Referenzen mit unterschiedlichen konkreten Lebensdauern
 </span><span class="boring">        y
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 10-22: Verwenden der Funktion <code>longest</code> mit
-Referenzen auf Zeichenketten, die unterschiedliche konkrete Lebensdauern
-haben</span></p>
+<p><span class="caption">Listing 10-22: Verwenden der Funktion <code>longest</code> mit
+Referenzen auf Strings, die unterschiedliche konkrete Lebensdauern haben</span></p>
 <p>In diesem Beispiel ist <code>string1</code> bis zum Ende des äußeren Gültigkeitsbereichs
 gültig, <code>string2</code> ist bis zum Ende des inneren Gültigkeitsbereichs gültig, und
-<code>result</code> referenziert auf etwas, das bis zum Ende des inneren
-Gültigkeitsbereichs gültig ist. Führe diesen Code aus und du wirst sehen, dass
-der Ausleihenprüfer diesen Code akzeptiert; er kompiliert und gibt <code>Die längere Zeichenkette ist lange Zeichenkette ist lang</code> aus.</p>
+<code>result</code> referenziert etwas, das bis zum Ende des inneren Gültigkeitsbereichs
+gültig ist. Führe diesen Code aus und du wirst sehen, dass der Borrow Checker
+diesen Code akzeptiert; er kompiliert und gibt <code>Der längere String ist langer String ist lang</code> aus.</p>
 <p>Versuchen wir als nächstes ein Beispiel, das zeigt, dass die Lebensdauer der
 Referenz in <code>result</code> die kürzere Lebensdauer der beiden Argumente sein muss.
 Wir verschieben die Deklaration der Variable <code>result</code> oberhalb des inneren
 Gültigkeitsbereichs, lassen aber die Zuweisung des Wertes an die Variable
 <code>result</code> innerhalb des Gültigkeitsbereichs mit <code>string2</code>. Dann verschieben wir
 <code>println!</code>, das <code>result</code> verwendet, unterhalb des inneren Gültigkeitsbereichs.
-Der Code in Codeblock 10-23 lässt sich nicht kompilieren.</p>
+Der Code in Listing 10-23 lässt sich nicht kompilieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
-    let string1 = String::from("lange Zeichenkette ist lang");
+    let string1 = String::from("langer String ist lang");
     let result;
     {
         let string2 = String::from("xyz");
         result = longest(string1.as_str(), string2.as_str());
     }
-    println!("Die längere Zeichenkette ist {result}");
+    println!("Der längere String ist {result}");
 }
 <span class="boring">
 </span><span class="boring">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
@@ -510,7 +507,7 @@ Der Code in Codeblock 10-23 lässt sich nicht kompilieren.</p>
 </span><span class="boring">        y
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 10-23: Der Versuch, <code>result</code> zu verwenden,
+<p><span class="caption">Listing 10-23: Der Versuch, <code>result</code> zu verwenden,
 nachdem <code>string2</code> den Gültigkeitsbereich verlassen hat</span></p>
 <p>Wenn wir versuchen, diesen Code zu kompilieren, erhalten wir folgenden Fehler:</p>
 <pre><code class="language-console">$ cargo run
@@ -524,8 +521,8 @@ error[E0597]: `string2` does not live long enough
   |                                            ^^^^^^^ borrowed value does not live long enough
 7 |     }
   |     - `string2` dropped here while still borrowed
-8 |     println!("Die längere Zeichenkette ist {result}");
-  |                                            -------- borrow later used here
+8 |     println!("Der längere String ist {result}");
+  |                                      -------- borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
@@ -538,30 +535,29 @@ Rückgabewerte mit dem gleichen Lebensdauerparameter <code>'a</code> annotiert h
 länger als <code>string2</code> ist und deshalb wird <code>result</code> eine Referenz auf <code>string1</code>
 enthalten. Da <code>string1</code> den Gültigkeitsbereich noch nicht verlassen hat, wird
 eine Referenz auf <code>string1</code> in der <code>println!</code>-Anweisung noch gültig sein. Der
-Compiler kann jedoch nicht sehen, dass die Referenz in diesem Fall gültig
-ist. Wir haben Rust gesagt, dass die Lebensdauer der Referenz, die von der
-Funktion <code>longest</code> zurückgegeben wird, die gleiche ist wie die kürzere der
-Lebensdauern der entgegengenommenen Referenzen. Daher lehnt der Ausleihenprüfer
-den Code in Codeblock 10-23 als möglicherweise ungültige Referenz ab.</p>
+Compiler kann jedoch nicht sehen, dass die Referenz in diesem Fall gültig ist.
+Wir haben Rust gesagt, dass die Lebensdauer der Referenz, die von der Funktion
+<code>longest</code> zurückgegeben wird, die gleiche ist wie die kürzere der Lebensdauern
+der entgegengenommenen Referenzen. Daher lehnt der Borrow Checker den Code in
+Listing 10-23 als möglicherweise ungültige Referenz ab.</p>
 <p>Versuche, dir weitere Experimente auszudenken, die die Werte und die
 Lebensdauern der an die Funktion <code>longest</code> übergebenen Referenzen variieren und
 wie die zurückgegebene Referenz verwendet wird. Stelle Hypothesen darüber auf,
-ob deine Experimente den Ausleihenprüfer bestehen oder nicht, bevor du
+ob deine Experimente den Borrow Checker bestehen oder nicht, bevor du
 kompilierst; prüfe dann, ob du Recht hast!</p>
 <h3 id="beziehungen"><a class="header" href="#beziehungen">Beziehungen</a></h3>
-<p>Die Art und Weise, in der du Lebensdauerparameter angeben musst, hängt davon
-ab, was deine Funktion tut. Wenn wir zum Beispiel die Implementierung der
-Funktion <code>longest</code> so ändern würden, dass sie immer den ersten Parameter
-zurückgibt und nicht den längsten Zeichenkettenanteilstyp, bräuchten wir keine
-Lebensdauer für den Parameter <code>y</code> anzugeben. Der folgende Code wird
-kompilieren:</p>
+<p>Die Art und Weise, in der du Lebensdauerparameter angeben musst, hängt davon ab,
+was deine Funktion tut. Wenn wir zum Beispiel die Implementierung der Funktion
+<code>longest</code> so ändern würden, dass sie immer den ersten Parameter zurückgibt und
+nicht den längsten String Slice, bräuchten wir keine Lebensdauer für den
+Parameter <code>y</code> anzugeben. Der folgende Code wird kompilieren:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    let string1 = String::from("abcd");
 </span><span class="boring">    let string2 = "efghijklmnopqrstuvwxyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
+</span><span class="boring">    println!("Der längere String ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;str) -&gt; &amp;'a str {
@@ -584,11 +580,11 @@ Implementierung der Funktion <code>longest</code>, die sich nicht kompilieren l�
 </span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
+</span><span class="boring">    println!("Der längere String ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;str, y: &amp;str) -&gt; &amp;'a str {
-    let result = String::from("wirklich lange Zeichenkette");
+    let result = String::from("wirklich langer String");
     result.as_str()
 }</code></pre>
 <p>Auch wenn wir hier einen Lebensdauer-Parameter <code>'a</code> für den Rückgabetyp
@@ -623,11 +619,11 @@ um speichersichere Operationen zu ermöglichen und Operationen zu unterbinden,
 die hängende Zeiger erzeugen oder anderweitig die Speichersicherheit verletzen
 würden.</p>
 <h3 id="in-struktur-definitionen"><a class="header" href="#in-struktur-definitionen">In Struktur-Definitionen</a></h3>
-<p>Bisher haben wir nur Strukturen (structs) definiert, die aneigenbare Typen
+<p>Bisher haben wir nur Strukturen (structs) definiert, die besitzende Typen
 enthalten. Es ist möglich, dass Strukturen Referenzen enthalten, aber in diesem
 Fall müssten wir Lebensdauer-Annotationen zu jeder Referenz in der
-Strukturdefinition angeben. Codeblock 10-24 hat eine Struktur namens
-<code>ImportantExcerpt</code>, die einen Zeichenkettenanteilstyp enthält.</p>
+Strukturdefinition angeben. Listing 10-24 hat eine Struktur namens
+<code>ImportantExcerpt</code>, die einen String Slice enthält.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">struct ImportantExcerpt&lt;'a&gt; {
     part: &amp;'a str,
@@ -640,12 +636,12 @@ fn main() {
         part: first_sentence,
     };
 }</code></pre>
-<p><span class="caption">Codeblock 10-24: Eine Struktur, die eine Referenz
-enthält, sodass ihre Definition eine Lebensdauer-Annotationen benötigt</span></p>
-<p>Diese Struktur hat das einzige Feld <code>part</code>, das einen Zeichenkettenanteilstyp
-enthält, der eine Referenz ist. Wie bei generischen Datentypen deklarieren wir
-den Namen des generischen Lebensdauerparameters innerhalb spitzer Klammern
-hinter dem Strukturnamen, damit wir den Lebensdauerparameter im Rumpf der
+<p><span class="caption">Listing 10-24: Eine Struktur, die eine Referenz enthält,
+sodass ihre Definition eine Lebensdauer-Annotation benötigt</span></p>
+<p>Diese Struktur hat das einzige Feld <code>part</code>, das einen String Slice enthält, der
+eine Referenz ist. Wie bei generischen Datentypen deklarieren wir den Namen des
+generischen Lebensdauerparameters innerhalb spitzer Klammern hinter dem
+Strukturnamen, damit wir den Lebensdauerparameter im Rumpf der
 Strukturdefinition verwenden können. Diese Annotation bedeutet, dass eine
 Instanz von <code>ImportantExcerpt</code> die Referenz, die sie in ihrem Feld <code>part</code>
 enthält, nicht überleben kann.</p>
@@ -659,8 +655,8 @@ ist.</p>
 <h3 id="lebensdauer-elision"><a class="header" href="#lebensdauer-elision">Lebensdauer-Elision</a></h3>
 <p>Du hast gelernt, dass jede Referenz eine Lebensdauer hat und dass du
 Lebensdauerparameter für Funktionen oder Strukturen angeben musst, die
-Referenzen verwenden. In Kapitel 4 hatten wir jedoch eine Funktion in Codeblock
-4-9, die wiederum in Codeblock 10-25 gezeigt wird, die ohne
+Referenzen verwenden. In Kapitel 4 hatten wir jedoch eine Funktion in Listing
+4-9, die wiederum in Listing 10-25 gezeigt wird, die ohne
 Lebensdauer-Annotationen kompiliert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn first_word(s: &amp;str) -&gt; &amp;str {
@@ -678,19 +674,19 @@ Lebensdauer-Annotationen kompiliert.</p>
 </span><span class="boring">fn main() {
 </span><span class="boring">    let my_string = String::from("Hallo Welt");
 </span><span class="boring">
-</span><span class="boring">    // first_word funktioniert mit Anteilstypen von `String`
+</span><span class="boring">    // first_word funktioniert mit Slices von `String`
 </span><span class="boring">    let word = first_word(&amp;my_string[..]);
 </span><span class="boring">
 </span><span class="boring">    let my_string_literal = "Hallo Welt";
 </span><span class="boring">
-</span><span class="boring">    // first_word funktioniert mit Anteilstypen von Zeichenkettenliteralen
+</span><span class="boring">    // first_word funktioniert mit Slices von String-Literalen
 </span><span class="boring">    let word = first_word(&amp;my_string_literal[..]);
 </span><span class="boring">
-</span><span class="boring">    // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
-</span><span class="boring">    // funktioniert dies auch ohne die Anteilstypensyntax!
+</span><span class="boring">    // Da String-Literale bereits String Slices sind,
+</span><span class="boring">    // funktioniert dies auch ohne Slices-Syntax!
 </span><span class="boring">    let word = first_word(my_string_literal);
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 10-25: Eine Funktion, die wir in Codeblock 4-9
+<p><span class="caption">Listing 10-25: Eine Funktion, die wir in Listing 4-9
 definiert haben und die ohne Lebensdauer-Annotationen kompiliert, obwohl
 Parameter und Rückgabetyp Referenzen sind</span></p>
 <p>Der Grund, warum diese Funktion ohne Lebensdauer-Annotationen kompiliert, ist
@@ -698,13 +694,13 @@ historisch bedingt: In frühen Versionen (vor 1.0) von Rust hätte sich dieser
 Code nicht kompilieren lassen, da jede Referenz eine explizite Lebensdauer
 benötigte. Damals wäre die Funktionssignatur so geschrieben worden:</p>
 <pre><code class="language-rust ignore">fn first_word&lt;'a&gt;(s: &amp;'a str) -&gt; &amp;'a str {</code></pre>
-<p>Nachdem jede Menge Rust-Code geschrieben wurde, stellte das Rust-Team fest,
-dass die Rust-Programmierer in bestimmten Situationen immer wieder die gleichen
+<p>Nachdem jede Menge Rust-Code geschrieben wurde, stellte das Rust-Team fest, dass
+die Rust-Programmierer in bestimmten Situationen immer wieder die gleichen
 Lebensdauer-Annotationen angaben. Diese Situationen waren vorhersehbar und
-folgten einigen wenigen deterministischen Mustern. Die Entwickler
-programmierten diese Muster in den Code des Compilers, sodass der
-Ausleihenprüfer in diesen Situationen auf die Lebensdauer schließen konnte und
-keine expliziten Annotationen benötigte.</p>
+folgten einigen wenigen deterministischen Mustern. Die Entwickler programmierten
+diese Muster in den Code des Compilers, sodass der Borrow Checker in diesen
+Situationen auf die Lebensdauer schließen konnte und keine expliziten
+Annotationen benötigte.</p>
 <p>Dieses Stück Rust-Geschichte ist relevant, weil es möglich ist, dass weitere
 deterministische Muster auftauchen und dem Compiler hinzugefügt werden. In
 Zukunft könnten noch weniger Lebensdauer-Annotationen erforderlich sein.</p>
@@ -744,7 +740,7 @@ Diese dritte Regel macht Methoden viel angenehmer zu lesen und zu schreiben,
 weil weniger Symbole erforderlich sind.</p>
 <p>Tun wir so, als wären wir der Compiler. Wir werden diese Regeln anwenden, um
 herauszufinden, wie lang die Lebensdauer der Referenzen in der Signatur der
-Funktion <code>first_word</code> in Codeblock 10-26 ist. Die Signatur beginnt ohne
+Funktion <code>first_word</code> in Listing 10-26 ist. Die Signatur beginnt ohne
 Lebensdauern:</p>
 <pre><code class="language-rust ignore">fn first_word(s: &amp;str) -&gt; &amp;str {</code></pre>
 <p>Dann wendet der Compiler die erste Regel an, die festlegt, dass jeder
@@ -760,7 +756,7 @@ aussieht:</p>
 der Compiler kann seine Analyse fortsetzen, ohne dass der Programmierer die
 Lebensdauer in dieser Funktionssignatur annotieren muss.</p>
 <p>Schauen wir uns ein anderes Beispiel an, diesmal mit der Funktion <code>longest</code>,
-die keine Lebensdauerparameter hatte, als wir in Codeblock 10-20 mit ihr zu
+die keine Lebensdauerparameter hatte, als wir in Listing 10-20 mit ihr zu
 arbeiten begannen:</p>
 <pre><code class="language-rust ignore">fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {</code></pre>
 <p>Wenden wir die erste Regel an: Jeder Parameter erhält seine eigene Lebensdauer.
@@ -772,7 +768,7 @@ Eingangslebensdauer gibt. Auch die dritte Regel trifft nicht zu, weil <code>long
 eine Funktion ist, keine Methode, sodass keiner der Parameter <code>self</code> ist.
 Nachdem wir alle drei Regeln durchgearbeitet haben, haben wir immer noch nicht
 herausgefunden, wie lang die Lebensdauer des Rückgabetyps ist. Aus diesem Grund
-haben wir beim Versuch, den Code in Codeblock 10-20 zu kompilieren, einen
+haben wir beim Versuch, den Code in Listing 10-20 zu kompilieren, einen
 Fehler erhalten: Der Compiler arbeitete die Lebensdauer-Elisionsregeln
 durch, konnte aber immer noch nicht alle Lebensdauern der Referenzen in der
 Signatur ermitteln.</p>
@@ -782,7 +778,7 @@ warum die dritte Regel bedeutet, dass wir die Lebensdauer in Methodensignaturen
 nicht sehr oft annotieren müssen.</p>
 <h3 id="in-methodendefinitionen"><a class="header" href="#in-methodendefinitionen">In Methodendefinitionen</a></h3>
 <p>Wenn wir Methoden auf einer Struktur mit Lebensdauer implementieren, verwenden
-wir die gleiche Syntax wie die in Codeblock 10-11 gezeigten generischen
+wir die gleiche Syntax wie die in Listing 10-11 gezeigten generischen
 Typparameter. Wo wir die Lebensdauerparameter deklarieren und verwenden, hängt
 davon ab, ob sie sich auf die Strukturfelder oder auf die Methodenparameter und
 Rückgabewerte beziehen.</p>
@@ -794,7 +790,7 @@ Lebensdauern der Referenzen in den Feldern der Struktur gebunden sein oder sie
 können unabhängig sein. Darüber hinaus sorgen die Lebensdauer-Elisionsregeln
 oft dafür, dass Lebensdauer-Annotationen in Methodensignaturen nicht
 erforderlich sind. Betrachten wir einige Beispiele mit der Struktur
-<code>ImportantExcerpt</code>, die wir in Codeblock 10-24 definiert haben.</p>
+<code>ImportantExcerpt</code>, die wir in Listing 10-24 definiert haben.</p>
 <p>Zuerst werden wir eine Methode namens <code>level</code> verwenden, deren einziger
 Parameter eine Referenz auf <code>self</code> ist und deren Rückgabewert ein <code>i32</code> ist,
 was keine Referenz ist:</p>
@@ -858,15 +854,15 @@ berücksichtigt worden.</p>
 <h3 id="statische-lebensdauer"><a class="header" href="#statische-lebensdauer">Statische Lebensdauer</a></h3>
 <p>Eine besondere Lebensdauer, die wir besprechen müssen, ist <code>'static</code>, was
 bedeutet, dass diese Referenz während der gesamten Dauer des Programms bestehen
-kann. Alle Zeichenkettenliterale haben die Lebensdauer <code>'static</code>. Sie wird wie
-folgt annotiert:</p>
+kann. Alle String-Literale haben die Lebensdauer <code>'static</code>. Sie wird wie folgt
+annotiert:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s: &amp;'static str = "Ich habe eine statische Lebensdauer.";
 <span class="boring">}</span></code></pre>
-<p>Der Text dieser Zeichenkette wird direkt in der Binärdatei des Programms
-gespeichert, die immer verfügbar ist. Daher ist die Lebensdauer aller
-Zeichenkettenliterale <code>'static</code>.</p>
+<p>Der Text dieses Strings wird direkt in der Binärdatei des Programms gespeichert,
+die immer verfügbar ist. Daher ist die Lebensdauer aller String-Literale
+<code>'static</code>.</p>
 <p>Möglicherweise siehst du in Fehlermeldungen Hinweise zur Verwendung der
 Lebensdauer <code>'static</code>. Aber bevor du <code>'static</code> als Lebensdauer für eine
 Referenz angibst, denke darüber nach, ob deine Referenz tatsächlich während der
@@ -876,9 +872,9 @@ In den meisten Fällen resultiert eine Fehlermeldung, die auf die Lebensdauer
 aus einer Nichtübereinstimmung der verfügbaren Lebensdauern. In solchen Fällen
 besteht die Lösung darin, diese Probleme zu beheben und nicht darin, die
 Lebensdauer als <code>'static</code> festzulegen.</p>
-<h2 id="generische-typparameter-merkmalsabgrenzungen-und-lebensdauern"><a class="header" href="#generische-typparameter-merkmalsabgrenzungen-und-lebensdauern">Generische Typparameter, Merkmalsabgrenzungen und Lebensdauern</a></h2>
-<p>Schauen wir uns kurz die Syntax zu Angabe generischer Typparameter,
-Merkmalsabgrenzungen und Lebensdauern in einer Funktion an!</p>
+<h2 id="generische-typparameter-trait-bounds-und-lebensdauern"><a class="header" href="#generische-typparameter-trait-bounds-und-lebensdauern">Generische Typparameter, Trait Bounds und Lebensdauern</a></h2>
+<p>Schauen wir uns kurz die Syntax zur Angabe generischer Typparameter, Trait
+Bounds und Lebensdauern in einer Funktion an!</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    let string1 = String::from("abcd");
 </span><span class="boring">    let string2 = "xyz";
@@ -888,7 +884,7 @@ Merkmalsabgrenzungen und Lebensdauern in einer Funktion an!</p>
 </span><span class="boring">        string2,
 </span><span class="boring">        "Heute hat jemand Geburtstag!",
 </span><span class="boring">    );
-</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
+</span><span class="boring">    println!("Der längere String ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>use std::fmt::Display;
@@ -908,30 +904,30 @@ where
         y
     }
 }</code></pre>
-<p>Dies ist die Funktion <code>longest</code> aus Codeblock 10-21, die die längere von zwei
-Zeichenkettenanteilstypen zurückgibt. Aber jetzt hat sie einen zusätzlichen
-Parameter namens <code>ann</code> vom generischen Typ <code>T</code>, der jeder beliebige Typ sein
-kann, der das Merkmal <code>Display</code> implementiert, wie in der <code>where</code>-Klausel
-spezifiziert ist. Dieser zusätzliche Parameter wird unter Verwendung von
-<code>{ann}</code> ausgegeben, weshalb die Merkmalsabgrenzung <code>Display</code> erforderlich ist.
-Da die Lebensdauer ein generischer Typ ist, stehen die Deklarationen des
-Lebensdauer-Parameters <code>'a</code> und des generischen Typ-Parameters <code>T</code> in der
-gleichen Liste innerhalb spitzer Klammern hinter dem Funktionsnamen.</p>
+<p>Dies ist die Funktion <code>longest</code> aus Listing 10-21, die die längere von zwei
+String Slices zurückgibt. Aber jetzt hat sie einen zusätzlichen Parameter namens
+<code>ann</code> vom generischen Typ <code>T</code>, der jeder beliebige Typ sein kann, der das Trait
+<code>Display</code> implementiert, wie in der <code>where</code>-Klausel spezifiziert ist. Dieser
+zusätzliche Parameter wird unter Verwendung von <code>{ann}</code> ausgegeben, weshalb die
+Trait Bound <code>Display</code> erforderlich ist. Da die Lebensdauer ein generischer Typ
+ist, stehen die Deklarationen des Lebensdauer-Parameters <code>'a</code> und des
+generischen Typ-Parameters <code>T</code> in der gleichen Liste innerhalb spitzer Klammern
+hinter dem Funktionsnamen.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
-<p>Wir haben in diesem Kapitel viel behandelt! Jetzt, da du über generische
-Typparameter, Merkmale und Merkmalsabgrenzungen sowie generische
-Lebensdauerparameter Bescheid weißt, bist du bereit, Code ohne Wiederholungen
-zu schreiben, der in vielen verschiedenen Situationen funktioniert. Merkmale
-und Merkmalsabgrenzungen stellen sicher, dass die Typen, auch wenn sie
-generisch sind, das Verhalten haben, das der Code benötigt. Du hast gelernt,
-wie man Lebensdauer-Annotationen verwendet, um sicherzustellen, dass dieser
-flexible Code keine hängenden Referenzen hat. Und all diese Analysen finden zur
-Kompilierzeit statt, was die Laufzeitperformanz nicht beeinträchtigt!</p>
+<p>Wir haben in diesem Kapitel viel behandelt! Da du jetzt mit generischen
+Typparametern, Traits und Trait Bounds sowie generischen Lebensdauerparametern
+vertraut bist, kannst du Code ohne Wiederholungen schreiben, der in vielen
+verschiedenen Situationen funktioniert. Traits und Trait Bounds stellen sicher,
+dass die Typen, auch wenn sie generisch sind, das Verhalten haben, das der Code
+benötigt. Du hast gelernt, wie man Lebensdauer-Annotationen verwendet, um
+sicherzustellen, dass dieser flexible Code keine hängenden Referenzen hat. Und
+all diese Analysen finden zur Kompilierzeit statt, was die Laufzeitperformanz
+nicht beeinträchtigt!</p>
 <p>Ob du es glaubst oder nicht, es gibt zu den Themen, die wir in diesem Kapitel
-besprochen haben, noch viel mehr zu sagen: In Kapitel 18 werden Merkmalsobjekte
-erörtert, die eine weitere Möglichkeit zur Verwendung von Merkmalen darstellen.
-Es gibt auch komplexere Szenarien mit Lebensdauer-Annotationen, die du nur in
-sehr fortgeschrittenen Szenarien benötigst; für diese solltest du die
+besprochen haben, noch viel mehr zu sagen: In Kapitel 18 werden Trait-Objekte
+erörtert, die eine weitere Möglichkeit zur Verwendung von Traits darstellen. Es
+gibt auch komplexere Szenarien mit Lebensdauer-Annotationen, die du nur in sehr
+fortgeschrittenen Szenarien benötigst; für diese solltest du die
 <a href="https://doc.rust-lang.org/reference/trait-bounds.html">Rust-Referenz</a> lesen. Aber als Nächstes wirst du lernen, wie man
 Tests in Rust schreibt, damit du sicherstellen kannst, dass dein Code so
 funktioniert, wie er es soll.</p>

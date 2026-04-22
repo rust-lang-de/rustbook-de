@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -166,10 +166,10 @@
 wichtigsten Funktionen in der Sprache gesehen: Die Funktion <code>main</code>, die der
 Einstiegspunkt vieler Programme ist. Du hast auch das Schlüsselwort <code>fn</code>
 gesehen, mit dem du neue Funktionen deklarieren kannst.</p>
-<p>Rust-Code verwendet die <em>Schlangenschrift</em>-Stil-Konvention (snake case) für
-Funktions- und Variablennamen, bei der alle Buchstaben klein geschrieben sind
-und Unterstriche Wörter separieren. Hier ist ein Programm, das eine
-Beispiel-Funktionsdefinition enthält:</p>
+<p>Rust-Code verwendet die <em>Snake Case</em>-Konvention für Funktions- und
+Variablennamen, bei der alle Buchstaben klein geschrieben sind und Unterstriche
+Wörter separieren. Hier ist ein Programm, das eine Beispiel-Funktionsdefinition
+enthält:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     println!("Hallo Welt!");
@@ -181,15 +181,15 @@ fn another_function() {
     println!("Eine andere Funktion.");
 }</code></pre>
 <p>Wir definieren eine Funktion in Rust durch die Eingabe von <code>fn</code>, gefolgt von
-einem Funktionsnamen und einem Satz Klammern. Die geschweiften Klammern teilen
+einem Funktionsnamen und einem Klammernpaar. Die geschweiften Klammern teilen
 dem Compiler mit, wo der Funktionsrumpf beginnt und endet.</p>
 <p>Wir können jede Funktion, die wir definiert haben, aufrufen, indem wir ihren
-Namen gefolgt von einem Satz Klammern eingeben. Da <code>another_function</code> im
-Programm definiert ist, kann sie von innerhalb der Funktion <code>main</code> aufgerufen
-werden. Beachte, dass wir <code>another_function</code> <em>nach</em> der Funktion <code>main</code> im
-Quellcode definiert haben; wir hätten sie auch vorher definieren können. Rust
-interessiert es nicht, wo du deine Funktionen definierst, nur dass sie irgendwo
-definiert sind.</p>
+Namen gefolgt von einem Klammernpaar eingeben. Da <code>another_function</code> im Programm
+definiert ist, kann sie von innerhalb der Funktion <code>main</code> aufgerufen werden.
+Beachte, dass wir <code>another_function</code> <em>nach</em> der Funktion <code>main</code> im Quellcode
+definiert haben; wir hätten sie auch vorher definieren können. Rust interessiert
+es nicht, wo du deine Funktionen definierst, nur dass sie irgendwo definiert
+sind.</p>
 <p>Lass uns ein neues Binärprojekt namens „functions“ anfangen, um Funktionen
 weiter zu erforschen. Platziere das Beispiel <code>another_function</code> in
 <em>src/main.rs</em> und lass es laufen. Du solltest die folgende Ausgabe sehen:</p>
@@ -232,8 +232,7 @@ Der Wert von x ist: 5
 <p>Die Deklaration <code>another_function</code> hat einen Parameter namens <code>x</code>. Der Typ von
 <code>x</code> wird als <code>i32</code> angegeben. Wenn wir <code>5</code> an <code>another_function</code> übergeben,
 setzt das Makro <code>println!</code> den Wert <code>5</code> an die Stelle, an der sich das Paar
-geschweifter Klammern mit dem <code>x</code> darin in der Formatierungszeichenkette
-befand.</p>
+geschweifter Klammern mit dem <code>x</code> darin im Formatierungs-String befand.</p>
 <p>In Funktionssignaturen <em>musst</em> du den Typ jedes Parameters deklarieren. Dies
 ist eine bewusste Designentscheidung von Rust: Das Erfordernis von
 Typ-Annotationen in Funktionsdefinitionen bedeutet, dass der Compiler sie
@@ -281,13 +280,13 @@ und keinen Wert zurückgeben.</li>
 Schauen wir uns einige Beispiele an.</li>
 </ul>
 <p>Eine Variable zu erstellen und ihr mit dem Schlüsselwort <code>let</code> einen Wert
-zuzuweisen, ist eine Anweisung. In Codeblock 3-1 ist <code>let y = 6;</code> eine
+zuzuweisen, ist eine Anweisung. In Listing 3-1 ist <code>let y = 6;</code> eine
 Anweisung.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let y = 6;
 }</code></pre>
-<p><span class="caption">Codeblock 3-1: Eine Funktionsdeklaration <code>main</code>, die eine
+<p><span class="caption">Listing 3-1: Eine Funktionsdeklaration <code>main</code>, die eine
 Anweisung enthält</span></p>
 <p>Auch Funktionsdefinitionen sind Anweisungen; das gesamte vorhergehende Beispiel
 ist eine Anweisung für sich. (Wie wir weiter unten sehen werden, ist der
@@ -334,7 +333,7 @@ als auch <code>y</code> haben den Wert <code>6</code>; das ist in Rust nicht der
 <p>Ausdrücke werten zu einem Wert aus und machen den größten Teil des restlichen
 Codes aus, den du in Rust schreiben wirst. Betrachte eine mathematische
 Operation, z.B. <code>5 + 6</code>, die ein Ausdruck ist, der zum Wert <code>11</code> ausgewertet
-wird. Ausdrücke können Teil von Anweisungen sein: In Codeblock 3-1 ist die <code>6</code>
+wird. Ausdrücke können Teil von Anweisungen sein: In Listing 3-1 ist die <code>6</code>
 in der Anweisung <code>let y = 6;</code> ein Ausdruck, der den Wert <code>6</code> ergibt. Der Aufruf
 einer Funktion ist ein Ausdruck. Der Aufruf eines Makros ist ein Ausdruck. Ein
 neuer Gültigkeitsbereichsblock, der mit geschweiften Klammern erstellt wird,

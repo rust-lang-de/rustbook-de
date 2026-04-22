@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Grundlagen der asynchronen Programmierung: Async, Await, Futures und Ströme - Die Programmiersprache Rust</title>
+        <title>Grundlagen der asynchronen Programmierung: Async, Await, Futures und Streams - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,27 +161,27 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="grundlagen-der-asynchronen-programmierung-async-await-futures-und-ströme"><a class="header" href="#grundlagen-der-asynchronen-programmierung-async-await-futures-und-ströme">Grundlagen der asynchronen Programmierung: Async, Await, Futures und Ströme</a></h1>
-<p>Viele Operationen, die wir einen Computer ausführen lassen, können eine Weile
-dauern, bis sie erledigt sind. Es wäre schön, wenn wir etwas anderes tun
-könnten, während wir darauf warten, bis diese lang dauernden Prozesse
-abgeschlossen sind. Moderne Computer bieten zwei Techniken, um mehr als einen
-Vorgang gleichzeitig zu bearbeiten: Parallelität und Nebenläufigkeit. Die Logik
-unserer Programme ist jedoch meist linear geschrieben. Wir möchten gerne
-festlegen können, welche Operationen ein Programm ausführen soll und an welchen
-Punkten eine Funktion pausieren und stattdessen ein anderer Teil des Programms
-ausgeführt werden kann, ohne dass wir im Voraus genau festlegen müssen, in
-welcher Reihenfolge und auf welche Weise jeder einzelne Codeausschnitt
-ausgeführt werden soll. <em>Asynchrone Programmierung</em> ist eine Abstraktion, mit
-der wir unseren Code in Form von potenziellen Haltepunkten und Endergebnissen
-ausdrücken können, die die Details der Koordination für uns übernehmen.</p>
-<p>Dieses Kapitel baut auf Kapitel 16 auf, in dem Stränge (threads) für
-Parallelität und Nebenläufigkeit verwendet werden, und stellt einen
-alternativen Ansatz zum Schreiben von Code vor: Rusts Futures, Ströme (streams)
-und die Syntax <code>async</code> und <code>await</code>, mit denen wir ausdrücken können, wie
-Operationen asynchron sein könnten, sowie die Kisten (crates) von
-Drittanbietern, die asynchrone Laufzeiten implementieren: Code, der die
-Ausführung asynchroner Operationen verwaltet und koordiniert.</p>
+                        <h1 id="grundlagen-der-asynchronen-programmierung-async-await-futures-und-streams"><a class="header" href="#grundlagen-der-asynchronen-programmierung-async-await-futures-und-streams">Grundlagen der asynchronen Programmierung: Async, Await, Futures und Streams</a></h1>
+<p>Viele Operationen, die ein Computer ausführt, können eine Weile dauern, bis sie
+erledigt sind. Es wäre schön, wenn wir etwas anderes tun könnten, während wir
+darauf warten, bis diese lang dauernden Prozesse abgeschlossen sind. Moderne
+Computer bieten zwei Techniken, um mehr als einen Vorgang gleichzeitig zu
+bearbeiten: Parallelität und Nebenläufigkeit. Die Logik unserer Programme ist
+jedoch meist linear geschrieben. Wir möchten gerne festlegen können, welche
+Operationen ein Programm ausführen soll und an welchen Punkten eine Funktion
+pausieren und stattdessen ein anderer Teil des Programms ausgeführt werden kann,
+ohne dass wir im Voraus genau festlegen müssen, in welcher Reihenfolge und auf
+welche Weise jeder einzelne Codeausschnitt ausgeführt werden soll. <em>Asynchrone
+Programmierung</em> ist eine Abstraktion, mit der wir unseren Code in Form von
+potenziellen Haltepunkten und Endergebnissen ausdrücken können, die die Details
+der Koordination für uns übernehmen.</p>
+<p>Dieses Kapitel baut auf Kapitel 16 auf, in dem Threads für Parallelität und
+Nebenläufigkeit verwendet werden, und stellt einen alternativen Ansatz zum
+Schreiben von Code vor: Rusts Futures, Streams und die Syntax <code>async</code> und
+<code>await</code>, mit denen wir ausdrücken können, wie Operationen asynchron sein
+könnten, sowie die Crate von Drittanbietern, die asynchrone Laufzeiten
+implementieren: Code, der die Ausführung asynchroner Operationen verwaltet und
+koordiniert.</p>
 <p>Schauen wir uns ein Beispiel an. Nehmen wir an, du exportierst ein Video, das
 du von einer Familienfeier erstellt hast – ein Vorgang, der zwischen
 Minuten und Stunden dauern kann. Der Videoexport wird so viel CPU- und
@@ -206,11 +206,11 @@ sie auf den Abschluss des Netzwerkvorgangs wartet.</p>
 <p>Der Videoexport ist ein Beispiel für einen <em>CPU-gebundenen</em> (CPU-bound) oder
 <em>rechengebunden</em> (compute-bound) Vorgang. Er ist durch die potenzielle
 Datenverarbeitungsgeschwindigkeit der CPU oder GPU des Computers begrenzt und
-dadurch, wie viel von dieser Geschwindigkeit er für den Vorgang nutzen kann.
-Der Videodownload ist ein Beispiel für einen <em>E/A-gebunden</em> (IO-bound) Vorgang,
-da er durch die Geschwindigkeit der <em>Eingabe und Ausgabe</em> des Computers
-begrenzt ist; er kann nur so schnell sein, wie die Daten über das Netzwerk
-gesendet werden können.</p>
+dadurch, wie viel von dieser Geschwindigkeit der Vorgang nutzen kann. Der
+Videodownload ist ein Beispiel für einen <em>E/A-gebunden</em> (IO-bound) Vorgang, da
+er durch die Geschwindigkeit der <em>Eingabe und Ausgabe</em> des Computers begrenzt
+ist; er kann nur so schnell sein, wie die Daten über das Netzwerk gesendet
+werden können.</p>
 <p>In beiden Beispielen stellen die unsichtbaren Unterbrechungen durch das
 Betriebssystem eine Form der Nebenläufigkeit dar. Diese Nebenläufigkeit findet
 allerdings nur auf der Ebene des gesamten Programms statt: Das Betriebssystem
@@ -233,14 +233,14 @@ dem Computer interagieren, weil dies Stellen sind, an denen ein individuelles
 Programm davon profitieren würde, wenn die Operation <em>nicht</em> blockierend
 wäre.</p>
 </blockquote>
-<p>Wir könnten das Blockieren unseres Hauptstrangs (main thread) vermeiden, indem
-wir einen dedizierten Strang zum Herunterladen jeder Datei erstellen.
-Allerdings würde der Overhead der von diesen Strang verwendeten
-Systemressourcen letztendlich zu einem Problem werden. Es wäre besser, wenn der
-Aufruf gar nicht erst blockiert würde und wir stattdessen eine Reihe von
-Aufgaben definieren könnten, die unser Programm ausführen soll, und es der
-Laufzeitumgebung überlassen könnten, die beste Reihenfolge und Art und Weise
-für deren Ausführung zu wählen.</p>
+<p>Wir könnten das Blockieren unseres Haupt-Threads (main thread) vermeiden, indem
+wir einen dedizierten Thread zum Herunterladen jeder Datei erstellen. Allerdings
+würde der Overhead der von diesen Threads verwendeten Systemressourcen
+letztendlich zu einem Problem werden. Es wäre besser, wenn der Aufruf gar nicht
+erst blockiert würde und wir stattdessen eine Reihe von Aufgaben definieren
+könnten, die unser Programm ausführen soll, und es der Laufzeitumgebung
+überlassen könnten, die beste Reihenfolge und Art und Weise für deren Ausführung
+zu wählen.</p>
 <p>Genau das bietet uns die <em>async</em> (kurz für <em>asynchronous</em>) Abstraktion von
 Rust. In diesem Kapitel wirst du alles über async lernen, indem wir die
 folgenden Themen behandeln:</p>
@@ -249,8 +249,8 @@ folgenden Themen behandeln:</p>
 Funktionen mit einer Laufzeitumgebung ausführt</li>
 <li>Wie man das asynchrone Modell verwendet, um einige der gleichen
 Herausforderungen zu lösen, die wir uns in Kapitel 16 angeschaut haben</li>
-<li>Wie Mehrsträngigkeit (multithreading) und async komplementäre Lösungen
-bieten, die man in vielen Fällen kombinieren kann</li>
+<li>Wie Multithreading und async komplementäre Lösungen bieten, die man in vielen
+Fällen kombinieren kann</li>
 </ul>
 <p>Bevor wir uns jedoch ansehen, wie async in der Praxis funktioniert, müssen wir
 einen kleinen Abstecher zu den Unterschieden zwischen Parallelität und
@@ -301,15 +301,15 @@ Aufgaben beendet hast, wirst du dich wahrscheinlich ganz auf diese Aufgabe
 konzentrieren, um deinen Kollegen nicht weiter zu blockieren. Du und dein
 Kollege können nicht mehr parallel arbeiten, und du könntest auch nicht mehr
 nebenläufig an deinen eigenen Aufgaben arbeiten.</p>
-<p>Die gleiche grundlegende Dynamik kommt bei Software und Hardware zum Tragen.
-Auf einem Rechner mit einem einzigen CPU-Kern kann die CPU nur eine Operation
-zur gleichen Zeit ausführen, aber sie kann dennoch nebenläufig arbeiten.
-Mithilfe von Werkzeugen wie Strängen, Prozessen und async kann der Computer
-eine Aktivität unterbrechen und zu einer anderen wechseln, bis er schließlich
-wieder zur ersten Aktivität zurückkehrt. Auf einem Computer mit mehreren
-CPU-Kernen kann er auch parallel arbeiten. Ein Kern kann eine Aufgabe
-erledigen, während ein anderer Kern eine komplett unabhängige, andere Aufgabe
-erledigt, und das sogar zur gleichen Zeit.</p>
+<p>Die gleiche grundlegende Dynamik kommt bei Software und Hardware zum Tragen. Auf
+einem Rechner mit einem einzigen CPU-Kern kann die CPU nur eine Operation zur
+gleichen Zeit ausführen, aber sie kann dennoch nebenläufig arbeiten. Mithilfe
+von Werkzeugen wie Threads, Prozessen und async kann der Computer eine Aktivität
+unterbrechen und zu einer anderen wechseln, bis er schließlich wieder zur ersten
+Aktivität zurückkehrt. Auf einem Computer mit mehreren CPU-Kernen kann er auch
+parallel arbeiten. Ein Kern kann eine Aufgabe erledigen, während ein anderer
+Kern eine komplett unabhängige, andere Aufgabe erledigt, und das sogar zur
+gleichen Zeit.</p>
 <p>Die Ausführung von asynchronem Code in Rust erfolgt in der Regel nebenläufig.
 Abhängig von der Hardware, dem Betriebssystem und der verwendeten asynchronen
 Laufzeitumgebung, die wir verwenden, kann die Nebenläufigkeit unter der Haube

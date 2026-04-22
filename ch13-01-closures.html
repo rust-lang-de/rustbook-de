@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Funktionsabschlüsse (closures) - Die Programmiersprache Rust</title>
+        <title>Closures - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,34 +161,34 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="funktionsabschlüsse-closures"><a class="header" href="#funktionsabschlüsse-closures">Funktionsabschlüsse (closures)</a></h2>
-<p>Rusts Funktionsabschlüsse sind anonyme Funktionen, die du in einer Variable
-speichern oder anderen Funktionen als Argument übergeben kannst. Du kannst einen
-Funktionsabschluss erstellen und dann in einem anderen Zusammenhang aufrufen
-und auswerten. Im Gegensatz zu Funktionen können Funktionsabschlüsse auf Werte
-(values) im Gültigkeitsbereich (scope) zugreifen, in dem sie erstellt wurden.
-Wir werden im Folgenden zeigen, wie die Funktionalität von Funktionsabschlüssen
-die Wiederverwendung von Code erlaubt und sein Verhalten anpassen kann.</p>
+                        <h2 id="closures"><a class="header" href="#closures">Closures</a></h2>
+<p>Rusts Closures (Funktionsabschlüsse) sind anonyme Funktionen, die du in einer
+Variable speichern oder anderen Funktionen als Argument übergeben kannst. Du
+kannst einen Closure erstellen und dann in einem anderen Zusammenhang aufrufen
+und auswerten. Im Gegensatz zu Funktionen können Closures auf Werte (values) im
+Gültigkeitsbereich (scope) zugreifen, in dem sie erstellt wurden. Wir werden im
+Folgenden zeigen, wie die Funktionalität von Closures die Wiederverwendung von
+Code erlaubt und sein Verhalten anpassen kann.</p>
 <h3 id="erfassen-der-umgebung"><a class="header" href="#erfassen-der-umgebung">Erfassen der Umgebung</a></h3>
-<p>Wir werden zunächst untersuchen, wie wir Funktionsabschlüsse verwenden können,
-um Werte aus der Umgebung, in der sie definiert sind, zur späteren Verwendung
-zu erfassen. Hier ist das Szenario: Von Zeit zu Zeit verschenkt unsere
-T-Shirt-Firma ein exklusives T-Shirt in limitierter Auflage an jemanden aus
-unserer Mailingliste als Werbeaktion. Die Personen auf der Mailingliste können
-optional ihre Lieblingsfarbe zu ihrem Profil hinzufügen. Wenn die Person, die
-das kostenlose Shirt erhalten soll, ihre Lieblingsfarbe in ihrem Profil
-angegeben hat, erhält sie das Hemd in dieser Farbe. Wenn die Person keine
-Lieblingsfarbe angegeben hat, erhält sie die Farbe, in der das Unternehmen
-derzeit die meisten Exemplare hat.</p>
+<p>Wir werden zunächst untersuchen, wie wir Closures verwenden können, um Werte aus
+der Umgebung, in der sie definiert sind, zur späteren Verwendung zu erfassen.
+Hier ist das Szenario: Von Zeit zu Zeit verschenkt unsere T-Shirt-Firma ein
+exklusives T-Shirt in limitierter Auflage an jemanden aus unserer Mailingliste
+als Werbeaktion. Die Personen auf der Mailingliste können optional ihre
+Lieblingsfarbe zu ihrem Profil hinzufügen. Wenn die Person, die das kostenlose
+Shirt erhalten soll, ihre Lieblingsfarbe in ihrem Profil angegeben hat, erhält
+sie das Shirt in dieser Farbe. Wenn die Person keine Lieblingsfarbe angegeben
+hat, erhält sie die Farbe, in der das Unternehmen derzeit die meisten Exemplare
+hat.</p>
 <p>Es gibt viele Möglichkeiten, dies zu implementieren. Für dieses Beispiel werden
 wir eine Aufzählung namens <code>ShirtColor</code> verwenden, die die Varianten <code>Red</code> und
 <code>Blue</code> hat (der Einfachheit halber wird die Anzahl der verfügbaren Farben
 begrenzt). Das Inventar des Unternehmens wird durch eine Struktur <code>Inventory</code>
 repräsentiert, die ein Feld mit dem Namen <code>shirts</code> hat, das ein
-<code>Vec&lt;ShirtColor&gt;</code> mit den derzeit vorrätigen Hemden enthält. Die Methode
-<code>giveaway</code>, die auf <code>Inventory</code> definiert ist, erhält die optionale
-Shirtfarbe der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe
-zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt.</p>
+<code>Vec&lt;ShirtColor&gt;</code> mit den derzeit vorrätigen Shirts enthält. Die Methode
+<code>giveaway</code>, die auf <code>Inventory</code> definiert ist, erhält die optionale Shirtfarbe
+der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe zurück, die
+die Person erhalten wird. Dies wird in Listing 13-1 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">#[derive(Debug, PartialEq, Copy, Clone)]
 enum ShirtColor {
@@ -236,33 +236,31 @@ fn main() {
     let giveaway2 = store.giveaway(user_pref2);
     println!("Der Benutzer mit Präferenz {user_pref2:?} erhält {giveaway2:?}");
 }</code></pre>
-<p><span class="caption">Codeblock 13-1: Werbegeschenk der Shirtfirma</span></p>
+<p><span class="caption">Listing 13-1: Werbegeschenk der Shirtfirma</span></p>
 <p>Der in <code>main</code> definierte <code>store</code> hat zwei blaue Shirts und ein rotes Shirt
 übrig, die für diese limitierte Aktion verteilt werden sollen. Wir rufen die
-Methode <code>giveaway</code> für einen Benutzer mit einer Präferenz für ein rotes Hemd
+Methode <code>giveaway</code> für einen Benutzer mit einer Präferenz für ein rotes Shirt
 und einen Benutzer ohne jegliche Präferenz auf.</p>
 <p>Auch dieser Code könnte auf viele Arten implementiert werden. Um uns auf
-Funktionsabschlüsse zu konzentrieren, haben wir uns an die Konzepte gehalten,
-die du bereits gelernt hast, mit Ausnahme des Methodenrumpfs von <code>giveaway</code>,
-der einen Funktionsabschluss verwendet. In der Methode <code>giveaway</code> erhalten wir
-die Benutzerpräferenz als einen Parameter vom Typ <code>Option&lt;ShirtColor&gt;</code> und
-rufen die Methode <code>unwrap_or_else</code> auf <code>user_preference</code> auf. Die <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_or_else">Methode
-<code>unwrap_or_else</code> auf <code>Option&lt;T&gt;</code></a> ist in der Standardbibliothek
-definiert. Sie nimmt ein Argument entgegen: Einen Funktionsabschluss ohne
-Argument, der einen Wert <code>T</code> zurückgibt (denselben Typ, der in der Variante
-<code>Some</code> von <code>Option&lt;T&gt;</code> gespeichert ist, in diesem Fall <code>ShirtColor</code>). Wenn
-<code>Option&lt;T&gt;</code> die Variante <code>Some</code> ist, gibt <code>unwrap_or_else</code> den Wert aus <code>Some</code>
-zurück. Wenn <code>Option&lt;T&gt;</code> die Variante <code>None</code> ist, ruft <code>unwrap_or_else</code> den
-Funktionsabschluss auf und gibt den Wert zurück, der vom Funktionsabschluss
-zurückgegeben wurde.</p>
-<p>Wir geben den Funktionsabschluss-Ausdruck <code>|| self.most_stocked()</code> als Argument
-bei <code>unwrap_or_else</code> an. Dies ist ein Funktionsabschluss, die selbst keine
-Parameter hat (wenn der Funktionsabschluss Parameter hätte, würden sie zwischen
-den beiden vertikalen Strichen erscheinen). Der Rumpf des Funktionsabschlusses
-ruft <code>self.most_stocked()</code> auf. Wir definieren den Funktionsabschluss hier, und
-die Implementierung von <code>unwrap_or_else</code> wird den Funktionsabschluss später
-auswerten, wenn das Ergebnis benötigt wird.</p>
-<p>Die Ausführung dieses Codes gibt folgendes aus:</p>
+Closures zu konzentrieren, haben wir uns an die Konzepte gehalten, die du
+bereits gelernt hast, mit Ausnahme des Methodenrumpfs von <code>giveaway</code>, der einen
+Closure verwendet. In der Methode <code>giveaway</code> erhalten wir die Benutzerpräferenz
+als einen Parameter vom Typ <code>Option&lt;ShirtColor&gt;</code> und rufen die Methode
+<code>unwrap_or_else</code> auf <code>user_preference</code> auf. Die <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_or_else">Methode <code>unwrap_or_else</code> auf
+<code>Option&lt;T&gt;</code></a> ist in der Standardbibliothek definiert. Sie nimmt
+ein Argument entgegen: einen Closure ohne Argument, der einen Wert <code>T</code>
+zurückgibt (denselben Typ, der in der Variante <code>Some</code> von <code>Option&lt;T&gt;</code>
+gespeichert ist, in diesem Fall <code>ShirtColor</code>). Wenn <code>Option&lt;T&gt;</code> die Variante
+<code>Some</code> ist, gibt <code>unwrap_or_else</code> den Wert aus <code>Some</code> zurück. Wenn <code>Option&lt;T&gt;</code>
+die Variante <code>None</code> ist, ruft <code>unwrap_or_else</code> den Closure auf und gibt den Wert
+zurück, der vom Closure zurückgegeben wurde.</p>
+<p>Wir geben den Closure-Ausdruck <code>|| self.most_stocked()</code> als Argument bei
+<code>unwrap_or_else</code> an. Dies ist ein Closure, der selbst keine Parameter hat. (Wenn
+der Closure Parameter hätte, würden sie zwischen den beiden vertikalen Strichen
+erscheinen.) Der Rumpf des Closures ruft <code>self.most_stocked()</code> auf. Wir
+definieren den Closure hier, und die Implementierung von <code>unwrap_or_else</code> wird
+den Closure später auswerten, wenn das Ergebnis benötigt wird.</p>
+<p>Die Ausführung dieses Codes gibt Folgendes aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling shirt-company v0.1.0 (file:///projects/shirt-company)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
@@ -270,39 +268,38 @@ auswerten, wenn das Ergebnis benötigt wird.</p>
 Der Benutzer mit Präferenz Some(Red) erhält Red
 Der Benutzer mit Präferenz None erhält Blue
 </code></pre>
-<p>Ein interessanter Aspekt ist hier, dass wir einen Funktionsabschluss übergeben
-haben, der <code>self.most_stocked()</code> für die aktuelle <code>Inventory</code>-Instanz aufruft.
-Die Standardbibliothek musste nichts über die von uns definierten Typen
-<code>Inventory</code> oder <code>ShirtColor</code> oder die Logik, die wir in diesem Szenario
-verwenden wollen, wissen. Der Funktionsabschluss hat eine unveränderbare
-Referenz auf die <code>self</code>-Instanz von <code>Inventory</code> erfasst und sie mit dem von uns
-angegebenen Code an die Methode <code>unwrap_or_else</code> übergeben. Funktionen sind
-andererseits nicht in der Lage, ihre Umgebung auf diese Weise zu erfassen.</p>
-<h3 id="herleiten-und-annotieren-von-funktionsabschluss-typen"><a class="header" href="#herleiten-und-annotieren-von-funktionsabschluss-typen">Herleiten und Annotieren von Funktionsabschluss-Typen</a></h3>
-<p>Es gibt weitere Unterschiede zwischen Funktionen und Funktionsabschlüssen. Bei
-Funktionsabschlüssen ist es normalerweise nicht erforderlich, die Typen der
-Parameter oder des Rückgabewertes zu annotieren, wie es bei <code>fn</code>-Funktionen der
-Fall ist. Typ-Annotationen sind bei Funktionen erforderlich, weil die Typen
-Teil einer expliziten Schnittstelle sind, die für deine Benutzer sichtbar ist.
-Die strikte Definition dieser Schnittstelle ist wichtig, um sicherzustellen,
-dass alle Beteiligten sich darüber einig sind, welche Arten von Werten eine
-Funktion verwendet und zurückgibt. Funktionsabschlüsse werden hingegen nicht in
-einer offengelegten Schnittstelle wie dieser verwendet: Sie werden in Variablen
-gespeichert und verwendet, ohne sie zu benennen und den Benutzern unserer
-Bibliothek offenzulegen.</p>
-<p>Funktionsabschlüsse sind in der Regel kurz und nur in einem engen Kontext und
-nicht in jedem beliebigen Szenario relevant. Innerhalb dieser begrenzten
-Kontexte kann der Compiler die Typen der Parameter und des Rückgabetyps
-ableiten, ähnlich wie er die Typen der meisten Variablen ableiten kann (es gibt
-seltene Fälle, in denen der Compiler auch Funktionsabschluss-Typannotationen
-benötigt).</p>
+<p>Ein interessanter Aspekt ist hier, dass wir einen Closure übergeben haben, der
+<code>self.most_stocked()</code> für die aktuelle <code>Inventory</code>-Instanz aufruft. Die
+Standardbibliothek musste nichts über die von uns definierten Typen <code>Inventory</code>
+oder <code>ShirtColor</code> oder die Logik, die wir in diesem Szenario verwenden wollen,
+wissen. Der Closure hat eine unveränderbare Referenz auf die <code>self</code>-Instanz von
+<code>Inventory</code> erfasst und sie mit dem von uns angegebenen Code an die Methode
+<code>unwrap_or_else</code> übergeben. Funktionen sind andererseits nicht in der Lage, ihre
+Umgebung auf diese Weise zu erfassen.</p>
+<h3 id="herleiten-und-annotieren-von-closure-typen"><a class="header" href="#herleiten-und-annotieren-von-closure-typen">Herleiten und Annotieren von Closure-Typen</a></h3>
+<p>Es gibt weitere Unterschiede zwischen Funktionen und Closures. Bei Closures ist
+es normalerweise nicht erforderlich, die Typen der Parameter oder des
+Rückgabewertes zu annotieren, wie es bei <code>fn</code>-Funktionen der Fall ist.
+Typ-Annotationen sind bei Funktionen erforderlich, weil die Typen Teil einer
+expliziten Schnittstelle sind, die für deine Benutzer sichtbar ist. Die strikte
+Definition dieser Schnittstelle ist wichtig, um sicherzustellen, dass alle
+Beteiligten sich darüber einig sind, welche Arten von Werten eine Funktion
+verwendet und zurückgibt. Closures werden hingegen nicht in einer offengelegten
+Schnittstelle wie dieser verwendet: Sie werden in Variablen gespeichert und
+verwendet, ohne sie zu benennen und den Benutzern unserer Bibliothek
+offenzulegen.</p>
+<p>Closures sind in der Regel kurz und nur in einem engen Kontext und nicht in
+jedem beliebigen Szenario relevant. Innerhalb dieser begrenzten Kontexte kann
+der Compiler die Typen der Parameter und des Rückgabetyps ableiten, ähnlich wie
+er die Typen der meisten Variablen ableiten kann (es gibt seltene Fälle, in
+denen der Compiler auch Closure-Typannotationen benötigt).</p>
 <p>Wie bei Variablen können wir Typ-Annotationen hinzufügen, wenn wir die
-Explizitheit und Klarheit erhöhen wollen, auch wenn wir dafür ausführlicher
-sind als unbedingt nötig. Die Annotation der Typen für einen Funktionsabschluss
-würde wie die in Codeblock 13-2 gezeigte Definition aussehen. In diesem
-Beispiel definieren wir einen Funktionsabschluss und speichern ihn in einer
-Variablen, anstatt den Funktionsabschluss an der Stelle zu definieren, an der
-wir ihn als Argument übergeben, wie wir es in Codeblock 13-1 getan haben.</p>
+Explizitheit und Klarheit erhöhen wollen, auch wenn wir dafür ausführlicher sind
+als unbedingt nötig. Die Annotation der Typen für einen Closure würde wie die in
+Listing 13-2 gezeigte Definition aussehen. In diesem Beispiel definieren wir
+einen Closure und speichern ihn in einer Variablen, anstatt den Closure dort zu
+definieren, wo wir ihn als Argument übergeben, wie wir es in Listing 13-1 getan
+haben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::thread;
 </span><span class="boring">use std::time::Duration;
@@ -335,39 +332,36 @@ wir ihn als Argument übergeben, wie wir es in Codeblock 13-1 getan haben.</p>
 </span><span class="boring">
 </span><span class="boring">    generate_workout(simulated_user_specified_value, simulated_random_number);
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-2: Hinzufügen optionaler Datentypangabe der
-Parameter- und Rückgabewert-Typen im Funktionsabschluss</span></p>
-<p>Mit Typ-Annotationen ähnelt die Syntax eines Funktionsabschlusses sehr der
-Syntax einer Funktion. Hier definieren wir eine Funktion, die zu ihrem
-Parameter den Wert 1 addiert, und zum Vergleich einen Funktionsabschluss mit
-identischem Verhalten. Zur besseren Darstellung der relevanten Teile haben wir
-einige Leerzeichen eingefügt. Dies zeigt, wie ähnlich die Syntax von Funktionen
-der von Funktionsabschlüssen ist, abgesehen von den senkrechten Strichen und
-der Möglichkeit, einen Teil der Syntax wegzulassen:</p>
+<p><span class="caption">Listing 13-2: Hinzufügen optionaler Datentypangabe der
+Parameter- und Rückgabewert-Typen im Closure</span></p>
+<p>Mit Typ-Annotationen ähnelt die Syntax eines Closures sehr der Syntax einer
+Funktion. Hier definieren wir eine Funktion, die zu ihrem Parameter den Wert 1
+addiert, und zum Vergleich einen Closure mit identischem Verhalten. Zur besseren
+Darstellung der relevanten Teile haben wir einige Leerzeichen eingefügt. Dies
+zeigt, wie ähnlich die Syntax von Funktionen der von Closures ist, abgesehen von
+den senkrechten Strichen und der Möglichkeit, einen Teil der Syntax wegzulassen:</p>
 <pre><code class="language-rust ignore">fn  add_one_v1   (x: u32) -&gt; u32 { x + 1 }
 let add_one_v2 = |x: u32| -&gt; u32 { x + 1 };
 let add_one_v3 = |x|             { x + 1 };
 let add_one_v4 = |x|               x + 1  ;</code></pre>
 <p>Die erste Zeile zeigt eine Funktionsdefinition und die zweite eine Definition
-eines Funktionsabschlusses mit allen Datentypangaben. In der dritten Zeile
-werden die Datentypangaben aus der Funktionsabschluss-Definition entfernt,
-und in der vierten Zeile werden die geschweiften Klammern weggelassen, die
-optional sind, da der Funktionsabschluss-Rumpf nur einen Ausdruck beinhaltet.
-All diese Ausdrücke sind gültig und verhalten sich beim Aufruf gleich. Von
-<code>add_one_v3</code> und <code>add_one_v4</code> wird ein Aufruf zum Kompilieren des Codes
-benötigt, da hier die Typen abhängig von der Verwendung abgeleitet werden. Dies
-ist vergleichbar mit <code>let v = Vec::new();</code>, bei dem entweder Typ-Annotationen
-oder Werte eines bestimmten Typs in den <code>Vec</code> eingefügt werden müssen, damit
-Rust den Typ ableiten kann.</p>
-<p>Bei Funktionsabschlussdefinitionen wird für jeden Parameter und für den
-Rückgabewert ein konkreter Typ abgeleitet. Codeblock 13-3 zeigt zum Beispiel
-die Definition eines kurzen Funktionsabschlusses, der nur den Wert des
-übergebenen Parameters zurückgibt. Dieser Funktionsabschluss ist außer für
-dieses Beispiel nicht weiter nützlich. Beachte, dass wir der Definition keine
-Datentypangaben hinzugefügt haben. Da es keine Typ-Annotationen gibt, können
-wir den Funktionsabschluss mit einem beliebigen Typ aufrufen, was wir hier mit
-<code>String</code> das erste Mal getan haben. Wenn wir dann versuchen, <code>example_closure</code>
-mit einer Ganzzahl aufzurufen, erhalten wir einen Fehler.</p>
+eines Closures mit allen Datentypangaben. In der dritten Zeile werden die
+Datentypangaben aus der Closure-Definition entfernt, und in der vierten Zeile
+werden die geschweiften Klammern weggelassen, die optional sind, da der
+Closure-Rumpf nur einen Ausdruck beinhaltet. All diese Ausdrücke sind gültig und
+verhalten sich beim Aufruf gleich. Bei <code>add_one_v3</code> und <code>add_one_v4</code> ist ein
+Aufruf nötig, damit der Code kompiliert, da hier die Typen abhängig von der
+Verwendung abgeleitet werden. Dies ist vergleichbar mit <code>let v = Vec::new();</code>,
+bei dem entweder Typ-Annotationen oder Werte eines bestimmten Typs in den <code>Vec</code>
+eingefügt werden müssen, damit Rust den Typ ableiten kann.</p>
+<p>Bei Closure-Definitionen wird für jeden Parameter und für den Rückgabewert ein
+konkreter Typ abgeleitet. Listing 13-3 zeigt zum Beispiel die Definition eines
+kurzen Closures, der nur den Wert des übergebenen Parameters zurückgibt. Dieser
+Closure ist außer für dieses Beispiel nicht weiter nützlich. Beachte, dass wir
+der Definition keine Datentypangaben hinzugefügt haben. Da es keine
+Typ-Annotationen gibt, können wir den Closure mit einem beliebigen Typ aufrufen,
+was wir hier mit <code>String</code> das erste Mal getan haben. Wenn wir dann versuchen,
+<code>example_closure</code> mit einer Ganzzahl aufzurufen, erhalten wir einen Fehler.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -376,8 +370,8 @@ mit einer Ganzzahl aufzurufen, erhalten wir einen Fehler.</p>
 let s = example_closure(String::from("hallo"));
 let n = example_closure(5);
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-3: Versuchter Aufruf eines
-Funktionsabschlusses, dem zwei unterschiedliche Typen übergeben wurden</span></p>
+<p><span class="caption">Listing 13-3: Versuchter Aufruf von einem Closure, dem
+zwei unterschiedliche Typen übergeben wurden</span></p>
 <p>Der Compiler gibt diesen Fehler aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
@@ -410,167 +404,153 @@ For more information about this error, try `rustc --explain E0308`.
 error: could not compile `closure-example` (bin "closure-example") due to 1 previous error
 </code></pre>
 <p>Beim ersten Aufruf von <code>example_closure</code> wird dem Typ von <code>x</code> und dem
-Rückgabewert des Funktionsabschlusses der Typ <code>String</code> zugewiesen. Diese Typen
-sind dann für den Funktionsabschluss <code>example_closure</code> festgeschrieben. Daher
-bekommen wir eine Fehlermeldung, wenn wir versuchen einen anderen Typ mit dem
-gleichen Funktionsabschluss zu benutzen.</p>
-<h3 id="erfassen-von-referenzen-oder-verschieben-der-eigentümerschaft"><a class="header" href="#erfassen-von-referenzen-oder-verschieben-der-eigentümerschaft">Erfassen von Referenzen oder Verschieben der Eigentümerschaft</a></h3>
-<p>Funktionsabschlüsse können Werte aus ihrer Umgebung auf drei Arten erfassen,
-die direkt den drei Möglichkeiten entsprechen, wie eine Funktion einen
-Parameter aufnehmen kann: Unveränderbare Ausleihen (borrowing immutably),
-veränderbare Ausleihen (borrowing mutably) und Eigentümerschaft übernehmen
-(taking ownership). Der Funktionsabschluss entscheidet, welche dieser
-Möglichkeiten verwendet wird, je nachdem, was der Rumpf der Funktion mit den
-erfassten Werten macht.</p>
-<p>In Codeblock 13-4 definieren wir einen Funktionsabschluss, der eine
-unveränderbare Referenz an den Vektor mit dem Namen <code>list</code> erfasst, weil er
-nur eine unveränderbare Referenz benötigt, um den Wert auszugeben.</p>
+Rückgabewert des Closures der Typ <code>String</code> zugewiesen. Diese Typen sind dann für
+den Closure <code>example_closure</code> festgeschrieben. Daher bekommen wir eine
+Fehlermeldung, wenn wir versuchen, einen anderen Typ mit dem gleichen Closure zu
+benutzen.</p>
+<h3 id="erfassen-von-referenzen-oder-verschieben-des-eigentums"><a class="header" href="#erfassen-von-referenzen-oder-verschieben-des-eigentums">Erfassen von Referenzen oder Verschieben des Eigentums</a></h3>
+<p>Closures können Werte aus ihrer Umgebung auf drei Arten erfassen, die direkt den
+drei Möglichkeiten entsprechen, wie eine Funktion einen Parameter aufnehmen
+kann: Unveränderbare Borrows, veränderbare Borrows und Eigentum übernehmen. Der
+Closure entscheidet, welche dieser Möglichkeiten verwendet wird, je nachdem, was
+der Rumpf der Funktion mit den erfassten Werten macht.</p>
+<p>In Listing 13-4 definieren wir einen Closure, der eine unveränderbare Referenz
+an den Vektor mit dem Namen <code>list</code> erfasst, weil er nur eine unveränderbare
+Referenz benötigt, um den Wert auszugeben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {list:?}");
+    println!("Vor der Closure-Definition: {list:?}");
 
-    let only_borrows = || println!("Im Funktionsabschluss: {list:?}");
+    let only_borrows = || println!("Im Closure: {list:?}");
 
-    println!("Vor dem Funktionsabschluss-Aufruf: {list:?}");
+    println!("Vor dem Closure-Aufruf: {list:?}");
     only_borrows();
-    println!("Nach dem Funktionsabschluss-Aufruf: {list:?}");
+    println!("Nach dem Closure-Aufruf: {list:?}");
 }</code></pre>
-<p><span class="caption">Codeblock 13-4: Definieren und Aufrufen eines
-Funktionsabschlusses, der eine unveränderbare Referenz erfasst</span></p>
+<p><span class="caption">Listing 13-4: Definieren und Aufrufen eines Closure, der
+eine unveränderbare Referenz erfasst</span></p>
 <p>Dieses Beispiel veranschaulicht auch, dass eine Variable an eine
-Funktionsabschlussdefinition gebunden werden kann, und wir den
-Funktionsabschluss später aufrufen können, indem wir den Variablennamen und die
-Klammern verwenden, als ob der Variablenname ein Funktionsname wäre.</p>
+Closure-Definition gebunden werden kann, und wir den Closure später aufrufen
+können, indem wir den Variablennamen und die Klammern verwenden, als ob der
+Variablenname ein Funktionsname wäre.</p>
 <p>Da wir mehrere unveränderbare Referenzen auf <code>list</code> zur gleichen Zeit haben
-können, ist <code>list</code> immer noch vom Code vor der Funktionsabschlussdefinition
-zugreifbar, sowie nach der Funktionsabschlussdefinition und vor dem Aufruf des
-Funktionsabschlusses, und nach dem Aufruf des Funktionsabschlusses. Dieser Code
-kompiliert, läuft und gibt folgendes aus:</p>
+können, ist <code>list</code> immer noch vom Code vor der Closure-Definition zugreifbar,
+sowie nach der Closure-Definition und vor dem Aufruf des Closures, und nach dem
+Aufruf des Closures. Dieser Code kompiliert, läuft und gibt Folgendes aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
-Vor der Funktionsabschlussdefinition: [1, 2, 3]
-Vor dem Funktionsabschluss-Aufruf: [1, 2, 3]
-Im Funktionsabschluss: [1, 2, 3]
-Nach dem Funktionsabschluss-Aufruf: [1, 2, 3]
+Vor der Closure-Definition: [1, 2, 3]
+Vor dem Closure-Aufruf: [1, 2, 3]
+Im Closure: [1, 2, 3]
+Nach dem Closure-Aufruf: [1, 2, 3]
 </code></pre>
-<p>In Codeblock 13-5 wird die Definition des Funktionsabschlusses so geändert,
-dass er ein Element zum Vektor <code>list</code> hinzufügt. Der Funktionsabschluss erfasst
-nun eine veränderbare Referenz.</p>
+<p>In Listing 13-5 wird der Closure so geändert, dass er ein Element zum Vektor
+<code>list</code> hinzufügt. Der Closure erfasst nun eine veränderbare Referenz.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {list:?}");
+    println!("Vor der Closure-Definition: {list:?}");
 
     let mut borrows_mutably = || list.push(7);
 
     borrows_mutably();
-    println!("Nach dem Funktionsabschluss-Aufruf: {list:?}");
+    println!("Nach dem Closure-Aufruf: {list:?}");
 }</code></pre>
-<p><span class="caption">Codeblock 13-5: Definieren und Aufrufen eines
-Funktionsabschlusses, der eine veränderbare Referenz erfasst</span></p>
+<p><span class="caption">Listing 13-5: Definieren und Aufrufen eines Closures,
+der eine veränderbare Referenz erfasst</span></p>
 <p>Dieser Code kompiliert, läuft und gibt aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
-Vor der Funktionsabschlussdefinition: [1, 2, 3]
-Nach dem Funktionsabschluss-Aufruf: [1, 2, 3, 7]
+Vor der Closure-Definition: [1, 2, 3]
+Nach dem Closure-Aufruf: [1, 2, 3, 7]
 </code></pre>
-<p>Beachte, dass es kein <code>println!</code> mehr zwischen der Definition und dem Aufruf
-des Funktionsabschlusses <code>borrows_mutably</code> gibt: Wenn <code>borrows_mutably</code>
-definiert ist, erfasst es eine veränderbare Referenz auf <code>list</code>. Der
-Funktionsabschluss wird nicht mehr verwendet, nachdem er aufgerufen wurde,
-daher endet die veränderbare Ausleihe. Zwischen der
-Funktionsabschlussdefinition und dem Funktionsabschluss-Aufruf ist eine
-unveränderbare Ausleihe für die Ausgabe nicht erlaubt, weil keine anderen
-Ausleihen erlaubt sind, wenn es eine veränderbare Ausleihe gibt. Versuche,
-dort ein <code>println!</code> hinzuzufügen, um zu sehen, welche Fehlermeldung du
-erhältst!</p>
-<p>Wenn du den Funktionsabschluss zwingen willst, die Eigentümerschaft der Werte,
-die er in der Umgebung verwendet, zu übernehmen, obwohl der Rumpf des
-Funktionsabschlusses nicht unbedingt Eigentümer sein muss, kannst du das
-Schlüsselwort <code>move</code> vor der Parameterliste verwenden.</p>
-<p>Diese Technik ist vor
-allem nützlich, wenn ein Funktionsabschluss an einen neuen Strang (thread)
-übergeben wird, um die Daten zu verschieben, sodass sie dem neuen Strang
+<p>Beachte, dass es kein <code>println!</code> mehr zwischen der Definition und dem Aufruf des
+Closures <code>borrows_mutably</code> gibt: Wenn <code>borrows_mutably</code> definiert ist, erfasst
+es eine veränderbare Referenz auf <code>list</code>. Der Closure wird nicht mehr verwendet,
+nachdem er aufgerufen wurde, daher endet die veränderbare Borrow. Zwischen der
+Closure-Definition und dem Closureaufruf ist eine unveränderbare Borrow für die
+Ausgabe nicht erlaubt, weil keine anderen Borrows erlaubt sind, wenn es eine
+veränderbare Borrow gibt. Versuche, dort ein <code>println!</code> hinzuzufügen, um zu
+sehen, welche Fehlermeldung du erhältst!</p>
+<p>Wenn du den Closure zwingen willst, das Eigentum an den Werten, die er in der
+Umgebung verwendet, zu übernehmen, obwohl der Closure-Rumpf nicht unbedingt
+Eigentümer sein muss, kannst du das Schlüsselwort <code>move</code> vor der Parameterliste
+verwenden.</p>
+<p>Diese Technik ist vor allem nützlich, wenn ein Closure an einen neuen Thread
+übergeben wird, um die Daten zu verschieben, sodass sie dem neuen Thread
 gehören. Wir werden in Kapitel 16, wenn wir über Nebenläufigkeit (concurrency)
-sprechen, detailliert auf Stränge eingehen und erläutern, warum man sie
+sprechen, detailliert auf Threads eingehen und erläutern, warum man sie
 verwenden sollte, aber jetzt wollen wir uns kurz mit dem Erzeugen eines neuen
-Strangs mithilfe eines Funktionsabschlusses befassen, der das Schlüsselwort
-<code>move</code> benötigt. Codeblock 13-6 zeigt Codeblock 13-4 modifiziert, um den Vektor
-in einem neuen Strang statt im Hauptstrang auszugeben.</p>
+Threads mithilfe eines Closures befassen, der das Schlüsselwort <code>move</code> benötigt.
+Listing 13-6 zeigt Listing 13-4 modifiziert, um den Vektor in einem neuen
+Thread statt im Haupt-Thread auszugeben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::thread;
 
 fn main() {
     let list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {list:?}");
+    println!("Vor der Closure-Definition: {list:?}");
 
-    thread::spawn(move || println!("Im Strang: {list:?}"))
+    thread::spawn(move || println!("Im Thread: {list:?}"))
         .join()
         .unwrap();
 }</code></pre>
-<p><span class="caption">Codeblock 13-6: Verwenden von <code>move</code>, um den
-Funktionsabschluss des Strangs zu erzwingen, die Eigentümerschaft an <code>list</code> zu
-übernehmen</span></p>
-<p>Wir starten einen neuen Strang und geben ihm einen Funktionsabschluss als
-Argument mit. Der Rumps des Funktionsabschlusses gibt die Liste aus. In
-Codeblock 13-4 hat der Funktionsabschluss nur <code>list</code> mit einer unveränderbaren
-Referenz erfasst, weil das die kleinste Zugriffmenge auf <code>list</code> ist, die
-benötigt wird, um sie auszugeben. In diesem Beispiel müssen wir, obwohl der
-Funktionsabschluss-Rumpf nur eine unveränderbare Referenz benötigt, angeben,
-dass <code>list</code> in den Funktionsabschluss verschoben werden soll, indem wir das
-Schlüsselwort <code>move</code> an den Anfang der Funktionsabschlussdefinition setzen.</p>
-<p>Wenn der Hauptstrang vor dem Aufruf von <code>join</code> für den neuen Strang weitere
-Operationen ausgeführt hat, könnte der neue Strang beendet werden, bevor der
-Rest des Hauptstrangs beendet wird, oder der Hauptstrang könnte zuerst beendet
-werden. Wenn der Hauptstrang die Eigentümerschaft von <code>list</code> beibehält, aber
-vor dem neuen Strang endet und <code>list</code> aufräumt, wäre die unveränderbare
-Referenz im Strang ungültig. Daher verlangt der Compiler, dass <code>list</code> in den
-Funktionsabschluss im neuen Strang verschoben wird, damit die Referenz gültig
-bleibt. Versuche, das Schlüsselwort <code>move</code> zu entfernen oder <code>list</code> im
-Hauptstrang zu verwenden, nachdem der Funktionsabschluss definiert wurde, um zu
-sehen, welche Compilerfehler du erhältst!</p>
-<h3 id="verschieben-erfasster-werte-aus-funktionsabschlüssen"><a class="header" href="#verschieben-erfasster-werte-aus-funktionsabschlüssen">Verschieben erfasster Werte aus Funktionsabschlüssen</a></h3>
-<p>Sobald ein Funktionsabschluss eine Referenz oder die Eigentümerschaft eines
-Werts aus der Umgebung, in der der Funktionsabschluss definiert ist, erfasst
-hat (und damit beeinflusst, was <em>in</em> den Funktionsabschluss verschoben wird),
-definiert der Code im Rumpf des Funktionsabschlusses, was mit den Referenzen
-oder Werten passiert, wenn der Funktionsabschluss später ausgewertet wird (und
-damit beeinflusst, was <em>aus</em> dem Funktionsabschluss verschoben wird). Ein
-Funktionsabschluss-Rumpf kann eine der folgenden Aktionen ausführen: Einen
-erfassten Wert aus dem Funktionsabschluss herausbewegen, den erfassten Wert
-verändern, den Wert weder bewegen noch verändern oder zunächst nichts aus der
-Umgebung erfassen.</p>
-<p>Die Art und Weise, wie ein Funktionsabschluss Werte aus der Umgebung erfasst
-und verarbeitet, wirkt sich darauf aus, welche Merkmale (traits) der
-Funktionsabschluss implementiert, und mit Hilfe von Merkmalen können Funktionen
-und Strukturen angeben, welche Arten von Funktionsabschlüssen sie verwenden
-können. Funktionsabschlüsse implementieren automatisch eine, zwei oder alle
-drei dieser <code>Fn</code>-Merkmale, und zwar in additiver Weise, je nachdem, wie der
-Rumpf des Funktionsabschlusses die Werte behandelt:</p>
+<p><span class="caption">Listing 13-6: Verwenden von <code>move</code>, um den Closure des
+Threads zu zwingen, das Eigentum an <code>list</code> zu übernehmen</span></p>
+<p>Wir starten einen neuen Thread und geben ihm einen Closure als Argument mit. Der
+Rumpf des Closures gibt die Liste aus. In Listing 13-4 hat der Closure nur
+<code>list</code> mit einer unveränderbaren Referenz erfasst, weil das die kleinste
+Zugriffsmenge auf <code>list</code> ist, die benötigt wird, um sie auszugeben. In diesem
+Beispiel müssen wir, obwohl der Closure-Rumpf nur eine unveränderbare Referenz
+benötigt, angeben, dass <code>list</code> in den Closure verschoben werden soll, indem wir
+das Schlüsselwort <code>move</code> an den Anfang der Closure-Definition setzen.</p>
+<p>Wenn der Haupt-Thread vor dem Aufruf von <code>join</code> für den neuen Thread weitere
+Operationen ausgeführt hat, könnte der neue Thread beendet werden, bevor der
+Rest des Haupt-Threads beendet wird, oder der Haupt-Thread könnte zuerst beendet
+werden. Wenn der Haupt-Thread das Eigentum an <code>list</code> behält, aber vor dem neuen
+Thread endet und <code>list</code> aufräumt, wäre die unveränderbare Referenz im Thread
+ungültig. Daher verlangt der Compiler, dass <code>list</code> in den Closure im neuen
+Thread verschoben wird, damit die Referenz gültig bleibt. Versuche, das
+Schlüsselwort <code>move</code> zu entfernen oder <code>list</code> im Haupt-Thread zu verwenden,
+nachdem der Closure definiert wurde, um zu sehen, welche Compilerfehler du
+erhältst!</p>
+<h3 id="verschieben-erfasster-werte-aus-closures"><a class="header" href="#verschieben-erfasster-werte-aus-closures">Verschieben erfasster Werte aus Closures</a></h3>
+<p>Sobald ein Closure eine Referenz oder das Eigentum an einem Wert aus der
+Umgebung, in der der Closure definiert ist, erfasst hat (und damit beeinflusst,
+was <em>in</em> den Closure verschoben wird), definiert der Code im Rumpf des Closures,
+was mit den Referenzen oder Werten passiert, wenn der Closure später ausgewertet
+wird (und damit beeinflusst, was <em>aus</em> dem Closure verschoben wird). Ein
+Closure-Rumpf kann eine der folgenden Aktionen ausführen: Einen erfassten Wert
+aus dem Closure herausverschieben, den erfassten Wert verändern, den Wert weder
+verschieben noch verändern oder zunächst nichts aus der Umgebung erfassen.</p>
+<p>Die Art und Weise, wie ein Closure Werte aus der Umgebung erfasst und
+verarbeitet, wirkt sich darauf aus, welche Traits der Closure implementiert, und
+mit Hilfe von Traits können Funktionen und Strukturen angeben, welche Arten von
+Closures sie verwenden können. Closures implementieren automatisch eine, zwei
+oder alle drei dieser <code>Fn</code>-Traits, und zwar in additiver Weise, je nachdem, wie
+der Closure-Rumpf die Werte behandelt:</p>
 <ul>
-<li><code>FnOnce</code> gilt für Funktionsabschlüsse, die einmal aufgerufen werden können.
-Alle Funktionsabschlüsse implementieren zumindest dieses Merkmal, weil alle
-Funktionsabschlüsse aufgerufen werden können. Ein Funktionsabschluss, der
-erfasste Werte aus seinem Rumpf herausverschiebt, implementiert nur <code>FnOnce</code>
-und keine der anderen <code>Fn</code>-Merkmale, weil er nur einmal aufgerufen werden
-kann.</li>
-<li><code>FnMut</code> gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus ihrem
-Rumpf herausverschieben, aber die erfassten Werte möglicherweise verändern.
-Diese Funktionsabschlüsse können mehr als einmal aufgerufen werden.</li>
-<li><code>Fn</code> gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus ihrem
-Rumpf herausverschieben und die erfassten Werte nicht verändern, sowie
-Funktionsabschlüsse, die nichts aus ihrer Umgebung erfassen. Diese
-Funktionsabschlüsse können mehr als einmal aufgerufen werden, ohne ihre
-Umgebung zu verändern, was wichtig ist, wenn z.B. ein Funktionsabschluss
-mehrere Male gleichzeitig aufgerufen wird.</li>
+<li><code>FnOnce</code> gilt für Closures, die einmal aufgerufen werden können. Alle Closures
+implementieren zumindest dieses Trait, weil alle Closures aufgerufen werden
+können. Ein Closure, der erfasste Werte aus seinem Rumpf herausverschiebt,
+implementiert nur <code>FnOnce</code> und keine der anderen <code>Fn</code>-Traits, weil er nur
+einmal aufgerufen werden kann.</li>
+<li><code>FnMut</code> gilt für Closures, die die erfassten Werte nicht aus ihrem Rumpf
+herausverschieben, aber die erfassten Werte möglicherweise verändern. Diese
+Closures können mehr als einmal aufgerufen werden.</li>
+<li><code>Fn</code> gilt für Closures, die die erfassten Werte nicht aus ihrem Rumpf
+herausverschieben und die erfassten Werte nicht verändern, sowie Closures, die
+nichts aus ihrer Umgebung erfassen. Diese Closures können mehr als einmal
+aufgerufen werden, ohne ihre Umgebung zu verändern, was wichtig ist, wenn z.B.
+ein Closure mehrere Male gleichzeitig aufgerufen wird.</li>
 </ul>
 <p>Schauen wir uns die Definition der Methode <code>unwrap_or_else</code> auf <code>Option&lt;T&gt;</code> an,
-die wir in Codeblock 13-1 verwendet haben:</p>
+die wir in Listing 13-1 verwendet haben:</p>
 <pre><code class="language-rust ignore">impl&lt;T&gt; Option&lt;T&gt; {
     pub fn unwrap_or_else&lt;F&gt;(self, f: F) -&gt; T
     where
@@ -588,36 +568,34 @@ Rückgabetyp der Funktion <code>unwrap_or_else</code>: Code, der <code>unwrap_or
 <code>Option&lt;String&gt;</code> aufruft, erhält zum Beispiel einen <code>String</code>.</p>
 <p>Als Nächstes ist zu beachten, dass die Funktion <code>unwrap_or_else</code> den
 zusätzlichen generischen Typ-Parameter <code>F</code> hat. Der Typ <code>F</code> ist der Typ des
-Parameters namens <code>f</code>, der der Funktionsabschluss ist, den wir beim Aufruf von
+Parameters namens <code>f</code>, der der Closure ist, den wir beim Aufruf von
 <code>unwrap_or_else</code> bereitstellen.</p>
-<p>Die für den generischen Typ <code>F</code> spezifizierte Merkmalsabgrenzung ist <code>FnOnce() -&gt; T</code>, was bedeutet, dass <code>F</code> mindestens einmal aufgerufen werden können muss,
-keine Argumente annimmt und ein <code>T</code> zurückgeben muss. Die Verwendung von
-<code>FnOnce</code> in der Merkmalsabgrenzung drückt die Einschränkung aus, dass
-<code>unwrap_or_else</code> <code>f</code> nicht mehr als ein Mal aufrufen wird. Im Rumpf von
-<code>unwrap_or_else</code> können wir sehen, dass, wenn die <code>Option</code> <code>Some</code> ist, <code>f</code>
-nicht aufgerufen wird. Wenn die <code>Option</code> <code>None</code> ist, wird <code>f</code> einmal
-aufgerufen. Da alle Funktionsabschlüsse <code>FnOnce</code> implementieren, akzeptiert
-<code>unwrap_or_else</code> alle drei Arten von Funktionsabschlüssen und ist so flexibel
-wie nur möglich.</p>
+<p>Die für den generischen Typ <code>F</code> spezifizierte Trait Bound ist <code>FnOnce() -&gt; T</code>,
+was bedeutet, dass <code>F</code> mindestens einmal aufgerufen werden können muss, keine
+Argumente annimmt und ein <code>T</code> zurückgeben muss. Die Verwendung von <code>FnOnce</code> in
+der Trait Bound drückt die Einschränkung aus, dass <code>unwrap_or_else</code> <code>f</code> nicht
+mehr als ein Mal aufrufen wird. Im Rumpf von <code>unwrap_or_else</code> können wir sehen,
+dass, wenn die <code>Option</code> <code>Some</code> ist, <code>f</code> nicht aufgerufen wird. Wenn die <code>Option</code>
+<code>None</code> ist, wird <code>f</code> einmal aufgerufen. Da alle Closures <code>FnOnce</code>
+implementieren, akzeptiert <code>unwrap_or_else</code> alle drei Arten von Closures und ist
+so flexibel wie nur möglich.</p>
 <blockquote>
 <p>Anmerkung: Wenn das, was wir tun wollen, keine Werte aus der Umgebung
-erfassen muss, können wir einen Funktionsnamen anstelle eines
-Funktionsabschlüsses verwenden. Zum Beispiel könnten wir
-<code>unwrap_or_else(Vec::new)</code> auf einem <code>Option&lt;Vec&lt;T&gt;&gt;</code>-Wert aufrufen, um einen
-neuen, leeren Vektor zu erhalten, wenn der Wert <code>None</code> ist. Der Compiler
-implementiert automatisch die <code>Fn</code>-Merkmale, die für eine Funktionsdefinition
-anwendbar sind.</p>
+erfassen muss, können wir einen Funktionsnamen anstelle eines Closures
+verwenden. Zum Beispiel könnten wir <code>unwrap_or_else(Vec::new)</code> auf einem
+<code>Option&lt;Vec&lt;T&gt;&gt;</code>-Wert aufrufen, um einen neuen, leeren Vektor zu erhalten,
+wenn der Wert <code>None</code> ist. Der Compiler implementiert automatisch die
+<code>Fn</code>-Traits, die für eine Funktionsdefinition anwendbar sind.</p>
 </blockquote>
-<p>Schauen wir uns nun die Standard-Bibliotheksmethode <code>sort_by_key</code> an, die auf
-Anteilstypen (slices) definiert ist, um zu sehen, wie sie sich von <code>unwrap_or_else</code>
-unterscheidet und warum <code>sort_by_key</code> <code>FnMut</code> statt <code>FnOnce</code> für die
-Mermalsabgrenzung verwendet. Der Funktionsabschluss erhält ein Argument, eine
-Referenz auf das aktuelle Element im betrachteten Anteilstyp, und gibt einen
-Wert vom Typ <code>K</code> zurück, der geordnet werden kann. Diese Funktion ist nützlich,
-wenn man einen Anteilstyp nach einem bestimmten Attribut der einzelnen Elemente
-sortieren will. In Codeblock 13-7 haben wir eine Liste von
-<code>Rectangle</code>-Instanzen und benutzen <code>sort_by_key</code>, um sie nach ihrem
-<code>width</code>-Attribut von niedrig nach hoch zu sortieren:</p>
+<p>Schauen wir uns nun die Standardbibliotheksmethode <code>sort_by_key</code> an, die auf
+Slice definiert ist, um zu sehen, wie sie sich von <code>unwrap_or_else</code>
+unterscheidet und warum <code>sort_by_key</code> <code>FnMut</code> statt <code>FnOnce</code> für die Trait Bound
+verwendet. Der Closure erhält ein Argument, eine Referenz auf das aktuelle
+Element im betrachteten Slice, und gibt einen Wert vom Typ <code>K</code> zurück, der
+geordnet werden kann. Diese Funktion ist nützlich, wenn man einen Slice nach
+einem bestimmten Attribut der einzelnen Elemente sortieren will. In Listing 13-7
+haben wir eine Liste von <code>Rectangle</code>-Instanzen und benutzen <code>sort_by_key</code>, um
+sie nach ihrem <code>width</code>-Attribut von niedrig nach hoch zu sortieren:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
 struct Rectangle {
@@ -635,7 +613,7 @@ fn main() {
     list.sort_by_key(|r| r.width);
     println!("{list:#?}");
 }</code></pre>
-<p><span class="caption">Codeblock 13-7: Verwenden von <code>sort_by_key</code> um Rechtecke
+<p><span class="caption">Listing 13-7: Verwenden von <code>sort_by_key</code> um Rechtecke
 nach ihrer Breite zu sortieren</span></p>
 <p>Dieser Code gibt aus:</p>
 <pre><code class="language-console">$ cargo run
@@ -657,14 +635,14 @@ nach ihrer Breite zu sortieren</span></p>
     },
 ]
 </code></pre>
-<p>Der Grund, warum <code>sort_by_key</code> so definiert ist, dass es einen
-<code>FnMut</code>-Funktionsabschluss nimmt, ist, dass es den Funktionsabschluss mehrfach
-aufruft: Einmal für jedes Element im Anteilstyp. Der Funktionsabschluss <code>|r| r.width</code> erfasst, verändert oder verschiebt nichts aus seiner Umgebung, sodass
-er die Anforderungen der Merkmalsabgrenzung erfüllt.</p>
-<p>Im Gegensatz dazu zeigt Codeblock 13-8 ein Beispiel für einen
-Funktionsabschluss, der nur das Merkmal <code>FnOnce</code> implementiert, weil er einen
-Wert aus der Umgebung verschiebt. Der Compiler lässt uns diesen
-Funktionsabschluss nicht mit <code>sort_by_key</code> verwenden.</p>
+<p>Der Grund, warum <code>sort_by_key</code> so definiert ist, dass es einen <code>FnMut</code>-Closure
+nimmt, ist, dass es den Closure mehrfach aufruft: Einmal für jedes Element im
+Slice. Der Closure <code>|r| r.width</code> erfasst, verändert oder verschiebt nichts aus
+seiner Umgebung, sodass er die Anforderungen der Trait Bound erfüllt.</p>
+<p>Im Gegensatz dazu zeigt Listing 13-8 ein Beispiel für einen Closure, der nur
+das Trait <code>FnOnce</code> implementiert, weil er einen Wert aus der Umgebung
+verschiebt. Der Compiler lässt uns diesen Closure nicht mit <code>sort_by_key</code>
+verwenden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">#[derive(Debug)]
 struct Rectangle {
@@ -680,7 +658,7 @@ fn main() {
     ];
 
     let mut sort_operations = vec![];
-    let value = String::from("Funktionsabschluss aufgerufen");
+    let value = String::from("Closure aufgerufen");
 
     list.sort_by_key(|r| {
         sort_operations.push(value);
@@ -688,29 +666,27 @@ fn main() {
     });
     println!("{list:#?}");
 }</code></pre>
-<p><span class="caption">Codeblock 13-8: Versuch, einen <code>FnOnce</code>-Funktionsabschluss
-mit <code>sort_by_key</code> zu verwenden</span></p>
+<p><span class="caption">Listing 13-8: Versuch, einen <code>FnOnce</code>-Closure mit
+<code>sort_by_key</code> zu verwenden</span></p>
 <p>Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), der
-versucht die Anzahl der Aufrufe des Funktionsabschlusses durch <code>sort_by_key</code>
-beim Sortieren von <code>list</code> zu zählen. Dieser Code versucht diese Zählung
-durchzuführen, indem er den <code>String</code> <code>value</code> aus der Umgebung des
-Funktionsabschlusses in den Vektor <code>sort_operations</code> verschiebt. Der
-Funktionsabschluss erfasst <code>value</code> und verschiebt dann <code>value</code> aus dem
-Funktionsabschluss heraus, indem er die Eigentümerschaft von <code>value</code> an den
-Vektor <code>sort_operations</code> überträgt. Dieser Funktionsabschluss kann einmal
-aufgerufen werden; ein zweiter Aufruf würde nicht funktionieren, da <code>value</code>
-nicht mehr in der Umgebung wäre, um erneut in <code>sort_operations</code> verschoben zu
-werden! Daher implementiert dieser Funktionsabschluss nur <code>FnOnce</code>. Wenn wir
-versuchen, diesen Code zu kompilieren, erhalten wir die Fehlermeldung, dass
-<code>value</code> nicht aus dem Funktionsabschluss verschoben werden kann, weil der
-Funktionsabschluss <code>FnMut</code> implementieren muss:</p>
+versucht die Anzahl der Aufrufe des Closures durch <code>sort_by_key</code> beim Sortieren
+von <code>list</code> zu zählen. Dieser Code versucht diese Zählung durchzuführen, indem er
+den <code>String</code> <code>value</code> aus der Umgebung des Closures in den Vektor
+<code>sort_operations</code> verschiebt. Der Closure erfasst <code>value</code> und verschiebt dann
+<code>value</code> aus dem Closure heraus, indem er das Eigentum an <code>value</code> an den Vektor
+<code>sort_operations</code> überträgt. Dieser Closure kann einmal aufgerufen werden; ein
+zweiter Aufruf würde nicht funktionieren, da <code>value</code> nicht mehr in der Umgebung
+wäre, um erneut in <code>sort_operations</code> verschoben zu werden! Daher implementiert
+dieser Closure nur <code>FnOnce</code>. Wenn wir versuchen, diesen Code zu kompilieren,
+erhalten wir die Fehlermeldung, dass <code>value</code> nicht aus dem Closure verschoben
+werden kann, weil der Closure <code>FnMut</code> implementieren muss:</p>
 <pre><code class="language-console">$ cargo run
    Compiling rectangles v0.1.0 (file:///projects/rectangles)
 error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` closure
   --&gt; src/main.rs:18:30
    |
-15 |     let value = String::from("Funktionsabschluss aufgerufen");
-   |         -----   --------------------------------------------- move occurs because `value` has type `String`, which does not implement the `Copy` trait
+15 |     let value = String::from("Closure aufgerufen");
+   |         -----   ---------------------------------- move occurs because `value` has type `String`, which does not implement the `Copy` trait
    |         |
    |         captured outer variable
 16 |
@@ -727,15 +703,14 @@ help: consider cloning the value if the performance cost is acceptable
 For more information about this error, try `rustc --explain E0507`.
 error: could not compile `rectangles` (bin "rectangles") due to 1 previous error
 </code></pre>
-<p>Der Fehler bezieht sich auf die Zeile im Funktionsabschluss-Rumpf, die <code>value</code>
-aus der Umgebung verschiebt. Um dies zu beheben, müssen wir den Rumpf des
-Funktionsabschlusses so ändern, dass er keine Werte aus der Umgebung
-verschiebt. Es ist einfacher, einen Zähler in der Umgebung zu halten und seinen
-Wert im Funktionsabschluss-Rumpf zu erhöhen, um zu zählen, wie oft
-<code>sort_by_key</code> aufgerufen wurde. Der Funktionsabschluss in Codeblock 13-9
+<p>Der Fehler bezieht sich auf die Zeile im Closure-Rumpf, die <code>value</code> aus der
+Umgebung verschiebt. Um dies zu beheben, müssen wir den Rumpf des Closures so
+ändern, dass er keine Werte aus der Umgebung verschiebt. Es ist einfacher, einen
+Zähler in der Umgebung zu halten und seinen Wert im Closure-Rumpf zu erhöhen, um
+zu zählen, wie oft <code>sort_by_key</code> aufgerufen wurde. Der Closure in Listing 13-9
 funktioniert mit <code>sort_by_key</code>, weil er nur eine veränderbare Referenz auf den
-<code>num_sort_operations</code>-Zähler erfasst und daher mehr als einmal aufgerufen
-werden kann.</p>
+<code>num_sort_operations</code>-Zähler erfasst und daher mehr als einmal aufgerufen werden
+kann.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
 struct Rectangle {
@@ -757,13 +732,12 @@ fn main() {
     });
     println!("{list:#?}, sortiert in {num_sort_operations} Operationen");
 }</code></pre>
-<p><span class="caption">Codeblock 13-9: Verwenden eines
-<code>FnMut</code>-Funktionsabschlusses mit <code>sort_by_key</code> ist erlaubt</span></p>
-<p>Die <code>Fn</code>-Merkmale sind wichtig bei der Definition oder Verwendung von
-Funktionen oder Typen, die Funktionsabschlüsse verwenden. Im nächsten Abschnitt
-besprechen wir Iteratoren. Viele Iterator-Methoden nehmen
-Funktionsabschluss-Argumente entgegen, also behalte diese Details von
-Funktionsabschlüssen im Kopf, wenn wir weitermachen!</p>
+<p><span class="caption">Listing 13-9: Verwenden eines <code>FnMut</code>-Closure mit
+<code>sort_by_key</code> ist erlaubt</span></p>
+<p>Die <code>Fn</code>-Traits sind wichtig bei der Definition oder Verwendung von Funktionen
+oder Typen, die Closures verwenden. Im nächsten Abschnitt besprechen wir
+Iteratoren. Viele Iterator-Methoden nehmen Closure-Argumente entgegen, also
+behalte diese Details von Closures im Kopf, wenn wir weitermachen!</p>
 
                     </main>
 

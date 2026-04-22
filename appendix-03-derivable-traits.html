@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>C - Ableitbare Merkmale (traits) - Die Programmiersprache Rust</title>
+        <title>C - Ableitbare Traits - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,82 +161,80 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="anhang-c-ableitbare-merkmale-traits"><a class="header" href="#anhang-c-ableitbare-merkmale-traits">Anhang C: Ableitbare Merkmale (traits)</a></h2>
-<p>An verschiedenen Stellen im Buch haben wir das Attribut <code>derive</code> besprochen,
-das du auf eine Struktur- oder Aufzählungsdefinition anwenden kannst. Das
-Attribut <code>derive</code> generiert Code, der ein Merkmal (trait) mit seiner eigenen
+                        <h2 id="anhang-c-ableitbare-trait"><a class="header" href="#anhang-c-ableitbare-trait">Anhang C: Ableitbare Trait</a></h2>
+<p>An verschiedenen Stellen im Buch haben wir das Attribut <code>derive</code> besprochen, das
+du auf eine Struktur- oder Aufzählungsdefinition anwenden kannst. Das Attribut
+<code>derive</code> generiert Code, der ein Trait (Merkmal) mit seiner eigenen
 Standard-Implementierung auf dem Typ implementiert, den du mit der
 <code>derive</code>-Syntax annotiert hast.</p>
-<p>In diesem Anhang findest du eine Referenz aller Merkmale in der
+<p>In diesem Anhang findest du eine Referenz aller Traits in der
 Standardbibliothek, die du mit <code>derive</code> verwenden kannst. Jeder Abschnitt
 umfasst:</p>
 <ul>
-<li>Welche Operatoren und Methoden nach Ableiten dieses Merkmals ermöglicht
-werden</li>
-<li>Was die Implementierung des durch <code>derive</code> bereitgestellten Merkmals bewirkt</li>
-<li>Was die Implementierung des Merkmals über den Typ aussagt</li>
-<li>Die Bedingungen, unter denen du das Merkmal implementieren darfst oder nicht</li>
-<li>Beispiele für Operationen, die dieses Merkmal erfordern</li>
+<li>Welche Operatoren und Methoden nach dem Ableiten dieses Traits ermöglicht werden</li>
+<li>Was die Implementierung des durch <code>derive</code> bereitgestellten Traits bewirkt</li>
+<li>Was die Implementierung des Traits über den Typ aussagt</li>
+<li>Die Bedingungen, unter denen du das Trait implementieren darfst oder nicht</li>
+<li>Beispiele für Operationen, die dieses Trait erfordern</li>
 </ul>
 <p>Wenn du ein anderes Verhalten wünschst als das, das durch das Attribut <code>derive</code>
 bereitgestellt wird, schaue in die <a href="https://doc.rust-lang.org/std/index.html">Standardbibliotheksdokumentation</a>
-zu den Merkmalen, um zu erfahren, wie sie manuell implementiert werden können.</p>
-<p>Die hier aufgelisteten Merkmale sind die einzigen, die von der
-Standardbibliothek definiert werden und die mit <code>derive</code> in deinen Typen
-implementiert werden können. Andere in der Standardbibliothek definierte
-Merkmale haben kein sinnvolles Standardverhalten, sodass es an dir liegt, sie
-so zu implementieren, wie es für dein Vorhaben sinnvoll ist.</p>
-<p>Ein Beispiel für ein Merkmal, das nicht abgeleitet werden kann, ist <code>Display</code>,
-das die Formatierung für Endbenutzer übernimmt. Du solltest immer eine
-geeignete Art und Weise in Betracht ziehen, einen Typ für einen Endbenutzer
-anzuzeigen. Welche Teile des Typs sollte ein Endbenutzer sehen dürfen? Welche
-Teile würden sie für relevant halten? Welches Datenformat wäre für sie am
-relevantesten? Der Rust-Compiler verfügt nicht über dieses Wissen, sodass er
-kein angemessenes Standardverhalten für dich bereitstellen kann.</p>
-<p>Die Liste der ableitbaren Merkmale in diesem Anhang ist nicht vollständig:
-Bibliotheken können <code>derive</code> für ihre eigenen Merkmale implementieren, sodass
-die Liste der Merkmale, die du mit <code>derive</code> verwenden kannst, wahrlich
-unbegrenzt ist. Das Implementieren von <code>derive</code> verwendet ein prozedurales
-Makro, das im Abschnitt <a href="ch20-05-macros.html#benutzerdefinierte-makro-mit-derive">„Benutzerdefinierte Makro mit
-<code>derive</code>“</a> in Kapitel 20 behandelt wird.</p>
+zu den Traits, um zu erfahren, wie sie manuell implementiert werden können.</p>
+<p>Die hier aufgelisteten Traits sind die einzigen, die von der Standardbibliothek
+definiert werden und die mit <code>derive</code> in deinen Typen implementiert werden
+können. Andere in der Standardbibliothek definierte Traits haben kein sinnvolles
+Standardverhalten, sodass es an dir liegt, sie so zu implementieren, wie es für
+dein Vorhaben sinnvoll ist.</p>
+<p>Ein Beispiel für ein Trait, das nicht abgeleitet werden kann, ist <code>Display</code>, das
+die Formatierung für Endbenutzer übernimmt. Du solltest immer eine geeignete Art
+und Weise in Betracht ziehen, einen Typ für einen Endbenutzer anzuzeigen. Welche
+Teile des Typs sollte ein Endbenutzer sehen dürfen? Welche Teile würden sie für
+relevant halten? Welches Datenformat wäre für sie am relevantesten? Der
+Rust-Compiler verfügt nicht über dieses Wissen, sodass er kein angemessenes
+Standardverhalten für dich bereitstellen kann.</p>
+<p>Die Liste der ableitbaren Traits in diesem Anhang ist nicht vollständig:
+Bibliotheken können <code>derive</code> für ihre eigenen Traits implementieren, sodass die
+Liste der Traits, die du mit <code>derive</code> verwenden kannst, wahrlich unbegrenzt ist.
+Das Implementieren von <code>derive</code> verwendet ein prozedurales Makro, das im
+Abschnitt <a href="ch20-05-macros.html#benutzerdefinierte-derive-makros">„Benutzerdefinierte <code>derive</code>-Makros“</a> in
+Kapitel 20 behandelt wird.</p>
 <h3 id="debug-für-die-programmierer-ausgabe"><a class="header" href="#debug-für-die-programmierer-ausgabe"><code>Debug</code> für die Programmierer-Ausgabe</a></h3>
-<p>Das Merkmal <code>Debug</code> ermöglicht das Debuggen von Formatierungen in
-Formatierungszeichenketten, die du durch Angeben von <code>:?</code> innerhalb Platzhalter
-<code>{}</code> angibst.</p>
-<p>Das Merkmal <code>Debug</code> erlaubt es dir, Instanzen eines Typs zu Debugging-Zwecken
+<p>Das Trait <code>Debug</code> ermöglicht das Debuggen von Formatierungen in
+Formatierungs-Strings, die du durch <code>:?</code> innerhalb von Platzhaltern <code>{}</code>
+angibst.</p>
+<p>Das Trait <code>Debug</code> erlaubt es dir, Instanzen eines Typs zu Debugging-Zwecken
 auszugeben, sodass du und andere Programmierer, die deinen Typ verwenden, eine
-Instanz zu einem bestimmten Zeitpunkt der Programmausführung untersuchen
-können.</p>
-<p>Das Merkmal <code>Debug</code> ist beispielsweise beim Verwenden des Makros <code>assert_eq!</code>
+Instanz zu einem bestimmten Zeitpunkt der Programmausführung untersuchen können.</p>
+<p>Das Trait <code>Debug</code> ist beispielsweise beim Verwenden des Makros <code>assert_eq!</code>
 erforderlich. Dieses Makro gibt die Werte der Instanzen, die als Argumente
 angegeben wurden, aus, wenn die Gleichheitszusicherung fehlschlägt, damit
 Programmierer sehen können, warum die beiden Instanzen nicht gleich waren.</p>
 <h3 id="partialeq-und-eq-für-gleichheitsvergleiche"><a class="header" href="#partialeq-und-eq-für-gleichheitsvergleiche"><code>PartialEq</code> und <code>Eq</code> für Gleichheitsvergleiche</a></h3>
-<p>Das Merkmal <code>PartialEq</code> erlaubt dir, Instanzen eines Typs auf Gleichheit zu
-prüfen und ermöglicht das Verwenden der Operatoren <code>==</code> und <code>!=</code>.</p>
+<p>Das Trait <code>PartialEq</code> erlaubt dir, Instanzen eines Typs auf Gleichheit zu prüfen
+und ermöglicht das Verwenden der Operatoren <code>==</code> und <code>!=</code>.</p>
 <p>Das Ableiten von <code>PartialEq</code> implementiert die Methode <code>eq</code>. Wenn <code>PartialEq</code>
 für Strukturen abgeleitet wird, sind zwei Instanzen nur dann gleich, wenn
 <em>alle</em> Felder gleich sind, und die Instanzen sind nicht gleich, wenn <em>wenigstens
 ein</em> Feld nicht gleich ist. Beim Ableiten für Aufzählungen ist jede Variante
 gleich sich selbst und nicht gleich den anderen Varianten.</p>
-<p>Das Merkmal <code>PartialEq</code> ist beispielsweise beim Verwenden des Makros
-<code>assert_eq!</code> erforderlich, das in der Lage sein muss, zwei Instanzen eines Typs
-auf Gleichheit zu prüfen.</p>
-<p>Das Merkmal <code>Eq</code> hat keine Methoden. Sein Zweck ist es, zu signalisieren, dass
-für jeden Wert des annotierten Typs der Wert gleich sich selbst ist. Das
-Merkmal <code>Eq</code> kann nur auf Typen angewandt werden, die auch <code>PartialEq</code>
-implementieren, obwohl nicht alle Typen, die <code>PartialEq</code> implementieren, <code>Eq</code>
-implementieren können. Ein Beispiel dafür sind Fließkomma-Zahlentypen: Die
-Implementierung von Fließkomma-Zahlen besagt, dass zwei Instanzen des Wertes
-<code>NaN</code> nicht vergleichbar sind.</p>
+<p>Das Trait <code>PartialEq</code> ist beispielsweise beim Verwenden des Makros <code>assert_eq!</code>
+erforderlich, das in der Lage sein muss, zwei Instanzen eines Typs auf
+Gleichheit zu prüfen.</p>
+<p>Das Trait <code>Eq</code> hat keine Methoden. Sein Zweck ist es, zu signalisieren, dass für
+jeden Wert des annotierten Typs der Wert gleich sich selbst ist. Das Trait <code>Eq</code>
+kann nur auf Typen angewandt werden, die auch <code>PartialEq</code> implementieren, obwohl
+nicht alle Typen, die <code>PartialEq</code> implementieren, <code>Eq</code> implementieren können.
+Ein Beispiel dafür sind Fließkomma-Zahlentypen: Die Implementierung von
+Fließkomma-Zahlen besagt, dass zwei Instanzen des Wertes <code>NaN</code> nicht
+vergleichbar sind.</p>
 <p>Ein Beispiel dafür, wann <code>Eq</code> erforderlich ist, ist für Schlüssel in einer
 <code>HashMap&lt;K, V&gt;</code>, damit <code>HashMap&lt;K, V&gt;</code> erkennen kann, ob zwei Schlüssel gleich
 sind.</p>
 <h3 id="partialord-und-ord-für-sortiervergleiche"><a class="header" href="#partialord-und-ord-für-sortiervergleiche"><code>PartialOrd</code> und <code>Ord</code> für Sortiervergleiche</a></h3>
-<p>Das Merkmal <code>PartialOrd</code> erlaubt dir, Instanzen eines Typs zum Sortieren zu
+<p>Das Trait <code>PartialOrd</code> erlaubt dir, Instanzen eines Typs zum Sortieren zu
 vergleichen. Ein Typ, der <code>PartialOrd</code> implementiert, kann mit den Operatoren
-<code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code> und <code>&gt;=</code> verwendet werden. Du kannst das Merkmal <code>PartialOrd</code>
-nur auf Typen anwenden, die auch <code>PartialEq</code> implementieren.</p>
+<code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code> und <code>&gt;=</code> verwendet werden. Du kannst das Trait <code>PartialOrd</code> nur
+auf Typen anwenden, die auch <code>PartialEq</code> implementieren.</p>
 <p>Das Ableiten von <code>PartialOrd</code> implementiert die Methode <code>partial_cmp</code>, die eine
 <code>Option&lt;Ordering&gt;</code> zurückgibt, die <code>None</code> ist, wenn die angegebenen Werte nicht
 vergleichbar sind. Ein Beispiel für einen Wert, der nicht vergleichbar ist,
@@ -248,14 +246,14 @@ den Wert in jedem Feld in der Reihenfolge vergleicht, in der die Felder in der
 Strukturdefinition erscheinen. Beim Ableiten auf Aufzählungen werden Varianten,
 die in der Aufzählungsdefinition früher deklariert sind, als kleiner als die
 später aufgeführten Varianten betrachtet.</p>
-<p>Das Merkmal <code>PartialOrd</code> ist z.B. für die Methode <code>gen_range</code> aus der Kiste
-<code>rand</code> erforderlich, die einen Zufallswert aus einem Wertebereich erzeugt, der
-durch einen Bereichsausdruck festgelegt wird.</p>
-<p>Das Merkmal <code>Ord</code> erlaubt dir zu wissen, dass für zwei beliebige Werte des
-annotierten Typs eine gültige Reihenfolge existiert. Das Merkmal <code>Ord</code>
+<p>Das Trait <code>PartialOrd</code> ist z.B. für die Methode <code>gen_range</code> aus der Crate <code>rand</code>
+erforderlich, die einen Zufallswert aus einem Wertebereich erzeugt, der durch
+einen Bereichsausdruck festgelegt wird.</p>
+<p>Das Trait <code>Ord</code> erlaubt dir zu wissen, dass für zwei beliebige Werte des
+annotierten Typs eine gültige Reihenfolge existiert. Das Trait <code>Ord</code>
 implementiert die Methode <code>cmp</code>, die <code>Ordering</code> statt <code>Option&lt;Ordering&gt;</code>
-zurückgibt, weil eine gültige Reihenfolge immer möglich sein wird. Du kannst
-das Merkmal <code>Ord</code> nur auf Typen anwenden, die auch <code>PartialOrd</code> und <code>Eq</code>
+zurückgibt, weil eine gültige Reihenfolge immer möglich sein wird. Du kannst das
+Trait <code>Ord</code> nur auf Typen anwenden, die auch <code>PartialOrd</code> und <code>Eq</code>
 implementieren (und <code>Eq</code> erfordert <code>PartialEq</code>). Beim Ableiten auf Strukturen
 und Aufzählungen verhält sich <code>cmp</code> genauso wie die abgeleitete Implementierung
 für <code>partial_cmp</code> mit <code>PartialOrd</code>.</p>
@@ -263,41 +261,40 @@ für <code>partial_cmp</code> mit <code>PartialOrd</code>.</p>
 in einem <code>BTreeSet&lt;T&gt;</code>, einer Datenstruktur, die Daten auf Grundlage der
 Sortierreihenfolge der Werte speichert.</p>
 <h3 id="clone-und-copy-zum-duplizieren-von-werten"><a class="header" href="#clone-und-copy-zum-duplizieren-von-werten"><code>Clone</code> und <code>Copy</code> zum Duplizieren von Werten</a></h3>
-<p>Das Merkmal <code>Clone</code> erlaubt es dir, explizit eine tiefe Kopie eines Wertes zu
-erstellen, und der Vervielfältigungsprozess könnte die Ausführung von
-beliebigem Code und das Kopieren von Daten im Haldenspeicher beinhalten. Siehe
-den Abschnitt <a href="ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-clone">„Variablen und Daten im Zusammenspiel mit
-Clone“</a> in Kapitel 4 für weitere
-Informationen zu <code>Clone</code>.</p>
+<p>Das Trait <code>Clone</code> erlaubt es dir, explizit eine tiefe Kopie eines Wertes zu
+erstellen, und der Vervielfältigungsprozess könnte die Ausführung von beliebigem
+Code und das Kopieren von Daten im Heap beinhalten. Siehe Abschnitt <a href="ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-clone">„Variablen
+und Daten im Zusammenspiel mit Clone“</a>
+in Kapitel 4 für weitere Informationen zu <code>Clone</code>.</p>
 <p>Das Ableiten von <code>Clone</code> implementiert die Methode <code>clone</code>, die, wenn sie für
 den gesamten Typ implementiert ist, <code>clone</code> auf jedem der Teile des Typs
 aufruft. Das bedeutet, dass alle Felder oder Werte des Typs auch <code>Clone</code>
 implementieren müssen, um <code>Clone</code> abzuleiten.</p>
 <p>Ein Beispiel dafür, wann <code>Clone</code> erforderlich ist, ist der Aufruf der Methode
-<code>to_vec</code> auf einem Anteilstyp. Der Anteilstyp besitzt die Typ-Instanzen nicht,
-die er enthält, aber der von <code>to_vec</code> zurückgegebene Vektor muss seine
-Instanzen besitzen, also ruft <code>to_vec</code> bei jedem Element <code>clone</code> auf. Daher
-muss der im Anteilstyp gespeicherte Typ <code>Clone</code> implementieren.</p>
-<p>Das Merkmal <code>Copy</code> erlaubt es dir, einen Wert zu duplizieren, indem nur die auf
-dem Stapelspeicher gespeicherten Bits kopiert werden; es ist kein spezieller
-Code notwendig. Weitere Informationen zu <code>Copy</code> findest du im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur
-Stapelspeicher-Daten: Kopieren (copy)“</a> in Kapitel 4.</p>
-<p>Das Merkmal <code>Copy</code> definiert keine Methoden, um Programmierer daran zu hindern,
+<code>to_vec</code> auf einem Slice. Der Slice besitzt die Typ-Instanzen nicht, die er
+enthält, aber der von <code>to_vec</code> zurückgegebene Vektor muss seine Instanzen
+besitzen, also ruft <code>to_vec</code> bei jedem Element <code>clone</code> auf. Daher muss der im
+Slice gespeicherte Typ <code>Clone</code> implementieren.</p>
+<p>Das Trait <code>Copy</code> erlaubt es dir, einen Wert zu duplizieren, indem nur die auf
+dem Stack gespeicherten Bits kopiert werden; es ist kein spezieller Code
+notwendig. Weitere Informationen zu <code>Copy</code> findest du im Abschnitt <a href="ch04-01-what-is-ownership.html#reine-stack-daten-copy">„Reine
+Stack-Daten: Copy“</a> in Kapitel 4.</p>
+<p>Das Trait <code>Copy</code> definiert keine Methoden, um Programmierer daran zu hindern,
 diese Methoden zu überladen und die Annahme zu verletzen, dass kein spezieller
 Code ausgeführt wird. Auf diese Weise können alle Programmierer davon ausgehen,
 dass das Kopieren eines Wertes sehr schnell gehen wird.</p>
 <p>Du kannst <code>Copy</code> auf jeden Typ ableiten, dessen Teile alle <code>Copy</code>
-implementieren. Du kannst das Merkmal <code>Copy</code> nur auf Typen anwenden, die auch
+implementieren. Du kannst das Trait <code>Copy</code> nur auf Typen anwenden, die auch
 <code>Clone</code> implementieren, weil ein Typ, der <code>Copy</code> implementiert, eine triviale
-Implementierung von <code>Clone</code> hat, das die gleiche Aufgabe wie <code>Copy</code> erfüllt.</p>
-<p>Das Merkmal <code>Copy</code> ist selten erforderlich; Typen, die <code>Copy</code> implementieren,
-verfügen über Optimierungen, d.h. du musst nicht <code>clone</code> aufrufen, was den
-Code prägnanter macht.</p>
+Implementierung von <code>Clone</code> hat, die die gleiche Aufgabe wie <code>Copy</code> erfüllt.</p>
+<p>Das Trait <code>Copy</code> ist selten erforderlich; Typen, die <code>Copy</code> implementieren,
+verfügen über Optimierungen, d.h. du musst nicht <code>clone</code> aufrufen, was den Code
+prägnanter macht.</p>
 <p>Alles, was mit <code>Copy</code> möglich ist, kannst du auch mit <code>Clone</code> erreichen, aber
 der Code könnte langsamer sein oder an manchen Stellen <code>clone</code> erforderlich
 machen.</p>
 <h3 id="hash-für-die-abbildung-eines-wertes-auf-einen-wert-fester-größe"><a class="header" href="#hash-für-die-abbildung-eines-wertes-auf-einen-wert-fester-größe"><code>Hash</code> für die Abbildung eines Wertes auf einen Wert fester Größe</a></h3>
-<p>Das Merkmal <code>Hash</code> erlaubt es dir, eine Instanz eines Typs beliebiger Größe zu
+<p>Das Trait <code>Hash</code> erlaubt es dir, eine Instanz eines Typs beliebiger Größe zu
 nehmen und diese Instanz mithilfe einer Hash-Funktion auf einen Wert fester
 Größe abzubilden. Das Ableiten von <code>Hash</code> implementiert die Methode <code>hash</code>. Die
 abgeleitete Implementierung der Methode <code>hash</code> kombiniert das Ergebnis des
@@ -306,18 +303,18 @@ ebenfalls <code>Hash</code> implementieren, um <code>Hash</code> abzuleiten.</p>
 <p>Ein Beispiel dafür, wann <code>Hash</code> erforderlich ist, ist das Speichern von
 Schlüsseln in einer <code>HashMap&lt;K, V&gt;</code>, um Daten effizient zu speichern.</p>
 <h3 id="default-für-standardwerte"><a class="header" href="#default-für-standardwerte"><code>Default</code> für Standardwerte</a></h3>
-<p>Das Merkmal <code>Default</code> erlaubt es dir, einen Standardwert für einen Typ zu
-definieren. Das Ableiten von <code>Default</code> implementiert die Funktion <code>default</code>.
-Die abgeleitete Implementierung der Funktion <code>default</code> ruft die Funktion
-<code>default</code> für jeden Teil des Typs auf, d.h. alle Felder oder Werte in dem Typ
-müssen auch <code>Default</code> implementieren, um <code>Default</code> abzuleiten.</p>
+<p>Das Trait <code>Default</code> erlaubt es dir, einen Standardwert für einen Typ zu
+definieren. Das Ableiten von <code>Default</code> implementiert die Funktion <code>default</code>. Die
+abgeleitete Implementierung der Funktion <code>default</code> ruft die Funktion <code>default</code>
+für jeden Teil des Typs auf, d.h. alle Felder oder Werte in dem Typ müssen auch
+<code>Default</code> implementieren, um <code>Default</code> abzuleiten.</p>
 <p>Die Funktion <code>Default::default</code> wird häufig in Kombination mit der Syntax zur
 Aktualisierung von Strukturen verwendet, die im Abschnitt <a href="ch05-01-defining-structs.html#instanzen-erzeugen-mit-der-strukturaktualisierungssyntax">„Instanzen erzeugen
 mit der Strukturaktualisierungssyntax“</a> in Kapitel 5
 besprochen wird. Du kannst einige Felder einer Struktur anpassen und dann einen
 Standardwert für den Rest der Felder festlegen und verwenden, indem du
 <code>...Default::default()</code> schreibst.</p>
-<p>Das Merkmal <code>Default</code> ist erforderlich, wenn du die Methode <code>unwrap_or_default</code>
+<p>Das Trait <code>Default</code> ist erforderlich, wenn du die Methode <code>unwrap_or_default</code>
 z.B. auf Instanzen von <code>Option&lt;T&gt;</code> verwendest. Wenn die <code>Option&lt;T&gt;</code> den Wert
 <code>None</code> hat, gibt die Methode <code>unwrap_or_default</code> das Ergebnis von
 <code>Default::default</code> für den Typ <code>T</code> zurück, der in <code>Option&lt;T&gt;</code> gespeichert ist.</p>

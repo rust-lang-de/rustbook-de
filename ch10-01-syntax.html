@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -175,10 +175,9 @@ normalerweise die Datentypen der Parameter und des Rückgabewerts angeben
 würden. Dadurch wird unser Code flexibler und bietet den Aufrufern unserer
 Funktion mehr Funktionalität, während gleichzeitig Code-Duplikate verhindert
 werden.</p>
-<p>Um mit unserer Funktion <code>largest</code> fortzufahren, zeigt Codeblock 10-4 zwei
-Funktionen, die beide den größten Wert in einem Anteilstyp finden. Wir werden
-diese dann in einer einzigen Funktion kombinieren, die generische Typen
-verwendet.</p>
+<p>Um mit unserer Funktion <code>largest</code> fortzufahren, zeigt Listing 10-4 zwei
+Funktionen, die beide den größten Wert in einem Slice finden. Wir werden diese
+dann in einer einzigen Funktion kombinieren, die generische Typen verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn largest_i32(list: &amp;[i32]) -&gt; &amp;i32 {
     let mut largest = &amp;list[0];
@@ -217,14 +216,13 @@ fn main() {
     println!("Das größte Zeichen ist {result}");
 <span class="boring">    assert_eq!(*result, 'y');
 </span>}</code></pre>
-<p><span class="caption">Codeblock 10-4: Zwei Funktionen, die sich nur in ihren
+<p><span class="caption">Listing 10-4: Zwei Funktionen, die sich nur in ihren
 Namen und den Typen in ihren Signaturen unterscheiden</span></p>
-<p>Die Funktion <code>largest_i32</code> ist diejenige, die wir in Codeblock 10-3 extrahiert
-haben und die den größten <code>i32</code> in einem Anteilstyp findet. Die Funktion
-<code>largest_char</code> findet das größte <code>char</code> in einem Anteilstyp. Die
-Funktionsrümpfe haben den gleichen Code, also lass uns die Duplizierung
-eliminieren, indem wir einen generischen Typparameter in einer einzigen
-Funktion einführen.</p>
+<p>Die Funktion <code>largest_i32</code> ist diejenige, die wir in Listing 10-3 extrahiert
+haben und die den größten <code>i32</code> in einem Slice findet. Die Funktion
+<code>largest_char</code> findet das größte <code>char</code> in einem Slice. Die Funktionsrümpfe
+haben den gleichen Code, also lass uns die Duplizierung eliminieren, indem wir
+einen generischen Typparameter in einer einzigen Funktion einführen.</p>
 <p>Um die Typen in einer neuen, einzigen Funktion zu parametrisieren, müssen wir
 den Typparameter benennen, so wie wir es für die Wertparameter einer Funktion
 tun. Du kannst jeden beliebigen Bezeichner als Typparametername verwenden. Aber
@@ -240,15 +238,14 @@ generische Funktion <code>largest</code> zu definieren, platzieren wir die
 Typnamen-Deklarationen innerhalb spitzer Klammern <code>&lt;&gt;</code>, zwischen dem
 Funktionsnamen und der Parameterliste, so wie hier:</p>
 <pre><code class="language-rust ignore">fn largest&lt;T&gt;(list: &amp;[T]) -&gt; &amp;T {</code></pre>
-<p>Wir lesen diese Definition wie folgt: „Die Funktion <code>largest</code> ist generisch
-über einen Typ <code>T</code>.“ Sie hat einen Parameter namens <code>list</code>, der ein Anteilstyp
-von Werten des Typs <code>T</code> ist. Die Funktion <code>largest</code> gibt eine Referenz auf denn
-Wert des gleichen Typs <code>T</code> zurück.</p>
-<p>Codeblock 10-5 zeigt die kombinierte Funktionsdefinition <code>largest</code>, die den
-generischen Datentyp in ihrer Signatur verwendet. Der Codeblock zeigt auch, wie
-wir die Funktion entweder mit einem Anteilstyp von <code>i32</code>-Werten oder
-<code>char</code>-Werten aufrufen können. Beachte, dass sich dieser Code noch nicht
-kompilieren lässt.</p>
+<p>Wir lesen diese Definition wie folgt: „Die Funktion <code>largest</code> ist generisch über
+einen Typ <code>T</code>.“ Sie hat einen Parameter namens <code>list</code>, der ein Slice von Werten
+des Typs <code>T</code> ist. Die Funktion <code>largest</code> gibt eine Referenz auf den Wert des
+gleichen Typs <code>T</code> zurück.</p>
+<p>Listing 10-5 zeigt die kombinierte Funktionsdefinition <code>largest</code>, die den
+generischen Datentyp in ihrer Signatur verwendet. Das Listing zeigt auch, wie
+wir die Funktion entweder mit einem Slice von <code>i32</code>-Werten oder <code>char</code>-Werten
+aufrufen können. Beachte, dass sich dieser Code noch nicht kompilieren lässt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">fn largest&lt;T&gt;(list: &amp;[T]) -&gt; &amp;T {
     let mut largest = &amp;list[0];
@@ -273,7 +270,7 @@ fn main() {
     let result = largest(&amp;char_list);
     println!("Das größte Zeichen ist {result}");
 }</code></pre>
-<p><span class="caption">Codeblock 10-5: Die Funktion <code>largest</code> mit generischen
+<p><span class="caption">Listing 10-5: Die Funktion <code>largest</code> mit generischen
 Typparametern; diese kompiliert aber noch nicht</span></p>
 <p>Wenn wir diesen Code kompilieren, erhalten wir diesen Fehler:</p>
 <pre><code class="language-console">$ cargo run
@@ -294,21 +291,21 @@ help: consider restricting type parameter `T`
 For more information about this error, try `rustc --explain E0369`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
-<p>Der Hilfetext erwähnt <code>std::cmp::PartialOrd</code>, was ein Merkmal (trait) ist, und
-wir werden im nächsten Abschnitt über Merkmale sprechen. Vorerst bedeutet
-dieser Fehler, dass der Rumpf von <code>largest</code> nicht für alle möglichen Typen
-funktioniert, die <code>T</code> sein könnten. Da wir Werte des Typs <code>T</code> im Rumpf
-vergleichen wollen, können wir nur Typen verwenden, deren Werte sortiert werden
-können. Um Vergleiche zu ermöglichen, hat die Standardbibliothek das Merkmal
-<code>std::cmp::PartialOrd</code>, das du auf Typen implementieren kannst (siehe Anhang C
-für weitere Informationen zu diesem Merkmal). Um den obigen Beispielcode zu
-korrigieren, müssten wir den Vorschlägen des Hilfetextes folgen und die für <code>T</code>
-gültigen Typen auf diejenigen beschränken, die <code>PartialOrd</code> implementieren. Das
-Beispiel würde dann kompilieren, weil die Standardbibliothek <code>PartialOrd</code>
-sowohl für <code>i32</code> als auch für <code>char</code> implementiert.</p>
+<p>Der Hilfetext erwähnt <code>std::cmp::PartialOrd</code>, was ein Trait ist, und wir werden
+im nächsten Abschnitt über Traits sprechen. Vorerst bedeutet dieser Fehler, dass
+der Rumpf von <code>largest</code> nicht für alle möglichen Typen funktioniert, die <code>T</code>
+sein könnten. Da wir Werte des Typs <code>T</code> im Rumpf vergleichen wollen, können wir
+nur Typen verwenden, deren Werte sortiert werden können. Um Vergleiche zu
+ermöglichen, hat die Standardbibliothek das Trait <code>std::cmp::PartialOrd</code>, das du
+auf Typen implementieren kannst (siehe Anhang C für weitere Informationen zu
+diesem Trait). Um den obigen Beispielcode zu korrigieren, müssten wir den
+Vorschlägen des Hilfetextes folgen und die für <code>T</code> gültigen Typen auf diejenigen
+beschränken, die <code>PartialOrd</code> implementieren. Das Beispiel würde dann
+kompilieren, weil die Standardbibliothek <code>PartialOrd</code> sowohl für <code>i32</code> als auch
+für <code>char</code> implementiert.</p>
 <h3 id="in-struktur-definitionen"><a class="header" href="#in-struktur-definitionen">In Struktur-Definitionen</a></h3>
 <p>Wir können auch Strukturen definieren, um einen generischen Typparameter in
-einem oder mehreren Feldern mit der <code>&lt;&gt;</code> Syntax zu verwenden. Codeblock 10-6
+einem oder mehreren Feldern mit der <code>&lt;&gt;</code> Syntax zu verwenden. Listing 10-6
 definiert eine Struktur <code>Point&lt;T&gt;</code>, um Koordinatenwerte <code>x</code> und <code>y</code> eines
 beliebigen Typs aufzunehmen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -321,19 +318,19 @@ fn main() {
     let integer = Point { x: 5, y: 10 };
     let float = Point { x: 1.0, y: 4.0 };
 }</code></pre>
-<p><span class="caption">Codeblock 10-6: Eine Struktur <code>Point&lt;T&gt;</code>, die Werte <code>x</code>
+<p><span class="caption">Listing 10-6: Eine Struktur <code>Point&lt;T&gt;</code>, die Werte <code>x</code>
 und <code>y</code> vom Typ <code>T</code> enthält</span></p>
 <p>Die Syntax zum Verwenden von generischen Datentypen in Strukturdefinitionen
 ähnelt der Syntax, die in Funktionsdefinitionen verwendet wird. Zuerst
 deklarieren wir den Namen des Typparameters innerhalb spitzer Klammern direkt
 nach dem Namen der Struktur. Dann verwenden wir den generischen Typ in der
 Strukturdefinition, wo wir sonst konkrete Datentypen angeben würden.</p>
-<p>Beachte, da wir nur einen generischen Typ zur Definition von <code>Point&lt;T&gt;</code>
-verwendet haben, besagt diese Definition, dass die Struktur <code>Point&lt;T&gt;</code>
-generisch über einen Typ <code>T</code> ist, und die beiden Felder <code>x</code> und <code>y</code> <em>denselben</em>
-Typ haben, welcher Typ das auch immer sein mag. Wenn wir eine Instanz von
-<code>Point&lt;T&gt;</code> erzeugen, die Werte unterschiedlichen Typs hat, wie in Codeblock
-10-7, wird sich unser Code nicht kompilieren lassen.</p>
+<p>Beachte: Da wir nur einen generischen Typ zur Definition von <code>Point&lt;T&gt;</code>
+verwendet haben, besagt diese Definition, dass die Struktur <code>Point&lt;T&gt;</code> generisch
+über einen Typ <code>T</code> ist, und die beiden Felder <code>x</code> und <code>y</code> <em>denselben</em> Typ haben,
+welcher Typ das auch immer sein mag. Wenn wir eine Instanz von <code>Point&lt;T&gt;</code>
+erzeugen, die Werte unterschiedlichen Typs hat, wie in Listing 10-7, wird sich
+unser Code nicht kompilieren lassen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">struct Point&lt;T&gt; {
     x: T,
@@ -343,7 +340,7 @@ Typ haben, welcher Typ das auch immer sein mag. Wenn wir eine Instanz von
 fn main() {
     let wont_work = Point { x: 5, y: 4.0 };
 }</code></pre>
-<p><span class="caption">Codeblock 10-7: Die Felder <code>x</code> und <code>y</code> müssen vom
+<p><span class="caption">Listing 10-7: Die Felder <code>x</code> und <code>y</code> müssen vom
 gleichen Typ sein, da beide den gleichen generischen Datentyp <code>T</code> haben.</span></p>
 <p>Wenn wir in diesem Beispiel <code>x</code> den Integer-Wert 5 zuweisen, lassen wir den
 Compiler wissen, dass der generische Typ <code>T</code> für diese Instanz von
@@ -362,10 +359,10 @@ For more information about this error, try `rustc --explain E0308`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Um eine Struktur <code>Point</code> zu definieren, bei der <code>x</code> und <code>y</code> generische, aber
-unterschiedliche, Typen haben können, können wir mehrere generische
-Typparameter verwenden. Zum Beispiel ändern wir in Codeblock 10-8 die
-Definition von <code>Point</code> so, dass sie über den Typen <code>T</code> und <code>U</code> generisch ist,
-wobei <code>x</code> vom Typ <code>T</code> und <code>y</code> vom Typ <code>U</code> ist.</p>
+unterschiedliche, Typen haben können, können wir mehrere generische Typparameter
+verwenden. Zum Beispiel ändern wir in Listing 10-8 die Definition von <code>Point</code>
+so, dass die Typen <code>T</code> und <code>U</code> generisch sind, wobei <code>x</code> vom Typ <code>T</code> und <code>y</code> vom
+Typ <code>U</code> ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">struct Point&lt;T, U&gt; {
     x: T,
@@ -377,7 +374,7 @@ fn main() {
     let both_float = Point { x: 1.0, y: 4.0 };
     let integer_and_float = Point { x: 5, y: 4.0 };
 }</code></pre>
-<p><span class="caption">Codeblock 10-8: <code>Point&lt;T, U&gt;</code> ist generisch über zwei
+<p><span class="caption">Listing 10-8: <code>Point&lt;T, U&gt;</code> ist generisch über zwei
 Typen, sodass <code>x</code> und <code>y</code> Werte unterschiedlichen Typs haben können</span></p>
 <p>Jetzt sind alle gezeigten Instanzen von <code>Point</code> erlaubt! Du kannst so viele
 generische Typparameter in einer Definition verwenden, wie du willst, aber das
@@ -419,7 +416,7 @@ vom Typ <code>E</code> enthält. Diese Definition macht es bequem, die Aufzählu
 überall dort zu verwenden, wo wir eine Operation haben, die erfolgreich sein
 (gibt einen Wert vom Typ <code>T</code> zurück) oder fehlschlagen (gibt einen Fehler vom
 Typ <code>E</code> zurück) könnte. Tatsächlich haben wir dies beim Öffnen einer Datei in
-Codeblock 9-3 verwendet, wobei für <code>T</code> der Typ <code>std::fs::File</code> verwendet wurde,
+Listing 9-3 verwendet, wobei für <code>T</code> der Typ <code>std::fs::File</code> verwendet wurde,
 wenn die Datei erfolgreich geöffnet wurde, und für <code>E</code> der Typ
 <code>std::io::Error</code>, wenn es Probleme beim Öffnen der Datei gab.</p>
 <p>Wenn du in deinem Code Situationen mit mehreren Struktur- oder
@@ -429,7 +426,7 @@ stattdessen generische Typen verwendest.</p>
 <h3 id="in-methodendefinitionen"><a class="header" href="#in-methodendefinitionen">In Methodendefinitionen</a></h3>
 <p>Wir können Methoden auf Strukturen und Aufzählungen implementieren (wie wir es
 in Kapitel 5 getan haben) und auch generische Typen in ihren Definitionen
-verwenden. Codeblock 10-9 zeigt die Struktur <code>Point&lt;T&gt;</code>, die wir in Codeblock
+verwenden. Listing 10-9 zeigt die Struktur <code>Point&lt;T&gt;</code>, die wir in Listing
 10-6 definiert haben, mit einer darauf implementierten Methode namens <code>x</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">struct Point&lt;T&gt; {
@@ -448,7 +445,7 @@ fn main() {
 
     println!("p.x = {}", p.x());
 }</code></pre>
-<p><span class="caption">Codeblock 10-9: Implementierung einer Methode <code>x</code> auf der
+<p><span class="caption">Listing 10-9: Implementierung einer Methode <code>x</code> auf der
 Struktur <code>Point&lt;T&gt;</code>, die eine Referenz auf das Feld <code>x</code> vom Typ <code>T</code>
 zurückgibt</span></p>
 <p>Hier haben wir eine Methode <code>x</code> auf <code>Point&lt;T&gt;</code> definiert, die eine Referenz auf
@@ -466,7 +463,7 @@ generischen Typ ersetzt.</p>
 <p>Wir können auch Einschränkungen für generische Typen angeben, wenn wir Methoden
 auf dem Typ definieren. Wir könnten zum Beispiel Methoden nur auf
 <code>Point&lt;f32&gt;</code>-Instanzen implementieren und nicht auf <code>Point&lt;T&gt;</code>-Instanzen mit
-einem beliebigen generischen Typ. In Codeblock 10-10 verwenden wir den
+einem beliebigen generischen Typ. In Listing 10-10 verwenden wir den
 konkreten Typ <code>f32</code>, d.h. wir deklarieren keinen Typ hinter <code>impl</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">struct Point&lt;T&gt; {
@@ -491,18 +488,17 @@ konkreten Typ <code>f32</code>, d.h. wir deklarieren keinen Typ hinter <code>imp
 </span><span class="boring">
 </span><span class="boring">    println!("p.x = {}", p.x());
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 10-10: Ein <code>impl</code>-Block, der nur für eine
+<p><span class="caption">Listing 10-10: Ein <code>impl</code>-Block, der nur für eine
 Struktur mit einem bestimmten konkreten Typ für den generischen Typparameter
 <code>T</code> gilt</span></p>
 <p>Dieser Code bedeutet, dass der Typ <code>Point&lt;f32&gt;</code> eine Methode
-<code>distance_from_origin</code> hat und andere Instanzen von <code>Point&lt;T&gt;</code>, bei denen <code>T</code>
-nicht vom Typ <code>f32</code> ist, haben diese Methode nicht. Die Methode misst, wie weit
-unser Punkt vom Punkt mit den Koordinaten (0,0, 0,0) entfernt ist, und
-verwendet mathematische Operationen, die nur für Fließkomma-Typen zur Verfügung
-stehen.</p>
+<code>distance_from_origin</code> hat; andere Instanzen von <code>Point&lt;T&gt;</code>, bei denen <code>T</code> nicht
+vom Typ <code>f32</code> ist, haben diese Methode nicht. Die Methode misst, wie weit unser
+Punkt vom Punkt mit den Koordinaten (0.0, 0.0) entfernt ist, und verwendet
+mathematische Operationen, die nur für Fließkomma-Typen zur Verfügung stehen.</p>
 <p>Generische Typparameter in einer Strukturdefinition sind nicht immer die
 gleichen wie die, die du in denselben Methodensignaturen für diese Struktur
-verwendest. In Codeblock 10-11 werden die generischen Typen <code>X1</code> und <code>Y1</code> für
+verwendest. In Listing 10-11 werden die generischen Typen <code>X1</code> und <code>Y1</code> für
 die Struktur <code>Point</code> und <code>X2</code> und <code>Y2</code> für die Signatur der Methode <code>mixup</code>
 verwendet, um das Beispiel zu verdeutlichen. Die Methode erzeugt eine neue
 <code>Point</code>-Instanz mit dem Wert <code>x</code> aus <code>self</code> (vom Typ <code>X1</code>) und dem Wert <code>y</code> aus
@@ -530,16 +526,15 @@ fn main() {
 
     println!("p3.x = {}, p3.y = {}", p3.x, p3.y);
 }</code></pre>
-<p><span class="caption">Codeblock 10-11: Eine Methode, die generische Typen aus
+<p><span class="caption">Listing 10-11: Eine Methode, die generische Typen aus
 der Definition ihrer Struktur anders verwendet</span></p>
 <p>In <code>main</code> haben wir einen <code>Point</code> definiert, bei dem <code>x</code> den Typ <code>i32</code> (mit dem
-Wert <code>5</code>) und <code>y</code> den Typ <code>f64</code> (mit dem Wert <code>10.4</code>) hat. Die Variable <code>p2</code>
-ist eine Struktur <code>Point</code>, bei der <code>x</code> einen Zeichenkettenanteilstyp (mit dem
-Wert <code>"Hallo"</code>) und <code>y</code> den Typ <code>char</code> (mit dem Wert <code>c</code>) hat. Wenn wir <code>mixup</code>
-auf <code>p1</code> mit dem Argument <code>p2</code> aufrufen, erhalten wir <code>p3</code>, das ein <code>i32</code> für
-<code>x</code> haben wird, weil <code>x</code> von <code>p1</code> kam. Die Variable <code>p3</code> wird ein <code>char</code> für
-<code>y</code> haben, weil <code>y</code> von <code>p2</code> stammt. Der Makroaufruf <code>println!</code> gibt
-<code>p3.x = 5, p3.y = c</code> aus.</p>
+Wert <code>5</code>) und <code>y</code> den Typ <code>f64</code> (mit dem Wert <code>10.4</code>) hat. Die Variable <code>p2</code> ist
+eine Struktur <code>Point</code>, bei der <code>x</code> einen String Slice (mit dem Wert <code>"Hallo"</code>)
+und <code>y</code> den Typ <code>char</code> (mit dem Wert <code>c</code>) hat. Wenn wir <code>mixup</code> auf <code>p1</code> mit dem
+Argument <code>p2</code> aufrufen, erhalten wir <code>p3</code>, das ein <code>i32</code> für <code>x</code> haben wird,
+weil <code>x</code> von <code>p1</code> kam. Die Variable <code>p3</code> wird ein <code>char</code> für <code>y</code> haben, weil <code>y</code>
+von <code>p2</code> stammt. Der Makroaufruf <code>println!</code> gibt <code>p3.x = 5, p3.y = c</code> aus.</p>
 <p>Der Zweck dieses Beispiels ist es, eine Situation zu demonstrieren, in der
 einige generische Parameter mit <code>impl</code> und einige mit der Methodendefinition
 deklariert werden. Hier werden die generischen Parameter <code>X1</code> und <code>Y1</code> nach
@@ -556,7 +551,7 @@ Kompilierzeit. <em>Codeduplizierung</em> (monomorphization) ist der Vorgang der
 Umwandlung von generischem Code in spezifischen Code durch Ausfüllen der
 konkreten Typen, die bei der Kompilierung verwendet werden. Bei diesem Vorgang
 führt der Compiler das Gegenteil der Schritte aus, die wir beim Erstellen der
-generischen Funktion in Codeblock 10-5 angewendet haben: Der Compiler schaut
+generischen Funktion in Listing 10-5 angewendet haben: Der Compiler schaut
 sich alle Stellen an, an denen generischer Code aufgerufen wird, und generiert
 Code für die konkreten Typen, mit denen der generische Code aufgerufen wird.</p>
 <p>Betrachten wir die Funktionsweise bei der Aufzählung <code>Option&lt;T&gt;</code> der
@@ -567,12 +562,12 @@ Standardbibliothek:</p>
 let float = Some(5.0);
 <span class="boring">}</span></code></pre>
 <p>Wenn Rust diesen Code kompiliert, führt es eine Codeduplizierung durch. Während
-dieses Vorgangs liest der Compiler die Werte ein, die in
-<code>Option&lt;T&gt;</code>-Instanzen verwendet wurden, und identifiziert zwei Arten von
-<code>Option&lt;T&gt;</code>: Eine verwendet den Typ <code>i32</code> und die andere <code>f64</code>. Als solches
-erweitert es die allgemeine Definition von <code>Option&lt;T&gt;</code> in zwei auf <code>i32</code> und
-<code>f64</code> spezialisierte Definitionen, wodurch die allgemeine Definition durch die
-spezifische ersetzt wird.</p>
+dieses Vorgangs liest der Compiler die Werte ein, die in <code>Option&lt;T&gt;</code>-Instanzen
+verwendet wurden, und identifiziert zwei Arten von <code>Option&lt;T&gt;</code>: Eine verwendet
+den Typ <code>i32</code> und die andere <code>f64</code>. Deshalb erweitert es die allgemeine
+Definition von <code>Option&lt;T&gt;</code> in zwei auf <code>i32</code> und <code>f64</code> spezialisierte
+Definitionen, wodurch die allgemeine Definition durch die spezifische ersetzt
+wird.</p>
 <p>Die duplizierte Codeversion sieht ähnlich aus wie die folgende (der Compiler
 verwendet andere Namen als die, die wir hier zur Veranschaulichung verwenden):</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Mit Strängen (threads) Programmcode gleichzeitig ausführen - Die Programmiersprache Rust</title>
+        <title>Programmcode mit Threads gleichzeitig ausführen - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,45 +161,45 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="mit-strängen-threads-programmcode-gleichzeitig-ausführen"><a class="header" href="#mit-strängen-threads-programmcode-gleichzeitig-ausführen">Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></h2>
+                        <h2 id="programmcode-mit-threads-gleichzeitig-ausführen"><a class="header" href="#programmcode-mit-threads-gleichzeitig-ausführen">Programmcode mit Threads gleichzeitig ausführen</a></h2>
 <p>In den meisten aktuellen Betriebssystemen wird der Code eines ausgeführten
-Programms in einem <em>Prozess</em> ausgeführt und das Betriebssystem verwaltet
-mehrere Prozesse gleichzeitig. Innerhalb eines Programms kannst du auch
-unabhängige Teile haben, die gleichzeitig laufen. Die Funktionalitäten, die
-diese unabhängigen Teile ausführen, werden <em>Stränge</em> (threads) genannt. Ein
-Webserver könnte beispielsweise mehrere Stränge haben, damit er auf mehrere
-Anfragen gleichzeitig reagieren kann.</p>
-<p>Das Aufteilen der Berechnung in deinem Programm in mehrere Stränge, um mehrere
+Programms in einem <em>Prozess</em> ausgeführt und das Betriebssystem verwaltet mehrere
+Prozesse gleichzeitig. Innerhalb eines Programms kannst du auch unabhängige
+Teile haben, die gleichzeitig laufen. Die Funktionalitäten, die diese
+unabhängigen Teile ausführen, werden <em>Threads</em> (Stränge) genannt. Ein Webserver
+könnte beispielsweise mehrere Threads haben, damit er auf mehrere Anfragen
+gleichzeitig reagieren kann.</p>
+<p>Das Aufteilen der Berechnung in deinem Programm in mehrere Threads, um mehrere
 Aufgaben gleichzeitig auszuführen, kann die Performanz erhöhen, aber es erhöht
-auch die Komplexität. Da Stränge gleichzeitig laufen können, gibt es keine
-inhärente Garantie für die Reihenfolge, in der Teile deines Codes in
-verschiedenen Strängen ausgeführt werden. Dies kann zu Problemen führen wie:</p>
+auch die Komplexität. Da Threads gleichzeitig laufen können, gibt es keine
+Garantie für die Reihenfolge, in der Teile deines Codes in verschiedenen Threads
+ausgeführt werden. Dies kann zu Problemen führen wie:</p>
 <ul>
-<li>Wettlaufsituationen (race conditions), bei denen Stränge auf Daten oder
+<li>Race Conditions, bei denen Threads auf Daten oder
 Ressourcen in einer inkonsistenten Reihenfolge zugreifen.</li>
-<li>Deadlocks, bei denen zwei Stränge auf den jeweils anderen warten, sodass
-beide Stränge nicht fortgesetzt werden können.</li>
+<li>Deadlocks, bei denen zwei Threads auf den jeweils anderen warten, sodass
+beide Threads nicht fortgesetzt werden können.</li>
 <li>Fehler, die nur in bestimmten Situationen auftreten und schwer zu
 reproduzieren und zu beheben sind.</li>
 </ul>
-<p>Rust versucht, die negativen Auswirkungen bei der Verwendung von Strängen zu
-mildern, aber die Programmierung in einem mehrsträngigen Kontext erfordert
-immer noch sorgfältige Überlegungen und benötigt eine andere Code-Struktur als
-bei Programmen, die in einem einzigen Strang laufen.</p>
-<p>Programmiersprachen implementieren Stränge auf verschiedene Weise, und viele
-Betriebssysteme bieten eine API, die die Sprache aufrufen kann, um neue Stränge
+<p>Rust versucht, die negativen Auswirkungen bei der Verwendung von Threads zu
+mildern, aber die Programmierung in einem multi-threaded Kontext erfordert immer
+noch sorgfältige Überlegungen und benötigt eine andere Code-Struktur als bei
+Programmen, die in einem einzigen Thread laufen.</p>
+<p>Programmiersprachen implementieren Threads auf verschiedene Weise, und viele
+Betriebssysteme bieten eine API, die die Sprache aufrufen kann, um neue Threads
 zu erstellen. Die Rust-Standardbibliothek verwendet ein <em>1:1</em>-Modell der
-Strang-Implementierung, bei dem ein Programm einen Betriebssystem-Strang für
-einen Sprach-Strang verwendet. Es gibt Kisten, die andere Strang-Modelle
+Thread-Implementierung, bei dem ein Programm einen Betriebssystem-Thread für
+einen Sprach-Thread verwendet. Es gibt Crates, die andere Thread-Modelle
 implementieren, die andere Kompromisse als das 1:1-Modell eingehen. (Das
 async-System von Rust, das wir uns im nächsten Kapitel ansehen werden, bietet
 ebenfalls einen anderen Ansatz der Nebenläufigkeit.)</p>
-<h3 id="erstellen-eines-neuen-strangs-mit-spawn"><a class="header" href="#erstellen-eines-neuen-strangs-mit-spawn">Erstellen eines neuen Strangs mit <code>spawn</code></a></h3>
-<p>Um einen neuen Strang zu erstellen, rufen wir die Funktion <code>thread::spawn</code> auf
-und übergeben ihr einen Funktionsabschluss (closure) (wir haben in Kapitel 13
-über Funktionsabschlüsse gesprochen), der den Code enthält, den wir im neuen
-Strang ausführen wollen. Das Beispiel in Codeblock 16-1 gibt einen Text im
-Hauptstrang und anderen Text im neuen Strang aus:</p>
+<h3 id="erstellen-eines-neuen-threads-mit-spawn"><a class="header" href="#erstellen-eines-neuen-threads-mit-spawn">Erstellen eines neuen Threads mit <code>spawn</code></a></h3>
+<p>Um einen neuen Thread zu erstellen, rufen wir die Funktion <code>thread::spawn</code> auf
+und übergeben ihr einen Closure (wir haben in Kapitel 13 über Closures
+gesprochen), der den Code enthält, den wir im neuen Thread ausführen wollen. Das
+Beispiel in Listing 16-1 gibt einen Text im Haupt-Thread und anderen Text im
+neuen Thread aus:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::thread;
 use std::time::Duration;
@@ -207,57 +207,57 @@ use std::time::Duration;
 fn main() {
     thread::spawn(|| {
         for i in 1..10 {
-            println!("Hallo Zahl {i} aus dem erzeugten Strang!");
+            println!("Hallo Zahl {i} aus dem erzeugten Thread!");
             thread::sleep(Duration::from_millis(1));
         }
     });
 
     for i in 1..5 {
-        println!("Hallo Zahl {i} aus dem Hauptstrang!");
+        println!("Hallo Zahl {i} aus dem Haupt-Thread!");
         thread::sleep(Duration::from_millis(1));
     }
 }</code></pre>
-<p><span class="caption">Codeblock 16-1: Erstellen eines neuen Strangs, um einen
-Text auszugeben, während der Hauptstrang einen anderen Text ausgibt</span></p>
-<p>Beachte, dass bei der Beendigung des Hauptstrangs eines Rust-Programms alle
-erzeugten Stränge beendet werden, unabhängig davon, ob sie zu Ende gelaufen
-sind oder nicht. Die Ausgabe dieses Programms kann jedes Mal ein wenig anders
-sein, aber sie wird in etwa wie folgt aussehen:</p>
-<pre><code class="language-text">Hallo Zahl 1 aus dem Hauptstrang!
-Hallo Zahl 1 aus dem erzeugten Strang!
-Hallo Zahl 2 aus dem Hauptstrang!
-Hallo Zahl 2 aus dem erzeugten Strang!
-Hallo Zahl 3 aus dem Hauptstrang!
-Hallo Zahl 3 aus dem erzeugten Strang!
-Hallo Zahl 4 aus dem Hauptstrang!
-Hallo Zahl 4 aus dem erzeugten Strang!
-Hallo Zahl 5 aus dem erzeugten Strang!
+<p><span class="caption">Listing 16-1: Erstellen eines neuen Threads, um einen
+Text auszugeben, während der Haupt-Thread einen anderen Text ausgibt</span></p>
+<p>Beachte, dass bei der Beendigung des Haupt-Threads eines Rust-Programms alle
+erzeugten Threads beendet werden, unabhängig davon, ob sie zu Ende gelaufen sind
+oder nicht. Die Ausgabe dieses Programms kann jedes Mal ein wenig anders sein,
+aber sie wird in etwa wie folgt aussehen:</p>
+<pre><code class="language-text">Hallo Zahl 1 aus dem Haupt-Thread!
+Hallo Zahl 1 aus dem erzeugten Thread!
+Hallo Zahl 2 aus dem Haupt-Thread!
+Hallo Zahl 2 aus dem erzeugten Thread!
+Hallo Zahl 3 aus dem Haupt-Thread!
+Hallo Zahl 3 aus dem erzeugten Thread!
+Hallo Zahl 4 aus dem Haupt-Thread!
+Hallo Zahl 4 aus dem erzeugten Thread!
+Hallo Zahl 5 aus dem erzeugten Thread!
 </code></pre>
-<p>Aufrufe von <code>thread::sleep</code> zwingen einen Strang, seine Ausführung für eine
-kurze Zeit anzuhalten, sodass ein anderer Strang laufen kann. Die Stränge
-werden sich wahrscheinlich abwechseln, aber das ist nicht garantiert: Es hängt
-davon ab, wie dein Betriebssystem die Stränge organisiert (schedule). In diesem
-Lauf hat der Hauptstrang zuerst etwas ausgegeben, obwohl sich die
-Ausgabeanweisung des erzeugten Strangs weiter oben im Code befindet. Und obwohl
-wir dem erzeugten Strang gesagt haben, er solle solange etwas ausgeben, bis <code>i</code>
-den Wert <code>9</code> hat, kam er nur bis <code>5</code>, als sich der Hauptstrang beendet hat.</p>
-<p>Wenn du diesen Code ausführst und nur Ausgaben aus dem Hauptstrang siehst oder
+<p>Aufrufe von <code>thread::sleep</code> zwingen einen Thread, seine Ausführung für eine
+kurze Zeit anzuhalten, sodass ein anderer Thread laufen kann. Die Threads werden
+sich wahrscheinlich abwechseln, aber das ist nicht garantiert: Es hängt davon
+ab, wie dein Betriebssystem die Threads organisiert (schedule). In diesem Lauf
+hat der Haupt-Thread zuerst etwas ausgegeben, obwohl sich die Ausgabeanweisung
+des erzeugten Threads weiter oben im Code befindet. Und obwohl wir dem erzeugten
+Thread gesagt haben, er solle solange etwas ausgeben, bis <code>i</code> den Wert <code>9</code> hat,
+kam er nur bis <code>5</code>, als sich der Haupt-Thread beendet hat.</p>
+<p>Wenn du diesen Code ausführst und nur Ausgaben aus dem Haupt-Thread siehst oder
 keine Überschneidungen feststellst, versuche, die Zahlen in den Bereichen zu
-erhöhen, um dem Betriebssystem mehr Gelegenheit zu geben, zwischen den Strängen
+erhöhen, um dem Betriebssystem mehr Gelegenheit zu geben, zwischen den Threads
 zu wechseln.</p>
-<h3 id="warten-auf-das-ende-aller-stränge"><a class="header" href="#warten-auf-das-ende-aller-stränge">Warten auf das Ende aller Stränge</a></h3>
-<p>Der Code in Codeblock 16-1 beendet nicht nur den erzeugten Strang meist
-vorzeitig, weil der Hauptstrangs endet, sondern weil es keine Garantie für die
-Reihenfolge gibt, in der Stränge laufen. Wir können auch nicht garantieren,
-dass der erzeugte Strang überhaupt zum Laufen kommt!</p>
-<p>Wir können das Problem, dass der erzeugte Strang nicht läuft oder vorzeitig
+<h3 id="warten-auf-das-ende-aller-threads"><a class="header" href="#warten-auf-das-ende-aller-threads">Warten auf das Ende aller Threads</a></h3>
+<p>Der Code in Listing 16-1 beendet nicht nur den erzeugten Thread meist vorzeitig,
+weil der Haupt-Thread endet, sondern weil es keine Garantie für die Reihenfolge
+gibt, in der Threads laufen. Wir können auch nicht garantieren, dass der
+erzeugte Thread überhaupt zum Laufen kommt!</p>
+<p>Wir können das Problem, dass der erzeugte Thread nicht läuft oder vorzeitig
 beendet wird, beheben, indem wir den Rückgabewert von <code>thread::spawn</code> in einer
-Variable speichern. Der Rückgabetyp von <code>thread::spawn</code> ist <code>JoinHandle&lt;T&gt;</code>.
-Ein <code>JoinHandle&lt;T&gt;</code> ist ein aneigenbarer (owned) Wert, der, wenn wir die
-Methode <code>join</code> darauf aufrufen, darauf wartet, bis sich sein Strang beendet.
-Codeblock 16-2 zeigt, wie der <code>JoinHandle&lt;T&gt;</code> des Strangs, den wir in Codeblock
-16-1 erstellt haben, verwendet und wie <code>join</code> aufgerufen wird, um
-sicherzustellen, dass der erzeugte Strang beendet wird, bevor <code>main</code> endet:</p>
+Variable speichern. Der Rückgabetyp von <code>thread::spawn</code> ist <code>JoinHandle&lt;T&gt;</code>. Ein
+<code>JoinHandle&lt;T&gt;</code> ist ein besitzender (owned) Wert, der, wenn wir die Methode
+<code>join</code> darauf aufrufen, darauf wartet, bis sich sein Thread beendet. Listing
+16-2 zeigt, wie der <code>JoinHandle&lt;T&gt;</code> des Threads, den wir in Listing 16-1
+erstellt haben, verwendet und wie <code>join</code> aufgerufen wird, um sicherzustellen,
+dass der erzeugte Thread beendet wird, bevor <code>main</code> endet:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::thread;
 use std::time::Duration;
@@ -265,44 +265,44 @@ use std::time::Duration;
 fn main() {
     let handle = thread::spawn(|| {
         for i in 1..10 {
-            println!("Hallo Zahl {i} aus dem erzeugten Strang!");
+            println!("Hallo Zahl {i} aus dem erzeugten Thread!");
             thread::sleep(Duration::from_millis(1));
         }
     });
 
     for i in 1..5 {
-        println!("Hallo Zahl {i} aus dem Hauptstrang!");
+        println!("Hallo Zahl {i} aus dem Haupt-Thread!");
         thread::sleep(Duration::from_millis(1));
     }
 
     handle.join().unwrap();
 }</code></pre>
-<p><span class="caption">Codeblock 16-2: Speichern des <code>JoinHandle&lt;T&gt;</code> von
-<code>thread::spawn</code>, um zu garantieren, dass der Strang bis zum Ende ausgeführt
+<p><span class="caption">Listing 16-2: Speichern des <code>JoinHandle&lt;T&gt;</code> von
+<code>thread::spawn</code>, um zu garantieren, dass der Thread bis zum Ende ausgeführt
 wird</span></p>
-<p>Aufrufen von <code>join</code> auf <code>JoinHandle</code> blockiert den gerade laufenden Strang, bis
-der durch <code>JoinHandle</code> repräsentierte Strang beendet ist. <em>Blockieren</em> eines
-Strangs bedeutet, dass der Strang daran gehindert wird, Arbeit auszuführen oder
+<p>Aufrufen von <code>join</code> auf <code>JoinHandle</code> blockiert den gerade laufenden Thread, bis
+der durch <code>JoinHandle</code> repräsentierte Thread beendet ist. <em>Blockieren</em> eines
+Threads bedeutet, dass der Thread daran gehindert wird, Arbeit auszuführen oder
 sich zu beenden. Da wir den Aufruf von <code>join</code> nach der <code>for</code>-Schleife im
-Hauptstrang gesetzt haben, sollte das Ausführen von Codeblock 16-2 eine Ausgabe
+Haupt-Thread gesetzt haben, sollte das Ausführen von Listing 16-2 eine Ausgabe
 wie folgt erzeugen:</p>
-<pre><code class="language-text">Hallo Zahl 1 aus dem Hauptstrang!
-Hallo Zahl 2 aus dem Hauptstrang!
-Hallo Zahl 1 aus dem erzeugten Strang!
-Hallo Zahl 3 aus dem Hauptstrang!
-Hallo Zahl 2 aus dem erzeugten Strang!
-Hallo Zahl 4 aus dem Hauptstrang!
-Hallo Zahl 3 aus dem erzeugten Strang!
-Hallo Zahl 4 aus dem erzeugten Strang!
-Hallo Zahl 5 aus dem erzeugten Strang!
-Hallo Zahl 6 aus dem erzeugten Strang!
-Hallo Zahl 7 aus dem erzeugten Strang!
-Hallo Zahl 8 aus dem erzeugten Strang!
-Hallo Zahl 9 aus dem erzeugten Strang!
+<pre><code class="language-text">Hallo Zahl 1 aus dem Haupt-Thread!
+Hallo Zahl 2 aus dem Haupt-Thread!
+Hallo Zahl 1 aus dem erzeugten Thread!
+Hallo Zahl 3 aus dem Haupt-Thread!
+Hallo Zahl 2 aus dem erzeugten Thread!
+Hallo Zahl 4 aus dem Haupt-Thread!
+Hallo Zahl 3 aus dem erzeugten Thread!
+Hallo Zahl 4 aus dem erzeugten Thread!
+Hallo Zahl 5 aus dem erzeugten Thread!
+Hallo Zahl 6 aus dem erzeugten Thread!
+Hallo Zahl 7 aus dem erzeugten Thread!
+Hallo Zahl 8 aus dem erzeugten Thread!
+Hallo Zahl 9 aus dem erzeugten Thread!
 </code></pre>
-<p>Die beiden Stränge setzen abwechselnd fort, aber der Hauptstrang wartet wegen
-des Aufrufs von <code>handle.join()</code> und endet nicht, bis der erzeugte Strang
-beendet ist.</p>
+<p>Die beiden Threads setzen die Ausführung abwechselnd fort, aber der Haupt-Thread
+wartet wegen des Aufrufs von <code>handle.join()</code> und endet nicht, bis der erzeugte
+Thread beendet ist.</p>
 <p>Aber lass uns sehen, was passiert, wenn wir stattdessen <code>handle.join()</code> vor die
 <code>for</code>-Schleife in <code>main</code> schieben, etwa so:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -312,7 +312,7 @@ use std::time::Duration;
 fn main() {
     let handle = thread::spawn(|| {
         for i in 1..10 {
-            println!("Hallo Zahl {i} aus dem erzeugten Strang!");
+            println!("Hallo Zahl {i} aus dem erzeugten Thread!");
             thread::sleep(Duration::from_millis(1));
         }
     });
@@ -320,46 +320,44 @@ fn main() {
     handle.join().unwrap();
 
     for i in 1..5 {
-        println!("Hallo Zahl {i} aus dem Hauptstrang!");
+        println!("Hallo Zahl {i} aus dem Haupt-Thread!");
         thread::sleep(Duration::from_millis(1));
     }
 }</code></pre>
-<p>Der Hauptstrang wartet auf das Ende des erzeugten Strangs und führt dann seine
+<p>Der Haupt-Thread wartet auf das Ende des erzeugten Threads und führt dann seine
 <code>for</code>-Schleife aus, sodass die Ausgabe nicht mehr überlappend ist, wie hier
 gezeigt:</p>
-<pre><code class="language-text">Hallo Zahl 1 aus dem erzeugten Strang!
-Hallo Zahl 2 aus dem erzeugten Strang!
-Hallo Zahl 3 aus dem erzeugten Strang!
-Hallo Zahl 4 aus dem erzeugten Strang!
-Hallo Zahl 5 aus dem erzeugten Strang!
-Hallo Zahl 6 aus dem erzeugten Strang!
-Hallo Zahl 7 aus dem erzeugten Strang!
-Hallo Zahl 8 aus dem erzeugten Strang!
-Hallo Zahl 9 aus dem erzeugten Strang!
-Hallo Zahl 1 aus dem Hauptstrang!
-Hallo Zahl 2 aus dem Hauptstrang!
-Hallo Zahl 3 aus dem Hauptstrang!
-Hallo Zahl 4 aus dem Hauptstrang!
+<pre><code class="language-text">Hallo Zahl 1 aus dem erzeugten Thread!
+Hallo Zahl 2 aus dem erzeugten Thread!
+Hallo Zahl 3 aus dem erzeugten Thread!
+Hallo Zahl 4 aus dem erzeugten Thread!
+Hallo Zahl 5 aus dem erzeugten Thread!
+Hallo Zahl 6 aus dem erzeugten Thread!
+Hallo Zahl 7 aus dem erzeugten Thread!
+Hallo Zahl 8 aus dem erzeugten Thread!
+Hallo Zahl 9 aus dem erzeugten Thread!
+Hallo Zahl 1 aus dem Haupt-Thread!
+Hallo Zahl 2 aus dem Haupt-Thread!
+Hallo Zahl 3 aus dem Haupt-Thread!
+Hallo Zahl 4 aus dem Haupt-Thread!
 </code></pre>
 <p>Kleine Details, z.B. wo <code>join</code> aufgerufen wird, können beeinflussen, ob deine
-Stränge zur gleichen Zeit laufen oder nicht.</p>
-<h3 id="verwenden-von-move-funktionsabschlüssen-mit-strängen"><a class="header" href="#verwenden-von-move-funktionsabschlüssen-mit-strängen">Verwenden von <code>move</code>-Funktionsabschlüssen mit Strängen</a></h3>
-<p>Wir werden oft das Schlüsselwort <code>move</code> mit Funktionsabschlüssen verwenden, die
-an <code>thread::spawn</code> übergeben werden, weil der Funktionsabschluss dann die
-Eigentümerschaft an den Werten, die sie benutzt, von der Umgebung übernimmt und
-damit die Eigentümerschaft an diesen Werten von einem Strang auf einen anderen
-überträgt. In <a href="ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-der-eigentümerschaft">„Erfassen von Referenzen oder Verschieben der
-Eigentümerschaft“</a> in Kapitel 13 haben wir <code>move</code> im Zusammenhang mit
-Funktionsabschlüssen besprochen. Jetzt werden wir uns mehr auf die Interaktion
-zwischen <code>move</code> und <code>thread::spawn</code> konzentrieren.</p>
-<p>Beachte in Codeblock 16-1, dass der Funktionsabschluss, den wir an
-<code>thread::spawn</code> übergeben, keine Argumente erfordert: Wir verwenden keine Daten
-aus dem Hauptstrang im Code des erzeugten Strangs. Um Daten aus dem Hauptstrang
-im erzeugten Strang zu verwenden, muss der Funktionsabschluss des erzeugten
-Strangs die benötigten Werte erfassen. Codeblock 16-3 zeigt einen Versuch,
-einen Vektor im Hauptstrang zu erstellen und ihn im erzeugten Strang zu
-verwenden. Dies wird jedoch noch nicht funktionieren, wie du gleich sehen
-wirst.</p>
+Threads zur gleichen Zeit laufen oder nicht.</p>
+<h3 id="verwenden-von-move-closures-mit-threads"><a class="header" href="#verwenden-von-move-closures-mit-threads">Verwenden von <code>move</code>-Closures mit Threads</a></h3>
+<p>Wir werden oft das Schlüsselwort <code>move</code> mit Closures verwenden, die an
+<code>thread::spawn</code> übergeben werden, weil der Closure dann das Eigentum an den
+Werten, die sie benutzt, von der Umgebung übernimmt und damit das Eigentum an
+diesen Werten von einem Thread auf einen anderen überträgt. In <a href="ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-des-eigentums">„Erfassen von
+Referenzen oder Verschieben des Eigentums“</a> in Kapitel 13 haben wir
+<code>move</code> im Zusammenhang mit Closures besprochen. Jetzt werden wir uns mehr auf
+die Interaktion zwischen <code>move</code> und <code>thread::spawn</code> konzentrieren.</p>
+<p>Beachte in Listing 16-1, dass der Closure, den wir an <code>thread::spawn</code>
+übergeben, keine Argumente erfordert: Wir verwenden keine Daten aus dem
+Haupt-Thread im Code des erzeugten Threads. Um Daten aus dem Haupt-Thread im
+erzeugten Thread zu verwenden, muss der Closure des erzeugten Threads die
+benötigten Werte erfassen. Listing 16-3 zeigt einen Versuch, einen Vektor im
+Haupt-Thread zu erstellen und ihn im erzeugten Thread zu verwenden. Dies wird
+jedoch noch nicht funktionieren, wie du gleich sehen wirst.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">use std::thread;
 
@@ -372,13 +370,12 @@ fn main() {
 
     handle.join().unwrap();
 }</code></pre>
-<p><span class="caption">Codeblock 16-3: Versuch, einen im Hauptstrang erzeugten
-Vektor in einem anderen Strang zu verwenden</span></p>
-<p>Der Funktionsabschluss verwendet <code>v</code>, sodass er <code>v</code> erfasst und zum Teil der
-Umgebung des Funktionsabschlusses macht. Da <code>thread::spawn</code> diesen
-Funktionsabschluss in einem neuen Strang ausführt, sollten wir in der Lage
-sein, auf <code>v</code> innerhalb dieses neuen Strangs zuzugreifen. Aber wenn wir dieses
-Beispiel kompilieren, erhalten wir den folgenden Fehler:</p>
+<p><span class="caption">Listing 16-3: Versuch, einen im Haupt-Thread erzeugten
+Vektor in einem anderen Thread zu verwenden</span></p>
+<p>Der Closure verwendet <code>v</code>, sodass <code>v</code> Teil der Umgebung des Closures wird. Da
+<code>thread::spawn</code> diesen Closure in einem neuen Thread ausführt, sollten wir in
+der Lage sein, auf <code>v</code> innerhalb dieses neuen Threads zuzugreifen. Aber wenn wir
+dieses Beispiel kompilieren, erhalten wir den folgenden Fehler:</p>
 <pre><code class="language-console">$ cargo run
    Compiling threads v0.1.0 (file:///projects/threads)
 error[E0373]: closure may outlive the current function, but it borrows `v`, which is owned by the current function
@@ -406,10 +403,10 @@ For more information about this error, try `rustc --explain E0373`.
 error: could not compile `playground` (bin "playground") due to 1 previous error
 </code></pre>
 <p>Rust <em>folgert</em>, wie <code>v</code> zu erfassen ist, und weil <code>println!</code> nur eine Referenz
-auf <code>v</code> benötigt, versucht der Funktionsabschluss, <code>v</code> auszuleihen. Es gibt
-jedoch ein Problem: Rust kann nicht sagen, wie lange der erzeugte Strang laufen
-wird, sodass es nicht weiß, ob die Referenz auf <code>v</code> immer gültig sein wird.</p>
-<p>Codeblock 16-4 zeigt ein Szenario, das eine Referenz auf <code>v</code> hat, die eher
+auf <code>v</code> benötigt, versucht der Closure, <code>v</code> auszuleihen. Es gibt jedoch ein
+Problem: Rust kann nicht sagen, wie lange der erzeugte Thread laufen wird,
+sodass es nicht weiß, ob die Referenz auf <code>v</code> immer gültig sein wird.</p>
+<p>Listing 16-4 zeigt ein Szenario, das eine Referenz auf <code>v</code> hat, die eher
 nicht gültig ist:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">use std::thread;
@@ -425,28 +422,28 @@ fn main() {
 
     handle.join().unwrap();
 }</code></pre>
-<p><span class="caption">Codeblock 16-4: Ein Strang mit einem Funktionsabschluss,
-der versucht, eine Referenz auf <code>v</code> vom Hauptstrang zu erfassen, der <code>v</code>
+<p><span class="caption">Listing 16-4: Ein Thread mit einem Closure, der
+versucht, eine Referenz auf <code>v</code> vom Haupt-Thread zu erfassen, der <code>v</code>
 aufräumt</span></p>
 <p>Wenn Rust uns erlauben würde, diesen Code auszuführen, bestünde die
-Möglichkeit, dass der erzeugte Strang sofort in den Hintergrund gestellt wird,
-ohne überhaupt zu laufen. Der erzeugte Strang hat eine Referenz auf <code>v</code> im
-Inneren, aber der Hauptstrang räumt <code>v</code> sofort auf, indem er die Funktion
+Möglichkeit, dass der erzeugte Thread sofort in den Hintergrund gestellt wird,
+ohne überhaupt zu laufen. Der erzeugte Thread hat eine Referenz auf <code>v</code> im
+Inneren, aber der Haupt-Thread räumt <code>v</code> sofort auf, indem er die Funktion
 <code>drop</code> benutzt, die wir in Kapitel 15 besprochen haben. Wenn der erzeugte
-Strang dann mit der Ausführung beginnt, ist <code>v</code> nicht mehr gültig, sodass eine
+Thread dann mit der Ausführung beginnt, ist <code>v</code> nicht mehr gültig, sodass eine
 Referenz darauf ebenfalls ungültig ist. Oh nein!</p>
-<p>Um den Kompilierfehler in Codeblock 16-3 zu beheben, können wir die Hinweise
-der Fehlermeldung verwenden:</p>
+<p>Um den Compilerfehler in Listing 16-3 zu beheben, können wir die Hinweise der
+Fehlermeldung verwenden:</p>
 <pre><code class="language-text">help: to force the closure to take ownership of `v` (and any other referenced variables), use the `move` keyword
   |
 6 |     let handle = thread::spawn(move || {
   |                                ++++
 </code></pre>
-<p>Indem wir vor dem Funktionsabschluss das Schlüsselwort <code>move</code> hinzufügen,
-zwingen wir den Funktionsabschluss dazu, die Eigentümerschaft der Werte zu
-übernehmen, die er benutzt, anstatt zuzulassen, dass Rust daraus ableitet, dass
-er sich die Werte ausleihen sollte. Die in Codeblock 16-5 gezeigte Änderung an
-Codeblock 16-3 wird wie von uns beabsichtigt kompilieren und ausgeführt.</p>
+<p>Indem wir vor dem Closure das Schlüsselwort <code>move</code> hinzufügen, zwingen wir den
+Closure dazu, das Eigentum an den Werten zu übernehmen, die er benutzt, anstatt
+zuzulassen, dass Rust daraus ableitet, dass er sich die Werte ausleihen sollte.
+Die in Listing 16-5 gezeigte Änderung an Listing 16-3 wird wie von uns
+beabsichtigt kompilieren und ausgeführt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::thread;
 
@@ -459,17 +456,16 @@ fn main() {
 
     handle.join().unwrap();
 }</code></pre>
-<p><span class="caption">Codeblock 16-5: Durch Verwenden des Schlüsselwortes
-<code>move</code> zwigen wir den Funktionsabschluss, die Eigentümerschaft der von ihm
-verwendeten Werte zu übernehmen</span></p>
-<p>Wir könnten versuchen, den Code in Codeblock 16-4 auf diesselbe Weise zu
-reparieren, wo der Hauptstrang <code>drop</code> aufruft, während wir einen
-<code>move</code>-Funktionsabschluss verwenden. Diese Lösung wird jedoch nicht
-funktionieren, weil das, was Codeblock 16-4 versucht, aus einem anderen Grund
-nicht erlaubt ist. Wenn wir dem Funktionsabschluss <code>move</code> hinzufügen, würden
-wir <code>v</code> in die Umgebung des Funktionsabschlusses verschieben, und wir könnten
-im Hauptstrang nicht mehr <code>drop</code> darauf aufrufen. Wir würden stattdessen diesen
-Kompilierfehler erhalten:</p>
+<p><span class="caption">Listing 16-5: Durch Verwenden des Schlüsselwortes <code>move</code>
+zwingen wir den Closure, das Eigentum an den von ihm verwendeten Werten zu
+übernehmen</span></p>
+<p>Wir könnten versuchen, den Code in Listing 16-4 auf dieselbe Weise zu
+reparieren, wo der Haupt-Thread <code>drop</code> aufruft, während wir einen <code>move</code>-Closure
+verwenden. Diese Lösung wird jedoch nicht funktionieren, weil das, was Listing
+16-4 versucht, aus einem anderen Grund nicht erlaubt ist. Wenn wir dem Closure
+<code>move</code> hinzufügen, würden wir <code>v</code> in die Umgebung des Closures verschieben, und
+wir könnten im Haupt-Thread nicht mehr <code>drop</code> darauf aufrufen. Wir würden
+stattdessen diesen Compilerfehler erhalten:</p>
 <pre><code class="language-console">$ cargo run
    Compiling threads v0.1.0 (file:///projects/threads)
 error[E0382]: use of moved value: `v`
@@ -497,18 +493,18 @@ For more information about this error, try `rustc --explain E0382`.
 error: could not compile `threads` (bin "threads") due to 1 previous error
 </code></pre>
 <p>Die Eigentumsregeln von Rust haben uns wieder einmal gerettet! Wir haben einen
-Fehler im Code in Codeblock 16-3 erhalten, weil Rust konservativ war und nur
-<code>v</code> für den Strang auslieh, was bedeutete, dass der Hauptstrang theoretisch die
-Referenz des erzeugte Strangs ungültig machen konnte. Indem wir Rust anweisen,
-die Eigentümerschaft von <code>v</code> in den erzeugte Strang zu verlagern, garantieren
-wir Rust, dass der Hauptstrang <code>v</code> nicht mehr benutzen wird. Wenn wir Codeblock
-16-4 auf die gleiche Weise ändern, verletzen wir die Eigentumsregeln, wenn wir
-versuchen, <code>v</code> im Hauptstrang zu benutzen. Das Schlüsselwort <code>move</code> setzt Rusts
-konservative Standardausleihe außer Kraft; es lässt uns nicht gegen die
+Fehler im Code in Listing 16-3 erhalten, weil Rust konservativ war und nur <code>v</code>
+für den Thread auslieh, was bedeutete, dass der Haupt-Thread theoretisch die
+Referenz des erzeugten Threads ungültig machen konnte. Indem wir Rust anweisen,
+das Eigentum an <code>v</code> in den erzeugten Thread zu verschieben, garantieren wir
+Rust, dass der Haupt-Thread <code>v</code> nicht mehr benutzen wird. Wenn wir Listing 16-4
+auf die gleiche Weise ändern, verletzen wir die Eigentumsregeln, wenn wir
+versuchen, <code>v</code> im Haupt-Thread zu benutzen. Das Schlüsselwort <code>move</code> setzt Rusts
+konservativen Borrowing-Standard außer Kraft; es lässt uns nicht gegen die
 Eigentumsregeln verstoßen.</p>
-<p>Nachdem wir uns nun damit beschäftigt haben, was Stränge sind und welche
-Methoden die Strang-API bietet, wollen wir uns nun einige Situationen ansehen,
-in denen wir Stränge verwenden können.</p>
+<p>Nachdem wir uns nun damit beschäftigt haben, was Threads sind und welche
+Methoden die Thread-API bietet, wollen wir uns nun einige Situationen ansehen,
+in denen wir Threads verwenden können.</p>
 
                     </main>
 

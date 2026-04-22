@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Pakete (packages) und Kisten (crates) - Die Programmiersprache Rust</title>
+        <title>Pakete und Crates - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,44 +161,43 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="pakete-packages-und-kisten-crates"><a class="header" href="#pakete-packages-und-kisten-crates">Pakete (packages) und Kisten (crates)</a></h2>
+                        <h2 id="pakete-und-crates"><a class="header" href="#pakete-und-crates">Pakete und Crates</a></h2>
 <p>Die ersten Teile des Modulsystems, die wir behandeln werden, sind Pakete und
-Kisten.</p>
-<p>Eine <em>Kiste</em> ist die kleinste Menge an Code, die der Rust-Compiler zu einem
-bestimmten Zeitpunkt berücksichtigt. Selbst wenn du <code>rustc</code> anstelle von
-<code>cargo</code> ausführst und eine einzelne Quellcodedatei übergibst (wie wir es
-bereits im Abschnitt <a href="ch01-02-hello-world.html#grundlagen-eines-rust-programms">„Grundlagen eines Rust-Programms“</a> in Kapitel 1
-getan haben), betrachtet der Compiler diese Datei als eine Kiste. Kisten können
-Module enthalten, und die Module können in anderen Dateien definiert sein, die
-mit der Kiste kompiliert werden, wie wir in den nächsten Abschnitten sehen
-werden.</p>
-<p>Es gibt zwei Arten von Kisten: Binäre Kisten und Bibliothekskisten. <em>Binäre
-Kisten</em> (binary crates) sind Programme, die du zu einer ausführbaren Datei
-kompilieren und starten kannst, z.B. ein Befehlszeilenprogramm
-oder einen Server. Jede muss eine Funktion namens <code>main</code> haben, die definiert,
-was passiert, wenn die ausführbare Datei läuft. Alle Kisten, die wir bisher
-erstellt haben, waren binäre Kisten.</p>
-<p><em>Bibliothekskisten</em> (library crates) haben keine Funktion <code>main</code> und sie werden
+Crates.</p>
+<p>Eine <em>Crate</em> (Kiste) ist die kleinste Menge an Code, die der Rust-Compiler zu
+einem bestimmten Zeitpunkt berücksichtigt. Selbst wenn du <code>rustc</code> anstelle von
+<code>cargo</code> ausführst und eine einzelne Quellcodedatei übergibst (wie wir es bereits
+im Abschnitt <a href="ch01-02-hello-world.html#grundlagen-eines-rust-programms">„Grundlagen eines Rust-Programms“</a> in Kapitel 1 getan
+haben), betrachtet der Compiler diese Datei als eine Crate. Crates können Module
+enthalten, und die Module können in anderen Dateien definiert sein, die mit der
+Crate kompiliert werden, wie wir in den nächsten Abschnitten sehen werden.</p>
+<p>Es gibt zwei Arten von Crates: Binäre Crates und Bibliotheks-Crates. <em>Binäre
+Crates</em> (binary crates) sind Programme, die du zu einer ausführbaren Datei
+kompilieren und starten kannst, z.B. ein Befehlszeilenprogramm oder einen
+Server. Diese müssen eine Funktion namens <code>main</code> haben, die definiert, was
+passiert, wenn die ausführbare Datei läuft. Alle Crates, die wir bisher erstellt
+haben, waren binäre Crates.</p>
+<p><em>Bibliotheks-Crates</em> (library crates) haben keine Funktion <code>main</code> und sie werden
 nicht zu einer ausführbaren Datei kompiliert. Stattdessen definieren sie
 Funktionalität, die für mehrere Projekte gemeinsam genutzt werden soll. Zum
-Beispiel bietet die Kiste <code>rand</code>, die wir in <a href="ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl">Kapitel 2</a> verwendet haben,
-Funktionalität, die Zufallszahlen erzeugt. Wenn Rust-Entwickler „Kiste“ sagen,
-meinen sie meistens „Bibliothekskiste“, und sie verwenden „Kiste“ austauschbar
+Beispiel bietet die Crate <code>rand</code>, die wir in <a href="ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl">Kapitel 2</a> verwendet haben,
+Funktionalität, die Zufallszahlen erzeugt. Wenn Rust-Entwickler „Crate“ sagen,
+meinen sie meistens „Bibliotheks-Crates“, und sie verwenden „Crate“ austauschbar
 mit dem allgemeinen Programmierkonzept einer „Bibliothek“.</p>
-<p>Die <em>Kistenwurzel</em> ist eine Quelldatei, von der der Rust-Compiler ausgeht und
-die das Wurzel-Modul deiner Kiste bildet (Module werden in <a href="ch07-02-defining-modules-to-control-scope-and-privacy.html">„Kontrollumfang und
-Datenschutz mit Modulen“</a> ausführlich erklärt).</p>
-<p>Ein <em>Paket</em> ist ein Bündel von einer oder mehreren Kisten, die eine Reihe von
+<p>Die <em>Crate-Wurzel</em> ist eine Quelldatei, von der der Rust-Compiler ausgeht und
+die das Wurzel-Modul deiner Crate bildet (Module werden in <a href="ch07-02-defining-modules-to-control-scope-and-privacy.html">„Gültigkeitsbereich
+und Sichtbarkeit mit Modulen steuern“</a> ausführlich erklärt).</p>
+<p>Ein <em>Paket</em> ist ein Bündel von einer oder mehreren Crates, die eine Reihe von
 Funktionalitäten bereitstellen. Ein Paket enthält eine Datei <em>Cargo.toml</em>, die
-beschreibt, wie diese Kisten zu bauen sind. Cargo ist eigentlich ein Paket, das
-die Binärkiste für das Kommandozeilenwerkzeug enthält, das du zum Erstellen
+beschreibt, wie diese Crates zu bauen sind. Cargo ist eigentlich ein Paket, das
+die binäre Crate für das Kommandozeilenwerkzeug enthält, das du zum Erstellen
 deines Codes verwendet hast. Das Cargo-Paket enthält auch eine
-Bibliothekskiste, von der die binäre Kiste abhängt. Andere Projekte können von
-der Bibliothekskiste Cargo abhängen, um die gleiche Logik wie das
+Bibliotheks-Crate, von der die binäre Crate abhängt. Andere Projekte können von
+der Bibliotheks-Crate Cargo abhängen, um die gleiche Logik wie das
 Befehlszeilenwerkzeug Cargo zu verwenden.</p>
-<p>Ein Paket kann beliebig viele Binärkisten enthalten, aber höchstens eine
-Bibliothekskiste. Ein Paket muss mindestens eine Kiste enthalten, unabhängig
-davon, ob es sich um eine Bibliothek oder eine binäre Kiste handelt.</p>
+<p>Ein Paket kann beliebig viele binäre Crates enthalten, aber höchstens eine
+Bibliotheks-Crate. Ein Paket muss mindestens eine Crate enthalten, unabhängig
+davon, ob es sich um eine Bibliotheks-Crate oder eine binäre Crate handelt.</p>
 <p>Lass uns durchgehen, was passiert, wenn wir ein Paket erstellen. Zuerst geben
 wir den Befehl <code>cargo new my-project</code> ein:</p>
 <pre><code class="language-console">$ cargo new my-project
@@ -213,18 +212,18 @@ main.rs
 sehen, was Cargo erzeugt. Im Projektverzeichnis <em>my-project</em> gibt es eine Datei
 <em>Cargo.toml</em>, die uns ein Paket gibt. Es gibt auch ein Verzeichnis <em>src</em>, das
 <em>main.rs</em> enthält. Öffne <em>Cargo.toml</em> in deinem Texteditor und beachte, dass
-<em>src/main.rs</em> nicht erwähnt wird. Cargo folgt der Konvention, dass
-<em>src/main.rs</em> die Kistenwurzel einer binären Kiste mit dem gleichen Namen wie
-das Paket ist. Ebenso weiß Cargo, dass, wenn das Paketverzeichnis <em>src/lib.rs</em>
-enthält, das Paket eine Bibliothekskiste mit dem gleichen Namen wie das Paket
-enthält, und <em>src/lib.rs</em> deren Kistenstamm ist. Cargo übergibt die
-Kistenwurzel-Dateien an <code>rustc</code>, um die Bibliothek oder Binärdatei zu bauen.</p>
+<em>src/main.rs</em> nicht erwähnt wird. Cargo folgt der Konvention, dass <em>src/main.rs</em>
+die Crate-Wurzel einer binären Crate mit dem gleichen Namen wie das Paket ist.
+Ebenso weiß Cargo: Wenn das Paketverzeichnis <em>src/lib.rs</em> enthält, enthält das
+Paket eine Bibliotheks-Crate mit dem gleichen Namen wie das Paket, und
+<em>src/lib.rs</em> ist deren Crate-Wurzel. Cargo übergibt die Crate-Wurzeldateien an
+<code>rustc</code>, um die Bibliothek oder Binärdatei zu bauen.</p>
 <p>Hier haben wir ein Paket, das nur <em>src/main.rs</em> enthält, d.h. es enthält nur
-eine binäre Kiste mit dem Namen <code>my-project</code>. Wenn ein Paket <em>src/main.rs</em> und
-<em>src/lib.rs</em> enthält, hat es zwei Kisten: Eine binäre und eine Bibliothek,
-beide mit dem gleichen Namen wie das Paket. Ein Paket kann mehrere binäre
-Kisten haben, indem es Dateien im Verzeichnis <em>src/bin</em> ablegt: Jede Datei ist
-dann eine eigene binäre Kiste.</p>
+eine binäre Crate mit dem Namen <code>my-project</code>. Wenn ein Paket <em>src/main.rs</em> und
+<em>src/lib.rs</em> enthält, hat es zwei Crates: Eine binäre und eine Bibliothek, beide
+mit dem gleichen Namen wie das Paket. Ein Paket kann mehrere binäre Crates
+haben, indem es Dateien im Verzeichnis <em>src/bin</em> ablegt: Jede Datei ist dann
+eine eigene binäre Crate.</p>
 
                     </main>
 

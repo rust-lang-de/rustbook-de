@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -170,10 +170,10 @@ das du vielleicht schon auf deinem System hast:</p>
 $ cd minigrep
 </code></pre>
 <p>Die erste Aufgabe besteht darin, <code>minigrep</code> dazu zu bringen, seine beiden
-Kommandozeilenargumente entgegennehmen: Den Dateipfad und eine Zeichenkette,
-nach der gesucht werden soll. Das heißt, wir wollen in der Lage sein, unser
-Programm mit <code>cargo run</code>, einer zu suchenden Zeichenkette und einem Pfad zu
-einer Datei, in der gesucht werden soll, auszuführen:</p>
+Kommandozeilenargumente entgegennehmen: den Dateipfad und einen String, nach dem
+gesucht werden soll. Das heißt, wir wollen in der Lage sein, unser Programm mit
+<code>cargo run</code>, einem zu suchenden String und einem Pfad zu einer Datei, in der
+gesucht werden soll, auszuführen:</p>
 <pre><code class="language-console">$ cargo run -- searchstring example-filename.txt
 </code></pre>
 <p>Im Moment kann das von <code>cargo new</code> generierte Programm die Argumente, die wir
@@ -191,7 +191,7 @@ Moment brauchst du nur zwei Details über Iteratoren zu wissen: Iteratoren
 erzeugen eine Reihe von Werten und wir können die Methode <code>collect</code> auf einem
 Iterator aufrufen, um ihn in eine Kollektion, z.B. einen Vektor, zu verwandeln,
 der alle Elemente enthält, die der Iterator erzeugt.</p>
-<p>Der Code in Codeblock 12-1 ermöglicht deinem <code>minigrep</code>-Programm, alle ihm
+<p>Der Code in Listing 12-1 ermöglicht deinem <code>minigrep</code>-Programm, alle ihm
 übergebenen Befehlszeilenargumente zu lesen und die Werte dann in einem Vektor
 zu sammeln.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -201,7 +201,7 @@ fn main() {
     let args: Vec&lt;String&gt; = env::args().collect();
     dbg!(args);
 }</code></pre>
-<p><span class="caption">Codeblock 12-1: Sammeln der Befehlszeilenargumente in
+<p><span class="caption">Listing 12-1: Sammeln der Befehlszeilenargumente in
 einem Vektor und Ausgeben dieser Werte</span></p>
 <p>Zuerst bringen wir das Modul <code>std::env</code> mit einer <code>use</code>-Anweisung in den
 Gültigkeitsbereich, damit wir seine Funktion <code>args</code> verwenden können. Beachte,
@@ -216,23 +216,22 @@ Funktion nur mit <code>args</code>, weil <code>args</code> leicht mit einer Funk
 werden könnte, die im aktuellen Modul definiert ist.</p>
 <blockquote>
 <h3 id="die-funktion-args-und-ungültiger-unicode"><a class="header" href="#die-funktion-args-und-ungültiger-unicode">Die Funktion <code>args</code> und ungültiger Unicode</a></h3>
-<p>Beachte, dass <code>std::env::args</code> abstürzt, wenn ein Argument einen ungültigen
-Unicode enthält. Wenn dein Programm Argumente mit ungültigem Unicode
-akzeptieren muss, verwende stattdessen <code>std::env::args_os</code>. Diese Funktion
-gibt einen Iterator zurück, der <code>OsString</code>-Werte anstelle von <code>String</code>-Werten
-erzeugt. Wir haben uns hier aus Gründen der Einfachheit für die Verwendung
-von <code>std::env::args</code> entschieden, weil <code>OsString</code>-Werte sich je nach
-Plattform unterscheiden und die Arbeit mit ihnen komplexer ist als mit
-<code>String</code>-Werten.</p>
+<p>Beachte, dass <code>std::env::args</code> abbricht, wenn ein Argument einen ungültigen
+Unicode enthält. Wenn dein Programm Argumente mit ungültigem Unicode akzeptieren
+muss, verwende stattdessen <code>std::env::args_os</code>. Diese Funktion gibt einen
+Iterator zurück, der <code>OsString</code>-Werte anstelle von <code>String</code>-Werten erzeugt. Wir
+haben uns hier aus Gründen der Einfachheit für die Verwendung von
+<code>std::env::args</code> entschieden, weil <code>OsString</code>-Werte sich je nach Plattform
+unterscheiden und die Arbeit mit ihnen komplexer ist als mit <code>String</code>-Werten.</p>
 </blockquote>
 <p>In der ersten Zeile von <code>main</code> rufen wir <code>env::args</code> auf und wir verwenden
 sofort <code>collect</code>, um den Iterator in einen Vektor zu verwandeln, der alle vom
 Iterator erzeugten Werte enthält. Wir können die Funktion <code>collect</code> verwenden,
 um viele Arten von Kollektionen zu erstellen, also vermerken wir explizit den
-Typ von <code>args</code>, um anzugeben, dass wir einen Vektor mit Zeichenketten wollen.
-Obwohl du in Rust nur sehr selten Typen mit Annotationen versehen musst, ist
-<code>collect</code> eine Funktion, die du häufig mit Annotationen versehen musst, da Rust
-nicht in der Lage ist, auf die Art der gewünschten Kollektion zu schließen.</p>
+Typ von <code>args</code>, um anzugeben, dass wir einen Vektor mit Strings wollen. Obwohl
+du in Rust nur sehr selten Typen mit Annotationen versehen musst, ist <code>collect</code>
+eine Funktion, die du häufig mit Annotationen versehen musst, da Rust nicht in
+der Lage ist, auf die Art der gewünschten Kollektion zu schließen.</p>
 <p>Zum Schluss geben wir den Vektor mit dem Debug-Makro aus. Versuchen wir, den
 Code zuerst ohne Argumente und dann mit zwei Argumenten laufen zu lassen:</p>
 <pre><code class="language-console">$ cargo run
@@ -265,7 +264,7 @@ ihn und speichern nur die beiden Argumente, die wir brauchen.</p>
 <p>Das Programm ist derzeit in der Lage, auf die als Kommandozeilenargumente
 angegebenen Werte zuzugreifen. Jetzt müssen wir die Werte der beiden Argumente
 in Variablen speichern, damit wir die Werte im restlichen Programm verwenden
-können. Das tun wir in Codeblock 12-2.</p>
+können. Das tun wir in Listing 12-2.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust noplayground">use std::env;
 
@@ -278,15 +277,14 @@ fn main() {
     println!("Suche nach {query}");
     println!("In Datei {file_path}");
 }</code></pre>
-<p><span class="caption">Codeblock 12-2: Erstellen von Variablen zur Aufnahme des
+<p><span class="caption">Listing 12-2: Erstellen von Variablen zur Aufnahme des
 Such-Arguments und des Dateipfad-Arguments</span></p>
 <p>Wie wir gesehen haben, als wir den Vektor ausgegeben haben, nimmt der
-Programmname den ersten Wert im Vektor bei <code>args[0]</code> ein, also beginnen wir
-beim Index <code>1</code>. Das erste Argument, das <code>minigrep</code> annimmt, ist die
-Zeichenkette, nach der wir suchen, also setzen wir eine Referenz auf das erste
-Argument in die Variable <code>query</code>. Das zweite Argument wird der Dateipfad sein,
-also setzen wir eine Referenz auf das zweite Argument in die Variable
-<code>file_path</code>.</p>
+Programmname den ersten Wert im Vektor bei <code>args[0]</code> ein, also beginnen wir beim
+Index <code>1</code>. Das erste Argument, das <code>minigrep</code> annimmt, ist der String, nach dem
+wir suchen, also setzen wir eine Referenz auf das erste Argument in die Variable
+<code>query</code>. Das zweite Argument wird der Dateipfad sein, also setzen wir eine
+Referenz auf das zweite Argument in die Variable <code>file_path</code>.</p>
 <p>Wir geben vorübergehend die Werte dieser Variablen aus, um zu belegen, dass der
 Code so funktioniert, wie wir es beabsichtigen. Lassen wir dieses Programm mit
 den Argumenten <code>test</code> und <code>sample.txt</code> noch einmal laufen:</p>

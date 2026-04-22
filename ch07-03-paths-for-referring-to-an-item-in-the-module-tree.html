@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -163,30 +163,30 @@
                     <main>
                         <h2 id="mit-pfaden-auf-ein-element-im-modulbaum-verweisen"><a class="header" href="#mit-pfaden-auf-ein-element-im-modulbaum-verweisen">Mit Pfaden auf ein Element im Modulbaum verweisen</a></h2>
 <p>Um Rust zu zeigen, wo ein Element in einem Modulbaum zu finden ist, verwenden
-wir einen Pfad, auf gleiche Weise wie beim Navigieren durch ein Dateisystem.
-Um eine Funktion aufzurufen, müssen wir ihren Pfad kennen.</p>
+wir einen Pfad, in gleicher Weise wie beim Navigieren durch ein Dateisystem. Um
+eine Funktion aufzurufen, müssen wir ihren Pfad kennen.</p>
 <p>Ein Pfad kann zwei Formen annehmen:</p>
 <ul>
 <li>Ein <em>absoluter Pfad</em> ist der vollständige Pfad ausgehend von einer
-Kistenwurzel; für Code aus einer externen Kiste beginnt der absolute Pfad mit
-der Kistenwurzel, und für Code aus der aktuellen Kiste beginnt er mit dem
+Crate-Wurzel; für Code aus einer externen Crate beginnt der absolute Pfad mit
+der Crate-Wurzel, und für Code aus der aktuellen Crate beginnt er mit dem
 Literal <code>crate</code>.</li>
 <li>Ein <em>relativer Pfad</em> startet beim aktuellen Modul und benutzt <code>self</code>, <code>super</code>
 oder einen Bezeichner im aktuellen Modul.</li>
 </ul>
 <p>Sowohl absolute als auch relative Pfade bestehen aus einem oder mehreren
 Bezeichnern, die durch doppelte Doppelpunkte (<code>::</code>) getrennt sind.</p>
-<p>Um zu Codeblock 7-1 zurückzukehren, nehmen wir an, wir wollen die Funktion
+<p>Um zu Listing 7-1 zurückzukehren, nehmen wir an, wir wollen die Funktion
 <code>add_to_waitlist</code> aufrufen. Das ist dasselbe wie die Frage, wie der Pfad der
-Funktion <code>add_to_waitlist</code> ist. Codeblock 7-3 enthält Codeblock 7-1, wobei
+Funktion <code>add_to_waitlist</code> ist. Listing 7-3 enthält Listing 7-1, wobei
 einige Module und Funktionen entfernt wurden.</p>
 <p>Wir zeigen zwei Möglichkeiten, wie die Funktion <code>add_to_waitlist</code> von einer
 neuen Funktion <code>eat_at_restaurant</code> aus aufgerufen werden kann, die in der
-Kistenwurzel definiert ist. Diese Pfade sind korrekt, aber es gibt noch ein
+Crate-Wurzel definiert ist. Diese Pfade sind korrekt, aber es gibt noch ein
 weiteres Problem, das verhindert, dass dieses Beispiel in dieser Form
 kompiliert. Wir werden gleich erklären, warum.</p>
 <p>Die Funktion <code>eat_at_restaurant</code> ist Teil der öffentlichen
-Programmierschnittstelle (API) unserer Bibliothekskiste, daher markieren wir
+Programmierschnittstelle (API) unserer Bibliotheks-Crate, daher markieren wir
 sie mit dem Schlüsselwort <code>pub</code>. Im Abschnitt <a href="#pfade-mit-dem-schlüsselwort-pub-öffentlich-machen">„Pfade mit dem Schlüsselwort
 <code>pub</code> öffentlich machen“</a> gehen wir näher auf <code>pub</code> ein.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -206,17 +206,17 @@ pub fn eat_at_restaurant() {
     front_of_house::hosting::add_to_waitlist();
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 7-3: Aufruf der Funktion <code>add_to_waitlist</code>
+<p><span class="caption">Listing 7-3: Aufruf der Funktion <code>add_to_waitlist</code>
 mittels absoluter und relativer Pfade</span></p>
 <p>Beim ersten Aufruf der Funktion <code>add_to_waitlist</code> in <code>eat_at_restaurant</code>
 verwenden wir einen absoluten Pfad. Die Funktion <code>add_to_waitlist</code> ist in der
-gleichen Kiste definiert wie <code>eat_at_restaurant</code>, daher können wir das
-Schlüsselwort <code>crate</code> verwenden, um einen absoluten Pfad zu beginnen. Dann
-geben wir jedes der aufeinanderfolgenden Module an, bis wir <code>add_to_waitlist</code>
+gleichen Crate definiert wie <code>eat_at_restaurant</code>, daher können wir das
+Schlüsselwort <code>crate</code> verwenden, um einen absoluten Pfad zu beginnen. Dann geben
+wir jedes der aufeinanderfolgenden Module an, bis wir <code>add_to_waitlist</code>
 erreichen. Du kannst dir ein Dateisystem mit der gleichen Struktur vorstellen:
 Wir würden den Pfad <code>/front_of_house/hosting/add_to_waitlist</code> angeben, um das
-Programm <code>add_to_waitlist</code> auszuführen; das Verwenden des Namens <code>crate</code>, um
-von der Kistenwurzel aus zu beginnen, ist analog zu <code>/</code>, um vom
+Programm <code>add_to_waitlist</code> auszuführen; das Verwenden des Namens <code>crate</code>, um von
+der Crate-Wurzel aus zu beginnen, ist analog zu <code>/</code>, um vom
 Dateisystem-Wurzelverzeichnis in deinem Terminal aus zu beginnen.</p>
 <p>Beim zweiten Aufruf von <code>add_to_waitlist</code> in <code>eat_at_restaurant</code> verwenden wir
 einen relativen Pfad. Der Pfad beginnt mit <code>front_of_house</code>, dem Namen des
@@ -237,9 +237,9 @@ wir jedoch die Funktion <code>eat_at_restaurant</code> in ein separates Modul na
 werden. Wir bevorzugen generell die Angabe absoluter Pfade, da es
 wahrscheinlicher ist, dass Codedefinitionen und Elementaufrufe unabhängig
 voneinander verschoben werden.</p>
-<p>Lass uns versuchen, Codeblock 7-3 zu kompilieren, und herausfinden, warum er
-sich noch nicht kompilieren lässt! Die Fehler, die wir erhalten, sind in
-Codeblock 7-4 zu sehen.</p>
+<p>Lass uns versuchen, Listing 7-3 zu kompilieren, und herausfinden, warum es sich
+noch nicht kompilieren lässt! Die Fehler, die wir erhalten, sind in Listing 7-4
+zu sehen.</p>
 <pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
 error[E0603]: module `hosting` is private
@@ -273,8 +273,7 @@ note: the module `hosting` is defined here
 For more information about this error, try `rustc --explain E0603`.
 error: could not compile `restaurant` (lib) due to 2 previous errors
 </code></pre>
-<p><span class="caption">Codeblock 7-4: Kompilierfehler im Code in Codeblock
-7-3</span></p>
+<p><span class="caption">Listing 7-4: Compilerfehler im Code in Listing 7-3</span></p>
 <p>Die Fehlermeldungen besagen, dass das Modul <code>hosting</code> privat ist. Mit anderen
 Worten, wir haben die korrekten Pfade für das Modul <code>hosting</code> und die Funktion
 <code>add_to_waitlist</code> angegeben, aber Rust lässt sie uns nicht nutzen, weil es
@@ -283,14 +282,14 @@ keinen Zugriff auf die privaten Abschnitte hat. In Rust sind alle Elemente
 standardmäßig privat für übergeordnete Module. Wenn du ein Element wie eine
 Funktion oder Struktur privat machen willst, setze es in ein Modul.</p>
 <p>Objekte in einem übergeordneten Modul können die privaten Objekte in
-untergeordneten Modulen nicht verwenden, aber Objekte in untergeordneten
-Modulen können die Objekte in ihren übergeordneten Modulen verwenden. Der Grund
-dafür ist, dass untergeordnete Module ihre Implementierungsdetails ein- und
-ausblenden, aber die untergeordneten Module können den Gültigkeitsbereich
-sehen, in dem sie definiert sind. Um mit unserer Metapher fortzufahren, stelle
-dir die Datenschutzregeln wie das Backoffice eines Restaurants vor: Was dort
-drinnen passiert, ist für Restaurantkunden privat, aber Büroleiter können alles
-im Restaurant, in dem sie arbeiten, sehen und tun.</p>
+untergeordneten Modulen nicht verwenden, aber Objekte in untergeordneten Modulen
+können die Objekte in ihren übergeordneten Modulen verwenden. Der Grund dafür
+ist, dass untergeordnete Module ihre Implementierungsdetails ein- und
+ausblenden, aber die untergeordneten Module können den Gültigkeitsbereich sehen,
+in dem sie definiert sind. Um mit unserer Metapher fortzufahren, stelle dir die
+Sichtbarkeitsregeln wie das Backoffice eines Restaurants vor: Was dort drinnen
+passiert, ist für Restaurantkunden privat, aber Büroleiter können alles im
+Restaurant, in dem sie arbeiten, sehen und tun.</p>
 <p>Rust entschied sich dafür, das Modulsystem auf diese Weise funktionieren zu
 lassen, sodass das Ausblenden innerer Implementierungsdetails die Vorgabe ist.
 Auf diese Weise weißt du, welche Teile des inneren Codes du ändern kannst, ohne
@@ -298,11 +297,11 @@ den äußeren Code zu brechen. Rust gibt dir jedoch die Möglichkeit, innere Tei
 des Codes von Kindmodulen für äußere Vorgängermodule offenzulegen, indem du das
 Schlüsselwort <code>pub</code> verwendest, um ein Element öffentlich zu machen.</p>
 <h3 id="pfade-mit-dem-schlüsselwort-pub-öffentlich-machen"><a class="header" href="#pfade-mit-dem-schlüsselwort-pub-öffentlich-machen">Pfade mit dem Schlüsselwort <code>pub</code> öffentlich machen</a></h3>
-<p>Kehren wir zum Fehler in Codeblock 7-4 zurück, der uns sagte, das Modul
+<p>Kehren wir zum Fehler in Listing 7-4 zurück, der uns sagte, das Modul
 <code>hosting</code> sei privat. Wir wollen, dass die Funktion <code>eat_at_restaurant</code> im
 übergeordneten Modul Zugriff auf die Funktion <code>add_to_waitlist</code> im
 untergeordneten Modul hat, also markieren wir das Modul <code>hosting</code> mit dem
-Schlüsselwort <code>pub</code>, wie in Codeblock 7-5 gezeigt.</p>
+Schlüsselwort <code>pub</code>, wie in Listing 7-5 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -321,10 +320,10 @@ Schlüsselwort <code>pub</code>, wie in Codeblock 7-5 gezeigt.</p>
 </span><span class="boring">    front_of_house::hosting::add_to_waitlist();
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 7-5: Deklarieren des Moduls <code>hosting</code> als
+<p><span class="caption">Listing 7-5: Deklarieren des Moduls <code>hosting</code> als
 <code>pub</code>, um es von <code>eat_at_restaurant</code> aus zu benutzen</span></p>
-<p>Leider führt der Code in Codeblock 7-5 immer noch zu Kompilierfehlern, wie
-Codeblock 7-6 zeigt.</p>
+<p>Leider führt der Code in Listing 7-5 immer noch zu Compilerfehlern, wie Listing
+7-6 zeigt.</p>
 <pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
 error[E0603]: function `add_to_waitlist` is private
@@ -354,8 +353,7 @@ note: the function `add_to_waitlist` is defined here
 For more information about this error, try `rustc --explain E0603`.
 error: could not compile `restaurant` (lib) due to 2 previous errors
 </code></pre>
-<p><span class="caption">Codeblock 7-6: Kompilierfehler im Code in Codeblock
-7-5</span></p>
+<p><span class="caption">Listing 7-6: Compilerfehler im Code in Listing 7-5</span></p>
 <p>Was ist passiert? Das Hinzufügen des Schlüsselworts <code>pub</code> vor <code>mod hosting</code>
 macht das Modul öffentlich. Wenn wir auf <code>front_of_house</code> zugreifen können,
 können wir mit dieser Änderung auch auf <code>hosting</code> zugreifen. Aber die <em>Inhalte</em>
@@ -366,11 +364,11 @@ nicht aber auf seinen inneren Code zuzugreifen. Da Module Container sind,
 können wir nicht viel tun, indem wir nur das Modul öffentlich machen; wir
 müssen weiter gehen und eines oder mehrere der Elemente innerhalb des Moduls
 ebenfalls öffentlich machen.</p>
-<p>Die Fehler in Codeblock 7-6 besagen, dass die Funktion <code>add_to_waitlist</code> privat
-ist. Die Datenschutzregeln gelten für Strukturen, Aufzählungen, Funktionen und
+<p>Die Fehler in Listing 7-6 besagen, dass die Funktion <code>add_to_waitlist</code> privat
+ist. Die Sichtbarkeitsregeln gelten für Strukturen, Aufzählungen, Funktionen und
 Methoden sowie für Module.</p>
 <p>Lass uns auch die Funktion <code>add_to_waitlist</code> öffentlich machen, indem wir das
-Schlüsselwort <code>pub</code> vor ihre Definition hinzufügen, wie in Codeblock 7-7.</p>
+Schlüsselwort <code>pub</code> vor ihre Definition hinzufügen, wie in Listing 7-7.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground test_harness">mod front_of_house {
     pub mod hosting {
@@ -386,71 +384,70 @@ Schlüsselwort <code>pub</code> vor ihre Definition hinzufügen, wie in Codebloc
 </span><span class="boring">    // Relativer Pfad
 </span><span class="boring">    front_of_house::hosting::add_to_waitlist();
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 7-7: Das Hinzufügen des Schlüsselworts <code>pub</code> zu
+<p><span class="caption">Listing 7-7: Das Hinzufügen des Schlüsselworts <code>pub</code> zu
 <code>mod hosting</code> und <code>fn add_to_waitlist</code> lässt uns die Funktion in
 <code>eat_at_restaurant</code> aufrufen</span></p>
 <p>Jetzt kompiliert der Code! Um zu sehen, warum das Hinzufügen des Schlüsselworts
 <code>pub</code> uns erlaubt, diese Pfade in <code>eat_at_restaurant</code> im Hinblick auf die
-Datenschutzregeln zu verwenden, sehen wir uns die absoluten und relativen Pfade
-an.</p>
+Sichtbarkeitsregeln zu verwenden, sehen wir uns die absoluten und relativen
+Pfade an.</p>
 <p>Auf dem absoluten Pfad beginnen wir mit <code>crate</code>, der Wurzel des Modulbaums
-unserer Kiste. Dann wird das Modul <code>front_of_house</code> in der Kistenwurzel
+unserer Crate. Dann wird das Modul <code>front_of_house</code> in der Crate-Wurzel
 definiert. Während das Modul <code>front_of_house</code> nicht öffentlich ist, weil die
 Funktion <code>eat_at_restaurant</code> im gleichen Modul wie <code>front_of_house</code> definiert
-ist (d.h. <code>eat_at_restaurant</code> und <code>front_of_house</code> sind Geschwister), können
-wir auf <code>front_of_house</code> von <code>eat_at_restaurant</code> aus zugreifen. Als nächstes
-wird das Modul <code>hosting</code> mit <code>pub</code> gekennzeichnet. Wir können auf das
-übergeordnete Modul von <code>hosting</code> zugreifen, also können wir auf <code>hosting</code>
-zugreifen. Schließlich wird die Funktion <code>add_to_waitlist</code> mit <code>pub</code> markiert
-und wir können auf ihr Elternmodul zugreifen, sodass dieser Funktionsaufruf
-klappt!</p>
+ist (d.h. <code>eat_at_restaurant</code> und <code>front_of_house</code> sind Geschwister), können wir
+auf <code>front_of_house</code> von <code>eat_at_restaurant</code> aus zugreifen. Als nächstes wird
+das Modul <code>hosting</code> mit <code>pub</code> gekennzeichnet. Wir können auf das übergeordnete
+Modul von <code>hosting</code> zugreifen, also können wir auf <code>hosting</code> zugreifen.
+Schließlich wird die Funktion <code>add_to_waitlist</code> mit <code>pub</code> markiert und wir
+können auf ihr Elternmodul zugreifen, sodass dieser Funktionsaufruf klappt!</p>
 <p>Beim relativen Pfad ist die Logik die gleiche wie beim absoluten Pfad, mit
-Ausnahme des ersten Schritts: Anstatt von der Kistenwurzel auszugehen, beginnt
+Ausnahme des ersten Schritts: Anstatt von der Crate-Wurzel auszugehen, beginnt
 der Pfad mit <code>front_of_house</code>. Das Modul <code>front_of_house</code> wird innerhalb
 desselben Moduls wie <code>eat_at_restaurant</code> definiert, sodass der relative Pfad
 ausgehend vom Modul, in dem <code>eat_at_restaurant</code> definiert ist, funktioniert.
 Weil <code>hosting</code> und <code>add_to_waitlist</code> nun mit <code>pub</code> markiert sind, funktioniert
 der Rest des Pfades, und dieser Funktionsaufruf ist gültig!</p>
-<p>Wenn du vorhast, deine Bibliothekskiste weiterzugeben, damit andere Projekte
-deinen Code verwenden können, ist deine öffentliche API deine Übereinkunft mit den
-Benutzern deiner Kiste, die festlegt, wie sie mit deinem Code interagieren
+<p>Wenn du vorhast, deine Bibliotheks-Crate weiterzugeben, damit andere Projekte
+deinen Code verwenden können, ist deine öffentliche API deine Übereinkunft mit
+den Benutzern deiner Crate, die festlegt, wie sie mit deinem Code interagieren
 können. Es gibt viele Überlegungen zum Umgang mit Änderungen an deiner
-öffentlichen API, um es für andere einfacher zu machen, sich auf deine Kiste zu
+öffentlichen API, um es für andere einfacher zu machen, sich auf deine Crate zu
 verlassen. Diese Überlegungen gehen über den Rahmen dieses Buches hinaus; wenn
 du an diesem Thema interessiert bist, lies die <a href="https://rust-lang.github.io/api-guidelines/">Rust API
 Guidelines</a>.</p>
 <blockquote>
 <h4 id="bewährte-praktiken-für-pakete-mit-einer-binärdatei-und-einer-bibliothek"><a class="header" href="#bewährte-praktiken-für-pakete-mit-einer-binärdatei-und-einer-bibliothek">Bewährte Praktiken für Pakete mit einer Binärdatei und einer Bibliothek</a></h4>
-<p>Wir haben bereits erwähnt, dass ein Paket sowohl eine Binärkistenwurzel
-<em>src/main.rs</em> als auch eine Bibliothekskistenwurzel <em>src/lib.rs</em> enthalten
-kann, und beide Kisten tragen standardmäßig den Paketnamen. Normalerweise
-haben Pakete mit diesem Muster, die sowohl eine Bibliothek als auch eine
-Binärkiste enthalten, gerade genug Code in der Binärkiste, um eine
-ausführbare Datei zu starten, die Code aus der Bibliothekskiste aufruft.
+<p>Wir haben bereits erwähnt, dass ein Paket sowohl eine binäre Crate-Wurzel
+<em>src/main.rs</em> als auch eine Bibliotheks-Crate-Wurzel <em>src/lib.rs</em> enthalten
+kann, und beide Crates tragen standardmäßig den Paketnamen. Normalerweise haben
+Pakete mit diesem Muster, die sowohl eine Bibliotheks-Crate als auch eine
+binäre Crate enthalten, gerade genug Code in der binären Crate, um eine
+ausführbare Datei zu starten, die Code aus der Bibliotheks-Crate aufruft.
 Dadurch können andere Projekte von den meisten Funktionen des Pakets
-profitieren, da der Code der Bibliothekskiste gemeinsam genutzt werden kann.</p>
+profitieren, da der Code der Bibliotheks-Crate gemeinsam genutzt werden kann.</p>
 <p>Der Modulbaum sollte in <em>src/lib.rs</em> definiert werden. Dann können alle
-öffentlichen Elemente in der Binärkiste verwendet werden, indem die Pfade
-mit dem Namen des Pakets beginnen. Die binäre Kiste wird zu einem Benutzer
-der Bibliothekskiste, so wie eine vollständig externe Kiste die
-Bibliothekskiste verwenden würde: Sie kann nur die öffentliche API
+öffentlichen Elemente in der binären Crate verwendet werden, indem die Pfade
+mit dem Namen des Pakets beginnen. Die binäre Crate wird zu einem Benutzer
+der Bibliotheks-Crate, so wie eine vollständig externe Crate die
+Bibliotheks-Crate verwenden würde: Sie kann nur die öffentliche API
 verwenden. Dies hilft dir, eine gute API zu entwerfen; Du bist nicht nur der
 Autor, sondern auch ein Kunde!</p>
 <p>In <a href="ch12-00-an-io-project.html">Kapitel 12</a> werden wir diese organisatorische Praxis anhand eines
-Befehlszeilenprogramms demonstrieren, das sowohl eine Binärkiste als auch
-eine Bibliothekskiste enthält.</p>
+Befehlszeilenprogramms demonstrieren, das sowohl eine binäre Crate als auch
+eine Bibliotheks-Crate enthält.</p>
 </blockquote>
 <h3 id="relative-pfade-mit-super-beginnen"><a class="header" href="#relative-pfade-mit-super-beginnen">Relative Pfade mit <code>super</code> beginnen</a></h3>
-<p>Wir können relative Pfade konstruieren, die im übergeordneten Modul beginnen
-und nicht im aktuellen Modul oder der Kistenwurzel, indem wir <code>super</code> am Anfang
-des Pfades verwenden. Dies ist so, als würde man einen Dateisystempfad mit der
+<p>Wir können relative Pfade konstruieren, die im übergeordneten Modul beginnen und
+nicht im aktuellen Modul oder der Crate-Wurzel, indem wir <code>super</code> am Anfang des
+Pfades verwenden. Dies ist so, als würde man einen Dateisystempfad mit der
 Syntax <code>..</code> beginnen, wodurch man ins übergeordnete Verzeichnis kommt. Das
 Verwenden von <code>super</code> erlaubt es uns, auf ein Element zu referenzieren, von dem
 wir wissen, dass es sich im übergeordneten Modul befindet, was die Neuordnung
-des Modulbaums erleichtern kann, wenn das Modul eng mit dem übergeordneten
-Modul verwandt ist, aber das übergeordnete Modul eines Tages an eine andere
-Stelle im Modulbaum verschoben werden könnte.</p>
-<p>Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
+des Modulbaums erleichtern kann, wenn das Modul eng mit dem übergeordneten Modul
+verwandt ist, aber das übergeordnete Modul eines Tages an eine andere Stelle im
+Modulbaum verschoben werden könnte.</p>
+<p>Betrachte den Code in Listing 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die
 Funktion <code>fix_incorrect_order</code>, die im Modul <code>back_of_house</code> definiert ist,
 ruft die im übergeordneten Modul definierte Funktion <code>deliver_order</code> auf, indem
@@ -469,14 +466,15 @@ mod back_of_house {
     fn cook_order() {}
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 7-8: Aufrufen einer Funktion unter Verwendung
+<p><span class="caption">Listing 7-8: Aufrufen einer Funktion unter Verwendung
 eines relativen Pfades, der mit <code>super</code> beginnt</span></p>
 <p>Die Funktion <code>fix_incorrect_order</code> befindet sich im Modul <code>back_of_house</code>,
 sodass wir <code>super</code> benutzen können, um zum Elternmodul von <code>back_of_house</code> zu
 gelangen, was in diesem Fall die Wurzel <code>crate</code> ist. Von dort aus suchen wir
 nach <code>deliver_order</code> und finden es. Erfolg! Wir denken, dass das Modul
-<code>back_of_house</code> und die Funktion <code>deliver_order</code> wahrscheinlich in der gleichen Beziehung zueinander stehen und zusammen verschoben werden, sollten wir uns dazu
-entschließen, den Modulbaum der Kiste neu zu organisieren. Deshalb haben wir
+<code>back_of_house</code> und die Funktion <code>deliver_order</code> wahrscheinlich in der gleichen
+Beziehung zueinander stehen und zusammen verschoben werden, sollten wir uns dazu
+entschließen, den Modulbaum der Crate neu zu organisieren. Deshalb haben wir
 <code>super</code> verwendet, sodass wir in Zukunft weniger Codestellen zu aktualisieren
 haben, wenn dieser Code in ein anderes Modul verschoben wird.</p>
 <h3 id="strukturen-und-aufzählungen-öffentlich-machen"><a class="header" href="#strukturen-und-aufzählungen-öffentlich-machen">Strukturen und Aufzählungen öffentlich machen</a></h3>
@@ -485,7 +483,7 @@ zu kennzeichnen, aber es gibt ein paar zusätzliche Details zur Verwendung von
 <code>pub</code> mit Strukturen und Aufzählungen. Wenn wir <code>pub</code> vor einer
 Struktur-Definition verwenden, machen wir die Struktur öffentlich, aber die
 Felder der Struktur sind immer noch privat. Wir können jedes Feld von Fall zu
-Fall öffentlich machen oder auch nicht. In Codeblock 7-9 haben wir eine
+Fall öffentlich machen oder auch nicht. In Listing 7-9 haben wir eine
 öffentliche Struktur <code>back_of_house::Breakfast</code> mit einem öffentlichen Feld
 <code>toast</code>, aber einem privaten Feld <code>seasonal_fruit</code> definiert. Dies ist der Fall
 in einem Restaurant, in dem der Kunde die Brotsorte auswählen kann, die zu
@@ -525,7 +523,7 @@ pub fn eat_at_restaurant() {
     // meal.seasonal_fruit = String::from("Heidelbeeren");
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 7-9: Eine Struktur mit öffentlichen und
+<p><span class="caption">Listing 7-9: Eine Struktur mit öffentlichen und
 privaten Feldern</span></p>
 <p>Da das Feld <code>toast</code> in der Struktur <code>back_of_house::Breakfast</code> öffentlich ist,
 können wir in <code>eat_at_restaurant</code> in das Feld <code>toast</code> schreiben und lesen,
@@ -542,7 +540,7 @@ keine solche Funktion hätte, könnten wir keine Instanz von <code>Breakfast</co
 <code>seasonal_fruit</code> in <code>eat_at_restaurant</code> nicht setzen könnten.</p>
 <p>Wenn wir dagegen eine Aufzählung veröffentlichen, dann sind alle ihre
 Varianten öffentlich. Wir brauchen nur das Schlüsselwort <code>pub</code> vor dem
-Schlüsselwort <code>enum</code>, wie in Codeblock 7-10 gezeigt.</p>
+Schlüsselwort <code>enum</code>, wie in Listing 7-10 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -558,7 +556,7 @@ pub fn eat_at_restaurant() {
     let order2 = back_of_house::Appetizer::Salad;
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 7-10: Kennzeichnen einer Aufzählung als
+<p><span class="caption">Listing 7-10: Kennzeichnen einer Aufzählung als
 öffentlich macht alle ihre Varianten öffentlich</span></p>
 <p>Da wir die Aufzählung <code>Appetizer</code> öffentlich gemacht haben, können wir die
 Varianten <code>Soup</code> und <code>Salad</code> in <code>eat_at_restaurant</code> verwenden.</p>

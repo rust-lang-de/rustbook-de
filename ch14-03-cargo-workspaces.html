@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -162,40 +162,39 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h2 id="cargo-arbeitsbereiche"><a class="header" href="#cargo-arbeitsbereiche">Cargo-Arbeitsbereiche</a></h2>
-<p>In Kapitel 12 haben wir ein Paket erstellt, das eine binäre Kiste und eine
-Bibliothekskiste enthält. Während dein Projekt entwickelt wird, wirst du
-möglicherweise feststellen, dass die Bibliothekskiste immer größer wird und du
-dein Paket weiter in mehrere Bibliothekskisten aufteilen möchtest. Cargo bietet
-eine Funktion namens <em>Arbeitsbereiche</em> (workspaces), mit denen mehrere
-verwandte Pakete verwaltet werden können, die gemeinsam entwickelt werden.</p>
+<p>In Kapitel 12 haben wir ein Paket erstellt, das eine binäre Crate und eine
+Bibliotheks-Crate enthält. Während dein Projekt entwickelt wird, wirst du
+möglicherweise feststellen, dass die Bibliotheks-Crate immer größer wird und du
+dein Paket weiter in mehrere Bibliotheks-Crates aufteilen möchtest. Cargo bietet
+eine Funktion namens <em>Arbeitsbereiche</em> (workspaces), mit denen mehrere verwandte
+Pakete verwaltet werden können, die gemeinsam entwickelt werden.</p>
 <h3 id="einen-arbeitsbereich-erstellen"><a class="header" href="#einen-arbeitsbereich-erstellen">Einen Arbeitsbereich erstellen</a></h3>
-<p>Ein <em>Arbeitsbereich</em> ist eine Reihe von Paketen, die dieselbe Datei
-<em>Cargo.lock</em> sowie dasselbe Ausgabeverzeichnis (output directory) verwenden.
-Lass uns mithilfe eines Arbeitsbereiches ein Projekt erstellen. Wir verwenden
-einfachen Programmcode, damit wir uns auf die Struktur des Arbeitsbereiches
-konzentrieren können. Es gibt verschiedene Möglichkeiten, einen Arbeitsbereich
-zu strukturieren. Wir werden nur einen einen üblichen Weg zeigen. Wir haben
-einen Arbeitsbereich mit einer Binärdatei und zwei Bibliotheken. Die Binärdatei
-stellt die Hauptfunktion bereit und hängt von den beiden Bibliotheken ab. Eine
-Bibliothek stellt die Funktion <code>add_one</code> und eine andere Bibliothek die
-Funktion <code>add_two</code> zur Verfügung. Diese drei Kisten werden Teil desselben
-Arbeitsbereichs sein. Zunächst erstellen wir ein neues Verzeichnis für den
-Arbeitsbereich:</p>
+<p>Ein <em>Arbeitsbereich</em> ist eine Reihe von Paketen, die dieselbe Datei <em>Cargo.lock</em>
+sowie dasselbe Ausgabeverzeichnis (output directory) verwenden. Lass uns
+mithilfe eines Arbeitsbereiches ein Projekt erstellen. Wir verwenden einfachen
+Programmcode, damit wir uns auf die Struktur des Arbeitsbereiches konzentrieren
+können. Es gibt verschiedene Möglichkeiten, einen Arbeitsbereich zu
+strukturieren. Wir werden nur einen üblichen Weg zeigen. Wir haben einen
+Arbeitsbereich mit einer Binärdatei und zwei Bibliotheken. Die Binärdatei stellt
+die Hauptfunktion bereit und hängt von den beiden Bibliotheken ab. Eine
+Bibliothek stellt die Funktion <code>add_one</code> und eine andere Bibliothek die Funktion
+<code>add_two</code> zur Verfügung. Diese drei Crates werden Teil desselben Arbeitsbereichs
+sein. Zunächst erstellen wir ein neues Verzeichnis für den Arbeitsbereich:</p>
 <pre><code class="language-console">$ mkdir add
 $ cd add
 </code></pre>
 <p>Als Nächstes erstellen wir im Verzeichnis <em>add</em> die Datei <em>Cargo.toml</em>, mit der
-der gesamte Arbeitsbereich konfiguriert wird. Diese Datei enthält keine
+der gesamte Arbeitsbereich konfiguriert wird. Diese Datei enthält keinen
 Abschnitt <code>[package]</code>. Stattdessen beginnt sie mit einem Abschnitt
 <code>[workspace]</code>, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können. Wir
 stellen außerdem sicher, dass wir die neueste und beste Version des
-Cargo-Auflösungsalgorithmus in unserem Arbeitsbereich verwenden, indem wir
-den Wert von <code>resolver</code> auf <code>"3"</code> setzen:</p>
+Cargo-Auflösungsalgorithmus in unserem Arbeitsbereich verwenden, indem wir den
+Wert von <code>resolver</code> auf <code>"3"</code> setzen:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[workspace]
 resolver = "3"
 </code></pre>
-<p>Als nächstes erstellen wir die Binärkiste <code>adder</code>, indem wir <code>cargo new</code> im
+<p>Als nächstes erstellen wir die binäre Crate <code>adder</code>, indem wir <code>cargo new</code> im
 Verzeichnis <em>add</em> ausführen:</p>
 <pre><code class="language-console">$ cargo new adder
     Created binary (application) `adder` package
@@ -219,19 +218,19 @@ folgendermaßen aussehen:</p>
 └── target
 </code></pre>
 <p>Der Arbeitsbereich verfügt auf der obersten Ebene über ein <em>Zielverzeichnis</em>
-(target), in das die kompilierten Artefakte abgelegt werden; das Paket
-<code>adder</code> hat kein eigenes <em>Zielverzeichnis</em>. Selbst wenn wir <code>cargo build</code> aus
-dem Verzeichnis <em>adder</em> heraus ausführen würden, landen die kompilierten
-Artefakte noch immer in <em>add/target</em> und nicht in <em>add/adder/target</em>. Cargo
-strukturiert das <em>Zielverzeichnis</em> in einem derartigen Arbeitsverzeichnis, da
-die Kisten voneinander abhängig sein sollen. Wenn jede Kiste ihr eigenes
-<em>Zielverzeichnis</em> hätte, müssten für jede Kiste die anderen Kisten im
-Arbeitsbereich neu kompiliert werden, damit die Artefakte ein eigenes
-<em>Zielverzeichnis</em> haben könnten. Durch die gemeinsame Nutzung eines
-Verzeichnisses können die Kisten unnötig wiederholte Erstellung vermeiden.</p>
+(target), in das die kompilierten Artefakte abgelegt werden; das Paket <code>adder</code>
+hat kein eigenes <em>Zielverzeichnis</em>. Selbst wenn wir <code>cargo build</code> aus dem
+Verzeichnis <em>adder</em> heraus ausführen würden, landen die kompilierten Artefakte
+noch immer in <em>add/target</em> und nicht in <em>add/adder/target</em>. Cargo strukturiert
+das <em>Zielverzeichnis</em> in einem derartigen Arbeitsverzeichnis, da die Crates
+voneinander abhängig sein sollen. Wenn jede Crate ihr eigenes <em>Zielverzeichnis</em>
+hätte, müssten für jede Crate die anderen Crates im Arbeitsbereich neu
+kompiliert werden, um die Artefakte in ihrem eigenen <em>Zielverzeichnis</em>
+abzulegen. Durch die gemeinsame Nutzung eines einzigen Verzeichnisses können die
+Crates unnötiges Neuaufbauen vermeiden.</p>
 <h3 id="erstellen-des-zweiten-pakets-im-arbeitsbereich"><a class="header" href="#erstellen-des-zweiten-pakets-im-arbeitsbereich">Erstellen des zweiten Pakets im Arbeitsbereich</a></h3>
 <p>Als Nächstes erstellen wir ein weiteres, dem Arbeitsbereich zugehöriges Paket
-und nennen es <code>add_one</code>. Erzeuge eine neue Bibliothekskiste namens <code>add_one</code>:</p>
+und nennen es <code>add_one</code>. Erzeuge eine neue Bibliotheks-Crate namens <code>add_one</code>:</p>
 <pre><code class="language-console">$ cargo new add_one --lib
     Created library `add_one` package
       Adding `add_one` as member of workspace at `file:///projects/add`
@@ -256,7 +255,7 @@ members = ["adder", "add_one"]
 │       └── main.rs
 └── target
 </code></pre>
-<p>Lass uns in der Datei <em>add_one/src/lib.rs</em>, eine Funktion <code>add_one</code> hinzufügen.</p>
+<p>Lass uns in der Datei <em>add_one/src/lib.rs</em> eine Funktion <code>add_one</code> hinzufügen.</p>
 <p><span class="filename">Dateiname: add_one/src/lib.rs</span></p>
 <pre><code class="language-rust ignore">pub fn add_one(x: i32) -&gt; i32 {
     x + 1
@@ -268,45 +267,45 @@ Pfad zur Abhängigkeit von <code>add_one</code> hinzufügen.</p>
 <pre><code class="language-toml">[dependencies]
 add_one = { path = "../add_one" }
 </code></pre>
-<p>Cargo geht nicht davon aus, dass Kisten in einem Arbeitsbereich voneinander
+<p>Cargo geht nicht davon aus, dass Crates in einem Arbeitsbereich voneinander
 abhängen, daher müssen wir die Abhängigkeit explizit angeben.</p>
-<p>Als nächstes verwenden wir die Funktion <code>add_one</code> (aus der <code>add_one</code>-Kiste) in
-der <code>adder</code>-Kiste. Öffne die Datei <em>adder/src/main.rs</em> und ändere die Funktion
-<code>main</code>, um die Funktion <code>add_one</code> aufzurufen, siehe Codeblock 14-7.</p>
+<p>Als nächstes verwenden wir die Funktion <code>add_one</code> (aus der Crate <code>add_one</code>) in
+der Crate <code>adder</code>. Öffne die Datei <em>adder/src/main.rs</em> und ändere die Funktion
+<code>main</code>, um die Funktion <code>add_one</code> aufzurufen, siehe Listing 14-7.</p>
 <p><span class="filename">Dateiname: adder/src/main.rs</span></p>
 <pre><code class="language-rust ignore">fn main() {
     let num = 10;
     println!("Hello, world! {num} plus one is {}!", add_one::add_one(num));
 }</code></pre>
-<p><span class="caption">Codeblock 14-7: Die <code>add_one</code>-Bibliothekskiste in der
-Kiste <code>adder</code> verwenden</span></p>
+<p><span class="caption">Listing 14-7: Die <code>add_one</code>-Bibliotheks-Crate in der
+Crate <code>adder</code> verwenden</span></p>
 <p>Erstellen wir den Arbeitsbereich, indem wir <code>cargo build</code> im obersten
 Verzeichnis <em>add</em> ausführen!</p>
 <pre><code class="language-console">$ cargo build
-  Compiling add_one v0.1.0 (file:///projects/add/add_one)
-  Compiling adder v0.1.0 (file:///projects/add/adder)
-   Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.68s
+   Compiling add_one v0.1.0 (file:///projects/add/add_one)
+   Compiling adder v0.1.0 (file:///projects/add/adder)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.68s
 </code></pre>
-<p>Um die Binärkiste aus dem Verzeichnis <em>add</em> auszuführen, können wir mithilfe
-des Arguments <code>-p</code> und des Paketnamens mit <code>cargo run</code> angeben, welches Paket
-im Arbeitsbereich ausgeführt werden soll:</p>
+<p>Um die binäre Crate aus dem Verzeichnis <em>add</em> auszuführen, können wir mithilfe
+des Arguments <code>-p</code> und des Paketnamens mit <code>cargo run</code> angeben, welches Paket im
+Arbeitsbereich ausgeführt werden soll:</p>
 <pre><code class="language-console">$ cargo run -p adder
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/adder`
 Hello, world! 10 plus one is 11!
 </code></pre>
 <p>Dadurch wird der Programmcode in <em>adder/src/main.rs</em> ausgeführt, der von der
-Kiste <code>add_one</code> abhängt.</p>
+Crate <code>add_one</code> abhängt.</p>
 <h3 id="abhängigkeiten-zu-externen-paketen"><a class="header" href="#abhängigkeiten-zu-externen-paketen">Abhängigkeiten zu externen Paketen</a></h3>
 <p>Beachte, dass der Arbeitsbereich nur eine Datei <em>Cargo.lock</em> auf der obersten
-Ebene enthält, anstatt einer in jeder Kiste. Dies stellt sicher, dass alle
-Kisten dieselbe Version aller Abhängigkeiten verwenden. Wenn wir das Paket
+Ebene enthält, anstatt einer in jeder Crate. Dies stellt sicher, dass alle
+Crates dieselbe Version aller Abhängigkeiten verwenden. Wenn wir das Paket
 <code>rand</code> zu den Dateien <em>adder/Cargo.toml</em> und <em>add_one/Cargo.toml</em> hinzufügen,
 löst Cargo beide dieser Versionen zu einer auf und fügt diese in der
-<em>Cargo.lock</em>-Datei hinzu. Wenn alle Kisten im Arbeitsbereich dieselben
-Abhängigkeiten verwenden, sind die Kisten immer miteinander kompatibel. Lass
-uns die Kiste <code>rand</code> in der Datei <em>add_one/Cargo.toml</em> zum Abschnitt
-<code>[dependencies]</code> hinzufügen, damit wir die Kiste <code>rand</code> in der Kiste <code>add_one</code>
+<em>Cargo.lock</em>-Datei hinzu. Wenn alle Crates im Arbeitsbereich dieselben
+Abhängigkeiten verwenden, sind die Crates immer miteinander kompatibel. Lass uns
+die Crate <code>rand</code> in der Datei <em>add_one/Cargo.toml</em> zum Abschnitt
+<code>[dependencies]</code> hinzufügen, damit wir die Crate <code>rand</code> in der Crate <code>add_one</code>
 verwenden können:</p>
 <p><span class="filename">Dateiname: add_one/Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
@@ -314,7 +313,7 @@ rand = "0.8.5"
 </code></pre>
 <p>Wir können nun <code>use rand;</code> zur Datei <em>add_one/src/lib.rs</em> hinzufügen, und wenn
 du den gesamten Arbeitsbereich durch Ausführen von <code>cargo build</code> im Verzeichnis
-<em>add</em> erstellst, wird die Kiste <code>rand</code> eingefügt und kompiliert. Wir erhalten
+<em>add</em> erstellst, wird die Crate <code>rand</code> eingefügt und kompiliert. Wir erhalten
 eine Warnung, weil wir nicht auf <code>rand</code> referenzieren, das wir in den
 Gültigkeitsbereich gebracht haben:</p>
 <pre><code class="language-console">$ cargo build
@@ -337,7 +336,7 @@ warning: `add_one` (lib) generated 1 warning (run `cargo fix --lib -p add_one` t
 </code></pre>
 <p>Die Datei <em>Cargo.lock</em> der obersten Ebene enthält nun Informationen über die
 Abhängigkeit von <code>add_one</code> von <code>rand</code>. Obwohl <code>rand</code> irgendwo im Arbeitsbereich
-verwendet wird, können wir es nicht in anderen Kisten im Arbeitsbereich
+verwendet wird, können wir es nicht in anderen Crates im Arbeitsbereich
 verwenden, es sei denn, wir fügen <code>rand</code> zu ihren <em>Cargo.toml</em>-Dateien hinzu.
 Wenn wir beispielsweise <code>use rand;</code> zur Datei <em>adder/src/main.rs</em> für das Paket
 <code>adder</code> hinzufügen, wird folgende Fehlermeldung angezeigt:</p>
@@ -354,15 +353,15 @@ error[E0432]: unresolved import `rand`
 und geben an, dass <code>rand</code> auch eine Abhängigkeit davon ist. Durch das Erstellen
 des Pakets <code>adder</code> wird <code>rand</code> zur Liste der Abhängigkeiten für <code>adder</code> in
 <em>Cargo.lock</em> hinzugefügt, es werden jedoch keine zusätzlichen Kopien von <code>rand</code>
-heruntergeladen. Cargo stellt sicher, dass jede Kiste in jedem Paket im
+heruntergeladen. Cargo stellt sicher, dass jede Crate in jedem Paket im
 Arbeitsbereich, das das <code>rand</code>-Paket verwendet, die gleiche Version verwendet,
 solange sie kompatible Versionen von <code>rand</code> angeben, was uns Platz spart und
-sicherstellt, dass die Kisten im Arbeitsbereich miteinander kompatibel sind.</p>
-<p>Wenn Kisten im Arbeitsbereich inkompatible Versionen der gleichen Abhängigkeit
+sicherstellt, dass die Crates im Arbeitsbereich miteinander kompatibel sind.</p>
+<p>Wenn Crates im Arbeitsbereich inkompatible Versionen der gleichen Abhängigkeit
 angeben, löst Cargo jede von ihnen auf, versucht aber trotzdem, so wenige
 Versionen wie möglich aufzulösen.</p>
 <h3 id="hinzufügen-eines-tests-zu-einem-arbeitsbereich"><a class="header" href="#hinzufügen-eines-tests-zu-einem-arbeitsbereich">Hinzufügen eines Tests zu einem Arbeitsbereich</a></h3>
-<p>Füge für eine weitere Verbesserung innerhalb der <code>add_one</code>-Kiste einen Test der
+<p>Füge für eine weitere Verbesserung innerhalb der Crate <code>add_one</code> einen Test der
 Funktion <code>add_one::add_one</code> hinzu:</p>
 <p><span class="filename">Dateiname: add_one/src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -382,8 +381,8 @@ mod tests {
 }
 <span class="boring">}</span></code></pre>
 <p>Führen wir nun <code>cargo test</code> in der obersten Ebene im Verzeichnis <em>add</em> aus. Die
-Ausführung von <code>cargo test</code> in einem Arbeitsbereich, der wie dieser
-strukturiert ist, führt die Tests für alle Kisten im Arbeitsbereich aus:</p>
+Ausführung von <code>cargo test</code> in einem Arbeitsbereich, der wie dieser strukturiert
+ist, führt die Tests für alle Crates im Arbeitsbereich aus:</p>
 <pre><code class="language-console">$ cargo test
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
    Compiling adder v0.1.0 (file:///projects/add/adder)
@@ -407,13 +406,13 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
-<p>Der erste Abschnitt der Ausgabe zeigt, dass der Test <code>it_works</code> in der Kiste
-<code>add_one</code> bestanden wurde. Der nächste Abschnitt zeigt, dass in der Kiste
-<code>adder</code> keine Tests gefunden wurden, und der letzte Abschnitt zeigt, dass in
-der Kiste <code>add_one</code> keine Dokumentationstests gefunden wurden.</p>
-<p>Wir können auch Tests für eine bestimmte Kiste in einem Arbeitsbereich aus dem
+<p>Der erste Abschnitt der Ausgabe zeigt, dass der Test <code>it_works</code> in der Crate
+<code>add_one</code> bestanden wurde. Der nächste Abschnitt zeigt, dass in der Crate
+<code>adder</code> keine Tests gefunden wurden, und der letzte Abschnitt zeigt, dass in der
+Crate <code>add_one</code> keine Dokumentationstests gefunden wurden.</p>
+<p>Wir können auch Tests für eine bestimmte Crate in einem Arbeitsbereich aus dem
 Verzeichnis der obersten Ebene ausführen, indem wir die Option <code>-p</code> verwenden
-und den Namen der Kiste angeben, die wir testen möchten:</p>
+und den Namen der Crate angeben, die wir testen möchten:</p>
 <pre><code class="language-console">$ cargo test -p add_one
     Finished test [unoptimized + debuginfo] target(s) in 0.00s
      Running unittests src/lib.rs (target/debug/deps/add_one-b3235fea9a156f74)
@@ -429,19 +428,19 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
-<p>Die Ausgabe zeigt, dass <code>cargo test</code> nur die Tests der Kiste <code>add_one</code> aber
-nicht der Kiste <code>adder</code> ausgeführt hat.</p>
-<p>Wenn du die Kisten im Arbeitsbereich unter <a href="https://crates.io/">crates.io</a> veröffentlichst,
-muss jede Kiste im Arbeitsbereich separat veröffentlicht werden. Der Befehl
+<p>Die Ausgabe zeigt, dass <code>cargo test</code> nur die Tests der Crate <code>add_one</code>, aber
+nicht der Crate <code>adder</code> ausgeführt hat.</p>
+<p>Wenn du die Crates im Arbeitsbereich unter <a href="https://crates.io/">crates.io</a> veröffentlichst,
+muss jede Crate im Arbeitsbereich separat veröffentlicht werden. Der Befehl
 <code>cargo publish</code> hat keine Option <code>--all</code> oder <code>-p</code>, daher musst du in das
-Verzeichnis jeder Kiste wechseln und <code>cargo publish</code> für jede Kiste im
-Arbeitsbereich ausführen, um die Kisten zu veröffentlichen.</p>
-<p>Als zusätzliche Übung, füge ähnlich der Kiste <code>add_one</code> diesem Arbeitsbereich
-eine Kiste <code>add-two</code> hinzu!</p>
+Verzeichnis jeder Crate wechseln und <code>cargo publish</code> für jede Crate im
+Arbeitsbereich ausführen, um die Crates zu veröffentlichen.</p>
+<p>Als zusätzliche Übung, füge ähnlich der Crate <code>add_one</code> diesem Arbeitsbereich
+eine Crate <code>add-two</code> hinzu!</p>
 <p>Wenn dein Projekt wächst, solltest du einen Arbeitsbereich verwenden: Es
 ermöglicht dir, mit kleineren, leichter zu verstehenden Komponenten zu arbeiten
 als mit einem großen Klumpen von Code. Darüber hinaus kann die Verwaltung von
-Kisten in einem Arbeitsbereich die Koordination zwischen Kisten erleichtern,
+Crates in einem Arbeitsbereich die Koordination zwischen Crates erleichtern,
 wenn sie häufig zur gleichen Zeit verändert werden.</p>
 
                     </main>

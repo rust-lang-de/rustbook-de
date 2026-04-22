@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Gemeinsames Verhalten definieren mit Merkmalen (traits) - Die Programmiersprache Rust</title>
+        <title>Gemeinsames Verhalten definieren mit Traits - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,21 +161,21 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="gemeinsames-verhalten-definieren-mit-merkmalen-traits"><a class="header" href="#gemeinsames-verhalten-definieren-mit-merkmalen-traits">Gemeinsames Verhalten definieren mit Merkmalen (traits)</a></h2>
-<p>Ein <em>Merkmal</em> (trait) definiert die Funktionalität, den ein bestimmter Typ hat
-und mit anderen Typen teilen kann. Wir können Merkmale verwenden, um
-gemeinsames Verhalten auf abstrakte Weise zu definieren. Wir können
-Merkmalsabgrenzungen (trait bounds) verwenden, um anzugeben, dass ein
-generischer Typ jeder Typ sein kann, der ein bestimmtes Verhalten aufweist.</p>
+                        <h2 id="gemeinsames-verhalten-definieren-mit-traits"><a class="header" href="#gemeinsames-verhalten-definieren-mit-traits">Gemeinsames Verhalten definieren mit Traits</a></h2>
+<p>Ein <em>Trait</em> (Merkmal) definiert die Funktionalität, die ein bestimmter Typ hat
+und mit anderen Typen teilen kann. Wir können Traits verwenden, um gemeinsames
+Verhalten auf abstrakte Weise zu definieren. Wir können Trait Bounds verwenden,
+um anzugeben, dass ein generischer Typ jeder Typ sein kann, der ein bestimmtes
+Verhalten aufweist.</p>
 <blockquote>
-<p>Anmerkung: Merkmale sind einer Funktionalität recht ähnlich, die in anderen
+<p>Anmerkung: Traits sind einer Funktionalität recht ähnlich, die in anderen
 Sprachen oft <em>Schnittstelle</em> (interface) genannt wird, wenn auch mit einigen
 Unterschieden.</p>
 </blockquote>
-<h3 id="ein-merkmal-definieren"><a class="header" href="#ein-merkmal-definieren">Ein Merkmal definieren</a></h3>
+<h3 id="ein-trait-definieren"><a class="header" href="#ein-trait-definieren">Ein Trait definieren</a></h3>
 <p>Das Verhalten eines Typs besteht aus den Methoden, die wir auf diesen Typ
 anwenden können. Verschiedene Typen haben das gleiche Verhalten, wenn wir bei
-allen die gleichen Methoden aufrufen können. Merkmalsdefinitionen sind eine
+allen die gleichen Methoden aufrufen können. Trait-Definitionen sind eine
 Möglichkeit, Methodensignaturen zu gruppieren, um eine Reihe von
 Verhaltensweisen zu definieren, die zum Erreichen eines bestimmten Zwecks
 erforderlich sind.</p>
@@ -185,13 +185,13 @@ die eine Nachricht enthält, die sich auf einen bestimmten Ort bezieht, und ein
 <code>SocialPost</code>, der maximal 280 Zeichen umfassen kann, sowie Metadaten, die
 angeben, ob es sich um eine neue Nachricht, eine Wiederholung oder eine Antwort
 auf eine andere Nachricht handelt.</p>
-<p>Wir wollen eine Medienaggregator-Bibliothekskiste namens <code>aggregator</code>
+<p>Wir wollen eine Medienaggregator-Bibliotheks-Crate namens <code>aggregator</code>
 erstellen, die Zusammenfassungen von Daten anzeigen kann, die in einer
-<code>NewsArticle</code>- oder <code>SocialPost</code>-Instanz gespeichert sein könnten. Dazu
-brauchen wir eine Zusammenfassung von jedem Typ, und wir werden diese
-Zusammenfassung anfordern, indem wir eine Methode <code>summarize</code> auf einer Instanz
-aufrufen. Codeblock 10-12 zeigt die Definition eines öffentlichen
-<code>Summary</code>-Merkmals, das dieses Verhalten zum Ausdruck bringt.</p>
+<code>NewsArticle</code>- oder <code>SocialPost</code>-Instanz gespeichert sein könnten. Dazu brauchen
+wir eine Zusammenfassung von jedem Typ, und wir werden diese Zusammenfassung
+anfordern, indem wir eine Methode <code>summarize</code> auf einer Instanz aufrufen.
+Listing 10-12 zeigt die Definition eines öffentlichen Traits <code>Summary</code>, die
+dieses Verhalten zum Ausdruck bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -199,31 +199,29 @@ aufrufen. Codeblock 10-12 zeigt die Definition eines öffentlichen
     fn summarize(&amp;self) -&gt; String;
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 10-12: Ein Merkmal <code>Summary</code>, dessen Verhalten
-aus der Methode <code>summarize</code> besteht</span></p>
-<p>Hier deklarieren wir ein Merkmal mit dem Schlüsselwort <code>trait</code> und dann den
-Namen des Merkmals, der in diesem Fall <code>Summary</code> lautet. Wir deklarieren das
-Merkmal auch als <code>pub</code>, sodass Kisten, die von dieser Kiste abhängen, dieses
-Merkmal ebenfalls nutzen können, wie wir in einigen Beispielen sehen werden.
-Innerhalb der geschweiften Klammern deklarieren wir die Methodensignaturen, die
-das Verhalten der Typen beschreiben, die dieses Merkmal implementieren, was in
-diesem Fall <code>fn summarize(&amp;self) -&gt; String</code> ist.</p>
+<p><span class="caption">Listing 10-12: Ein Trait <code>Summary</code>, dessen Verhalten aus
+der Methode <code>summarize</code> besteht</span></p>
+<p>Hier deklarieren wir ein Trait mit dem Schlüsselwort <code>trait</code> und dann den Namen
+des Traits, der in diesem Fall <code>Summary</code> lautet. Wir deklarieren das Trait auch
+als <code>pub</code>, sodass Crates, die von dieser Crate abhängen, dieses Trait ebenfalls
+nutzen können, wie wir in einigen Beispielen sehen werden. Innerhalb der
+geschweiften Klammern deklarieren wir die Methodensignaturen, die das Verhalten
+der Typen beschreiben, die dieses Trait implementieren, was in diesem Fall <code>fn summarize(&amp;self) -&gt; String</code> ist.</p>
 <p>Nach der Methodensignatur verwenden wir statt einer Implementierung in
-geschweiften Klammern ein Semikolon. Jeder Typ, der dieses Merkmal
-implementiert, muss sein eigenes benutzerdefiniertes Verhalten für den
-Methodenrumpf bereitstellen. Der Compiler wird sicherstellen, dass jeder
-Typ, der das Merkmal <code>Summary</code> hat, die Methode <code>summarize</code> mit genau dieser
-Signatur hat.</p>
-<p>Ein Merkmal kann mehrere Methoden umfassen: Die Methodensignaturen werden
+geschweiften Klammern ein Semikolon. Jeder Typ, der dieses Trait implementiert,
+muss sein eigenes benutzerdefiniertes Verhalten für den Methodenrumpf
+bereitstellen. Der Compiler wird sicherstellen, dass jeder Typ, der das Trait
+<code>Summary</code> hat, die Methode <code>summarize</code> mit genau dieser Signatur hat.</p>
+<p>Ein Trait kann mehrere Methoden umfassen: Die Methodensignaturen werden
 zeilenweise aufgelistet und jede Zeile endet mit einem Semikolon.</p>
-<h3 id="ein-merkmal-für-einen-typ-implementieren"><a class="header" href="#ein-merkmal-für-einen-typ-implementieren">Ein Merkmal für einen Typ implementieren</a></h3>
-<p>Nachdem wir nun die gewünschten Signaturen der Methoden des Merkmals <code>Summary</code>
+<h3 id="ein-trait-für-einen-typ-implementieren"><a class="header" href="#ein-trait-für-einen-typ-implementieren">Ein Trait für einen Typ implementieren</a></h3>
+<p>Nachdem wir nun die gewünschten Signaturen der Methoden des Traits <code>Summary</code>
 definiert haben, können wir sie für die Typen in unserem Medienaggregator
-implementieren. Codeblock 10-13 zeigt eine Implementierung des Merkmals
-<code>Summary</code> für die Struktur <code>NewsArticle</code>, die die Überschrift, den Autor und
-den Ort verwendet, um den Rückgabewert von <code>summarize</code> zu erzeugen. Für die
-Struktur <code>SocialPost</code> definieren wir <code>summarize</code> als den Benutzernamen, gefolgt
-vom gesamten Text der Nachricht, wobei wir davon ausgehen, dass der Inhalt der
+implementieren. Listing 10-13 zeigt eine Implementierung des Traits <code>Summary</code>
+für die Struktur <code>NewsArticle</code>, die die Überschrift, den Autor und den Ort
+verwendet, um den Rückgabewert von <code>summarize</code> zu erzeugen. Für die Struktur
+<code>SocialPost</code> definieren wir <code>summarize</code> als den Benutzernamen, gefolgt vom
+gesamten Text der Nachricht, wobei wir davon ausgehen, dass der Inhalt der
 Nachricht bereits auf 280 Zeichen begrenzt ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -258,25 +256,24 @@ impl Summary for SocialPost {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 10-13: Implementierung des Merkmals <code>Summary</code>
+<p><span class="caption">Listing 10-13: Implementierung des Traits <code>Summary</code>
 für die Typen <code>NewsArticle</code> und <code>SocialPost</code></span></p>
-<p>Die Implementierung eines Merkmals für einen Typ ist ähnlich zur
-Implementierung regulärer Methoden. Der Unterschied besteht darin, dass wir
-nach <code>impl</code> den Namen des Merkmals schreiben, das wir implementieren wollen
-und dann das Schlüsselwort <code>for</code> gefolgt vom Namen des Typs, für den wir
-das Merkmal implementieren wollen. Innerhalb des <code>impl</code>-Blocks geben wir die
-Methodensignaturen an, die das Merkmal vorgibt. Anstatt nach jeder Signatur ein
+<p>Die Implementierung eines Traits für einen Typ ist ähnlich zur Implementierung
+regulärer Methoden. Der Unterschied besteht darin, dass wir nach <code>impl</code> den
+Namen des Traits schreiben, das wir implementieren wollen und dann das
+Schlüsselwort <code>for</code> gefolgt vom Namen des Typs, für den wir das Trait
+implementieren wollen. Innerhalb des <code>impl</code>-Blocks geben wir die
+Methodensignaturen an, die das Trait vorgibt. Anstatt nach jeder Signatur ein
 Semikolon zu schreiben, verwenden wir geschweifte Klammern und füllen den
-Methodenrumpf mit dem spezifischen Verhalten, das die Methoden des Merkmals für
+Methodenrumpf mit dem spezifischen Verhalten, das die Methoden des Traits für
 den jeweiligen Typ haben sollen.</p>
-<p>Da die Bibliothek nun das Merkmal <code>Summary</code> auf <code>NewsArticle</code> und <code>SocialPost</code>
-implementiert hat, können Benutzer der Kiste die Merkmals-Methoden auf
-Instanzen von <code>NewsArticle</code> und <code>SocialPost</code> auf die gleiche Weise aufrufen,
-wie wir reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass
-der Benutzer das Merkmal sowie die Typen in den Gültigkeitsbereich bringen
-muss, um die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel
-dafür, wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden
-könnte:</p>
+<p>Da die Bibliothek nun das Trait <code>Summary</code> auf <code>NewsArticle</code> und <code>SocialPost</code>
+implementiert hat, können Benutzer der Crate die Trait-Methoden auf Instanzen
+von <code>NewsArticle</code> und <code>SocialPost</code> auf die gleiche Weise aufrufen, wie wir
+reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass der
+Benutzer das Trait sowie die Typen in den Gültigkeitsbereich bringen muss, um
+die zusätzlichen Trait-Methoden zu erhalten. Hier ist ein Beispiel dafür, wie
+eine binäre Crate unsere Bibliotheks-Crate <code>aggregator</code> verwenden könnte:</p>
 <pre><code class="language-rust ignore">use aggregator::{self, Summary, SocialPost};
 
 fn main() {
@@ -290,37 +287,34 @@ fn main() {
     println!("1 neue Nachricht: {}", post.summarize());
 }</code></pre>
 <p>Dieser Code gibt <code>1 neue Nachricht: horse_ebooks: natürlich, wie du wahrscheinlich schon weißt</code> aus.</p>
-<p>Andere Kisten, die von der <code>aggregator</code>-Kiste abhängen, können auch das Merkmal
+<p>Andere Crates, die von der Crate <code>aggregator</code> abhängen, können auch das Trait
 <code>Summary</code> in den Gültigkeitsbereich bringen, um <code>Summary</code> auf ihren eigenen
-Typen zu implementieren. Eine Einschränkung ist, dass wir ein Merkmal für einen
-Typ nur dann implementieren können, wenn entweder das Merkmal und/oder der Typ
-lokal in unserer Kiste vorhanden ist. Zum Beispiel können wir
-Standard-Bibliotheksmerkmale wie <code>Display</code> auf einem benutzerdefinierten Typ
-wie <code>SocialPost</code> als Teil unserer <code>aggregator</code>-Kistenfunktionalität
-implementieren, weil der Typ <code>SocialPost</code> lokal zu unserer <code>aggregator</code>-Kiste
-gehört. Wir können auch <code>Summary</code> auf <code>Vec&lt;T&gt;</code> in unserer <code>aggregator</code>-Kiste
-implementieren, weil das Merkmal <code>Summary</code> lokal zu unserer <code>aggregator</code>-Kiste
-gehört.</p>
-<p>Aber wir können externe Merkmale nicht auf externe Typen anwenden. Zum Beispiel
-können wir das Merkmal <code>Display</code> auf <code>Vec&lt;T&gt;</code> in unserer <code>aggregator</code>-Kiste
-nicht implementieren, weil <code>Display</code> und <code>Vec&lt;T&gt;</code> in der Standardbibliothek
-definiert sind und nicht lokal zu unserer <code>aggregator</code>-Kiste gehören. Diese
-Beschränkung ist Teil einer Eigenschaft von Programmen namens <em>Kohärenz</em>
-(coherence), genauer gesagt der <em>Waisenregel</em> (orphan rule), die so genannt
-wird, weil der übergeordnete Typ nicht vorhanden ist. Diese Regel stellt
-sicher, dass der Code anderer Personen deinen Code nicht brechen kann und
-umgekehrt. Ohne diese Regel könnten zwei Kisten dasselbe Merkmal für denselben
-Typ implementieren und Rust wüsste nicht, welche Implementierung es verwenden
-sollte.</p>
+Typen zu implementieren. Eine Einschränkung ist, dass wir ein Trait für einen
+Typ nur dann implementieren können, wenn entweder das Trait oder der Typ lokal
+in unserer Crate vorhanden ist. Zum Beispiel können wir
+Standardbibliotheks-Traits wie <code>Display</code> auf einem benutzerdefinierten Typ wie
+<code>SocialPost</code> als Teil unserer <code>aggregator</code>-Crate-Funktionalität implementieren,
+weil der Typ <code>SocialPost</code> lokal zu unserer Crate <code>aggregator</code> gehört. Wir können
+auch <code>Summary</code> auf <code>Vec&lt;T&gt;</code> in unserer Crate <code>aggregator</code> implementieren, weil
+das Trait <code>Summary</code> lokal zu unserer Crate <code>aggregator</code> gehört.</p>
+<p>Aber wir können externe Traits nicht auf externe Typen anwenden. Zum Beispiel
+können wir das Trait <code>Display</code> auf <code>Vec&lt;T&gt;</code> in unserer Crate <code>aggregator</code> nicht
+implementieren, weil <code>Display</code> und <code>Vec&lt;T&gt;</code> in der Standardbibliothek definiert
+sind und nicht lokal zu unserer Crate <code>aggregator</code> gehören. Diese Beschränkung
+ist Teil einer Eigenschaft von Programmen namens <em>Kohärenz</em> (coherence), genauer
+gesagt der <em>Waisenregel</em> (orphan rule), die so genannt wird, weil der
+übergeordnete Typ nicht vorhanden ist. Diese Regel stellt sicher, dass der Code
+anderer Personen deinen Code nicht brechen kann und umgekehrt. Ohne diese Regel
+könnten zwei Crates dasselbe Trait für denselben Typ implementieren und Rust
+wüsste nicht, welche Implementierung es verwenden sollte.</p>
 <h3 id="standard-implementierungen-verwenden"><a class="header" href="#standard-implementierungen-verwenden">Standard-Implementierungen verwenden</a></h3>
 <p>Manchmal ist es nützlich, ein Standardverhalten für einige oder alle Methoden
-eines Merkmals zu haben, anstatt Implementierungen für alle Methoden für jeden
-Typ zu verlangen. Wenn wir dann das Merkmal für einen bestimmten Typ
-implementieren, können wir das Standardverhalten jeder Methode beibehalten oder
-überschreiben.</p>
-<p>In Codeblock 10-14 geben wir eine Standard-Zeichenkette für die Methode
-<code>summarize</code> des Merkmals <code>Summary</code> an, anstatt nur die Methodensignatur zu
-definieren, wie wir es in Codeblock 10-12 getan haben.</p>
+eines Traits zu haben, anstatt Implementierungen für alle Methoden für jeden Typ
+zu verlangen. Wenn wir dann das Trait für einen bestimmten Typ implementieren,
+können wir das Standardverhalten jeder Methode beibehalten oder überschreiben.</p>
+<p>In Listing 10-14 geben wir einen Standard-String für die Methode <code>summarize</code> des
+Traits <code>Summary</code> an, anstatt nur die Methodensignatur zu definieren, wie wir es
+in Listing 10-12 getan haben.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -352,15 +346,15 @@ definieren, wie wir es in Codeblock 10-12 getan haben.</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 10-14: Definieren eines Merkmals <code>Summary</code> mit
+<p><span class="caption">Listing 10-14: Definieren eines Traits <code>Summary</code> mit
 einer Standard-Implementierung der Methode <code>summarize</code></span></p>
 <p>Um eine Standard-Implementierung zu verwenden, um Instanzen von <code>NewsArticle</code>
 zusammenzufassen, geben wir einen leeren <code>impl</code>-Block mit <code>impl Summary for NewsArticle {}</code> an.</p>
 <p>Auch wenn wir die Methode <code>summarize</code> nicht mehr direkt für <code>NewsArticle</code>
 definieren, haben wir eine Standard-Implementierung bereitgestellt und
-festgelegt, dass <code>NewsArticle</code> das Merkmal <code>Summary</code> implementiert.
-Infolgedessen können wir immer noch die Methode <code>summarize</code> einer
-<code>NewsArticle</code>-Instanz aufrufen, etwa so:</p>
+festgelegt, dass <code>NewsArticle</code> das Trait <code>Summary</code> implementiert. Infolgedessen
+können wir immer noch die Methode <code>summarize</code> einer <code>NewsArticle</code>-Instanz
+aufrufen, etwa so:</p>
 <pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, NewsArticle, Summary};
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -377,15 +371,15 @@ Infolgedessen können wir immer noch die Methode <code>summarize</code> einer
 <span class="boring">}</span></code></pre>
 <p>Dieser Code gibt <code>Neuer Artikel verfügbar! (Lies mehr ...)</code> aus.</p>
 <p>Das Erstellen einer Standard-Implementierung erfordert nicht, dass wir an der
-Implementierung von <code>Summary</code> für <code>SocialPost</code> in Codeblock 10-13 etwas ändern.
+Implementierung von <code>Summary</code> für <code>SocialPost</code> in Listing 10-13 etwas ändern.
 Der Grund dafür ist, dass die Syntax für das Überschreiben einer
 Standard-Implementierung die gleiche ist wie die Syntax für die Implementierung
-einer Merkmalsmethode, die keine Standard-Implementierung hat.</p>
-<p>Standard-Implementierungen können andere Methoden desselben Merkmals aufrufen,
+einer Trait-Methode, die keine Standard-Implementierung hat.</p>
+<p>Standard-Implementierungen können andere Methoden desselben Traits aufrufen,
 selbst wenn diese anderen Methoden keine Standard-Implementierung haben. Auf
-diese Weise kann ein Merkmal eine Menge nützlicher Funktionalität bereitstellen
+diese Weise kann ein Trait eine Menge nützlicher Funktionalität bereitstellen
 und von den Implementierern nur die Angabe eines kleinen Teils verlangen. Zum
-Beispiel könnten wir das Merkmal <code>Summary</code> so definieren, dass wir eine Methode
+Beispiel könnten wir das Trait <code>Summary</code> so definieren, dass wir eine Methode
 <code>summarize_author</code> haben, deren Implementierung erforderlich ist, und dann eine
 Methode <code>summarize</code> definieren, die eine Standard-Implementierung hat und die
 Methode <code>summarize_author</code> aufruft:</p>
@@ -413,7 +407,7 @@ Methode <code>summarize_author</code> aufruft:</p>
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Um diese Version von <code>Summary</code> zu verwenden, müssen wir <code>summarize_author</code> nur
-dann definieren, wenn wir das Merkmal für einen Typ implementieren:</p>
+dann definieren, wenn wir das Trait für einen Typ implementieren:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
@@ -440,9 +434,9 @@ dann definieren, wenn wir das Merkmal für einen Typ implementieren:</p>
 <p>Nachdem wir <code>summarize_author</code> definiert haben, können wir <code>summarize</code> auf
 Instanzen der <code>SocialPost</code>-Struktur aufrufen, und die Standard-Implementierung
 von <code>summarize</code> wird die Definition von <code>summarize_author</code> aufrufen, die wir
-bereitgestellt haben. Da wir <code>summarize_author</code> implementiert haben, hat uns
-das Merkmal <code>Summary</code> das Verhalten der Methode <code>summarize</code> mitgeliefert, ohne
-dass wir weiteren Code schreiben müssen. Das sieht dann so aus:</p>
+bereitgestellt haben. Da wir <code>summarize_author</code> implementiert haben, hat uns das
+Trait <code>Summary</code> das Verhalten der Methode <code>summarize</code> mitgeliefert, ohne dass
+wir weiteren Code schreiben müssen. Das sieht dann so aus:</p>
 <pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, Summary, SocialPost};
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -458,14 +452,15 @@ dass wir weiteren Code schreiben müssen. Das sieht dann so aus:</p>
 <p>Dieser Code gibt <code>1 neue Nachricht: (Lies mehr von @horse_ebooks...)</code> aus.</p>
 <p>Beachte, dass es nicht möglich ist, die Standardimplementierung von einer
 übergeordneten Implementierung derselben Methode aus aufzurufen.</p>
-<h3 id="merkmale-als-parameter-verwenden"><a class="header" href="#merkmale-als-parameter-verwenden">Merkmale als Parameter verwenden</a></h3>
-<p>Da du jetzt weißt, wie man Merkmale definiert und implementiert, können wir
-untersuchen, wie man Merkmale zur Definition von Funktionen verwendet, die
-viele verschiedene Typen akzeptieren. Wir verwenden das Merkmal <code>Summary</code>, das
-wir für die Typen <code>NewsArticle</code> und <code>SocialPost</code> in Codeblock 10-13
-implementiert haben, um eine Funktion <code>notify</code> zu definieren, die die Methode
-<code>summarize</code> für ihren Parameter <code>item</code> aufruft, der von einem Typ ist, der das
-Merkmal <code>Summary</code> implementiert. Um dies zu tun, können wir die Syntax <code>impl  Trait</code> verwenden, etwa so:</p>
+<h3 id="traits-als-parameter-verwenden"><a class="header" href="#traits-als-parameter-verwenden">Traits als Parameter verwenden</a></h3>
+<p>Da du jetzt weißt, wie man Traits definiert und implementiert, können wir
+untersuchen, wie man Traits zur Definition von Funktionen verwendet, die viele
+verschiedene Typen akzeptieren. Wir verwenden das Trait <code>Summary</code>, das wir für
+die Typen <code>NewsArticle</code> und <code>SocialPost</code> in Listing 10-13 implementiert haben,
+um eine Funktion <code>notify</code> zu definieren, die die Methode <code>summarize</code> für ihren
+Parameter <code>item</code> aufruft, der von einem Typ ist, der das Trait <code>Summary</code>
+implementiert. Um dies zu tun, können wir die Syntax <code>impl Trait</code> verwenden,
+etwa so:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
@@ -503,17 +498,17 @@ Merkmal <code>Summary</code> implementiert. Um dies zu tun, können wir die Synt
 }
 <span class="boring">}</span></code></pre>
 <p>Anstelle eines konkreten Typs für den Parameter <code>item</code> geben wir das
-Schlüsselwort <code>impl</code> und den Merkmalsnamen an. Dieser Parameter akzeptiert
-jeden Typ, der das angegebene Merkmal implementiert. Im Rumpf von <code>notify</code>
-können wir alle Methoden von <code>item</code> aufrufen, die vom Merkmal <code>Summary</code>
-herrühren, zum Beispiel <code>summarize</code>. Wir können <code>notify</code> aufrufen und jede
-Instanz von <code>NewsArticle</code> und <code>SocialPost</code> angeben. Code, der die Funktion mit
-einem anderen Typ aufruft, z.B. <code>String</code> oder <code>i32</code>, lässt sich nicht
-kompilieren, da diese Typen kein <code>Summary</code> implementieren.</p>
-<h4 id="merkmalsabgrenzungs-syntax"><a class="header" href="#merkmalsabgrenzungs-syntax">Merkmalsabgrenzungs-Syntax</a></h4>
+Schlüsselwort <code>impl</code> und den Trait-Namen an. Dieser Parameter akzeptiert jeden
+Typ, der das angegebene Trait implementiert. Im Rumpf von <code>notify</code> können wir
+alle Methoden von <code>item</code> aufrufen, die vom Trait <code>Summary</code> herrühren, zum
+Beispiel <code>summarize</code>. Wir können <code>notify</code> aufrufen und jede Instanz von
+<code>NewsArticle</code> und <code>SocialPost</code> angeben. Code, der die Funktion mit einem anderen
+Typ aufruft, z.B. <code>String</code> oder <code>i32</code>, lässt sich nicht kompilieren, da diese
+Typen kein <code>Summary</code> implementieren.</p>
+<h4 id="trait-bound-syntax"><a class="header" href="#trait-bound-syntax">Trait Bound Syntax</a></h4>
 <p>Die Syntax <code>impl Trait</code> funktioniert für einfache Fälle, ist aber eigentlich
-syntaktischer Zucker für eine längere Form, die <em>Merkmalsabgrenzung</em> (trait
-bound) genannt wird; sie sieht so aus:</p>
+syntaktischer Zucker für eine längere Form, die <em>Trait Bound</em> genannt wird; sie
+sieht so aus:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
@@ -525,42 +520,40 @@ bound) genannt wird; sie sieht so aus:</p>
 }
 <span class="boring">}</span></code></pre>
 <p>Diese längere Form entspricht dem Beispiel im vorigen Abschnitt, ist aber
-wortreicher. Wir platzieren Merkmalsabgrenzungen in der Deklaration des
-generischen Typparameters nach einem Doppelpunkt und innerhalb spitzer
-Klammern.</p>
+wortreicher. Wir platzieren Trait Bounds in der Deklaration des generischen
+Typparameters nach einem Doppelpunkt und innerhalb spitzer Klammern.</p>
 <p>Die Syntax <code>impl Trait</code> ist bequem und ermöglicht in einfachen Fällen einen
-prägnanteren Code, während die umfassendere Merkmalsabgrenzungs-Syntax mehr
-Komplexität ausdrücken kann. Zum Beispiel können wir zwei Parameter haben, die
-<code>Summary</code> implementieren. Das Verwenden der Syntax <code>impl Trait</code> sieht
-folgendermaßen aus:</p>
+prägnanteren Code, während die umfassendere Trait Bound Syntax mehr Komplexität
+ausdrücken kann. Zum Beispiel können wir zwei Parameter haben, die <code>Summary</code>
+implementieren. Das Verwenden der Syntax <code>impl Trait</code> sieht folgendermaßen aus:</p>
 <pre><code class="language-rust ignore">pub fn notify(item1: &amp;impl Summary, item2: &amp;impl Summary) {</code></pre>
 <p>Die Verwendung von <code>impl Trait</code> ist angemessen, wenn wir wollten, dass diese
 Funktion bei <code>item1</code> und <code>item2</code> unterschiedliche Typen haben kann (solange
 beide Typen <code>Summary</code> implementieren). Wenn beide Parameter aber den gleichen
-Typ haben sollen, müssen wir eine Merkmalsabgrenzung verwenden, so wie hier:</p>
+Typ haben sollen, müssen wir eine Trait Bound verwenden, so wie hier:</p>
 <pre><code class="language-rust ignore">pub fn notify&lt;T: Summary&gt;(item1: &amp;T, item2: &amp;T) {</code></pre>
 <p>Der als Parametertyp für <code>item1</code> und <code>item2</code> angegebene generische Typ <code>T</code>
 schränkt die Funktion so ein, dass der konkrete Typ der als Argument für
 <code>item1</code> und <code>item2</code> übergebenen Werte derselbe sein muss.</p>
-<h4 id="mehrere-merkmalsabgrenzungen-mit-der-syntax-"><a class="header" href="#mehrere-merkmalsabgrenzungen-mit-der-syntax-">Mehrere Merkmalsabgrenzungen mit der Syntax <code>+</code></a></h4>
-<p>Wir können auch mehr als eine Merkmalsabgrenzung angeben. Nehmen wir an, wir
-wollen, dass sowohl <code>notify</code> als auch die Methode <code>summarize</code> die
-Bildschirmausgabe für <code>item</code> formatieren: Spezifizieren wir in der
-<code>notify</code>-Definition, dass <code>item</code> sowohl <code>Display</code> als auch <code>Summary</code>
-implementieren muss. Wir können dies mit der Syntax <code>+</code> tun:</p>
+<h4 id="mehrere-trait-bounds-mit-der-syntax-"><a class="header" href="#mehrere-trait-bounds-mit-der-syntax-">Mehrere Trait Bounds mit der Syntax <code>+</code></a></h4>
+<p>Wir können auch mehr als eine Trait Bound angeben. Nehmen wir an, wir wollen,
+dass sowohl <code>notify</code> als auch die Methode <code>summarize</code> die Bildschirmausgabe für
+<code>item</code> formatieren: Spezifizieren wir in der <code>notify</code>-Definition, dass <code>item</code>
+sowohl <code>Display</code> als auch <code>Summary</code> implementieren muss. Wir können dies mit der
+Syntax <code>+</code> tun:</p>
 <pre><code class="language-rust ignore">pub fn notify(item: &amp;(impl Summary + Display)) {</code></pre>
-<p>Die Syntax <code>+</code> ist auch bei Merkmalsabgrenzungen mit generischen Typen gültig:</p>
+<p>Die Syntax <code>+</code> ist auch bei Trait Bounds mit generischen Typen gültig:</p>
 <pre><code class="language-rust ignore">pub fn notify&lt;T: Summary + Display&gt;(item: &amp;T) {</code></pre>
-<p>Mit den beiden angegebenen Merkmalsabgrenzungen kann der Rumpf von <code>notify</code> die
-Methode <code>summarize</code> aufrufen und <code>{}</code> verwenden, um <code>item</code> zu formatieren.</p>
-<h4 id="klarere-merkmalsabgrenzungen-mit-where-klauseln"><a class="header" href="#klarere-merkmalsabgrenzungen-mit-where-klauseln">Klarere Merkmalsabgrenzungen mit <code>where</code>-Klauseln</a></h4>
-<p>Zu viele Merkmalsabgrenzungen zu verwenden, hat seine Schattenseiten. Jeder
-generische Datentyp hat seine eigenen Merkmalsabgrenzungen, sodass Funktionen
-mit mehreren generischen Typparametern viele Merkmalsabgrenzungsangaben
-zwischen Funktionsname und Parameterliste enthalten können, wodurch die
-Funktionssignatur schwer lesbar wird. Aus diesem Grund hat Rust für die Angabe
-von Merkmalsabgrenzungen eine alternative Syntax in Form einer <code>where</code>-Klausel
-nach der Funktionssignatur. Anstatt das hier zu schreiben:</p>
+<p>Mit den beiden angegebenen Trait Bounds kann der Rumpf von <code>notify</code> die Methode
+<code>summarize</code> aufrufen und <code>{}</code> verwenden, um <code>item</code> zu formatieren.</p>
+<h4 id="klarere-trait-bounds-mit-where-klauseln"><a class="header" href="#klarere-trait-bounds-mit-where-klauseln">Klarere Trait Bounds mit <code>where</code>-Klauseln</a></h4>
+<p>Zu viele Trait Bounds zu verwenden, hat seine Schattenseiten. Jeder generische
+Datentyp hat seine eigenen Trait Bounds, sodass Funktionen mit mehreren
+generischen Typparametern viele Trait Bound Angaben zwischen Funktionsname und
+Parameterliste enthalten können, wodurch die Funktionssignatur schwer lesbar
+wird. Aus diesem Grund hat Rust für die Angabe von Trait Bounds eine alternative
+Syntax in Form einer <code>where</code>-Klausel nach der Funktionssignatur. Anstatt das
+hier zu schreiben:</p>
 <pre><code class="language-rust ignore">fn some_function&lt;T: Display + Clone, U: Clone + Debug&gt;(t: &amp;T, u: &amp;U) -&gt; i32 {</code></pre>
 <p>können wir eine <code>where</code>-Klausel wie folgt verwenden:</p>
 <pre><code class="language-rust ignore">fn some_function&lt;T, U&gt;(t: &amp;T, u: &amp;U) -&gt; i32
@@ -572,8 +565,8 @@ where
 </span><span class="boring">}</span></code></pre>
 <p>Die Signatur dieser Funktion ist übersichtlicher: Der Funktionsname, die
 Parameterliste und der Rückgabetyp liegen nahe beieinander, ähnlich wie bei
-einer Funktion ohne viele Merkmalsabgrenzungen.</p>
-<h3 id="rückgabetypen-die-merkmale-implementieren"><a class="header" href="#rückgabetypen-die-merkmale-implementieren">Rückgabetypen, die Merkmale implementieren</a></h3>
+einer Funktion ohne viele Trait Bounds.</p>
+<h3 id="rückgabetypen-die-traits-implementieren"><a class="header" href="#rückgabetypen-die-traits-implementieren">Rückgabetypen, die Traits implementieren</a></h3>
 <p>Wir können die Syntax <code>impl Trait</code> auch für den Rückgabetyp verwenden, wie hier
 gezeigt:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -618,18 +611,17 @@ gezeigt:</p>
 }
 <span class="boring">}</span></code></pre>
 <p>Durch Verwenden von <code>impl Summary</code> für den Rückgabetyp legen wir fest, dass die
-Funktion <code>returns_summarizable</code> einen Typ zurückgibt, der das Merkmal <code>Summary</code>
+Funktion <code>returns_summarizable</code> einen Typ zurückgibt, der das Trait <code>Summary</code>
 implementiert, ohne den konkreten Typ zu nennen. In diesem Fall gibt
 <code>returns_summarizable</code> einen <code>SocialPost</code> zurück, aber der Code, der diese
 Funktion aufruft, muss das nicht wissen.</p>
-<p>Die Fähigkeit, einen Rückgabetyp nur durch das Merkmal, das er implementiert,
-zu spezifizieren, ist besonders nützlich im Zusammenhang mit
-Funktionsabschlüssen und Iteratoren, die wir in Kapitel 13 behandeln.
-Funktionsabschlüsse und Iteratoren erzeugen Typen, die nur der Compiler
-kennt oder deren Spezifikation sehr lang ist. Mit der Syntax <code>impl Trait</code>
-kannst du prägnant angeben, dass eine Funktion einen Typ zurückgibt, der das
-Merkmal <code>Iterator</code> implementiert, ohne dass du einen sehr langen Typ schreiben
-musst.</p>
+<p>Die Fähigkeit, einen Rückgabetyp nur durch das Trait, das er implementiert, zu
+spezifizieren, ist besonders nützlich im Zusammenhang mit Closures und
+Iteratoren, die wir in Kapitel 13 behandeln. Closures und Iteratoren erzeugen
+Typen, die nur der Compiler kennt oder deren Spezifikation sehr lang ist. Mit
+der Syntax <code>impl Trait</code> kannst du prägnant angeben, dass eine Funktion einen Typ
+zurückgibt, der das Trait <code>Iterator</code> implementiert, ohne dass du einen sehr
+langen Typ schreiben musst.</p>
 <p>Du kannst <code>impl Trait</code> jedoch nur verwenden, wenn du einen einzigen Typ
 zurückgibst. Beispielsweise würde dieser Code, der entweder einen <code>NewsArticle</code>
 oder einen <code>SocialPost</code> mit dem Rückgabetyp <code>impl Summary</code> zurückgibt, nicht
@@ -692,17 +684,17 @@ funktionieren:</p>
 <p>Die Rückgabe entweder eines <code>NewsArticle</code> oder eines <code>SocialPost</code> ist aufgrund
 von Einschränkungen hinsichtlich der Implementierung der Syntax <code>impl Trait</code> im
 Compiler nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
-wird in <a href="ch18-02-trait-objects.html">„Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames
+wird in <a href="ch18-02-trait-objects.html">„Verwendung von Trait-Objekten zur Abstraktion über gemeinsames
 Verhalten“</a> in Kapitel 18 behandelt.</p>
-<h3 id="verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden"><a class="header" href="#verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden">Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden</a></h3>
-<p>Durch Verwenden einer Merkmalsabgrenzung mit einem <code>impl</code>-Block, der generische
+<h3 id="verwenden-von-trait-bounds-zur-bedingten-implementierung-von-methoden"><a class="header" href="#verwenden-von-trait-bounds-zur-bedingten-implementierung-von-methoden">Verwenden von Trait Bounds zur bedingten Implementierung von Methoden</a></h3>
+<p>Durch Verwenden einer Trait Bound mit einem <code>impl</code>-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
-die das angegebene Merkmal implementieren. Beispielsweise implementiert der Typ
-<code>Pair&lt;T&gt;</code> in Codeblock 10-15 immer die Funktion <code>new</code>, um eine neue Instanz von
+die das angegebene Trait implementieren. Beispielsweise implementiert der Typ
+<code>Pair&lt;T&gt;</code> in Listing 10-15 immer die Funktion <code>new</code>, um eine neue Instanz von
 <code>Pair&lt;T&gt;</code> zurückzugeben (erinnere dich an <a href="ch05-03-method-syntax.html#methoden-syntax">„Methoden-Syntax“</a> in
 Kapitel 5, dass <code>Self</code> ein Typ-Alias für den Typ des <code>impl</code>-Blocks ist, der in
 diesem Fall <code>Pair&lt;T&gt;</code> ist). Aber im nächsten <code>impl</code>-Block implementiert
-<code>Pair&lt;T&gt;</code> die Methode <code>cmp_display</code> nur, wenn ihr innerer Typ <code>T</code> die Merkmale
+<code>Pair&lt;T&gt;</code> die Methode <code>cmp_display</code> nur, wenn ihr innerer Typ <code>T</code> die Traits
 <code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die den Vergleich bzw. eine Ausgabe
 ermöglichen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -731,42 +723,42 @@ impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt; {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 10-15: Bedingte Implementierung von Methoden
-für einen generischen Typ in Abhängigkeit von Merkmalsabgrenzungen</span></p>
-<p>Wir können auch ein Merkmal für beliebige Typen bedingt implementieren, die ein
-anderes Merkmal implementieren. Implementierungen eines Merkmals für Typen, die
-Merkmalsabgrenzungen erfüllen, werden als <em>Pauschal-Implementierungen</em> (blanket
+<p><span class="caption">Listing 10-15: Bedingte Implementierung von Methoden
+für einen generischen Typ in Abhängigkeit von Trait Bounds</span></p>
+<p>Wir können auch ein Trait für beliebige Typen bedingt implementieren, die ein
+anderes Trait implementieren. Implementierungen eines Traits für Typen, die
+Trait Bounds erfüllen, werden als <em>Pauschal-Implementierungen</em> (blanket
 implementations) bezeichnet und kommen in der Rust-Standardbibliothek ausgiebig
-zur Anwendung. Beispielsweise implementiert die Standardbibliothek das Merkmal
-<code>ToString</code> für jeden Typ, der das Merkmal <code>Display</code> implementiert. Der
+zur Anwendung. Beispielsweise implementiert die Standardbibliothek das Trait
+<code>ToString</code> für jeden Typ, der das Trait <code>Display</code> implementiert. Der
 <code>impl</code>-Block in der Standardbibliothek sieht in etwa so aus:</p>
 <pre><code class="language-rust ignore">impl&lt;T: Display&gt; ToString for T {
     // --abschneiden--
 }</code></pre>
 <p>Da die Standardbibliothek diese Pauschal-Implementierungen hat, können wir die
-Methode <code>to_string</code>, die durch das Merkmal <code>ToString</code> definiert ist, bei jedem
-Typ aufrufen, der das Merkmal <code>Display</code> implementiert. Zum Beispiel können wir
+Methode <code>to_string</code>, die durch das Trait <code>ToString</code> definiert ist, bei jedem
+Typ aufrufen, der das Trait <code>Display</code> implementiert. Zum Beispiel können wir
 ganze Zahlen in ihre entsprechenden <code>String</code>-Werte umwandeln, weil ganze
 Zahlen <code>Display</code> implementieren:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = 3.to_string();
 <span class="boring">}</span></code></pre>
-<p>Pauschal-Implementierungen erscheinen in der Dokumentation des Merkmals im
+<p>Pauschal-Implementierungen erscheinen in der Dokumentation des Traits im
 Abschnitt „Implementierer“ (implementors).</p>
-<p>Mithilfe von Merkmalen und Merkmalsabgrenzungen können wir Code schreiben, der
-generische Typparameter verwendet, um Duplikationen zu reduzieren, aber auch
-dem Compiler gegenüber angeben, dass der generische Typ ein bestimmtes
-Verhalten haben soll. Der Compiler kann dann die Merkmalsabgrenzungen
-verwenden, um zu überprüfen, ob alle konkreten Typen, die von unserem Code
-verwendet werden, das richtige Verhalten aufweisen. In dynamisch typisierten
-Sprachen würden wir einen Laufzeitfehler erhalten, wenn wir eine Methode bei
-einem Typ aufrufen, der die Methode nicht definiert hat. Rust verschiebt diese
-Fehler jedoch in die Kompilierzeit und verlangt damit, dass wir die Probleme
-beheben, bevor unser Code überhaupt lauffähig ist. Außerdem müssen wir keinen
-Code schreiben, der das Verhalten zur Laufzeit überprüft, da wir es bereits zur
-Kompilierzeit überprüft haben. Auf diese Weise wird die Performanz verbessert,
-ohne die Flexibilität der generischen Datentypen aufgeben zu müssen.</p>
+<p>Mithilfe von Traits und Trait Bounds können wir Code schreiben, der generische
+Typparameter verwendet, um Duplikationen zu reduzieren, aber auch dem Compiler
+gegenüber angeben, dass der generische Typ ein bestimmtes Verhalten haben soll.
+Der Compiler kann dann die Trait Bounds verwenden, um zu überprüfen, ob alle
+konkreten Typen, die von unserem Code verwendet werden, das richtige Verhalten
+aufweisen. In dynamisch typisierten Sprachen würden wir einen Laufzeitfehler
+erhalten, wenn wir eine Methode bei einem Typ aufrufen, der die Methode nicht
+definiert hat. Rust verschiebt diese Fehler jedoch in die Kompilierzeit und
+verlangt damit, dass wir die Probleme beheben, bevor unser Code überhaupt
+lauffähig ist. Außerdem müssen wir keinen Code schreiben, der das Verhalten zur
+Laufzeit überprüft, da wir es bereits zur Kompilierzeit überprüft haben. Auf
+diese Weise wird die Performanz verbessert, ohne die Flexibilität der
+generischen Datentypen aufgeben zu müssen.</p>
 
                     </main>
 

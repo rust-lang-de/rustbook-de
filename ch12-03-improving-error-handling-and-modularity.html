@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -169,10 +169,9 @@ und liest Dateien. Für eine so kleine Funktion ist dies kein großes Problem.
 Wenn wir jedoch unser Programm innerhalb der Funktion <code>main</code> weiter ausbauen,
 wird die Anzahl der einzelnen Aufgaben, die die Funktion <code>main</code> bearbeitet,
 zunehmen. In dem Maße, wie eine Funktion an Verantwortung hinzugewinnt, wird es
-schwieriger sie zu verstehen, schwieriger sie zu testen und schwieriger sie zu
-ändern, ohne dass eines ihrer Teile kaputtgeht. Am besten ist es, die
-Funktionalität so aufzuteilen, dass jede Funktion für eine Aufgabe zuständig
-ist.</p>
+schwieriger, sie zu verstehen, sie zu testen und sie zu ändern, ohne dass eines
+ihrer Teile kaputtgeht. Am besten ist es, die Funktionalität so aufzuteilen,
+dass jede Funktion für eine Aufgabe zuständig ist.</p>
 <p>Diese Frage hängt auch mit dem zweiten Problem zusammen: Obwohl <code>query</code> und
 <code>file_path</code> Konfigurationsvariablen unseres Programms sind, werden Variablen
 wie <code>contents</code> verwendet, um die Logik des Programms umzusetzen. Je länger
@@ -231,7 +230,7 @@ folgen.</p>
 <h4 id="extrahieren-des-argument-parsers"><a class="header" href="#extrahieren-des-argument-parsers">Extrahieren des Argument-Parsers</a></h4>
 <p>Wir werden die Funktionalität für das Parsen von Argumenten in eine Funktion
 extrahieren, die von <code>main</code> aufgerufen wird, um das Verschieben der
-Kommandozeilen-Parselogik nach <em>src/lib.rs</em> vorzubereiten. Codeblock 12-5 zeigt
+Kommandozeilen-Parselogik nach <em>src/lib.rs</em> vorzubereiten. Listing 12-5 zeigt
 den neuen Anfang von <code>main</code>, der eine neue Funktion <code>parse_config</code> aufruft, die
 wir vorerst in <em>src/main.rs</em> definieren werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -251,7 +250,7 @@ wir vorerst in <em>src/main.rs</em> definieren werden.</p>
 </span><span class="boring">    let contents = fs::read_to_string(file_path)
 </span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
 </span><span class="boring">
-</span><span class="boring">    println!("Mit text:\n{contents}");
+</span><span class="boring">    println!("Mit Text:\n{contents}");
 </span>}
 
 fn parse_config(args: &amp;[String]) -&gt; (&amp;str, &amp;str) {
@@ -260,7 +259,7 @@ fn parse_config(args: &amp;[String]) -&gt; (&amp;str, &amp;str) {
 
     (query, file_path)
 }</code></pre>
-<p><span class="caption">Codeblock 12-5: Extrahieren einer Funktion <code>parse_config</code>
+<p><span class="caption">Listing 12-5: Extrahieren einer Funktion <code>parse_config</code>
 aus <code>main</code></span></p>
 <p>Wir sammeln immer noch die Kommandozeilenargumente in einem Vektor, aber
 anstatt den Argumentwert am Index 1 der Variablen <code>query</code> und den Argumentwert
@@ -291,7 +290,7 @@ in einer Struktur an und geben jedem der Strukturfelder einen aussagekräftigen
 Namen. Auf diese Weise wird es künftigen Entwicklern dieses Codes leichter
 fallen, zu verstehen, wie die verschiedenen Werte miteinander in Beziehung
 stehen und was ihr Zweck ist.</p>
-<p>Codeblock 12-6 zeigt die Verbesserungen der Funktion <code>parse_config</code>.</p>
+<p>Listing 12-6 zeigt die Verbesserungen der Funktion <code>parse_config</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust should_panic edition2024"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
@@ -309,7 +308,7 @@ stehen und was ihr Zweck ist.</p>
 
     // --abschneiden--
 <span class="boring">
-</span><span class="boring">    println!("Mit text:\n{contents}");
+</span><span class="boring">    println!("Mit Text:\n{contents}");
 </span>}
 
 struct Config {
@@ -323,40 +322,39 @@ fn parse_config(args: &amp;[String]) -&gt; Config {
 
     Config { query, file_path }
 }</code></pre>
-<p><span class="caption">Codeblock 12-6: Refactorieren von <code>parse_config</code> zur
+<p><span class="caption">Listing 12-6: Refactorieren von <code>parse_config</code> zur
 Rückgabe einer Instanz einer <code>Config</code>-Struktur</span></p>
 <p>Wir haben eine Struktur namens <code>Config</code> hinzugefügt, die so definiert ist, dass
 sie Felder mit den Namen <code>query</code> und <code>file_path</code> enthält. Die Signatur von
-<code>parse_config</code> zeigt nun an, dass sie einen <code>Config</code>-Wert zurückgibt. Im
-Rumpf von <code>parse_config</code>, wo wir früher Zeichenkettenanteilstypen (string
-slices) zurückgegeben haben, die auf <code>String</code>-Werte in <code>args</code> referenzieren,
-definieren wir <code>Config</code> jetzt so, dass es aneigenbare (owned) <code>String</code>-Werte
-enthält. Die <code>args</code>-Variable in <code>main</code> ist der Eigentümer der Argumentwerte und
-lässt die Funktion <code>parse_config</code> diese nur ausleihen, was bedeutet, dass wir
-Rusts Regeln für das Ausleihen verletzen würden, wenn <code>Config</code> versucht, die
-Eigentümerschaft für die Werte in <code>args</code> zu nehmen.</p>
+<code>parse_config</code> zeigt nun an, dass sie einen <code>Config</code>-Wert zurückgibt. Im Rumpf
+von <code>parse_config</code>, wo wir früher String Slices zurückgegeben haben, die auf
+<code>String</code>-Werte in <code>args</code> referenzieren, definieren wir <code>Config</code> jetzt so, dass
+es besitzende (owned) <code>String</code>-Werte enthält. Die <code>args</code>-Variable in <code>main</code> ist
+der Eigentümer der Argumentwerte und lässt die Funktion <code>parse_config</code> diese nur
+ausleihen, was bedeutet, dass wir Rusts Regeln für das Borrowing verletzen
+würden, wenn <code>Config</code> versucht, das Eigentum an den Werten in <code>args</code> zu
+übernehmen.</p>
 <p>Wir könnten die <code>String</code>-Daten auf verschiedene Weise verwalten, aber der
 einfachste, wenn auch etwas ineffiziente Weg ist es, die Methode <code>clone</code> der
 Werte aufzurufen. Dadurch wird eine vollständige Kopie der Daten erstellt, die
 die <code>Config</code>-Instanz besitzen soll, was mehr Zeit und Speicherplatz in Anspruch
-nimmt als das Speichern einer Referenz auf die Zeichenkettendaten. Das Klonen
-der Daten macht unseren Code jedoch auch sehr unkompliziert, weil wir die
-Lebensdauer der Referenzen nicht verwalten müssen; unter diesen Umständen ist
-es ein lohnender Kompromiss, ein wenig Leistung aufzugeben, um Einfachheit zu
+nimmt als das Speichern einer Referenz auf die String-Daten. Das Klonen der
+Daten macht unseren Code jedoch auch sehr unkompliziert, weil wir die
+Lebensdauer der Referenzen nicht verwalten müssen; unter diesen Umständen ist es
+ein lohnender Kompromiss, ein wenig Leistung aufzugeben, um Einfachheit zu
 bekommen.</p>
 <blockquote>
 <h3 id="die-kompromisse-beim-verwenden-von-clone"><a class="header" href="#die-kompromisse-beim-verwenden-von-clone">Die Kompromisse beim Verwenden von <code>clone</code></a></h3>
 <p>Viele Rust-Entwickler neigen dazu, das Verwenden von <code>clone</code> zur Lösung von
-Eigentümerschaftsproblemen wegen der Laufzeitkosten zu vermeiden. In <a href="ch13-00-functional-features.html">Kapitel
-13</a> erfährst du, wie du in solchen Situationen effizientere Methoden
-einsetzen kannst. Aber für den Moment ist es in Ordnung, ein paar
-Zeichenketten zu kopieren, um weiter voranzukommen, da du diese Kopien nur
-einmal erstellen wirst und dein Dateipfad und deine Suchzeichenkette sehr
-klein sind. Es ist besser, ein funktionierendes Programm zu haben, das ein
-bisschen ineffizient ist, als zu versuchen, den Code beim ersten Durchgang zu
-hyperoptimieren. Je mehr Erfahrung du mit Rust sammelst, desto einfacher wird
-es, mit der effizientesten Lösung zu beginnen, aber im Moment ist es völlig
-akzeptabel, <code>clone</code> aufzurufen.</p>
+Eigentumsproblemen wegen der Laufzeitkosten zu vermeiden. In <a href="ch13-00-functional-features.html">Kapitel 13</a>
+erfährst du, wie du in solchen Situationen effizientere Methoden einsetzen
+kannst. Aber für den Moment ist es in Ordnung, ein paar Strings zu kopieren, um
+weiter voranzukommen, da du diese Kopien nur einmal erstellen wirst und dein
+Dateipfad und deinen Such-String sehr klein sind. Es ist besser, ein
+funktionierendes Programm zu haben, das ein bisschen ineffizient ist, als zu
+versuchen, den Code beim ersten Durchgang zu hyperoptimieren. Je mehr Erfahrung
+du mit Rust sammelst, desto einfacher wird es, mit der effizientesten Lösung zu
+beginnen, aber im Moment ist es völlig akzeptabel, <code>clone</code> aufzurufen.</p>
 </blockquote>
 <p>Wir haben <code>main</code> aktualisiert, sodass es die Instanz von <code>Config</code>, die von
 <code>parse_config</code> zurückgegeben wird, in eine Variable namens <code>config</code> setzt, und
@@ -383,7 +381,7 @@ assoziiert ist. Durch diese Änderung wird der Code idiomatischer. Wir können
 Instanzen von Typen in der Standardbibliothek erstellen, wie bei <code>String</code>,
 indem wir <code>String::new</code> aufrufen. In ähnlicher Weise können wir durch Ändern
 von <code>parse_config</code> in eine Funktion <code>new</code>, die mit <code>Config</code> assoziiert ist,
-Instanzen von <code>Config</code> durch Aufrufen von <code>Config::new</code> erzeugen. Codeblock
+Instanzen von <code>Config</code> durch Aufrufen von <code>Config::new</code> erzeugen. Listing
 12-7 zeigt die Änderungen, die wir vornehmen müssen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust should_panic edition2024"><span class="boring">use std::env;
@@ -400,7 +398,7 @@ Instanzen von <code>Config</code> durch Aufrufen von <code>Config::new</code> er
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)
 </span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
 </span><span class="boring">
-</span><span class="boring">    println!("Mit text:\n{contents}");
+</span><span class="boring">    println!("Mit Text:\n{contents}");
 </span><span class="boring">
 </span>    // --abschneiden--
 }
@@ -420,7 +418,7 @@ Instanzen von <code>Config</code> durch Aufrufen von <code>Config::new</code> er
         Config { query, file_path }
     }
 }</code></pre>
-<p><span class="caption">Codeblock 12-7: Ändern von <code>parse_config</code> in
+<p><span class="caption">Listing 12-7: Ändern von <code>parse_config</code> in
 <code>Config::new</code></span></p>
 <p>Wir haben <code>main</code> aktualisiert, wo wir <code>parse_config</code> aufgerufen haben, um
 stattdessen <code>Config::new</code> aufzurufen. Wir haben den Namen von <code>parse_config</code> in
@@ -429,10 +427,10 @@ Funktion <code>new</code> mit <code>Config</code> assoziiert. Versuche, diesen C
 kompilieren, um sicherzustellen, dass er funktioniert.</p>
 <h3 id="korrigieren-der-fehlerbehandlung"><a class="header" href="#korrigieren-der-fehlerbehandlung">Korrigieren der Fehlerbehandlung</a></h3>
 <p>Jetzt werden wir daran arbeiten, unsere Fehlerbehandlung zu korrigieren.
-Erinnere dich, dass der Versuch, auf die Werte im <code>args</code>-Vektor bei Index 1
-oder Index 2 zuzugreifen, das Programm zum Absturz bringt, wenn der Vektor
-weniger als drei Elemente enthält. Versuche, das Programm ohne irgendwelche
-Argumente laufen zu lassen; es wird so aussehen:</p>
+Erinnere dich, dass der Versuch, auf die Werte im <code>args</code>-Vektor bei Index 1 oder
+Index 2 zuzugreifen, das Programm abbrecht, wenn der Vektor weniger als drei
+Elemente enthält. Versuche, das Programm ohne irgendwelche Argumente laufen zu
+lassen; es wird so aussehen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
@@ -446,10 +444,10 @@ Programmierer bestimmte Fehlermeldung. Sie wird unseren Endbenutzern nicht
 helfen zu verstehen, was sie stattdessen tun sollten. Lass uns das jetzt
 korrigieren.</p>
 <h4 id="verbessern-der-fehlermeldung"><a class="header" href="#verbessern-der-fehlermeldung">Verbessern der Fehlermeldung</a></h4>
-<p>In Codeblock 12-8 fügen wir eine Prüfung in der Funktion <code>new</code> hinzu, die
-überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und Index 2
-zugegriffen wird. Wenn der Anteilstyp nicht lang genug ist, stürzt das Programm
-ab und zeigt eine bessere Fehlermeldung an.</p>
+<p>In Listing 12-8 fügen wir eine Prüfung in der Funktion <code>new</code> hinzu, die
+überprüft, ob der Slice lang genug ist, bevor auf Index 1 und Index 2
+zugegriffen wird. Wenn der Slice nicht lang genug ist, bricht das Programm ab
+und zeigt eine bessere Fehlermeldung an.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
@@ -465,7 +463,7 @@ ab und zeigt eine bessere Fehlermeldung an.</p>
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)
 </span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
 </span><span class="boring">
-</span><span class="boring">    println!("Mit text:\n{contents}");
+</span><span class="boring">    println!("Mit Text:\n{contents}");
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">struct Config {
@@ -487,16 +485,16 @@ ab und zeigt eine bessere Fehlermeldung an.</p>
 </span><span class="boring">        Config { query, file_path }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 12-8: Hinzufügen einer Prüfung für die Anzahl
+<p><span class="caption">Listing 12-8: Hinzufügen einer Prüfung für die Anzahl
 der Argumente</span></p>
-<p>Dieser Code ähnelt <a href="ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-für-die-validierung">der Funktion <code>Guess::new</code>, die wir in Codeblock
+<p>Dieser Code ähnelt <a href="ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-für-die-validierung">der Funktion <code>Guess::new</code>, die wir in Listing
 9-13</a> geschrieben haben, wo wir <code>panic!</code> aufgerufen haben,
-wenn das Argument <code>value</code> außerhalb des gültigen Wertebereichs lag. Anstatt
-hier auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von <code>args</code>
-mindestens <code>3</code> beträgt und der Rest der Funktion unter der Annahme arbeiten
-kann, dass diese Bedingung erfüllt ist. Wenn <code>args</code> weniger als drei Elemente
-hat, wird diese Bedingung <code>true</code> und wir rufen das Makro <code>panic!</code> auf, um das
-Programm sofort zu beenden.</p>
+wenn das Argument <code>value</code> außerhalb des gültigen Wertebereichs lag. Anstatt hier
+auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von <code>args</code> mindestens
+<code>3</code> beträgt und der Rest der Funktion unter der Annahme arbeiten kann, dass
+diese Bedingung erfüllt ist. Wenn <code>args</code> weniger als drei Elemente hat, wird
+diese Bedingung <code>true</code> und wir rufen das Makro <code>panic!</code> auf, um das Programm
+sofort abzubrechen.</p>
 <p>Mit diesen zusätzlichen wenigen Zeilen Code in <code>new</code> lassen wir das Programm
 ohne Argumente erneut laufen, um zu sehen, wie der Fehler jetzt aussieht:</p>
 <pre><code class="language-console">$ cargo run
@@ -510,7 +508,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Diese Ausgabe ist besser: Wir haben jetzt eine vernünftige Fehlermeldung. Wir
 haben jedoch auch irrelevante Informationen, die wir unseren Benutzern nicht
-geben wollen. Vielleicht ist die Technik, die wir in Codeblock 9-13 verwendet
+geben wollen. Vielleicht ist die Technik, die wir in Listing 9-13 verwendet
 haben, hier nicht die beste: Das Aufrufen von <code>panic!</code> ist für ein
 Programmierproblem besser geeignet als für ein Nutzungsproblem, <a href="ch09-03-to-panic-or-not-to-panic.html#richtlinien-zur-fehlerbehandlung">wie in Kapitel
 9 besprochen</a>. Stattdessen können wir die andere Technik
@@ -526,10 +524,10 @@ um zu signalisieren, dass ein Problem aufgetreten ist. Dann können wir <code>ma
 ändern, um eine <code>Err</code>-Variante in einen praktikableren Fehler für unsere
 Benutzer umzuwandeln, ohne den umgebenden Text über <code>thread 'main'</code> und
 <code>RUST_BACKTRACE</code>, den ein Aufruf von <code>panic!</code> verursacht.</p>
-<p>Codeblock 12-9 zeigt die Änderungen, die wir am Rückgabewert der Funktion, die
+<p>Listing 12-9 zeigt die Änderungen, die wir am Rückgabewert der Funktion, die
 nun <code>Config::build</code> aufruft, und am Funktionsrumpf vornehmen müssen, um ein
 <code>Result</code> zurückzugeben. Beachte, dass dies nicht kompiliert werden kann, bis
-wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun werden.</p>
+wir auch <code>main</code> aktualisieren, was wir im nächsten Listing tun werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
@@ -545,7 +543,7 @@ wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun wer
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)
 </span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
 </span><span class="boring">
-</span><span class="boring">    println!("Mit text:\n{contents}");
+</span><span class="boring">    println!("Mit Text:\n{contents}");
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">struct Config {
@@ -565,11 +563,11 @@ wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun wer
         Ok(Config { query, file_path })
     }
 }</code></pre>
-<p><span class="caption">Codeblock 12-9: Rückgabe eines <code>Result</code> von
+<p><span class="caption">Listing 12-9: Rückgabe eines <code>Result</code> von
 <code>Config::build</code></span></p>
 <p>Unsere Funktion <code>build</code> liefert ein <code>Result</code> mit einer <code>Config</code>-Instanz im
-Erfolgsfall und ein Zeichenkettenliteral im Fehlerfall. Unsere Fehlerwerte
-werden immer Zeichenketten-Literale sein, die eine <code>'static</code> Lebensdauer haben.</p>
+Erfolgsfall und ein String-Literal im Fehlerfall. Unsere Fehlerwerte werden
+immer String-Literale sein, die eine <code>'static</code> Lebensdauer haben.</p>
 <p>Wir haben zwei Änderungen im Rumpf der Funktion vorgenommen: Anstatt <code>panic!</code>
 aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben wir jetzt
 einen <code>Err</code>-Wert zurück, und wir haben den <code>Config</code>-Rückgabewert in ein <code>Ok</code>
@@ -581,7 +579,7 @@ und den Prozess im Fehlerfall sauberer zu beenden.</p>
 <h4 id="aufrufen-von-configbuild-und-behandeln-von-fehlern"><a class="header" href="#aufrufen-von-configbuild-und-behandeln-von-fehlern">Aufrufen von <code>Config::build</code> und Behandeln von Fehlern</a></h4>
 <p>Um den Fehlerfall zu behandeln und eine benutzerfreundliche Meldung auszugeben,
 müssen wir <code>main</code> aktualisieren, um das von <code>Config::build</code> zurückgegebene
-<code>Result</code> zu behandeln, wie in Codeblock 12-10 gezeigt. Wir werden auch die
+<code>Result</code> zu behandeln, wie in Listing 12-10 gezeigt. Wir werden auch die
 Verantwortung dafür übernehmen, das Kommandozeilenwerkzeug mit einem Fehlercode
 ungleich Null wie bei <code>panic!</code> zu beenden und es von Hand zu implementieren.
 Ein Exit-Status ungleich Null ist eine Konvention, um dem Prozess, der unser
@@ -608,7 +606,7 @@ fn main() {
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)
 </span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
 </span><span class="boring">
-</span><span class="boring">    println!("Mit text:\n{contents}");
+</span><span class="boring">    println!("Mit Text:\n{contents}");
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">struct Config {
@@ -628,30 +626,30 @@ fn main() {
 </span><span class="boring">        Ok(Config { query, file_path })
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 12-10: Beenden mit einem Fehlercode, wenn das
+<p><span class="caption">Listing 12-10: Beenden mit einem Fehlercode, wenn das
 Erstellen einer <code>Config</code> fehlschlägt</span></p>
-<p>In diesem Codeblock haben wir eine Methode verwendet, die wir bisher noch
-nicht behandelt haben: <code>unwrap_or_else</code>, die in der Standardbibliothek unter
-<code>Result&lt;T, E&gt;</code> definiert ist. Das Verwenden von <code>unwrap_or_else</code> erlaubt es
-uns, eine benutzerdefinierte nicht-<code>panic!</code>-Fehlerbehandlung zu definieren.
-Wenn das <code>Result</code> ein <code>Ok</code>-Wert ist, verhält sich diese Methode ähnlich wie
-<code>unwrap</code>: Sie gibt den inneren Wert von <code>Ok</code> zurück. Wenn der Wert jedoch ein
-<code>Err</code>-Wert ist, ruft diese Methode den Code im Funktionsabschluss (closure)
-auf, die eine anonyme Funktion ist, die wir definieren und als Argument an
-<code>unwrap_or_else</code> übergeben. Auf Funktionsabschlüsse gehen wir ausführlicher in
-<a href="ch13-00-functional-features.html">Kapitel 13</a> ein. Im Moment musst du nur wissen, dass <code>unwrap_or_else</code>
-den inneren Wert des <code>Err</code>, in diesem Fall die statische Zeichenkette <code>Nicht genügend Argumente</code>, die wir in Codeblock 12-9 hinzugefügt haben, an unseren
-Funktionsabschluss im Argument <code>err</code>, das zwischen den senkrechten Strichen
-erscheint, weitergibt. Der Code im Funktionsabschluss kann dann den <code>err</code>-Wert
-verwenden, wenn sie ausgeführt wird.</p>
+<p>In diesem Listing haben wir eine Methode verwendet, die wir bisher noch nicht
+behandelt haben: <code>unwrap_or_else</code>, die in der Standardbibliothek unter
+<code>Result&lt;T, E&gt;</code> definiert ist. Das Verwenden von <code>unwrap_or_else</code> erlaubt es uns,
+eine benutzerdefinierte nicht-<code>panic!</code>-Fehlerbehandlung zu definieren. Wenn das
+<code>Result</code> ein <code>Ok</code>-Wert ist, verhält sich diese Methode ähnlich wie <code>unwrap</code>: Sie
+gibt den inneren Wert von <code>Ok</code> zurück. Wenn der Wert jedoch ein <code>Err</code>-Wert ist,
+ruft diese Methode den Code im Closure auf, der eine anonyme Funktion ist, die
+wir definieren und als Argument an <code>unwrap_or_else</code> übergeben. Auf Closures
+gehen wir ausführlicher in <a href="ch13-00-functional-features.html">Kapitel 13</a> ein. Im Moment musst du nur
+wissen, dass <code>unwrap_or_else</code> den inneren Wert von <code>Err</code>, in diesem Fall der
+statische String <code>Nicht genügend Argumente</code>, den wir in Listing 12-9 hinzugefügt
+haben, an unseren Closure im Argument <code>err</code>, das zwischen den senkrechten
+Strichen erscheint, weitergibt. Der Code im Closure kann dann den <code>err</code>-Wert
+verwenden, wenn der ausgeführt wird.</p>
 <p>Wir haben eine neue Zeile <code>use</code> hinzugefügt, um <code>process</code> aus der
-Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code im
-Funktionsabschluss, der im Fehlerfall ausgeführt wird, besteht nur aus zwei
-Zeilen: Wir geben den <code>err</code>-Wert aus und rufen dann <code>process::exit</code> auf. Die
-Funktion <code>process::exit</code> stoppt das Programm sofort und gibt die Zahl zurück,
-die als Exit-Statuscode übergeben wurde. Dies ähnelt der <code>panic!</code>-basierten
-Behandlung, die wir in Codeblock 12-8 verwendet haben, aber wir erhalten nicht
-mehr die gesamte zusätzliche Ausgabe. Lass es uns versuchen:</p>
+Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code im Closure,
+der im Fehlerfall ausgeführt wird, besteht nur aus zwei Zeilen: Wir geben den
+<code>err</code>-Wert aus und rufen dann <code>process::exit</code> auf. Die Funktion <code>process::exit</code>
+stoppt das Programm sofort und gibt die Zahl zurück, die als Exit-Statuscode
+übergeben wurde. Dies ähnelt der <code>panic!</code>-basierten Behandlung, die wir in
+Listing 12-8 verwendet haben, aber wir erhalten nicht mehr die gesamte
+zusätzliche Ausgabe. Lass es uns versuchen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
@@ -669,7 +667,7 @@ Aufsetzen der Konfiguration oder dem Behandeln von Fehlern zu tun hat. Wenn wir
 fertig sind, wird die Funktion <code>main</code> übersichtlich und leicht zu verifizieren
 sein. Zudem werden wir in der Lage sein, Tests für all die andere Logik zu
 schreiben.</p>
-<p>Codeblock 12-11 zeigt die extrahierte Funktion <code>run</code>. Im Moment machen wir nur
+<p>Listing 12-11 zeigt die extrahierte Funktion <code>run</code>. Im Moment machen wir nur
 die kleine, inkrementelle Verbesserung durch Extrahieren der Funktion. Wir sind
 immer noch dabei, die Funktion in <em>src/main.rs</em> zu definieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -697,7 +695,7 @@ fn run(config: Config) {
     let contents = fs::read_to_string(config.file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
-    println!("Mit text:\n{contents}");
+    println!("Mit Text:\n{contents}");
 }
 
 // --abschneiden--
@@ -719,20 +717,20 @@ fn run(config: Config) {
 </span><span class="boring">        Ok(Config { query, file_path })
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 12-11: Extrahieren einer Funktion <code>run</code>, die
+<p><span class="caption">Listing 12-11: Extrahieren einer Funktion <code>run</code>, die
 den Rest der Programmlogik enthält</span></p>
 <p>Die Funktion <code>run</code> enthält nun die gesamte restliche Logik von <code>main</code>,
 beginnend mit dem Lesen der Datei. Die Funktion <code>run</code> nimmt die
 <code>Config</code>-Instanz als Argument.</p>
 <h4 id="fehlerrückgabe-aus-run"><a class="header" href="#fehlerrückgabe-aus-run">Fehlerrückgabe aus <code>run</code></a></h4>
-<p>Wenn die verbleibende Programmlogik in die Funktion <code>run</code> separiert wird,
-können wir die Fehlerbehandlung verbessern, wie wir es mit <code>Config::build</code> in
-Codeblock 12-9 getan haben. Anstatt das Programm durch den Aufruf von <code>expect</code>
-abstürzen zu lassen, gibt die Funktion <code>run</code> ein <code>Result&lt;T, E&gt;</code> zurück, wenn
-etwas schief läuft. Auf diese Weise können wir in <code>main</code> die Logik rund um den
-Umgang mit Fehlern auf benutzerfreundliche Weise weiter konsolidieren.
-Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
-<code>run</code> vornehmen müssen.</p>
+<p>Wenn die verbleibende Programmlogik in die Funktion <code>run</code> separiert wird, können
+wir die Fehlerbehandlung verbessern, wie wir es mit <code>Config::build</code> in Listing
+12-9 getan haben. Anstatt das Programm durch den Aufruf von <code>expect</code> abbrechen
+zu lassen, gibt die Funktion <code>run</code> ein <code>Result&lt;T, E&gt;</code> zurück, wenn etwas schief
+läuft. Auf diese Weise können wir in <code>main</code> die Logik rund um den Umgang mit
+Fehlern auf benutzerfreundliche Weise weiter konsolidieren. Listing 12-12
+zeigt die Änderungen, die wir an der Signatur und dem Rumpf von <code>run</code> vornehmen
+müssen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
@@ -758,7 +756,7 @@ Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 </span>fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let contents = fs::read_to_string(config.file_path)?;
 
-    println!("Mit text:\n{contents}");
+    println!("Mit Text:\n{contents}");
 
     Ok(())
 }
@@ -780,19 +778,19 @@ Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 </span><span class="boring">        Ok(Config { query, file_path })
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 12-12: Ändern der Funktion <code>run</code>, um ein
+<p><span class="caption">Listing 12-12: Ändern der Funktion <code>run</code>, um ein
 <code>Result</code> zurückzugeben</span></p>
 <p>Wir haben hier drei wesentliche Änderungen vorgenommen. Erstens haben wir den
 Rückgabetyp der Funktion <code>run</code> in <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> geändert. Diese
 Funktion gab zuvor den Einheitstyp <code>()</code> zurück und wir behalten diesen als
 Rückgabewert im Fall <code>Ok</code> bei.</p>
-<p>Für den Fehlertyp haben wir das Merkmalsobjekt (trait object) <code>Box&lt;dyn Error&gt;</code>
-verwendet (und wir haben <code>std::error::Error</code> mit einer <code>use</code>-Anweisung am
-Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
-<a href="ch18-00-oop.html">Kapitel 18</a> behandeln. Für den Moment solltest du nur wissen, dass
-<code>Box&lt;dyn Error&gt;</code> bedeutet, dass die Funktion einen Typ zurückgibt, der das
-Merkmal <code>Error</code> implementiert, aber wir müssen nicht angeben, welcher bestimmte
-Typ der Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
+<p>Für den Fehlertyp haben wir das Trait-Objekt <code>Box&lt;dyn Error&gt;</code> verwendet (und wir
+haben <code>std::error::Error</code> mit einer <code>use</code>-Anweisung am Anfang des
+Gültigkeitsbereichs eingebunden). Wir werden Trait-Objekte in <a href="ch18-00-oop.html">Kapitel 18</a>
+behandeln. Für den Moment solltest du nur wissen, dass <code>Box&lt;dyn Error&gt;</code>
+bedeutet, dass die Funktion einen Typ zurückgibt, der das Trait <code>Error</code>
+implementiert, aber wir müssen nicht angeben, welcher bestimmte Typ der
+Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
 zurückzugeben, die in verschiedenen Fehlerfällen von unterschiedlichem Typ sein
 können. Das Schlüsselwort <code>dyn</code> ist die Abkürzung für <em>dynamisch</em>.</p>
 <p>Zweitens haben wir den Aufruf von <code>expect</code> zugunsten des <code>?</code>-Operators
@@ -828,7 +826,7 @@ warning: `minigrep` (bin "minigrep") generated 1 warning
      Running `target/debug/minigrep the poem.txt`
 Suche nach the
 In Datei poem.txt
-Mit text:
+Mit Text:
 I'm nobody! Who are you?
 Are you nobody, too?
 Then there's a pair of us - don't tell!
@@ -846,7 +844,7 @@ Compiler erinnert uns daran, dass wir wahrscheinlich gemeint haben, hier etwas
 Fehlerbehandlungscode zu haben! Lass uns dieses Problem jetzt beheben.</p>
 <h4 id="behandeln-von-fehlern-die-von-run-in-main-zurückgegeben-wurden"><a class="header" href="#behandeln-von-fehlern-die-von-run-in-main-zurückgegeben-wurden">Behandeln von Fehlern, die von <code>run</code> in <code>main</code> zurückgegeben wurden</a></h4>
 <p>Wir werden nach Fehlern suchen und sie mit einer Technik behandeln, die ähnlich
-der Technik ist, die wir mit <code>Config::build</code> in Codeblock 12-10 verwendet
+der Technik ist, die wir mit <code>Config::build</code> in Listing 12-10 verwendet
 haben, aber mit einem kleinen Unterschied:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
@@ -876,7 +874,7 @@ haben, aber mit einem kleinen Unterschied:</p>
 </span><span class="boring">fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
-</span><span class="boring">    println!("Mit text:\n{contents}");
+</span><span class="boring">    println!("Mit Text:\n{contents}");
 </span><span class="boring">
 </span><span class="boring">    Ok(())
 </span><span class="boring">}
@@ -907,7 +905,7 @@ einen Fehler zu entdecken, wir brauchen also nicht <code>unwrap_or_else</code>, 
 ausgepackten Wert zurückzugeben, der nur <code>()</code> wäre.</p>
 <p>Die Rümpfe von <code>if let</code> und der <code>unwrap_or_else</code>-Funktionen sind in beiden
 Fällen gleich: Wir geben den Fehler aus und beenden.</p>
-<h3 id="code-in-eine-bibliothekskiste-aufteilen"><a class="header" href="#code-in-eine-bibliothekskiste-aufteilen">Code in eine Bibliothekskiste aufteilen</a></h3>
+<h3 id="code-in-eine-bibliotheks-crate-aufteilen"><a class="header" href="#code-in-eine-bibliotheks-crate-aufteilen">Code in eine Bibliotheks-Crate aufteilen</a></h3>
 <p>Unser <code>minigrep</code>-Projekt sieht soweit gut aus! Jetzt teilen wir die Datei
 <em>src/main.rs</em> auf und fügen etwas Code in die Datei <em>src/lib.rs</em> ein. Auf
 diese Weise können wir den Code testen und haben eine Datei <em>src/main.rs</em> mit
@@ -917,7 +915,7 @@ weniger Verantwortlichkeiten.</p>
 Bibliothek <code>minigrep</code> verwendet) die Suchfunktion aus mehr Kontexten als nur
 unserer Binärdatei <code>minigrep</code> aufrufen.</p>
 <p>Zunächst definieren wir die Signatur der Funktion <code>search</code> in <em>src/lib.rs</em>, wie
-in Codeblock 12-13 gezeigt, mit einem Rumpf, der das Makro <code>unimplemented!</code>
+in Listing 12-13 gezeigt, mit einem Rumpf, der das Makro <code>unimplemented!</code>
 aufruft. Wir werden die Signatur genauer erklären, wenn wir die Implementierung
 ausfüllen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -927,14 +925,14 @@ ausfüllen.</p>
     unimplemented!();
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 12-13: Definieren der Funktion <code>search</code> in
+<p><span class="caption">Listing 12-13: Definieren der Funktion <code>search</code> in
 <em>src/lib.rs</em></span></p>
 <p>Wir haben das Schlüsselwort <code>pub</code> in der Funktionsdefinition verwendet, um
-<code>search</code> als Teil der öffentlichen API unserer Bibliothekskiste zu
-kennzeichnen. Wir haben nun eine Bibliothekskiste, die wir aus unserer
-Binärkiste heraus verwenden und testen können!</p>
+<code>search</code> als Teil der öffentlichen API unserer Bibliotheks-Crate zu
+kennzeichnen. Wir haben nun eine Bibliotheks-Crate, die wir aus unserer binären
+Crate heraus verwenden und testen können!</p>
 <p>Jetzt müssen wir den in <em>src/lib.rs</em> definierten Code in den Gültigkeitsbereich
-der Binärkiste in <em>src/main.rs</em> bringen und ihn aufrufen, wie in Codeblock
+der binären Crate in <em>src/main.rs</em> bringen und ihn aufrufen, wie in Listing
 12-14 zu sehen ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::env;
@@ -989,10 +987,10 @@ fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 
     Ok(())
 }</code></pre>
-<p><span class="caption">Codeblock 12-14: Verwenden der
-<code>minigrep</code>-Bibliothekskiste in <em>src/main.rs</em></span></p>
-<p>Wir fügen eine Zeile <code>use minigrep::Config</code> hinzu, um den Typ <code>Config</code> aus der
-Bibliothekskiste in den Gültigkeitsbereich der Binärkiste zu bringen. Dann
+<p><span class="caption">Listing 12-14: Verwenden der Bibliotheks-Crate
+<code>minigrep</code> in <em>src/main.rs</em></span></p>
+<p>Wir fügen eine Zeile <code>use minigrep::search</code> hinzu, um den Typ <code>Config</code> aus der
+Bibliotheks-Crate in den Gültigkeitsbereich der binären Crate zu bringen. Dann
 rufen wir in der Funktion <code>run</code> anstatt den Inhalt der Datei auszugeben die
 Funktion <code>search</code> auf und übergeben den Wert <code>config.query</code> und <code>contents</code> als
 Argumente. Anschließend verwendet <code>run</code> eine <code>for</code>-Schleife, um jede von

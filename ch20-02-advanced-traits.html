@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Fortgeschrittene Merkmale (traits) - Die Programmiersprache Rust</title>
+        <title>Fortgeschrittene Traits - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,30 +161,29 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="fortgeschrittene-merkmale-traits"><a class="header" href="#fortgeschrittene-merkmale-traits">Fortgeschrittene Merkmale (traits)</a></h2>
-<p>Merkmale behandelten wir als Erstes im Abschnitt <a href="ch10-02-traits.html">„Gemeinsames Verhalten
-definieren mit Merkmalen (traits)“</a> in Kapitel 10, aber wir haben die
+                        <h2 id="fortgeschrittene-traits"><a class="header" href="#fortgeschrittene-traits">Fortgeschrittene Traits</a></h2>
+<p>Traits behandelten wir als Erstes im Abschnitt <a href="ch10-02-traits.html">„Gemeinsames Verhalten
+definieren mit Traits“</a> in Kapitel 10, aber wir haben die
 fortgeschrittenen Details nicht besprochen. Jetzt, da du mehr über Rust weißt,
 können wir zum Kern der Sache kommen.</p>
-<h3 id="merkmale-mit-assoziierten-typen-definieren"><a class="header" href="#merkmale-mit-assoziierten-typen-definieren">Merkmale mit assoziierten Typen definieren</a></h3>
-<p><em>Assoziierte Typen</em> (associated types) verbinden einen Typ-Platzhalter mit
-einem Merkmal, sodass die Definitionen der Merkmalsmethoden diese
-Platzhaltertypen in ihren Signaturen verwenden können. Der Implementierer eines
-Merkmals gibt den konkreten Typ an, der anstelle des Platzhaltertyps für die
-jeweilige Implementierung verwendet werden soll. Auf diese Weise können wir ein
-Merkmal definieren, das einige Typen verwendet, ohne dass wir genau wissen
-müssen, um welche Typen es sich dabei handelt, bis das Merkmal implementiert
-ist.</p>
+<h3 id="traits-mit-assoziierten-typen-definieren"><a class="header" href="#traits-mit-assoziierten-typen-definieren">Traits mit assoziierten Typen definieren</a></h3>
+<p><em>Assoziierte Typen</em> (associated types) verbinden einen Typ-Platzhalter mit einem
+Trait, sodass die Definitionen der Trait-Methoden diese Platzhaltertypen in
+ihren Signaturen verwenden können. Der Implementierer eines Traits gibt den
+konkreten Typ an, der anstelle des Platzhaltertyps für die jeweilige
+Implementierung verwendet werden soll. Auf diese Weise können wir ein Trait
+definieren, das einige Typen verwendet, ohne dass wir genau wissen müssen, um
+welche Typen es sich dabei handelt, bis das Trait implementiert ist.</p>
 <p>Wir haben die meisten der fortgeschrittenen Funktionalitäten in diesem Kapitel
 als selten benötigt beschrieben. Assoziierte Typen liegen irgendwo dazwischen:
 Sie werden seltener verwendet als die im Rest des Buches erläuterten
 Funktionalitäten, aber häufiger als viele der anderen in diesem Kapitel
 besprochenen Funktionalitäten.</p>
-<p>Ein Beispiel für ein Merkmal mit einem assoziierten Typ ist das Merkmal
-<code>Iterator</code>, das die Standardbibliothek zur Verfügung stellt. Der assoziierte
-Typ wird <code>Item</code> genannt und steht für den Typ der Werte, über die der Typ, der
-das Merkmal <code>Iterator</code> implementiert, iteriert. Die Definition des Merkmals
-<code>Iterator</code> ist in Codeblock 20-13 zu sehen.</p>
+<p>Ein Beispiel für ein Trait mit einem assoziierten Typ ist das Trait <code>Iterator</code>,
+das die Standardbibliothek zur Verfügung stellt. Der assoziierte Typ wird <code>Item</code>
+genannt und steht für den Typ der Werte, über die der Typ, der das Trait
+<code>Iterator</code> implementiert, iteriert. Die Definition des Traits <code>Iterator</code> ist in
+Listing 20-13 zu sehen.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Iterator {
@@ -193,18 +192,18 @@ das Merkmal <code>Iterator</code> implementiert, iteriert. Die Definition des Me
     fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt;;
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-13: Definition des Merkmals <code>Iterator</code>, das
+<p><span class="caption">Listing 20-13: Definition des Traits <code>Iterator</code>, das
 einen assoziierten Typ <code>Item</code> hat</span></p>
 <p>Der Typ <code>Item</code> ist ein Platzhalter und die Definition der Methode <code>next</code> zeigt,
 dass sie Werte vom Typ <code>Option&lt;Self::Item&gt;</code> zurückgibt. Implementierungen des
-Merkmals <code>Iterator</code> geben den konkreten Typ für <code>Item</code> an und die Methode
-<code>next</code> gibt eine <code>Option</code> zurück, die einen Wert dieses konkreten Typs enthält.</p>
+Traits <code>Iterator</code> geben den konkreten Typ für <code>Item</code> an und die Methode <code>next</code>
+gibt eine <code>Option</code> zurück, die einen Wert dieses konkreten Typs enthält.</p>
 <p>Assoziierte Typen scheinen ein ähnliches Konzept wie generische Datentypen
-(generics) zu sein, da letztere es uns ermöglichen, eine Funktion zu
-definieren, ohne anzugeben, welche Typen sie handhaben kann. Um den Unterschied
-zwischen den beiden Konzepten zu untersuchen, betrachten wir eine
-Implementierung des Merkmals <code>Iterator</code> für einen Typ namens <code>Counter</code>, der
-angibt, dass der <code>Item</code>-Typ <code>u32</code> ist:</p>
+(generics) zu sein, da letztere es uns ermöglichen, eine Funktion zu definieren,
+ohne anzugeben, welche Typen sie handhaben kann. Um den Unterschied zwischen den
+beiden Konzepten zu untersuchen, betrachten wir eine Implementierung des Traits
+<code>Iterator</code> für einen Typ namens <code>Counter</code>, der angibt, dass der <code>Item</code>-Typ <code>u32</code>
+ist:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -233,40 +232,40 @@ angibt, dass der <code>Item</code>-Typ <code>u32</code> ist:</p>
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Diese Syntax scheint mit der von generischen Datentypen vergleichbar zu sein.
-Warum also nicht einfach das Merkmal <code>Iterator</code> mit generischen Datentypen
-definieren, wie in Codeblock 20-14 gezeigt?</p>
+Warum also nicht einfach das Trait <code>Iterator</code> mit generischen Datentypen
+definieren, wie in Listing 20-14 gezeigt?</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Iterator&lt;T&gt; {
     fn next(&amp;mut self) -&gt; Option&lt;T&gt;;
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-14: Eine hypothetische Definition des
-Merkmals <code>Iterator</code> unter Verwendung eines generischen Datentyps</span></p>
+<p><span class="caption">Listing 20-14: Eine hypothetische Definition des Traits
+<code>Iterator</code> unter Verwendung eines generischen Datentyps</span></p>
 <p>Der Unterschied ist, dass wir beim Verwenden von generischen Datentypen, wie in
-Codeblock 20-14, die Typen in jeder Implementierung annotieren müssen; da wir
+Listing 20-14, die Typen in jeder Implementierung annotieren müssen; da wir
 auch <code>Iterator&lt;String&gt; for Counter</code> oder jeden anderen Typ implementieren
 können, könnten wir mehrere Implementierungen von <code>Iterator</code> für <code>Counter</code>
-haben. Mit anderen Worten, wenn ein Merkmal einen generischen Parameter hat,
-kann es für einen Typ mehrfach implementiert werden, wobei die konkreten Typen
-der generischen Typparameter jedes Mal geändert werden können. Wenn wir die
-Methode <code>next</code> auf <code>Counter</code> verwenden, müssten wir Typ-Annotationen
-bereitstellen, um anzugeben, welche Implementierung des <code>Iterators</code> wir
-verwenden wollen.</p>
+haben. Mit anderen Worten, wenn ein Trait einen generischen Parameter hat, kann
+es für einen Typ mehrfach implementiert werden, wobei die konkreten Typen der
+generischen Typparameter jedes Mal geändert werden können. Wenn wir die Methode
+<code>next</code> auf <code>Counter</code> verwenden, müssten wir Typ-Annotationen bereitstellen, um
+anzugeben, welche Implementierung des <code>Iterators</code> wir verwenden wollen.</p>
 <p>Bei assoziierten Typen brauchen wir Typen nicht zu annotieren, weil wir ein
-Merkmal auf einem Typ nicht mehrfach implementieren können. In Codeblock 20-13
-mit der Definition, die assoziierte Typen verwendet, können wir nur einmal
-wählen, was der Typ von <code>Item</code> sein wird, weil es nur einen <code>impl Iterator for Counter</code> geben kann. Wir müssen nicht angeben, dass wir einen Iterator von
-<code>u32</code>-Werten überall dort haben wollen, wo wir <code>next</code> auf <code>Counter</code> aufrufen.</p>
-<p>Assoziierte Typen werden auch Teil des Merkmal-Vertrags: Implementierer des
-Merkmals müssen einen Typ bereitstellen, der für den Platzhalter des
-assoziierten Typs steht. Assoziierte Typen haben oft einen Namen, der
-beschreibt, wie der Typ verwendet werden soll, und das Dokumentieren des
-assoziierten Typs in der API-Dokumentation ist eine gute Praxis.</p>
+Trait auf einem Typ nicht mehrfach implementieren können. In Listing 20-13 mit
+der Definition, die assoziierte Typen verwendet, können wir nur einmal wählen,
+was der Typ von <code>Item</code> sein wird, weil es nur einen <code>impl Iterator for Counter</code>
+geben kann. Wir müssen nicht angeben, dass wir einen Iterator von <code>u32</code>-Werten
+überall dort haben wollen, wo wir <code>next</code> auf <code>Counter</code> aufrufen.</p>
+<p>Assoziierte Typen werden auch Teil des Trait-Vertrags: Implementierer des Traits
+müssen einen Typ bereitstellen, der für den Platzhalter des assoziierten Typs
+steht. Assoziierte Typen haben oft einen Namen, der beschreibt, wie der Typ
+verwendet werden soll, und das Dokumentieren des assoziierten Typs in der
+API-Dokumentation ist eine gute Praxis.</p>
 <h3 id="generische-standardparameter-und-operatorüberladung-verwenden"><a class="header" href="#generische-standardparameter-und-operatorüberladung-verwenden">Generische Standardparameter und Operatorüberladung verwenden</a></h3>
 <p>Wenn wir generische Typparameter verwenden, können wir einen konkreten
 Standardtyp für den generischen Typ angeben. Dadurch entfällt die Notwendigkeit
-für Implementierer des Merkmals, einen konkreten Typ anzugeben, wenn der
+für Implementierer des Traits, einen konkreten Typ anzugeben, wenn der
 Standardtyp passt. Du gibst einen Standardtyp an, wenn du einen generischen Typ
 mit der Syntax <code>&lt;PlaceholderType=ConcreteType&gt;</code> deklarierst.</p>
 <p>Ein gutes Beispiel für eine Situation, in der diese Technik nützlich ist, ist
@@ -274,10 +273,10 @@ die <em>Operatorüberladung</em> (operator overloading), bei der du das Verhalte
 Operators (wie <code>+</code>) in bestimmten Situationen anpasst.</p>
 <p>Rust erlaubt es dir nicht, eigene Operatoren zu erstellen oder beliebige
 Operatoren zu überladen. Aber du kannst die in <code>std::ops</code> aufgeführten
-Operationen und entsprechenden Merkmale überladen, indem du die mit dem
-Operator assoziierten Merkmale implementierst. Beispielsweise überladen wir in
-Codeblock 20-15 den Operator <code>+</code>, um zwei <code>Point</code>-Instanzen zu addieren. Wir
-tun dies, indem wir das Merkmal <code>Add</code> auf eine <code>Point</code>-Struktur implementieren.</p>
+Operationen und entsprechenden Traits überladen, indem du die mit dem Operator
+assoziierten Traits implementierst. Beispielsweise überladen wir in Listing
+20-15 den Operator <code>+</code>, um zwei <code>Point</code>-Instanzen zu addieren. Wir tun dies,
+indem wir das Trait <code>Add</code> auf eine <code>Point</code>-Struktur implementieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::ops::Add;
 
@@ -304,13 +303,13 @@ fn main() {
         Point { x: 3, y: 3 }
     );
 }</code></pre>
-<p><span class="caption">Codeblock 20-15: Implementieren des Merkmals <code>Add</code>, um
-den Operator <code>+</code> für <code>Point</code>-Instanzen zu überladen</span></p>
+<p><span class="caption">Listing 20-15: Implementieren des Traits <code>Add</code>, um den
+Operator <code>+</code> für <code>Point</code>-Instanzen zu überladen</span></p>
 <p>Die Methode <code>add</code> addiert die <code>x</code>-Werte zweier <code>Point</code>-Instanzen und die
 <code>y</code>-Werte zweier <code>Point</code>-Instanzen, um einen neuen <code>Point</code> zu erzeugen. Das
-Merkmal <code>Add</code> hat einen assoziierten Typ namens <code>Output</code>, der den von der
-Methode <code>add</code> zurückgegebenen Typ bestimmt.</p>
-<p>Der generische Standardtyp in diesem Code befindet sich innerhalb des Merkmals
+Trait <code>Add</code> hat einen assoziierten Typ namens <code>Output</code>, der den von der Methode
+<code>add</code> zurückgegebenen Typ bestimmt.</p>
+<p>Der generische Standardtyp in diesem Code befindet sich innerhalb des Traits
 <code>Add</code>. Hier ist seine Definition:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -320,26 +319,26 @@ Methode <code>add</code> zurückgegebenen Typ bestimmt.</p>
     fn add(self, rhs: Rhs) -&gt; Self::Output;
 }
 <span class="boring">}</span></code></pre>
-<p>Dieser Code sollte allgemein bekannt aussehen: Ein Merkmal mit einer Methode
-und einem assoziierten Typ. Der neue Teil ist <code>Rhs=Self</code>: Diese Syntax heißt
+<p>Dieser Code sollte allgemein bekannt aussehen: Ein Trait mit einer Methode und
+einem assoziierten Typ. Der neue Teil ist <code>Rhs=Self</code>: Diese Syntax heißt
 <em>Standardtypparameter</em> (default type parameters). Der generische Typparameter
-<code>Rhs</code> (kurz für „right hand side“, engl. „rechte Seite“) definiert den Typ des
+<code>Rhs</code> (kurz für „right hand side“, „rechte Seite“) definiert den Typ des
 Parameters <code>rhs</code> in der Methode <code>add</code>. Wenn wir keinen konkreten Typ für <code>Rhs</code>
-angeben, wenn wir das Merkmal <code>Add</code> implementieren, wird der Typ <code>Rhs</code>
+angeben, wenn wir das Trait <code>Add</code> implementieren, wird der Typ <code>Rhs</code>
 standardmäßig auf <code>Self</code> gesetzt, was der Typ sein wird, auf dem wir <code>Add</code>
 implementieren.</p>
 <p>Als wir <code>Add</code> für <code>Point</code> implementiert haben, haben wir den Standardwert für
 <code>Rhs</code> verwendet, weil wir zwei <code>Point</code>-Instanzen addieren wollten. Schauen wir
-uns ein Beispiel für die Implementierung des Merkmals <code>Add</code> an, bei dem wir den
+uns ein Beispiel für die Implementierung des Traits <code>Add</code> an, bei dem wir den
 Typ <code>Rhs</code> anpassen wollen, anstatt den Standardwert zu verwenden.</p>
-<p>Wir haben zwei Strukturen <code>Millimeters</code> und <code>Meters</code>, die Werte in
-verschiedenen Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs
-in einer anderen Struktur ist als <em>Newtype-Muster</em> bekannt, das wir im
-Abschnitt <a href="#externe-merkmale-mit-dem-newtype-muster-implementieren">„Externe Merkmale mit dem Newtype-Muster implementieren“</a>
-ausführlicher beschreiben. Wir wollen Werte in Millimeter zu Werten in Meter
-addieren und die Implementierung von <code>Add</code> die Umrechnung korrekt durchführen
-lassen. Wir können <code>Add</code> für <code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code>
-implementieren, wie in Codeblock 20-16 gezeigt.</p>
+<p>Wir haben zwei Strukturen <code>Millimeters</code> und <code>Meters</code>, die Werte in verschiedenen
+Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs in einer
+anderen Struktur ist als <em>Newtype-Muster</em> bekannt, das wir im Abschnitt
+<a href="#externe-traits-mit-dem-newtype-muster-implementieren">„Externe Traits mit dem Newtype-Muster implementieren“</a> ausführlicher
+beschreiben. Wir wollen Werte in Millimeter zu Werten in Meter addieren und die
+Implementierung von <code>Add</code> die Umrechnung korrekt durchführen lassen. Wir können
+<code>Add</code> für <code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code> implementieren, wie in Listing
+20-16 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -356,7 +355,7 @@ impl Add&lt;Meters&gt; for Millimeters {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-16: Implementieren des Merkmals <code>Add</code> auf
+<p><span class="caption">Listing 20-16: Implementieren des Traits <code>Add</code> auf
 <code>Millimeters</code>, um <code>Millimeters</code> zu <code>Meters</code> zu addieren</span></p>
 <p>Um <code>Millimeters</code> und <code>Meters</code> zu addieren, geben wir <code>impl Add&lt;Meters&gt;</code> an, um
 den Wert des Parameters vom Typ <code>Rhs</code> zu setzen, anstatt den Standardwert
@@ -367,29 +366,29 @@ den Wert des Parameters vom Typ <code>Rhs</code> zu setzen, anstatt den Standard
 <li>Um eine Anpassung in bestimmten Fällen zu ermöglichen, die die meisten
 Benutzer nicht benötigen.</li>
 </ol>
-<p>Das Merkmal <code>Add</code> der Standardbibliothek ist ein Beispiel für den zweiten
-Zweck: Normalerweise addierst du zwei ähnliche Typen, aber das Merkmal <code>Add</code>
-bietet die Möglichkeit, darüber hinausgehende Anpassungen vorzunehmen. Das
-Verwenden eines Standardtypparameters in der Merkmalsdefinition <code>Add</code> bedeutet,
-dass du den zusätzlichen Parameter die meiste Zeit nicht angeben musst. Mit
-anderen Worten kann etwas Implementierungscode eingespart werden, was das
-Verwenden des Merkmals erleichtert.</p>
+<p>Das Trait <code>Add</code> der Standardbibliothek ist ein Beispiel für den zweiten Zweck:
+Normalerweise addierst du zwei ähnliche Typen, aber das Trait <code>Add</code> bietet die
+Möglichkeit, darüber hinausgehende Anpassungen vorzunehmen. Das Verwenden eines
+Standardtypparameters in der Trait-Definition <code>Add</code> bedeutet, dass du den
+zusätzlichen Parameter die meiste Zeit nicht angeben musst. Mit anderen Worten
+kann etwas Implementierungscode eingespart werden, was das Verwenden des Traits
+erleichtert.</p>
 <p>Der erste Zweck ist ähnlich zum zweiten, nur umgekehrt: Wenn du einem
-vorhandenen Merkmal einen Typparameter hinzufügen möchtest, kannst du ihm einen
-Standardwert geben, um eine Erweiterung der Funktionalität des Merkmals zu
+vorhandenen Trait einen Typparameter hinzufügen möchtest, kannst du ihm einen
+Standardwert geben, um eine Erweiterung der Funktionalität des Traits zu
 ermöglichen, ohne den vorhandenen Implementierungscode zu brechen.</p>
 <h3 id="eindeutiger-aufruf-von-methoden-mit-identischen-namen"><a class="header" href="#eindeutiger-aufruf-von-methoden-mit-identischen-namen">Eindeutiger Aufruf von Methoden mit identischen Namen</a></h3>
-<p>Nichts in Rust hindert ein Merkmal daran, eine Methode mit demselben Namen wie
-die Methode eines anderen Merkmals zu haben, und Rust hindert dich auch nicht
-daran, beide Merkmale auf einem Typ zu implementieren. Es ist auch möglich,
-eine Methode direkt auf dem Typ mit dem gleichen Namen wie Methoden von
-Merkmalen zu implementieren.</p>
+<p>Rust hindert dich nicht daran, dass ein Trait eine Methode mit demselben Namen
+wie die Methode eines anderen Traits hat, und Rust hindert dich auch nicht
+daran, beide Traits auf einem Typ zu implementieren. Es ist auch möglich, eine
+Methode direkt auf dem Typ mit dem gleichen Namen wie Methoden von Traits zu
+implementieren.</p>
 <p>Wenn du Methoden mit dem gleichen Namen aufrufst, musst du Rust mitteilen,
-welche du verwenden willst. Betrachte den Code in Codeblock 20-17, wo wir zwei
-Merkmale <code>Pilot</code> und <code>Wizard</code> definiert haben, die beide eine Methode namens
-<code>fly</code> haben. Wir implementieren dann beide Merkmale auf einem Typ <code>Human</code>, der
-bereits eine Methode namens <code>fly</code> implementiert hat. Jede Methode <code>fly</code> macht
-etwas anderes.</p>
+welche du verwenden willst. Betrachte den Code in Listing 20-17, wo wir zwei
+Traits <code>Pilot</code> und <code>Wizard</code> definiert haben, die beide eine Methode namens <code>fly</code>
+haben. Wir implementieren dann beide Traits auf einem Typ <code>Human</code>, der bereits
+eine Methode namens <code>fly</code> implementiert hat. Jede Methode <code>fly</code> macht etwas
+anderes.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">trait Pilot {
     fn fly(&amp;self);
@@ -420,12 +419,12 @@ impl Human {
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre>
-<p><span class="caption">Codeblock 20-17: Zwei Merkmale sind so definiert, dass
-sie eine Methode <code>fly</code> haben und auf dem Typ <code>Human</code> implementiert sind, und
-eine Methode <code>fly</code> ist direkt auf dem Typ <code>Human</code> implementiert</span></p>
+<p><span class="caption">Listing 20-17: Zwei Traits sind so definiert, dass sie
+eine Methode <code>fly</code> haben und auf dem Typ <code>Human</code> implementiert sind, und eine
+Methode <code>fly</code> ist direkt auf dem Typ <code>Human</code> implementiert</span></p>
 <p>Wenn wir <code>fly</code> auf einer Instanz von <code>Human</code> aufrufen, ruft der Compiler
 standardmäßig die Methode auf, die direkt auf dem Typ implementiert ist, wie in
-Codeblock 20-18 gezeigt.</p>
+Listing 20-18 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">trait Pilot {
 </span><span class="boring">    fn fly(&amp;self);
@@ -459,14 +458,14 @@ Codeblock 20-18 gezeigt.</p>
     let person = Human;
     person.fly();
 }</code></pre>
-<p><span class="caption">Codeblock 20-18: Aufrufen von <code>fly</code> auf einer Instanz von
+<p><span class="caption">Listing 20-18: Aufrufen von <code>fly</code> auf einer Instanz von
 <code>Human</code></span></p>
 <p>Wenn man diesen Code ausführt, wird <code>*Wütend mit den Armen wedeln*</code> ausgegeben,
 was zeigt, dass Rust die Methode <code>fly</code>, die direkt auf <code>Human</code> implementiert
 wurde, aufgerufen hat.</p>
-<p>Um die Methoden <code>fly</code> entweder vom Merkmal <code>Pilot</code> oder vom Merkmal <code>Wizard</code>
+<p>Um die Methoden <code>fly</code> entweder vom Trait <code>Pilot</code> oder vom Trait <code>Wizard</code>
 aufzurufen, müssen wir eine explizitere Syntax verwenden, um anzugeben, welche
-Methode <code>fly</code> wir meinen. Codeblock 20-19 demonstriert diese Syntax.</p>
+Methode <code>fly</code> wir meinen. Listing 20-19 demonstriert diese Syntax.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">trait Pilot {
 </span><span class="boring">    fn fly(&amp;self);
@@ -502,12 +501,12 @@ Methode <code>fly</code> wir meinen. Codeblock 20-19 demonstriert diese Syntax.<
     Wizard::fly(&amp;person);
     person.fly();
 }</code></pre>
-<p><span class="caption">Codeblock 20-19: Angeben, welche Methode <code>fly</code> wir
+<p><span class="caption">Listing 20-19: Angeben, welche Methode <code>fly</code> wir
 aufrufen wollen</span></p>
-<p>Das Angeben des Merkmalsnamens vor dem Methodennamen verdeutlicht Rust, welche
+<p>Das Angeben des Trait-Namens vor dem Methodennamen verdeutlicht Rust, welche
 Implementierung von <code>fly</code> wir aufrufen wollen. Wir könnten auch
 <code>Human::fly(&amp;person)</code> schreiben, was äquivalent zu <code>person.fly()</code> ist, das wir
-in Codeblock 20-19 verwendet haben, aber das ist etwas länger zu schreiben, wenn
+in Listing 20-19 verwendet haben, aber das ist etwas länger zu schreiben, wenn
 wir nicht vereindeutigen müssen.</p>
 <p>Beim Ausführen dieses Codes wird Folgendes ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
@@ -518,19 +517,18 @@ Hier spricht Ihr Kapitän.
 Hoch!
 *Wütend mit den Armen wedeln*
 </code></pre>
-<p>Da die Methode <code>fly</code> einen Parameter <code>self</code> benötigt, könnte Rust, wenn wir
-zwei <em>Typen</em> hätten, die beide ein <em>Merkmal</em> implementieren, herausfinden,
-welche Implementierung eines Merkmals basierend auf dem Typ von <code>self</code> zu
-verwenden ist.</p>
+<p>Da die Methode <code>fly</code> einen Parameter <code>self</code> benötigt, könnte Rust, wenn wir zwei
+<em>Typen</em> hätten, die beide ein <em>Trait</em> implementieren, herausfinden, welche
+Implementierung eines Traits basierend auf dem Typ von <code>self</code> zu verwenden ist.</p>
 <p>Assoziierte Funktionen, die keine Methoden sind, haben jedoch keinen
-<code>self</code>-Parameter. Wenn es mehrere Typen oder Merkmale gibt, die
-Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
-nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine
-voll-qualifizierte Syntax. In Codeblock 20-20 erstellen wir zum Beispiel ein
-Merkmal für ein Tierheim, das alle Hundebabys Spot nennen möchte. Wir erstellen
-ein Merkmal <code>Animal</code> mit einer assoziierten Nicht-Methodenfunktion <code>baby_name</code>.
-Das Merkmal <code>Animal</code> ist für die Struktur <code>Dog</code> implementiert, für die wir auch
-direkt eine assoziierte Nicht-Methodenfunktionen <code>baby_name</code> bereitstellen.</p>
+<code>self</code>-Parameter. Wenn es mehrere Typen oder Traits gibt, die assoziierte
+Funktionen mit demselben Funktionsnamen definieren, weiß Rust nicht immer,
+welchen Typ du meinst, es sei denn, du verwendest eine voll-qualifizierte
+Syntax. In Listing 20-20 erstellen wir zum Beispiel ein Trait für ein Tierheim,
+das alle Hundewelpen Spot nennen möchte. Wir erstellen ein Trait <code>Animal</code> mit
+einer assoziierten Funktion <code>baby_name</code>. Das Trait <code>Animal</code> ist für die Struktur
+<code>Dog</code> implementiert, für die wir auch direkt eine assoziierte Funktion
+<code>baby_name</code> bereitstellen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">trait Animal {
     fn baby_name() -&gt; String;
@@ -553,15 +551,15 @@ impl Animal for Dog {
 fn main() {
     println!("Ein Hundebaby wird {} genannt.", Dog::baby_name());
 }</code></pre>
-<p><span class="caption">Codeblock 20-20: Ein Merkmal mit einer assoziierten
-Funktion und ein Typ mit einer assoziierten Funktion desselben Namens, der das
-Merkmal ebenfalls implementiert</span></p>
+<p><span class="caption">Listing 20-20: Ein Trait mit einer assoziierten Funktion
+und ein Typ mit einer assoziierten Funktion desselben Namens, der das Trait
+ebenfalls implementiert</span></p>
 <p>Wir implementieren den Code für die Benennung aller Welpen Spot in der
 assoziierten Funktion <code>baby_name</code>, die auf <code>Dog</code> definiert ist. Der Typ <code>Dog</code>
-implementiert auch das Merkmal <code>Animal</code>, das Charakteristiken beschreibt, die
-alle Tiere haben. Hundebabys werden Welpen genannt und das drückt sich in der
-Implementierung des Merkmals <code>Animal</code> auf <code>Dog</code> in der Funktion <code>baby_name</code>
-aus, die mit dem Merkmal <code>Animal</code> assoziiert ist.</p>
+implementiert auch das Trait <code>Animal</code>, das Charakteristiken beschreibt, die alle
+Tiere haben. Hundebabys werden Welpen genannt und das drückt sich in der
+Implementierung des Traits <code>Animal</code> auf <code>Dog</code> in der Funktion <code>baby_name</code> aus,
+die mit dem Trait <code>Animal</code> assoziiert ist.</p>
 <p>In <code>main</code> rufen wir die Funktion <code>Dog::baby_name</code> auf, die die assoziierte
 Funktion, die auf <code>Dog</code> definiert ist, direkt aufruft. Dieser Code gibt
 Folgendes aus:</p>
@@ -572,11 +570,11 @@ Folgendes aus:</p>
 Ein Hundebaby wird Spot genannt.
 </code></pre>
 <p>Diese Ausgabe ist nicht das, was wir wollten. Wir wollen die Funktion
-<code>baby_name</code> aufrufen, die Teil des Merkmals <code>Animal</code> ist, das wir auf <code>Dog</code>
-implementiert haben, sodass der Code <code>Ein Hundebaby wird Welpe genannt</code>
-ausgibt. Die Technik der Angabe des Merkmalsnamens, die wir in Codeblock 20-19
-verwendet haben, hilft hier nicht weiter; wenn wir <code>main</code> in den Code in
-Codeblock 20-21 ändern, erhalten wir einen Kompilierfehler.</p>
+<code>baby_name</code> aufrufen, die Teil des Traits <code>Animal</code> ist, das wir auf <code>Dog</code>
+implementiert haben, sodass der Code <code>Ein Hundebaby wird Welpe genannt</code> ausgibt.
+Die Technik der Angabe des Trait-Namens, die wir in Listing 20-19 verwendet
+haben, hilft hier nicht weiter; wenn wir <code>main</code> in den Code in Listing 20-21
+ändern, erhalten wir einen Compilerfehler.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">trait Animal {
 </span><span class="boring">    fn baby_name() -&gt; String;
@@ -600,13 +598,13 @@ Codeblock 20-21 ändern, erhalten wir einen Kompilierfehler.</p>
     println!("Ein Hundebaby wird {} genannt.", Animal::baby_name());
 }
 </code></pre>
-<p><span class="caption">Codeblock 20-21: Versuch, die Funktion <code>baby_name</code> des
-Merkmals <code>Animal</code> aufzurufen, aber Rust weiß nicht, welche Implementierung es
+<p><span class="caption">Listing 20-21: Versuch, die Funktion <code>baby_name</code> des
+Traits <code>Animal</code> aufzurufen, aber Rust weiß nicht, welche Implementierung es
 verwenden soll</span></p>
 <p>Da <code>Animal::baby_name</code> keinen <code>self</code>-Parameter hat, und es andere Typen geben
-könnte, die das Merkmal <code>Animal</code> implementieren, kann Rust nicht herausfinden,
+könnte, die das Trait <code>Animal</code> implementieren, kann Rust nicht herausfinden,
 welche Implementierung von <code>Animal::baby_name</code> wir wollen. Wir werden diesen
-Kompilierfehler erhalten:</p>
+Compilerfehler erhalten:</p>
 <pre><code class="language-console">$ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
 error[E0790]: cannot call associated function on trait without specifying the corresponding `impl` type
@@ -629,7 +627,7 @@ error: could not compile `traits-example` (bin "traits-example") due to 1 previo
 <p>Um zu vereindeutigen und Rust zu sagen, dass wir die Implementierung von
 <code>Animal</code> für <code>Dog</code> verwenden wollen und nicht die Implementierung von <code>Animal</code>
 für einen anderen Typ, müssen wir eine vollständig qualifizierte Syntax
-verwenden. Codeblock 20-22 zeigt, wie man eine vollständig qualifizierte Syntax
+verwenden. Listing 20-22 zeigt, wie man eine vollständig qualifizierte Syntax
 verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">trait Animal {
@@ -653,11 +651,11 @@ verwendet.</p>
 </span>fn main() {
     println!("Ein Hundebaby wird {} genannt.", &lt;Dog as Animal&gt;::baby_name());
 }</code></pre>
-<p><span class="caption">Codeblock 20-22: Verwenden einer vollständig
+<p><span class="caption">Listing 20-22: Verwenden einer vollständig
 qualifizierten Syntax, um anzugeben, dass wir die Funktion <code>baby_name</code> des
-Merkmals <code>Animal</code> aufrufen wollen, wie sie auf <code>Dog</code> implementiert ist</span></p>
+Traits <code>Animal</code> aufrufen wollen, wie sie auf <code>Dog</code> implementiert ist</span></p>
 <p>Wir geben Rust mit einer Typ-Annotation innerhalb spitzer Klammern an, dass wir
-die Methode <code>baby_name</code> des Merkmals <code>Animal</code>, die auf <code>Dog</code> implementiert ist,
+die Methode <code>baby_name</code> des Traits <code>Animal</code>, die auf <code>Dog</code> implementiert ist,
 aufrufen wollen, indem wir sagen, dass wir den Typ <code>Dog</code> für diesen
 Funktionsaufruf als <code>Animal</code> behandeln wollen. Dieser Code wird nun ausgeben,
 was wir wollen:</p>
@@ -677,19 +675,19 @@ anderen Informationen im Programm herausfinden kann. Du musst diese
 ausführlichere Syntax nur in Fällen verwenden, in denen es mehrere
 Implementierungen gibt, die denselben Namen verwenden, und Rust Hilfe benötigt,
 um herauszufinden, welche Implementierung du aufrufen möchtest.</p>
-<h3 id="verwenden-von-supermerkmalen"><a class="header" href="#verwenden-von-supermerkmalen">Verwenden von Supermerkmalen</a></h3>
-<p>Manchmal kann es vorkommen, dass man eine Merkmals-Definition schreibt, die von
-einem anderen Merkmal abhängt: Damit ein Typ das erste Merkmal implementieren
-kann, muss dieser Typ auch das zweite Merkmal implementieren. Du würdest dies
-tun, damit deine Merkmalsdefinition die zugehörigen Elemente des zweiten
-Merkmals verwenden kann. Das Merkmal, auf das sich deine Merkmalsdefinition
-stützt, wird als <em>Supermerkmal</em> (supertrait) deines Merkmals bezeichnet.</p>
-<p>Nehmen wir zum Beispiel an, wir wollen ein Merkmal <code>OutlinePrint</code> mit einer
-Methode <code>outline_print</code> erstellen, das einen bestimmten Wert so formatiert,
-dass er in Sternchen eingerahmt ausgegeben wird. Das heißt, wenn wir eine
-Struktur <code>Point</code> haben, die <code>Display</code> so implementiert, dass sie <code>(x, y)</code>
-ausgibt, dann gibt der Aufruf von <code>outline_print</code> einer <code>Point</code>-Instanz, die
-<code>1</code> für <code>x</code> und <code>3</code> für <code>y</code> hat, folgendes aus:</p>
+<h3 id="verwenden-von-supertraits"><a class="header" href="#verwenden-von-supertraits">Verwenden von Supertraits</a></h3>
+<p>Manchmal kann es vorkommen, dass man eine Trait-Definition schreibt, die von
+einem anderen Trait abhängt: Damit ein Typ das erste Trait implementieren kann,
+muss dieser Typ auch das zweite Trait implementieren. Du würdest dies tun, damit
+deine Trait-Definition die zugehörigen Elemente des zweiten Traits verwenden
+kann. Das Trait, auf das sich deine Trait-Definition stützt, wird als
+<em>Supertrait</em> deines Traits bezeichnet.</p>
+<p>Nehmen wir zum Beispiel an, wir wollen ein Trait <code>OutlinePrint</code> mit einer
+Methode <code>outline_print</code> erstellen, das einen bestimmten Wert so formatiert, dass
+er in Sternchen eingerahmt ausgegeben wird. Das heißt, wenn wir eine Struktur
+<code>Point</code> haben, die <code>Display</code> so implementiert, dass sie <code>(x, y)</code> ausgibt, dann
+gibt der Aufruf von <code>outline_print</code> einer <code>Point</code>-Instanz, die <code>1</code> für <code>x</code> und
+<code>3</code> für <code>y</code> hat, Folgendes aus:</p>
 <pre><code class="language-text">**********
 *        *
 * (1, 3) *
@@ -697,13 +695,12 @@ ausgibt, dann gibt der Aufruf von <code>outline_print</code> einer <code>Point</
 **********
 </code></pre>
 <p>Bei der Implementierung der Methode <code>outline_print</code> wollen wir die
-Funktionalität des Merkmals <code>Display</code> nutzen. Daher müssen wir festlegen, dass
-das Merkmal <code>OutlinePrint</code> nur bei Typen funktioniert, die auch <code>Display</code>
+Funktionalität des Traits <code>Display</code> nutzen. Daher müssen wir festlegen, dass das
+Trait <code>OutlinePrint</code> nur bei Typen funktioniert, die auch <code>Display</code>
 implementieren und die Funktionalität bieten, die <code>OutlinePrint</code> benötigt. Wir
-können dies in der Merkmalsdefinition tun, indem wir <code>OutlinePrint: Display</code>
-angeben. Diese Technik ähnelt dem Angeben einer Merkmalsabgrenzung (trait
-bound) bei einem Merkmal. Codeblock 20-23 zeigt eine Implementierung des
-Merkmals <code>OutlinePrint</code>.</p>
+können dies in der Trait-Definition tun, indem wir <code>OutlinePrint: Display</code>
+angeben. Diese Technik ähnelt dem Angeben einer Trait Bound bei einem Trait.
+Listing 20-23 zeigt eine Implementierung des Traits <code>OutlinePrint</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::fmt;
 
@@ -720,15 +717,15 @@ trait OutlinePrint: fmt::Display {
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre>
-<p><span class="caption">Codeblock 20-23: Implementieren des Merkmals
-<code>OutlinePrint</code>, das die Funktionalität von <code>Display</code> erfordert</span></p>
-<p>Da wir festgelegt haben, dass <code>OutlinePrint</code> das Merkmal <code>Display</code> erfordert,
+<p><span class="caption">Listing 20-23: Implementieren des Traits <code>OutlinePrint</code>,
+das die Funktionalität von <code>Display</code> erfordert</span></p>
+<p>Da wir festgelegt haben, dass <code>OutlinePrint</code> das Trait <code>Display</code> erfordert,
 können wir die Funktion <code>to_string</code> verwenden, die automatisch für jeden Typ
 implementiert wird, der <code>Display</code> implementiert. Wenn wir versuchen würden,
-<code>to_string</code> zu verwenden, ohne einen Doppelpunkt und das Merkmal <code>Display</code> nach
-dem Merkmalsnamen anzugeben, würden wir eine Fehlermeldung erhalten, die
-besagt, dass keine Methode mit dem Namen <code>to_string</code> für den Typ <code>&amp;Self</code> im
-aktuellen Gültigkeitsbereich gefunden wurde.</p>
+<code>to_string</code> zu verwenden, ohne einen Doppelpunkt und das Trait <code>Display</code> nach
+dem Trait-Namen anzugeben, würden wir eine Fehlermeldung erhalten, die besagt,
+dass keine Methode mit dem Namen <code>to_string</code> für den Typ <code>&amp;Self</code> im aktuellen
+Gültigkeitsbereich gefunden wurde.</p>
 <p>Lass uns sehen, was passiert, wenn wir versuchen, <code>OutlinePrint</code> auf einem Typ
 zu implementieren, der <code>Display</code> nicht implementiert, z.B. die Struktur
 <code>Point</code>:</p>
@@ -829,30 +826,30 @@ impl fmt::Display for Point {
 </span><span class="boring">    let p = Point { x: 1, y: 3 };
 </span><span class="boring">    p.outline_print();
 </span><span class="boring">}</span></code></pre>
-<p>Dann wird die Implementierung des Merkmals <code>OutlinePrint</code> auf <code>Point</code>
-erfolgreich kompilieren und wir können <code>outline_print</code> auf einer
-<code>Point</code>-Instanz aufrufen, um sie in Sternchen eingerahmt anzuzeigen.</p>
-<h3 id="externe-merkmale-mit-dem-newtype-muster-implementieren"><a class="header" href="#externe-merkmale-mit-dem-newtype-muster-implementieren">Externe Merkmale mit dem Newtype-Muster implementieren</a></h3>
-<p>In <a href="ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren">„Ein Merkmal für einen Typ implementieren“</a>
-in Kapitel 10 erwähnten wir die Waisenregel, bei der wir ein Merkmal nur dann
-auf einem Typ implementieren dürfen, wenn entweder das Merkmal oder der Typ
-oder beides lokal in unserer Kiste (crate) vorhanden ist. Es ist möglich, diese
-Einschränkung zu umgehen, indem man das <em>Newtype-Muster</em> (newtype pattern)
-verwendet, bei dem ein neuer Typ in einer Tupelstruktur erzeugt wird. (Wir
-haben Tupelstrukturen in <a href="ch05-01-defining-structs.html#mit-tupel-strukturen-verschiedene-typen-erzeugen">„Mit Tupel-Strukturen verschiedene Typen
-erzeugen“</a> in Kapitel 5 behandelt.) Die Tupelstruktur wird ein
-Feld haben und eine dünne Verpackung um den Typ sein, für den wir ein Merkmal
-implementieren wollen. Dann ist der Verpackungstyp lokal in unserer Kiste und
-wir können das Merkmal auf dem Verpackungstyp (wrapper type) implementieren.
-<em>Newtype</em> ist ein Begriff, der aus der Programmiersprache Haskell stammt. Beim
-Verwenden dieses Musters gibt es keine Beeinträchtigung der Laufzeitperformanz
-und der Verpackungstyp wird zur Kompilierzeit elidiert.</p>
+<p>Dann wird die Implementierung des Traits <code>OutlinePrint</code> auf <code>Point</code> erfolgreich
+kompilieren und wir können <code>outline_print</code> auf einer <code>Point</code>-Instanz aufrufen,
+um sie in Sternchen eingerahmt anzuzeigen.</p>
+<h3 id="externe-traits-mit-dem-newtype-muster-implementieren"><a class="header" href="#externe-traits-mit-dem-newtype-muster-implementieren">Externe Traits mit dem Newtype-Muster implementieren</a></h3>
+<p>In <a href="ch10-02-traits.html#ein-trait-für-einen-typ-implementieren">„Ein Trait für einen Typ implementieren“</a> in
+Kapitel 10 erwähnten wir die Waisenregel, bei der wir ein Trait nur dann auf
+einem Typ implementieren dürfen, wenn entweder das Trait oder der Typ oder
+beides lokal in unserer Crate vorhanden ist. Es ist möglich, diese Einschränkung
+zu umgehen, indem man das <em>Newtype-Muster</em> (newtype pattern) verwendet, bei dem
+ein neuer Typ in einer Tupelstruktur erzeugt wird. (Wir haben Tupelstrukturen in
+<a href="ch05-01-defining-structs.html#mit-tupel-strukturen-verschiedene-typen-erzeugen">„Mit Tupel-Strukturen verschiedene Typen erzeugen“</a> in Kapitel 5
+behandelt.) Die Tupelstruktur wird ein Feld haben und eine dünne Verpackung um
+den Typ sein, für den wir ein Trait implementieren wollen. Dann ist der
+Verpackungstyp lokal in unserer Crate und wir können das Trait auf dem
+Verpackungstyp (wrapper type) implementieren. <em>Newtype</em> ist ein Begriff, der aus
+der Programmiersprache Haskell stammt. Beim Verwenden dieses Musters gibt es
+keine Beeinträchtigung der Laufzeitperformanz und der Verpackungstyp wird zur
+Kompilierzeit elidiert.</p>
 <p>Nehmen wir als Beispiel an, wir wollen <code>Display</code> auf <code>Vec&lt;T&gt;</code> implementieren,
-was uns die Waisenregel direkt verbietet, weil das Merkmal <code>Display</code> und der
-Typ <code>Vec&lt;T&gt;</code> außerhalb unserer Kiste definiert sind. Wir können eine Struktur
+was uns die Waisenregel direkt verbietet, weil das Trait <code>Display</code> und der Typ
+<code>Vec&lt;T&gt;</code> außerhalb unserer Crate definiert sind. Wir können eine Struktur
 <code>Wrapper</code> erstellen, die eine Instanz von <code>Vec&lt;T&gt;</code> enthält; dann können wir
 <code>Display</code> auf <code>Wrapper</code> implementieren und den Wert <code>Vec&lt;T&gt;</code> verwenden, wie in
-Codeblock 20-24 gezeigt.</p>
+Listing 20-24 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::fmt;
 
@@ -868,27 +865,27 @@ fn main() {
     let w = Wrapper(vec![String::from("Hallo"), String::from("Welt")]);
     println!("w = {w}");
 }</code></pre>
-<p><span class="caption">Codeblock 20-24: Erstellen eines Typs <code>Wrapper</code> um
+<p><span class="caption">Listing 20-24: Erstellen eines Typs <code>Wrapper</code> um
 <code>Vec&lt;String&gt;</code> zur Implementierung von <code>Display</code></span></p>
 <p>Die Implementierung von <code>Display</code> verwendet <code>self.0</code>, um auf den inneren
 <code>Vec&lt;T&gt;</code> zuzugreifen, da <code>Wrapper</code> eine Tupelstruktur ist und <code>Vec&lt;T&gt;</code> das
 Element mit dem Index 0 im Tupel ist. Dann können wir die Funktionalität des
-<code>Display</code>-Typs auf <code>Wrapper</code> verwenden.</p>
+Traits <code>Display</code> auf <code>Wrapper</code> verwenden.</p>
 <p>Der Nachteil der Verwendung dieser Technik ist, dass <code>Wrapper</code> ein neuer Typ
 ist, sodass er nicht die Methoden des Wertes hat, den er hält. Wir müssten alle
 Methoden von <code>Vec&lt;T&gt;</code> direkt auf <code>Wrapper</code> implementieren, sodass die Methoden
 an <code>self.0</code> delegieren, was uns erlauben würde, <code>Wrapper</code> genau wie einen
 <code>Vec&lt;T&gt;</code> zu behandeln. Wenn wir wollten, dass der neue Typ jede Methode des
-inneren Typs hat, wäre die Implementierung des Merkmals <code>Deref</code> auf dem
-<code>Wrapper</code> eine Lösung, um den inneren Typ zurückzugeben (wir haben die
-Implementierung des Merkmals <code>Deref</code> in <a href="ch15-02-deref.html">„Intelligente Zeiger wie normale
-Referenzen behandeln“</a> in Kapitel 15 besprochen). Wenn wir
-nicht wollten, dass der <code>Wrapper</code>-Typ alle Methoden des inneren Typs hat
-– zum Beispiel, um das Verhalten des <code>Wrapper</code>-Typs einzuschränken
-– müssten wir nur die Methoden, die wir wollen, manuell implementieren.</p>
-<p>Dieses Newtype-Muster ist auch dann nützlich, wenn keine Merkmale beteiligt
-sind. Wechseln wir den Fokus und schauen wir uns einige fortgeschrittene
-Möglichkeiten an, mit dem Typsystem von Rust zu interagieren.</p>
+inneren Typs hat, wäre die Implementierung des Traits <code>Deref</code> auf dem <code>Wrapper</code>
+eine Lösung, um den inneren Typ zurückzugeben (wir haben die Implementierung des
+Traits <code>Deref</code> in <a href="ch15-02-deref.html">„Intelligente Zeiger wie normale Referenzen
+behandeln“</a> in Kapitel 15 besprochen). Wenn wir nicht
+wollten, dass der <code>Wrapper</code>-Typ alle Methoden des inneren Typs hat – zum
+Beispiel, um das Verhalten des <code>Wrapper</code>-Typs einzuschränken – müssten wir
+nur die Methoden, die wir wollen, manuell implementieren.</p>
+<p>Dieses Newtype-Muster ist auch dann nützlich, wenn keine Traits beteiligt sind.
+Wechseln wir den Fokus und schauen wir uns einige fortgeschrittene Möglichkeiten
+an, mit dem Typsystem von Rust zu interagieren.</p>
 
                     </main>
 

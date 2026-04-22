@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -164,19 +164,18 @@
                         <h2 id="nicht-behebbare-fehler-mit-panic"><a class="header" href="#nicht-behebbare-fehler-mit-panic">Nicht behebbare Fehler mit <code>panic!</code></a></h2>
 <p>Manchmal passieren schlimme Dinge in deinem Code und du kannst nichts dagegen
 tun. Für diese Fälle hat Rust das Makro <code>panic!</code>. In der Praxis gibt es zwei
-Möglichkeiten, ein Programm abstürzen zu lassen: Durch eine Aktion, die unseren
-Code abstürzen lässt (z.B. Zugriff auf ein Array über das Ende hinaus) oder
-durch den expliziten Aufruf des Makros <code>panic!</code>. In beiden Fällen brechen wir
-unser Programm ab. Standardmäßig geben diese Programmabbrüche eine
-Fehlermeldung aus, räumen den Stapelspeicher auf und beenden sich. Über eine
-Umgebungsvariable kannst du auch festlegen, dass Rust den Stapelspeicher
-anzeigt, wenn das Programm abbricht, damit du die Quelle des Abbruchs leichter
-aufspüren kannst.</p>
+Möglichkeiten, ein Programm abzubrechen: Durch eine Aktion, die unseren Code
+abbricht (z.B. Zugriff auf ein Array über das Ende hinaus) oder durch den
+expliziten Aufruf des Makros <code>panic!</code>. In beiden Fällen brechen wir unser
+Programm ab. Standardmäßig geben diese Programmabbrüche eine Fehlermeldung aus,
+räumen den Stack auf und beenden sich. Über eine Umgebungsvariable kannst du
+auch festlegen, dass Rust den Stack anzeigt, wenn das Programm abbricht, damit
+du die Quelle des Abbruchs leichter aufspüren kannst.</p>
 <blockquote>
-<h3 id="auflösen-des-stapelspeichers-oder-abbrechen-als-fehlerreaktion"><a class="header" href="#auflösen-des-stapelspeichers-oder-abbrechen-als-fehlerreaktion">Auflösen des Stapelspeichers oder Abbrechen als Fehlerreaktion</a></h3>
+<h3 id="auflösen-des-stacks-oder-abbrechen-als-fehlerreaktion"><a class="header" href="#auflösen-des-stacks-oder-abbrechen-als-fehlerreaktion">Auflösen des Stacks oder Abbrechen als Fehlerreaktion</a></h3>
 <p>Wenn ein Programmabbruch auftritt, beginnt das Programm standardmäßig mit dem
-<em>Abwickeln</em>, was bedeutet, dass Rust den Stapelspeicher wieder nach oben geht
-und die Daten aller Funktion aufräumt. Allerdings ist dieses Zurückgehen und
+<em>Abwickeln</em>, was bedeutet, dass Rust den Stack wieder nach oben geht und die
+Daten aller Funktionen aufräumt. Allerdings ist dieses Zurückgehen und
 Aufräumen eine Menge Arbeit. Rust bietet dir als Alternative daher an, das
 Programm sofort <em>abzubrechen</em>, also das Programm ohne Aufräumen zu beenden.</p>
 <p>Der Speicher, den das Programm benutzt hat, muss dann vom Betriebssystem
@@ -193,7 +192,7 @@ panic = 'abort'
 <p>Versuchen wir <code>panic!</code> in einem einfachen Programm aufzurufen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust should_panic panics edition2024">fn main() {
-    panic!("abstürzen und verbrennen");
+    panic!("abbrechen und verbrennen");
 }</code></pre>
 <p>Wenn du das Programm ausführst, wirst du in etwa das hier sehen:</p>
 <pre><code class="language-console">$ cargo run
@@ -207,8 +206,8 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Der Aufruf von <code>panic!</code> verursacht die in den letzten beiden Zeilen enthaltene
 Fehlermeldung. Die erste Zeile zeigt unsere Fehlermeldung und die Position in
-unserem Quellcode, an der der Fehler aufgetreten ist: <em>src/main.rs:2:5</em> gibt
-an, dass es sich um die zweite Zeile und dem fünften Zeichen in unserer Datei
+unserem Quellcode, an der der Fehler aufgetreten ist: <em>src/main.rs:2:5</em> gibt an,
+dass es sich um die zweite Zeile und das fünften Zeichen in unserer Datei
 <em>src/main.rs</em> handelt.</p>
 <p>In diesem Fall ist die angegebene Zeile Teil unseres Codes und wenn wir uns
 diese Zeile ansehen, sehen wir den Makroaufruf <code>panic!</code>. In anderen Fällen
@@ -221,7 +220,7 @@ schließlich zum Aufruf von <code>panic!</code> geführt hat.</p>
 verursacht. Um zu verstehen, wie man eine <code>panic!</code>-Aufrufhistorie liest, lass
 uns ein anderes Beispiel betrachten, bei dem ein <code>panic!</code>-Aufruf aufgrund eines
 Fehlers in unserem Code von einer Bibliothek kommt, anstatt von unserem Code,
-der das Makro direkt aufruft. Codeblock 9-1 enthält einen Code, der versucht,
+der das Makro direkt aufruft. Listing 9-1 enthält einen Code, der versucht,
 auf einen Index in einem Vektor zuzugreifen, der außerhalb des Bereichs
 gültiger Indizes liegt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -230,7 +229,7 @@ gültiger Indizes liegt.</p>
 
     v[99];
 }</code></pre>
-<p><span class="caption">Codeblock 9-1: Versuch, auf ein Element jenseits des
+<p><span class="caption">Listing 9-1: Versuch, auf ein Element jenseits des
 Endes eines Vektors zuzugreifen, was einen Aufruf von <code>panic!</code> auslöst</span></p>
 <p>Hier versuchen wir, auf das 100. Element unseres Vektors zuzugreifen (das bei
 Index 99 liegt, weil die Indexierung bei Null beginnt), der Vektor hat aber nur
@@ -242,10 +241,10 @@ könnte.</p>
 undefiniertes Verhalten. Möglicherweise erhältst du den Wert im Speicher an der
 der Datenstruktur entsprechenden Stelle, selbst wenn der Speicher nicht zu
 dieser Struktur gehört. Dies wird als <em>Hinauslesen über den Puffer</em> (buffer
-overread) bezeichnet und kann zu Sicherheitslücken führen, wenn ein Angreifer
-in der Lage ist, den Index so zu manipulieren, dass er unerlaubterweise Daten
-lesen kann, die nach der Datenstruktur gespeichert sind.</p>
-<p>Um dein Programm vor dieser Art Verwundbarkeit zu schützen, wird Rust beim
+overread) bezeichnet und kann zu Sicherheitslücken führen, wenn ein Angreifer in
+der Lage ist, den Index so zu manipulieren, dass er unerlaubt Daten lesen kann,
+die nach der Datenstruktur gespeichert sind.</p>
+<p>Um dein Programm vor dieser Art von Verwundbarkeit zu schützen, wird Rust beim
 Versuch, ein Element an einem Index zu lesen, der nicht existiert, die
 Ausführung stoppen und die Fortsetzung verweigern. Versuchen wir es und sehen,
 was passiert:</p>
@@ -261,18 +260,18 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 <p>Dieser Fehler weist auf Zeile 4 in unserer <code>main.rs</code> hin, wo wir versuchen, auf
 den Index 99 des Vektors in <code>v</code> zuzugreifen.</p>
 <p>Die Zeile <code>note:</code> sagt uns, dass wir die Umgebungsvariable <code>RUST_BACKTRACE</code>
-setzen können, um eine Aufrufhistorie zu erhalten, was genau passiert ist und
-den Fehler verursacht hat. Eine <em>Aufrufhistorie</em> ist eine Liste aller
-Funktionen, die aufgerufen wurden, um an diesen Punkt zu gelangen.
-Aufrufhistorien in Rust funktionieren wie in anderen Sprachen: Der Schlüssel
-zum Lesen der Aufrufhistorie ist, von oben zu beginnen und zu lesen, bis du
-Dateien siehst, die du geschrieben hast. Das ist die Stelle, an der das Problem
+setzen können, um eine Aufrufhistorie zu erhalten und zu sehen, was genau
+passiert ist und was den Fehler verursacht hat. Eine <em>Aufrufhistorie</em> ist eine
+Liste aller Funktionen, die aufgerufen wurden, um an diesen Punkt zu gelangen.
+Aufrufhistorien in Rust funktionieren wie in anderen Sprachen: Der Schlüssel zum
+Lesen der Aufrufhistorie ist, von oben zu beginnen und zu lesen, bis du Dateien
+siehst, die du geschrieben hast. Das ist die Stelle, an der das Problem
 entstanden ist. Die Zeilen darüber sind Code, den dein Code aufgerufen hat; die
 Zeilen darunter sind Code, der deinen Code aufgerufen hat. Diese Zeilen können
-Core-Rust-Code, Code der Standardbibliothek oder Kisten, enthalten, die du
+Core-Rust-Code, Code der Standardbibliothek oder Crates enthalten, die du
 verwendest. Versuchen wir, eine Aufrufhistorie zu erhalten, indem wir die
 Umgebungsvariable <code>RUST_BACKTRACE</code> auf einen beliebigen Wert außer <code>0</code> setzen.
-Codeblock 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.</p>
+Listing 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.</p>
 <pre><code class="language-console">$ RUST_BACKTRACE=1 cargo run
 thread 'main' panicked at src/main.rs:4:6:
 index out of bounds: the len is 3 but the index is 99
@@ -295,22 +294,22 @@ stack backtrace:
              at /rustc/07dca489ac2d933c78d3c5158e3f43/library/core/src/ops/function.rs:250:5
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 </code></pre>
-<p><span class="caption">Codeblock 9-2: Aufrufhistorie, erzeugt durch einen Aufruf
+<p><span class="caption">Listing 9-2: Aufrufhistorie, erzeugt durch einen Aufruf
 von <code>panic!</code>, wenn die Umgebungsvariable <code>RUST_BACKTRACE</code> gesetzt ist</span></p>
 <p>Das ist eine lange Ausgabe! Die genaue Ausgabe kann je nach Betriebssystem und
 Rust-Version unterschiedlich sein. Um Aufrufhistorien mit diesen Informationen
 zu erhalten, müssen Fehlersuchinfos (debug symbols) aktiviert sein.
 Fehlersuchinfos sind standardmäßig aktiviert, wenn du <code>cargo build</code> oder
 <code>cargo run</code> ohne Flag <code>--release</code> verwendest, wie wir es hier haben.</p>
-<p>In der Ausgabe in Codeblock 9-2 zeigt Zeile 17 der Aufrufhistorie auf die Zeile
-in unserem Projekt, die das Problem verursacht: Zeile 4 in <em>src/main.rs</em>. Wenn
-wir nicht wollen, dass unser Programm abbricht, sollten wir bei der ersten
-Zeile, die auf eine von uns geschriebenen Datei verweist, mit der Untersuchung
-beginnen. In Codeblock 9-1, wo wir absichtlich Code geschrieben haben, der das
-Programm abbricht, besteht die Möglichkeit das Problem zu beheben darin, kein
-Element außerhalb des Bereichs der Vektorindizes anzufordern. Wenn dein Code in
-Zukunft abbricht, musst du herausfinden, bei welcher Aktion der Code mit
-welchen Werten abbricht und was der Code stattdessen tun sollte.</p>
+<p>In der Ausgabe in Listing 9-2 zeigt Zeile 17 der Aufrufhistorie auf die Zeile in
+unserem Projekt, die das Problem verursacht: Zeile 4 in <em>src/main.rs</em>. Wenn wir
+nicht wollen, dass unser Programm abbricht, sollten wir bei der ersten Zeile,
+die auf eine von uns geschriebene Datei verweist, mit der Untersuchung beginnen.
+In Listing 9-1, wo wir absichtlich Code geschrieben haben, der das Programm
+abbricht, besteht die Möglichkeit, das Problem zu beheben, indem man kein
+Element außerhalb des Bereichs der Vektorindizes anfordert. Wenn dein Code in
+Zukunft abbricht, musst du herausfinden, bei welcher Aktion der Code mit welchen
+Werten abbricht und was der Code stattdessen tun sollte.</p>
 <p>In Abschnitt <a href="ch09-03-to-panic-or-not-to-panic.html">„Wann <code>panic!</code> aufrufen und wann
 nicht?“</a> später in diesem Kapitel kommen wir noch
 einmal auf <code>panic!</code> zurück und wann wir <code>panic!</code> verwenden sollten und wann

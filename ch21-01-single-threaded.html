@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Einen einsträngigen (single-threaded) Webserver erstellen - Die Programmiersprache Rust</title>
+        <title>Einen single-threaded Webserver erstellen - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,26 +161,26 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="einen-einsträngigen-single-threaded-webserver-erstellen"><a class="header" href="#einen-einsträngigen-single-threaded-webserver-erstellen">Einen einsträngigen (single-threaded) Webserver erstellen</a></h2>
-<p>Wir beginnen damit, einen einsträngigen Webserver zum Laufen zu bringen. Bevor
+                        <h2 id="einen-single-threaded-webserver-erstellen"><a class="header" href="#einen-single-threaded-webserver-erstellen">Einen single-threaded Webserver erstellen</a></h2>
+<p>Wir beginnen damit, einen single-threaded Webserver zum Laufen zu bringen. Bevor
 wir beginnen, wollen wir uns einen kurzen Überblick über die Protokolle
-verschaffen, die beim Aufbau von Webservern eine Rolle spielen. Die
-Einzelheiten dieser Protokolle sprengen den Rahmen dieses Buches, aber ein
-kurzer Überblick wird dir die Informationen geben, die du benötigst.</p>
+verschaffen, die beim Aufbau von Webservern eine Rolle spielen. Die Einzelheiten
+dieser Protokolle sprengen den Rahmen dieses Buches, aber ein kurzer Überblick
+wird dir die Informationen geben, die du benötigst.</p>
 <p>Die beiden wichtigsten Protokolle, die bei Webservern zum Einsatz kommen, sind
-das <em>Hypertext-Übertragungsprotokoll</em> (Hypertext Transfer Protocol, kurz
-<em>HTTP</em>) und das <em>Übertragungssteuerungsprotokoll</em> (Transmission Control
-Protocol, kurz <em>TCP</em>). Beide Protokolle sind <em>Anfrage-Antwort-Protokolle</em>, d.h.
-ein <em>Client</em> initiiert Anfragen und ein <em>Server</em> hört auf die Anfragen und gibt
-eine Antwort an den Client. Der Inhalt dieser Anfragen und Antworten wird durch
-die Protokolle definiert.</p>
-<p>TCP ist das Protokoll der untergeordneten Ebene, das im Detail beschreibt, wie
-Informationen von einem Server zu einem anderen gelangen, aber nicht
-spezifiziert, um welche Informationen es sich dabei handelt. HTTP baut auf TCP
-auf, indem es den Inhalt der Anfragen und Antworten definiert. Es ist technisch
-möglich, HTTP mit anderen Protokollen zu verwenden, aber in den allermeisten
-Fällen sendet HTTP seine Daten über TCP. Wir werden mit den Roh-Bytes von TCP-
-und HTTP-Anfragen und -Antworten arbeiten.</p>
+das <em>Hypertext-Übertragungsprotokoll</em> (Hypertext Transfer Protocol, kurz <em>HTTP</em>)
+und das <em>Übertragungssteuerungsprotokoll</em> (Transmission Control Protocol, kurz
+<em>TCP</em>). Beide Protokolle sind <em>Anfrage-Antwort-Protokolle</em>, d.h. ein <em>Client</em>
+sendet Anfragen und ein <em>Server</em> nimmt Anfragen entgegen und gibt eine Antwort
+an den Client zurück. Der Inhalt dieser Anfragen und Antworten wird durch die
+Protokolle definiert.</p>
+<p>TCP ist ein Basisprotokoll, das im Detail beschreibt, wie Informationen von
+einem Rechner zu einem anderen gelangen, aber nicht spezifiziert, um welche
+Informationen es sich dabei handelt. HTTP baut auf TCP auf, indem es den Inhalt
+der Anfragen und Antworten definiert. Es ist technisch möglich, HTTP mit anderen
+Protokollen zu verwenden, aber in den allermeisten Fällen sendet HTTP seine
+Daten über TCP. Wir werden mit den Roh-Bytes von TCP- und HTTP-Anfragen und
+-Antworten arbeiten.</p>
 <h3 id="lauschen-auf-eine-tcp-verbindung"><a class="header" href="#lauschen-auf-eine-tcp-verbindung">Lauschen auf eine TCP-Verbindung</a></h3>
 <p>Unser Webserver muss auf eine TCP-Verbindung lauschen (listen), also ist das
 der erste Teil, an dem wir arbeiten werden. Die Standardbibliothek bietet ein
@@ -190,10 +190,9 @@ auf die übliche Art und Weise erstellen:</p>
      Created binary (application) `hello` project
 $ cd hello
 </code></pre>
-<p>Gib nun den Code in Codeblock 21-1 in <em>src/main.rs</em> ein, um zu beginnen. Dieser
+<p>Gib nun den Code in Listing 21-1 in <em>src/main.rs</em> ein, um zu beginnen. Dieser
 Code lauscht unter der lokalen Adresse <code>127.0.0.1:7878</code> auf eingehende
-TCP-Ströme (TCP streams). Wenn er einen eingehenden Strom erhält, wird er
-<code>Verbindung hergestellt!</code> ausgeben.</p>
+TCP-Anfragen. Wenn er eine eingehende Anfrage erhält, wird er <code>Verbindung hergestellt!</code> ausgeben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust no_run edition2024">use std::net::TcpListener;
 
@@ -206,8 +205,8 @@ fn main() {
         println!("Verbindung hergestellt!");
     }
 }</code></pre>
-<p><span class="caption">Codeblock 21-1: Warten auf eingehende Ströme und Ausgeben
-einer Nachricht, wenn wir einen Strom empfangen</span></p>
+<p><span class="caption">Listing 21-1: Warten auf eingehende Anfragen und Ausgeben
+einer Nachricht, wenn wir eine Anfrage empfangen</span></p>
 <p>Mit <code>TcpListener</code> können wir unter der Adresse <code>127.0.0.1:7878</code> auf
 TCP-Verbindungen warten. In der Adresse ist der Abschnitt vor dem Doppelpunkt
 eine IP-Adresse, die deinen Computer repräsentiert (dies ist auf jedem Computer
@@ -228,28 +227,27 @@ schreiben, werden wir uns nicht um die Behandlung dieser Art von Fehlern
 kümmern; stattdessen verwenden wir <code>unwrap</code>, um das Programm zu stoppen, wenn
 Fehler auftreten.</p>
 <p>Die Methode <code>incoming</code> von <code>TcpListener</code> gibt einen Iterator zurück, der uns
-eine Sequenz von Strömen (genauer gesagt Ströme vom Typ <code>TcpStream</code>) liefert.
-Ein einzelner <em>Strom</em> (stream) stellt eine offene Verbindung zwischen dem
-Client und dem Server dar. Eine <em>Verbindung</em> (connection) ist der Name für den
-vollständigen Anfrage- und Antwortprozess, bei dem sich ein Client mit dem
-Server verbindet, der Server eine Antwort erzeugt und der Server die Verbindung
-schließt. Daher werden wir aus dem <code>TcpStream</code> lesen, um zu sehen, was der
-Client gesendet hat, und dann unsere Antwort in den Strom schreiben, um Daten
-zurück an den Client zu senden. Insgesamt wird diese <code>for</code>-Schleife jede
-Verbindung der Reihe nach verarbeiten und eine Reihe von Strömen erzeugen, die
-wir verarbeiten müssen.</p>
-<p>Im Moment besteht unsere Behandlung des Stroms darin, dass wir <code>unwrap</code>
-aufrufen, um unser Programm zu beenden, wenn der Strom Fehler aufweist; wenn
+eine Sequenz von Streams (genauer gesagt Streams vom Typ <code>TcpStream</code>) liefert.
+Ein einzelner <em>Stream</em> stellt eine offene Verbindung zwischen dem Client und dem
+Server dar. Eine <em>Verbindung</em> (connection) ist der Name für den vollständigen
+Anfrage- und Antwortprozess, bei dem sich ein Client mit dem Server verbindet,
+der Server eine Antwort erzeugt und der Server die Verbindung schließt. Daher
+werden wir aus dem <code>TcpStream</code> lesen, um zu sehen, was der Client gesendet hat,
+und dann unsere Antwort in den Stream schreiben, um Daten zurück an den Client
+zu senden. Insgesamt wird diese <code>for</code>-Schleife jede Verbindung der Reihe nach
+verarbeiten und eine Reihe von Streams erzeugen, die wir verarbeiten müssen.</p>
+<p>Im Moment besteht unsere Behandlung des Streams darin, dass wir <code>unwrap</code>
+aufrufen, um unser Programm abzubrechen, wenn der Stream Fehler aufweist; wenn
 keine Fehler vorliegen, gibt das Programm eine Nachricht aus. Wir werden im
-nächsten Codeblock mehr Funktionalität für den Erfolgsfall hinzufügen. Der
-Grund, warum wir Fehler von der Methode <code>incoming</code> erhalten könnten, wenn sich
-ein Client mit dem Server verbindet, ist, dass wir nicht wirklich über
-Verbindungen iterieren. Stattdessen iterieren wir über <em>Verbindungsversuche</em>.
-Die Verbindung kann aus einer Reihe von Gründen nicht erfolgreich sein, viele
-davon sind betriebssystemspezifisch. Zum Beispiel haben viele Betriebssysteme
-ein Limit für die Anzahl der gleichzeitig offenen Verbindungen, die sie
-unterstützen können; neue Verbindungsversuche über diese Anzahl hinaus führen
-zu einem Fehler, bis einige der offenen Verbindungen geschlossen werden.</p>
+nächsten Listing mehr Funktionalität für den Erfolgsfall hinzufügen. Der Grund,
+warum wir Fehler von der Methode <code>incoming</code> erhalten könnten, wenn sich ein
+Client mit dem Server verbindet, ist, dass wir nicht wirklich über Verbindungen
+iterieren. Stattdessen iterieren wir über <em>Verbindungsversuche</em>. Die Verbindung
+kann aus einer Reihe von Gründen nicht erfolgreich sein, viele davon sind
+betriebssystemspezifisch. Zum Beispiel haben viele Betriebssysteme ein Limit für
+die Anzahl der gleichzeitig offenen Verbindungen, die sie unterstützen können;
+neue Verbindungsversuche über diese Anzahl hinaus führen zu einem Fehler, bis
+einige der offenen Verbindungen geschlossen werden.</p>
 <p>Lass uns versuchen, diesen Code auszuführen! Rufe <code>cargo run</code> im Terminal auf
 und öffne dann <em>127.0.0.1:7878</em> in einem Web-Browser. Der Browser sollte eine
 Fehlermeldung wie „Verbindung abgebrochen“ anzeigen, da der Server derzeit
@@ -265,33 +263,34 @@ Verbindung hergestellt!
 Grund dafür könnte sein, dass der Browser sowohl eine Anfrage für die Seite als
 auch eine Anfrage für andere Ressourcen stellt, z.B. das Symbol <em>favicon.ico</em>,
 das in der Browser-Registerkarte erscheint.</p>
-<p>Es könnte auch sein, dass der Browser mehrmals versucht, eine Verbindung mit
-dem Server herzustellen, weil der Server nicht mit Daten antwortet. Wenn
-<code>stream</code> den Gültigkeitsbereich verlässt und am Ende der Schleife aufgeräumt
-wird, wird die Verbindung als Teil der <code>drop</code>-Implementierung geschlossen.
-Browser reagieren auf geschlossene Verbindungen manchmal damit, es erneut zu
-versuchen, weil das Problem möglicherweise nur vorübergehend ist.</p>
+<p>Es könnte auch sein, dass der Browser mehrmals versucht, eine Verbindung mit dem
+Server herzustellen, weil der Server nicht mit Daten antwortet. Wenn <code>stream</code>
+den Gültigkeitsbereich verlässt und am Ende der Schleife aufgeräumt wird, wird
+die Verbindung als Teil der <code>drop</code>-Implementierung geschlossen. Browser
+reagieren auf geschlossene Verbindungen manchmal damit, diese erneut aufzubauen
+und es erneut zu versuchen, weil das Problem möglicherweise nur vorübergehend
+besteht.</p>
 <p>Browser öffnen manchmal auch mehrere Verbindungen zum Server, ohne Anfragen zu
 senden, damit <em>spätere</em> Anfragen schneller bearbeitet werden können. In diesem
 Fall sieht unser Server alle Verbindungen, unabhängig davon, ob über diese
-Verbindung Anfragen gesendet werden. Viele Versionen Chrome-basierter Browser
-verhalten sich beispielsweise so. Du kannst diese Optimierung deaktivieren,
-indem du den privaten Modus verwendest oder einen anderen Browser nutzt.</p>
+Verbindung Anfragen gesendet werden. Viele Chrome-basierte Browser verhalten
+sich beispielsweise so. Du kannst diese Optimierung deaktivieren, indem du den
+privaten Modus verwendest oder einen anderen Browser nutzt.</p>
 <p>Der wichtige Punkt ist, dass wir erfolgreich eine TCP-Verbindung hergestellt
 haben!</p>
-<p>Denke daran, das Programm durch Drücken von <kbd>Strg</kbd>+<kbd>c</kbd> zu
-beenden, wenn du mit der Ausführung einer bestimmten Version des Codes fertig
-bist. Starte dann das Programm neu, indem du den Befehl <code>cargo run</code> aufrufst,
-nachdem du die einzelnen Codeänderungen vorgenommen hast, um sicherzustellen,
-dass du den neuesten Code ausführst.</p>
+<p>Denke daran, das Programm durch Drücken von <kbd>Strg</kbd>+<kbd>c</kbd>
+abzubrechen, wenn du mit der Ausführung einer bestimmten Version des Codes
+fertig bist. Starte dann das Programm neu, indem du den Befehl <code>cargo run</code>
+aufrufst, nachdem du die einzelnen Codeänderungen vorgenommen hast, um
+sicherzustellen, dass du den neuesten Code ausführst.</p>
 <h3 id="lesen-der-anfrage"><a class="header" href="#lesen-der-anfrage">Lesen der Anfrage</a></h3>
-<p>Lass uns die Funktionalität zum Lesen der Anfrage vom Browser implementieren!
-Um die Zuständigkeiten zu trennen, also zuerst eine Verbindung entgegenzunehmen
-und dann mit der Verbindung etwas zu machen, werden wir eine neue Funktion zur
+<p>Lass uns die Funktionalität zum Lesen der Anfrage vom Browser implementieren! Um
+die Zuständigkeiten zu trennen, also zuerst eine Verbindung entgegenzunehmen und
+dann mit der Verbindung etwas zu machen, werden wir eine neue Funktion zur
 Verarbeitung von Verbindungen anfangen. In dieser neuen Funktion
-<code>handle_connection</code> lesen wir Daten aus dem TCP-Strom und geben sie aus, sodass
+<code>handle_connection</code> lesen wir Daten aus dem TCP-Stream und geben sie aus, sodass
 wir sehen können, welche Daten vom Browser gesendet werden. Ändere den Code so,
-dass er wie Codeblock 21-2 aussieht.</p>
+dass er wie Listing 21-2 aussieht.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust no_run edition2024">use std::{
     io::{prelude::*, BufReader},
@@ -318,33 +317,31 @@ fn handle_connection(mut stream: TcpStream) {
 
     println!("Request: {http_request:#?}");
 }</code></pre>
-<p><span class="caption">Codeblock 21-2: Lesen aus dem <code>TcpStream</code> und Ausgeben
+<p><span class="caption">Listing 21-2: Lesen aus dem <code>TcpStream</code> und Ausgeben
 der Daten</span></p>
 <p>Wir bringen <code>std::io::BufReader</code> und <code>std::io::prelude</code> in den
-Gültigkeitsbereich, um Zugang zu Merkmalen (traits) und Typen zu erhalten, die
-es uns ermöglichen, aus dem Strom zu lesen und in den Strom zu schreiben. In
-der <code>for</code>-Schleife in der Funktion <code>main</code> rufen wir jetzt, statt eine Nachricht
+Gültigkeitsbereich, um Zugang zu Traits und Typen zu erhalten, die es uns
+ermöglichen, aus dem Stream zu lesen und in den Stream zu schreiben. In der
+<code>for</code>-Schleife in der Funktion <code>main</code> rufen wir jetzt, statt eine Nachricht
 auszugeben, dass wir eine Verbindung hergestellt haben, die neue Funktion
 <code>handle_connection</code> auf und übergeben ihr den <code>stream</code>.</p>
-<p>In der Funktion <code>handle_connection</code> erstellen wir eine neue
-<code>BufReader</code>-Instanz, die eine Referenz auf den <code>stream</code> enthält. <code>BufReader</code>
-sorgt für die Pufferung, indem es die Aufrufe der Merkmals-Methoden von
-<code>std::io::Read</code> für uns verwaltet.</p>
-<p>Wir erstellen eine Variable namens <code>http_request</code>, um die Zeilen der Anfrage zu
+<p>In der Funktion <code>handle_connection</code> erstellen wir eine neue <code>BufReader</code>-Instanz,
+die eine Referenz auf den <code>stream</code> enthält. <code>BufReader</code> sorgt für die Pufferung,
+indem es die Aufrufe der Trait-Methoden von <code>std::io::Read</code> für uns verwaltet.</p>
+<p>Wir erstellen eine Variable namens <code>http_request</code>, um die Zeilen der Anfrage
 aufzusammeln, die der Browser an unseren Server sendet. Wir geben an, dass wir
 diese Zeilen in einem Vektor sammeln wollen, indem wir die Typ-Annotation
 <code>Vec&lt;_&gt;</code> hinzufügen.</p>
-<p><code>BufReader</code> implementiert das Merkmal <code>std::io::BufRead</code>, das die Methode
-<code>lines</code> bereitstellt. Die Methode <code>lines</code> gibt einen Iterator von
-<code>Result&lt;String, std::io::Error&gt;</code> zurück, indem sie den Datenstrom immer dann
-aufteilt, wenn sie ein Neue-Zeile-Byte sieht. Um jeden <code>String</code> zu erhalten,
-wird jedes <code>Result</code> mit <code>map</code> abgebildet und <code>unwrap</code> aufgerufen. Das <code>Result</code>
-könnte einen Fehler darstellen, wenn die Daten kein gültiges UTF-8 sind oder
-wenn es ein Problem beim Lesen aus dem Strom gab. Auch hier sollte ein
-Produktivprogramm diese Fehler besser behandeln, aber der Einfachheit halber
-brechen wir das Programm im Fehlerfall ab.</p>
-<p>Der Browser signalisiert das Ende einer HTTP-Anfrage, indem er zwei
-Zeilenumbrüche hintereinander sendet. Um also eine Anfrage aus dem Strom zu
+<p><code>BufReader</code> implementiert das Trait <code>std::io::BufRead</code>, das die Methode <code>lines</code>
+bereitstellt. Die Methode <code>lines</code> gibt einen Iterator von <code>Result&lt;String, std::io::Error&gt;</code> zurück, indem sie den Datenstrom immer dann aufteilt, wenn sie
+ein Neue-Zeile-Byte sieht. Um jeden <code>String</code> zu erhalten, wird jedes <code>Result</code>
+mit <code>map</code> abgebildet und <code>unwrap</code> aufgerufen. Das <code>Result</code> könnte einen Fehler
+darstellen, wenn die Daten kein gültiges UTF-8 sind oder wenn es ein Problem
+beim Lesen aus dem Stream gab. Auch hier sollte ein Produktivprogramm diese
+Fehler besser behandeln, aber der Einfachheit halber brechen wir das Programm im
+Fehlerfall ab.</p>
+<p>Der Browser signalisiert das Ende eines HTTP-Headers, indem er zwei
+Zeilenumbrüche hintereinander sendet. Um also eine Anfrage aus dem Stream zu
 erhalten, nehmen wir so lange Zeilen an, bis wir eine leere Zeile erhalten.
 Sobald wir die Zeilen im Vektor gesammelt haben, geben wir sie mit einer
 hübschen Debug-Formatierung aus, damit wir einen Blick auf die Anweisungen
@@ -383,15 +380,15 @@ weil er keine Antwort von unserem Programm erhält.</p>
 <p>Lass uns diese Anfragedaten aufschlüsseln, um zu verstehen, was der Browser von
 unserem Programm will.</p>
 <h3 id="ein-genauerer-blick-auf-eine-http-anfrage"><a class="header" href="#ein-genauerer-blick-auf-eine-http-anfrage">Ein genauerer Blick auf eine HTTP-Anfrage</a></h3>
-<p>HTTP ist ein textbasiertes Protokoll und eine Anfrage hat dieses Format an:</p>
+<p>HTTP ist ein textbasiertes Protokoll und eine Anfrage hat dieses Format:</p>
 <pre><code class="language-text">Method Request-URI HTTP-Version CRLF
 headers CRLF
 message-body
 </code></pre>
-<p>Die erste Zeile ist die <em>Anfragezeile</em> (request line), die Informationen
-darüber enthält, was der Client anfragt. Der erste Teil der Anfragezeile gibt
-die Methode an, die verwendet wird, z.B. <code>GET</code> oder <code>POST</code>, die beschreibt, wie
-der Client diese Anfrage stellt. Unser Client benutzte eine <code>GET</code>-Anfrage, was
+<p>Die erste Zeile ist die <em>Anfragezeile</em> (request line), die Informationen darüber
+enthält, was der Client anfragt. Der erste Teil der Anfragezeile gibt die
+Methode an, die verwendet wird, z.B. <code>GET</code> oder <code>POST</code>, die beschreibt, wie der
+Client diese Anfrage stellt. Unser Client hat eine <code>GET</code>-Anfrage verwendet, was
 bedeutet, dass er nach Informationen fragt.</p>
 <p>Der nächste Teil der Anfragezeile ist <code>/</code>, der den <em>einheitlichen
 Ressourcenbezeichner</em> (Uniform Resource Identifier, kurz <em>URI</em>) angibt, den der
@@ -435,9 +432,9 @@ Kopfzeilen, eine weitere CRLF-Sequenz und der Rumpf der Antwort.</p>
 </code></pre>
 <p>Der Statuscode 200 ist die Standard-Erfolgsantwort. Der Text ist eine winzige
 erfolgreiche HTTP-Antwort. Lass uns dies als Antwort auf eine erfolgreiche
-Anfrage in den Strom schreiben! Entferne aus der Funktion <code>handle_connection</code>
+Anfrage in den Stream schreiben! Entferne aus der Funktion <code>handle_connection</code>
 das <code>println!</code>, das die Anfragedaten ausgegeben hat, und ersetze es durch den
-Code in Codeblock 21-3.</p>
+Code in Listing 21-3.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
 </span><span class="boring">    io::{prelude::*, BufReader},
@@ -466,15 +463,15 @@ Code in Codeblock 21-3.</p>
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre>
-<p><span class="caption">Codeblock 21-3: Schreiben einer kleinen erfolgreichen
-HTTP-Antwort in den Strom</span></p>
+<p><span class="caption">Listing 21-3: Schreiben einer kleinen erfolgreichen
+HTTP-Antwort in den Stream</span></p>
 <p>Die erste neue Zeile definiert die Variable <code>response</code>, die die Daten der
-Erfolgsmeldung enthält. Dann rufen wir <code>as_bytes</code> auf unserer <code>response</code> auf,
-um die Zeichenkettendaten in Bytes zu konvertieren. Die Methode <code>write_all</code> auf
-<code>stream</code> nimmt ein <code>&amp;[u8]</code> und sendet diese Bytes direkt in die Verbindung. Da
-die Operation <code>write_all</code> fehlschlagen könnte, verwenden wir wie bisher bei
-jedem Fehlerergebnis <code>unwrap</code> . Auch hier würdest du in einer echten Anwendung
-eine Fehlerbehandlung hinzufügen.</p>
+Erfolgsmeldung enthält. Dann rufen wir <code>as_bytes</code> auf unserer <code>response</code> auf, um
+die String-Daten in Bytes zu konvertieren. Die Methode <code>write_all</code> auf <code>stream</code>
+nimmt ein <code>&amp;[u8]</code> und sendet diese Bytes direkt in die Verbindung. Da die
+Operation <code>write_all</code> fehlschlagen könnte, verwenden wir wie bisher bei jedem
+Fehlerergebnis <code>unwrap</code>. Auch hier würdest du in einer echten Anwendung eine
+Fehlerbehandlung hinzufügen.</p>
 <p>Lass uns mit diesen Änderungen unseren Code ausführen und eine Anfrage stellen.
 Wir geben keine Daten mehr im Terminal aus, sodass wir außer der Ausgabe von
 Cargo keine weiteren Ausgaben sehen werden. Wenn du <em>127.0.0.1:7878</em> in einem
@@ -485,7 +482,7 @@ Hand programmiert!</p>
 <p>Lass uns die Funktionalität für die Rückgabe von mehr als einer leeren Seite
 implementieren. Erstelle die neue Datei <em>hello.html</em> in der Wurzel deines
 Projektverzeichnisses, nicht im Verzeichnis <em>src</em>. Du kannst beliebiges HTML
-eingeben, das du willst; Codeblock 21-4 zeigt eine Möglichkeit.</p>
+eingeben, das du willst; Listing 21-4 zeigt eine Möglichkeit.</p>
 <p><span class="filename">Dateiname: hello.html</span></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="de"&gt;
@@ -499,11 +496,11 @@ eingeben, das du willst; Codeblock 21-4 zeigt eine Möglichkeit.</p>
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p><span class="caption">Codeblock 21-4: Eine Beispiel-HTML-Datei, die in einer
+<p><span class="caption">Listing 21-4: Eine Beispiel-HTML-Datei, die in einer
 Antwort zurückgegeben werden soll</span></p>
 <p>Dies ist ein minimales HTML5-Dokument mit einer Überschrift und etwas Text. Um
 dies vom Server zurückzugeben, wenn eine Anfrage empfangen wird, modifizieren
-wir <code>handle_connection</code> wie in Codeblock 21-5 gezeigt, um die HTML-Datei zu
+wir <code>handle_connection</code> wie in Listing 21-5 gezeigt, um die HTML-Datei zu
 lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust no_run edition2024">use std::{
@@ -540,17 +537,17 @@ lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre>
-<p><span class="caption">Codeblock 21-5: Senden des Inhalts von <em>hello.html</em> als
+<p><span class="caption">Listing 21-5: Senden des Inhalts von <em>hello.html</em> als
 Rumpf der Antwort</span></p>
 <p>Wir haben <code>fs</code> zur <code>use</code>-Deklaration hinzugefügt, um das Dateisystemmodul der
 Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code zum Lesen des
-Inhalts einer Datei in eine Zeichenkette sollte vertraut aussehen; wir haben
-ihn verwendet, als wir den Inhalt einer Datei für unser E/A-Projekt in
-Codeblock 12-4 gelesen haben.</p>
+Inhalts einer Datei in einen String sollte vertraut aussehen; wir haben ihn
+verwendet, als wir den Inhalt einer Datei für unser E/A-Projekt in Listing 12-4
+gelesen haben.</p>
 <p>Als Nächstes verwenden wir <code>format!</code>, um den Inhalt der Datei als Rumpf der
-Erfolgsantwort hinzuzufügen. Um eine gültige HTTP-Antwort zu gewährleisten,
-fügen wir den Header <code>Content-Length</code> hinzu, der auf die Größe unseres
-Antwortrumpfs gesetzt wird, in diesem Fall auf die Größe von <code>hello.html</code>.</p>
+Erfolgsantwort hinzuzufügen. Um eine gültige HTTP-Antwort zu formulieren, fügen
+wir den Header <code>Content-Length</code> hinzu, der auf die Größe unseres Antwortrumpfs
+gesetzt wird, in diesem Fall auf die Größe von <code>hello.html</code>.</p>
 <p>Führe diesen Code mit <code>cargo run</code> aus und lade <em>127.0.0.1:7878</em> im Browser; du
 solltest dein HTML gerendert sehen!</p>
 <p>Gegenwärtig ignorieren wir die Anfragedaten in <code>http_request</code> und senden
@@ -565,7 +562,7 @@ wohlgeformte Anfrage an <code>/</code> zurücksenden.</p>
 davon, was der Client angefragt hat. Fügen wir Funktionen hinzu, um zu
 überprüfen, ob der Browser <code>/</code> anfragt, bevor er die HTML-Datei zurückgibt, und
 um einen Fehler zurückzugeben, wenn der Browser etwas anderes anfragt. Dazu
-müssen wir <code>handle_connection</code> modifizieren, wie in Codeblock 21-6 gezeigt.
+müssen wir <code>handle_connection</code> modifizieren, wie in Listing 21-6 gezeigt.
 Dieser neue Code prüft den Inhalt der erhaltenen Anfrage, ob <code>/</code> angefragt
 wird, und fügt <code>if</code>- und <code>else</code>-Blöcke hinzu, um die Anfragen unterschiedlich
 zu behandeln.</p>
@@ -606,25 +603,25 @@ fn handle_connection(mut stream: TcpStream) {
         // eine andere Anfrage
     }
 }</code></pre>
-<p><span class="caption">Codeblock 21-6: Behandlung von Anfragen an <code>/</code> anders als
+<p><span class="caption">Listing 21-6: Behandlung von Anfragen an <code>/</code> anders als
 andere Anfragen</span></p>
 <p>Wir werden uns nur die erste Zeile der HTTP-Anfrage ansehen. Anstatt also die
 gesamte Anfrage in einen Vektor zu lesen, rufen wir <code>next</code> auf, um das erste
 Element aus dem Iterator zu erhalten. Das erste <code>unwrap</code> kümmert sich um die
 <code>Option</code> und hält das Programm an, wenn der Iterator keine Elemente hat. Das
 zweite <code>unwrap</code> behandelt das <code>Result</code> und hat den gleichen Effekt wie das
-<code>unwrap</code> in  <code>map</code> in Codeblock 21-2.</p>
+<code>unwrap</code> in <code>map</code> in Listing 21-2.</p>
 <p>Als nächstes überprüfen wir <code>request_line</code>, um zu sehen, ob es der Anfragezeile
 einer GET-Anfrage mit dem Pfad <code>/</code> entspricht. Ist dies der Fall, gibt der
 <code>if</code>-Block den Inhalt unserer HTML-Datei zurück.</p>
-<p>Wenn <code>request_line</code> <em>nicht</em> der GET-Anfrage mit dem <code>/</code> Pfad entspricht,
+<p>Wenn <code>request_line</code> <em>nicht</em> der GET-Anfrage mit dem Pfad <code>/</code> entspricht,
 bedeutet das, dass wir eine andere Anfrage erhalten haben. Wir werden dem
 <code>else</code>-Block gleich Code hinzufügen, um auf alle anderen Anfragen zu reagieren.</p>
 <p>Führe diesen Code jetzt aus und frage <em>127.0.0.1:7878</em> an; du solltest das HTML
 in <em>hello.html</em> erhalten. Wenn du eine andere Anfrage stellst, z.B.
 <em>127.0.0.1:7878/something-else</em>, erhältst du einen Verbindungsfehler, wie du
-ihn beim Ausführen des Codes in Codeblock 21-1 und Codeblock 21-2 gesehen hast.</p>
-<p>Fügen wir nun den Code in Codeblock 21-7 in den <code>else</code>-Block ein, um eine
+ihn beim Ausführen des Codes in Listing 21-1 und Listing 21-2 gesehen hast.</p>
+<p>Fügen wir nun den Code in Listing 21-7 in den <code>else</code>-Block ein, um eine
 Antwort mit dem Statuscode 404 zurückzugeben, der signalisiert, dass der Inhalt
 für die Anfrage nicht gefunden wurde. Wir geben auch etwas HTML für eine Seite
 zurück, die im Browser dargestellt werden soll, um dem Endbenutzer die Antwort
@@ -673,13 +670,13 @@ anzuzeigen.</p>
         stream.write_all(response.as_bytes()).unwrap();
     }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-7: Antworten mit Statuscode 404 und einer
+<p><span class="caption">Listing 21-7: Antworten mit Statuscode 404 und einer
 Fehlerseite, wenn etwas anderes als <code>/</code> angefragt wurde</span></p>
 <p>Hier hat unsere Antwort eine Statuszeile mit Statuscode 404 und der
 Begründungsphrase <code>NOT FOUND</code> (nicht gefunden). Der Rumpf der Antwort wird das
-HTML in der Datei <em>404.html</em> sein. Du musst neben <em>hallo.html</em> eine Datei
+HTML in der Datei <em>404.html</em> sein. Du musst neben <em>hello.html</em> eine Datei
 <em>404.html</em> für die Fehlerseite erstellen; auch hier kannst du jedes beliebige
-HTML verwenden oder das Beispiel-HTML in Codeblock 21-8.</p>
+HTML verwenden oder das Beispiel-HTML in Listing 21-8.</p>
 <p><span class="filename">Dateiname: 404.html</span></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="de"&gt;
@@ -693,20 +690,20 @@ HTML verwenden oder das Beispiel-HTML in Codeblock 21-8.</p>
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p><span class="caption">Codeblock 21-8: Beispielinhalt für die Seite, die mit
+<p><span class="caption">Listing 21-8: Beispielinhalt für die Seite, die mit
 jeder 404-Antwort zurückgesendet werden soll</span></p>
 <p>Lass deinen Server mit diesen Änderungen erneut laufen. Die Anfrage
-<em>127.0.0.1:7878</em> sollte den Inhalt von <em>hallo.html</em> zurückgeben und jede andere
+<em>127.0.0.1:7878</em> sollte den Inhalt von <em>hello.html</em> zurückgeben und jede andere
 Anfrage, wie <em>127.0.0.1:7878/foo</em>, sollte das Fehler-HTML von <em>404.html</em>
 zurückgeben.</p>
 <h3 id="refactoring"><a class="header" href="#refactoring">Refactoring</a></h3>
-<p>Im Moment haben die <code>if</code>- und <code>else</code>-Blöcke eine Menge Wiederholungen: Sie
-lesen beide Dateien und schreiben den Inhalt der Dateien in den Strom. Die
-einzigen Unterschiede sind die Statuszeile und der Dateiname. Lass uns den Code
+<p>Im Moment haben die <code>if</code>- und <code>else</code>-Blöcke eine Menge Wiederholungen: Sie lesen
+beide Dateien und schreiben den Inhalt der Dateien in den Stream. Die einzigen
+Unterschiede sind die Statuszeile und der Dateiname. Lass uns den Code
 prägnanter gestalten, indem wir diese Unterschiede in separate <code>if</code>- und
 <code>else</code>-Zeilen herausziehen, die die Werte der Statuszeile und des Dateinamens
 Variablen zuweisen; wir können diese Variablen dann bedingungslos im Code
-verwenden, um die Datei zu lesen und die Antwort zu schreiben. Codeblock 21-9
+verwenden, um die Datei zu lesen und die Antwort zu schreiben. Listing 21-9
 zeigt den resultierenden Code nach dem Ersetzen der großen <code>if</code>- und
 <code>else</code>-Blöcke.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -748,7 +745,7 @@ fn handle_connection(mut stream: TcpStream) {
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre>
-<p><span class="caption">Codeblock 21-9: Refactoring der <code>if</code>- und <code>else</code>-Blöcke,
+<p><span class="caption">Listing 21-9: Refactoring der <code>if</code>- und <code>else</code>-Blöcke,
 damit sie nur den Code enthalten, der sich zwischen den beiden Fällen
 unterscheidet</span></p>
 <p>Die Blöcke <code>if</code> und <code>else</code> geben jetzt nur noch die entsprechenden Werte für
@@ -761,16 +758,15 @@ wie in Kapitel 18 besprochen.</p>
 einfacher, den Unterschied zwischen den beiden Fällen zu erkennen, und es
 bedeutet, dass wir nur einen Ort haben, an dem wir den Code aktualisieren
 müssen, wenn wir ändern wollen, wie das Lesen der Datei und das Schreiben der
-Antwort funktionieren. Das Verhalten des Codes in Codeblock 21-9 ist dasselbe
-wie in Codeblock 21-7.</p>
+Antwort funktionieren. Das Verhalten des Codes in Listing 21-9 ist dasselbe
+wie in Listing 21-7.</p>
 <p>Fantastisch! Wir haben jetzt einen einfachen Webserver mit etwa 40 Zeilen
 Rust-Code, der auf eine Anfrage mit einer Inhaltsseite antwortet und auf alle
 anderen Anfragen mit einer 404-Antwort.</p>
-<p>Derzeit läuft unser Server in einem einzigen Strang (thread), d.h. er kann
-immer nur eine Anfrage gleichzeitig bedienen. Lass uns untersuchen, warum das
-ein Problem sein kann, indem wir einige langsame Anfragen simulieren. Dann
-werden wir es beheben, indem unser Server mehrere Anfragen auf einmal
-bearbeiten kann.</p>
+<p>Derzeit läuft unser Server in einem einzigen Thread, d.h. er kann immer nur eine
+Anfrage gleichzeitig bedienen. Lass uns untersuchen, warum das ein Problem sein
+kann, indem wir einige langsame Anfragen simulieren. Dann werden wir es beheben,
+indem unser Server mehrere Anfragen auf einmal bearbeiten kann.</p>
 
                     </main>
 

@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -184,15 +184,15 @@ TDD auch beim Code-Design helfen. Das Schreiben der Tests vor dem Schreiben des
 Codes, der den Test bestehen lässt, trägt dazu bei, während des gesamten
 Entwicklungsprozesses eine hohe Testabdeckung aufrechtzuerhalten.</p>
 <p>Wir werden die Implementierung der Funktionalität testen, die tatsächlich die
-Suche nach der Suchzeichenkette im Dateiinhalt durchführt und eine Liste von
-Zeilen erzeugt, die der Suchabfrage entsprechen. Wir werden diese
-Funktionalität in einer Funktion namens <code>search</code> hinzufügen.</p>
+Suche nach dem Such-String im Dateiinhalt durchführt und eine Liste von Zeilen
+erzeugt, die der Suchabfrage entsprechen. Wir werden diese Funktionalität in
+einer Funktion namens <code>search</code> hinzufügen.</p>
 <h3 id="schreiben-eines-fehlschlagenden-tests"><a class="header" href="#schreiben-eines-fehlschlagenden-tests">Schreiben eines fehlschlagenden Tests</a></h3>
 <p>In <em>src/lib.rs</em> fügen wir ein Modul <code>tests</code> mit einer Testfunktion hinzu, wie
 wir es in <a href="ch11-01-writing-tests.html#testfunktionen-strukturieren">Kapitel 11</a> getan haben. Die Testfunktion spezifiziert
 das Verhalten, das die Funktion <code>search</code> haben soll: Sie nimmt eine Suchabfrage
 und den Text, in dem gesucht werden soll, entgegen und gibt nur die Zeilen aus
-dem Text zurück, die die Suchabfrage enthalten. Codeblock 12-15 zeigt diesen
+dem Text zurück, die die Suchabfrage enthalten. Listing 12-15 zeigt diesen
 Test.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
@@ -219,20 +219,20 @@ Nimm drei.";
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 12-15: Erstellen eines fehlschlagenden Tests
+<p><span class="caption">Listing 12-15: Erstellen eines fehlschlagenden Tests
 für die Funktion <code>search</code>, die wir uns wünschen</span></p>
-<p>Dieser Test sucht nach der Zeichenkette <code>"dukt"</code>. Der Text, den wir
-durchsuchen, besteht aus drei Zeilen, von denen nur eine <code>"dukt"</code> enthält.
-(Beachte, dass der Backslash nach dem öffnenden doppelten Anführungszeichen
-Rust anweist, keinen Zeilenumbruch an den Anfang des Zeichenkettenliterals zu
-setzen.) Wir verlangen, dass der von der Funktion <code>search</code> zurückgegebene Wert
-nur die Zeile enthält, die wir erwarten.</p>
+<p>Dieser Test sucht nach dem String <code>"dukt"</code>. Der Text, den wir durchsuchen,
+besteht aus drei Zeilen, von denen nur eine <code>"dukt"</code> enthält. (Beachte, dass der
+Backslash nach dem öffnenden doppelten Anführungszeichen Rust anweist, keinen
+Zeilenumbruch an den Anfang des String-Literals zu setzen.) Wir verlangen, dass
+der von der Funktion <code>search</code> zurückgegebene Wert nur die Zeile enthält, die wir
+erwarten.</p>
 <p>Wir sind noch nicht in der Lage, diesen Test auszuführen und zuzusehen, wie er
 fehlschlägt, weil der Test noch nicht mal kompiliert: Die Funktion <code>search</code>
 existiert noch nicht! In Übereinstimmung mit den TDD-Prinzipien werden wir
 jetzt gerade genug Code hinzufügen, um den Test zum Kompilieren und Ausführen
 zu bringen, indem wir eine Definition der Funktion <code>search</code> hinzufügen, die
-immer einen leeren Vektor zurückgibt, wie in Codeblock 12-16 gezeigt. Dann
+immer einen leeren Vektor zurückgibt, wie in Listing 12-16 gezeigt. Dann
 sollte der Test kompiliert werden können und fehlschlagen, weil ein leerer
 Vektor nicht mit einem Vektor übereinstimmt, der die Zeile <code>"sicher, schnell, produktiv."</code> enthält.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -258,23 +258,21 @@ Vektor nicht mit einem Vektor übereinstimmt, der die Zeile <code>"sicher, schne
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 12-16: Definiere gerade genug von der Funktion
+<p><span class="caption">Listing 12-16: Definiere gerade genug von der Funktion
 <code>search</code>, damit unser Test kompiliert</span></p>
 <p>Beachte, dass wir eine explizite Lebensdauer <code>'a</code> in der Signatur von <code>search</code>
 definieren müssen und diese Lebensdauer beim Argument <code>contents</code> und dem
 Rückgabewert verwenden. Erinnere dich in <a href="ch10-03-lifetime-syntax.html">Kapitel 10</a> daran,
 dass die Lebensdauer-Parameter angeben, welche Argument-Lebensdauer mit der
 Lebensdauer des Rückgabewertes verbunden ist. In diesem Fall geben wir an, dass
-der zurückgegebene Vektor Zeichenkettenanteilstypen enthalten sollte, die auf
-Anteilstypen des Arguments <code>contents</code> (und nicht auf das Argument <code>query</code>)
-referenzieren.</p>
+der zurückgegebene Vektor String Slices enthalten sollte, die auf Slices des
+Arguments <code>contents</code> (und nicht auf das Argument <code>query</code>) referenzieren.</p>
 <p>Mit anderen Worten sagen wir Rust, dass die von der Funktion <code>search</code>
 zurückgegebenen Daten so lange leben, wie die Daten, die im Argument <code>contents</code>
 an die Funktion <code>search</code> übergeben werden. Das ist wichtig! Die Daten, auf die
-durch einen Anteilstyp <em>referenziert</em> wird, müssen gültig sein, damit die
-Referenz gültig ist; wenn der Compiler annimmt, dass wir
-Zeichenkettenanteilstypen aus <code>query</code> statt aus <code>contents</code> erstellen, wird er
-seine Sicherheitsprüfung falsch durchführen.</p>
+ein Slice <em>referenziert</em>, müssen gültig sein, damit die Referenz gültig ist;
+wenn der Compiler annimmt, dass wir String Slices aus <code>query</code> statt aus
+<code>contents</code> erstellen, wird er seine Sicherheitsprüfung falsch durchführen.</p>
 <p>Wenn wir die Lebensdauer-Annotationen vergessen und versuchen, diese Funktion
 zu kompilieren, erhalten wir diesen Fehler:</p>
 <pre><code class="language-console">$ cargo build
@@ -318,8 +316,8 @@ folgenden Schritte befolgen:</p>
 <p>Lass uns jeden Schritt durcharbeiten, beginnend mit dem Iterieren über die
 Zeilen.</p>
 <h4 id="iterieren-über-zeilen-mit-der-methode-lines"><a class="header" href="#iterieren-über-zeilen-mit-der-methode-lines">Iterieren über Zeilen mit der Methode <code>lines</code></a></h4>
-<p>Rust hat eine hilfreiche Methode zum zeilenweisen Iterieren von Zeichenketten,
-bequemerweise <code>lines</code> genannt, die wie in Codeblock 12-17 gezeigt funktioniert.
+<p>Rust hat eine hilfreiche Methode zum zeilenweisen Iterieren von Strings,
+bequemerweise <code>lines</code> genannt, die wie in Listing 12-17 gezeigt funktioniert.
 Beachte, dass dies noch nicht kompiliert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
@@ -346,19 +344,19 @@ Beachte, dass dies noch nicht kompiliert.</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 12-17: Iteriere über jede Zeile in
+<p><span class="caption">Listing 12-17: Iteriere über jede Zeile in
 <code>contents</code></span></p>
 <p>Die Methode <code>lines</code> gibt einen Iterator zurück. Wir werden in <a href="ch13-02-iterators.html">Kapitel
-13</a> ausführlich über Iteratoren sprechen, aber erinnere dich
-daran, dass du diese Art der Verwendung eines Iterators in <a href="ch03-05-control-flow.html#durchlaufen-einer-kollektion-mit-for">Codeblock
+13</a> ausführlich über Iteratoren sprechen; aber erinnere dich
+daran, dass du diese Art der Verwendung eines Iterators in <a href="ch03-05-control-flow.html#durchlaufen-einer-kollektion-mit-for">Listing
 3-5</a> gesehen hast, wo wir eine <code>for</code>-Schleife mit einem Iterator
-benutzt haben, um etwas Code für jedes Element in einer Kollektion auszuführen.</p>
+benutzt haben, um Code für jedes Element in einer Kollektion auszuführen.</p>
 <h4 id="durchsuchen-aller-zeilen-nach-dem-abfragetext"><a class="header" href="#durchsuchen-aller-zeilen-nach-dem-abfragetext">Durchsuchen aller Zeilen nach dem Abfragetext</a></h4>
-<p>Als nächstes prüfen wir, ob die aktuelle Zeile unsere Abfragezeichenkette
-enthält. Glücklicherweise haben Zeichenketten eine hilfreiche Methode namens
-<code>contains</code>, die dies für uns erledigt! Füge einen Aufruf der Methode <code>contains</code>
-in der Funktion <code>search</code> hinzu, wie in Codeblock 12-18 gezeigt. Beachte, dass
-dies noch nicht kompiliert werden kann.</p>
+<p>Als nächstes prüfen wir, ob die aktuelle Zeile unseren Abfrage-String enthält.
+Glücklicherweise haben Strings eine hilfreiche Methode namens <code>contains</code>, die
+dies für uns erledigt! Füge einen Aufruf der Methode <code>contains</code> in der Funktion
+<code>search</code> hinzu, wie in Listing 12-18 gezeigt. Beachte, dass dies noch nicht
+kompiliert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -386,8 +384,8 @@ dies noch nicht kompiliert werden kann.</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 12-18: Hinzufügen von Funktionalität, um zu
-sehen, ob die Zeile die Zeichenkette in <code>query</code> enthält</span></p>
+<p><span class="caption">Listing 12-18: Hinzufügen von Funktionalität, um zu sehen,
+ob die Zeile den String in <code>query</code> enthält</span></p>
 <p>Im Moment bauen wir die Funktionalität auf. Damit sie kompiliert werden kann,
 müssen wir einen Wert aus dem Rumpf zurückgeben, wie wir es in der
 Funktionssignatur angegeben haben.</p>
@@ -396,7 +394,7 @@ Funktionssignatur angegeben haben.</p>
 passenden Zeilen zu speichern, die wir zurückgeben wollen. Dafür können wir
 einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die Methode
 <code>push</code> aufrufen, um eine <code>line</code> im Vektor zu speichern. Nach der <code>for</code>-Schleife
-geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.</p>
+geben wir den Vektor zurück, wie in Listing 12-19 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -428,7 +426,7 @@ geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 12-19: Speichern der passenden Zeilen, damit
+<p><span class="caption">Listing 12-19: Speichern der passenden Zeilen, damit
 wir sie zurückgeben können</span></p>
 <p>Jetzt sollte die Funktion <code>search</code> nur noch die Zeilen zurückgeben, die <code>query</code>
 enthalten, und unser Test sollte erfolgreich sein. Lass uns den Test ausführen:</p>
@@ -454,7 +452,7 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
-<p>Unser Test war erfolgreich, also wissen wir, dass es funktioniert!</p>
+<p>Unser Test war erfolgreich, also wissen wir, dass der Code funktioniert!</p>
 <p>An diesem Punkt könnten wir Möglichkeiten für eine Refaktorierung der
 Implementierung der Suchfunktion in Betracht ziehen, während die Tests
 weiterlaufen, um die gleiche Funktionalität zu erhalten. Der Code in der

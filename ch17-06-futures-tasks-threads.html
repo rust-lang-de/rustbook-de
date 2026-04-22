@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Futures, Aufgaben und Stränge - Die Programmiersprache Rust</title>
+        <title>Futures, Aufgaben und Threads - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,73 +161,71 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="alles-zusammenfügen-futures-aufgaben-und-stränge"><a class="header" href="#alles-zusammenfügen-futures-aufgaben-und-stränge">Alles zusammenfügen: Futures, Aufgaben und Stränge</a></h2>
-<p>Wie wir in <a href="ch16-00-concurrency.html">Kapitel 16</a> gesehen haben, bieten Stränge (threads) einen
-Ansatz für Nebenläufigkeit (concurrency). In diesem Kapitel haben wir einen
-anderen Ansatz für Nebenläufigkeit gesehen: Verwenden von asynchronem Code mit
-Futures und Strömen (streams). Wenn du dich fragst, wann du eine Methode der
-anderen vorziehen solltest, lautet die Antwort: Es kommt darauf an! Und in
-vielen Fällen ist die Wahl nicht Stränge <em>oder</em> asynchroner Code, sondern eher
-Stränge <em>und</em> asynchroner Code.</p>
-<p>Viele Betriebssysteme bieten schon seit Jahrzehnten Strang-basierte
+                        <h2 id="alles-zusammenfügen-futures-aufgaben-und-threads"><a class="header" href="#alles-zusammenfügen-futures-aufgaben-und-threads">Alles zusammenfügen: Futures, Aufgaben und Threads</a></h2>
+<p>Wie wir in <a href="ch16-00-concurrency.html">Kapitel 16</a> gesehen haben, bieten Threads einen Ansatz für
+Nebenläufigkeit (concurrency). In diesem Kapitel haben wir einen anderen Ansatz
+für Nebenläufigkeit gesehen: Verwenden von asynchronem Code mit Futures und
+Streams. Wenn du dich fragst, wann du eine Methode der anderen vorziehen
+solltest, lautet die Antwort: Es kommt darauf an! Und in vielen Fällen ist die
+Wahl nicht Threads <em>oder</em> asynchroner Code, sondern eher Threads <em>und</em>
+asynchroner Code.</p>
+<p>Viele Betriebssysteme bieten schon seit Jahrzehnten Thread-basierte
 Nebenläufigkeitsmodelle an, und viele Programmiersprachen unterstützen diese
-Modelle daher. Diese Modelle sind jedoch nicht frei von Kompromissen. Auf
-vielen Betriebssystemen wird für jeden Strang ein beträchtlicher Teil an
-Arbeitsspeicher verbraucht. Stränge sind auch nur dann eine Option, wenn dein
+Modelle daher. Diese Modelle sind jedoch nicht frei von Kompromissen. Auf vielen
+Betriebssystemen wird für jeden Thread ein beträchtlicher Teil an
+Arbeitsspeicher verbraucht. Threads sind auch nur dann eine Option, wenn dein
 Betriebssystem und deine Hardware sie unterstützen. Im Gegensatz zu
 herkömmlichen Desktop- und Mobilcomputern haben einige eingebettete Systeme
-überhaupt kein Betriebssystem, sodass sie auch keine Stränge haben.</p>
+überhaupt kein Betriebssystem, sodass sie auch keine Threads haben.</p>
 <p>Das asynchrone Modell bietet eine andere – und letztlich ergänzende
 – Reihe von Kompromissen. Im asynchronen Modell benötigen nebenläufige
-Vorgänge keine eigenen Stränge. Stattdessen können sie in Aufgaben laufen, so
+Vorgänge keine eigenen Threads. Stattdessen können sie in Aufgaben laufen, so
 wie wir <code>trpl::spawn_task</code> verwendet haben, um die Arbeit von einer synchronen
-Funktion im Abschnitt „Ströme“ zu starten. Eine Aufgabe ähnelt einem Strang,
-wird aber nicht vom Betriebssystem, sondern von einem Code auf Bibliotheksebene
-verwaltet: der Laufzeitumgebung.</p>
-<p>Es gibt einen Grund dafür, dass die APIs zum Erzeugen von Strängen und zum
-Erzeugen von Aufgaben so ähnlich sind. Stränge dienen als Grenze für Gruppen
-von synchronen Operationen; Nebenläufigkeit ist <em>zwischen</em> Strängen möglich.
-Aufgaben fungieren als Grenze für Gruppen von <em>asynchronen</em> Vorgängen;
-Nebenläufigkeit ist sowohl <em>zwischen</em> als auch <em>innerhalb</em> von Aufgaben
-möglich, da eine Aufgabe in ihrem Rumpf zwischen Futures wechseln kann.
-Schließlich sind Futures die granularste Einheit der Nebenläufigkeit in Rust,
-und jedes Future kann einen Baum von anderen Futures darstellen. Die
-Laufzeitumgebung – genauer gesagt ihr Executor – verwaltet
-Aufgaben, und Aufgaben verwalten Futures. In dieser Hinsicht ähneln Aufgaben
-leichtgewichtigen, von der Laufzeitumgebung verwalteten Strängen mit
-zusätzlichen Fähigkeiten, die sich daraus ergeben, dass sie von der
-Laufzeitumgebung und nicht vom Betriebssystem verwaltet werden.</p>
-<p>Das bedeutet nicht, dass asynchrone Aufgaben immer besser sind als Stränge
-(oder umgekehrt). Nebenläufigkeit mit Strängen ist in gewisser Weise ein
-einfacheres Programmiermodell als Nebenläufigkeit mit <code>async</code>. Das kann eine
-Stärke und eine Schwäche sein. Stränge sind eine Art „Feuern und Vergessen“;
-sie haben kein natives Äquivalent zu einem Future, also laufen sie einfach bis
-zum Ende, ohne Unterbrechung, außer durch das Betriebssystem selbst.</p>
-<p>Und es stellt sich heraus, dass Stränge und Aufgaben oft sehr gut
+Funktion im Abschnitt „Streams“ zu starten. Eine Aufgabe ähnelt einem Thread,
+wird aber nicht vom Betriebssystem, sondern auf Bibliotheksebene verwaltet: der
+Laufzeitumgebung.</p>
+<p>Es gibt einen Grund dafür, dass die APIs zum Erzeugen von Threads und zum
+Erzeugen von Aufgaben so ähnlich sind. Threads dienen als Grenze für Gruppen von
+synchronen Operationen; Nebenläufigkeit ist <em>zwischen</em> Threads möglich. Aufgaben
+fungieren als Grenze für Gruppen von <em>asynchronen</em> Vorgängen; Nebenläufigkeit
+ist sowohl <em>zwischen</em> als auch <em>innerhalb</em> von Aufgaben möglich, da eine Aufgabe
+in ihrem Rumpf zwischen Futures wechseln kann. Schließlich sind Futures die
+granularste Einheit der Nebenläufigkeit in Rust, und jedes Future kann einen
+Baum von anderen Futures darstellen. Die Laufzeitumgebung – genauer gesagt
+ihr Executor – verwaltet Aufgaben, und Aufgaben verwalten Futures. In
+dieser Hinsicht ähneln Aufgaben leichtgewichtigen, von der Laufzeitumgebung
+verwalteten Threads mit zusätzlichen Fähigkeiten, die sich daraus ergeben, dass
+sie von der Laufzeitumgebung und nicht vom Betriebssystem verwaltet werden.</p>
+<p>Das bedeutet nicht, dass asynchrone Aufgaben immer besser sind als Threads (oder
+umgekehrt). Nebenläufigkeit mit Threads ist in gewisser Weise ein einfacheres
+Programmiermodell als Nebenläufigkeit mit <code>async</code>. Das kann eine Stärke und eine
+Schwäche sein. Threads sind eine Art „Feuern und Vergessen“; sie haben kein
+natives Äquivalent zu einem Future, also laufen sie einfach bis zum Ende, ohne
+Unterbrechung, außer durch das Betriebssystem selbst.</p>
+<p>Und es stellt sich heraus, dass Threads und Aufgaben oft sehr gut
 zusammenarbeiten, weil Aufgaben (zumindest in einigen Laufzeitumgebungen)
-zwischen Strängen verschoben werden können. Unter der Haube ist die
+zwischen Threads verschoben werden können. Unter der Haube ist die
 Laufzeitumgebung, die wir verwenden – einschließlich der Funktionen
-<code>spawn_blocking</code> und <code>spawn_task</code> – standardmäßig mehrstängig
-(multithreaded)! Viele Laufzeitumgebungen verwenden einen Ansatz namens <em>Work
-Stealing</em>, um Aufgaben transparent zwischen Strängen zu verschieben, je
-nachdem, wie die Stränge gerade ausgelastet sind, um die Gesamtleistung des
-Systems zu verbessern. Dieser Ansatz erfordert eigentlich Stränge <em>und</em>
-Aufgaben, und damit Futures.</p>
+<code>spawn_blocking</code> und <code>spawn_task</code> – standardmäßig multi-threaded! Viele
+Laufzeitumgebungen verwenden einen Ansatz namens <em>Work Stealing</em>, um Aufgaben
+transparent zwischen Threads zu verschieben, je nachdem, wie die Threads gerade
+ausgelastet sind, um die Gesamtleistung des Systems zu verbessern. Dieser Ansatz
+erfordert eigentlich Threads <em>und</em> Aufgaben, und damit Futures.</p>
 <p>Wenn du überlegst, welche Methode du wann anwenden solltest, beachte diese
 Daumenregeln:</p>
 <ul>
 <li>Wenn die Arbeit <em>sehr parallelisierbar</em> ist (d.h. CPU-gebunden), z.B. bei der
 Verarbeitung einer Menge von Daten, bei der jeder Teil separat verarbeitet
-werden kann, sind Stränge die bessere Wahl.</li>
+werden kann, sind Threads die bessere Wahl.</li>
 <li>Wenn es sich um <em>sehr nebenläufige</em> Arbeit handelt (d.h. E/A-gebunden), wie
 die Bearbeitung von Nachrichten aus einer Reihe von verschiedenen Quellen,
 die in unterschiedlichen Intervallen oder mit unterschiedlicher
 Geschwindigkeit eintreffen können, ist asynchroner Code die bessere Wahl.</li>
 </ul>
 <p>Und wenn du Parallelität und Nebenläufigkeit benötigst, musst du dich nicht
-zwischen Strängen und asynchronem Code entscheiden. Du kannst beide zusammen
+zwischen Threads und asynchronem Code entscheiden. Du kannst beide zusammen
 verwenden, wobei jede der beiden die Aufgabe übernimmt, für die sie am besten
-geeignet ist. Codeblock 17-25 zeigt zum Beispiel ein gängiges Beispiel für
+geeignet ist. Listing 17-25 zeigt zum Beispiel ein gängiges Beispiel für
 dieses Zusammenspiel in echtem Rust-Code.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::{thread, time::Duration};
@@ -248,30 +246,29 @@ fn main() {
         }
     });
 }</code></pre>
-<p><span class="caption">Codeblock 17-25: Senden von Nachrichten mit blockierendem
-Code in einem Strang und Warten auf die Nachrichten in einem asynchronen
+<p><span class="caption">Listing 17-25: Senden von Nachrichten mit blockierendem
+Code in einem Thread und Warten auf die Nachrichten in einem asynchronen
 Block</span></p>
 <p>Wir beginnen mit der Erstellung eines asynchronen Kanals. Dann legen wir einen
-Strang an, der für die Senderseite des Kanals zuständig ist, indem wir das
-Schlüsselword <code>move</code> verwenden. Innerhalb des Strangs senden wir die Zahlen 1
-bis 10 und schlafen dazwischen jeweils eine Sekunde lang. Schließlich führen
-wir ein Future aus, das mit einem asynchronen Block erstellt wurde, der an
+Thread an, der für die Senderseite des Kanals zuständig ist, indem wir das
+Schlüsselwort <code>move</code> verwenden. Innerhalb des Threads senden wir die Zahlen 1
+bis 10 und schlafen dazwischen jeweils eine Sekunde lang. Schließlich führen wir
+ein Future aus, das mit einem asynchronen Block erstellt wurde, der an
 <code>trpl::block_on</code> übergeben wurde, so wie wir es im ganzen Kapitel getan haben.
 In diesem Future warten wir auf diese Nachrichten, genau wie in den anderen
-Beispielen mit Nachrichten-Weitergabe, die wir gesehen haben.</p>
+Beispielen mit Nachrichtenaustausch, die wir gesehen haben.</p>
 <p>Um zu den Szenarien zurückzukehren, mit denen wir das Kapitel eröffnet haben,
 könnte man sich vorstellen, dass eine Reihe von Videokodierungsaufgaben über
-einen dedizierten Strang ausgeführt wird, da die Videokodierung rechenintensiv
+einen dedizierten Thread ausgeführt wird, da die Videokodierung rechenintensiv
 ist. Die Benutzeroberfläche kann aber über einen asynchronen Kanal informiert
 werden, wenn diese Vorgänge ausgeführt werden. Es gibt unzählige Beispiele für
 diese Art von Kombinationen in der Praxis.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
-<p>Dies ist nicht das letzte Mal, dass du in diesem Buch etwas über
-Nebenläufigkeit lesen wirst. Das Projekt in <a href="ch21-00-final-project-a-web-server.html">Kapitel 21</a> wird die
-Konzepte dieses Kapitels in einer realistischeren Situation anwenden als die
-hier besprochenen einfacheren Beispiele und einen direkteren Vergleich
-anstellen, wie es aussieht, wenn man diese Art von Problemen mit Strängen und
-mit Aufgaben und Futures löst.</p>
+<p>Dies ist nicht das letzte Mal, dass du in diesem Buch etwas über Nebenläufigkeit
+lesen wirst. Das Projekt in <a href="ch21-00-final-project-a-web-server.html">Kapitel 21</a> wird die Konzepte dieses Kapitels
+in einer realistischeren Situation anwenden als die hier besprochenen
+einfacheren Beispiele und einen direkteren Vergleich anstellen, wie es aussieht,
+wenn man diese Art von Problemen mit Threads und mit Aufgaben und Futures löst.</p>
 <p>Welchen Ansatz du auch immer wählst, Rust gibt dir die Werkzeuge an die Hand,
 die du benötigst, um sicheren, schnellen und nebenläufigen Code zu schreiben
 – sei es für einen durchsatzstarken Webserver oder ein eingebettetes

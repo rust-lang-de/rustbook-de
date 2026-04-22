@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -190,24 +190,23 @@ dieselbe Funktionalität gemäß der Definition von Objekten der Gang of Four.</
 <h3 id="kapselung-die-implementierungsdetails-verbirgt"><a class="header" href="#kapselung-die-implementierungsdetails-verbirgt">Kapselung, die Implementierungsdetails verbirgt</a></h3>
 <p>Ein weiterer Aspekt, der gemeinhin mit OOP in Verbindung gebracht wird, ist die
 Idee der <em>Kapselung</em> (encapsulation), was bedeutet, dass die
-Implementierungsdetails eines Objekts nicht zugänglich sind für Code, der
-dieses Objekt verwendet. Daher ist die einzige Möglichkeit, mit einem Objekt zu
+Implementierungsdetails eines Objekts für Code, der dieses Objekt verwendet,
+nicht zugänglich sind. Daher ist die einzige Möglichkeit, mit einem Objekt zu
 interagieren, seine öffentliche API; Code, der das Objekt verwendet, sollte
 nicht in der Lage sein, in die Interna des Objekts vorzudringen und Daten oder
 Verhalten direkt zu ändern. Dies ermöglicht es dem Programmierer, die Interna
 eines Objekts zu ändern und umzugestalten, ohne Code ändern zu müssen, der das
 Objekt verwendet.</p>
-<p>Wie man die Kapselung steuert, haben wir in Kapitel 7 besprochen: Wir können
+<p>Wie die Kapselung gesteuert wird, haben wir in Kapitel 7 besprochen: Wir können
 das Schlüsselwort <code>pub</code> benutzen, um zu entscheiden, welche Module, Typen,
-Funktionen und Methoden in unserem Code öffentlich sein sollen, alles andere
-ist standardmäßig privat. Zum Beispiel können wir eine Struktur
-<code>AveragedCollection</code> definieren, die ein Feld hat, das einen Vektor mit
-<code>i32</code>-Werten enthält. Die Struktur kann auch ein Feld haben, das den Mittelwert
-der Werte im Vektor enthält, was bedeutet, dass der Mittelwert nicht auf
-Anfrage berechnet werden muss, wenn jemand ihn braucht. Mit anderen Worten:
-<code>AveragedCollection</code> wird den errechneten Durchschnitt für uns
-zwischenspeichern. Codeblock 18-1 zeigt die Definition der Struktur
-<code>AveragedCollection</code>.</p>
+Funktionen und Methoden in unserem Code öffentlich sein sollen, alles andere ist
+standardmäßig privat. Zum Beispiel können wir eine Struktur <code>AveragedCollection</code>
+definieren, die ein Feld hat, das einen Vektor mit <code>i32</code>-Werten enthält. Die
+Struktur kann auch ein Feld haben, das den Mittelwert der Werte im Vektor
+enthält, was bedeutet, dass der Mittelwert nicht auf Anfrage berechnet werden
+muss, wenn jemand ihn braucht. Mit anderen Worten: <code>AveragedCollection</code> wird den
+errechneten Durchschnitt für uns zwischenspeichern. Listing 18-1 zeigt die
+Definition der Struktur <code>AveragedCollection</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -216,14 +215,14 @@ zwischenspeichern. Codeblock 18-1 zeigt die Definition der Struktur
     average: f64,
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-1: Eine Struktur <code>AveragedCollection</code>, die
+<p><span class="caption">Listing 18-1: Eine Struktur <code>AveragedCollection</code>, die
 eine Liste von ganzen Zahlen und deren Durchschnitt verwaltet</span></p>
 <p>Die Struktur wird als <code>pub</code> markiert, damit anderer Code sie verwenden kann,
 aber die Felder innerhalb der Struktur bleiben privat. Dies ist in diesem Fall
 wichtig, weil wir sicherstellen wollen, dass immer dann, wenn ein Wert
 hinzugefügt oder aus der Liste entfernt wird, auch der Durchschnitt
 aktualisiert wird. Wir tun dies, indem wir die Methoden <code>add</code>, <code>remove</code> und
-<code>average</code> auf der Struktur implementieren, wie in Codeblock 18-2 gezeigt.</p>
+<code>average</code> auf der Struktur implementieren, wie in Listing 18-2 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -259,8 +258,8 @@ aktualisiert wird. Wir tun dies, indem wir die Methoden <code>add</code>, <code>
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-2: Implementierungen der öffentlichen
-Methoden <code>add</code>, <code>remove</code> und <code>average</code> auf  <code>AveragedCollection</code></span></p>
+<p><span class="caption">Listing 18-2: Implementierungen der öffentlichen
+Methoden <code>add</code>, <code>remove</code> und <code>average</code> auf <code>AveragedCollection</code></span></p>
 <p>Die öffentlichen Methoden <code>add</code>, <code>remove</code> und <code>average</code> sind die einzigen
 Möglichkeiten, auf Daten in einer <code>AveragedCollection</code>-Instanz zuzugreifen oder
 sie zu ändern. Wenn ein Eintrag mit der Methode <code>add</code> zu <code>list</code> hinzugefügt
@@ -277,11 +276,11 @@ haben, können wir Aspekte wie die Datenstruktur in Zukunft leicht ändern. Zum
 Beispiel könnten wir ein <code>HashSet&lt;i32&gt;</code> anstelle eines <code>Vec&lt;i32&gt;</code> für das Feld
 <code>list</code> verwenden. Solange die Signaturen der öffentlichen Methoden <code>add</code>,
 <code>remove</code> und <code>average</code> gleich bleiben, würde Code, der <code>AveragedCollection</code>
-verwendet, nicht geändert werden müssen damit er kompiliert. Wenn wir
-stattdessen <code>list</code> öffentlich machen würden, wäre dies nicht unbedingt der
-Fall: <code>HashSet&lt;i32&gt;</code> und <code>Vec&lt;i32&gt;</code> haben unterschiedliche Methoden zum
-Hinzufügen und Entfernen von Elementen, sodass externer Code wahrscheinlich
-geändert werden müsste, wenn er <code>list</code> direkt modifizieren würde.</p>
+verwendet, nicht geändert werden müssen, damit er kompiliert. Wenn wir
+stattdessen <code>list</code> öffentlich machen würden, wäre dies nicht unbedingt der Fall:
+<code>HashSet&lt;i32&gt;</code> und <code>Vec&lt;i32&gt;</code> haben unterschiedliche Methoden zum Hinzufügen und
+Entfernen von Elementen, sodass externer Code wahrscheinlich geändert werden
+müsste, wenn er <code>list</code> direkt modifizieren würde.</p>
 <p>Wenn die Kapselung ein erforderlicher Aspekt ist, damit eine Sprache als
 objektorientiert betrachtet werden kann, dann erfüllt Rust diese Anforderung.
 Die Möglichkeit, <code>pub</code> für verschiedene Teile des Codes zu verwenden oder auch
@@ -301,16 +300,16 @@ verwenden, je nachdem, warum du überhaupt zu Vererbung gegriffen hast.</p>
 die Wiederverwendung von Code: Du kannst ein bestimmtes Verhalten für einen Typ
 implementieren und die Vererbung ermöglicht es dir, diese Implementierung für
 einen anderen Typ wiederzuverwenden. Du kannst das auf begrenzte Weise in
-Rust-Code unter Verwendung von Standard-Merkmalsmethoden-Implementierungen tun,
-was du in Codeblock 10-14 gesehen hast, als wir eine Standard-Implementierung
-der Methode <code>summarize</code> für das Merkmal (trait) <code>Summary</code> hinzugefügt haben.
-Jeder Typ, der das Merkmal <code>Summary</code> implementiert, hätte die Methode
-<code>summarize</code> ohne weiteren Code darauf zur Verfügung. Dies ist vergleichbar mit
-einer Elternklasse, die eine Implementierung einer Methode hat, und einer
-erbenden Kindklasse, die ebenfalls die Implementierung der Methode hat. Wir
-können auch die Standard-Implementierung der Methode <code>summarize</code> überschreiben,
-wenn wir das Markmal <code>Summary</code> implementieren, die einer Kindklasse ähnelt, die
-die Implementierung einer von einer Elternklasse geerbten Methode überschreibt.</p>
+Rust-Code unter Verwendung von Standard-Trait-Methodenimplementierungen tun, was
+du in Listing 10-14 gesehen hast, als wir eine Standard-Implementierung der
+Methode <code>summarize</code> für das Trait <code>Summary</code> hinzugefügt haben. Jeder Typ, der
+das Trait <code>Summary</code> implementiert, hätte die Methode <code>summarize</code> ohne weiteren
+Code darauf zur Verfügung. Dies ist vergleichbar mit einer Elternklasse, die
+eine Implementierung einer Methode hat, und einer erbenden Kindklasse, die
+ebenfalls die Implementierung der Methode hat. Wir können auch die
+Standard-Implementierung der Methode <code>summarize</code> überschreiben, wenn wir das
+Trait <code>Summary</code> implementieren, die einer Kindklasse ähnelt, die die
+Implementierung einer von einer Elternklasse geerbten Methode überschreibt.</p>
 <p>Der andere Grund, Vererbung zu verwenden, bezieht sich auf das Typsystem: Ein
 untergeordneter Typ soll an den gleichen Stellen wie der übergeordnete Typ
 verwendet werden können. Dies wird auch <em>Polymorphismus</em> (polymorphism)
@@ -322,11 +321,11 @@ wenn sie bestimmte Eigenschaften gemeinsam haben.</p>
 ist eigentlich ein allgemeinerer Begriff, der sich auf Code bezieht, der mit
 Daten unterschiedlichen Typs arbeiten kann. Für die Vererbung sind diese
 Typen im Allgemeinen Unterklassen.</p>
-<p>Rust verwendet stattdessen generische Datentypen (generics), um über
-verschiedene mögliche Typen und Merkmalsabgrenzungen (trait bounds) zu
-abstrahieren, um Beschränkungen für das aufzuerlegen, was diese Typen bieten
-müssen. Dies wird manchmal als <em>begrenzter parametrischer Polymorphismus</em>
-(bounded parametric polymorphism) bezeichnet.</p>
+<p>Rust verwendet stattdessen generische Datentypen (generics), um von
+verschiedenen möglichen Typen und Trait Bounds zu abstrahieren, und um
+Beschränkungen für das aufzuerlegen, was diese Typen bieten müssen. Dies wird
+manchmal als <em>begrenzter parametrischer Polymorphismus</em> (bounded parametric
+polymorphism) bezeichnet.</p>
 </blockquote>
 <p>Rust hat sich für andere Kompromisse entschieden, indem es keine Vererbung
 anbietet. Bei der Vererbung besteht oft die Gefahr, dass mehr Code als nötig
@@ -339,8 +338,8 @@ Darüber hinaus lassen einige Sprachen nur <em>Einfachvererbung</em> zu (d.h. ei
 Unterklasse kann nur von einer Klasse erben), was die Flexibilität des
 Programmdesigns weiter einschränkt.</p>
 <p>Aus diesen Gründen verfolgt Rust den anderen Ansatz mittels Verwendung von
-Merkmalsobjekten (trait objects) anstelle der Vererbung, um Polymorphismus zur
-Laufzeit zu realisieren. Schauen wir uns an, wie Merkmalsobjekte funktionieren.</p>
+Trait-Objekten anstelle der Vererbung, um Polymorphismus zur Laufzeit zu
+realisieren. Schauen wir uns an, wie Trait-Objekte funktionieren.</p>
 
                     </main>
 

@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -173,7 +173,7 @@ verzweigen. Du gibst eine Bedingung an und legst dann fest: „Wenn diese
 Bedingung erfüllt ist, führe diesen Codeblock aus. Wenn die Bedingung nicht
 erfüllt ist, darf dieser Codeblock nicht ausgeführt werden.“</p>
 <p>Erstelle in deinem <em>projects</em>-Verzeichnis ein neues Projekt namens <em>branches</em>,
-um den <code>if</code>-Ausdruck zu erforschen. Gibt in der Datei <em>src/main.rs</em> folgendes
+um den <code>if</code>-Ausdruck zu erforschen. Gib in der Datei <em>src/main.rs</em> Folgendes
 ein:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
@@ -249,12 +249,12 @@ error[E0308]: mismatched types
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `branches` (bin "branches") due to 1 previous error
 </code></pre>
-<p>Der Fehler gibt an, dass Rust ein <code>bool</code> erwartet, aber eine ganze Zahl
-erhalten hat. Im Gegensatz zu Sprachen wie Ruby und JavaScript wird Rust nicht
-automatisch versuchen, nicht-boolsche Typen in ein Boolean zu konvertieren. Du
-musst explizit sein und immer <code>if</code> mit einer Booleschen Bedingung versehen.
-Wenn wir beispielsweise wollen, dass der <code>if</code>-Codeblock nur ausgeführt wird,
-wenn eine Zahl ungleich <code>0</code> ist, können wir den <code>if</code>-Ausdruck wie folgt ändern:</p>
+<p>Der Fehler gibt an, dass Rust ein <code>bool</code> erwartet, aber eine ganze Zahl erhalten
+hat. Im Gegensatz zu Sprachen wie Ruby und JavaScript wird Rust nicht
+automatisch versuchen, nicht-boolsche Typen zu Boolean zu konvertieren. Du musst
+explizit sein und immer <code>if</code> mit einer Booleschen Bedingung versehen. Wenn wir
+beispielsweise wollen, dass der <code>if</code>-Codeblock nur ausgeführt wird, wenn eine
+Zahl ungleich <code>0</code> ist, können wir den <code>if</code>-Ausdruck wie folgt ändern:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let number = 3;
@@ -283,7 +283,7 @@ ausgegeben.</p>
     }
 }</code></pre>
 <p>Dieses Programm hat vier mögliche Wege, die es nehmen kann. Nachdem du es
-ausgeführt hast, solltest du folgende Ausgabe sehen:</p>
+ausgeführt hast, solltest du die folgende Ausgabe sehen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling branches v0.1.0 (file:///projects/branches)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
@@ -303,7 +303,7 @@ Rust-Verzweigungskonstrukt namens <code>match</code> für solche Fälle.</p>
 <h4 id="verwenden-von-if-in-einer-let-anweisung"><a class="header" href="#verwenden-von-if-in-einer-let-anweisung">Verwenden von <code>if</code> in einer <code>let</code>-Anweisung</a></h4>
 <p>Weil <code>if</code> ein Ausdruck ist, können wir ihn auf der rechten Seite einer
 <code>let</code>-Anweisung verwenden, um das Ergebnis einer Variablen zuzuordnen, wie in
-Codeblock 3-2.</p>
+Listing 3-2.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let condition = true;
@@ -311,7 +311,7 @@ Codeblock 3-2.</p>
 
     println!("Der Wert der Zahl ist: {number}");
 }</code></pre>
-<p><span class="caption">Codeblock 3-2: Zuweisen des Ergebnisses eines
+<p><span class="caption">Listing 3-2: Zuweisen des Ergebnisses eines
 <code>if</code>-Ausdrucks an eine Variable</span></p>
 <p>Die Variable <code>number</code> wird an einen Wert gebunden, der auf dem Ergebnis des
 <code>if</code>-Ausdrucks basiert. Führe diesen Code aus, um zu sehen, was passiert:</p>
@@ -325,7 +325,7 @@ Der Wert der Zahl ist: 5
 werden, und auch Zahlen an sich sind Ausdrücke. In diesem Fall hängt der Wert
 des gesamten <code>if</code>-Ausdrucks davon ab, welcher Codeblock ausgeführt wird. Dies
 bedeutet, dass die Werte, die potentielle Ergebnisse eines <code>if</code>-Zweigs sein
-können, vom gleichen Typ sein müssen; in Codeblock 3-2 waren die Ergebnisse
+können, vom gleichen Typ sein müssen; in Listing 3-2 waren die Ergebnisse
 sowohl des <code>if</code>-Zweigs als auch des <code>else</code>-Zweigs <code>i32</code>-Ganzzahlen. Wenn die
 Typen nicht übereinstimmen, wie im folgenden Beispiel, erhalten wir einen
 Fehler:</p>
@@ -354,14 +354,14 @@ For more information about this error, try `rustc --explain E0308`.
 error: could not compile `branches` (bin "branches") due to 1 previous error
 </code></pre>
 <p>Der Ausdruck im <code>if</code>-Block wird zu einer ganzen Zahl und der Ausdruck im
-<code>else</code>-Block zu einer Zeichenkette ausgewertet. Dies wird nicht funktionieren,
-da Variablen einen einzigen Typ haben müssen. Rust muss zur Kompilierzeit
-definitiv wissen, welchen Typ die Variable <code>number</code> hat, damit es zur
-Kompilierzeit überprüfen kann, ob ihr Typ überall gültig ist, wo wir <code>number</code>
-verwenden. Rust wäre dazu nicht in der Lage, wenn der Typ von <code>number</code> erst zur
-Laufzeit bestimmt würde; der Compiler wäre komplexer und würde weniger
-Garantien über den Code geben, wenn er mehrere hypothetische Typen für jede
-Variable verfolgen müsste.</p>
+<code>else</code>-Block zu einem String ausgewertet. Dies wird nicht funktionieren, da
+Variablen einen einzigen Typ haben müssen. Rust muss zur Kompilierzeit definitiv
+wissen, welchen Typ die Variable <code>number</code> hat, damit es zur Kompilierzeit
+überprüfen kann, ob ihr Typ überall gültig ist, wo wir <code>number</code> verwenden. Rust
+wäre dazu nicht in der Lage, wenn der Typ von <code>number</code> erst zur Laufzeit
+bestimmt würde; der Compiler wäre komplexer und würde weniger Garantien über den
+Code geben, wenn er mehrere hypothetische Typen für jede Variable verfolgen
+müsste.</p>
 <h3 id="wiederholung-mit-schleifen"><a class="header" href="#wiederholung-mit-schleifen">Wiederholung mit Schleifen</a></h3>
 <p>Es ist oft hilfreich, einen Codeblock mehr als einmal auszuführen. Für diese
 Aufgabe stellt Rust mehrere <em>Schleifen</em> (loops) zur Verfügung, die den Code
@@ -372,8 +372,8 @@ Projekt namens <em>loops</em>.</p>
 jede einzelne aus.</p>
 <h4 id="wiederholen-von-code-mit-loop"><a class="header" href="#wiederholen-von-code-mit-loop">Wiederholen von Code mit <code>loop</code></a></h4>
 <p>Das Schlüsselwort <code>loop</code> weist Rust an, einen Codeblock immer und immer wieder
-auszuführen, und zwar für immer oder bis du ihm explizit sagst, dass er
-aufhören soll.</p>
+auszuführen, und zwar für immer oder bis du ihm explizit sagst, dass er aufhören
+soll.</p>
 <p>Als Beispiel änderst du die Datei <em>src/main.rs</em> in deinem <em>loops</em>-Verzeichnis
 so, dass sie wie folgt aussieht:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -415,12 +415,12 @@ das Programm anweist, jeden restlichen Code in dieser Iteration der Schleife zu
 <h4 id="rückgabe-von-werten-aus-schleifen"><a class="header" href="#rückgabe-von-werten-aus-schleifen">Rückgabe von Werten aus Schleifen</a></h4>
 <p>Eine der Verwendungen von <code>loop</code> besteht darin, eine Operation, von der du
 weißt, dass sie fehlschlagen könnte, erneut zu versuchen, z.B. um zu prüfen, ob
-ein Strang (thread) seine Arbeit abgeschlossen hat. Möglicherweise musst du
-jedoch das Ergebnis dieser Operation aus der Schleife heraus an den Rest deines
-Codes weitergeben. Dazu kannst du den Wert, der zurückgegeben werden soll,
-hinter dem <code>break</code>-Ausdruck angeben, den du zum Beenden der Schleife
-verwendest; dieser Wert wird aus der Schleife zurückgegeben, sodass du ihn
-verwenden kannst, wie hier gezeigt:</p>
+ein Thread seine Arbeit abgeschlossen hat. Möglicherweise musst du jedoch das
+Ergebnis dieser Operation aus der Schleife heraus an den Rest deines Codes
+weitergeben. Dazu kannst du den Wert, der zurückgegeben werden soll, hinter dem
+<code>break</code>-Ausdruck angeben, den du zum Beenden der Schleife verwendest; dieser
+Wert wird aus der Schleife zurückgegeben, sodass du ihn verwenden kannst, wie
+hier gezeigt:</p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut counter = 0;
 
@@ -478,7 +478,7 @@ beginnen. Hier ist ein Beispiel mit zwei verschachtelten Schleifen:</p>
 aufwärts. Die innere Schleife ohne Label zählt von 10 bis 9 herunter. Das erste
 <code>break</code>, das kein Label angibt, beendet nur die innere Schleife. Mit der
 Anweisung <code>break 'counting_up;</code> wird die äußere Schleife verlassen. Dieser Code
-gibt folgendes aus:</p>
+gibt Folgendes aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.58s
@@ -501,7 +501,7 @@ die Schleife. Es ist möglich, derartiges Verhalten mittels einer Kombination
 von <code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> zu implementieren; du kannst das jetzt in
 einem Programm versuchen, wenn du möchtest. Dieses Muster ist jedoch so weit
 verbreitet, dass Rust ein eingebautes Sprachkonstrukt dafür hat, die sogenannte
-<code>while</code>-Schleife. In Codeblock 3-3 wird <code>while</code> verwendet: Das Programm
+<code>while</code>-Schleife. In Listing 3-3 wird <code>while</code> verwendet: Das Programm
 durchläuft dreimal eine Schleife, in der es jedes Mal abwärts zählt, und dann
 nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -516,7 +516,7 @@ nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.</p>
 
     println!("ABHEBEN!!!");
 }</code></pre>
-<p><span class="caption">Codeblock 3-3: Verwenden einer <code>while</code>-Schleife, um Code
+<p><span class="caption">Listing 3-3: Verwenden einer <code>while</code>-Schleife, um Code
 auszuführen, solange eine Bedingung wahr ist</span></p>
 <p>Dieses Konstrukt eliminiert eine Menge von Verschachtelungen, die notwendig
 wären, wenn du <code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> verwenden würdest, und es ist
@@ -524,7 +524,7 @@ klarer. Solange eine Bedingung zu <code>true</code> auswertet, läuft der Code a
 andernfalls wird die Schleife verlassen.</p>
 <h4 id="durchlaufen-einer-kollektion-mit-for"><a class="header" href="#durchlaufen-einer-kollektion-mit-for">Durchlaufen einer Kollektion mit <code>for</code></a></h4>
 <p>Du kannst das <code>while</code>-Konstrukt verwenden, um die Elemente einer Kollektion,
-z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4
+z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Listing 3-4
 gibt zum Beispiel jedes Element im Array <code>a</code> aus.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
@@ -537,7 +537,7 @@ gibt zum Beispiel jedes Element im Array <code>a</code> aus.</p>
         index += 1;
     }
 }</code></pre>
-<p><span class="caption">Codeblock 3-4: Wiederholen anhand aller Elemente einer
+<p><span class="caption">Listing 3-4: Wiederholen anhand aller Elemente einer
 Kollektion unter Verwendung einer <code>while</code>-Schleife</span></p>
 <p>Hier zählt der Code die Elemente im Array aufwärts. Er beginnt bei Index <code>0</code>
 und wiederholt bis er den letzten Index im Array erreicht (d.h. wenn
@@ -556,16 +556,16 @@ Der Wert ist: 50
 <p>Alle fünf Array-Werte erscheinen erwartungsgemäß im Terminal. Wenn <code>index</code> den
 Wert <code>5</code> erreicht hat, stoppt die Schleife ihre Ausführung, bevor sie versucht,
 einen sechsten Wert aus dem Array zu holen.</p>
-<p>Aber dieser Ansatz ist fehleranfällig; wir könnten das Programm zum Abstürzen
+<p>Aber dieser Ansatz ist fehleranfällig; wir könnten das Programm zum Abbrechen
 bringen, wenn der Indexwert oder die Testbedingung falsch ist. Wenn du zum
 Beispiel die Definition des Arrays <code>a</code> so änderst, dass es vier Elemente hat,
 aber vergisst, die Bedingung <code>while index &lt; 4</code> zu aktualisieren, würde der Code
-abstürzen. Er ist zudem langsam, weil der Compiler Laufzeitcode erzeugt, der
-die Bedingungsprüfung, ob der Index innerhalb der Arraygrenzen liegt, bei jeder
+abbrechen. Er ist zudem langsam, weil der Compiler Laufzeitcode erzeugt, der die
+Bedingungsprüfung, ob der Index innerhalb der Arraygrenzen liegt, bei jeder
 Schleifeniteration durchführt.</p>
 <p>Als prägnantere Alternative kannst du eine <code>for</code>-Schleife verwenden und für
 jedes Element einer Kollektion etwas Code ausführen. Eine <code>for</code>-Schleife sieht
-wie der Code in Codeblock 3-5 aus.</p>
+wie der Code in Listing 3-5 aus.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let a = [10, 20, 30, 40, 50];
@@ -574,9 +574,9 @@ wie der Code in Codeblock 3-5 aus.</p>
         println!("Der Wert ist: {element}");
     }
 }</code></pre>
-<p><span class="caption">Codeblock 3-5: Wiederholen anhand aller Elemente einer
+<p><span class="caption">Listing 3-5: Wiederholen anhand aller Elemente einer
 Kollektion unter Verwendung einer <code>for</code>-Schleife</span></p>
-<p>Wenn wir diesen Code ausführen, werden wir die gleiche Ausgabe wie in Codeblock
+<p>Wenn wir diesen Code ausführen, werden wir die gleiche Ausgabe wie in Listing
 3-4 sehen. Noch wichtiger ist, dass wir jetzt die Sicherheit des Codes erhöht
 und die Möglichkeit von Fehlern eliminiert haben, die dadurch entstehen
 könnten, dass wir über das Ende des Arrays hinausgehen oder nicht weit genug
@@ -585,11 +585,11 @@ Maschinencode kann ebenfalls effizienter sein, da der Index nicht bei jeder
 Iteration mit der Länge des Arrays verglichen werden muss.</p>
 <p>Wenn du die <code>for</code>-Schleife verwendest, brauchst du nicht daran zu denken,
 irgendeinen anderen Code zu ändern, wenn du die Anzahl der Werte im Array
-änderst, wie bei der Methode in Codeblock 3-4 verwendet.</p>
+änderst, wie bei der Methode in Listing 3-4 verwendet.</p>
 <p>Die Sicherheit und Prägnanz der <code>for</code>-Schleifen machen sie zum am häufigsten
 verwendeten Schleifenkonstrukt in Rust. Sogar in Situationen, in denen du einen
 Code bestimmt oft laufen lassen willst, wie im Countdown-Beispiel, das in
-Codeblock 3-3 eine <code>while</code>-Schleife verwendet hat, würden die meisten
+Listing 3-3 eine <code>while</code>-Schleife verwendet hat, würden die meisten
 Rust-Entwickler eine <code>for</code>-Schleife verwenden. Der Weg, dies zu erreichen, wäre
 das Verwenden eines <code>Range</code>, der von der Standardbibliothek zur Verfügung
 gestellt wird und alle Zahlen in Folge generiert, beginnend mit einer Zahl und

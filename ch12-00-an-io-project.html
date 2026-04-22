@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -164,18 +164,18 @@
                         <h1 id="ein-ea-projekt-ein-kommandozeilenprogramm-erstellen"><a class="header" href="#ein-ea-projekt-ein-kommandozeilenprogramm-erstellen">Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></h1>
 <p>Dieses Kapitel ist eine Zusammenfassung der vielen Fähigkeiten, die du bisher
 gelernt hast, und eine Erkundung einiger weiterer
-Standard-Bibliotheks-Funktionalitäten. Wir werden ein Kommandozeilenwerkzeug
-erstellen, das mit der Datei- und der Terminal-Ein- und -Ausgabe interagiert,
-um einige der Rust-Konzepte zu üben, die du bereits gelernt hast.</p>
+Standardbibliotheks-Funktionalitäten. Wir werden ein Kommandozeilenwerkzeug
+erstellen, das mit der Datei- und der Terminal-Ein- und -Ausgabe interagiert, um
+einige der Rust-Konzepte zu üben, die du bereits gelernt hast.</p>
 <p>Rusts Geschwindigkeit, Sicherheit, Ausgabe in eine einzelne Binärdatei und
 plattformübergreifende Unterstützung machen es zu einer idealen Sprache zum
 Erstellen von Kommandozeilenwerkzeugen. Für unser Projekt werden wir daher eine
 eigene Version des klassischen Kommandozeilenwerkzeugs <code>grep</code> (<strong>g</strong>lobally
 search a <strong>r</strong>egular <strong>e</strong>xpression and <strong>p</strong>rint) erstellen. Im einfachsten
-Anwendungsfall durchsucht <code>grep</code> eine angegebene Datei nach einer bestimmten
-Zeichenkette. Dazu nimmt <code>grep</code> als Argumente einen Dateipfad und eine
-Zeichenkette. Dann liest es die Datei, findet Zeilen in dieser Datei, die das
-Zeichenketten-Argument enthalten, und gibt diese Zeilen aus.</p>
+Anwendungsfall durchsucht <code>grep</code> eine angegebene Datei nach einem bestimmten
+String. Dazu nimmt <code>grep</code> als Argumente einen Dateipfad und einen String. Dann
+liest es die Datei, findet Zeilen in dieser Datei, die das String-Argument
+enthalten, und gibt diese Zeilen aus.</p>
 <p>Auf dem Weg dorthin werden wir zeigen, wie wir unser Kommandozeilenwerkzeug
 dazu bringen können, Funktionalitäten des Terminals zu nutzen, die viele
 Kommandozeilenwerkzeuge nutzen. Wir werden den Wert einer Umgebungsvariablen
@@ -193,15 +193,14 @@ benötigst, um ein reales Projekt wie <code>ripgrep</code> zu verstehen.</p>
 gelernt hast:</p>
 <ul>
 <li>Code organisieren (<a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html">Kapitel 7</a>)</li>
-<li>Verwenden von Vektoren und Zeichenketten (<a href="ch08-00-common-collections.html">Kapitel 8</a>)</li>
+<li>Verwenden von Vektoren und Strings (<a href="ch08-00-common-collections.html">Kapitel 8</a>)</li>
 <li>Fehlerbehandlung (<a href="ch09-00-error-handling.html">Kapitel 9</a>)</li>
-<li>Verwenden von Merkmalen (traits) und Lebensdauer (lifetimes) soweit möglich
-(<a href="ch10-00-generics.html">Kapitel 10</a>)</li>
+<li>Verwenden von Traits und Lebensdauer (lifetimes) soweit möglich (<a href="ch10-00-generics.html">Kapitel
+10</a>)</li>
 <li>Schreiben von Tests (<a href="ch11-00-testing.html">Kapitel 11</a>)</li>
 </ul>
-<p>Wir werden auch kurz Funktionsabschlüsse (closures), Iteratoren und
-Merkmalsobjekte (trait objects) vorstellen, die in den <a href="ch13-00-functional-features.html">Kapitel 13</a>
-und <a href="ch18-00-oop.html">Kapitel 18</a> ausführlich behandelt werden.</p>
+<p>Wir werden auch kurz Closures, Iteratoren und Trait-Objekte vorstellen, die in
+<a href="ch13-00-functional-features.html">Kapitel 13</a> und <a href="ch18-00-oop.html">Kapitel 18</a> ausführlich behandelt werden.</p>
 
                     </main>
 

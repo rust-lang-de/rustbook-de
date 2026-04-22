@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Referenzen und Ausleihen (borrowing) - Die Programmiersprache Rust</title>
+        <title>Referenzen und Borrowing - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,8 +161,8 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="referenzen-und-ausleihen-borrowing"><a class="header" href="#referenzen-und-ausleihen-borrowing">Referenzen und Ausleihen (borrowing)</a></h2>
-<p>Das Problem mit dem Tupelcode in Codeblock 4-5 ist, dass wir der aufrufenden
+                        <h2 id="referenzen-und-borrowing"><a class="header" href="#referenzen-und-borrowing">Referenzen und Borrowing</a></h2>
+<p>Das Problem mit dem Tupelcode in Listing 4-5 ist, dass wir der aufrufenden
 Funktion den <code>String</code> zurückgeben müssen, damit wir den <code>String</code> nach dem
 Aufruf von <code>calculate_length</code> weiter verwenden können, weil der <code>String</code> in
 <code>calculate_length</code> verschoben wurde. Stattdessen können wir eine Referenz auf
@@ -173,7 +173,7 @@ einem Zeiger ist bei einer Referenz garantiert, dass sie auf einen gültigen
 Wert eines bestimmten Typs zeigt.</p>
 <p>Im Folgenden siehst du, wie du eine Funktion <code>calculate_length</code> definieren und
 verwenden kannst, die eine Referenz auf ein Objekt als Parameter hat, anstatt
-die Eigentümerschaft (ownership) des Wertes zu übernehmen:</p>
+das Eigentum am Wert zu übernehmen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let s1 = String::from("Hallo");
@@ -187,14 +187,14 @@ fn calculate_length(s: &amp;String) -&gt; usize {
     s.len()
 }</code></pre>
 <p>Beachte, dass der gesamte Tupelcode aus der Variablendeklaration und dem
-Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
-<code>&amp;s1</code> an <code>calculate_length</code> übergeben und in seiner Definition <code>&amp;String</code> statt
-<code>String</code> steht. Das <code>&amp;</code>-Zeichen steht für eine Referenz, und sie ermöglicht
-es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
-übernehmen. Abbildung 4-6 zeigt die Speicherdarstellung.</p>
+Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir <code>&amp;s1</code>
+an <code>calculate_length</code> übergeben und in seiner Definition <code>&amp;String</code> statt
+<code>String</code> steht. Das <code>&amp;</code>-Zeichen steht für eine Referenz, und sie ermöglicht es
+dir, dich auf einen Wert zu beziehen, ohne dessen Eigentum zu übernehmen.
+Abbildung 4-6 zeigt die Speicherdarstellung.</p>
 <p><img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
-Tabelle für s1. Die Tabelle für s1 enthält die Stapelspeicher-Daten für s1 und
-zeigt auf die Zeichenketten-Daten auf dem Haldenspeicher." src="img/trpl04-06.svg" class="center" /></p>
+Tabelle für s1. Die Tabelle für s1 enthält die Stack-Daten für s1 und zeigt auf
+die String-Daten auf dem Heap." src="img/trpl04-06.svg" class="center" /></p>
 <p><span class="caption">Abbildung 4-6: Eine Grafik mit <code>&amp;String s</code>, das auf
 <code>String s1</code> zeigt</span></p>
 <blockquote>
@@ -231,21 +231,21 @@ Anmerkungen ergänzen:</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn calculate_length(s: &amp;String) -&gt; usize { // s ist eine Referenz
-                                           // auf eine Zeichenkette
+                                           // auf einen String
     s.len()
-} // Hier verlässt s den Gültigkeitsbereich. Aber weil es keine
-  // Eigentümerschaft an dem hat, worauf es referenziert, passiert nichts.</code></pre>
-<p>Der Gültigkeitsbereich, in dem die Variable <code>s</code> gültig ist, ist derselbe wie
-der Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
+} // Hier verlässt s den Gültigkeitsbereich. Aber weil es kein
+  // Eigentum daran hat, worauf es referenziert, passiert nichts.</code></pre>
+<p>Der Gültigkeitsbereich, in dem die Variable <code>s</code> gültig ist, ist derselbe wie der
+Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
 Referenz zeigt, wird nicht aufgeräumt, wenn <code>s</code> nicht mehr verwendet wird, weil
-<code>s</code> keine Eigentümerschaft hat. Wenn Funktionen statt der tatsächlichen Werte
-Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
-die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.</p>
-<p>Wir nennen den Vorgang des Erstellens einer Referenz <em>Ausleihen</em> (borrowing).
+<code>s</code> kein Eigentum hat. Wenn Funktionen statt der tatsächlichen Werte Referenzen
+als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um das Eigentum
+zurückzugeben, denn wir hatten nie das Eigentum.</p>
+<p>Wir nennen den Vorgang des Erstellens einer Referenz <em>Borrowing</em> (Ausleihen).
 Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von ihr
 ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir nicht.</p>
-<p>Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns
-ausleihen? Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!</p>
+<p>Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns ausleihen?
+Versuche den Code in Listing 4-6. Achtung: Es funktioniert nicht!</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let s = String::from("Hallo");
@@ -256,7 +256,7 @@ ausleihen? Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!</
 fn change(some_string: &amp;String) {
     some_string.push_str(" Welt");
 }</code></pre>
-<p><span class="caption">Codeblock 4-6: Versuch, einen ausgeliehenen Wert zu
+<p><span class="caption">Listing 4-6: Versuch, einen ausgeliehenen Wert zu
 verändern</span></p>
 <p>Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
@@ -279,9 +279,9 @@ error: could not compile `ownership` (bin "ownership") due to 1 previous error
 unveränderbar. Es ist uns nicht erlaubt, etwas zu verändern, auf das wir eine
 Referenz haben.</p>
 <h3 id="veränderbare-referenzen"><a class="header" href="#veränderbare-referenzen">Veränderbare Referenzen</a></h3>
-<p>Wir können den Code aus Codeblock 4-6 so ändern, dass wir einen geliehenen Wert
-mit ein paar kleinen Änderungen ändern können, die stattdessen eine
-<em>veränderbare Referenz</em> verwenden:</p>
+<p>Wir können den Code aus Listing 4-6 mit nur wenigen kleinen Anpassungen so
+ändern, dass wir einen ausgeliehenen Wert verändern können; dabei setzen wir
+stattdessen eine <em>veränderbare Referenz</em> ein:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut s = String::from("Hallo");
@@ -330,27 +330,26 @@ error: could not compile `playground` (bin "playground") due to 1 previous error
 </code></pre>
 <p>Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir <code>s</code> nicht mehr
 als einmal zur gleichen Zeit als veränderbar ausleihen können. Die erste
-veränderbare Ausleihe ist in <code>r1</code> und muss beibehalten werden, bis sie in
+veränderbare Borrow ist in <code>r1</code> und muss beibehalten werden, bis sie in
 <code>println!</code> verwendet wird, aber zwischen dem Erstellen dieser veränderbaren
 Referenz und ihrer Verwendung haben wir versucht, eine andere veränderbare
 Referenz in <code>r2</code> zu erstellen, der die gleichen Daten wie <code>r1</code> ausleiht.</p>
-<p>Die Beschränkung, die mehrere veränderbare Referenz auf dieselben Daten zur
-gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr
-kontrollierten Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn
-in den meisten Sprachen kann man verändern wann immer man will. Diese
-Beschränkung hat den Vorteil, dass Rust Daten-Wettlaufsituation zur
-Kompilierzeit verhindern kann. Eine <em>Daten-Wettlaufsituation</em> (data race) ist
-ähnlich einer Wettlaufsituation (race condition) und tritt auf, wenn diese drei
-Verhaltensweisen auftreten:</p>
+<p>Die Beschränkung, die mehrere veränderbare Referenzen auf dieselben Daten zur
+gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr kontrollierten
+Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn in den meisten
+Sprachen kann man verändern wann immer man will. Diese Beschränkung hat den
+Vorteil, dass Rust Data Races zur Kompilierzeit verhindern kann. Eine <em>Data
+Race</em> ist ähnlich einer Race Condition (Wettlaufsituation) und tritt auf, wenn
+diese drei Verhaltensweisen vorliegen:</p>
 <ul>
 <li>Zwei oder mehr Zeiger greifen gleichzeitig auf die gleichen Daten zu.</li>
 <li>Mindestens einer der Zeiger wird zum Schreiben auf die Daten verwendet.</li>
 <li>Es gibt keinen Mechanismus, um den Zugriff auf die Daten zu synchronisieren.</li>
 </ul>
-<p>Daten-Wettlaufsituationen verursachen undefiniertes Verhalten und können
-schwierig zu diagnostizieren und zu beheben sein, wenn du versuchst, sie zur
-Laufzeit aufzuspüren; Rust verhindert dieses Problem, indem es Code mit
-Daten-Wettlaufsituationen gar nicht erst kompiliert!</p>
+<p>Data Races verursachen undefiniertes Verhalten und können schwierig zu
+diagnostizieren und zu beheben sein, wenn du versuchst, sie zur Laufzeit
+aufzuspüren; Rust verhindert dieses Problem, indem es Code mit Data Races gar
+nicht erst kompiliert!</p>
 <p>Wie immer können wir geschweifte Klammern verwenden, um einen neuen
 Gültigkeitsbereich zu schaffen, der mehrere veränderbare Referenzen erlaubt,
 nur nicht <em>gleichzeitige</em>:</p>
@@ -424,11 +423,11 @@ veränderbare Referenz <code>r3</code> erstellt wird. Diese Gültigkeitsbereiche
 überschneiden sich nicht, daher ist dieser Code zulässig: Der Compiler kann
 erkennen, dass die Referenz bereits vor dem Ende des Gültigkeitsbereichs nicht
 mehr verwendet wird.</p>
-<p>Auch wenn Fehler durch Ausleihen manchmal frustrierend sein können, denke
-daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
-nicht zur Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo
-das Problem liegt. Dann musst du nicht aufspüren, warum deine Daten nicht so
-sind, wie du dachtest.</p>
+<p>Auch wenn Fehler durch Borrowing manchmal frustrierend sein können, denke daran,
+dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und nicht zur
+Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo das
+Problem liegt. Dann musst du nicht aufspüren, warum deine Daten nicht so sind,
+wie du dachtest.</p>
 <h3 id="hängende-referenzen"><a class="header" href="#hängende-referenzen">Hängende Referenzen</a></h3>
 <p>In Sprachen mit Zeigern ist es leicht, fälschlicherweise einen <em>hängenden
 Zeiger</em> (dangling pointer) zu erzeugen, also einen Zeiger, der auf eine Stelle
@@ -438,8 +437,8 @@ bestehen bleibt. In Rust hingegen garantiert der Compiler, dass Referenzen
 niemals hängende Referenzen sein können: Wenn du eine Referenz auf Daten hast,
 stellt der Compiler sicher, dass die Daten nicht den Gültigkeitsbereich
 verlassen, bevor die Referenz auf die Daten dies tut.</p>
-<p>Versuchen wir, eine hängende Referenz zu erstellen, um zu sehen wie Rust das
-mit einem Kompilierfehler verhindert:</p>
+<p>Versuchen wir, eine hängende Referenz zu erstellen, um zu sehen wie Rust das mit
+einem Compilerfehler verhindert:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let reference_to_nothing = dangle();
@@ -488,11 +487,11 @@ for it to be borrowed from
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn dangle() -&gt; &amp;String { // dangle gibt eine Referenz
-                         // auf eine Zeichenkette zurück
+                         // auf einen String zurück
 
-    let s = String::from("Hallo"); // s ist eine neue Zeichenkette
+    let s = String::from("Hallo"); // s ist ein neuer String
 
-    &amp;s // wir geben einen Verweis auf die Zeichenkette s zurück
+    &amp;s // wir geben eine Referenz auf den String s zurück
 } // Hier verlässt s den Gültigkeitsbereich und wird verworfen.
   // Sein Speicherplatz wird aufgeräumt. Gefahr!</code></pre>
 <p>Da <code>s</code> innerhalb <code>dangle</code> erzeugt wird, wird <code>s</code> wieder freigegeben, wenn der
@@ -509,8 +508,8 @@ verweisen. Das ist nicht gut! Rust lässt uns das nicht tun.</p>
 
     s
 }</code></pre>
-<p>Dies funktioniert ohne Probleme. Die Eigentümerschaft wird nach außen
-verschoben, und nichts wird freigegeben.</p>
+<p>Dies funktioniert ohne Probleme. Das Eigentum wird nach außen verschoben, und
+nichts wird freigegeben.</p>
 <h3 id="regeln-für-referenzen"><a class="header" href="#regeln-für-referenzen">Regeln für Referenzen</a></h3>
 <p>Lass uns rekapitulieren, was wir über Referenzen gelernt haben:</p>
 <ul>
@@ -518,8 +517,7 @@ verschoben, und nichts wird freigegeben.</p>
 Referenz <em>oder</em> eine beliebige Anzahl unveränderbarer Referenzen haben.</li>
 <li>Referenzen müssen immer gültig sein.</li>
 </ul>
-<p>Als Nächstes werden wir uns mit einer anderen Art von Referenz befassen:
-Anteilstypen (slice).</p>
+<p>Als Nächstes werden wir uns mit einer anderen Art von Referenz befassen: Slices.</p>
 
                     </main>
 

@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -167,21 +167,20 @@ die Rust-Schlüsselwörter <code>async</code> und <code>await</code>.</p>
 <p>Ein <em>Future</em> ist ein Wert, der vielleicht noch nicht verfügbar ist, aber
 irgendwann in der Zukunft verfügbar sein wird. (Das gleiche Konzept taucht in
 vielen Programmiersprachen auf, manchmal unter anderen Namen wie „task“ oder
-„promise“.) Rust hat ein Merkmal <code>Future</code> als Baustein, sodass verschiedene
+„promise“.) Rust definiert das Trait <code>Future</code> als Baustein, sodass verschiedene
 asynchrone Operationen mit verschiedenen Datenstrukturen, aber mit einer
 gemeinsamen Schnittstelle implementiert werden können. In Rust sind Futures
-Typen, die das Merkmal <code>Future</code> implementieren. Jedes Future hält seine eigenen
-Informationen über den Fortschritt, der gemacht wurde und was „fertig“
-bedeutet.</p>
+Typen, die das Trait <code>Future</code> implementieren. Jedes Future hält seine eigenen
+Informationen über den Fortschritt, der gemacht wurde und was „fertig“ bedeutet.</p>
 <p>Das Schlüsselwort <code>async</code> kann auf Blöcke und Funktionen angewendet werden, um
 anzugeben, dass sie unterbrochen und fortgesetzt werden können. Innerhalb eines
 asynchronen Blocks oder einer asynchronen Funktion kannst du mit dem
 Schlüsselwort <code>await</code> auf ein Future warten (d.h. warten bis es fertig ist).
-Jede Stelle, an der du innerhalb eines asynchronen Blocks oder einer
-asynchronen Funktion auf ein Future wartest, ist eine Stelle, an der der
-Block oder die Funktion unterbrochen und fortgesetzt werden kann. Der Vorgang,
-bei dem bei einem Future geprüft wird, ob sein Wert bereits verfügbar ist, wird
-<em>polling</em> (engl. Abfragen) genannt.</p>
+Jede Stelle, an der du innerhalb eines asynchronen Blocks oder einer asynchronen
+Funktion auf ein Future wartest, ist eine Stelle, an der der Block oder die
+Funktion unterbrochen und fortgesetzt werden kann. Der Vorgang, bei dem bei
+einem Future geprüft wird, ob sein Wert bereits verfügbar ist, wird <em>polling</em>
+(Abfragen) genannt.</p>
 <p>Andere Sprachen wie C# und JavaScript verwenden ebenfalls die Schlüsselwörter
 <code>async</code> und <code>await</code> für die asynchrone Programmierung. Wenn du mit diesen
 Sprachen vertraut bist, wirst du vielleicht einige signifikante Unterschiede
@@ -189,14 +188,14 @@ bemerken, wie Rust die Syntax handhabt. Und das aus gutem Grund, wie wir sehen
 werden!</p>
 <p>Wenn wir asynchrones Rust schreiben, verwenden wir meistens die Schlüsselwörter
 <code>async</code> und <code>await</code>. Rust kompiliert sie in äquivalenten Code unter Verwendung
-des Merkmals <code>Future</code>, genauso wie es <code>for</code>-Schleifen in äquivalenten Code
-unter Verwendung des Merkmals <code>Iterator</code> kompiliert. Da Rust das Merkmal
-<code>Future</code> bereitstellt, kannst du es bei Bedarf auch für deine eigenen
-Datentypen implementieren. Viele der Funktionen, die wir in diesem Kapitel
-sehen werden, geben Typen mit ihren eigenen Implementierungen von <code>Future</code>
-zurück. Wir werden am Ende des Kapitels noch einmal auf die Definition des
-Merkmals zurückkommen und mehr darüber erfahren, wie es funktioniert. Aber das
-sind vorerst genug Details, die wir brauchen.</p>
+des Traits <code>Future</code>, genauso wie es <code>for</code>-Schleifen in äquivalenten Code unter
+Verwendung des Traits <code>Iterator</code> kompiliert. Da Rust das Trait <code>Future</code>
+bereitstellt, kannst du es bei Bedarf auch für deine eigenen Datentypen
+implementieren. Viele der Funktionen, die wir in diesem Kapitel sehen werden,
+geben Typen mit ihren eigenen Implementierungen von <code>Future</code> zurück. Wir werden
+am Ende des Kapitels noch einmal auf die Definition des Traits zurückkommen und
+mehr darüber erfahren, wie es funktioniert. Aber das sind vorerst genug Details,
+die wir brauchen.</p>
 <p>Das mag sich alles ein wenig abstrakt anfühlen, lass uns daher unser erstes
 asynchrones Programm schreiben: Einen kleinen Web Scraper. Wir geben zwei URLs
 über die Befehlszeile ein, rufen beide gleichzeitig ab und geben das Ergebnis
@@ -205,24 +204,23 @@ Syntax verwenden, aber keine Sorge – wir erklären dir alles, was du zum
 jeweiligen Zeitpunkt wissen musst.</p>
 <h2 id="unser-erstes-asynchrones-programm"><a class="header" href="#unser-erstes-asynchrones-programm">Unser erstes asynchrones Programm</a></h2>
 <p>Um dieses Kapitel auf das Erlernen von async zu beschränken, anstatt mit Teilen
-des Ökosystems zu jonglieren, haben wir die Kiste <code>trpl</code> erstellt (<code>trpl</code> ist
+des Ökosystems zu jonglieren, haben wir die Crate <code>trpl</code> erstellt (<code>trpl</code> ist
 die Abkürzung für „The Rust Programming Language“). Sie re-exportiert alle
-Typen, Merkmale und Funktionen, die du benötigst, hauptsächlich aus den Kisten
-<a href="https://crates.io/crates/futures"><code>futures</code></a> und <a href="https://tokio.rs"><code>tokio</code></a>. Die Kiste <code>futures</code> ist ein
-offizielles Zuhause für Rust-Experimente mit asynchronem Code und ist
-eigentlich der Ort, an dem das Merkmal <code>Future</code> ursprünglich entworfen wurde.
-Tokio ist heute die am häufigsten verwendete asynchrone Laufzeitumgebung in
-Rust, insbesondere für Webanwendungen. Es gibt noch andere großartige
-Laufzeitumgebungen, die für deine Zwecke evtl. besser geeignet sind. Wir
-verwenden unter der Haube die Kiste <code>tokio</code> für <code>trpl</code>, weil es gut getestet
-und weit verbreitet ist.</p>
+Typen, Traits und Funktionen, die du benötigst, hauptsächlich aus den Crates
+<a href="https://crates.io/crates/futures"><code>futures</code></a> und <a href="https://tokio.rs"><code>tokio</code></a>. Die Crate <code>futures</code> ist ein
+offizielles Zuhause für Rust-Experimente mit asynchronem Code und ist eigentlich
+der Ort, an dem das Trait <code>Future</code> ursprünglich entworfen wurde. Tokio ist heute
+die am häufigsten verwendete asynchrone Laufzeitumgebung in Rust, insbesondere
+für Webanwendungen. Es gibt noch andere großartige Laufzeitumgebungen, die für
+deine Zwecke evtl. besser geeignet sind. Wir verwenden unter der Haube die Crate
+<code>tokio</code> für <code>trpl</code>, weil es gut getestet und weit verbreitet ist.</p>
 <p>In einigen Fällen nennt <code>trpl</code> die ursprünglichen APIs um oder umschließt sie,
 damit wir uns auf die für dieses Kapitel relevanten Details konzentrieren
-können. Wenn du verstehen willst, was die Kiste tut, empfehlen wir dir, sich
-den <a href="https://github.com/rust-lang/book/tree/main/packages/trpl">trpl-Quellcode</a> anzusehen. Du wirst sehen können, aus
-welcher Kiste jeder Re-Export stammt, und wir haben ausführliche Kommentare
-angegeben, die erklären, was die Kiste tut.</p>
-<p>Erstelle ein neues Binärprojekt mit dem Namen <code>hello-async</code> und füge die Kiste
+können. Wenn du verstehen willst, was die Crate tut, empfehlen wir dir, den
+<a href="https://github.com/rust-lang/book/tree/main/packages/trpl">trpl-Quellcode</a> anzusehen. Du wirst sehen können, aus welcher
+Crate jeder Re-Export stammt, und wir haben ausführliche Kommentare angegeben,
+die erklären, was die Crate tut.</p>
+<p>Erstelle ein neues Binärprojekt mit dem Namen <code>hello-async</code> und füge die Crate
 <code>trpl</code> als Abhängigkeit hinzu:</p>
 <pre><code class="language-console">$ cargo new hello-async
 $ cd hello-async
@@ -236,7 +234,7 @@ die den Vorgang zuerst beendet hat.</p>
 <h3 id="definieren-der-funktion-page_title"><a class="header" href="#definieren-der-funktion-page_title">Definieren der Funktion <code>page_title</code></a></h3>
 <p>Beginnen wir mit dem Schreiben einer Funktion, die eine Seiten-URL als
 Parameter entgegennimmt, eine Anfrage an diese stellt und den Text des
-Elements <code>&lt;title&gt;</code> zurückgibt (siehe Codeblock 17-1).</p>
+Elements <code>&lt;title&gt;</code> zurückgibt (siehe Listing 17-1).</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    // TODO: Wir fügen dies als nächstes hinzu!
@@ -251,7 +249,7 @@ async fn page_title(url: &amp;str) -&gt; Option&lt;String&gt; {
         .select_first("title")
         .map(|title| title.inner_html())
 }</code></pre>
-<p><span class="caption">Codeblock 17-1: Definieren einer asynchronen Funktion zum
+<p><span class="caption">Listing 17-1: Definieren einer asynchronen Funktion zum
 Abrufen des Titelelements aus einer HTML-Seite</span></p>
 <p>Zuerst definieren wir eine Funktion <code>page_title</code> und versehen sie mit dem
 Schlüsselwort <code>async</code>. Dann verwenden wir die Funktion <code>trpl::get</code>, um die
@@ -269,7 +267,7 @@ wird die Methode <code>text</code> ebenfalls als asynchron deklariert.</p>
 sind: Sie tun nichts, bis man sie mit dem Schlüsselwort <code>await</code> dazu
 auffordert. (Tatsächlich zeigt Rust eine Compiler-Warnung an, wenn du keine
 Futures verwendest.) Das dürfte dich an unsere Diskussion über Iteratoren in
-<a href="ch13-02-iterators.html">„Eine Reihe von Elementen verarbeiten mit Iteratoren“</a> in
+<a href="ch13-02-iterators.html">„Eine Reihe von Elementen mit Iteratoren verarbeiten“</a> in
 Kapitel 13 erinnern. Iteratoren tun nichts, es sei denn, du rufst ihre Methode
 <code>next</code> auf – entweder direkt oder mit Hilfe von <code>for</code>-Schleifen
 oder Methoden wie <code>map</code>, die <code>next</code> unter der Haube verwenden. Ebenso machen
@@ -278,35 +276,34 @@ erlaubt es Rust, die Ausführung von asynchronem Code zu vermeiden, bis er
 tatsächlich benötigt wird.</p>
 <blockquote>
 <p>Anmerkung: Dies unterscheidet sich von dem Verhalten, das wir gesehen haben,
-als wir <code>thread::spawn</code> im Abschnitt <a href="ch16-01-threads.html#erstellen-eines-neuen-strangs-mit-spawn">„Erstellen eines neuen Strangs mit
-spawn“</a> in Kapitel 16 verwendet haben und der
-Funktionsabschluss, den wir an einen anderen Strang übergeben haben, sofort
-zu laufen begann. Es unterscheidet sich auch davon, wie viele andere Sprachen
-die asynchrone Programmierung umsetzen! Aber es ist wichtig für Rust, dass es
-seine Leistungsgarantien gewährleisten kann, genau wie bei Iteratoren.</p>
+als wir <code>thread::spawn</code> im Abschnitt <a href="ch16-01-threads.html#erstellen-eines-neuen-threads-mit-spawn">„Erstellen eines neuen Threads mit
+spawn“</a> in Kapitel 16 verwendet haben und der Closure, den wir
+an einen anderen Thread übergeben haben, sofort zu laufen begann. Es
+unterscheidet sich auch davon, wie viele andere Sprachen die asynchrone
+Programmierung umsetzen! Aber es ist wichtig für Rust, dass es seine
+Leistungsgarantien gewährleisten kann, genau wie bei Iteratoren.</p>
 </blockquote>
 <p>Sobald wir <code>response_text</code> haben, können wir ihn mit <code>Html::parse</code> in eine
-Instanz des Typs <code>Html</code> einlesen. Anstelle einer rohen Zeichenkette haben wir
-nun einen Datentyp, den wir verwenden können, um mit HTML als eine
-reichhaltigere Datenstruktur zu arbeiten. Insbesondere können wir die Methode
-<code>select_first</code> verwenden, um die erste Instanz eines bestimmten CSS-Selektors
-zu finden. Durch Übergeben der Zeichenkette <code>"title"</code> erhalten wir das erste
-<code>&lt;title&gt;</code>-Element im Dokument, wenn es eines gibt. Da möglicherweise kein
-passendes Element vorhanden ist, gibt <code>select_first</code> eine <code>Option&lt;ElementRef&gt;</code>
-zurück. Schließlich verwenden wir die Methode <code>Option::map</code>, die uns mit dem
-Element in der <code>Option</code> arbeiten lässt, wenn es vorhanden ist, und nichts tut,
-wenn es nicht vorhanden ist. (Wir könnten hier auch einen <code>match</code>-Ausdruck
-verwenden, aber <code>map</code> ist idiomatischer.) Im Rumpf der Funktion, die wir an
-<code>map</code> übergeben, rufen wir <code>inner_html</code> auf <code>title</code> auf, um dessen
-Inhalt als <code>String</code> zu erhalten. Wenn alles erledigt ist, haben wir eine
-<code>Option&lt;String&gt;</code>.</p>
+Instanz des Typs <code>Html</code> einlesen. Anstelle eines rohen Strings haben wir nun
+einen Datentyp, den wir verwenden können, um mit HTML als eine reichhaltigere
+Datenstruktur zu arbeiten. Insbesondere können wir die Methode <code>select_first</code>
+verwenden, um die erste Instanz eines bestimmten CSS-Selektors zu finden. Durch
+Übergeben des Strings <code>"title"</code> erhalten wir das erste <code>&lt;title&gt;</code>-Element im
+Dokument, wenn es eines gibt. Da möglicherweise kein passendes Element vorhanden
+ist, gibt <code>select_first</code> eine <code>Option&lt;ElementRef&gt;</code> zurück. Schließlich verwenden
+wir die Methode <code>Option::map</code>, die uns mit dem Element in der <code>Option</code> arbeiten
+lässt, wenn es vorhanden ist, und nichts tut, wenn es nicht vorhanden ist. (Wir
+könnten hier auch einen <code>match</code>-Ausdruck verwenden, aber <code>map</code> ist
+idiomatischer.) Im Rumpf der Funktion, die wir an <code>map</code> übergeben, rufen wir
+<code>inner_html</code> auf <code>title</code> auf, um dessen Inhalt als <code>String</code> zu erhalten. Wenn
+alles erledigt ist, haben wir eine <code>Option&lt;String&gt;</code>.</p>
 <p>Beachte, dass das Rust-Schlüsselwort <code>await</code> <em>hinter</em> dem Ausdruck steht, auf
 den du wartest, nicht vor ihm. Das heißt, es ist ein <em>Postfix</em>-Schlüsselwort.
 Dies mag sich von dem unterscheiden, was du vielleicht gewohnt bist, wenn du
 async in anderen Sprachen verwendet hast. Rust hat sich dafür entschieden, weil
 es die Arbeit mit Methodenketten viel angenehmer macht. Als Ergebnis können wir
-den Rumpf von <code>page_url_for</code> ändern, um die Funktionsaufrufe <code>trpl::get</code> und
-<code>text</code> mit <code>await</code> dazwischen zu verketten, wie in Codeblock 17-2 gezeigt.</p>
+den Rumpf von <code>page_title</code> ändern, um die Funktionsaufrufe <code>trpl::get</code> und
+<code>text</code> mit <code>await</code> dazwischen zu verketten, wie in Listing 17-2 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use trpl::Html;
 </span><span class="boring">
@@ -320,21 +317,20 @@ den Rumpf von <code>page_url_for</code> ändern, um die Funktionsaufrufe <code>t
 </span><span class="boring">        .select_first("title")
 </span><span class="boring">        .map(|title| title.inner_html())
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-2: Verketten mit dem Schlüsselwort
+<p><span class="caption">Listing 17-2: Verketten mit dem Schlüsselwort
 <code>await</code></span></p>
 <p>Damit haben wir erfolgreich unsere erste asynchrone Funktion geschrieben! Bevor
 wir etwas Code in <code>main</code> schreiben, um sie aufzurufen, wollen wir uns ansehen,
 was wir geschrieben haben und was es bedeutet.</p>
-<p>Wenn Rust einen mit dem Schlüsselwort <code>async</code> markierten Block sieht,
-kompiliert es ihn in einen eindeutigen, anonymen Datentyp, der das Merkmal
-<code>Future</code> implementiert. Wenn Rust eine mit dem Schlüsselwort <code>async</code>
-markierte Funktion sieht, kompiliert es sie zu einer nicht-asynchronen
-Funktion, deren Rumpf ein asynchroner Block ist. Der Rückgabetyp einer
-asynchronen Funktion ist der Typ des anonymen Datentyps, den der Compiler für
-diesen asynchronen Block erstellt.</p>
+<p>Wenn Rust einen mit dem Schlüsselwort <code>async</code> markierten Block sieht, kompiliert
+es ihn in einen eindeutigen, anonymen Datentyp, der das Trait <code>Future</code>
+implementiert. Wenn Rust eine mit dem Schlüsselwort <code>async</code> markierte Funktion
+sieht, kompiliert es sie zu einer nicht-asynchronen Funktion, deren Rumpf ein
+asynchroner Block ist. Der Rückgabetyp einer asynchronen Funktion ist der Typ
+des anonymen Datentyps, den der Compiler für diesen asynchronen Block erstellt.</p>
 <p>Die Angabe von <code>async fn</code> ist also gleichbedeutend mit dem Schreiben einer
 Funktion, die ein <em>Future</em> des Rückgabetyps zurückgibt. Für den Compiler ist
-eine Funktionsdefinition wie <code>async fn page_title</code> in Codeblock 17-1 fast
+eine Funktionsdefinition wie <code>async fn page_title</code> in Listing 17-1 fast
 äquivalent zu einer nicht-asynchronen Funktion, die wie folgt definiert ist:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -352,12 +348,12 @@ fn page_title(url: &amp;str) -&gt; impl Future&lt;Output = Option&lt;String&gt;&
 <span class="boring">}</span></code></pre>
 <p>Gehen wir die einzelnen Teile der umgewandelten Version durch:</p>
 <ul>
-<li>Sie verwendet die Syntax <code>impl Trait</code>, die wir bereits in <a href="ch10-02-traits.html#merkmale-als-parameter-verwenden">„Merkmale als
+<li>Sie verwendet die Syntax <code>impl Trait</code>, die wir bereits in <a href="ch10-02-traits.html#traits-als-parameter-verwenden">„Traits als
 Parameter verwenden“</a> in Kapitel 10 besprochen haben.</li>
-<li>Das zurückgegebene Wert implementiert das Merkmal <code>Future</code> mit dem
-assoziierten Typ von <code>Output</code>. Beachte, dass der <code>Output</code>-Typ
-<code>Option&lt;String&gt;</code> ist, was dem ursprünglichen Rückgabetyp der <code>async fn</code>-Version von <code>page_title</code> entspricht.</li>
-<li>Der gesamte im Rumpf der ursprünglichen Funktion wird in einen <code>async move</code>-Block eingepackt. Denke daran, dass Blöcke Ausdrücke sind. Dieser ganze
+<li>Der zurückgegebene Wert implementiert das Trait <code>Future</code> mit dem assoziierten
+Typ von <code>Output</code>. Beachte, dass der <code>Output</code>-Typ <code>Option&lt;String&gt;</code> ist, was dem
+ursprünglichen Rückgabetyp der <code>async fn</code>-Version von <code>page_title</code> entspricht.</li>
+<li>Der gesamte Code im Rumpf der ursprünglichen Funktion wird in einen <code>async move</code>-Block eingepackt. Denke daran, dass Blöcke Ausdrücke sind. Dieser ganze
 Block ist der Ausdruck, der von der Funktion zurückgegeben wird.</li>
 <li>Dieser asynchrone Block erzeugt einen Wert vom Typ <code>Option&lt;String&gt;</code>, wie eben
 beschrieben. Dieser Wert entspricht dem Typ <code>Output</code> im Rückgabetyp. Dies ist
@@ -368,7 +364,7 @@ Kapitel sprechen.)</li>
 </ul>
 <p>Jetzt können wir <code>page_title</code> in <code>main</code> aufrufen.</p>
 <h2 id="ausführen-einer-asynchronen-funktion-mit-einer-laufzeitumgebung"><a class="header" href="#ausführen-einer-asynchronen-funktion-mit-einer-laufzeitumgebung">Ausführen einer asynchronen Funktion mit einer Laufzeitumgebung</a></h2>
-<p>Zunächst holen wir uns den Titel für eine einzelne Seite, wie in Codeblock 17-3
+<p>Zunächst holen wir uns den Titel für eine einzelne Seite, wie in Listing 17-3
 gezeigt. Leider lässt sich dieser Code noch nicht kompilieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">use trpl::Html;
@@ -388,15 +384,14 @@ gezeigt. Leider lässt sich dieser Code noch nicht kompilieren.</p>
 </span><span class="boring">        .select_first("title")
 </span><span class="boring">        .map(|title| title.inner_html())
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-3: Aufruf der Funktion <code>page_title</code> aus
+<p><span class="caption">Listing 17-3: Aufruf der Funktion <code>page_title</code> aus
 <code>main</code> mit einem vom Benutzer angegebenen Argument</span></p>
-<p>Wir folgen wir dem gleichen Muster, das wir zum Einlesen von
-Kommandozeilenargumenten in <a href="ch12-01-accepting-command-line-arguments.html">„Kommandozeilenargumente
-entgegennehmen“</a> in Kapitel 12 verwendet haben. Dann übergeben wir
-die erste URL an <code>page_title</code> und warten das Ergebnis ab. Da der vom Future
-erzeugte Wert ein <code>Option&lt;String&gt;</code> ist, verwenden wir einen <code>match</code>-Ausdruck,
-um verschiedene Meldungen auszugeben, je nachdem ob die Seite einen <code>&lt;title&gt;</code>
-hatte oder nicht.</p>
+<p>Wir folgen dem gleichen Muster, das wir zum Einlesen von
+Kommandozeilenargumenten in <a href="ch12-01-accepting-command-line-arguments.html">„Kommandozeilenargumente entgegennehmen“</a>
+in Kapitel 12 verwendet haben. Dann übergeben wir die erste URL an <code>page_title</code>
+und warten das Ergebnis ab. Da der vom Future erzeugte Wert ein <code>Option&lt;String&gt;</code>
+ist, verwenden wir einen <code>match</code>-Ausdruck, um verschiedene Meldungen auszugeben,
+je nachdem ob die Seite einen <code>&lt;title&gt;</code> hatte oder nicht.</p>
 <p>Der einzige Ort, an dem wir das Schlüsselwort <code>await</code> verwenden können, ist in
 asynchronen Funktionen oder Blöcken, und Rust lässt uns die spezielle Funktion
 <code>main</code> nicht als <code>async</code> markieren.</p>
@@ -407,38 +402,37 @@ asynchronen Funktionen oder Blöcken, und Rust lässt uns die spezielle Funktion
   | ^^^^^^^^^^^^^^^ `main` function is not allowed to be `async`
 </code></pre>
 <p>Der Grund, warum <code>main</code> nicht mit <code>async</code> markiert werden kann, ist, dass
-asynchroner Code eine <em>Laufzeitumgebung</em> benötigt: eine Rust-Kiste, die die
-Details der Ausführung von asynchronem Code verwaltet. Die Funktion <code>main</code>
-eines Programms kann eine Laufzeitumgebung <em>initialisieren</em>, aber sie ist
-nicht <em>selbst</em> eine Laufzeitumgebung. (Warum das so ist, werden wir später
-sehen.) Jedes Rust-Programm, das asynchronen Code ausführt, hat mindestens eine
-Stelle, an der es eine Laufzeitumgebung einrichtet, die die Futures ausführt.</p>
-<p>Die meisten Sprachen, die asynchrone Programmierung unterstützen, enthalten
-eine Laufzeitumgebung, Rust hat das nicht. Stattdessen gibt es viele
-verschiedene asynchrone Laufzeitumgebungen, von denen jede für den jeweiligen
-Anwendungsfall unterschiedliche Kompromisse eingeht. Ein Webserver mit hohem
-Durchsatz, vielen CPU-Kernen und einer großen Menge an RAM hat zum Beispiel
-ganz andere Anforderungen als einen Mikrocontroller mit einem einzigen Kern,
-einer kleinen Menge an RAM und keiner Möglichkeit, Haldenspeicher-Allokationen
-(heap allocations) durchzuführen. Die Kisten, die diese Laufzeitumgebungen
-bereitstellen, bieten oft auch asynchrone Versionen gängiger Funktionen wie
-Datei- oder Netzwerkkommunikation.</p>
+asynchroner Code eine <em>Laufzeitumgebung</em> benötigt: eine Rust-Crate, die die
+Details der Ausführung von asynchronem Code verwaltet. Die Funktion <code>main</code> eines
+Programms kann eine Laufzeitumgebung <em>initialisieren</em>, aber sie ist nicht
+<em>selbst</em> eine Laufzeitumgebung. (Warum das so ist, werden wir später sehen.)
+Jedes Rust-Programm, das asynchronen Code ausführt, hat mindestens eine Stelle,
+an der es eine Laufzeitumgebung einrichtet, die die Futures ausführt.</p>
+<p>Die meisten Sprachen, die asynchrone Programmierung unterstützen, enthalten eine
+Laufzeitumgebung, Rust hat das nicht. Stattdessen gibt es viele verschiedene
+asynchrone Laufzeitumgebungen, von denen jede für den jeweiligen Anwendungsfall
+unterschiedliche Kompromisse eingeht. Ein Webserver mit hohem Durchsatz, vielen
+CPU-Kernen und einer großen Menge an RAM hat zum Beispiel ganz andere
+Anforderungen als ein Mikrocontroller mit einem einzigen Kern, einer kleinen
+Menge an RAM und keiner Möglichkeit, Heap-Allokationen durchzuführen. Die
+Crates, die diese Laufzeitumgebungen bereitstellen, bieten oft auch asynchrone
+Versionen gängiger Funktionen wie Datei- oder Netzwerkkommunikation.</p>
 <p>Hier und im Rest dieses Kapitels werden wir die Funktion <code>block_on</code> aus der
-Kiste <code>trpl</code> verwenden, die ein Future als Argument nimmt und den aktuellen
-Strang blockiert, bis das Future zu Ende ausgeführt ist. Hinter den Kulissen
-wird durch den Aufruf von <code>block_on</code> eine Laufzeitumgebung mit Hilfe der Kiste
+Crate <code>trpl</code> verwenden, die ein Future als Argument nimmt und den aktuellen
+Thread blockiert, bis das Future zu Ende ausgeführt ist. Hinter den Kulissen
+wird durch den Aufruf von <code>block_on</code> eine Laufzeitumgebung mit Hilfe der Crate
 <code>tokio</code> eingerichtet, die das übergebene Future ausführt. (Das Verhalten von
-<code>block_on</code> in der Kiste <code>trpl</code> ähnelt dem der <code>block_on</code>-Funktionen anderer
-Laufzeitumgebungs-Kisten.) Sobald das Future abgeschlossen ist, gibt <code>block_on</code>
+<code>block_on</code> in der Crate <code>trpl</code> ähnelt dem der <code>block_on</code>-Funktionen anderer
+Laufzeitumgebungs-Crates.) Sobald das Future abgeschlossen ist, gibt <code>block_on</code>
 den Wert zurück, den das Future erzeugt hat.</p>
 <p>Wir könnten das von <code>page_title</code> zurückgegebene Future direkt an <code>block_on</code>
 übergeben. Sobald es abgeschlossen ist, könnten wir die resultierende
-<code>Option&lt;String&gt;</code> abgleichen, so wie wir es in Codeblock 17-3 versucht haben.
+<code>Option&lt;String&gt;</code> abgleichen, so wie wir es in Listing 17-3 versucht haben.
 Für die meisten Beispiele in diesem Kapitel (und den meisten asynchronen Code
 in der realen Welt!) werden wir jedoch mehr als nur einen asynchronen
 Funktionsaufruf durchführen, also übergeben wir stattdessen einen <code>async</code>-Block
 und warten explizit auf das Ergebnis des Aufrufs von <code>page_title</code>, wie in
-Codeblock 17-4.</p>
+Listing 17-4.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust should_panic noplayground"><span class="boring">use trpl::Html;
 </span><span class="boring">
@@ -460,7 +454,7 @@ Codeblock 17-4.</p>
 </span><span class="boring">        .select_first("title")
 </span><span class="boring">        .map(|title| title.inner_html())
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-4: Warten auf einen asynchronen Block mit
+<p><span class="caption">Listing 17-4: Warten auf einen asynchronen Block mit
 <code>trpl::block_on</code></span></p>
 <p>Wenn wir diesen Code ausführen, erhalten wir das Verhalten, das wir anfangs
 erwartet haben:</p>
@@ -473,11 +467,11 @@ Der Titel von https://www.rust-lang.org ist
 <p>Puh – wir haben endlich funktionierenden asynchronen Code! Bevor wir aber
 den Code hinzufügen, um zwei Webseiten gegeneinander antreten zu lassen, wollen
 wir uns noch einmal kurz der Funktionsweise von Futures zuwenden.</p>
-<p>Jede Codestelle mit dem Schlüsselwort <code>await</code> stellt einen Punkt dar, an dem
-die Kontrolle an die Laufzeitumgebung abgegeben wird. Damit das funktioniert,
-muss Rust den Zustand des asynchronen Blocks verwalten, sodass die
-Laufzeitumgebung eine andere Arbeit starten und dann zurückkommen kann, wenn
-er bereit ist, diese Arbeit wieder fortzusetzen. Dies ist eine unsichtbare
+<p>Jede Codestelle mit dem Schlüsselwort <code>await</code> stellt einen Punkt dar, an dem die
+Kontrolle an die Laufzeitumgebung abgegeben wird. Damit das funktioniert, muss
+Rust den Zustand des asynchronen Blocks verwalten, sodass die Laufzeitumgebung
+eine andere Arbeit starten und dann zurückkommen kann, wenn der asynchrone Block
+bereit ist, seine Arbeit wieder fortzusetzen. Dies ist eine unsichtbare
 Zustandsmaschine, so als ob du eine Aufzählung auf diese Weise geschrieben
 hättest, um den aktuellen Zustand an jedem <code>await</code>-Punkt zu speichern:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -492,17 +486,17 @@ hättest, um den aktuellen Zustand an jedem <code>await</code>-Punkt zu speicher
 schreiben, wäre allerdings mühsam und fehleranfällig, vor allem, wenn dem Code
 später mehr Funktionalität und mehr Zustände hinzugefügt werden. Stattdessen
 erstellt und verwaltet der Rust-Compiler die Zustandsmaschinen-Datenstrukturen
-für asynchronen Code automatisch. Falls du dich wunderst: Ja, die normalen
-Regeln für Ausleihen und die Eigentümerschaft von Datenstrukturen gelten auch
-hier. Erfreulicherweise übernimmt der Compiler auch die Überprüfung dieser
-Regeln für uns und gibt hilfreiche Fehlermeldungen aus. Ein paar davon werden
-wir später im Kapitel durcharbeiten.</p>
+für asynchronen Code automatisch. Die normalen Regeln für Borrowing und
+Eigentümerschaft von Datenstrukturen gelten auch hier. Erfreulicherweise
+übernimmt der Compiler auch die Überprüfung dieser Regeln für uns und gibt
+hilfreiche Fehlermeldungen aus. Ein paar davon werden wir später im Kapitel
+durcharbeiten.</p>
 <p>Letztendlich muss etwas diese Zustandsmaschine ausführen, und dieses Etwas ist
-eine Laufzeitumgebung. (Aus diesem Grund wirst auf <em>Executors</em> stoßen, wenn du
-dich mit Laufzeitumgebungen befasst: Ein Executor ist der Teil einer
+eine Laufzeitumgebung. (Aus diesem Grund wirst du auf <em>Executors</em> stoßen, wenn
+du dich mit Laufzeitumgebungen befasst: Ein Executor ist der Teil einer
 Laufzeitumgebung, der für die Ausführung des asynchronen Codes verantwortlich
 ist.)</p>
-<p>Jetzt kannst du sehen, warum uns der Compiler in Codeblock 17-3 davon
+<p>Jetzt kannst du sehen, warum uns der Compiler in Listing 17-3 davon
 abgehalten hat, <code>main</code> selbst zu einer asynchronen Funktion zu machen. Wäre
 <code>main</code> eine asynchrone Funktion, müsste etwas anderes den Zustandsautomaten für
 das Future verwalten, das <code>main</code> zurückgibt, aber <code>main</code> ist der Startpunkt des
@@ -513,13 +507,13 @@ zurückgegebene Future auszuführen, bis es fertig ist.</p>
 <p>Hinweis: Einige Laufzeitumgebungen stellen Makros zur Verfügung, mit denen du
 eine asynchrone Funktion <code>main</code> schreiben <em>kannst</em>. Diese Makros wandeln
 <code>async fn main() { ... }</code> in eine normale <code>fn main</code> um, die dasselbe tut, was
-wir in Codeblock 17-4 von Hand gemacht haben: Eine Funktion aufrufen, die ein
+wir in Listing 17-4 von Hand gemacht haben: Eine Funktion aufrufen, die ein
 Future zu Ende ausführt, so wie <code>trpl::block_on</code> es macht.</p>
 </blockquote>
 <p>Fügen wir die Teile zusammen und sehen wir uns an, wie wir nebenläufigen Code
 schreiben können.</p>
 <h3 id="zwei-urls-nebenläufig-gegeneinander-antreten-lassen"><a class="header" href="#zwei-urls-nebenläufig-gegeneinander-antreten-lassen">Zwei URLs nebenläufig gegeneinander antreten lassen</a></h3>
-<p>In Codeblock 17-5 rufen wir <code>page_title</code> mit zwei verschiedenen URLs auf, die
+<p>In Listing 17-5 rufen wir <code>page_title</code> mit zwei verschiedenen URLs auf, die
 von der Befehlszeile übergeben werden, und lassen sie um die Wette laufen,
 indem das zuerst fertig werdende Future ausgewählt wird.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -553,7 +547,7 @@ async fn page_title(url: &amp;str) -&gt; (&amp;str, Option&lt;String&gt;) {
         .map(|title| title.inner_html());
     (url, title)
 }</code></pre>
-<p><span class="caption">Codeblock 17-5: Aufruf von <code>page_title</code> für zwei URLs, um
+<p><span class="caption">Listing 17-5: Aufruf von <code>page_title</code> für zwei URLs, um
 zu sehen, welche zuerst zurückgegeben wird</span></p>
 <p>Wir beginnen mit dem Aufruf von <code>page_title</code> für jede der vom Benutzer
 angegebenen URLs. Wir speichern die erhaltenen Futures als <code>title_fut_1</code> und
@@ -563,8 +557,8 @@ und wir haben noch nicht auf sie gewartet. Dann übergeben wir die Futures an
 Futures zuerst fertig wurde.</p>
 <blockquote>
 <p>Anmerkung: Unter der Haube ist <code>trpl::select</code> auf der allgemeineren Funktion
-<code>select</code> aufgebaut, die in der Kiste <code>futures</code> definiert ist. Die Funktion
-<code>select</code> der Kiste <code>futures</code> kann viele Dinge tun, die die Funktion
+<code>select</code> aufgebaut, die in der Crate <code>futures</code> definiert ist. Die Funktion
+<code>select</code> der Crate <code>futures</code> kann viele Dinge tun, die die Funktion
 <code>trpl::select</code> nicht kann, aber sie bringt auch zusätzliche Komplexität mit
 sich, was wir hier jedoch vorerst außer Acht lassen können.</p>
 </blockquote>

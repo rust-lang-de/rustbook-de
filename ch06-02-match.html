@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -163,13 +163,13 @@
                     <main>
                         <h2 id="das-kontrollflusskonstrukt-match"><a class="header" href="#das-kontrollflusskonstrukt-match">Das Kontrollflusskonstrukt <code>match</code></a></h2>
 <p>Rust verfügt über ein extrem leistungsfähiges Kontrollflusskonstrukt namens
-<code>match</code>, der es dir ermöglicht, einen Wert mit einer Reihe von Mustern
+<code>match</code>, das es dir ermöglicht, einen Wert mit einer Reihe von Mustern
 abzugleichen und dann Code zum jeweils passenden Muster auszuführen. Muster
 können sich aus Literalen, Variablennamen, Platzhaltern und vielen anderen
 Dingen zusammensetzen. <a href="ch19-00-patterns.html">Kapitel 19</a> befasst sich mit all den
-verschiedenen Musterarten und wie sie funktionieren. Die Mächtigkeit von
-<code>match</code> kommt von der Ausdruckskraft der Muster und der Tatsache, dass der
-Compiler sicherstellt, dass alle möglichen Fälle behandelt werden.</p>
+verschiedenen Musterarten und wie sie funktionieren. Die Mächtigkeit von <code>match</code>
+kommt von der Ausdruckskraft der Muster und der Tatsache, dass der Compiler
+sicherstellt, dass alle möglichen Fälle behandelt werden.</p>
 <p>Stelle dir einen <code>match</code>-Ausdruck wie eine Münzsortiermaschine vor:  Die Münzen
 rutschen eine Bahn mit unterschiedlich großen Löchern entlang, und jede Münze
 fällt durch das erste Loch, in das sie hineinpasst. Auf die gleiche Weise
@@ -179,7 +179,7 @@ werden soll.</p>
 <p>Apropos Münzen, nehmen wir sie als Beispiel für die Verwendung von <code>match</code>! Wir
 können eine Funktion schreiben, die eine unbekannte US-Münze nimmt und, ähnlich
 wie die Zählmaschine, bestimmt, um welche Münze es sich handelt und ihren Wert
-in Cent zurückgibt, wie in Codeblock 6-3 gezeigt.</p>
+in Cent zurückgibt, wie in Listing 6-3 gezeigt.</p>
 <pre class="playground"><code class="language-rust edition2024">enum Coin {
     Penny,
     Nickel,
@@ -197,7 +197,7 @@ fn value_in_cents(coin: Coin) -&gt; u8 {
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre>
-<p><span class="caption">Codeblock 6-3: Eine Aufzählung und ein <code>match</code>-Ausdruck,
+<p><span class="caption">Listing 6-3: Eine Aufzählung und ein <code>match</code>-Ausdruck,
 der die Varianten der Aufzählung als Muster hat</span></p>
 <p>Lass uns den <code>match</code>-Ausdruck in der Funktion <code>value_in_cents</code> aufschlüsseln.
 Zuerst geben wir das Schlüsselwort <code>match</code> an, gefolgt von einem Ausdruck, der
@@ -207,22 +207,22 @@ Unterschied: Bei <code>if</code> muss die Bedingung einen booleschen Wert ergebe
 hier kann ein beliebiger Typ zurückgegeben werden. Der Typ von <code>coin</code> ist in
 diesem Beispiel die Aufzählung <code>Coin</code>, die wir in der ersten Zeile definiert
 haben.</p>
-<p>Als nächstes kommen die <code>match</code>-Zweige. Ein Zweig hat zwei Teile: Ein Muster
+<p>Als Nächstes kommen die <code>match</code>-Zweige. Ein Zweig hat zwei Teile: Ein Muster
 und etwas Code. Der erste Zweig hat als Muster den Wert <code>Coin::Penny</code>, dann den
 Operator <code>=&gt;</code>, der das Muster und den auszuführenden Code trennt. Der Code ist
 in diesem Fall nur der Wert <code>1</code>. Jeder Zweig wird durch ein Komma vom nächsten
 getrennt.</p>
 <p>Wenn der <code>match</code>-Ausdruck ausgeführt wird, gleicht er den Ergebniswert mit dem
-Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum Wert
-passt, wird der zu diesem Muster gehörende Code ausgeführt. Wenn das Muster
-nicht zum Wert passt, wird die Ausführung beim nächsten Zweig fortgesetzt,
-ähnlich wie bei einer Münzsortiermaschine. Wir können so viele Zweige haben,
-wie wir brauchen: In Codeblock 6-3 hat unser <code>match</code>-Ausdruck vier Zweige.</p>
-<p>Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der Ergebniswert des
-Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
+Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum Wert passt,
+wird der zu diesem Muster gehörige Code ausgeführt. Wenn das Muster nicht zum
+Wert passt, wird die Ausführung beim nächsten Zweig fortgesetzt, ähnlich wie bei
+einer Münzsortiermaschine. Wir können so viele Zweige haben, wie wir brauchen:
+In Listing 6-3 hat unser <code>match</code>-Ausdruck vier Zweige.</p>
+<p>Der zu jedem Zweig gehörige Code ist ein Ausdruck, und der Ergebniswert des
+Ausdrucks im zugehörigen Zweig ist der Wert, der für den gesamten
 <code>match</code>-Ausdruck zurückgegeben wird.</p>
 <p>Wir verwenden üblicherweise keine geschweiften Klammern, wenn der Zweig-Code
-kurz ist, so wie in Codeblock 6-3, wo jeder Zweig nur einen Wert zurückgibt.
+kurz ist, so wie in Listing 6-3, wo jeder Zweig nur einen Wert zurückgibt.
 Wenn du mehrere Codezeilen in einem Zweig ausführen möchtest, musst du
 geschweifte Klammern verwenden, und das Komma nach dem Zweig ist dann optional.
 Zum Beispiel gibt der folgende Code jedes Mal „Glückspfennig!“ aus, wenn die
@@ -258,7 +258,7 @@ mit unterschiedlichem Aussehen auf einer Seite für jeden der 50 Staaten. Keine
 andere Münze hatte ein Staaten-spezifisches Aussehen, sodass nur 25-Cent-Münzen
 diese zusätzliche Eigenschaft haben. Wir können diese Information in unserer
 Aufzählung unterbringen, indem wir die Variante <code>Quarter</code> so ändern, dass sie
-einen <code>UsState</code>-Wert enthält, wie in Codeblock 6-4 umgesetzt.</p>
+einen <code>UsState</code>-Wert enthält, wie in Listing 6-4 umgesetzt.</p>
 <pre class="playground"><code class="language-rust edition2024">enum UsState {
     Alabama,
     Alaska,
@@ -273,7 +273,7 @@ enum Coin {
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre>
-<p><span class="caption">Codeblock 6-4: Aufzählung <code>Coin</code>, bei der die Variante
+<p><span class="caption">Listing 6-4: Aufzählung <code>Coin</code>, bei der die Variante
 <code>Quarter</code> zusätzlich einen <code>UsState</code>-Wert enthält</span></p>
 <p>Stellen wir uns vor, dass ein Freund versucht, 25-Cent-Münzen aller 50
 Staaten zu sammeln. Während wir unser Kleingeld nach Münzsorten sortieren,
@@ -331,7 +331,7 @@ und, falls ein Wert darin enthalten ist, zu diesem Wert 1 addiert. Wenn darin
 kein Wert enthalten ist, soll die Funktion den Wert <code>None</code> zurückgeben und
 nicht versuchen, irgendwelche Operationen durchzuführen.</p>
 <p>Diese Funktion ist dank <code>match</code> sehr einfach zu schreiben und wird wie in
-Codeblock 6-5 aussehen.</p>
+Listing 6-5 aussehen.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
@@ -345,7 +345,7 @@ let five = Some(5);
 let six = plus_one(five);
 let none = plus_one(None);
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 6-5: Eine Funktion, die einen <code>match</code>-Ausdruck
+<p><span class="caption">Listing 6-5: Eine Funktion, die einen <code>match</code>-Ausdruck
 auf einer <code>Option&lt;i32&gt;</code> verwendet</span></p>
 <p>Lass uns die erste Ausführung von <code>plus_one</code> näher betrachten. Wenn wir
 <code>plus_one(five)</code> aufrufen, wird die Variable <code>x</code> im Rumpf von <code>plus_one</code> den
@@ -376,7 +376,7 @@ nächsten Zweig fort:</p>
 bindet den in <code>Some</code> enthaltenen Wert, sodass <code>i</code> den Wert <code>5</code> annimmt. Dann
 wird der Code im <code>match</code>-Zweig ausgeführt, also fügen wir 1 zum Wert von <code>i</code>
 hinzu und erzeugen einen neuen <code>Some</code>-Wert mit der Summe <code>6</code> darin.</p>
-<p>Betrachten wir nun den zweiten Aufruf von <code>plus_one</code> in Codeblock 6-5, wo <code>x</code>
+<p>Betrachten wir nun den zweiten Aufruf von <code>plus_one</code> in Listing 6-5, wo <code>x</code>
 den Wert <code>None</code> hat. Wir betreten den <code>match</code>-Block und vergleichen mit dem
 ersten Zweig:</p>
 <pre><code class="language-rust ignore"><span class="boring">fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
@@ -392,12 +392,12 @@ ersten Zweig:</p>
 <p>Er passt! Es gibt keinen Wert zum Hinzufügen, also stoppt das Programm und gibt
 den Wert <code>None</code> auf der rechten Seite von <code>=&gt;</code> zurück. Da der erste Zweig
 passt, werden keine anderen Zweige abgeglichen.</p>
-<p>Die Kombination von <code>match</code> und Aufzählungen ist in vielen Situationen
-nützlich. Du wirst dieses Muster häufig in Rust-Code sehen: <code>match</code> mit einer
-Aufzählung, eine Variable an die darin enthaltenen Daten binden und dann
-dazugehörenden Code ausführen. Am Anfang ist es etwas knifflig, aber wenn man
-sich erst einmal daran gewöhnt hat, wird man sich wünschen, es in allen
-Sprachen zu haben. Es ist durchweg ein beliebtes Werkzeug.</p>
+<p>Die Kombination von <code>match</code> und Aufzählungen ist in vielen Situationen nützlich.
+Du wirst dieses Muster häufig in Rust-Code sehen: <code>match</code> mit einer Aufzählung,
+eine Variable an die darin enthaltenen Daten binden und dann zugehörigen Code
+ausführen. Am Anfang ist es etwas knifflig, aber wenn man sich erst einmal daran
+gewöhnt hat, wird man sich wünschen, es in allen Sprachen zu haben. Es ist
+durchweg ein beliebtes Werkzeug.</p>
 <h3 id="abgleiche-sind-vollständig"><a class="header" href="#abgleiche-sind-vollständig">Abgleiche sind vollständig</a></h3>
 <p>Es gibt noch einen weiteren Aspekt von <code>match</code>, den wir besprechen müssen: Die
 Muster der Zweige müssen alle Möglichkeiten abdecken. Betrachte folgende
@@ -474,8 +474,8 @@ fn remove_fancy_hat() {}
 fn move_player(num_spaces: u8) {}
 <span class="boring">}</span></code></pre>
 <p>Bei den ersten beiden Zweigen sind die Muster die literalen Werte <code>3</code> und <code>7</code>.
-Beim letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster
-die Variable die wir als <code>other</code> bezeichnet haben. Der Code, der für den
+Beim letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster die
+Variable, die wir als <code>other</code> bezeichnet haben. Der Code, der für den
 <code>other</code>-Zweig läuft, verwendet die Variable, indem er sie an die Funktion
 <code>move_player</code> übergibt.</p>
 <p>Dieser Code lässt sich kompilieren, auch wenn wir nicht alle möglichen Werte

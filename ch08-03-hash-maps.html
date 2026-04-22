@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -165,8 +165,8 @@
 <p>Die letzte unserer allgemeinen Kollektionen ist die Hashtabelle (hash map). Der
 Typ <code>HashMap&lt;K, V&gt;</code> speichert eine Zuordnung von Schlüsseln vom Typ <code>K</code> zu
 Werten vom Typ <code>V</code> mittels einer <em>Hashfunktion</em> (hash function), die bestimmt,
-wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
-unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
+wie sie diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
+unterstützen diese Art von Datenstruktur, aber sie verwenden oft einen anderen
 Namen wie <em>Hash</em>, <em>Abbildung</em> (map), <em>Objekt</em>, <em>Hashtabelle</em> (hash table),
 <em>Wörterbuch</em> (dictionary) oder <em>assoziatives Array</em> (associative array), um nur
 einige zu nennen.</p>
@@ -182,9 +182,9 @@ Funktionen, die in der Standardbibliothek für <code>HashMap&lt;K, V&gt;</code> 
 Weitere Informationen findest du wie immer in der
 Standardbibliotheksdokumentation.</p>
 <h3 id="erstellen-einer-neuen-hashtabelle"><a class="header" href="#erstellen-einer-neuen-hashtabelle">Erstellen einer neuen Hashtabelle</a></h3>
-<p>Ein Weg um eine leere Hashtabelle zu erzeugen ist mit <code>new</code> und um Elemente
-hinzuzufügen mit <code>insert</code>. In Codeblock 8-20 verfolgen wir die Ergebnisse
-zweier Mannschaften mit den Namen Blau und Gelb. Das Team Blau startet mit 10
+<p>Eine Möglichkeit, um eine leere Hashtabelle zu erzeugen, ist mit <code>new</code>. Elemente
+können mit <code>insert</code> eingefügt werden. In Listing 8-20 halten wir die Punktzahlen
+zweier Mannschaften fest, die Blau und Gelb heißen. Das Team Blau startet mit 10
 Punkten, das Team Gelb mit 50 Punkten.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -195,7 +195,7 @@ let mut scores = HashMap::new();
 scores.insert(String::from("Blau"), 10);
 scores.insert(String::from("Gelb"), 50);
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 8-20: Erstellen einer neuen Hashtabelle und
+<p><span class="caption">Listing 8-20: Erstellen einer neuen Hashtabelle und
 Einfügen einiger Schlüssel und Werte</span></p>
 <p>Beachte, dass wir zuerst mit <code>use</code> die <code>HashMap</code> aus dem Kollektionsteil der
 Standardbibliothek einbinden müssen. Von unseren drei allgemeinen Kollektionen
@@ -203,13 +203,13 @@ wird diese am seltensten verwendet, sodass sie nicht zu den Funktionalitäten
 gehört, die automatisch in den Gültigkeitsbereich aufgenommen werden.
 Hashtabellen werden auch weniger von der Standardbibliothek unterstützt; es
 gibt zum Beispiel kein eingebautes Makro, um sie zu erzeugen.</p>
-<p>Genau wie Vektoren speichern Hashtabellen ihre Daten im Haldenspeicher.
-Obige <code>HashMap</code> hat Schlüssel vom Typ <code>String</code> und Werte vom Typ <code>i32</code>.
-Hashtabellen sind homogen wie Vektoren: Alle Schlüssel müssen denselben Typ
-haben und alle Werte müssen denselben Typ haben.</p>
+<p>Genau wie Vektoren speichern Hashtabellen ihre Daten im Heap. Obige <code>HashMap</code>
+hat Schlüssel vom Typ <code>String</code> und Werte vom Typ <code>i32</code>. Hashtabellen sind
+homogen wie Vektoren: Alle Schlüssel müssen denselben Typ haben und alle
+Werte müssen denselben Typ haben.</p>
 <h3 id="zugreifen-auf-werte-in-einer-hashtabelle"><a class="header" href="#zugreifen-auf-werte-in-einer-hashtabelle">Zugreifen auf Werte in einer Hashtabelle</a></h3>
 <p>Wir können einen Wert aus der Hashtabelle herausholen, indem wir die Methode
-<code>get</code> mit ihrem Schlüssel aufrufen, wie in Codeblock 8-21 gezeigt.</p>
+<code>get</code> mit ihrem Schlüssel aufrufen, wie in Listing 8-21 gezeigt.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
@@ -222,7 +222,7 @@ scores.insert(String::from("Gelb"), 50);
 let team_name = String::from("Blau");
 let score = scores.get(&amp;team_name).copied().unwrap_or(0);
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 8-21: Zugreifen auf den Spielstand von Team
+<p><span class="caption">Listing 8-21: Zugreifen auf den Spielstand von Team
 Blau in der Hashtabelle</span></p>
 <p>Hier wird <code>score</code> den Wert haben, der mit Team Blau assoziiert ist, und das
 Ergebnis wird <code>10</code> sein. Die Methode <code>get</code> gibt eine <code>Option&lt;&amp;V&gt;</code> zurück;
@@ -250,11 +250,11 @@ for (key, value) in &amp;scores {
 <pre><code class="language-text">Gelb: 50
 Blau: 10
 </code></pre>
-<h3 id="verwalten-der-eigentümerschaft-in-hashtabellen"><a class="header" href="#verwalten-der-eigentümerschaft-in-hashtabellen">Verwalten der Eigentümerschaft in Hashtabellen</a></h3>
-<p>Bei Typen wie <code>i32</code>, die das Merkmal <code>Copy</code> implementieren, werden die Werte in
-die Hashtabelle kopiert. Bei aneigenbaren Werten wie <code>String</code> werden die Werte
-verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Codeblock
-8-22 gezeigt wird.</p>
+<h3 id="verwalten-des-eigentums-in-hashtabellen"><a class="header" href="#verwalten-des-eigentums-in-hashtabellen">Verwalten des Eigentums in Hashtabellen</a></h3>
+<p>Bei Typen wie <code>i32</code>, die das Trait <code>Copy</code> implementieren, werden die Werte in
+die Hashtabelle kopiert. Bei besitzenden Werten wie <code>String</code> werden die Werte
+verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Listing 8-22
+gezeigt wird.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
@@ -265,9 +265,9 @@ let field_value = String::from("Blau");
 let mut map = HashMap::new();
 map.insert(field_name, field_value);
 // field_name und field_value sind nach diesem Zeitpunkt ungültig.
-// Versuche, sie zu benutzen und beobachte, welchen Kompilierfehler du erhältst!
+// Versuche, sie zu benutzen und beobachte, welchen Compilerfehler du erhältst!
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 8-22: Zeigt, dass Schlüssel und Werte nach dem
+<p><span class="caption">Listing 8-22: Zeigt, dass Schlüssel und Werte nach dem
 Aufruf von <code>insert</code> Eigentum der Hashtabelle sind</span></p>
 <p>Wir können die Variablen <code>field_name</code> und <code>field_value</code> nicht mehr verwenden,
 nachdem sie mit dem Aufruf von <code>insert</code> in die Hashtabelle verschoben wurden.</p>
@@ -291,7 +291,7 @@ kombinieren. Schauen wir uns an, wie diese Varianten jeweils funktionieren!</p>
 <h4 id="überschreiben-eines-wertes"><a class="header" href="#überschreiben-eines-wertes">Überschreiben eines Wertes</a></h4>
 <p>Wenn wir einen Schlüssel und einen Wert in eine Hashtabelle einfügen und dann
 denselben Schlüssel mit einem anderen Wert einfügen, wird der mit diesem
-Schlüssel assoziierte Wert ersetzt. Auch wenn der Code in Codeblock 8-23
+Schlüssel assoziierte Wert ersetzt. Auch wenn der Code in Listing 8-23
 zweimal <code>insert</code> aufruft, wird die Hashtabelle nur ein Schlüssel-Wert-Paar
 enthalten, weil wir beide Male einen Wert für den Schlüssel des Teams Blau
 einfügen.</p>
@@ -306,7 +306,7 @@ scores.insert(String::from("Blau"), 25);
 
 println!("{scores:?}");
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 8-23: Ersetzen eines gespeicherten Wertes für
+<p><span class="caption">Listing 8-23: Ersetzen eines gespeicherten Wertes für
 einen bestimmten Schlüssel</span></p>
 <p>Dieser Code wird <code>{"Blau": 25}</code> ausgeben. Der ursprüngliche Wert <code>10</code> wurde
 überschrieben.</p>
@@ -322,7 +322,7 @@ Rückgabewert der Methode <code>entry</code> ist eine Aufzählung (enum) namens 
 einen Wert repräsentiert, der existieren könnte oder auch nicht. Nehmen wir an,
 wir wollen prüfen, ob der Schlüssel für das Team Gelb einen Wert hat. Wenn das
 nicht der Fall ist, wollen wir den Wert <code>50</code> einfügen, und dasselbe gilt für
-das Team Blau. Bei Verwendung von <code>entry</code> sieht der Code wie Codeblock 8-24
+das Team Blau. Bei Verwendung von <code>entry</code> sieht der Code wie Listing 8-24
 aus.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -336,15 +336,15 @@ scores.entry(String::from("Blau")).or_insert(50);
 
 println!("{scores:?}");
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 8-24: Verwenden der Methode <code>entry</code> zum
+<p><span class="caption">Listing 8-24: Verwenden der Methode <code>entry</code> zum
 Einfügen, nur wenn der Schlüssel nicht bereits einen Wert hat</span></p>
-<p>Die Methode <code>or_insert</code> von <code>Entry</code> ist so definiert, dass sie eine
-veränderbare Referenz auf den Wert des entsprechenden <code>Entry</code>-Schlüssels
-zurückgibt, wenn dieser Schlüssel existiert, andernfalls fügt sie den Parameter
-als neuen Wert für diesen Schlüssel ein und gibt eine veränderbare Referenz
-auf den neuen Wert zurück. Diese Technik ist viel sauberer, als die Logik
-selbst zu schreiben, und sie harmoniert besser mit dem Ausleihenprüfer.</p>
-<p>Der Code in Codeblock 8-24 gibt <code>{"Gelb": 50, "Blau": 10}</code> aus. Beim ersten
+<p>Die Methode <code>or_insert</code> von <code>Entry</code> ist so definiert, dass sie eine veränderbare
+Referenz auf den Wert des entsprechenden <code>Entry</code>-Schlüssels zurückgibt, wenn
+dieser Schlüssel existiert, andernfalls fügt sie den Parameter als neuen Wert
+für diesen Schlüssel ein und gibt eine veränderbare Referenz auf den neuen Wert
+zurück. Diese Technik ist viel sauberer, als die Logik selbst zu schreiben, und
+sie harmoniert besser mit dem Borrow Checker.</p>
+<p>Der Code in Listing 8-24 gibt <code>{"Gelb": 50, "Blau": 10}</code> aus. Beim ersten
 Aufruf von <code>entry</code> wird der Schlüssel von Team Gelb mit dem Wert <code>50</code>
 eingefügt, da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von <code>entry</code>
 wird die Hashtabelle nicht verändern, da das Team Blau bereits den Wert <code>10</code>
@@ -352,7 +352,7 @@ hat.</p>
 <h4 id="aktualisieren-eines-wertes-auf-basis-des-alten-wertes"><a class="header" href="#aktualisieren-eines-wertes-auf-basis-des-alten-wertes">Aktualisieren eines Wertes auf Basis des alten Wertes</a></h4>
 <p>Ein weiterer gängiger Anwendungsfall für Hashtabellen besteht darin, den Wert
 eines Schlüssels nachzuschlagen und ihn dann auf Basis des alten Wertes zu
-aktualisieren. Beispielsweise zeigt Codeblock 8-25 einen Code, der zählt, wie
+aktualisieren. Beispielsweise zeigt Listing 8-25 einen Code, der zählt, wie
 oft jedes Wort in einem Text vorkommt. Wir verwenden eine Hashtabelle mit den
 Wörtern als Schlüssel und inkrementieren den Wert, um nachzuvollziehen, wie oft
 wir dieses Wort schon gesehen haben. Wenn es das erste Mal ist, dass wir ein
@@ -372,46 +372,46 @@ for word in text.split_whitespace() {
 
 println!("{map:?}");
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 8-25: Zählen des Vorkommens von Wörtern mit
+<p><span class="caption">Listing 8-25: Zählen des Vorkommens von Wörtern mit
 Hilfe einer Hashtabelle, die Wörter speichert und zählt</span></p>
 <p>Dieser Code gibt <code>{"Welt": 2, "wunderbare": 1, "Hallo": 1}</code> aus. Es kann sein,
 dass dieselben Schlüssel/Wert-Paare in einer anderen Reihenfolge ausgegeben
 werden: Du erinnerst dich an <a href="#zugreifen-auf-werte-in-einer-hashtabelle">„Zugreifen auf Werte in einer
 Hashtabelle“</a>, wo die Iteration über eine Hashtabelle in einer
 willkürlichen Reihenfolge erfolgt.</p>
-<p>Die Methode <code>split_whitespace</code> gibt einen Iterator über durch Leerzeichen
-getrennte Sub-Anteilstypen des Wertes in <code>text</code> zurück. Die Methode <code>or_insert</code>
+<p>Die Methode <code>split_whitespace</code> gibt einen Iterator über Sub-Slices zurück, die
+durch Leerzeichen getrennte Werte in <code>text</code> enthalten. Die Methode <code>or_insert</code>
 gibt eine veränderbare Referenz (<code>&amp;mut V</code>) auf den Wert für den angegebenen
-Schlüssel zurück. Hier speichern wir diese veränderbaren Referenz in der
-Variablen <code>count</code>. Um diesen Wert zuzuweisen, müssen wir also zuerst <code>count</code>
-mit dem Stern (<code>*</code>) derefenzieren. Die veränderbare Referenz verlässt am Ende
-der <code>for</code>-Schleife dem Gültigkeitsbereich, sodass alle diese Änderungen sicher
-und gemäß der Ausleihregeln zulässig sind.</p>
+Schlüssel zurück. Hier speichern wir diese veränderbare Referenz in der
+Variablen <code>count</code>. Um diesen Wert zuzuweisen, müssen wir also zuerst <code>count</code> mit
+dem Stern (<code>*</code>) dereferenzieren. Die veränderbare Referenz verlässt am Ende der
+<code>for</code>-Schleife dem Gültigkeitsbereich, sodass alle diese Änderungen sicher und
+gemäß der Borrowing-Regeln zulässig sind.</p>
 <h3 id="hash-funktionen"><a class="header" href="#hash-funktionen">Hash-Funktionen</a></h3>
-<p>Standardmäßig verwendet <code>HashMap</code> eine Hash-Funktion namens <em>SipHash</em>, die robust
-gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen<sup class="footnote-reference" id="fr-siphash-1"><a href="#footnote-siphash">1</a></sup> ist. Dies
-ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der Kompromiss
-zugunsten einer höheren Sicherheit gegenüber einer geringeren Performanz ist es
-Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
-die Standard-Hash-Funktion für deine Zwecke zu langsam ist, kannst du zu einer
-anderen Funktion wechseln, indem du eine andere Hash-Funktion angibst. Eine
-<em>Hash-Funktion</em> ist ein Typ, der das Merkmal <code>BuildHasher</code> implementiert. Wir
-werden in <a href="ch10-02-traits.html">Kapitel 10</a> über Merkmale und ihre Implementierung sprechen.
-Du musst nicht unbedingt deine eigene Hash-Funktion von Grund auf
-implementieren; <a href="https://crates.io/">crates.io</a> verfügt über Bibliotheken, die von anderen
-Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
+<p>Standardmäßig verwendet <code>HashMap</code> eine Hash-Funktion namens <em>SipHash</em>, die
+robust gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen<sup class="footnote-reference" id="fr-siphash-1"><a href="#footnote-siphash">1</a></sup> ist.
+Dies ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der
+Kompromiss zugunsten einer höheren Sicherheit gegenüber einer geringeren
+Performanz lohnt sich. Wenn du eine Performanzanalyse deines Codes machst und
+feststellst, dass die Standard-Hash-Funktion für deine Zwecke zu langsam ist,
+kannst du zu einer anderen Funktion wechseln, indem du eine andere Hash-Funktion
+angibst. Eine <em>Hash-Funktion</em> ist ein Typ, der das Trait <code>BuildHasher</code>
+implementiert. Wir werden in <a href="ch10-02-traits.html">Kapitel 10</a> über Traits und ihre
+Implementierung sprechen. Du musst nicht unbedingt deine eigene Hash-Funktion
+von Grund auf implementieren; <a href="https://crates.io/">crates.io</a> verfügt über Bibliotheken, die
+von anderen Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
 implementieren.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
-<p>Vektoren, Zeichenketten und Hashtabellen bieten eine große Menge an
-Funktionalität, die in Programmen benötigt wird, wenn du Daten speichern,
-darauf zugreifen und sie verändern willst. Hier sind einige Übungen, für deren
-Lösung du jetzt gerüstet sein solltest:</p>
+<p>Vektoren, Strings und Hashtabellen bieten eine große Menge an Funktionalität,
+die in Programmen benötigt wird, wenn du Daten speichern, darauf zugreifen und
+sie verändern willst. Hier sind einige Übungen, für deren Lösung du jetzt
+gerüstet sein solltest:</p>
 <ol>
 <li>Verwende bei einer Liste von ganzen Zahlen einen Vektor und gib den
 Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
 der am häufigsten vorkommt; eine Hashtabelle ist hier hilfreich) der Liste
 zurück.</li>
-<li>Wandle Zeichenketten in Schweinelatein (pig latin) um. Der erste Konsonant
+<li>Wandle Strings in Schweinelatein (pig latin) um. Der erste Konsonant
 jedes Wortes wird an das Ende des Wortes verschoben und „ay“ angehängt,
 sodass „zuerst“ zu „uerst-zay“ wird. Bei Wörtern, die mit einem Vokal
 beginnen, wird stattdessen „hay“ an das Ende angefügt („ansehen“ wird zu
@@ -423,8 +423,8 @@ Unternehmen hinzuzufügen. Zum Beispiel „Sally zur Technik hinzufügen“ oder
 sortierte Liste aller Personen in einer Abteilung oder aller Personen in der
 Firma nach Abteilung ausgeben.</li>
 </ol>
-<p>Die API-Dokumentation der Standard-Bibliothek beschreibt Methoden für Vektoren,
-Zeichenketten und Hashtabellen, die für diese Übungen hilfreich sind!</p>
+<p>Die API-Dokumentation der Standardbibliothek beschreibt Methoden für Vektoren,
+Strings und Hashtabellen, die für diese Übungen hilfreich sind!</p>
 <p>Wir steigen in komplexere Programme ein, in denen Operationen fehlschlagen
 können, daher ist es ein perfekter Zeitpunkt, auf die Fehlerbehandlung
 einzugehen. Das werden wir als nächstes tun!</p>

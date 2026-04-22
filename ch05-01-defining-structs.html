@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Strukturen (structs) definieren und instanziieren - Die Programmiersprache Rust</title>
+        <title>Strukturen definieren und instanziieren - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="strukturen-structs-definieren-und-instanziieren"><a class="header" href="#strukturen-structs-definieren-und-instanziieren">Strukturen (structs) definieren und instanziieren</a></h2>
+                        <h2 id="strukturen-definieren-und-instanziieren"><a class="header" href="#strukturen-definieren-und-instanziieren">Strukturen definieren und instanziieren</a></h2>
 <p>Strukturen (structs) ähneln Tupeln, die im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a>
 besprochen wurden. Wie bei Tupeln können die Teile einer Struktur verschiedene
 Typen haben. Anders als bei Tupeln benennst du jedes Teil, so dass klar ist, was
@@ -172,7 +172,7 @@ Instanz zu spezifizieren oder auf sie zuzugreifen.</p>
 benennen die gesamte Struktur. Der Name einer Struktur sollte die Bedeutung der
 Daten beschreiben, die gruppiert werden. Dann definieren wir innerhalb
 geschweifter Klammern die Namen und Typen der Datenteile, die wir <em>Felder</em>
-nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
+nennen. Beispielsweise zeigt Listing 5-1 eine Struktur, die Informationen
 über ein Benutzerkonto speichert.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">struct User {
@@ -183,7 +183,7 @@ nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre>
-<p><span class="caption">Codeblock 5-1: Definition der Struktur <code>User</code></span></p>
+<p><span class="caption">Listing 5-1: Definition der Struktur <code>User</code></span></p>
 <p>Um eine Struktur zu verwenden, nachdem wir sie definiert haben, erstellen wir
 eine <em>Instanz</em> dieser Struktur, indem wir für jedes Feld einen konkreten Wert
 angeben. Wir erzeugen eine Instanz, indem wir den Namen der Struktur angeben
@@ -194,7 +194,7 @@ Reihenfolge angeben, in der wir sie in der Struktur deklariert haben. Anders
 gesagt ist die Strukturdefinition wie eine allgemeine Typvorlage und Instanzen
 füllen diese Vorlage mit bestimmten Daten aus, um Werte des Typs zu erzeugen.
 Beispielsweise können wir einen bestimmten Benutzer deklarieren, wie in
-Codeblock 5-2 zu sehen ist.</p>
+Listing 5-2 zu sehen ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
@@ -211,14 +211,14 @@ Codeblock 5-2 zu sehen ist.</p>
         sign_in_count: 1,
     };
 }</code></pre>
-<p><span class="caption">Codeblock 5-2: Eine Instanz der Struktur <code>User</code>
+<p><span class="caption">Listing 5-2: Eine Instanz der Struktur <code>User</code>
 erzeugen</span></p>
 <p>Um auf einen bestimmten Wert in einer Struktur zuzugreifen, verwenden wir die
 Punktnotation. Um beispielsweise auf die E-Mail-Adresse dieses Benutzers
 zuzugreifen, verwenden wir <code>user1.email</code>. Wenn die Instanz veränderbar ist,
 können wir einen Wert ändern, indem wir die Punktnotation verwenden und ihn
-einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
-<code>email</code> einer veränderbaren <code>User</code>-Instanz geändert werden kann.</p>
+einem bestimmten Feld zuweisen. Listing 5-3 zeigt, wie der Wert im Feld <code>email</code>
+einer veränderbaren <code>User</code>-Instanz geändert werden kann.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
@@ -237,12 +237,12 @@ einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
 
     user1.email = String::from("andere-email@example.com");
 }</code></pre>
-<p><span class="caption">Codeblock 5-3: Wert im Feld <code>email</code> einer <code>User</code>-Instanz ändern</span></p>
+<p><span class="caption">Listing 5-3: Wert im Feld <code>email</code> einer <code>User</code>-Instanz ändern</span></p>
 <p>Beachte, dass die gesamte Instanz veränderbar sein muss. Rust erlaubt es
 nicht, nur einzelne Felder als veränderbar zu markieren. Wie mit jedem
 Ausdruck können wir eine neue Instanz der Struktur als letzten Ausdruck im
 Funktionsrumpf erzeugen, um diese neue Instanz implizit zurückzugeben.</p>
-<p>Codeblock 5-4 zeigt eine Funktion <code>build_user</code>, die eine <code>User</code>-Instanz mit der
+<p>Listing 5-4 zeigt eine Funktion <code>build_user</code>, die eine <code>User</code>-Instanz mit der
 angegebenen E-Mail und dem Benutzernamen zurückgibt. Das Feld <code>active</code> erhält
 den Wert <code>true</code> und das Feld <code>sign_in_count</code> den Wert <code>1</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -268,7 +268,7 @@ den Wert <code>true</code> und das Feld <code>sign_in_count</code> den Wert <cod
 </span><span class="boring">        String::from("benutzername123"),
 </span><span class="boring">    );
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 5-4: Funktion <code>build_user</code>, die eine E-Mail und
+<p><span class="caption">Listing 5-4: Funktion <code>build_user</code>, die eine E-Mail und
 einen Benutzernamen entgegennimmt und eine <code>User</code>-Instanz zurückgibt</span></p>
 <p>Es ist sinnvoll, den Funktionsparametern dieselben Namen wie die der
 Strukturfelder zu geben, jedoch ist das Wiederholen der Feldnamen <code>email</code> und
@@ -276,11 +276,11 @@ Strukturfelder zu geben, jedoch ist das Wiederholen der Feldnamen <code>email</c
 Wiederholen jedes Namens noch lästiger werden. Glücklicherweise gibt es eine
 praktische Kurznotation!</p>
 <h3 id="kurznotation-der-feld-initialisierung-verwenden"><a class="header" href="#kurznotation-der-feld-initialisierung-verwenden">Kurznotation der Feld-Initialisierung verwenden</a></h3>
-<p>Da die Parameter und die Strukturfelder in Codeblock 5-4 die gleichen Namen
+<p>Da die Parameter und die Strukturfelder in Listing 5-4 die gleichen Namen
 haben, können wir die <em>Kurznotation der Feld-Initialisierung</em> (field init
 shorthand syntax) verwenden, um die Funktion <code>build_user</code> so umzuschreiben,
 dass sie sich unverändert gleich verhält, ohne <code>email</code> und <code>username</code> zu
-wiederholen, siehe Codeblock 5-5.</p>
+wiederholen, siehe Listing 5-5.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
@@ -304,7 +304,7 @@ wiederholen, siehe Codeblock 5-5.</p>
 </span><span class="boring">        String::from("benutzername123"),
 </span><span class="boring">    );
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 5-5: Funktion <code>build_user</code> mit Kurznotation der
+<p><span class="caption">Listing 5-5: Funktion <code>build_user</code> mit Kurznotation der
 Feld-Initialisierung, weil die Parameternamen <code>email</code> und <code>username</code> identisch
 mit den Strukturfeldern sind</span></p>
 <p>Hier erzeugen wir eine neue Instanz der Struktur <code>User</code>, die ein Feld namens
@@ -317,10 +317,10 @@ zu schreiben.</p>
 meisten Werte einer alten Instanz desselben Typs verwendet und nur einige davon
 verändert. Du kannst dazu die Strukturaktualisierungssyntax (struct update
 syntax) verwenden.</p>
-<p>Zunächst zeigt Codeblock 5-6, wie wir eine neue <code>User</code>-Instanz <code>user2</code> auf
+<p>Zunächst zeigt Listing 5-6, wie wir eine neue <code>User</code>-Instanz <code>user2</code> auf
 normalem Wege ohne Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert
 für <code>email</code>, verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir
-in Codeblock 5-2 erstellt haben.</p>
+in Listing 5-2 erstellt haben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
@@ -346,10 +346,10 @@ in Codeblock 5-2 erstellt haben.</p>
         sign_in_count: user1.sign_in_count,
     };
 }</code></pre>
-<p><span class="caption">Codeblock 5-6: Erstellen einer neuen <code>User</code>-Instanz unter
+<p><span class="caption">Listing 5-6: Erstellen einer neuen <code>User</code>-Instanz unter
 Verwendung aller Werte von <code>user1</code> bis auf einen.</span></p>
 <p>Durch Verwenden der Strukturaktualisierungssyntax können wir dasselbe Ergebnis
-mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax <code>..</code> gibt an,
+mit weniger Code erreichen, wie Listing 5-7 zeigt. Die Syntax <code>..</code> gibt an,
 dass die restlichen Felder, die nicht explizit gesetzt wurden, den gleichen
 Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -375,17 +375,17 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
         ..user1
     };
 }</code></pre>
-<p><span class="caption">Codeblock 5-7: Verwenden der
+<p><span class="caption">Listing 5-7: Verwenden der
 Strukturaktualisierungssyntax, um einen neuen Wert für <code>email</code> in der
 <code>User</code>-Instanz zu setzen und die restlichen Werte aus der Instanz <code>user1</code> zu
 übernehmen</span></p>
-<p>Der Code in Codeblock 5-7 erzeugt auch eine Instanz <code>user2</code>, die einen anderen
+<p>Der Code in Listing 5-7 erzeugt auch eine Instanz <code>user2</code>, die einen anderen
 Wert für <code>email</code> hat, aber die gleichen Werte der Felder <code>username</code>, <code>active</code>
-und <code>sign_in_count</code> wie <code>user1</code>. Das <code>..user1</code> muss an letzter Stelle stehen um
+und <code>sign_in_count</code> wie <code>user1</code>. Das <code>..user1</code> muss an letzter Stelle stehen, um
 festzulegen, dass alle verbleibenden Felder ihre Werte von den entsprechenden
-Feldern in <code>user1</code> beziehen sollen, aber wir können Werte für so viele Felder
-in beliebiger Reihenfolge angeben, unabhängig von der Reihenfolge der Felder in
-der Strukturdefinition.</p>
+Feldern in <code>user1</code> beziehen sollen, aber wir können Werte für so viele Felder in
+beliebiger Reihenfolge angeben, unabhängig von der Reihenfolge der Felder in der
+Strukturdefinition.</p>
 <p>Beachte, dass die Strukturaktualisierungssyntax wie eine Zuweisung mit <code>=</code> ist,
 da sie die Daten verschiebt, wie wir im Abschnitt <a href="ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-move">„Variablen und Daten im
 Zusammenspiel mit Move“</a> gesehen haben. In diesem Beispiel können wir
@@ -394,11 +394,10 @@ Zusammenspiel mit Move“</a> gesehen haben. In diesem Beispiel können wir
 <code>user2</code> neue <code>String</code>-Werte für beide Felder <code>email</code> und <code>username</code> gegeben und
 somit nur die Werte <code>active</code> und <code>sign_in_count</code> von <code>user1</code> verwendet, wäre
 <code>user1</code> auch nach dem Erstellen von <code>user2</code> noch gültig. Die Typen <code>active</code> und
-<code>sign_in_count</code> sind Typen, die das Merkmal <code>Copy</code> implementieren, sodass das
-Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur Stapelspeicher-Daten: Kopieren
-(copy)“</a> besprochen haben, zutreffen würde. Wir können in diesem Beispiel
-immer noch <code>user1.email</code> verwenden, da sein Wert <em>nicht</em> aus <code>user1</code> verschoben
-wurde.</p>
+<code>sign_in_count</code> sind Typen, die das Trait <code>Copy</code> implementieren, sodass das
+Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#reine-stack-daten-copy">„Reine Stack-Daten: Copy“</a> besprochen
+haben, zutreffen würde. Wir können in diesem Beispiel immer noch <code>user1.email</code>
+verwenden, da sein Wert <em>nicht</em> aus <code>user1</code> verschoben wurde.</p>
 <h3 id="mit-tupel-strukturen-verschiedene-typen-erzeugen"><a class="header" href="#mit-tupel-strukturen-verschiedene-typen-erzeugen">Mit Tupel-Strukturen verschiedene Typen erzeugen</a></h3>
 <p>Rust unterstützt auch Strukturen, die ähnlich wie Tupel aussehen, genannt
 <em>Tupel-Strukturen</em> (tuple structs). Tupel-Strukturen haben den Strukturnamen
@@ -434,11 +433,11 @@ würden zum Beispiel <code>let Point(x, y, z) = origin;</code> schreiben, um die
 <p>Du kannst auch Strukturen definieren, die gar keine Felder haben! Diese werden
 <em>Einheitstyp</em> (unit-like structs) genannt, weil sie sich ähnlich zum leeren
 Tupel <code>()</code> verhalten, das wir im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> erwähnt
-haben. Einheitstypen können in Situationen nützlich sein, in denen du ein
-Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
-die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
-besprechen. Hier ist ein Beispiel für die Deklaration und Instanziierung einer
-Unit-Struktur namens <code>AlwaysEqual</code>:</p>
+haben. Einheitstypen können in Situationen nützlich sein, in denen du ein Trait
+zu einem Typ implementieren musst, du aber keine Daten hast, die im Typ
+gespeichert werden sollen. Wir werden Traits in Kapitel 10 besprechen. Hier ist
+ein Beispiel für die Deklaration und Instanziierung einer Unit-Struktur namens
+<code>AlwaysEqual</code>:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">struct AlwaysEqual;
 
@@ -446,18 +445,18 @@ fn main() {
     let subject = AlwaysEqual;
 }</code></pre>
 <p>Um <code>AlwaysEqual</code> zu definieren, verwenden wir das Schlüsselwort <code>struct</code>, den
-gewünschten Namen und dann ein Semikolon. Geschweifte Klammern und Klammern
-sind nicht erforderlich! Dann können wir eine Instanz von <code>AlwaysEqual</code> in der
-Variable <code>subject</code> auf ähnliche Weise erhalten: Mit dem Namen, den wir
-definiert haben, ohne geschweifte Klammern oder Klammern. Stell dir vor, wir
-implementieren ein Verhalten für diesen Typ, bei dem jede Instanz immer gleich
-ist mit jeder Instanz jedes anderen Typs, vielleicht um ein bekanntes Ergebnis
-für Testzwecke zu haben. Wir bräuchten keine Daten, um dieses Verhalten
-umzusetzen! In Kapitel 10 wirst du sehen, wie man Merkmale definiert und sie
-für jeden Typ implementiert, auch für unit-ähnliche Strukturen.</p>
+gewünschten Namen und anschließend ein Semikolon. Geschweifte und runde Klammern
+sind nicht nötig! Dann können wir eine Instanz von <code>AlwaysEqual</code> in der Variable
+<code>subject</code> auf ähnliche Weise erhalten: mit dem von uns definierten Namen, wieder
+ohne geschweifte oder runde Klammern. Stell dir vor, dass wir später Verhalten
+für diesen Typ implementieren, bei dem jede Instanz von <code>AlwaysEqual</code> immer
+gleich jeder Instanz eines beliebigen anderen Typs ist – vielleicht, um
+für Tests ein bekanntes Ergebnis zu haben. Dafür bräuchten wir keine Daten! In
+Kapitel 10 wirst du sehen, wie man Traits definiert und sie für beliebige Typen
+implementiert, einschließlich unit-artiker Strukturen.</p>
 <blockquote>
 <h3 id="eigentümerschaft-von-strukturdaten"><a class="header" href="#eigentümerschaft-von-strukturdaten">Eigentümerschaft von Strukturdaten</a></h3>
-<p>In der Strukturdefinition <code>User</code> in Codeblock 5-1 haben wir den Typ <code>String</code>
+<p>In der Strukturdefinition <code>User</code> in Listing 5-1 haben wir den Typ <code>String</code>
 anstelle von <code>&amp;str</code> verwendet. Dies ist eine bewusste Entscheidung, denn wir
 wollen, dass Instanzen dieser Struktur all ihre Daten besitzen und diese
 Daten so lange gültig sind, wie die gesamte Struktur gültig ist.</p>

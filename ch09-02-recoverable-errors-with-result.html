@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -164,13 +164,13 @@
                         <h2 id="behebbare-fehler-mit-result"><a class="header" href="#behebbare-fehler-mit-result">Behebbare Fehler mit <code>Result</code></a></h2>
 <p>Die meisten Fehler sind nicht so schwerwiegend, dass das Programm ganz
 abgebrochen werden müsste. Manchmal, wenn eine Funktion fehlschlägt, hat das
-einen Grund, den man leicht erkennen und darauf reagieren kann. Wenn du
-beispielsweise versuchst, eine Datei zu öffnen, und dieser Vorgang schlägt
+einen Grund, den man leicht erkennen kann und auf den man reagieren kann. Wenn
+du beispielsweise versuchst, eine Datei zu öffnen, und dieser Vorgang schlägt
 fehl, weil die Datei nicht existiert, könntest du die Datei erstellen, anstatt
-den Vorgang zu beenden.</p>
-<p>Erinnere dich an <a href="ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-result">„Behandeln potentieller Fehler mit
-<code>Result</code>“</a> in Kapitel 2, das die Aufzählung <code>Result</code> mit zwei
-Varianten <code>Ok</code> und <code>Err</code> definiert, wie nachfolgend zu sehen ist:</p>
+den Vorgang abzubrechen.</p>
+<p>Erinnere dich an <a href="ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-result">„Behandeln potentieller Fehler mit <code>Result</code>“</a>
+in Kapitel 2, das die Aufzählung <code>Result</code> mit zwei Varianten <code>Ok</code> und <code>Err</code>
+definiert, wie nachfolgend zu sehen ist:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Result&lt;T, E&gt; {
@@ -188,7 +188,7 @@ definiert sind, in vielen verschiedenen Situationen verwenden, in denen der
 Erfolgswert und der Fehlerwert, den wir zurückgeben wollen, unterschiedlich
 sein können.</p>
 <p>Rufen wir eine Funktion auf, die einen <code>Result</code>-Wert zurückgibt, weil die
-Funktion fehlschlagen könnte. In Codeblock 9-3 versuchen wir, eine Datei zu
+Funktion fehlschlagen könnte. In Listing 9-3 versuchen wir, eine Datei zu
 öffnen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::fs::File;
@@ -196,7 +196,7 @@ Funktion fehlschlagen könnte. In Codeblock 9-3 versuchen wir, eine Datei zu
 fn main() {
     let greeting_file_result = File::open("hallo.txt");
 }</code></pre>
-<p><span class="caption">Codeblock 9-3: Eine Datei öffnen</span></p>
+<p><span class="caption">Listing 9-3: Eine Datei öffnen</span></p>
 <p>Der Rückgabetyp von <code>File::open</code> ist <code>Result&lt;T, E&gt;</code>. Der generische Parameter
 <code>T</code> wurde hier mit dem Typ des Erfolgswertes <code>std::fs::File</code>, der eine
 Dateiressource (file handle) ist, gefüllt. Der Typ <code>E</code> für den Fehlerwert ist
@@ -213,8 +213,8 @@ Aufzählung <code>Result</code> übermittelt.</p>
 <code>greeting_file_result</code> eine Instanz von <code>Ok</code> sein, die eine Dateiressource
 enthält. Im Fehlerfall ist der Wert von <code>greeting_file_result</code> eine Instanz von
 <code>Err</code>, die mehr Informationen über die Art des aufgetretenen Fehlers enthält.</p>
-<p>Wir müssen den Code in Codeblock 9-3 ergänzen, um abhängig vom Rückgabewert von
-<code>File::open</code> unterschiedliche Aktionen durchzuführen. Codeblock 9-4 zeigt eine
+<p>Wir müssen den Code in Listing 9-3 ergänzen, um abhängig vom Rückgabewert von
+<code>File::open</code> unterschiedliche Aktionen durchzuführen. Listing 9-4 zeigt eine
 Möglichkeit, <code>Result</code> mit Hilfe eines grundlegenden Werkzeugs, dem Ausdruck
 <code>match</code>, den wir in Kapitel 6 besprochen haben, zu behandeln.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -228,7 +228,7 @@ fn main() {
         Err(error) =&gt; panic!("Problem beim Öffnen der Datei: {error:?}"),
     };
 }</code></pre>
-<p><span class="caption">Codeblock 9-4: Verwenden eines <code>match</code>-Ausdrucks zum
+<p><span class="caption">Listing 9-4: Verwenden eines <code>match</code>-Ausdrucks zum
 Behandeln der <code>Result</code>-Varianten, die zurückgegeben werden könnten</span></p>
 <p>Beachte, dass die Aufzählung <code>Result</code> und ihre Varianten automatisch im
 Gültigkeitsbereich verfügbar sind, genau wie bei der Aufzählung <code>Option</code>,
@@ -236,8 +236,8 @@ sodass wir in den <code>match</code>-Zweigen nicht mehr <code>Result::</code> vo
 und <code>Err</code> angeben müssen.</p>
 <p>Wenn das Ergebnis <code>Ok</code> ist, gibt dieser Code den inneren <code>file</code>-Wert aus der
 <code>Ok</code>-Variante zurück, und wir weisen diese Dateiressource der Variablen
-<code>greeting_file </code> zu. Nach dem <code>match</code> können wir die Dateiressource zum Lesen
-und Schreiben verwenden.</p>
+<code>greeting_file</code> zu. Nach dem <code>match</code> können wir die Dateiressource zum Lesen und
+Schreiben verwenden.</p>
 <p>Der andere Zweig von <code>match</code> behandelt den Fall, dass wir einen <code>Err</code>-Wert von
 <code>File::open</code> erhalten. In diesem Beispiel haben wir uns dafür entschieden, das
 Makro <code>panic!</code> aufzurufen. Wenn es keine Datei namens <em>hallo.txt</em> in unserem
@@ -254,15 +254,15 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.</p>
 <h3 id="abgleich-verschiedener-fehler"><a class="header" href="#abgleich-verschiedener-fehler">Abgleich verschiedener Fehler</a></h3>
-<p>Der Code in Codeblock 9-4 wird abbrechen, egal aus welchem Grund <code>File::open</code>
+<p>Der Code in Listing 9-4 wird abbrechen, egal aus welchem Grund <code>File::open</code>
 fehlschlug. Nun wollen wir jedoch bei verschiedenen Fehlerursachen
 unterschiedliche Maßnahmen ergreifen. Wenn <code>File::open</code> fehlgeschlagen ist,
 weil die Datei nicht existiert, wollen wir die Datei erstellen und die
 Dateiressource der neuen Datei zurückgeben. Wenn <code>File::open</code> aus irgendeinem
 anderen Grund fehlschlug, z.B. weil wir keine Berechtigung zum Öffnen der Datei
-hatten, wollen wir immer noch, dass der Code abbricht, so wie es in Codeblock
+hatten, wollen wir immer noch, dass der Code abbricht, so wie es in Listing
 9-4 der Fall war. Dazu fügen wir einen inneren <code>match</code>-Ausdruck hinzu, wie in
-Codeblock 9-5 gezeigt.</p>
+Listing 9-5 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::fs::File;
 use std::io::ErrorKind;
@@ -283,7 +283,7 @@ fn main() {
         },
     };
 }</code></pre>
-<p><span class="caption">Codeblock 9-5: Unterschiedliche Arten von Fehlern auf
+<p><span class="caption">Listing 9-5: Unterschiedliche Arten von Fehlern auf
 unterschiedliche Weise behandeln</span></p>
 <p>Der Typ des Wertes, den <code>File::open</code> innerhalb der Variante <code>Err</code> zurückgibt,
 ist <code>io::Error</code>, eine Struktur (struct), die von der Standardbibliothek zur
@@ -294,7 +294,7 @@ enthält Varianten, die die verschiedenen Fehlerarten repräsentieren, die bei
 einer <code>io</code>-Operation auftreten können. Die Variante, die wir verwenden wollen,
 ist <code>ErrorKind::NotFound</code>, was bedeutet, dass die Datei, die wir zu öffnen
 versuchen, noch nicht existiert. Wir werten also <code>greeting_file_result</code> aus,
-als auch <code>error.kind()</code>.</p>
+zusätzlich aber auch <code>error.kind()</code>.</p>
 <p>Die Bedingung, die wir beim inneren Abgleich überprüfen wollen, ist, ob der von
 <code>error.kind()</code> zurückgegebene Wert die Variante <code>NotFound</code> der Aufzählung
 <code>ErrorKind</code> ist. Wenn das der Fall ist, versuchen wir, die Datei mit
@@ -306,13 +306,13 @@ Fehler, außer dem Fehler der fehlenden Datei, abbricht.</p>
 <blockquote>
 <h4 id="alternativen-zur-verwendung-von-match-mit-resultt-e"><a class="header" href="#alternativen-zur-verwendung-von-match-mit-resultt-e">Alternativen zur Verwendung von <code>match</code> mit <code>Result&lt;T, E&gt;</code></a></h4>
 <p>Das sind viele <code>match</code>! Der Ausdruck <code>match</code> ist sehr nützlich, aber auch
-sehr primitiv. In Kapitel 13 wirst du etwas über Funktionsabschlüsse
-(closures) lernen, die mit vielen der auf <code>Result&lt;T, E&gt;</code> definierten Methoden
-verwendet werden. Diese Methoden können prägnanter sein als die Verwendung
-von <code>match</code> bei der Behandlung von <code>Result&lt;T, E&gt;</code>-Werten in deinem Code.</p>
+sehr primitiv. In Kapitel 13 wirst du etwas über Closures lernen, die mit
+vielen der auf <code>Result&lt;T, E&gt;</code> definierten Methoden verwendet werden. Diese
+Methoden können prägnanter sein als die Verwendung von <code>match</code> bei der
+Behandlung von <code>Result&lt;T, E&gt;</code>-Werten in deinem Code.</p>
 <p>Hier ist zum Beispiel eine andere Möglichkeit, die gleiche Logik wie in
-Codeblock 9-5 zu schreiben, aber unter Verwendung von Funktionsabschlüssen
-und der Methode <code>unwrap_or_else</code>:</p>
+Listing 9-5 zu schreiben, aber unter Verwendung von Closures und der Methode
+<code>unwrap_or_else</code>:</p>
 <pre class="playground"><code class="language-rust edition2024">use std::fs::File;
 use std::io::ErrorKind;
 
@@ -327,7 +327,7 @@ fn main() {
         }
     });
 }</code></pre>
-<p>Obwohl dieser Code dasselbe Verhalten wie Codeblock 9-5 aufweist, enthält er
+<p>Obwohl dieser Code dasselbe Verhalten wie Listing 9-5 aufweist, enthält er
 keine <code>match</code>-Ausdrücke und ist einfacher zu lesen. Kehre zu diesem Beispiel
 zurück, nachdem du Kapitel 13 gelesen hast, und schlage die Methode
 <code>unwrap_or_else</code> in der Standardbibliotheksdokumentation nach. Viele weitere
@@ -339,7 +339,7 @@ wenn du mit Fehlern zu tun hast.</p>
 sein und vermittelt das Vorhaben nicht immer gut. Der Typ <code>Result&lt;T, E&gt;</code> bietet
 viele Hilfsmethoden, um verschiedene, spezifischere Aufgaben zu erledigen. Die
 Methode <code>unwrap</code> ist eine Abkürzungsmethode, implementiert wie der Ausdruck
-<code>match</code>, den wir in Codeblock 9-4 verwendet haben. Wenn der <code>Result</code>-Wert die
+<code>match</code>, den wir in Listing 9-4 verwendet haben. Wenn der <code>Result</code>-Wert die
 Variante <code>Ok</code> ist, gibt <code>unwrap</code> den Wert innerhalb <code>Ok</code> zurück. Wenn <code>Result</code>
 die Variante <code>Err</code> ist, ruft <code>unwrap</code> das Makro <code>panic!</code> für uns auf. Hier ist
 ein Beispiel für <code>unwrap</code> im Einsatz:</p>
@@ -386,7 +386,7 @@ zu tun ist. Dies wird als <em>Weitergeben</em> (propagating) des Fehlers bezeich
 und gibt dem aufrufenden Code mehr Kontrolle, wo mehr Informationen und Logik
 zur Fehlerbehandlung vorhanden sein könnte, als im Kontext deines Codes zur
 Verfügung steht.</p>
-<p>Beispielsweise zeigt Codeblock 9-6 eine Funktion, die einen Benutzernamen aus
+<p>Beispielsweise zeigt Listing 9-6 eine Funktion, die einen Benutzernamen aus
 einer Datei liest. Wenn die Datei nicht existiert oder nicht gelesen werden
 kann, gibt diese Funktion den Fehler an den Code zurück, der die Funktion
 aufgerufen hat.</p>
@@ -412,15 +412,15 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 9-6: Eine Funktion, die mit <code>match</code> Fehler an
+<p><span class="caption">Listing 9-6: Eine Funktion, die mit <code>match</code> Fehler an
 den aufrufenden Code zurückgibt</span></p>
-<p>Diese Funktion kann auf eine viel kürzere Art und Weise geschrieben werden,
-aber wir wollen für den Anfang viel davon manuell machen, um die
-Fehlerbehandlung kennen zu lernen; am Ende werden wir den kürzeren Weg zeigen. Sehen
-wir uns zunächst den Rückgabetyp der Funktion an: <code>Result&lt;String, io::Error&gt;</code>.
-Das bedeutet, dass die Funktion einen Wert vom Typ <code>Result&lt;T, E&gt;</code> zurückgibt,
-wobei der generische Typ <code>T</code> mit dem konkreten Typ <code>String</code> und der generische
-Typ <code>E</code> mit dem konkreten Typ <code>io::Error</code> gefüllt wurde.</p>
+<p>Diese Funktion kann auf eine viel kürzere Art und Weise geschrieben werden, aber
+wir wollen für den Anfang viel davon manuell machen, um die Fehlerbehandlung
+kennenzulernen; am Ende werden wir den kürzeren Weg zeigen. Sehen wir uns
+zunächst den Rückgabetyp der Funktion an: <code>Result&lt;String, io::Error&gt;</code>. Das
+bedeutet, dass die Funktion einen Wert vom Typ <code>Result&lt;T, E&gt;</code> zurückgibt, wobei
+der generische Typ <code>T</code> mit dem konkreten Typ <code>String</code> und der generische Typ <code>E</code>
+mit dem konkreten Typ <code>io::Error</code> gefüllt wurde.</p>
 <p>Wenn diese Funktion erfolgreich ist, erhält der aufrufende Code einen
 <code>Ok</code>-Wert, der einen <code>String</code> enthält – den Benutzernamen, den diese
 Funktion aus der Datei liest. Wenn diese Funktion auf Probleme stößt, erhält
@@ -430,15 +430,14 @@ mit weiteren Informationen darüber, was die Probleme waren. Wir wählten
 Fehlerwertes ist, der von beiden Operationen zurückgegeben wird, die wir im
 Funktionsrumpf aufrufen und fehlschlagen könnten: Die Funktion <code>File::open</code> und
 die Methode <code>read_to_string</code>.</p>
-<p>Der Funktionsrumpf beginnt mit dem Aufruf der Funktion <code>File::open</code>. Dann
-behandeln wir den <code>Result</code>-Wert, der von <code>match</code> zurückgegeben wird, auf
-ähnliche Weise wie bei <code>match</code> in Codeblock 9-4. Wenn <code>File::open</code> erfolgreich
-ist, erhält die Dateiressource in der Mustervariablen <code>file</code> den Wert in der
-veränderbaren Variablen <code>username_file</code> und die Funktion wird fortgesetzt. Im
-Fall von <code>Err</code> verwenden wir das Schlüsselwort <code>return</code>, anstatt <code>panic!</code>
-aufzurufen, um die Funktion vorzeitig ganz zu verlassen und den Fehlerwert von
-<code>File::open</code> in der Mustervariablen <code>e</code> als Fehlerwert dieser Funktion an den
-aufrufenden Code zurückzugeben.</p>
+<p>Der Funktionsrumpf beginnt mit dem Aufruf der Funktion <code>File::open</code>.
+Anschließend behandeln wir den <code>Result</code>-Wert mit einem <code>match</code>-Ausdruck, ähnlich
+wie in Listing 9-4. Wenn <code>File::open</code> erfolgreich ist, wird die Dateiressource
+aus der Mustervariablen <code>file</code> an die veränderbare Variable <code>username_file</code>
+zugewiesen und die Funktion wird fortgesetzt. Im <code>Err</code>-Fall rufen wir statt
+<code>panic!</code> das Schlüsselwort <code>return</code> auf, verlassen die Funktion damit vorzeitig
+und geben den Fehlerwert von <code>File::open</code>, der nun in der Mustervariablen <code>e</code>
+steht, an den aufrufenden Code als Fehlerwert dieser Funktion zurück.</p>
 <p>Wenn wir also eine Dateiressource in <code>username_file</code> haben, erzeugt die
 Funktion einen neuen <code>String</code> in der Variablen <code>username</code> und ruft die Methode
 <code>read_to_string</code> für die Dateiressource in <code>username_file</code> auf, um den Inhalt
@@ -452,21 +451,20 @@ fehlschlägt, geben wir den Fehlerwert auf die gleiche Weise zurück, wie wir de
 Fehlerwert in <code>match</code> zurückgegeben haben, das den Rückgabewert von
 <code>File::open</code> behandelt hat. Wir brauchen jedoch nicht ausdrücklich <code>return</code>
 anzugeben, weil dies der letzte Ausdruck in der Funktion ist.</p>
-<p>Der Code, der diesen Code aufruft, wird dann damit zurechtkommen, entweder
-einen <code>Ok</code>-Wert zu erhalten, der einen Benutzernamen enthält, oder einen
-<code>Err</code>-Wert, der einen <code>io::Error</code> enthält. Es ist Sache des aufrufenden Codes,
-zu entscheiden, was mit diesen Werten geschehen soll. Wenn der aufrufende Code
-einen <code>Err</code>-Wert erhält, könnte er <code>panic!</code> aufrufen und das Programm zum
-Absturz bringen, einen Standardbenutzernamen verwenden oder den Benutzernamen
-von irgendwo anders als z.B. einer Datei nachschlagen. Wir haben nicht genug
-Informationen darüber, was der aufrufende Code tatsächlich versucht, also
-propagieren wir alle Erfolgs- und Fehlerinformationen nach oben, damit sie
-angemessen behandelt werden.</p>
+<p>Der Code, der diesen Code aufruft, wird dann damit zurechtkommen, entweder einen
+<code>Ok</code>-Wert zu erhalten, der einen Benutzernamen enthält, oder einen <code>Err</code>-Wert,
+der einen <code>io::Error</code> enthält. Es ist Sache des aufrufenden Codes, zu
+entscheiden, was mit diesen Werten geschehen soll. Wenn der aufrufende Code
+einen <code>Err</code>-Wert erhält, könnte er <code>panic!</code> aufrufen, um das Programm
+abzubrechen, einen Standardbenutzernamen verwenden oder den Benutzernamen z.B.
+aus einer Datei auslesen. Wir haben nicht genug Informationen darüber, was der
+aufrufende Code tatsächlich versucht, also propagieren wir alle Erfolgs- und
+Fehlerinformationen nach oben, damit sie angemessen behandelt werden.</p>
 <p>Dieses Muster der Fehlerweitergabe ist in Rust so verbreitet, dass Rust den
 Fragezeichen-Operator <code>?</code> bereitstellt, um dies zu erleichtern.</p>
 <h4 id="der-operator--als-abkürzung"><a class="header" href="#der-operator--als-abkürzung">Der Operator <code>?</code> als Abkürzung</a></h4>
-<p>Codeblock 9-7 zeigt eine Implementierung von <code>read_username_from_file</code>, die
-dasselbe Verhalten wie Codeblock 9-6 hat, aber diese Implementierung verwendet
+<p>Listing 9-7 zeigt eine Implementierung von <code>read_username_from_file</code>, die
+dasselbe Verhalten wie Listing 9-6 hat, aber diese Implementierung verwendet
 den <code>?</code>-Operator.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -482,32 +480,32 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
     Ok(username)
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 9-7: Eine Funktion, die Fehler an den
+<p><span class="caption">Listing 9-7: Eine Funktion, die Fehler an den
 aufrufenden Code zurückgibt, indem sie den <code>?</code>-Operator verwendet</span></p>
 <p>Das <code>?</code> hinter dem <code>Result</code>-Wert bewirkt fast das gleiche wie die
-<code>match</code>-Ausdrücke, die wir zum Behandeln der <code>Result</code>-Werte in Codeblock 9-6
+<code>match</code>-Ausdrücke, die wir zum Behandeln der <code>Result</code>-Werte in Listing 9-6
 definiert haben. Wenn der Wert von <code>Result</code> ein <code>Ok</code> ist, wird der Wert
 innerhalb <code>Ok</code> zurückgegeben und das Programm fortgesetzt. Wenn der Wert ein
 <code>Err</code> ist, wird er als Funktionsergebnis zurückgegeben, als ob wir das
 Schlüsselwort <code>return</code> verwendet hätten.</p>
-<p>Es gibt einen Unterschied zwischen dem, was der <code>match</code>-Ausdruck aus Codeblock
+<p>Es gibt einen Unterschied zwischen dem, was der <code>match</code>-Ausdruck aus Listing
 9-6 tut, und dem, was der <code>?</code>-Operator tut: Fehlerwerte, bei denen der
-<code>?</code>-Operator aufgerufen wird, durchlaufen die Funktion <code>from</code>, die im Merkmal
-<code>From</code> der Standardbibliothek definiert ist und die zur Konvertierung von
-Werten eines Typs in einen anderen verwendet wird. Wenn der <code>?</code>-Operator die
-Funktion <code>from</code> aufruft, wird der empfangene Fehlertyp in den Fehlertyp
-umgewandelt, der als Rückgabetyp der aktuellen Funktion definiert ist. Das ist
-hilfreich, wenn eine Funktion einen einzigen Fehlertyp zurückgibt, um alle
-möglichen Fehlerarten einer Funktion darzustellen, auch wenn Teile aus vielen
-verschiedenen Gründen versagen könnten.</p>
-<p>Wir könnten zum Beispiel die Funktion <code>read_username_from_file</code> in Codeblock
-9-7 so ändern, dass sie einen von uns definierten Fehlertyp namens <code>OurError</code>
+<code>?</code>-Operator aufgerufen wird, durchlaufen die Funktion <code>from</code>, die im Trait
+<code>From</code> der Standardbibliothek definiert ist und die zur Konvertierung von Werten
+eines Typs in einen anderen verwendet wird. Wenn der <code>?</code>-Operator die Funktion
+<code>from</code> aufruft, wird der empfangene Fehlertyp in den Fehlertyp umgewandelt, der
+als Rückgabetyp der aktuellen Funktion definiert ist. Das ist hilfreich, wenn
+eine Funktion einen einzigen Fehlertyp zurückgibt, um alle möglichen Fehlerarten
+einer Funktion darzustellen, auch wenn Teile aus vielen verschiedenen Gründen
+versagen könnten.</p>
+<p>Wir könnten zum Beispiel die Funktion <code>read_username_from_file</code> in Listing 9-7
+so ändern, dass sie einen von uns definierten Fehlertyp namens <code>OurError</code>
 zurückgibt. Wenn wir auch <code>impl From&lt;io::Error&gt; for OurError</code> definieren, um
 eine Instanz von <code>OurError</code> aus einem <code>io::Error</code> zu konstruieren, dann werden
-die <code>?</code>-Operator-Aufrufe im Rumpf von <code>read_username_from_file</code> <code>from</code> aufrufen
-und die Fehlertypen konvertieren, ohne dass weiterer Code zur Funktion
+die Aufrufe des <code>?</code>-Operators im Rumpf von <code>read_username_from_file</code> <code>from</code>
+aufrufen und die Fehlertypen konvertieren, ohne dass weiterer Code zur Funktion
 hinzugefügt werden muss.</p>
-<p>Im Zusammenhang mit Codeblock 9-7 gibt das <code>?</code> am Ende des Aufrufs von
+<p>Im Zusammenhang mit Listing 9-7 gibt das <code>?</code> am Ende des Aufrufs von
 <code>File::open</code> den Wert innerhalb eines <code>Ok</code> an die Variable <code>username_file</code>
 zurück. Wenn ein Fehler auftritt, beendet der Operator vorzeitig die gesamte
 Funktion und gibt dem aufrufenden Code einen <code>Err</code>-Wert zurück. Dasselbe gilt
@@ -515,7 +513,7 @@ für das <code>?</code> am Ende des <code>read_to_string</code>-Aufrufs.</p>
 <p>Der <code>?</code>-Operator eliminiert viel umständlichen Code und macht die
 Implementierung dieser Funktion einfacher. Wir können diesen Code sogar noch
 weiter verkürzen, indem wir die Methodenaufrufe unmittelbar nach dem <code>?</code>
-verketten, wie in Codeblock 9-8 zu sehen ist.</p>
+verketten, wie in Listing 9-8 zu sehen ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -531,7 +529,7 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
     Ok(username)
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 9-8: Verketten von Methodenaufrufen nach dem
+<p><span class="caption">Listing 9-8: Verketten von Methodenaufrufen nach dem
 <code>?</code>-Operator</span></p>
 <p>Wir haben das Erstellen des neuen <code>String</code> in <code>username</code> an den Anfang der
 Funktion verlegt; dieser Teil hat sich nicht geändert. Anstatt eine Variable
@@ -540,9 +538,9 @@ an das Ergebnis von <code>File::open("hallo.txt")?</code> gehängt. Wir haben im
 ein <code>?</code> am Ende des Aufrufs von <code>read_to_string</code>, und wir geben immer noch
 einen <code>Ok</code>-Wert zurück, der <code>username</code> enthält, wenn sowohl <code>File::open</code> als
 auch <code>read_to_string</code> erfolgreich sind, anstatt Fehler zurückzugeben. Die
-Funktionalität ist wieder die gleiche wie in Codeblock 9-6 und Codeblock 9-7;
+Funktionalität ist wieder die gleiche wie in Listing 9-6 und Listing 9-7;
 das ist nur eine andere, ergonomischere Schreibweise.</p>
-<p>Codeblock 9-9 zeigt, dass es einen Weg gibt, diese Funktion noch kürzer zu
+<p>Listing 9-9 zeigt, dass es einen Weg gibt, diese Funktion noch kürzer zu
 machen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -554,9 +552,9 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
     fs::read_to_string("hallo.txt")
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 9-9: Verwenden von <code>fs::read_to_string</code>,
+<p><span class="caption">Listing 9-9: Verwenden von <code>fs::read_to_string</code>,
 anstatt die Datei zu öffnen und dann zu lesen</span></p>
-<p>Das Einlesen einer Datei in eine Zeichenkette ist eine ziemlich häufig
+<p>Das Einlesen einer Datei in einen String ist eine ziemlich häufig
 benötigte Operation, daher bringt die Standardbibliothek die praktische Funktion
 <code>fs::read_to_string</code> mit, die die Datei öffnet, einen neuen <code>String</code> erzeugt,
 den Inhalt der Datei einliest, den Inhalt in den <code>String</code> einfügt und ihn
@@ -567,11 +565,11 @@ zuerst auf dem längeren Weg gemacht.</p>
 <p>Der Operator <code>?</code> kann nur in Funktionen verwendet werden, deren Rückgabetyp mit
 dem Wert, auf den <code>?</code> angewendet wird, kompatibel ist. Das liegt daran, dass
 der Operator <code>?</code> so definiert ist, dass er einen Wert frühzeitig aus der
-Funktion zurückgibt, genauso wie der Ausdruck <code>match</code>, den wir in Codeblock 9-6
-definiert haben. In Codeblock 9-6 verwendet <code>match</code> einen <code>Result</code>-Wert, und
+Funktion zurückgibt, genauso wie der Ausdruck <code>match</code>, den wir in Listing 9-6
+definiert haben. In Listing 9-6 verwendet <code>match</code> einen <code>Result</code>-Wert, und
 der frühe Rückgabezweig liefert einen <code>Err(e)</code>-Wert. Der Rückgabetyp der
 Funktion muss ein <code>Result</code> sein, damit er mit <code>return</code> kompatibel ist.</p>
-<p>Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den <code>?</code>-Operator
+<p>Schauen wir uns in Listing 9-10 an, was passiert, wenn wir den <code>?</code>-Operator
 in einer Funktion <code>main</code> verwenden, deren Rückgabetyp nicht mit dem Typ des
 Wertes, für den wir <code>?</code> verwenden, kompatibel ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -580,7 +578,7 @@ Wertes, für den wir <code>?</code> verwenden, kompatibel ist.</p>
 fn main() {
     let greeting_file = File::open("hallo.txt")?;
 }</code></pre>
-<p><span class="caption">Codeblock 9-10: Der Versuch, das <code>?</code> in der Funktion
+<p><span class="caption">Listing 9-10: Der Versuch, das <code>?</code> in der Funktion
 <code>main</code> zu verwenden, die <code>()</code> zurückgibt, lässt sich nicht kompilieren.</span></p>
 <p>Dieser Code öffnet eine Datei, was fehlschlagen kann. Der <code>?</code>-Operator folgt
 dem <code>Result</code>-Wert, der von <code>File::open</code> zurückgegeben wird, aber diese Funktion
@@ -616,15 +614,15 @@ entgegensteht. Die andere Möglichkeit besteht darin, <code>match</code> oder ei
 Methoden von <code>Result&lt;T, E&gt;</code> zu verwenden, um <code>Result&lt;T, E&gt;</code> in geeigneter Weise
 zu behandeln.</p>
 <p>Die Fehlermeldung hat auch erwähnt, dass <code>?</code> ebenso mit <code>Option&lt;T&gt;</code>-Werten
-verwendet werden kann. Wie bei der Verwendung von <code>?</code> für <code>Result</code>, kannst du
-<code>?</code> für <code>Option</code> nur in einer Funktion verwenden, die eine <code>Option</code> zurückgibt.
-Das Verhalten des <code>?</code>-Operators beim Aufruf auf eine <code>Option&lt;T&gt;</code> ist ähnlich
-dem Verhalten, wenn er auf ein <code>Result&lt;T, E&gt;</code> aufgerufen wird: Wenn der Wert
-<code>None</code> ist, wird <code>None</code> zu diesem Zeitpunkt von der Funktion zurückgegeben.
-Wenn der Wert <code>Some</code> ist, ist der Wert innerhalb von <code>Some</code> der resultierende
-Wert des Ausdrucks und die Funktion wird fortgesetzt. Codeblock 9-11 zeigt ein
-Beispiel für eine Funktion, die das letzte Zeichen der ersten Zeile in einem
-gegebenen Text findet.</p>
+verwendet werden kann. Wie bei der Verwendung von <code>?</code> für <code>Result</code> kannst du <code>?</code>
+für <code>Option</code> nur in einer Funktion verwenden, die eine <code>Option</code> zurückgibt. Das
+Verhalten des <code>?</code>-Operators beim Aufruf auf eine <code>Option&lt;T&gt;</code> ist ähnlich dem
+Verhalten, wenn er auf ein <code>Result&lt;T, E&gt;</code> aufgerufen wird: Wenn der Wert <code>None</code>
+ist, wird <code>None</code> zu diesem Zeitpunkt von der Funktion zurückgegeben. Wenn der
+Wert <code>Some</code> ist, ist der Wert innerhalb von <code>Some</code> der resultierende Wert des
+Ausdrucks und die Funktion wird fortgesetzt. Listing 9-11 zeigt ein Beispiel für
+eine Funktion, die das letzte Zeichen der ersten Zeile in einem gegebenen Text
+findet.</p>
 <pre class="playground"><code class="language-rust edition2024">fn last_char_of_first_line(text: &amp;str) -&gt; Option&lt;char&gt; {
     text.lines().next()?.chars().last()
 }
@@ -638,31 +636,30 @@ gegebenen Text findet.</p>
 </span><span class="boring">    assert_eq!(last_char_of_first_line(""), None);
 </span><span class="boring">    assert_eq!(last_char_of_first_line("\nhi"), None);
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 9-11: Verwenden des <code>?</code>-Operators auf einem
+<p><span class="caption">Listing 9-11: Verwenden des <code>?</code>-Operators auf einem
 <code>Option&lt;T&gt;</code>-Wert</span></p>
-<p>Diese Funktion gibt <code>Option&lt;char&gt;</code> zurück, weil es möglich ist, dass ein
-Zeichen vorhanden ist, aber es ist auch möglich, dass keines vorhanden ist.
-Dieser Code nimmt das Zeichenkettenanteilstyp-Argument <code>text</code> und ruft die
-Methode <code>lines</code> darauf auf, die einen Iterator über die Zeilen der Zeichenkette
-zurückgibt. Da diese Funktion die erste Zeile untersuchen will, ruft sie <code>next</code>
-auf dem Iterator auf, um den ersten Wert vom Iterator zu erhalten. Wenn <code>text</code>
-die leere Zeichenkette ist, gibt dieser Aufruf von <code>next</code> <code>None</code> zurück, und
-hier können wir <code>?</code> benutzen, um zu stoppen und <code>None</code> von
-<code>last_char_of_first_line</code> zurückgeben, wenn dies der Fall ist. Wenn <code>text</code>
-nicht die leere Zeichenkette ist, gibt <code>next</code> einen <code>Some</code>-Wert zurück, der
-einen Zeichenkettenanteilstyp der ersten Zeile in <code>text</code> enthält.</p>
-<p>Das <code>?</code> extrahiert den Zeichenkettenanteilstyp, und wir können <code>chars</code> auf
-diesem Zeichenkettenanteilstyp aufrufen, um einen Iterator für seine Zeichen zu
-erhalten. Wir sind am letzten Zeichen in dieser ersten Zeile interessiert, also
-rufen wir <code>last</code> auf, um das letzte Element im Iterator über die Zeichen
-zurückzugeben. Dies ist eine <code>Option</code>, weil die erste Zeile die leere
-Zeichenkette sein kann, wenn <code>text</code> mit einer Leerzeile beginnt, aber Zeichen
-in anderen Zeilen enthält, wie in <code>"\nhi"</code>. Wenn es jedoch ein letztes Zeichen
-in der ersten Zeile gibt, wird es in der Variante <code>Some</code> zurückgegeben. Der
-<code>?</code>-Operator in der Mitte gibt uns eine prägnante Möglichkeit, diese Logik
-auszudrücken, und diese Funktion kann in einer Zeile implementiert werden. Wenn
-wir den <code>?</code>-Operator nicht auf <code>Option</code> verwenden könnten, müssten wir diese
-Logik mit weiteren Methodenaufrufen oder einem Ausdruck implementieren.</p>
+<p>Diese Funktion gibt <code>Option&lt;char&gt;</code> zurück, weil es möglich ist, dass ein Zeichen
+vorhanden ist, aber es ist auch möglich, dass keines vorhanden ist. Dieser Code
+nimmt das String-Slice-Argument <code>text</code> und ruft die Methode <code>lines</code> darauf auf,
+die einen Iterator über die Zeilen des Strings zurückgibt. Da diese Funktion die
+erste Zeile untersuchen will, ruft sie <code>next</code> auf dem Iterator auf, um den
+ersten Wert vom Iterator zu erhalten. Wenn <code>text</code> der leere String ist, gibt
+dieser Aufruf von <code>next</code> <code>None</code> zurück, und hier können wir <code>?</code> benutzen, um zu
+stoppen und <code>None</code> von <code>last_char_of_first_line</code> zurückgeben, wenn dies der Fall
+ist. Wenn <code>text</code> nicht der leere String ist, gibt <code>next</code> einen <code>Some</code>-Wert
+zurück, der einen String Slice der ersten Zeile in <code>text</code> enthält.</p>
+<p>Das <code>?</code> extrahiert den String Slice, und wir können <code>chars</code> auf diesem String
+Slice aufrufen, um einen Iterator für seine Zeichen zu erhalten. Uns
+interessiert das letzte Zeichen in dieser ersten Zeile, also rufen wir <code>last</code>
+auf, um das letzte Element im Iterator über die Zeichen zurückzugeben. Dies ist
+eine <code>Option</code>, weil die erste Zeile der leere String sein kann, wenn <code>text</code> mit
+einer Leerzeile beginnt, aber Zeichen in anderen Zeilen enthält, wie in
+<code>"\nhi"</code>. Wenn es jedoch ein letztes Zeichen in der ersten Zeile gibt, wird es
+in der Variante <code>Some</code> zurückgegeben. Der <code>?</code>-Operator in der Mitte gibt uns
+eine prägnante Möglichkeit, diese Logik auszudrücken, und diese Funktion kann in
+einer Zeile implementiert werden. Wenn wir den <code>?</code>-Operator nicht auf <code>Option</code>
+verwenden könnten, müssten wir diese Logik mit weiteren Methodenaufrufen oder
+einem Ausdruck implementieren.</p>
 <p>Beachte, dass du den <code>?</code>-Operator auf ein <code>Result</code> in einer Funktion anwenden
 kannst, die <code>Result</code> zurückgibt, und du kannst den <code>?</code>-Operator auf eine
 <code>Option</code> in einer Funktion anwenden, die <code>Option</code> zurückgibt, aber du kannst
@@ -675,11 +672,11 @@ zurückgegeben. Die Funktion <code>main</code> ist etwas Besonderes, weil sie de
 Ausstiegspunkt von ausführbaren Programmen ist, und es gibt Einschränkungen
 hinsichtlich ihres Rückgabetyps, damit sich die Programme wie erwartet
 verhalten.</p>
-<p>Glücklicherweise kann <code>main</code> auch ein <code>Result&lt;(), E&gt;</code> zurückgeben. Codeblock
-9-12 enthält den Code aus Codeblock 9-10, aber wir haben den Rückgabetyp von
+<p>Glücklicherweise kann <code>main</code> auch ein <code>Result&lt;(), E&gt;</code> zurückgeben. Listing
+9-12 enthält den Code aus Listing 9-10, aber wir haben den Rückgabetyp von
 <code>main</code> in <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> geändert und am Ende einen Rückgabewert
 <code>Ok(())</code> hinzugefügt. Dieser Code wird nun kompilieren:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use std::error::Error;
 use std::fs::File;
 
@@ -688,30 +685,32 @@ fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 
     Ok(())
 }</code></pre>
-<p><span class="caption">Codeblock 9-12: Die Änderung von <code>main</code> zur Rückgabe von
+<p><span class="caption">Listing 9-12: Die Änderung von <code>main</code> zur Rückgabe von
 <code>Result&lt;(), E&gt;</code> erlaubt die Verwendung des <code>?</code>-Operators für
 <code>Result</code>-Werte.</span></p>
-<p>Der Typ <code>Box&lt;dyn Error&gt;</code> ist ein Merkmalsobjekt (trait object), über das wir in
-<a href="ch18-02-trait-objects.html">„Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames
-Verhalten“</a> in Kapitel 18 sprechen werden. Vorerst kannst du
-<code>Box&lt;dyn Error&gt;</code> als „eine beliebige Fehlerart“ ansehen. Das Verwenden von <code>?</code>
-auf einen <code>Result</code>-Wert in einer Funktion <code>main</code> mit dem Fehlertyp <code>Box&lt;dyn Error&gt;</code> ist erlaubt, weil dadurch ein <code>Err</code>-Wert frühzeitig zurückgegeben
-werden kann. Obwohl der Rumpf dieser Funktion <code>main</code> nur Fehler des Typs
-<code>std::io::Error</code> zurückgibt, ist diese Signatur durch die Angabe von <code>Box&lt;dyn Error&gt;</code> auch dann noch korrekt, wenn weiterer Code, der andere Fehler
-zurückgibt, dem Rumpf von <code>main</code> hinzugefügt wird.</p>
-<p>Wenn eine Funktion <code>main</code> ein <code>Result&lt;(), E&gt;</code> zurückgibt, beendet sich die
-ausführbare Datei mit einem Wert von <code>0</code>, wenn <code>main</code> den Wert <code>Ok(())</code>
-zurückgibt, und mit einem Wert ungleich Null, wenn <code>main</code> einen <code>Err</code>-Wert
-zurückgibt. In C geschriebene ausführbare Programme geben beim Beenden ganze
-Zahlen zurück: Programme, die erfolgreich beendet werden, geben die Zahl <code>0</code>
-zurück, und Programme, die einen Fehler machen, geben eine Zahl ungleich <code>0</code>
-zurück. Rust gibt ebenfalls ganze Zahlen aus ausführbaren Dateien zurück, um
-mit dieser Konvention kompatibel zu sein.</p>
-<p>Die Funktion <code>main</code> kann jeden Typ zurückgeben, der das <a href="https://doc.rust-lang.org/std/process/trait.Termination.html">Merkmal
+<p>Der Typ <code>Box&lt;dyn Error&gt;</code> ist ein Trait-Objekt, über das wir in <a href="ch18-02-trait-objects.html">„Verwendung von
+Trait-Objekten zur Abstraktion über gemeinsames Verhalten“</a> in
+Kapitel 18 sprechen werden. Vorerst kannst du <code>Box&lt;dyn Error&gt;</code> als „eine
+beliebige Fehlerart“ ansehen. Das Verwenden von <code>?</code> auf einen <code>Result</code>-Wert in
+einer Funktion <code>main</code> mit dem Fehlertyp <code>Box&lt;dyn Error&gt;</code> ist erlaubt, weil
+dadurch ein <code>Err</code>-Wert frühzeitig zurückgegeben werden kann. Obwohl der Rumpf
+dieser Funktion <code>main</code> nur Fehler des Typs <code>std::io::Error</code> zurückgibt, ist
+diese Signatur durch die Angabe von <code>Box&lt;dyn Error&gt;</code> auch dann noch korrekt,
+wenn weiterer Code, der andere Fehler zurückgibt, dem Rumpf von <code>main</code>
+hinzugefügt wird.</p>
+<p>Wenn die Funktion <code>main</code> den Rückgabetyp <code>Result&lt;(), E&gt;</code> hat, beendet sich die
+ausführbare Datei mit dem Wert <code>0</code>, wenn <code>main</code> <code>Ok(())</code> zurückgibt, und mit
+einem von Null verschiedenen Wert, wenn <code>main</code> einen <code>Err</code>-Wert zurückgibt. In C
+geschriebene ausführbare Programme geben beim Beenden eine ganze Zahl zurück:
+Programme, die erfolgreich enden, geben die Zahl <code>0</code> zurück, und Programme, die
+mit einem Fehler enden, geben eine Zahl ungleich <code>0</code> zurück. Rust gibt aus
+ausführbaren Programmen ebenfalls ganze Zahlen zurück, um mit dieser Konvention
+kompatibel zu sein.</p>
+<p>Die Funktion <code>main</code> kann jeden Typ zurückgeben, der das <a href="https://doc.rust-lang.org/std/process/trait.Termination.html">Trait
 <code>std::process::Termination</code></a> implementiert, das eine Funktion
 <code>report</code> enthält, die einen <code>ExitCode</code> zurückgibt. Weitere Informationen zur
-Implementierung des Merkmals <code>Termination</code> für deine eigenen Typen findest du
-in der Dokumentation der Standardbibliothek.</p>
+Implementierung des Trait <code>Termination</code> für deine eigenen Typen findest du in
+der Dokumentation der Standardbibliothek.</p>
 <p>Nachdem wir nun die Einzelheiten des Aufrufs von <code>panic!</code> und der Rückgabe von
 <code>Result</code> besprochen haben, wollen wir zum Thema zurückkehren, wie wir
 entscheiden können, was in welchen Fällen geeignet ist.</p>

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Beispielprogramm mit Strukturen (structs) - Die Programmiersprache Rust</title>
+        <title>Beispielprogramm mit Strukturen - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,14 +161,14 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="beispielprogramm-mit-strukturen-structs"><a class="header" href="#beispielprogramm-mit-strukturen-structs">Beispielprogramm mit Strukturen (structs)</a></h2>
+                        <h2 id="beispielprogramm-mit-strukturen"><a class="header" href="#beispielprogramm-mit-strukturen">Beispielprogramm mit Strukturen</a></h2>
 <p>Um besser zu verstehen, wann wir Strukturen verwenden können, schreiben wir ein
 Programm, das die Fläche eines Rechtecks berechnet. Wir beginnen mit einzelnen
 Variablen und schreiben das Programm dann um, bis wir stattdessen Strukturen
 einsetzen.</p>
 <p>Legen wir mit Cargo ein neues Binärprojekt namens <em>rectangles</em> an, das die
 Breite und Höhe eines in Pixeln angegebenen Rechtecks nimmt und die Fläche des
-Rechtecks berechnet. Codeblock 5-8 zeigt ein kurzes Programm, das genau das in
+Rechtecks berechnet. Listing 5-8 zeigt ein kurzes Programm, das genau das in
 <em>src/main.rs</em> unseres Projekts macht.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
@@ -184,7 +184,7 @@ Rechtecks berechnet. Codeblock 5-8 zeigt ein kurzes Programm, das genau das in
 fn area(width: u32, height: u32) -&gt; u32 {
     width * height
 }</code></pre>
-<p><span class="caption">Codeblock 5-8: Berechnen der Fläche eines Rechtecks, das
+<p><span class="caption">Listing 5-8: Berechnen der Fläche eines Rechtecks, das
 durch separate Breiten- und Höhenvariablen beschrieben wird</span></p>
 <p>Nun führe dieses Programm mit <code>cargo run</code> aus:</p>
 <pre><code class="language-console">$ cargo run
@@ -217,8 +217,7 @@ und überschaubarer, Breite und Höhe zusammenzufassen. Eine Möglichkeit dazu
 haben wir bereits im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> in Kapitel 3
 vorgestellt: Der Einsatz von Tupeln.</p>
 <h3 id="refaktorierung-mit-tupeln"><a class="header" href="#refaktorierung-mit-tupeln">Refaktorierung mit Tupeln</a></h3>
-<p>Codeblock 5-9 zeigt eine weitere Version unseres Programms, die Tupel
-verwendet.</p>
+<p>Listing 5-9 zeigt eine weitere Version unseres Programms, die Tupel verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let rect1 = (30, 50);
@@ -232,7 +231,7 @@ verwendet.</p>
 fn area(dimensions: (u32, u32)) -&gt; u32 {
     dimensions.0 * dimensions.1
 }</code></pre>
-<p><span class="caption">Codeblock 5-9: Breite und Höhe des Rechtecks werden mit
+<p><span class="caption">Listing 5-9: Breite und Höhe des Rechtecks werden mit
 einem Tupel beschrieben</span></p>
 <p>In einem Punkt ist dieses Programm besser. Das Tupel bringt etwas Struktur
 hinein und wir geben jetzt nur noch ein Argument weiter. Andererseits ist
@@ -249,7 +248,7 @@ es jetzt einfacher, Fehler zu machen.</p>
 <h3 id="refaktorierung-mit-strukturen"><a class="header" href="#refaktorierung-mit-strukturen">Refaktorierung mit Strukturen</a></h3>
 <p>Verwenden wir Strukturen, um durch die Benennung der Daten deren Bedeutung
 anzugeben. Wir können das verwendete Tupel in eine Struktur mit einem Namen
-für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Codeblock
+für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Listing
 5-10 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">struct Rectangle {
@@ -272,29 +271,28 @@ fn main() {
 fn area(rectangle: &amp;Rectangle) -&gt; u32 {
     rectangle.width * rectangle.height
 }</code></pre>
-<p><span class="caption">Codeblock 5-10: Definieren der Struktur <code>Rectangle</code></span></p>
+<p><span class="caption">Listing 5-10: Definieren der Struktur <code>Rectangle</code></span></p>
 <p>Hier haben wir eine Struktur definiert und sie <code>Rectangle</code> genannt. Innerhalb
 der geschweiften Klammern haben wir die Felder <code>width</code> und <code>height</code> definiert,
 die beide den Typ <code>u32</code> haben. Dann erzeugten wir in <code>main</code> eine Instanz von
 <code>Rectangle</code> mit der Breite <code>30</code> und Höhe <code>50</code>.</p>
 <p>Unsere Funktion <code>area</code> hat nun einen Parameter, den wir <code>rectangle</code> genannt
-haben und dessen Typ eine unveränderbare Ausleihe (immutable borrow) einer
-Strukturinstanz <code>Rectangle</code> ist. Wie in Kapitel 4 erwähnt, wollen wir die
-Struktur nur ausleihen, nicht aber deren Eigentümerschaft (ownership)
-übernehmen. Auf diese Weise behält <code>main</code> seine Eigentümerschaft und kann
-weiterhin <code>rect1</code> verwenden, weshalb wir <code>&amp;</code> in der Funktionssignatur und an
-der Aufrufstelle verwenden.</p>
+haben und dessen Typ eine unveränderbare Borrow einer Strukturinstanz
+<code>Rectangle</code> ist. Wie in Kapitel 4 erwähnt, wollen wir die Struktur nur
+ausleihen, nicht aber deren Eigentum übernehmen. Auf diese Weise behält <code>main</code>
+das Eigentum und kann weiterhin <code>rect1</code> verwenden, weshalb wir <code>&amp;</code> in der
+Funktionssignatur und an der Aufrufstelle verwenden.</p>
 <p>Die Funktion <code>area</code> greift auf die Felder <code>width</code> und <code>height</code> der Instanz
 <code>Rectangle</code> zu. (Beachte, dass der Zugriff auf Felder einer ausgeliehenen
-Struktur-Instanz die Feldwerte nicht verschiebt, weshalb du häufig Ausleihen
+Struktur-Instanz die Feldwerte nicht verschiebt, weshalb du häufig Borrowing
 von Strukturen siehst.) Unsere Funktionssignatur für <code>area</code> sagt jetzt genau,
 was wir meinen: Berechne die Fläche von <code>Rectangle</code> unter Verwendung seiner
 Felder <code>width</code> und <code>height</code>. Dies drückt aus, dass Breite und Höhe in Beziehung
 zueinander stehen, und gibt den Werten beschreibende Namen, ohne die
 Tupelindexwerte <code>0</code> und <code>1</code> zu verwenden. Das erhöht die Lesbarkeit.</p>
-<h3 id="funktionalität-mit-abgeleiteten-merkmalen-derived-traits-hinzufügen"><a class="header" href="#funktionalität-mit-abgeleiteten-merkmalen-derived-traits-hinzufügen">Funktionalität mit abgeleiteten Merkmalen (derived traits) hinzufügen</a></h3>
+<h3 id="funktionalität-mit-abgeleiteten-traits-hinzufügen"><a class="header" href="#funktionalität-mit-abgeleiteten-traits-hinzufügen">Funktionalität mit abgeleiteten Traits hinzufügen</a></h3>
 <p>Es wäre hilfreich, eine Instanz von <code>Rectangle</code> samt der Werte seiner Felder
-ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
+ausgeben zu können, während wir unser Programm debuggen. In Listing 5-11
 versuchen wir, das <a href="https://doc.rust-lang.org/std/macro.println.html">Makro <code>println!</code></a> zu verwenden, das wir in den
 vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -311,23 +309,23 @@ fn main() {
 
     println!("rect1 ist {rect1}");
 }</code></pre>
-<p><span class="caption">Codeblock 5-11: Versuch, eine <code>Rectangle</code>-Instanz
+<p><span class="caption">Listing 5-11: Versuch, eine <code>Rectangle</code>-Instanz
 auszugeben</span></p>
 <p>Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:</p>
 <pre><code class="language-text">error[E0277]: `Rectangle` doesn't implement `std::fmt::Display`
 </code></pre>
-<p>Das Makro <code>println!</code> kann diverse Formatierungen vornehmen. Die geschweiften
+<p>Das Makro <code>println!</code> kann viele Arten von Formatierung. Die geschweiften
 Klammern weisen <code>println!</code> an, die Formatierung <code>Display</code> zu verwenden, bei der
 die Ausgabe direkt für den Endbenutzer bestimmt ist. Die primitiven Typen, die
-wir bisher gesehen haben, implementieren <code>Display</code> standardmäßig, denn es gibt
-nur eine Möglichkeit, dem Benutzer eine <code>1</code> oder einen anderen primitiven Typ
-zu zeigen. Aber bei Strukturen ist die Formatierung, die <code>println!</code> verwenden
-soll, weniger klar, da es mehrere Darstellungsmöglichkeiten gibt: Möchtest du
-Kommas oder nicht? Möchtest du die geschweiften Klammern ausgeben? Sollen alle
-Felder angezeigt werden? Aufgrund der vielen Möglichkeiten versucht Rust nicht
-zu erraten, was wir wollen. Strukturen haben daher keine
-Standardimplementierung von <code>Display</code>, um die mit <code>println!</code> und dem
-Platzhalter <code>{}</code> verwenden zu können.</p>
+wir bisher gesehen haben, implementieren standardmäßig <code>Display</code>, weil es nur
+eine sinnvolle Art gibt, dem Benutzer eine <code>1</code> oder einen anderen primitiven Typ
+anzuzeigen. Bei Strukturen ist dagegen weniger klar, wie <code>println!</code> die Ausgabe
+formatieren soll, weil es mehr Darstellungsmöglichkeiten gibt: Sollen Kommas
+verwendet werden oder nicht? Sollen die geschweiften Klammern mit ausgegeben
+werden? Sollen alle Felder angezeigt werden? Aufgrund der vielen Möglichkeiten
+versucht Rust nicht zu erraten, was wir wollen. Strukturen haben daher keine
+Standardimplementierung von <code>Display</code>, die man mit <code>println!</code> und dem
+Platzhalter <code>{}</code> verwenden könnte.</p>
 <p>Wenn wir die Fehlerausgabe weiterlesen, werden wir diesen hilfreichen Hinweis
 finden:</p>
 <pre><code class="language-text">   = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
@@ -335,7 +333,7 @@ finden:</p>
 <p>Lass es uns versuchen! Der Makroaufruf <code>println!</code> wird geändert in
 <code>println!("rect1 ist {rect1:?}");</code>. Wenn wir den Bezeichner <code>:?</code> innerhalb der
 geschweiften Klammern angeben, teilen wir <code>println!</code> mit, dass wir das
-Ausgabeformat <code>Debug</code> verwenden wollen. Das Merkmal <code>Debug</code> ermöglicht es, die
+Ausgabeformat <code>Debug</code> verwenden wollen. Das Trait <code>Debug</code> ermöglicht es, die
 Struktur so auszugeben, dass Entwickler ihren Wert erkennen können, während sie
 den Code debuggen.</p>
 <p>Kompiliere den Code mit dieser Änderung. Verflixt! Wir erhalten immer noch
@@ -349,7 +347,7 @@ einen Fehler:</p>
 <p>Rust enthält durchaus eine Funktionalität zum Ausgeben von Debug-Informationen,
 aber wir müssen diese explizit für unsere Struktur aktivieren. Dazu fügen wir
 das äußere Attribut <code>#[derive(Debug)]</code> unmittelbar vor der Strukturdefinition
-ein, wie in Codeblock 5-12 gezeigt.</p>
+ein, wie in Listing 5-12 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
 struct Rectangle {
@@ -365,8 +363,8 @@ fn main() {
 
     println!("rect1 ist {rect1:?}");
 }</code></pre>
-<p><span class="caption">Codeblock 5-12: Attribut zum Verwenden des Merkmals
-<code>Debug</code> und Ausgeben der Instanz <code>Rectangle</code> mittels Debug-Formatierung</span></p>
+<p><span class="caption">Listing 5-12: Attribut zum Verwenden des Trait <code>Debug</code>
+und Ausgeben der Instanz <code>Rectangle</code> mittels Debug-Formatierung</span></p>
 <p>Wenn wir das Programm nun ausführen, werden wir keinen Fehler mehr erhalten und
 folgende Ausgabe sehen:</p>
 <pre><code class="language-console">$ cargo run
@@ -380,7 +378,7 @@ dieser Instanz, was bei der Fehlersuche definitiv hilfreich ist. Bei größeren
 Strukturen ist es hilfreich, eine leichter lesbare Ausgabe zu erhalten.
 In diesen Fällen können wir <code>{:#?}</code> anstelle von <code>{:?}</code> in der
 <code>println!</code>-Meldung verwenden. In diesem Beispiel wird bei Verwendung von
-<code>{:#?}</code> folgendes ausgegeben:</p>
+<code>{:#?}</code> Folgendes ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
@@ -391,11 +389,11 @@ rect1 ist Rectangle {
 }
 </code></pre>
 <p>Eine andere Möglichkeit, einen Wert im <code>Debug</code>-Format auszugeben, ist die
-Verwendung des <a href="https://doc.rust-lang.org/std/macro.dbg.html">Makros <code>dbg!</code></a>, das die Eigentümerschaft eines Ausdrucks
-übernimmt (im Gegensatz zu <code>println!</code>, das eine Referenz nimmt), die Datei und
+Verwendung des <a href="https://doc.rust-lang.org/std/macro.dbg.html">Makros <code>dbg!</code></a>, das das Eigentum eines Ausdrucks übernimmt
+(im Gegensatz zu <code>println!</code>, das eine Referenz nimmt), die Datei und
 Zeilennummer, in der der <code>dbg!</code>-Makroaufruf in deinem Code vorkommt, zusammen
-mit dem resultierenden Wert des Ausdrucks ausgibt und die Eigentümerschaft am
-Wert zurückgibt.</p>
+mit dem resultierenden Wert des Ausdrucks ausgibt und das Eigentum am Wert
+zurückgibt.</p>
 <blockquote>
 <p>Hinweis: Der Aufruf des Makros <code>dbg!</code> schreibt in die
 Standardfehlerausgabe (<code>stderr</code>), im Gegensatz zu <code>println!</code>, das in
@@ -420,12 +418,11 @@ fn main() {
 
     dbg!(&amp;rect1);
 }</code></pre>
-<p>Wir können <code>dbg!</code> um den Ausdruck <code>30 * scale</code> setzen, und da <code>dbg!</code> die
-Eigentümerschaft des Werts des Ausdrucks zurückgibt, erhält das Feld <code>width</code>
-denselben Wert, als wenn wir den <code>dbg!</code>-Aufruf dort nicht hätten. Wir wollen
-nicht, dass <code>dbg!</code> die Eigentümerschaft von <code>rect1</code> übernimmt, also übergeben
-wir eine Referenz auf <code>rect1</code> im nächsten Aufruf. So sieht die Ausgabe dieses
-Beispiels aus:</p>
+<p>Wir können <code>dbg!</code> um den Ausdruck <code>30 * scale</code> setzen, und da <code>dbg!</code> das
+Eigentum am Wert des Ausdrucks zurückgibt, erhält das Feld <code>width</code> denselben
+Wert, als wenn wir den <code>dbg!</code>-Aufruf dort nicht hätten. Wir wollen nicht, dass
+<code>dbg!</code> das Eigentum an <code>rect1</code> übernimmt, also übergeben wir eine Referenz auf
+<code>rect1</code> im nächsten Aufruf. So sieht die Ausgabe dieses Beispiels aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling rectangles v0.1.0 (file:///projects/rectangles)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.61s
@@ -443,12 +440,12 @@ deren Wert aus). Der <code>dbg!</code>-Aufruf in Zeile 14 von <em>src/main.rs</e
 von <code>&amp;rect1</code> aus, der die Struktur <code>Rectangle</code> ist. Diese Ausgabe verwendet die
 hübsche <code>Debug</code>-Formatierung des Typs <code>Rectangle</code>. Das Makro <code>dbg!</code> kann sehr
 hilfreich sein, wenn du versuchst, herauszufinden, was dein Code macht!</p>
-<p>Zusätzlich zum Merkmal <code>Debug</code> hat Rust eine Reihe von Merkmalen für uns
+<p>Zusätzlich zum Trait <code>Debug</code> hat Rust eine Reihe von Traits für uns
 bereitgestellt, die wir mit dem Attribut <code>derive</code> verwenden können und die
 unseren benutzerdefinierten Typen nützliches Verhalten verleihen können. Diese
-Merkmale und ihr Verhalten sind in <a href="appendix-03-derivable-traits.html">Anhang C</a> aufgeführt. In Kapitel 10
-werden wir behandeln, wie man diese Merkmale mit benutzerdefiniertem Verhalten
-implementiert und wie man eigene Merkmale erstellt. Es gibt auch viele andere
+Traits und ihr Verhalten sind in <a href="appendix-03-derivable-traits.html">Anhang C</a> aufgeführt. In Kapitel 10
+werden wir behandeln, wie man diese Traits mit benutzerdefiniertem Verhalten
+implementiert und wie man eigene Traits erstellt. Es gibt auch viele andere
 Attribute als <code>derive</code>; für weitere Informationen, siehe den <a href="https://doc.rust-lang.org/reference/attributes.html">Abschnitt
 „Attribute“ in der Rust-Referenz</a>.</p>
 <p>Unsere Funktion <code>area</code> ist sehr spezifisch: Sie berechnet nur die Fläche von

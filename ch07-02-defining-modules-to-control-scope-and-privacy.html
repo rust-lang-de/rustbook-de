@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Kontrollumfang und Datenschutz mit Modulen - Die Programmiersprache Rust</title>
+        <title>Gültigkeitsbereich und Sichtbarkeit mit Modulen steuern - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="kontrollumfang-und-datenschutz-mit-modulen"><a class="header" href="#kontrollumfang-und-datenschutz-mit-modulen">Kontrollumfang und Datenschutz mit Modulen</a></h2>
+                        <h2 id="gültigkeitsbereich-und-sichtbarkeit-mit-modulen-steuern"><a class="header" href="#gültigkeitsbereich-und-sichtbarkeit-mit-modulen-steuern">Gültigkeitsbereich und Sichtbarkeit mit Modulen steuern</a></h2>
 <p>In diesem Abschnitt werden wir über Module und andere Teile des Modulsystems
 sprechen, nämlich <em>Pfade</em>, die es dir erlauben, Elemente zu benennen; das
 Schlüsselwort <code>use</code>, das einen Pfad in den Gültigkeitsbereich bringt; und das
@@ -176,11 +176,11 @@ ihren Code organisieren. Wir werden im Laufe dieses Kapitels Beispiele für jede
 dieser Regeln durchgehen, aber dies ist ein guter Ort, um sich daran zu
 erinnern, wie Module funktionieren.</p>
 <ul>
-<li><strong>Beginne bei der Kistenwurzel (crate root)</strong>: Beim Kompilieren einer Kiste
-sucht der Compiler zuerst in der Wurzeldatei der Kiste (normalerweise
-<em>src/lib.rs</em> für eine Bibliothekskiste und <em>src/main.rs</em> für eine
-Binärkiste).</li>
-<li><strong>Module deklarieren</strong>: In der Kisten-Stammdatei kannst du neue Module
+<li><strong>Beginne bei der Crate-Wurzel (crate root):</strong> Beim Kompilieren einer Crate
+sucht der Compiler zuerst in der Wurzeldatei der Crate (normalerweise
+<em>src/lib.rs</em> für eine Bibliotheks-Crate und <em>src/main.rs</em> für eine
+binäre Crate).</li>
+<li><strong>Module deklarieren:</strong> In der Crate-Wurzel kannst du neue Module
 deklarieren; z.B. deklarierst du ein „Garten“-Modul mit <code>mod garden;</code>. Der
 Compiler wird an diesen Stellen nach dem Code des Moduls suchen:
 <ul>
@@ -190,7 +190,7 @@ des Semikolons</li>
 <li>In der Datei <em>src/garden/mod.rs</em></li>
 </ul>
 </li>
-<li><strong>Submodule deklarieren</strong>: In jeder anderen Datei als der Kistenwurzel
+<li><strong>Submodule deklarieren:</strong> In jeder anderen Datei als der Crate-Wurzel
 kannst du Untermodule deklarieren. Du kannst zum Beispiel <code>mod vegetables;</code>
 in <em>src/garden.rs</em> deklarieren. Der Compiler sucht den Code des Submoduls in
 dem Verzeichnis, das nach dem übergeordneten Modul benannt ist, an folgenden
@@ -202,27 +202,27 @@ anstelle des Semikolons</li>
 <li>In der Datei <em>src/garden/vegetables/mod.rs</em></li>
 </ul>
 </li>
-<li><strong>Pfade zum Code in Modulen</strong>: Sobald ein Modul Teil deiner Kiste ist, kannst
-du auf den Code in diesem Modul von jedem anderen Ort in derselben Kiste aus
-referenzieren, solange die Datenschutzregeln dies zulassen, indem du den Pfad
-zum Code verwendest. Zum Beispiel würde ein Typ <code>Asparagus</code> (engl. Spargel)
-im Gartengemüse-Modul unter <code>crate::garden::vegetables::Asparagus</code> zu finden
+<li><strong>Pfade zum Code in Modulen:</strong> Sobald ein Modul Teil deiner Crate ist, kannst
+du auf den Code in diesem Modul von jedem anderen Ort in derselben Crate aus
+referenzieren, solange die Sichtbarkeitsregeln dies zulassen, indem du den
+Pfad zum Code verwendest. Zum Beispiel würde ein Typ <code>Asparagus</code> (Spargel) im
+Gartengemüse-Modul unter <code>crate::garden::vegetables::Asparagus</code> zu finden
 sein.</li>
-<li><strong>Privat vs. öffentlich</strong>: Der Code innerhalb eines Moduls ist standardmäßig
+<li><strong>Privat vs. öffentlich:</strong> Der Code innerhalb eines Moduls ist standardmäßig
 für seine übergeordneten Module nicht zugänglich. Um ein Modul öffentlich zu
 machen, deklariere es mit <code>pub mod</code> anstelle von <code>mod</code>. Um Elemente innerhalb
 eines öffentlichen Moduls ebenfalls öffentlich zu machen, verwende <code>pub</code> vor
 ihren Deklarationen.</li>
-<li><strong>Das Schlüsselwort <code>use</code></strong>: Innerhalb eines Gültigkeitsbereichs werden mit
+<li><strong>Das Schlüsselwort <code>use</code>:</strong> Innerhalb eines Gültigkeitsbereichs werden mit
 dem Schlüsselwort <code>use</code> Verknüpfungen zu Elementen erstellt, um die
-Wiederholung langer Pfade zu reduzieren. In jedem Gültigkeitsbereichs, der
+Wiederholung langer Pfade zu reduzieren. In jedem Gültigkeitsbereich, der
 auf <code>crate::garden::vegetables::Asparagus</code> referenzieren kann, kann man eine
 Verknüpfung mit <code>use crate::garden::vegetables::Asparagus</code> erstellen und von
 da an braucht man nur noch <code>Asparagus</code> zu schreiben, um diesen Typ im
 Gültigkeitsbereich zu verwenden.</li>
 </ul>
-<p>Hier erstellen wir eine binäre Kiste namens <code>backyard</code> (Hinterhof), die diese
-Regeln veranschaulicht. Das Verzeichnis der Kiste, ebenfalls <em>backyard</em>
+<p>Hier erstellen wir eine binäre Crate namens <code>backyard</code> (Hinterhof), die diese
+Regeln veranschaulicht. Das Verzeichnis der Crate, ebenfalls <em>backyard</em>
 genannt, enthält diese Dateien und Verzeichnisse:</p>
 <pre><code class="language-text">backyard
 ├── Cargo.lock
@@ -233,7 +233,7 @@ genannt, enthält diese Dateien und Verzeichnisse:</p>
     ├── garden.rs
     └── main.rs
 </code></pre>
-<p>Die Stammdatei der Kiste ist in diesem Fall <em>src/main.rs</em>, und sie enthält:</p>
+<p>Die Wurzel der Crate ist in diesem Fall <em>src/main.rs</em>, und sie enthält:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust noplayground ignore">use crate::garden::vegetables::Asparagus;
 
@@ -253,15 +253,15 @@ in <em>src/garden.rs</em> findet, nämlich:</p>
 pub struct Asparagus {}</code></pre>
 <p>Lass uns nun auf die Einzelheiten dieser Regeln eingehen und sie in der Praxis demonstrieren!</p>
 <h3 id="gruppierung-von-zugehörigem-code-in-modulen"><a class="header" href="#gruppierung-von-zugehörigem-code-in-modulen">Gruppierung von zugehörigem Code in Modulen</a></h3>
-<p><em>Module</em> ermöglichen es uns, den Code innerhalb einer Kiste zu organisieren,
-damit er lesbar und leicht wiederverwendbar ist. Mit Modulen können wir auch
-den <em>Datenschutz</em> (privacy) von Elementen kontrollieren, da Code innerhalb
-eines Moduls standardmäßig privat ist. Private Elemente sind interne
-Implementierungsdetails, die nicht für die externe Nutzung zur Verfügung
-stehen. Wir können uns dafür entscheiden, Module und die darin enthaltenen
-Elemente öffentlich zu machen, damit externer Code sie verwenden und von ihnen
-abhängen kann.</p>
-<p>Als Beispiel schreiben wir eine Bibliothekskiste, die die Funktionalität eines
+<p><em>Module</em> ermöglichen es uns, den Code innerhalb einer Crate zu organisieren,
+damit er lesbar und leicht wiederverwendbar ist. Mit Modulen können wir auch die
+<em>Sichtbarkeit</em> (privacy) von Elementen kontrollieren, da Code innerhalb eines
+Moduls standardmäßig privat ist. Private Elemente sind interne
+Implementierungsdetails, die nicht für die externe Nutzung zur Verfügung stehen.
+Wir können uns dafür entscheiden, Module und die darin enthaltenen Elemente
+öffentlich zu machen, damit externer Code sie verwenden und von ihnen abhängen
+kann.</p>
+<p>Als Beispiel schreiben wir eine Bibliotheks-Crate, die die Funktionalität eines
 Restaurants bietet. Wir werden die Signaturen der Funktionen definieren, aber
 ihre Rümpfe leer lassen, um uns auf die Organisation des Codes zu konzentrieren
 und nicht auf die Implementierung eines Restaurants.</p>
@@ -272,11 +272,11 @@ hin, Kellner nehmen Bestellungen auf und rechnen ab und Barkeeper machen die
 Getränke. Auf der <em>Hinterseite des Hauses</em> arbeiten die Küchenchefs und Köche
 in der Küche, Geschirrspüler waschen ab und Manager erledigen
 Verwaltungsarbeiten.</p>
-<p>Um unsere Kiste auf diese Weise zu strukturieren, können wir ihre Funktionen in
+<p>Um unsere Crate auf diese Weise zu strukturieren, können wir ihre Funktionen in
 verschachtelten Modulen organisieren. Erstelle eine neue Bibliothek namens
-<code>restaurant</code>, indem du <code>cargo new --lib restaurant</code> ausführst. Gib dann den
-Code in Codeblock 7-1 in <em>src/lib.rs</em> ein, um einige Module und
-Funktionssignaturen zu definieren. Hier ist der vordere Teil des Hauses:</p>
+<code>restaurant</code>, indem du <code>cargo new --lib restaurant</code> ausführst. Gib dann den Code
+in Listing 7-1 in <em>src/lib.rs</em> ein, um einige Module und Funktionssignaturen
+zu definieren. Hier ist der vordere Teil des Hauses:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground">mod front_of_house {
     mod hosting {
@@ -293,14 +293,14 @@ Funktionssignaturen zu definieren. Hier ist der vordere Teil des Hauses:</p>
         fn take_payment() {}
     }
 }</code></pre>
-<p><span class="caption">Codeblock 7-1: Ein Modul <code>front_of_house</code>, das andere
+<p><span class="caption">Listing 7-1: Ein Modul <code>front_of_house</code>, das andere
 Module enthält, die dann Funktionen enthalten</span></p>
 <p>Wir definieren ein Modul mit dem Schlüsselwort <code>mod</code>, gefolgt vom Namen des
 Moduls (in diesem Fall <code>front_of_house</code>). Der Rumpf des Moduls steht dann in
 geschweiften Klammern. Innerhalb von Modulen können wir andere Module
 platzieren, wie in diesem Fall mit den Modulen <code>hosting</code> und <code>serving</code>. Module
 können auch Definitionen für andere Elemente enthalten, wie Strukturen,
-Aufzählungen, Konstanten, Merkmalen und – wie in Codeblock 7-1 –
+Aufzählungen, Konstanten, Traits und – wie in Listing 7-1 –
 Funktionen.</p>
 <p>Durch die Verwendung von Modulen können wir verwandte Definitionen gruppieren
 und angeben, warum sie verwandt sind. Programmierer, die diesen Code verwenden,
@@ -308,11 +308,11 @@ können anhand der Gruppen durch den Code navigieren, anstatt alle Definitionen
 lesen zu müssen, und finden so leichter die für sie relevanten Definitionen.
 Programmierer, die diesem Code neue Funktionalität hinzufügen, wissen, wo sie
 den Code platzieren müssen, damit das Programm übersichtlich bleibt.</p>
-<p>Vorhin haben wir erwähnt, dass <em>src/main.rs</em> und <em>src/lib.rs</em> als
-<em>Kistenwurzel</em> bezeichnet werden. Der Grund für ihren Namen ist, dass der
-Inhalt dieser beiden Dateien ein Modul namens <code>crate</code> an der Wurzel der
-Modulstruktur der Kiste bilden, die als <em>Modulbaum</em> bekannt ist.</p>
-<p>Codeblock 7-2 zeigt den Modulbaum für die Struktur in Codeblock 7-1.</p>
+<p>Vorhin haben wir erwähnt, dass <em>src/main.rs</em> und <em>src/lib.rs</em> als <em>Crate-Wurzel</em>
+bezeichnet werden. Der Grund für ihren Namen ist, dass der Inhalt dieser beiden
+Dateien ein Modul namens <code>crate</code> an der Wurzel der Modulstruktur der Crate
+bilden, die als <em>Modulbaum</em> bekannt ist.</p>
+<p>Listing 7-2 zeigt den Modulbaum für die Struktur in Listing 7-1.</p>
 <pre><code class="language-text">crate
  └── front_of_house
      ├── hosting
@@ -323,7 +323,7 @@ Modulstruktur der Kiste bilden, die als <em>Modulbaum</em> bekannt ist.</p>
          ├── serve_order
          └── take_payment
 </code></pre>
-<p><span class="caption">Codeblock 7-2: Modulbaum für den Code in Codeblock
+<p><span class="caption">Listing 7-2: Modulbaum für den Code in Listing
 7-1</span></p>
 <p>Dieser Baum zeigt, wie einige Module in anderen Modulen verschachtelt sind;
 z.B. ist <code>hosting</code> innerhalb von <code>front_of_house</code>. Der Baum zeigt auch, dass

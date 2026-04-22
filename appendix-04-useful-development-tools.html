@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -180,7 +180,7 @@ Projekts versteht, das Cargo verwendet. Um ein beliebiges Cargo-Projekt zu
 formatieren, gibst du Folgendes ein:</p>
 <pre><code class="language-console">$ cargo fmt
 </code></pre>
-<p>Mit diesem Befehl wird der gesamte Rust-Code in der aktuellen Kiste neu
+<p>Mit diesem Befehl wird der gesamte Rust-Code in der aktuellen Crate neu
 formatiert. Dies sollte nur den Stil des Codes ändern, nicht die Semantik des
 Codes. Weitere Informationen zu <code>rustfmt</code> findest du in <a href="https://github.com/rust-lang/rustfmt">seiner
 Dokumentation</a>.</p>
@@ -229,10 +229,10 @@ den Befehl <code>cargo fix</code> ausführen:</p>
 verschiedenen Rust-Editionen zu konvertieren. Die Editionen sind in <a href="appendix-05-editions.html">Anhang
 E</a> aufgeführt.</p>
 <h3 id="mehr-statische-codeanalyse-mit-clippy"><a class="header" href="#mehr-statische-codeanalyse-mit-clippy">Mehr statische Codeanalyse mit Clippy</a></h3>
-<p>Das Tool Clippy ist eine Sammlung von Tools zur statischen Codeanalyse, mit dem
+<p>Das Tool Clippy ist eine Sammlung von Tools zur statischen Codeanalyse, mit der
 du häufige Fehler aufspüren und deinen Rust-Code verbessern kannst. Clippy ist
 in den Standardinstallationen von Rust enthalten.</p>
-<p>Um Clippy bei einem Cargo-Projekt auszuführen, gib folgendes ein:</p>
+<p>Um Clippy bei einem Cargo-Projekt auszuführen, gib Folgendes ein:</p>
 <pre><code class="language-console">$ cargo clippy
 </code></pre>
 <p>Angenommen, du schreibst ein Programm, das eine Annäherung an eine
@@ -270,7 +270,7 @@ Fehlern oder Warnungen von Clippy:</p>
 <p>Um die IDE-Integration zu erleichtern, empfiehlt die Rust-Gemeinschaft die
 Verwendung des <a href="https://rust-analyzer.github.io"><code>rust-analyzer</code></a>. Bei diesem Werkzeug handelt es
 sich um eine Reihe von Compiler-zentrierten Hilfsprogrammen, die das
-<a href="http://langserver.org/">Sprach-Server-Protokoll (Language Server Protocol)</a> beherrschen, eine
+<a href="https://langserver.org/">Sprach-Server-Protokoll (Language Server Protocol)</a> beherrschen, eine
 Spezifikation für IDEs und Programmiersprachen zur Kommunikation untereinander.
 Verschiedene Clients können <code>rust-analyzer</code> verwenden, wie zum Beispiel <a href="https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer">das
 Rust-Plugin für Visual Studio Code</a>.</p>

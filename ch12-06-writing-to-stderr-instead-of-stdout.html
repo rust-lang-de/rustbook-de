@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -182,8 +182,8 @@ werden, weiterhin auf dem Bildschirm angezeigt werden.</p>
 <p>Von Kommandozeilenprogrammen wird erwartet, dass sie Fehlermeldungen an die
 Standardfehlerausgabe senden, sodass wir Fehlermeldungen auch dann noch auf dem
 Bildschirm sehen können, wenn wir die Standardausgabe in eine Datei umleiten.
-Unser Programm ist zur Zeit nicht sehr brav: Wir werden gleich sehen, dass es
-die ausgegebenen Fehlermeldungen stattdessen in eine Datei speichert!</p>
+Unser Programm ist zurzeit nicht sehr brav: Wir werden gleich sehen, dass es die
+ausgegebenen Fehlermeldungen stattdessen in eine Datei speichert!</p>
 <p>Der Weg, dieses Verhalten zu demonstrieren, besteht darin, das Programm mit <code>&gt;</code>
 und dem Dateipfad <em>output.txt</em> laufen zu lassen, zu dem wir die
 Standardausgabe umleiten wollen. Wir werden keine Argumente übergeben, was
@@ -201,7 +201,7 @@ nützlicher, wenn Fehlermeldungen wie diese auf der Standardfehlerausgabe
 ausgegeben werden, sodass nur Daten aus einem erfolgreichen Lauf in der Datei
 landen. Das werden wir ändern.</p>
 <h3 id="fehler-auf-der-standardfehlerausgabe-ausgeben"><a class="header" href="#fehler-auf-der-standardfehlerausgabe-ausgeben">Fehler auf der Standardfehlerausgabe ausgeben</a></h3>
-<p>Wir werden den Code in Codeblock 12-24 verwenden, um zu ändern, wie
+<p>Wir werden den Code in Listing 12-24 verwenden, um zu ändern, wie
 Fehlermeldungen ausgegeben werden. Aufgrund der Refaktorierung, die wir früher
 in diesem Kapitel vorgenommen haben, befindet sich der gesamte Code, der
 Fehlermeldungen ausgibt, in einer einzigen Funktion, nämlich der Funktion
@@ -271,7 +271,7 @@ stattdessen <code>eprintln!</code> verwenden.</p>
 </span><span class="boring">
 </span><span class="boring">    Ok(())
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 12-24: Schreiben von Fehlermeldungen auf die
+<p><span class="caption">Listing 12-24: Schreiben von Fehlermeldungen auf die
 Standardfehlerausgabe anstelle der Standardausgabe durch Verwenden von
 <code>eprintln!</code></span></p>
 <p>Lassen wir das Programm nun auf die gleiche Art und Weise erneut laufen, ohne
@@ -298,13 +298,12 @@ gegebenenfalls die Standardfehlerausgabe für die Fehlerausgabe verwenden.</p>
 gelernt hast, und behandelt das Durchführen gängiger E/A-Operationen in Rust.
 Durch das Verwenden von Kommandozeilenargumenten, Dateien, Umgebungsvariablen
 und des Makros <code>eprintln!</code> für die Fehlerausgabe bist du jetzt bereit,
-Kommandozeilenanwendungen zu schreiben. Wenn du die Konzepte mit denen in den
-vorhergehenden Kapiteln kombinierst, wird dein Code gut organisiert sein, Daten
-effektiv in den entsprechenden Datenstrukturen speichern, Fehler gut behandeln
-und gut getestet sein.</p>
+Kommandozeilenanwendungen zu schreiben. Wenn du die Konzepte mit den Konzepten
+aus den vorhergehenden Kapiteln kombinierst, wird dein Code gut organisiert
+sein, Daten effektiv in den entsprechenden Datenstrukturen speichern, Fehler gut
+behandeln und gut getestet sein.</p>
 <p>Als Nächstes werden wir einige Rust-Funktionalitäten untersuchen, die von
-funktionalen Sprachen beeinflusst wurden: Funktionsabschlüsse (closures) und
-Iteratoren.</p>
+funktionalen Sprachen beeinflusst wurden: Closures und Iteratoren.</p>
 
                     </main>
 

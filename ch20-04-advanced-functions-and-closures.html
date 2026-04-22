@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Erweiterte Funktionen und Funktionsabschlüsse (closures) - Die Programmiersprache Rust</title>
+        <title>Erweiterte Funktionen und Closures - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,29 +161,27 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="erweiterte-funktionen-und-funktionsabschlüsse-closures"><a class="header" href="#erweiterte-funktionen-und-funktionsabschlüsse-closures">Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></h2>
+                        <h2 id="erweiterte-funktionen-und-closures"><a class="header" href="#erweiterte-funktionen-und-closures">Erweiterte Funktionen und Closures</a></h2>
 <p>Dieser Abschnitt befasst sich mit fortgeschrittenen Funktionalitäten im
-Zusammenhang mit Funktionen und Funktionsabschlüsse, einschließlich
-Funktionszeigern und Zurückgeben von Funktionsabschlüssen.</p>
+Zusammenhang mit Funktionen und Closures, einschließlich Funktionszeigern und
+Zurückgeben von Closures.</p>
 <h3 id="funktionszeiger"><a class="header" href="#funktionszeiger">Funktionszeiger</a></h3>
-<p>Wir haben darüber gesprochen, wie man Funktionsabschlüsse an Funktionen
-übergibt; man kann auch reguläre Funktionen an Funktionen übergeben! Diese
-Technik ist nützlich, wenn du eine Funktion, die du bereits definiert hast,
-übergeben willst, anstatt einen neuen Funktionsabschluss zu definieren.
-Funktionen haben den Typ <code>fn</code> (mit kleinem <em>f</em>), nicht zu verwechseln mit dem
-Funktionsabschlussmerkmal (closure trait) <code>Fn</code>. Der Typ <code>fn</code> wird
+<p>Wir haben darüber gesprochen, wie man Closures an Funktionen übergibt; man kann
+auch reguläre Funktionen an Funktionen übergeben! Diese Technik ist nützlich,
+wenn du eine Funktion, die du bereits definiert hast, übergeben willst, anstatt
+einen neuen Closure zu definieren. Funktionen haben den Typ <code>fn</code> (mit kleinem
+<em>f</em>), nicht zu verwechseln mit dem Closure-Trait <code>Fn</code>. Der Typ <code>fn</code> wird
 <em>Funktionszeiger</em> (function pointer) genannt. Die Übergabe von Funktionen mit
 Funktionszeigern ermöglicht es dir, Funktionen als Argumente für andere
 Funktionen zu verwenden.</p>
 <p>Die Syntax für die Angabe, dass ein Parameter ein Funktionszeiger ist, ähnelt
-der von Funktionsabschlüssen, wie in Codeblock 20-28 gezeigt, wo wir eine
-Funktion <code>add_one</code> definiert haben, die ihrem Parameter 1 hinzufügt. Die
-Funktion <code>do_twice</code> nimmt zwei Parameter entgegen: Einen Funktionszeiger auf
-eine beliebige Funktion mit einem <code>i32</code>-Parameter und einem <code>i32</code>-Rückgabewert,
-und einen <code>i32</code>-Parameter. Die Funktion <code>do_twice</code> ruft die Funktion <code>f</code>
-zweimal auf, übergibt ihr den Wert <code>arg</code> und addiert dann die Ergebnisse der
-beiden Funktionsaufrufe zusammen. Die Funktion <code>main</code> ruft <code>do_twice</code> mit den
-Argumenten <code>add_one</code> und <code>5</code> auf.</p>
+der von Closures, wie in Listing 20-28 gezeigt, wo wir eine Funktion <code>add_one</code>
+definiert haben, die ihrem Parameter 1 hinzufügt. Die Funktion <code>do_twice</code> nimmt
+zwei Parameter entgegen: einen Funktionszeiger auf eine beliebige Funktion mit
+einem <code>i32</code>-Parameter und einem <code>i32</code>-Rückgabewert, und einen <code>i32</code>-Parameter.
+Die Funktion <code>do_twice</code> ruft die Funktion <code>f</code> zweimal auf, übergibt ihr den Wert
+<code>arg</code> und addiert dann die Ergebnisse der beiden Funktionsaufrufe zusammen. Die
+Funktion <code>main</code> ruft <code>do_twice</code> mit den Argumenten <code>add_one</code> und <code>5</code> auf.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn add_one(x: i32) -&gt; i32 {
     x + 1
@@ -198,64 +196,60 @@ fn main() {
 
     println!("Die Antwort ist: {answer}");
 }</code></pre>
-<p><span class="caption">Codeblock 20-28: Verwenden des Typs <code>fn</code> zum
+<p><span class="caption">Listing 20-28: Verwenden des Typs <code>fn</code> zum
 Entgegennehmen eines Funktionszeigers als Argument</span></p>
 <p>Dieser Code gibt <code>Die Antwort ist: 12</code> aus. Wir spezifizieren, dass der
 Parameter <code>f</code> in <code>do_twice</code> ein <code>fn</code> ist, das einen Parameter vom Typ <code>i32</code>
 nimmt und ein <code>i32</code> zurückgibt. Wir können dann <code>f</code> im Rumpf von <code>do_twice</code>
 aufrufen. In <code>main</code> können wir den Funktionsnamen <code>add_one</code> als erstes Argument
 an <code>do_twice</code> übergeben.</p>
-<p>Im Gegensatz zu Funktionsabschlüssen ist <code>fn</code> ein Typ, nicht ein Merkmal, daher
-spezifizieren wir <code>fn</code> direkt als Parametertyp, anstatt einen generischen
-Typparameter mit einem Merkmal <code>Fn</code> als Merkmalsabgrenzung (trait bound) zu
-deklarieren.</p>
-<p>Funktionszeiger implementieren alle drei Funktionsabschlussmerkmale (<code>Fn</code>,
-<code>FnMut</code> und <code>FnOnce</code>), was bedeutet, dass du immer einen Funktionszeiger als
-Argument an eine Funktion übergeben kannst, die einen Funktionsabschluss
-erwartet. Es ist am besten, Funktionen mit einem generischen Typ und einer der
-Funktionsabschlussmerkmale zu schreiben, sodass deine Funktionen entweder
-Funktionen oder Funktionsabschlüsse akzeptieren können.</p>
-<p>Ein Beispiel, bei dem du nur <code>fn</code> und keine Funktionsabschlüsse akzeptieren
-möchtest, ist die Schnittstelle zu externem Code, der keine Funktionsabschlüsse
-hat: C-Funktionen können Funktionen als Argumente akzeptieren, aber C hat keine
-Funktionsabschlüsse.</p>
-<p>Als Beispiel dafür, wo du entweder einen inline definierten Funktionsabschluss
-oder eine benannte Funktion verwenden könntest, sehen wir uns die Verwendung
-der Methode <code>map</code> an, die vom Merkmal <code>Iterator</code> in der Standardbibliothek
-bereitgestellt wird. Um die Methode <code>map</code> zu verwenden, um einen Vektor von
-Zahlen in einen Vektor von Zeichenketten zu verwandeln, könnten wir einen
-Funktionsabschluss verwenden, wie in Codeblock 20-29.</p>
+<p>Im Gegensatz zu Closures ist <code>fn</code> ein Typ, kein Trait, daher spezifizieren wir
+<code>fn</code> direkt als Parametertyp, anstatt einen generischen Typparameter mit einem
+Trait <code>Fn</code> als Trait Bound zu deklarieren.</p>
+<p>Funktionszeiger implementieren alle drei Closure-Traits (<code>Fn</code>, <code>FnMut</code> und
+<code>FnOnce</code>), was bedeutet, dass du immer einen Funktionszeiger als Argument an
+eine Funktion übergeben kannst, die einen Closure erwartet. Es ist am besten,
+Funktionen mit einem generischen Typ und einer der Closure-Traits zu schreiben,
+sodass deine Funktionen entweder Funktionen oder Closures akzeptieren können.</p>
+<p>Ein Beispiel, bei dem du nur <code>fn</code> und keine Closures akzeptieren möchtest, ist
+die Schnittstelle zu externem Code, der keine Closures hat: C-Funktionen können
+Funktionen als Argumente akzeptieren, aber C hat keine Closures.</p>
+<p>Als Beispiel dafür, wo du entweder einen inline definierten Closure oder eine
+benannte Funktion verwenden könntest, sehen wir uns die Verwendung der Methode
+<code>map</code> an, die vom Trait <code>Iterator</code> in der Standardbibliothek bereitgestellt
+wird. Um die Methode <code>map</code> zu verwenden, um einen Vektor von Zahlen in einen
+Vektor von Strings zu verwandeln, könnten wir einen Closure verwenden, wie in
+Listing 20-29.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let list_of_numbers = vec![1, 2, 3];
 let list_of_strings: Vec&lt;String&gt; =
     list_of_numbers.iter().map(|i| i.to_string()).collect();
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-29: Verwendung eines Funktionsabschlusses
-mit der Methode <code>map</code> zur Umwandlung von Zahlen in Zeichenketten</span></p>
-<p>Oder wir könnten eine Funktion als Argument für <code>map</code> angeben anstelle des
-Funktionsabschlusses. Codeblock 20-30 zeigt, wie das aussehen würde.</p>
+<p><span class="caption">Listing 20-29: Verwendung eines Closure mit der Methode
+<code>map</code> zur Umwandlung von Zahlen in Strings</span></p>
+<p>Oder wir könnten eine Funktion als Argument für <code>map</code> angeben, anstelle des
+Closures. Listing 20-30 zeigt, wie das aussehen würde.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let list_of_numbers = vec![1, 2, 3];
 let list_of_strings: Vec&lt;String&gt; =
     list_of_numbers.iter().map(ToString::to_string).collect();
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-30: Verwenden der Methode
-<code>String::to_string</code> zur Umwandlung von Zahlen in Zeichenketten</span></p>
+<p><span class="caption">Listing 20-30: Verwenden der Methode <code>String::to_string</code>
+zur Umwandlung von Zahlen in Strings</span></p>
 <p>Beachte, dass wir die vollständig qualifizierte Syntax verwenden müssen, über
-die wir in Abschnitt <a href="ch20-02-advanced-traits.html">„Fortgeschrittene Merkmale (traits)“</a>
-gesprochen haben, weil es mehrere Funktionen namens <code>to_string</code> gibt.</p>
-<p>Hier verwenden wir die Funktion <code>to_string</code>, die im Merkmal <code>ToString</code>
-definiert ist, welche die Standardbibliothek für jeden Typ implementiert hat,
-der <code>Display</code> implementiert.</p>
+die wir in Abschnitt <a href="ch20-02-advanced-traits.html">„Fortgeschrittene Traits“</a> gesprochen
+haben, weil es mehrere Funktionen namens <code>to_string</code> gibt.</p>
+<p>Hier verwenden wir die Funktion <code>to_string</code>, die im Trait <code>ToString</code> definiert
+ist, welche die Standardbibliothek für jeden Typ implementiert hat, der
+<code>Display</code> implementiert.</p>
 <p>Aus Abschnitt <a href="ch06-01-defining-an-enum.html#werte-in-aufzählungen">„Werte in Aufzählungen“</a> in Kapitel 6 wissen wir,
 dass der Name jeder definierten Aufzählungsvariante auch eine
 Initialisierungsfunktion ist. Wir können diese Initialisierungsfunktionen als
-Funktionszeiger verwenden, die die Funktionsabschlussmerkmale implementieren,
-was bedeutet, dass wir die Initialisierungsfunktionen als Argumente für
-Methoden angeben können, die Funktionsabschlüsse nehmen, wie in Codeblock 20-32
-zu sehen ist.</p>
+Funktionszeiger verwenden, die die Closure-Traits implementieren, was bedeutet,
+dass wir die Initialisierungsfunktionen als Argumente für Methoden angeben
+können, die Closures nehmen, wie in Listing 20-31 zu sehen ist.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Status {
@@ -265,41 +259,41 @@ zu sehen ist.</p>
 
 let list_of_statuses: Vec&lt;Status&gt; = (0u32..20).map(Status::Value).collect();
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-31: Verwenden eines
+<p><span class="caption">Listing 20-31: Verwenden eines
 Aufzählungs-Initialisierers mit der Methode <code>map</code> zum Erstellen einer
 <code>Status</code>-Instanz aus Zahlen</span></p>
 <p>Hier erzeugen wir <code>Status::Value</code>-Instanzen für die <code>u32</code>-Werte im Bereich, für
 den <code>map</code> aufgerufen wird, indem wir die Initialisierungsfunktion von
 <code>Status::Value</code> verwenden. Einige Leute bevorzugen diesen Stil und einige Leute
-ziehen es vor, Funktionsabschlüsse zu verwenden. Sie kompilieren zum gleichen
-Code, also verwende den Stil, der für dich am klarsten ist.</p>
-<h3 id="zurückgeben-von-funktionsabschlüssen"><a class="header" href="#zurückgeben-von-funktionsabschlüssen">Zurückgeben von Funktionsabschlüssen</a></h3>
-<p>Funktionsabschlüsse werden durch Merkmale repräsentiert, was bedeutet, dass du
-Funktionsabschlüsse nicht direkt zurückgeben kannst. In den meisten Fällen, in
-denen du ein Merkmal zurückgeben möchtest, kannst du stattdessen den konkreten
-Typ, der das Merkmal implementiert, als Rückgabewert der Funktion verwenden.
-Aber das kannst du bei Funktionsabschlüssen normalerweise nicht tun, weil sie
-keinen konkreten Typ haben, den man zurückgeben kann. Es ist dir beispielsweise
-nicht erlaubt, den Funktionszeiger <code>fn</code> als Rückgabetyp zu verwenden, wenn der
-Funktionsabschluss irgendwelche Werte aus seinem Gültigkeitsbereich erfasst.</p>
+ziehen es vor, Closures zu verwenden. Sie kompilieren zum gleichen Code, also
+verwende den Stil, der für dich am klarsten ist.</p>
+<h3 id="zurückgeben-von-closures"><a class="header" href="#zurückgeben-von-closures">Zurückgeben von Closures</a></h3>
+<p>Closures werden durch Traits repräsentiert, was bedeutet, dass du Closures nicht
+direkt zurückgeben kannst. In den meisten Fällen, in denen du ein Trait
+zurückgeben möchtest, kannst du stattdessen den konkreten Typ, der das Trait
+implementiert, als Rückgabewert der Funktion verwenden. Aber das kannst du bei
+Closures normalerweise nicht tun, weil sie keinen konkreten Typ haben, den man
+zurückgeben kann. Es ist dir beispielsweise nicht erlaubt, den Funktionszeiger
+<code>fn</code> als Rückgabetyp zu verwenden, wenn der Closure irgendwelche Werte aus
+seinem Gültigkeitsbereich erfasst.</p>
 <p>Stattdessen wirst du normalerweise die Syntax <code>impl Trait</code> verwenden, die wir
 in Kapitel 10 kennengelernt haben. Du kannst jeden Funktionstyp zurückgeben,
 indem du <code>Fn</code>, <code>FnOnce</code> und <code>FnMut</code> verwendest. Zum Beispiel wird der Code in
-Codeblock 20-32 problemlos funktionieren.</p>
+Listing 20-32 problemlos funktionieren.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
     |x| x + 1
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-32: Rückgeben eines Funktionsabschlusses aus
-einer Funktion unter Verwendung der Syntax <code>impl Trait</code></span></p>
-<p>Wie wir jedoch im Abschnitt <a href="ch13-01-closures.html#herleiten-und-annotieren-von-funktionsabschluss-typen">„Herleiten und Annotieren von
-Funktionsabschluss-Typen“</a> in Kapitel 13 festgestellt haben, ist
-jeder Funktionsabschluss auch ein eigener Typ. Wenn du mit mehreren Funktionen
-arbeiten musst, die dieselbe Signatur, aber unterschiedliche Implementierungen
-haben, musst du ein Merkmals-Objekt für sie verwenden. Überlege, was passiert,
-wenn du einen Code wie in Codeblock 20-33 schreibst.</p>
+<p><span class="caption">Listing 20-32: Rückgeben eines Closures aus einer
+Funktion unter Verwendung der Syntax <code>impl Trait</code></span></p>
+<p>Wie wir jedoch im Abschnitt <a href="ch13-01-closures.html#herleiten-und-annotieren-von-closure-typen">„Herleiten und Annotieren von
+Closure-Typen“</a> in Kapitel 13 festgestellt haben, ist jeder
+Closure auch ein eigener Typ. Wenn du mit mehreren Funktionen arbeiten musst,
+die dieselbe Signatur, aber unterschiedliche Implementierungen haben, musst du
+ein Trait-Objekt für sie verwenden. Überlege, was passiert, wenn du einen Code
+wie in Listing 20-33 schreibst.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let handlers = vec![returns_closure(), returns_initialized_closure(123)];
@@ -316,14 +310,13 @@ fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
 fn returns_initialized_closure(init: i32) -&gt; impl Fn(i32) -&gt; i32 {
     move |x| x + init
 }</code></pre>
-<p><span class="caption">Codeblock 20-33: Erstellen eines <code>Vec&lt;T&gt;</code> von
-Funktionsabschlüssen, die durch Funktionen definiert sind, die <code>impl Fn</code>
-zurückgeben</span></p>
+<p><span class="caption">Listing 20-33: Erstellen eines <code>Vec&lt;T&gt;</code> von Closures,
+die durch Funktionen definiert sind, die <code>impl Fn</code> zurückgeben</span></p>
 <p>Hier haben wir zwei Funktionen <code>returns_closure</code> und
 <code>returns_initialized_closure</code>, die beide <code>impl Fn(i32) -&gt; i32</code> zurückgeben. Man
-beachte, dass die Funktionsabschlüsse, die sie zurückgeben, unterschiedlich
-sind, obwohl sie den gleichen Typ implementieren. Wenn wir versuchen, dies zu
-kompilieren, lässt uns Rust wissen, dass es nicht funktionieren wird:</p>
+beachte, dass die Closures, die sie zurückgeben, unterschiedlich sind, obwohl
+sie den gleichen Typ implementieren. Wenn wir versuchen, dies zu kompilieren,
+lässt uns Rust wissen, dass es nicht funktionieren wird:</p>
 <pre><code class="language-console">$ cargo build
    Compiling functions-example v0.1.0 (file:///projects/functions-example)
 error[E0308]: mismatched types
@@ -347,17 +340,16 @@ error: could not compile `functions-example` (bin "functions-example") due to 1 
 </code></pre>
 <p>Die Fehlermeldung sagt uns, dass Rust jedes Mal, wenn wir ein <code>impl Trait</code>
 zurückgeben, einen eindeutigen <em>undurchsichtigen Typ</em> (opaque type) erzeugt,
-einen Typ, bei dem wir weder die Details dessen sehen können, was Rust für uns
-konstruiert, noch den Typ erraten können, den Rust generieren wird. Obwohl
-diese Funktionen also beide Funktionsabschlüsse zurückgeben, die dasselbe
-Merkmal implementieren, nämlich <code>Fn(i32) -&gt; i32</code>, sind die undurchsichtigen
-Typen, die Rust für jede Funktion erzeugt, unterschiedlich. (Dies ist
-vergleichbar mit der Art und Weise, wie Rust unterschiedliche konkrete Typen
-für verschiedene asynchrone Blöcke erzeugt, selbst wenn sie denselben
-Ausgabetyp haben, wie wir im Abschnitt <a href="ch17-05-traits-for-async.html#der-typ-pin-und-das-merkmal-unpin">„Der Typ <code>Pin</code> und das Merkmal
-<code>Unpin</code>“</a> in Kapitel 17 gesehen haben.) Eine Lösung für dieses
-Problem haben wir jetzt schon ein paar Mal gesehen: Wir können ein
-Merkmals-Objekt verwenden, wie in Codeblock 20-34.</p>
+einen Typ, bei dem wir weder dessen Details dessen sehen können, was Rust für
+uns konstruiert, noch den Typ erraten können, den Rust generieren wird. Obwohl
+diese Funktionen also beide Closures zurückgeben, die dasselbe Trait
+implementieren, nämlich <code>Fn(i32) -&gt; i32</code>, sind die undurchsichtigen Typen, die
+Rust für jede Funktion erzeugt, unterschiedlich. (Dies ist vergleichbar mit der
+Art und Weise, wie Rust unterschiedliche konkrete Typen für verschiedene
+asynchrone Blöcke erzeugt, selbst wenn sie denselben Ausgabetyp haben, wie wir
+im Abschnitt <a href="ch17-05-traits-for-async.html#der-typ-pin-und-das-trait-unpin">„Der Typ <code>Pin</code> und das Trait <code>Unpin</code>“</a> in Kapitel 17
+gesehen haben.) Eine Lösung für dieses Problem haben wir jetzt schon ein paar
+Mal gesehen: Wir können ein Trait-Objekt verwenden, wie in Listing 20-34.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    let handlers = vec![returns_closure(), returns_initialized_closure(123)];
 </span><span class="boring">    for handler in handlers {
@@ -373,11 +365,11 @@ Merkmals-Objekt verwenden, wie in Codeblock 20-34.</p>
 fn returns_initialized_closure(init: i32) -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {
     Box::new(move |x| x + init)
 }</code></pre>
-<p><span class="caption">Codeblock 20-34: Erstellen eines <code>Vec&lt;T&gt;</code> von
-Funktionsabschlüssen, die durch Funktionen definiert sind, die <code>Box&lt;dyn Fn&gt;</code>
-zurückgeben, damit sie denselben Typ haben</span></p>
+<p><span class="caption">Listing 20-34: Erstellen eines <code>Vec&lt;T&gt;</code> von Closures,
+die durch Funktionen definiert sind, die <code>Box&lt;dyn Fn&gt;</code> zurückgeben, damit sie
+denselben Typ haben</span></p>
 <p>Dieser Code lässt sich sehr gut kompilieren. Weitere Informationen über
-Merkmalsobjekte findest du im Abschnitt <a href="ch18-02-trait-objects.html">„Verwendung von Merkmals-Objekten zur
+Trait-Objekte findest du im Abschnitt <a href="ch18-02-trait-objects.html">„Verwendung von Trait-Objekten zur
 Abstraktion über gemeinsames Verhalten“</a> in Kapitel 18.</p>
 <p>Als nächstes wollen wir uns Makros ansehen!</p>
 

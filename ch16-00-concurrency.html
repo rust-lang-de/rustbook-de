@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -197,28 +197,26 @@ Kapitel gedanklich durch <em>nebenläufig und/oder gleichzeitig</em>, wenn wir
 <em>nebenläufig</em> verwenden.</p>
 </blockquote>
 <p>Viele Sprachen sind dogmatisch, was die Lösungen betrifft, die sie zur
-Behandlung von Nebenläufigkeitsproblemen anbieten. Beispielsweise verfügt
-Erlang über elegante Funktionen für die nachrichtenübermittelnde
-Nebenläufigkeit (message-passing concurrency), hat aber nur obskure
-Möglichkeiten, einen gemeinsamen Status mit mehreren Strängen (threads) zu
-teilen. Die Unterstützung nur einer Teilmenge möglicher Lösungen ist eine
-vernünftige Strategie für Hochsprachen, da eine Hochsprache Vorteile
-verspricht, wenn sie eine gewisse Kontrolle aufgibt, um Abstraktionen zu
-erhalten. Es wird jedoch erwartet, dass Sprachen auf niedrigeren Ebenen in
-jeder Situation die Lösung mit der besten Performanz bieten und weniger
-Abstraktionen der Hardware haben. Daher bietet Rust eine Vielzahl von
-Werkzeugen zur Modellierung von Problemen in der Art und Weise, die für deine
-Situation und deine Anforderungen geeignet ist.</p>
+Behandlung von Nebenläufigkeitsproblemen anbieten. Beispielsweise verfügt Erlang
+über elegante Funktionen für die Nebenläufigkeit mit Nachrichtenaustausch
+(message-passing concurrency), hat aber nur obskure Möglichkeiten, einen
+gemeinsamen Status mit mehreren Threads zu teilen. Die Unterstützung nur einer
+Teilmenge möglicher Lösungen ist eine vernünftige Strategie für Hochsprachen, da
+eine Hochsprache Vorteile verspricht, wenn sie auf einen Teil der Kontrolle
+verzichtet, um Abstraktionen zu erhalten. Es wird jedoch erwartet, dass Sprachen
+auf niedrigeren Ebenen in jeder Situation die Lösung mit der besten Performanz
+bieten und weniger Abstraktionen der Hardware haben. Daher bietet Rust eine
+Vielzahl von Werkzeugen zur Modellierung von Problemen in der Art und Weise, die
+für deine Situation und deine Anforderungen geeignet ist.</p>
 <p>Hier sind die Themen, die wir in diesem Kapitel behandeln werden:</p>
 <ul>
-<li>Wie man Stränge (threads) erstellt, um mehrere Code-Abschnitte gleichzeitig
-auszuführen.</li>
+<li>Wie man Threads erstellt, um mehrere Code-Abschnitte gleichzeitig auszuführen.</li>
 <li><em>Nachrichtenübermittelnde</em> Nebenläufigkeit, bei der Kanäle Nachrichten
-zwischen Strängen senden.</li>
+zwischen Threads senden.</li>
 <li>Nebenläufigkeit mit <em>gemeinsamem Zustand</em> (shared-state), bei der mehrere
-Stränge Zugriff auf bestimmte Daten haben.</li>
-<li>Die Merkmale (traits) <code>Sync</code> und <code>Send</code>, die Rusts Nebenläufigkeitsgarantien
-sowohl auf benutzerdefinierte Typen als auch auf von der Standardbibliothek
+Threads Zugriff auf bestimmte Daten haben.</li>
+<li>Die Traits <code>Sync</code> und <code>Send</code>, die Rusts Nebenläufigkeitsgarantien sowohl auf
+benutzerdefinierte Typen als auch auf von der Standardbibliothek
 bereitgestellte Typen erweitern.</li>
 </ul>
 

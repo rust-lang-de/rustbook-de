@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -167,25 +167,24 @@ Der Kernpunkt des Musters besteht darin, dass wir eine Reihe von Zuständen
 definieren, die ein Wert intern annehmen kann. Die Zustände werden durch eine
 Reihe von <em>Zustandsobjekten</em> (state objects) dargestellt, und das Verhalten des
 Wertes ändert sich je nach Zustand. Wir werden ein Beispiel für eine
-Blog-Beitrags-Struktur durcharbeiten, die ein Feld für ihren Status hat, das
-ein Statusobjekt mit den Möglichkeiten „Entwurf“, „Überprüfung“ und
-„Veröffentlicht“ sein wird.</p>
+Blogbeitrags-Struktur durcharbeiten, die ein Feld für ihren Status hat, das ein
+Statusobjekt mit den Möglichkeiten „Entwurf“, „Überprüfung“ und „Veröffentlicht“
+sein wird.</p>
 <p>Die Zustandsobjekte haben eine gemeinsame Funktionalität: In Rust verwenden wir
-Strukturen (structs) und Merkmale (traits) und nicht Objekte und Vererbung.
-Jedes Zustandsobjekt ist für sein eigenes Verhalten verantwortlich und
-bestimmt, wann es in einen anderen Zustand übergehen soll. Der Wert, den ein
-Zustandsobjekt enthält, weiß nichts über das unterschiedliche Verhalten der
-Zustände oder den Zeitpunkt des Übergangs zwischen den Zuständen.</p>
+Strukturen (structs) und Traits und nicht Objekte und Vererbung. Jedes
+Zustandsobjekt ist für sein eigenes Verhalten verantwortlich und bestimmt, wann
+es in einen anderen Zustand übergehen soll. Der Wert, den ein Zustandsobjekt
+enthält, weiß nichts über das unterschiedliche Verhalten der Zustände oder den
+Zeitpunkt des Übergangs zwischen den Zuständen.</p>
 <p>Der Vorteil der Verwendung des Zustandsmusters besteht darin, dass wir, wenn
-sich die geschäftlichen Anforderungen des Programms ändern, weder den Code des
+sich die fachlichen Anforderungen des Programms ändern, weder den Code des
 Werts, der den Zustand hält, noch den Code, der den Wert verwendet, ändern
 müssen. Wir müssen nur den Code in einem der Zustandsobjekte aktualisieren, um
 seine Regeln zu ändern oder vielleicht weitere Zustandsobjekte hinzuzufügen.</p>
 <p>Zunächst werden wir das Zustandsmuster auf eine traditionellere
 objektorientierte Weise implementieren. Dann werden wir einen Ansatz verwenden,
 der in Rust etwas natürlicher ist. Beginnen wir mit der inkrementellen
-Implementierung eines Blogbeitrag-Workflows unter Verwendung des
-Zustandsmusters.</p>
+Implementierung eines Blogbeitrag-Workflow unter Verwendung des Zustandsmusters.</p>
 <p>Die finale Funktionalität des Blogs wird wie folgt aussehen:</p>
 <ol>
 <li>Ein Blog-Beitrag (post) beginnt als leerer Entwurf.</li>
@@ -204,15 +203,15 @@ Problem zu lösen, wobei jede davon unterschiedliche Vor- und Nachteile hat. Die
 Implementierung in diesem Abschnitt entspricht eher einem traditionellen
 objektorientierten Stil, der zwar in Rust geschrieben werden kann, aber einige
 der Stärken von Rust nicht nutzt. Später werden wir eine andere Lösung
-vorstellen, die zwar ebenfalls das objektorientierte Entwurfsnmuster verwendet,
+vorstellen, die zwar ebenfalls das objektorientierte Entwurfsmuster verwendet,
 aber so strukturiert ist, dass sie Programmierern mit objektorientierter
 Erfahrung möglicherweise weniger vertraut erscheint. Wir werden die beiden
 Lösungen vergleichen, um die Vor- und Nachteile einer anderen Gestaltung von
 Rust-Code im Vergleich zu Code in anderen Sprachen zu verdeutlichen.</p>
-<p>Codeblock 18-11 zeigt diesen Workflow in Codeform: Dies ist eine
-Beispielverwendung der API, die wir in einer Bibliothekskiste (library crate)
-<code>blog</code> implementieren werden. Dieser Code wird sich noch nicht kompilieren
-lassen, da wir die Kiste (crate) <code>blog</code> noch nicht implementiert haben.</p>
+<p>Listing 18-11 zeigt diesen Workflow in Codeform: Dies ist eine
+Beispielverwendung der API, die wir in einer Bibliotheks-Crate <code>blog</code>
+implementieren werden. Dieser Code wird sich noch nicht kompilieren lassen, da
+wir die Crate <code>blog</code> noch nicht implementiert haben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile">use blog::Post;
 
@@ -228,43 +227,42 @@ fn main() {
     post.approve();
     assert_eq!("Ich habe heute Mittag einen Salat gegessen", post.content());
 }</code></pre>
-<p><span class="caption">Codeblock 18-11: Code, der das gewünschte Verhalten
-demonstriert, das wir für unsere Kiste <code>blog</code> haben wollen</span></p>
+<p><span class="caption">Listing 18-11: Code, der das gewünschte Verhalten
+demonstriert, das wir für unsere Crate <code>blog</code> haben wollen</span></p>
 <p>Wir möchten dem Benutzer erlauben, einen neuen Entwurf eines Blog-Beitrags mit
 <code>Post::new</code> zu erstellen. Wir möchten dem Blog-Beitrag erlauben, Text
 hinzuzufügen. Wenn wir versuchen, den Inhalt des Beitrags sofort, also vor der
 Genehmigung, abzurufen, sollten wir keinen Text erhalten, da der Beitrag noch
 ein Entwurf ist. Wir haben zu Demonstrationszwecken <code>assert_eq!</code> in den Code
 eingefügt. Ein ausgezeichneter Modultest dafür wäre die Zusicherung, dass ein
-Entwurf eines Blog-Beitrags eine leere Zeichenkette aus der Methode <code>content</code>
+Entwurf eines Blog-Beitrags einen leeren String aus der Methode <code>content</code>
 zurückgibt, aber wir werden für dieses Beispiel keine Tests schreiben.</p>
 <p>Als nächstes wollen wir einen Antrag auf Überprüfung des Beitrags ermöglichen
-und wir wollen, dass <code>content</code> eine leere Zeichenkette zurückgibt, solange wir
-auf die Überprüfung warten. Wenn der Beitrag die Genehmigung erhält, soll er
+und wir wollen, dass <code>content</code> einen leeren String zurückgibt, solange wir auf
+die Überprüfung warten. Wenn der Beitrag die Genehmigung erhält, soll er
 veröffentlicht werden, d.h. der Text des Beitrags wird zurückgegeben, wenn
 <code>content</code> aufgerufen wird.</p>
-<p>Beachte, dass der einzige Typ, mit dem wir von der Kiste aus interagieren, der
+<p>Beachte, dass der einzige Typ, mit dem wir von der Crate aus interagieren, der
 Typ <code>Post</code> ist. Dieser Typ verwendet das Zustandsmuster und enthält einen Wert,
 der eines von drei Zustandsobjekten ist, die die verschiedenen Zustände
 repräsentieren, in denen sich ein Beitrag im Entwurf befinden, auf eine
 Überprüfung warten oder veröffentlicht werden kann. Der Wechsel von einem
 Zustand in einen anderen wird intern innerhalb des Typs <code>Post</code> verwaltet. Die
 Zustände ändern sich als Reaktion auf die Methoden, die von den Benutzern
-unserer Bibliothek auf der <code>Post</code>-Instanz aufgerufen werden, aber sie müssen
-die Zustandsänderungen nicht direkt verwalten. Auch können die Benutzer keinen
+unserer Bibliothek auf der <code>Post</code>-Instanz aufgerufen werden, aber sie müssen die
+Zustandsänderungen nicht direkt verwalten. Auch können die Benutzer keinen
 Fehler mit den Zuständen machen, z.B. einen Beitrag veröffentlichen, bevor er
 überprüft wurde.</p>
 <h4 id="definieren-von-post-und-erstellen-einer-neuen-instanz"><a class="header" href="#definieren-von-post-und-erstellen-einer-neuen-instanz">Definieren von <code>Post</code> und Erstellen einer neuen Instanz</a></h4>
 <p>Fangen wir mit der Implementierung der Bibliothek an! Wir wissen, dass wir eine
-öffentliche Struktur <code>Post</code> benötigen, die einige Inhalte enthält, also
-beginnen wir mit der Definition der Struktur und einer zugehörigen öffentlichen
-Funktion <code>new</code>, um eine Instanz von <code>Post</code> zu erzeugen, wie in Codeblock 18-12
-gezeigt. Wir werden auch ein privates Merkmal <code>State</code> erstellen, das das
-Verhalten definiert, das alle Zustandsobjekte für einen <code>Post</code> haben müssen.</p>
-<p>Dann wird <code>Post</code> ein Merkmalsobjekt (trait object) von <code>Box&lt;dyn State&gt;</code>
-innerhalb einer <code>Option&lt;T&gt;</code> in einem privaten Feld namens <code>state</code> halten, um
-das Zustandsobjekt zu halten. Du wirst gleich sehen, warum die <code>Option&lt;T&gt;</code>
-notwendig ist.</p>
+öffentliche Struktur <code>Post</code> benötigen, die einige Inhalte enthält, also beginnen
+wir mit der Definition der Struktur und einer zugehörigen öffentlichen Funktion
+<code>new</code>, um eine Instanz von <code>Post</code> zu erzeugen, wie in Listing 18-12 gezeigt.
+Wir werden auch ein privates Trait <code>State</code> erstellen, das das Verhalten
+definiert, das alle Zustandsobjekte für einen <code>Post</code> haben müssen.</p>
+<p>Dann wird <code>Post</code> ein Trait-Objekt von <code>Box&lt;dyn State&gt;</code> innerhalb einer
+<code>Option&lt;T&gt;</code> in einem privaten Feld namens <code>state</code> halten, um das Zustandsobjekt
+zu halten. Du wirst gleich sehen, warum die <code>Option&lt;T&gt;</code> notwendig ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -288,15 +286,15 @@ struct Draft {}
 
 impl State for Draft {}
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-12: Definition einer Struktur <code>Post</code> und
-einer Funktion <code>new</code>, die eine neue <code>Post</code>-Instanz, ein Merkmal <code>State</code> sowie
-eine Struktur <code>Draft</code> erzeugt</span></p>
-<p>Das Merkmal <code>State</code> definiert das Verhalten, das die verschiedenen
+<p><span class="caption">Listing 18-12: Definition einer Struktur <code>Post</code> und
+einer Funktion <code>new</code>, die eine neue <code>Post</code>-Instanz, ein Trait <code>State</code> sowie eine
+Struktur <code>Draft</code> erzeugt</span></p>
+<p>Das Trait <code>State</code> definiert das Verhalten, das die verschiedenen
 Beitragszustände gemeinsam haben. Die Zustandsobjekte sind <code>Draft</code>,
-<code>PendingReview</code> und <code>Published</code> und sie werden alle das Merkmal <code>State</code>
-implementieren. Im Moment hat das Merkmal noch keine Methoden und wir werden
-damit beginnen, nur den Zustand <code>Draft</code> zu definieren, weil das der Zustand
-ist, in dem ein Beitrag beginnen soll.</p>
+<code>PendingReview</code> und <code>Published</code> und sie werden alle das Trait <code>State</code>
+implementieren. Im Moment hat das Trait noch keine Methoden und wir werden damit
+beginnen, nur den Zustand <code>Draft</code> zu definieren, weil das der Zustand ist, in
+dem ein Beitrag beginnen soll.</p>
 <p>Wenn wir einen neuen <code>Post</code> erstellen, setzen wir sein <code>state</code>-Feld auf einen
 <code>Some</code>-Wert, der eine <code>Box</code> enthält. Diese <code>Box</code> verweist auf eine neue Instanz
 der Struktur <code>Draft</code>. Dies stellt sicher, dass jedes Mal, wenn wir eine neue
@@ -305,13 +303,13 @@ Instanz von <code>Post</code> erzeugen, diese als Entwurf beginnt. Da das Feld <
 Zustand zu erzeugen! In der Funktion <code>Post::new</code> setzen wir das Feld <code>content</code>
 auf einen neuen, leeren <code>String</code>.</p>
 <h4 id="speichern-des-textes-des-beitragsinhalts"><a class="header" href="#speichern-des-textes-des-beitragsinhalts">Speichern des Textes des Beitragsinhalts</a></h4>
-<p>Wir haben in Codeblock 18-11 gesehen, dass wir in der Lage sein wollen, eine
+<p>Wir haben in Listing 18-11 gesehen, dass wir in der Lage sein wollen, eine
 Methode namens <code>add_text</code> aufzurufen und ihr einen <code>&amp;str</code> zu übergeben, die
 dann als Textinhalt des Blog-Beitrags hinzugefügt wird. Wir implementieren dies
 als Methode, anstatt das Feld <code>content</code> mit <code>pub</code> offenzulegen, damit wir
 später eine Methode implementieren können, die steuert, wie die Daten des
 Feldes <code>content</code> gelesen werden. Die Methode <code>add_text</code> ist ziemlich einfach,
-also lass uns die Implementierung in Codeblock 18-13 zum Block <code>impl Post</code>
+also lass uns die Implementierung in Listing 18-13 zum Block <code>impl Post</code>
 hinzufügen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -341,7 +339,7 @@ hinzufügen.</p>
 </span><span class="boring">
 </span><span class="boring">impl State for Draft {}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-13: Implementierung der Methode <code>add_text</code>
+<p><span class="caption">Listing 18-13: Implementierung der Methode <code>add_text</code>
 zum Hinzufügen von Text zum <code>content</code> eines Beitrags</span></p>
 <p>Die Methode <code>add_text</code> nimmt eine veränderbare Referenz auf <code>self</code>, weil wir
 die <code>Post</code>-Instanz, auf der wir <code>add_text</code> aufrufen, ändern. Dann rufen wir
@@ -353,15 +351,14 @@ Feld <code>state</code>, aber sie ist Teil des Verhaltens, das wir unterstützen
 <h4 id="sicherstellen-dass-der-inhalt-eines-beitragsentwurfs-leer-ist"><a class="header" href="#sicherstellen-dass-der-inhalt-eines-beitragsentwurfs-leer-ist">Sicherstellen, dass der Inhalt eines Beitragsentwurfs leer ist</a></h4>
 <p>Selbst nachdem wir <code>add_text</code> aufgerufen und unserem Beitrag etwas Inhalt
 hinzugefügt haben, wollen wir immer noch, dass die Methode <code>content</code> einen
-leeren Zeichenkettenanteilstyp (string slice) zurückgibt, weil sich der Beitrag
-noch im Entwurfszustand befindet, wie beim ersten <code>assert_eq!</code> in Codeblock
-18-11 gezeigt wird. Lass uns fürs Erste die Methode <code>content</code> mit der
-einfachsten Sache implementieren, die diese Anforderung erfüllt: Immer einen
-leeren Zeichenkettenanteilstyp zurückgeben. Wir werden dies später ändern,
-sobald wir die Möglichkeit implementiert haben, den Zustand eines Beitrags zu
-ändern, damit er veröffentlicht werden kann. Bislang können Beiträge nur im
-Entwurfszustand sein, daher sollte der Beitragsinhalt immer leer sein.
-Codeblock 18-14 zeigt diese Platzhalter-Implementierung.</p>
+leeren String Slice zurückgibt, weil sich der Beitrag noch im Entwurfszustand
+befindet, wie beim ersten <code>assert_eq!</code> in Listing 18-11 gezeigt wird. Lass uns
+fürs Erste die Methode <code>content</code> mit der einfachsten Sache implementieren, die
+diese Anforderung erfüllt: Immer einen leeren String Slice zurückgeben. Wir
+werden dies später ändern, sobald wir die Möglichkeit implementiert haben, den
+Zustand eines Beitrags zu ändern, damit er veröffentlicht werden kann. Bislang
+können Beiträge nur im Entwurfszustand sein, daher sollte der Beitragsinhalt
+immer leer sein. Listing 18-14 zeigt diese Platzhalter-Implementierung.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -394,15 +391,15 @@ Codeblock 18-14 zeigt diese Platzhalter-Implementierung.</p>
 </span><span class="boring">
 </span><span class="boring">impl State for Draft {}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-14: Hinzufügen einer
+<p><span class="caption">Listing 18-14: Hinzufügen einer
 Platzhalter-Implementierung für die Methode <code>content</code> auf <code>Post</code>, die immer
-einen leeren Zeichenkettenanteilstyp zurückgibt</span></p>
-<p>Mit dieser zusätzlichen Methode <code>content</code> funktioniert alles in Codeblock 18-11
+einen leeren String Slice zurückgibt</span></p>
+<p>Mit dieser zusätzlichen Methode <code>content</code> funktioniert alles in Listing 18-11
 bis hin zum ersten <code>assert_eq!</code> wie beabsichtigt.</p>
 <h4 id="antrag-auf-überprüfung-der-den-zustand-des-beitrags-ändert"><a class="header" href="#antrag-auf-überprüfung-der-den-zustand-des-beitrags-ändert">Antrag auf Überprüfung, der den Zustand des Beitrags ändert</a></h4>
 <p>Als nächstes müssen wir eine Funktionalität hinzufügen, um eine Überprüfung
 eines Beitrags zu beantragen, die seinen Zustand von <code>Draft</code> in <code>PendingReview</code>
-ändern soll. Codeblock 18-15 zeigt diesen Code.</p>
+ändern soll. Listing 18-15 zeigt diesen Code.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -455,34 +452,33 @@ impl State for PendingReview {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-15: Implementierung der Methoden
-<code>request_review</code> für <code>Post</code> und des Merkmals <code>State</code></span></p>
+<p><span class="caption">Listing 18-15: Implementierung der Methoden
+<code>request_review</code> für <code>Post</code> und des Traits <code>State</code></span></p>
 <p>Wir geben <code>Post</code> eine öffentliche Methode namens <code>request_review</code>, die eine
 veränderbare Referenz auf <code>self</code> nimmt. Dann rufen wir eine interne
 Methode <code>request_review</code> über den aktuellen Zustand von <code>Post</code> auf und diese
 zweite Methode <code>request_review</code> konsumiert den aktuellen Zustand und gibt einen
 neuen Zustand zurück.</p>
-<p>Wir fügen die Methode <code>request_review</code> zum Merkmal <code>State</code> hinzu; alle Typen,
-die das Merkmal implementieren, müssen nun die Methode <code>request_review</code>
+<p>Wir fügen die Methode <code>request_review</code> zum Trait <code>State</code> hinzu; alle Typen, die
+das Trait implementieren, müssen nun die Methode <code>request_review</code>
 implementieren. Beachte, dass wir statt <code>self</code>, <code>&amp;self</code> oder <code>&amp;mut self</code> als
 ersten Parameter der Methode <code>self: Box&lt;Self&gt;</code> haben. Diese Syntax bedeutet,
-dass die Methode nur gültig ist, wenn sie auf einer <code>Box</code> mit dem Typ
-aufgerufen wird. Diese Syntax übernimmt die Eigentümerschaft von <code>Box&lt;Self&gt;</code>,
-wodurch der alte Zustand ungültig wird, sodass der Zustandswert von <code>Post</code> in
-einen neuen Zustand transformiert werden kann.</p>
-<p>Um den alten Zustand zu konsumieren, muss die Methode <code>request_review</code> die
-Eigentümerschaft des Zustandswerts übernehmen. Hier kommt die <code>Option</code> im Feld
-<code>state</code> von <code>Post</code> ins Spiel: Wir rufen die Methode <code>take</code> auf, um den
-<code>Some</code>-Wert aus dem <code>state</code>-Feld zu nehmen und an seiner Stelle ein <code>None</code> zu
-hinterlassen, weil Rust es nicht zulässt, dass wir unbestückte Felder in
-Strukturen haben. Dadurch können wir den Wert <code>state</code> aus <code>Post</code>
-herausverschieben, anstatt ihn auszuleihen. Dann setzen wir den Wert <code>state</code>
-des Beitrags auf das Ergebnis dieser Operation.</p>
+dass die Methode nur gültig ist, wenn sie auf einer <code>Box</code> mit dem Typ aufgerufen
+wird. Diese Syntax übernimmt das Eigentum an <code>Box&lt;Self&gt;</code>, wodurch der alte
+Zustand ungültig wird, sodass der Zustandswert von <code>Post</code> in einen neuen Zustand
+transformiert werden kann.</p>
+<p>Um den alten Zustand zu konsumieren, muss die Methode <code>request_review</code> das
+Eigentum am Zustandswert übernehmen. Hier kommt die <code>Option</code> im Feld <code>state</code> von
+<code>Post</code> ins Spiel: Wir rufen die Methode <code>take</code> auf, um den <code>Some</code>-Wert aus dem
+<code>state</code>-Feld zu nehmen und an seiner Stelle ein <code>None</code> zu hinterlassen, weil
+Rust keine leeren Felder in Strukturen erlaubt. Dadurch können wir den Wert
+<code>state</code> aus <code>Post</code> herausverschieben, anstatt ihn auszuleihen. Dann setzen wir
+den Wert <code>state</code> des Beitrags auf das Ergebnis dieser Operation.</p>
 <p>Wir müssen <code>state</code> vorübergehend auf <code>None</code> setzen, anstatt es direkt mit Code
-wie <code>self.state = self.state.request_review();</code> zu setzen, um die
-Eigentümerschaft des Wertes in <code>state</code> zu erhalten. Das stellt sicher, dass
-<code>Post</code> nicht den alten Wert in <code>state</code> verwenden kann, nachdem wir ihn in einen
-neuen Zustand transformiert haben.</p>
+wie <code>self.state = self.state.request_review();</code> zu setzen, um das Eigentum am
+Wert in <code>state</code> zu erhalten. Das stellt sicher, dass <code>Post</code> nicht den alten Wert
+in <code>state</code> verwenden kann, nachdem wir ihn in einen neuen Zustand transformiert
+haben.</p>
 <p>Die Methode <code>request_review</code> auf <code>Draft</code> gibt eine neue, in einer Box
 gespeicherte Instanz einer neuen Struktur <code>PendingReview</code> zurück, die den
 Zustand darstellt, in dem ein Beitrag auf eine Überprüfung wartet. Die Struktur
@@ -494,14 +490,14 @@ wir eine Überprüfung für einen Beitrag anfordern, der sich bereits im
 Methode <code>request_review</code> auf <code>Post</code> ist die gleiche, unabhängig von ihrem Wert
 <code>state</code>. Jeder Zustand ist für seine eigenen Regeln verantwortlich.</p>
 <p>Wir lassen die Methode <code>content</code> auf <code>Post</code> so wie sie ist und geben einen
-leeren Zeichenkettenanteilstyp zurück. Wir können jetzt einen <code>Post</code> sowohl im
-Zustand <code>PendingReview</code> als auch im Zustand <code>Draft</code> haben, aber wir wollen das
-gleiche Verhalten im Zustand <code>PendingReview</code>. Codeblock 18-11 funktioniert
-jetzt bis zum zweiten <code>assert_eq!</code>-Aufruf!</p>
+leeren String Slice zurück. Wir können jetzt einen <code>Post</code> sowohl im Zustand
+<code>PendingReview</code> als auch im Zustand <code>Draft</code> haben, aber wir wollen das gleiche
+Verhalten im Zustand <code>PendingReview</code>. Listing 18-11 funktioniert jetzt bis zum
+zweiten <code>assert_eq!</code>-Aufruf!</p>
 <h4 id="hinzufügen-von-approve-um-das-verhalten-von-content-zu-ändern"><a class="header" href="#hinzufügen-von-approve-um-das-verhalten-von-content-zu-ändern">Hinzufügen von <code>approve</code>, um das Verhalten von <code>content</code> zu ändern</a></h4>
 <p>Die Methode <code>approve</code> ähnelt der Methode <code>request_review</code>: Sie setzt den
 <code>state</code> auf den Wert, den der aktuelle Zustand nach der Genehmigung haben
-sollte, wie in Codeblock 18-16 gezeigt:</p>
+sollte, wie in Listing 18-16 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -583,22 +579,21 @@ impl State for Published {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-16: Implementieren der Methode <code>approve</code> auf
-<code>Post</code> und des Merkmals <code>State</code></span></p>
-<p>Wir fügen die Methode <code>approve</code> zum Merkmal <code>State</code> hinzu und fügen eine neue
-Struktur <code>Published</code> hinzu, die das Merkmal <code>State</code> implementiert.</p>
+<p><span class="caption">Listing 18-16: Implementieren der Methode <code>approve</code> auf
+<code>Post</code> und des Traits <code>State</code></span></p>
+<p>Wir fügen die Methode <code>approve</code> zum Trait <code>State</code> hinzu und fügen eine neue
+Struktur <code>Published</code> hinzu, die das Trait <code>State</code> implementiert.</p>
 <p>Ähnlich wie <code>request_review</code> bei <code>PendingReview</code> funktioniert, hat der Aufruf
 der Methode <code>approve</code> bei einem <code>Draft</code> keine Wirkung, weil <code>approve</code> den Wert
 <code>self</code> zurückgibt. Wenn wir die Methode <code>approve</code> bei <code>PendingReview</code> aufrufen,
-gibt sie eine neue, geschlossene Instanz der Struktur <code>Published</code> zurück. Die
-Struktur <code>Published</code> implementiert das Merkmal <code>State</code> und sowohl bei der
-Methode <code>request_review</code> als auch bei der Methode <code>approve</code> gibt sie sich
-selbst zurück, weil der Beitrag in diesen Fällen im Zustand <code>Published</code> bleiben
-sollte.</p>
+gibt sie eine neue, eingeschlossene Instanz der Struktur <code>Published</code> zurück. Die
+Struktur <code>Published</code> implementiert das Trait <code>State</code> und sowohl bei der Methode
+<code>request_review</code> als auch bei der Methode <code>approve</code> gibt sie sich selbst zurück,
+weil der Beitrag in diesen Fällen im Zustand <code>Published</code> bleiben sollte.</p>
 <p>Jetzt müssen wir die Methode <code>content</code> auf <code>Post</code> aktualisieren: Wir wollen,
 dass der von <code>content</code> zurückgegebene Wert vom aktuellen Zustand von <code>Post</code>
 abhängt, also delegieren wir <code>Post</code> an eine Methode <code>content</code>, die auf seinen
-<code>state</code> definiert ist, wie in Codeblock 18-17 gezeigt:</p>
+<code>state</code> definiert ist, wie in Listing 18-17 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -679,7 +674,7 @@ abhängt, also delegieren wir <code>Post</code> an eine Methode <code>content</c
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-17: Aktualisieren der Methode <code>content</code> auf
+<p><span class="caption">Listing 18-17: Aktualisieren der Methode <code>content</code> auf
 <code>Post</code> zum Delegieren an eine Methode <code>content</code> auf <code>State</code></span></p>
 <p>Da das Ziel darin besteht, all diese Regeln innerhalb der Strukturen zu halten,
 die <code>State</code> implementieren, rufen wir eine Methode <code>content</code> auf dem Wert in
@@ -687,24 +682,24 @@ die <code>State</code> implementieren, rufen wir eine Methode <code>content</cod
 geben wir den Wert zurück, der von der Verwendung der Methode <code>content</code> für den
 Wert <code>state</code> zurückgegeben wird.</p>
 <p>Wir rufen die Methode <code>as_ref</code> auf <code>Option</code> auf, weil wir eine Referenz auf den
-Wert innerhalb <code>Option</code> wollen und nicht die Eigentümerschaft am Wert. Weil
-<code>State</code> eine <code>Option&lt;Box&lt;dyn State&gt;&gt;</code> ist, wird beim Aufruf von <code>as_ref</code> eine
+Wert innerhalb <code>Option</code> wollen und nicht das Eigentum am Wert. Weil <code>State</code> eine
+<code>Option&lt;Box&lt;dyn State&gt;&gt;</code> ist, wird beim Aufruf von <code>as_ref</code> eine
 <code>Option&lt;&amp;Box&lt;dyn State&gt;&gt;</code> zurückgegeben. Würden wir nicht <code>as_ref</code> aufrufen,
 bekämen wir einen Fehler, weil wir <code>state</code> nicht aus dem ausgeliehenen <code>&amp;self</code>
 im Funktionsparameter herausverschieben können.</p>
 <p>Wir rufen dann die Methode <code>unwrap</code> auf, von der wir wissen, dass sie das
-Programm niemals abstürzen lassen wird, weil wir wissen, dass die Methoden auf
-<code>Post</code> sicherstellen, dass <code>state</code> stets einen <code>Some</code>-Wert enthält, wenn diese
-Methoden fertig ausgeführt sind. Dies ist einer der Fälle, über die wir im
-Abschnitt <a href="ch09-03-to-panic-or-not-to-panic.html#wenn-du-mehr-informationen-als-der-compiler-hast">„Wenn du mehr Informationen als der Compiler
-hast“</a> in Kapitel 9 gesprochen haben, bei denen wir im
-Unterschied zum Compiler wissen, dass ein <code>None</code>-Wert niemals möglich ist.</p>
+Programm abbrechen wird, weil wir wissen, dass die Methoden auf <code>Post</code>
+sicherstellen, dass <code>state</code> stets einen <code>Some</code>-Wert enthält, wenn diese Methoden
+fertig ausgeführt sind. Dies ist einer der Fälle, über die wir im Abschnitt
+<a href="ch09-03-to-panic-or-not-to-panic.html#wenn-du-mehr-informationen-als-der-compiler-hast">„Wenn du mehr Informationen als der Compiler hast“</a> in
+Kapitel 9 gesprochen haben, bei denen wir im Unterschied zum Compiler wissen,
+dass ein <code>None</code>-Wert niemals möglich ist.</p>
 <p>Wenn wir nun <code>content</code> auf <code>&amp;Box&lt;dyn State&gt;</code> aufrufen, wird eine automatische
 Umwandlung (deref coercion) auf <code>&amp;</code> und <code>Box</code> stattfinden, sodass die Methode
-<code>content</code> letztlich auf dem Typ aufgerufen wird, der das Merkmal <code>State</code>
-implementiert. Das bedeutet, dass wir die Definition des Merkmals <code>State</code> um
+<code>content</code> letztlich auf dem Typ aufgerufen wird, der das Trait <code>State</code>
+implementiert. Das bedeutet, dass wir die Definition des Traits <code>State</code> um
 <code>content</code> erweitern müssen, und hier werden wir die Logik dafür unterbringen,
-welcher Inhalt je nach Zustand zurückgegeben wird, wie in Codeblock 18-18 zu
+welcher Inhalt je nach Zustand zurückgegeben wird, wie in Listing 18-18 zu
 sehen ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -796,24 +791,24 @@ impl State for Published {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-18: Hinzufügen der Methode <code>content</code> zum
-Merkmal <code>State</code></span></p>
+<p><span class="caption">Listing 18-18: Hinzufügen der Methode <code>content</code> zum
+Trait <code>State</code></span></p>
 <p>Wir fügen eine Standard-Implementierung für die Methode <code>content</code> hinzu, die
-einen leeren Zeichenkettenanteilstyp zurückgibt. Das bedeutet, dass wir
-<code>content</code> in den Strukturen <code>Draft</code> und <code>PendingReview</code> nicht implementieren
-müssen. Die Struktur <code>Published</code> überschreibt die Methode <code>content</code> und gibt
-den Wert in <code>post.content</code> zurück. Die Verwendung der Methode <code>content</code> in
-<code>State</code> zur Bestimmung des Inhalts von <code>Post</code> ist zwar praktisch, verwischt
-jedoch die Grenzen zwischen den Verantwortlichkeiten von <code>State</code> und <code>Post</code>.</p>
+einen leeren String Slice zurückgibt. Das bedeutet, dass wir <code>content</code> in den
+Strukturen <code>Draft</code> und <code>PendingReview</code> nicht implementieren müssen. Die Struktur
+<code>Published</code> überschreibt die Methode <code>content</code> und gibt den Wert in
+<code>post.content</code> zurück. Die Verwendung der Methode <code>content</code> in <code>State</code> zur
+Bestimmung des Inhalts von <code>Post</code> ist zwar praktisch, verwischt jedoch die
+Grenzen zwischen den Verantwortlichkeiten von <code>State</code> und <code>Post</code>.</p>
 <p>Beachte, dass wir Lebensdauer-Annotationen bei dieser Methode benötigen, wie
 wir in Kapitel 10 besprochen haben. Wir nehmen eine Referenz auf ein <code>post</code> als
 Argument und geben eine Referenz auf einen Teil dieses <code>post</code> zurück, sodass
 die Lebensdauer der zurückgegebenen Referenz mit der Lebensdauer des Arguments
 <code>post</code> zusammenhängt.</p>
-<p>Nun sind wir fertig – der Codeblock 18-11 funktioniert jetzt! Wir haben
-das Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert.
-Die Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und
-ist nicht über den gesamten <code>Post</code> verstreut.</p>
+<p>Nun sind wir fertig – Listing 18-11 funktioniert jetzt! Wir haben das
+Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert. Die
+Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und ist
+nicht über den gesamten <code>Post</code> verstreut.</p>
 <blockquote>
 <h3 id="warum-keine-aufzählung"><a class="header" href="#warum-keine-aufzählung">Warum keine Aufzählung?</a></h3>
 <p>Vielleicht hast du dich gefragt, warum wir nicht ein <code>enum</code> mit den
@@ -823,26 +818,26 @@ Endergebnisse, um zu sehen, was du bevorzugst! Ein Nachteil der Verwendung
 einer Aufzählung ist, dass jede Stelle, die den Wert der Aufzählung prüft,
 einen <code>match</code>-Ausdruck oder ähnliches benötigt, um jede mögliche Variante zu
 behandeln. Dies könnte zu mehr Wiederholungen führen als die Lösung mit dem
-Merkmals-Objekt.</p>
+Trait-Objekt.</p>
 </blockquote>
 <h4 id="bewerten-des-zustandsmusters"><a class="header" href="#bewerten-des-zustandsmusters">Bewerten des Zustandsmusters</a></h4>
 <p>Wir haben gezeigt, dass Rust in der Lage ist, das objektorientierte
-Zustandsmuster zu implementieren, um die verschiedenen Verhaltensweisen, die
-ein Beitrag im jeweiligen Zustand haben sollte, zu kapseln. Die Methoden auf
-<code>Post</code> wissen nichts über die verschiedenen Verhaltensweisen. So, wie wir den
-Code organisiert haben, müssen wir nur an einem einzigen Ort suchen, um zu
-wissen, wie sich ein veröffentlichter Beitrag verhalten kann: Die
-Implementierung des Merkmals <code>State</code> auf der Struktur <code>Published</code>.</p>
+Zustandsmuster zu implementieren, um die verschiedenen Verhaltensweisen, die ein
+Beitrag im jeweiligen Zustand haben sollte, zu kapseln. Die Methoden auf <code>Post</code>
+wissen nichts über die verschiedenen Verhaltensweisen. So, wie wir den Code
+organisiert haben, müssen wir nur an einem einzigen Ort suchen, um zu wissen,
+wie sich ein veröffentlichter Beitrag verhalten kann: Die Implementierung des
+Traits <code>State</code> auf der Struktur <code>Published</code>.</p>
 <p>Wenn wir eine alternative Implementierung erstellen würden, die nicht das
 Zustandsmuster verwendet, könnten wir stattdessen <code>match</code>-Ausdrücke in den
 Methoden auf <code>Post</code> oder sogar im <code>main</code>-Code verwenden, die den Zustand des
 Beitrags überprüfen und das Verhalten an diesen Stellen ändern. Das würde
 bedeuten, dass wir an mehreren Stellen nachschauen müssten, um alle
 Auswirkungen eines Beitrags im veröffentlichten Zustand zu verstehen!</p>
-<p>Mit dem Zustandsmuster, den <code>Post</code>-Methoden und den Stellen, an denen wir
+<p>Durch das Zustandsmuster, den <code>Post</code>-Methoden und den Stellen, an denen wir
 <code>Post</code> verwenden, brauchen wir keine <code>match</code>-Ausdrücke, und um einen neuen
 Zustand hinzuzufügen, müssten wir nur eine neue Struktur hinzufügen und die
-Merkmalsmethoden auf dieser einen Struktur an einer Stelle implementieren.</p>
+Trait-Methoden auf dieser einen Struktur an einer Stelle implementieren.</p>
 <p>Die Implementierung unter Verwendung des Zustandsmusters ist leicht zu
 erweitern, um weitere Funktionalität hinzuzufügen. Um zu sehen, wie einfach es
 ist, Code zu pflegen, der das Zustandsmuster verwendet, probiere einige dieser
@@ -853,7 +848,7 @@ Vorschläge aus:</p>
 <li>Verlange zwei <code>approve</code>-Aufrufe, bevor der Zustand in <code>Published</code> geändert
 werden kann.</li>
 <li>Erlaube Benutzern das Hinzufügen von Textinhalten nur dann, wenn sich ein
-Beitrag im Zustand <code>Draft</code> befindet. Hinweis: Lasse das Zustandsobjekt dafür
+Beitrag im Zustand <code>Draft</code> befindet. Hinweis: Lass das Zustandsobjekt dafür
 verantwortlich sein, was sich am Inhalt ändern könnte, aber nicht für die
 Änderung des <code>Post</code>.</li>
 </ul>
@@ -867,12 +862,12 @@ Zustands geändert werden müsste, aber das würde bedeuten, zu einem anderen
 Entwurfsmuster zu wechseln.</p>
 <p>Ein weiterer Nachteil ist, dass wir eine gewisse Logik dupliziert haben. Um
 einen Teil der Duplikation zu eliminieren, könnten wir versuchen,
-Standard-Implementierungen für die Methoden <code>request_review</code> und <code>approval</code> für
-das Merkmal <code>State</code> zu erstellen, die <code>self</code> zurückgeben; dies würde jedoch
-nicht funktionieren: Bei der Verwendung von <code>State</code> als Merkmals-Objekt weiß
-das Merkmal nicht, was das konkrete <code>self</code> genau sein wird, sodass der
-Rückgabetyp zur Kompilierzeit nicht bekannt ist. (Dies ist eine der bereits
-erwähnten dyn-Kompatibilitätsregeln.)</p>
+Standard-Implementierungen für die Methoden <code>request_review</code> und <code>approve</code> für
+das Trait <code>State</code> zu erstellen, die <code>self</code> zurückgeben; dies würde jedoch nicht
+funktionieren: Bei der Verwendung von <code>State</code> als Trait-Objekt weiß das Trait
+nicht, was das konkrete <code>self</code> genau sein wird, sodass der Rückgabetyp zur
+Kompilierzeit nicht bekannt ist. (Dies ist eine der bereits erwähnten
+dyn-Kompatibilitätsregeln.)</p>
 <p>Eine weitere Duplikation sind die ähnlichen Implementierungen der Methoden
 <code>request_review</code> und <code>approve</code> auf <code>Post</code>. Beide Methoden verwenden
 <code>Option::take</code> mit dem Feld <code>state</code> von <code>Post</code>, und wenn <code>state</code> <code>Some</code> ist,
@@ -884,17 +879,16 @@ Makro zu definieren, um die Wiederholung zu eliminieren (siehe Abschnitt
 <p>Indem wir das Zustandsmuster genau so implementieren, wie es für
 objektorientierte Sprachen definiert ist, nutzen wir die Stärken Rusts nicht so
 aus, wie wir es könnten. Sehen wir uns einige Änderungen an, die wir an der
-Kiste <code>blog</code> vornehmen können, die ungültige Zustände und Übergänge in
+Crate <code>blog</code> vornehmen können, die ungültige Zustände und Übergänge in
 Kompilierzeitfehler verwandeln können.</p>
 <h3 id="kodieren-von-zuständen-und-verhalten-als-typen"><a class="header" href="#kodieren-von-zuständen-und-verhalten-als-typen">Kodieren von Zuständen und Verhalten als Typen</a></h3>
 <p>Wir werden dir zeigen, wie du das Zustandsmuster überdenken kannst, um andere
 Kompromisse zu erzielen. Anstatt die Zustände und Übergänge vollständig zu
 kapseln, sodass Außenstehende keine Kenntnis von ihnen haben, werden wir die
-Zustände in verschiedene Typen kodieren. Folglich wird Rusts
-Typprüfungssystem Versuche verhindern, Entwurfsbeiträge zu verwenden, bei denen
-nur veröffentlichte Beiträge erlaubt sind, indem ein Kompilierfehler ausgegeben
-wird.</p>
-<p>Betrachten wir den ersten Teil von <code>main</code> in Codeblock 18-11:</p>
+Zustände in verschiedene Typen kodieren. Folglich wird Rusts Typprüfungssystem
+Versuche verhindern, Entwurfsbeiträge zu verwenden, bei denen nur
+veröffentlichte Beiträge erlaubt sind, indem ein Compilerfehler ausgegeben wird.</p>
+<p>Betrachten wir den ersten Teil von <code>main</code> in Listing 18-11:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use blog::Post;
 </span><span class="boring">
@@ -912,16 +906,15 @@ wird.</p>
 </span>}</code></pre>
 <p>Wir ermöglichen nach wie vor das Erstellen neuer Beiträge im Entwurfsstadium
 unter Verwendung von <code>Post::new</code> und der Möglichkeit, dem Inhalt des Beitrags
-Text hinzuzufügen. Aber anstatt eine Methode <code>content</code> bei einem
-Beitragsentwurf zu haben, die eine leere Zeichenkette zurückgibt, werden wir
-es so einrichten, dass Beitragsentwürfe überhaupt keine Methode <code>content</code>
-haben. Wenn wir auf diese Weise versuchen, den Inhalt eines Beitragsentwurfs
-zu erhalten, erhalten wir einen Kompilierfehler, der uns sagt, dass die Methode
-nicht existiert. Infolgedessen wird es für uns unmöglich, versehentlich den
-Inhalt eines Beitragsentwurfs in der Produktion anzuzeigen, weil sich dieser
-Code nicht einmal kompilieren lässt. Codeblock 18-19 zeigt die Definition einer
-Struktur <code>Post</code> und einer Struktur <code>DraftPost</code> sowie die Methoden dieser
-Strukturen.</p>
+Text hinzuzufügen. Aber anstatt eine Methode <code>content</code> bei einem Beitragsentwurf
+zu haben, die einen leeren String zurückgibt, werden wir es so einrichten, dass
+Beitragsentwürfe überhaupt keine Methode <code>content</code> haben. Wenn wir auf diese
+Weise versuchen, den Inhalt eines Beitragsentwurfs zu erhalten, erhalten wir
+einen Compilerfehler, der uns sagt, dass die Methode nicht existiert.
+Infolgedessen wird es für uns unmöglich, versehentlich den Inhalt eines
+Beitragsentwurfs in der Produktion anzuzeigen, weil sich dieser Code nicht
+einmal kompilieren lässt. Listing 18-19 zeigt die Definition einer Struktur
+<code>Post</code> und einer Struktur <code>DraftPost</code> sowie die Methoden dieser Strukturen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -951,7 +944,7 @@ impl DraftPost {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-19: Ein <code>Post</code> mit einer Methode <code>content</code>
+<p><span class="caption">Listing 18-19: Ein <code>Post</code> mit einer Methode <code>content</code>
 und ein <code>DraftPost</code> ohne Methode <code>content</code></span></p>
 <p>Die beiden Strukturen <code>Post</code> und <code>DraftPost</code> haben ein privates Feld <code>content</code>,
 in dem der Text des Blog-Beitrags gespeichert wird. Die Strukturen haben nicht
@@ -963,12 +956,12 @@ Feldes <code>content</code> zurückgibt.</p>
 <code>Post</code> zurückzugeben, gibt sie eine Instanz von <code>DraftPost</code> zurück. Da
 <code>content</code> privat ist und es keine Funktion gibt, die <code>Post</code> zurückgibt, ist es
 im Moment nicht möglich, eine Instanz von <code>Post</code> zu erzeugen.</p>
-<p>Die Struktur <code>DraftPost</code> hat eine Methode <code>add_text</code>, sodass wir wie bisher
-Text zum <code>content</code> hinzufügen können, aber beachte, dass <code>DraftPost</code> keine
-Methode <code>content</code> definiert hat! Daher stellt das Programm jetzt sicher, dass
-alle Beiträge als Beitragsentwürfe beginnen und dass der Inhalt von
-Beitragsentwürfen nicht zur Anzeige verfügbar ist. Jeder Versuch, diese
-Einschränkungen zu umgehen, führt zu einem Kompilierfehler.</p>
+<p>Die Struktur <code>DraftPost</code> hat eine Methode <code>add_text</code>, sodass wir wie bisher Text
+zum <code>content</code> hinzufügen können, aber beachte, dass <code>DraftPost</code> keine Methode
+<code>content</code> definiert hat! Daher stellt das Programm jetzt sicher, dass alle
+Beiträge als Beitragsentwürfe beginnen und dass der Inhalt von Beitragsentwürfen
+nicht zur Anzeige verfügbar ist. Jeder Versuch, diese Einschränkungen zu
+umgehen, führt zu einem Compilerfehler.</p>
 <p>Wie bekommen wir also einen veröffentlichten Beitrag? Wir wollen die Regel
 durchsetzen, dass ein Beitragsentwurf geprüft und genehmigt werden muss, bevor
 er veröffentlicht werden kann. Ein Beitrag, der sich im Stadium der Überprüfung
@@ -976,7 +969,7 @@ befindet, sollte noch immer keinen Inhalt haben. Lass uns diese Bedingung
 implementieren, indem wir eine weitere Struktur <code>PendingReviewPost</code> hinzufügen,
 indem wir die Methode <code>request_review</code> auf <code>DraftPost</code> definieren, um einen
 <code>PendingReviewPost</code> zurückzugeben, und eine Methode <code>approve</code> auf
-<code>PendingReviewPost</code>, um einen <code>Post</code> zurückzugeben, wie in Codeblock 18-20
+<code>PendingReviewPost</code>, um einen <code>Post</code> zurückzugeben, wie in Listing 18-20
 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -1026,17 +1019,17 @@ impl PendingReviewPost {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-20: Ein <code>PendingReviewPost</code>, der durch
+<p><span class="caption">Listing 18-20: Ein <code>PendingReviewPost</code>, der durch
 Aufrufen von <code>request_review</code> auf <code>DraftPost</code> erzeugt wird, und eine Methode
 <code>approve</code>, die einen <code>PendingReviewPost</code> in einen veröffentlichten <code>Post</code>
 verwandelt</span></p>
-<p>Die Methoden <code>request_review</code> und <code>approve</code> übernehmen die Eigentümerschaft von
-<code>self</code>, wodurch die Instanzen <code>DraftPost</code> und <code>PendingReviewPost</code> verbraucht
-und in einen <code>PendingReviewPost</code> bzw. einen veröffentlichten <code>Post</code> umgewandelt
-werden. Auf diese Weise werden wir keine <code>DraftPost</code>-Instanzen mehr haben,
-nachdem wir <code>request_review</code> darauf aufgerufen haben, und so weiter. Die
+<p>Die Methoden <code>request_review</code> und <code>approve</code> übernehmen das Eigentum an <code>self</code>,
+wodurch die Instanzen <code>DraftPost</code> und <code>PendingReviewPost</code> verbraucht und in
+einen <code>PendingReviewPost</code> bzw. einen veröffentlichten <code>Post</code> umgewandelt werden.
+Auf diese Weise werden wir keine <code>DraftPost</code>-Instanzen mehr haben, nachdem wir
+<code>request_review</code> darauf aufgerufen haben, und so weiter. Die
 <code>PendingReviewPost</code>-Struktur hat keine Methode <code>content</code> definiert, sodass der
-Versuch, ihren Inhalt zu lesen, zu einem Kompilierfehler führt, wie bei
+Versuch, ihren Inhalt zu lesen, zu einem Compilerfehler führt, wie bei
 <code>DraftPost</code>. Da der einzige Weg, eine veröffentlichte <code>Post</code>-Instanz zu
 erhalten, die eine Methode <code>content</code> definiert hat, der Aufruf der Methode
 <code>approve</code> auf einem <code>PendingReviewPost</code> ist, und der einzige Weg, einen
@@ -1046,12 +1039,12 @@ Typsystem kodiert.</p>
 <p>Aber wir müssen auch einige kleine Änderungen an <code>main</code> vornehmen. Die Methoden
 <code>request_review</code> und <code>approve</code> geben neue Instanzen zurück, anstatt die
 Struktur, auf der sie aufgerufen werden, zu modifizieren, sodass wir mehr <code>let post =</code> Verschattungs-Zuweisungen (shadowing assignments) hinzufügen müssen, um
-die zurückgegebenen Instanzen zu speichern. Wir können auch nicht zulassen,
-dass die Zusicherungen über den Inhalt des Entwurfs und der anstehenden
-Überprüfungsbeiträge leere Zeichenketten sind, und wir brauchen sie auch nicht:
-Wir können keinen Code mehr kompilieren, der versucht, den Inhalt von Beiträgen
-in diesen Zuständen zu verwenden. Der aktualisierte Code in <code>main</code> ist in
-Codeblock 18-21 zu sehen.</p>
+die zurückgegebenen Instanzen zu speichern. Wir können auch nicht zulassen, dass
+die Zusicherungen über den Inhalt des Entwurfs und der anstehenden
+Überprüfungsbeiträge leere Strings sind, und wir brauchen sie auch nicht: Wir
+können keinen Code mehr kompilieren, der versucht, den Inhalt von Beiträgen in
+diesen Zuständen zu verwenden. Der aktualisierte Code in <code>main</code> ist in Listing
+18-21 zu sehen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use blog::Post;
 
@@ -1066,7 +1059,7 @@ fn main() {
 
     assert_eq!("Ich habe heute Mittag einen Salat gegessen", post.content());
 }</code></pre>
-<p><span class="caption">Codeblock 18-21: Änderungen an <code>main</code>, um die neue
+<p><span class="caption">Listing 18-21: Änderungen an <code>main</code>, um die neue
 Implementierung des Blog-Beitrags-Workflows zu nutzen</span></p>
 <p>Die Änderungen, die wir an <code>main</code> vornehmen mussten, um <code>post</code> neu zuzuweisen,
 bedeuten, dass diese Implementierung nicht mehr ganz dem objektorientierten
@@ -1077,9 +1070,9 @@ zur Kompilierzeit stattfindet, jetzt unmöglich sind! Dadurch wird
 sichergestellt, dass bestimmte Fehler, z.B. das Anzeigen des Inhalts eines
 unveröffentlichten Beitrags, entdeckt werden, bevor sie in die Produktion
 gelangen.</p>
-<p>Versuche es mit den Aufgaben, die wir zu Beginn dieses Abschnitts über die
-Kiste <code>blog</code> nach Codeblock 18-20 erwähnt haben, um zu sehen, was du über das
-Design dieser Version des Codes denkst. Beachte, dass einige der Aufgaben
+<p>Versuche es mit den Aufgaben, die wir zu Beginn dieses Abschnitts über die Crate
+<code>blog</code> nach Listing 18-20 erwähnt haben, um zu sehen, was du über das Design
+dieser Version des Codes denkst. Beachte, dass einige der Aufgaben
 möglicherweise bereits in diesem Entwurf abgeschlossen sind.</p>
 <p>Wir haben gesehen, dass, obwohl Rust in der Lage ist, objektorientierte
 Entwurfsmuster zu implementieren, auch andere Muster, z.B. das Kodieren des
@@ -1092,15 +1085,15 @@ Lösung sein, da objektorientierte Sprachen bestimmte Funktionalitäten wie die
 Eigentümerschaft nicht haben.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Unabhängig davon, ob du nach der Lektüre dieses Kapitels der Meinung bist, dass
-Rust eine objektorientierte Sprache ist, weißt du jetzt, dass du Merkmalsobjekte
+Rust eine objektorientierte Sprache ist, weißt du jetzt, dass du Trait-Objekte
 verwenden kannst, um einige objektorientierte Funktionalitäten in Rust zu
 erhalten. Dynamische Aufrufe können deinem Code eine gewisse Flexibilität im
 Austausch gegen ein wenig Laufzeitperformanz verleihen. Du kannst diese
 Flexibilität nutzen, um objektorientierte Muster zu implementieren, die die
 Wartbarkeit deines Codes verbessern können. Rust hat auch andere
 Funktionalitäten wie die Eigentümerschaft, die objektorientierte Sprachen nicht
-haben. Ein objektorientiertes Muster wird nicht immer der beste Weg sein, um
-die Stärken von Rust zu nutzen, aber es ist eine verfügbare Option.</p>
+haben. Ein objektorientiertes Muster wird nicht immer der beste Weg sein, um die
+Stärken von Rust zu nutzen, aber es ist eine verfügbare Option.</p>
 <p>Als nächstes werden wir uns mit Mustern befassen, die eine weitere
 Funktionalität von Rust sind und viel Flexibilität ermöglichen. Wir haben sie
 uns im Laufe des Buches kurz angeschaut, haben aber noch nicht ihre volle

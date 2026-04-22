@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Eine Reihe von Elementen verarbeiten mit Iteratoren - Die Programmiersprache Rust</title>
+        <title>Eine Reihe von Elementen mit Iteratoren verarbeiten - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="eine-reihe-von-elementen-verarbeiten-mit-iteratoren"><a class="header" href="#eine-reihe-von-elementen-verarbeiten-mit-iteratoren">Eine Reihe von Elementen verarbeiten mit Iteratoren</a></h2>
+                        <h2 id="eine-reihe-von-elementen-mit-iteratoren-verarbeiten"><a class="header" href="#eine-reihe-von-elementen-mit-iteratoren-verarbeiten">Eine Reihe von Elementen mit Iteratoren verarbeiten</a></h2>
 <p>Iteratoren ermöglichen dir, nacheinander eine Aufgabe für eine Folge von
 Elementen auszuführen. Der Iterator ist für die Logik verantwortlich, die
 Elemente zu durchlaufen und zu bestimmen, wann eine Sequenz beendet ist.
@@ -169,23 +169,23 @@ Durch die Verwendung von Iteratoren ist es nicht notwendig, diese Logik selbst
 neu zu implementieren.</p>
 <p>Die Iteratoren in Rust sind <em>faul</em> (lazy), das bedeutet, dass sie erst durch
 Methodenaufrufe konsumiert werden müssen, um einen Effekt zu haben. Der
-Programmcode in Codeblock 13-10 erstellt beispielsweise einen Iterator über die
-Elemente im Vektor <code>v1</code> indem die in <code>Vec&lt;T&gt;</code> definierte Methode <code>iter</code>
-aufgerufen wird. Dieser Programmcode macht nichts Sinnvolles.</p>
+Programmcode in Listing 13-10 erstellt beispielsweise einen Iterator über die
+Elemente im Vektor <code>v1</code>, indem die in <code>Vec&lt;T&gt;</code> definierte Methode <code>iter</code>
+aufgerufen wird. Dieser Programmcode bevirkt nichts Sinnvolles.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v1 = vec![1, 2, 3];
 
 let v1_iter = v1.iter();
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-10: Einen Iterator erstellen</span></p>
+<p><span class="caption">Listing 13-10: Einen Iterator erstellen</span></p>
 <p>Der Iterator wird in der Variable <code>v1_iter</code> gespeichert. Sobald wir einen
 Iterator erstellt haben, können wir ihn auf verschiedene Weise verwenden.
-In Codeblock 3-5 haben wir über ein Array iteriert, indem wir eine
+In Listing 3-5 haben wir über ein Array iteriert, indem wir eine
 <code>for</code>-Schleife verwendet haben, um einen Code für jedes Element auszuführen.
 Unter der Haube wird dabei implizit ein Iterator erzeugt und dann konsumiert,
 aber wir haben bis jetzt übersehen, wie das genau funktioniert.</p>
-<p>In Codeblock 13-11 wird die Erstellung des Iterators von dessen Verwendung in
+<p>In Listing 13-11 wird die Erstellung des Iterators von dessen Verwendung in
 der <code>for</code>-Schleife getrennt. Wenn die <code>for</code>-Schleife unter Verwendung des
 Iterators in <code>v1_iter</code> aufgerufen wird, wird jedes Element des Iterators in
 einer Iteration der Schleife verwendet, die den jeweiligen Wert ausgibt.</p>
@@ -199,22 +199,22 @@ for val in v1_iter {
     println!("Erhalten: {val}");
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-11: Verwendung eines Iterators in einer
+<p><span class="caption">Listing 13-11: Verwendung eines Iterators in einer
 <code>for</code>-Schleife</span></p>
 <p>In Sprachen, deren Standardbibliotheken Iteratoren nicht bereitstellen, würde
 man diese Funktionalität bereitstellen, indem man eine Variable bei Index 0
 startet und diese zum Indizieren im Vektor verwendet und den Wert der
 Indexvariable bei jedem Schleifendurchlauf erhöht bis die Gesamtzahl der
 Elemente im Vektor erreicht ist.</p>
-<p>Iteratoren übernehmen derartige Logik für dich und reduzieren dadurch sich
+<p>Iteratoren übernehmen derartige Logik für dich und verringern so den
 wiederholenden Code, der zusätzliche Fehlerquellen beinhalten kann. Iteratoren
 geben dir mehr Flexibilität bei der Verwendung derselben Logik für viele
 verschiedene Arten von Sequenzen, nicht nur für Datenstrukturen, die du wie
 Vektoren indizieren kannst. Lass uns herausfinden, wie Iteratoren das
 bewerkstelligen.</p>
-<h3 id="das-merkmal-trait-iterator-und-die-methode-next"><a class="header" href="#das-merkmal-trait-iterator-und-die-methode-next">Das Merkmal (trait) <code>Iterator</code> und die Methode <code>next</code></a></h3>
-<p>Alle Iteratoren implementieren ein Merkmal namens <code>Iterator</code> das in der
-Standardbibliothek definiert ist. Die Definition dieses Merkmals sieht wie folgt
+<h3 id="das-trait-iterator-und-die-methode-next"><a class="header" href="#das-trait-iterator-und-die-methode-next">Das Trait <code>Iterator</code> und die Methode <code>next</code></a></h3>
+<p>Alle Iteratoren implementieren ein Trait namens <code>Iterator</code> das in der
+Standardbibliothek definiert ist. Die Definition dieses Traits sieht wie folgt
 aus:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -227,16 +227,16 @@ aus:</p>
 }
 <span class="boring">}</span></code></pre>
 <p>Beachte, dass in der Definition eine neue Syntax verwendet wird: <code>type Item</code> und
-<code>Self::Item</code> die einen zugeordneten Typ (associated type) mit diesem Merkmal
+<code>Self::Item</code>, die einen zugeordneten Typ (associated type) mit diesem Trait
 definieren. Wir werden zugeordnete Typen im Kapitel 20 besprechen. Im Moment
 musst du nur wissen, dass dieser Programmcode bedeutet, dass die Implementierung
-des <code>Iterator</code>-Merkmals erfordert, dass du auch einen <code>Item</code>-Typ definierst und
-dieser <code>Item</code>-Typ im Rückgabetyp der Methode <code>next</code> benutzt wird. Mit anderen
-Worten wird der <code>Item</code>-Typ der vom Iterator zurückgegebene Typ sein.</p>
-<p>Für das <code>Iterator</code>-Merkmal muss man bei der Implementierung nur eine Methode
+des <code>Iterator</code>-Traits erfordert, dass du auch einen <code>Item</code>-Typ definieren muss
+und dieser <code>Item</code>-Typ im Rückgabetyp der Methode <code>next</code> benutzt wird. Mit
+anderen Worten wird der <code>Item</code>-Typ der vom Iterator zurückgegebene Typ sein.</p>
+<p>Für das <code>Iterator</code>-Trait muss man bei der Implementierung nur eine Methode
 definieren: Die Methode <code>next</code>, die jeweils ein Element des Iterators verpackt
 in <code>Some</code> zurückgibt und nach Beendigung der Iteration <code>None</code> zurückgibt.</p>
-<p>Wir können für Iteratoren die Methode <code>next</code> direkt aufrufen. Codeblock 13-12
+<p>Wir können für Iteratoren die Methode <code>next</code> direkt aufrufen. Listing 13-12
 zeigt, welche Werte bei wiederholten Aufrufen von <code>next</code> auf einen aus einem
 Vektor erstellten Iterator zurückgegeben werden:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -256,37 +256,37 @@ Vektor erstellten Iterator zurückgegeben werden:</p>
     }
 <span class="boring">
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-12: Iterator mit der Methode <code>next</code>
+<p><span class="caption">Listing 13-12: Iterator mit der Methode <code>next</code>
 aufrufen</span></p>
 <p>Beachte, dass wir <code>v1_iter</code> veränderbar (mutable) machen mussten: Beim Aufrufen
 der Methode <code>next</code> auf einen Iterator wird dessen interner Status geändert, der
 verwendet wird, um festzustellen, wo sich der Iterator in der Sequenz befindet.
 Mit anderen Worten <em>verbraucht</em> dieser Programmcode den Iterator. Jeder Aufruf
-von <code>next</code> isst ein Element des Iterators auf. Als wir die <code>for</code>-Schleife
+von <code>next</code> verbraucht ein Element des Iterators. Als wir die <code>for</code>-Schleife
 benutzten, mussten wir <code>v1_iter</code> nicht veränderbar machen, da dies schon hinter
-den Kulissen geschah, als die Schleife die Eigentümerschaft (ownership) von
-<code>v1_iter</code> übernahm.</p>
+den Kulissen geschah, als die Schleife das Eigentum (ownership) an <code>v1_iter</code>
+übernahm.</p>
 <p>Merke auch, dass die Werte, die wir von den Aufrufen von <code>next</code> erhalten,
 unveränderbare Referenzen (immutable references) auf die Werte im Vektor sind.
 Die Methode <code>iter</code> erzeugt einen Iterator über unveränderbare Referenzen. Wenn
-wir einen Iterator erzeugen möchten der die Eigentümerschaft von <code>v1</code> übernimmt
-und angeeignete Werte (owned values) zurückgibt, können wir die Methode
-<code>into_iter</code> anstelle von <code>iter</code> benutzen, und wenn wir über veränderbare
-Referenzen iterieren möchten, können wir <code>iter_mut</code> statt <code>iter</code> aufrufen.</p>
-<h3 id="methoden-die-den-iterator-verbrauchen"><a class="header" href="#methoden-die-den-iterator-verbrauchen">Methoden die den Iterator verbrauchen</a></h3>
-<p>Das <code>Iterator</code>-Merkmal verfügt über eine Vielzahl von Methoden, die in der
+wir einen Iterator erzeugen möchten der das Eigentum an <code>v1</code> übernimmt und
+angeeignete Werte (owned values) zurückgibt, können wir die Methode <code>into_iter</code>
+anstelle von <code>iter</code> benutzen, und wenn wir über veränderbare Referenzen
+iterieren möchten, können wir <code>iter_mut</code> statt <code>iter</code> aufrufen.</p>
+<h3 id="methoden-die-den-iterator-verbrauchen"><a class="header" href="#methoden-die-den-iterator-verbrauchen">Methoden, die den Iterator verbrauchen</a></h3>
+<p>Das Trait <code>Iterator</code> verfügt über eine Vielzahl von Methoden, die in der
 Standardbibliothek bereitgestellt werden. Du kannst dich über diese Methoden
 informieren, indem du in der Standardbibliothek-API-Dokumentation (standard
-library API documentation) nach dem <code>Iterator</code>-Merkmal suchst. Einige dieser
+library API documentation) nach dem Trait <code>Iterator</code> suchst. Einige dieser
 Methoden rufen in ihrer Definition die Methode <code>next</code> auf, daher musst du die
-Methode <code>next</code> bei der Implementierung des <code>Iterator</code>-Merkmals einbauen.</p>
-<p>Methoden die <code>next</code> aufrufen werden als <em>konsumierende Adapter</em> (consuming
+Methode <code>next</code> bei der Implementierung des Trait <code>Iterator</code> einbauen.</p>
+<p>Methoden, die <code>next</code> aufrufen werden als <em>konsumierende Adapter</em> (consuming
 adapters) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
-die Methode <code>sum</code>, sie übernimmt die Eigentümerschaft des Iterators und
-durchläuft die Elemente durch wiederholtes Aufrufen von <code>next</code>, wodurch der
-Iterator verbraucht wird. Jedes Element wird während der Iteration zu einer
-Summe hinzugefügt, die zurückgegeben wird, sobald die Iteration abgeschlossen
-ist. Codeblock 13-13 enthält einen Test, der die Methode <code>sum</code> veranschaulicht:</p>
+die Methode <code>sum</code>, sie übernimmt das Eigentum am Iterator und durchläuft die
+Elemente durch wiederholtes Aufrufen von <code>next</code>, wodurch der Iterator verbraucht
+wird. Jedes Element wird während der Iteration zu einer Summe hinzugefügt, die
+zurückgegeben wird, sobald die Iteration abgeschlossen ist. Listing 13-13
+enthält einen Test, der die Methode <code>sum</code> veranschaulicht:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">#[cfg(test)]
 </span><span class="boring">mod tests {
@@ -303,19 +303,19 @@ ist. Codeblock 13-13 enthält einen Test, der die Methode <code>sum</code> veran
     }
 <span class="boring">
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-13: Aufruf der Methode <code>sum</code> um den Wert der
+<p><span class="caption">Listing 13-13: Aufruf der Methode <code>sum</code> um den Wert der
 Summe aller Elemente zu erhalten</span></p>
-<p>Man kann <code>v1_iter</code> nach dem Aufruf von <code>sum</code> nicht verwenden, da <code>sum</code> die
-Eigentümerschaft des Iterators übernimmt, auf dem sie aufgerufen wird.</p>
-<h3 id="methoden-die-andere-iteratoren-erzeugen"><a class="header" href="#methoden-die-andere-iteratoren-erzeugen">Methoden die andere Iteratoren erzeugen</a></h3>
-<p><em>Iterator-Adaptoren</em> sind Methoden, die auf dem Merkmal <code>Iterator</code> definiert
+<p>Man kann <code>v1_iter</code> nach dem Aufruf von <code>sum</code> nicht verwenden, da <code>sum</code> das
+Eigentum am Iterator übernimmt, auf dem es aufgerufen wird.</p>
+<h3 id="methoden-die-andere-iteratoren-erzeugen"><a class="header" href="#methoden-die-andere-iteratoren-erzeugen">Methoden, die andere Iteratoren erzeugen</a></h3>
+<p><em>Iterator-Adaptoren</em> sind Methoden, die auf dem Trait <code>Iterator</code> definiert
 sind und den Iterator nicht verbrauchen. Stattdessen erzeugen sie andere
 Iteratoren, indem sie einen Aspekt des ursprünglichen Iterators verändern.</p>
-<p>Codeblock 13-14 zeigt ein Beispiel für den Aufruf der Iterator-Adaptor-Methode
-<code>map</code>, die einen Funktionsabschluss für jedes Element aufruft, während die
-Elemente durchlaufen werden. Die Methode <code>map</code> gibt einen neuen Iterator
-zurück, der die geänderten Elemente erzeugt. Der Funktionsabschluss erzeugt
-hier einen neuen Iterator, der jedes Element des Vektors um 1 erhöht.</p>
+<p>Listing 13-14 zeigt ein Beispiel für den Aufruf der Iterator-Adaptor-Methode
+<code>map</code>, die einen Closure für jedes Element aufruft, während die Elemente
+durchlaufen werden. Die Methode <code>map</code> gibt einen neuen Iterator zurück, der die
+geänderten Elemente erzeugt. Der Closure erzeugt hier einen neuen Iterator, der
+jedes Element des Vektors um 1 erhöht.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -323,7 +323,7 @@ hier einen neuen Iterator, der jedes Element des Vektors um 1 erhöht.</p>
 
 v1.iter().map(|x| x + 1);
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-14: Aufruf des Iteratoradapters <code>map</code> um
+<p><span class="caption">Listing 13-14: Aufruf des Iteratoradapters <code>map</code> um
 einen neuen Iterator zu erzeugen</span></p>
 <p>Dieser Code führt jedoch zu einer Warnung:</p>
 <pre><code class="language-console">$ cargo run
@@ -345,16 +345,16 @@ warning: `iterators` (bin "iterators") generated 1 warning
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.47s
      Running `target/debug/iterators`
 </code></pre>
-<p>Der Programmcode in Codeblock 13-14 hat keine Wirkung, der Funktionsabschluss
-wird nie aufgerufen. Die Warnung erinnert uns daran, dass Iteratoradapter faul
-sind und dass wir den Iterator verwenden müssen, um etwas zu bewirken.</p>
+<p>Der Programmcode in Listing 13-14 hat keine Wirkung, der Closure wird nie
+aufgerufen. Die Warnung erinnert uns daran, dass Iteratoradapter faul sind und
+dass wir den Iterator verwenden müssen, um etwas zu bewirken.</p>
 <p>Um das zu beheben, werden wir die Methode <code>collect</code> verwenden, die wir mit
-<code>env::args</code> im Codeblock 12-1 benutzt haben. Diese Methode konsumiert den
+<code>env::args</code> in Listing 12-1 benutzt haben. Diese Methode konsumiert den
 Iterator und sammelt die Ergebniswerte in einen Kollektionsdatentyp (collection
 data type).</p>
-<p>In Codeblock 13-15 sammeln wir die Resultate der Iterationen über den Iterator,
+<p>In Listing 13-15 sammeln wir die Resultate der Iterationen über den Iterator,
 der vom Aufruf der Methode <code>map</code> zurückgegeben wird, in einem Vektor. Dieser
-Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.</p>
+Vektor wird dann alle Elemente des Originalvektors erhöht um 1 enthalten.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -364,29 +364,28 @@ let v2: Vec&lt;_&gt; = v1.iter().map(|x| x + 1).collect();
 
 assert_eq!(v2, vec![2, 3, 4]);
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-15: Aufruf der Methode <code>map</code> um einen
+<p><span class="caption">Listing 13-15: Aufruf der Methode <code>map</code> um einen
 Iterator zu erzeugen und anschließend der Methode <code>collect</code> um den
 Iterator zu verbrauchen und einen Vektor zu erzeugen</span></p>
-<p>Da <code>map</code> einen Funktionsabschluss als Parameter annimmt, können wir eine
-beliebige Operation spezifizieren, die wir auf jedes Element anwenden wollen.
-Dies ist ein gutes Beispiel dafür, wie man mit Funktionsabschlüssen ein
-Verhalten anpassen kann, während das vom <code>Iterator</code>-Merkmal bereitgestellte
-Iterationsverhalten wiederverwendet wird.</p>
+<p>Da <code>map</code> einen Closure als Parameter annimmt, können wir eine beliebige
+Operation spezifizieren, die wir auf jedes Element anwenden wollen. Dies ist ein
+gutes Beispiel dafür, wie man mit Closures ein Verhalten anpassen kann, während
+das vom Trait <code>Iterator</code> bereitgestellte Iterationsverhalten wiederverwendet
+wird.</p>
 <p>Du kannst mehrere Aufrufe von Iterator-Adaptoren verketten, um komplexe
 Aktionen auf lesbare Weise durchzuführen. Da jedoch alle Iteratoren faul sind,
 musst du eine der konsumierenden Adaptermethoden aufrufen, um Ergebnisse aus
 Aufrufen von Iteratoradaptern zu erhalten.</p>
-<h3 id="funktionsabschlüsse-die-ihre-umgebung-erfassen"><a class="header" href="#funktionsabschlüsse-die-ihre-umgebung-erfassen">Funktionsabschlüsse die ihre Umgebung erfassen</a></h3>
-<p>Viele Iterator-Adapter nehmen Funktionsabschlüsse als Argumente, und in der
-Regel werden diese Funktionsabschlüsse solche sein, die ihre Umgebung erfassen.</p>
-<p>In diesem Beispiel verwenden wir die Methode <code>filter</code>, die einen
-Funktionsabschluss entgegennimmt. Der Funktionsabschluss holt ein Element aus
-dem Iterator und gibt ein <code>bool</code> zurück. Wenn der Funktionsabschluss <code>true</code>
-zurückgibt, wird der Wert in die von <code>filter</code> erzeugte Iteration aufgenommen.
-Wenn der Funktionsabschluss <code>false</code> zurückgibt, wird der Wert nicht
-aufgenommen.</p>
-<p>Im Codeblock 13-16 benutzen wir <code>filter</code> mit einem Funktionsabschluss, der die
-Variable <code>shoe_size</code> aus seiner Umgebung erfasst, um über eine Kollektion von
+<h3 id="closures-die-ihre-umgebung-erfassen"><a class="header" href="#closures-die-ihre-umgebung-erfassen">Closures die ihre Umgebung erfassen</a></h3>
+<p>Viele Iterator-Adapter nehmen Closures als Argumente, und in der Regel werden
+diese Closures solche sein, die ihre Umgebung erfassen.</p>
+<p>In diesem Beispiel verwenden wir die Methode <code>filter</code>, die einen Closure
+entgegennimmt. Der Closure holt ein Element aus dem Iterator und gibt ein <code>bool</code>
+zurück. Wenn der Closure <code>true</code> zurückgibt, wird der Wert in die von <code>filter</code>
+erzeugte Iteration aufgenommen. Wenn der Closure <code>false</code> zurückgibt, wird der
+Wert nicht aufgenommen.</p>
+<p>In Listing 13-16 benutzen wir <code>filter</code> mit einem Closure, der die Variable
+<code>shoe_size</code> aus seiner Umgebung erfasst, um über eine Kollektion von
 <code>Shoe</code>-Strukturinstanzen zu iterieren. Er wird nur Schuhe (shoes) einer
 bestimmten Größe zurückgeben.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -438,20 +437,20 @@ mod tests {
         );
     }
 }</code></pre>
-<p><span class="caption">Codeblock 13-16: Die Methode <code>filter</code> mit einen
-Funktionsabschluss benutzen, der <code>shoe_size</code> erfasst</span></p>
-<p>Die Funktion <code>shoes_in_size</code> übernimmt die Eigentümerschaft über einen Vektor
-aus Schuhen mit der Schuhgröße als Parameter und gibt einen Vektor zurück, der
-nur Schuhe einer bestimmten Größe enthält.</p>
+<p><span class="caption">Listing 13-16: Die Methode <code>filter</code> mit einem Closure
+benutzen, der <code>shoe_size</code> erfasst</span></p>
+<p>Die Funktion <code>shoes_in_size</code> übernimmt das Eigentum am Vektor aus Schuhen mit
+der Schuhgröße als Parameter und gibt einen Vektor zurück, der nur Schuhe einer
+bestimmten Größe enthält.</p>
 <p>Im Funktionsrumpf von <code>shoes_in_size</code> rufen wir <code>into_iter</code> auf, um einen
-Iterator zu erzeugen, der die Eigentümerschaft vom Vektor übernimmt. Im Anschluss
-rufen wir den <code>filter</code>-Adapter auf, um einen neuen Iterator zu erzeugen, der nur
-Elemente enthält, für die der Funktionsabschluss <code>true</code> zurückgibt.</p>
-<p>Der Funktionsabschluss erfasst den <code>shoe_size</code>-Parameter aus seiner Umgebung und
-vergleicht dessen Wert mit der jeweiligen Schuhgröße und behält nur Schuhe der
-gewählten Größe. Zuletzt sammelt der Aufruf der Methode <code>collect</code> die
-zurückgegeben Werte des angeschlossenen Adapters in den Vektor, der von der
-Funktion zurückgegeben wird.</p>
+Iterator zu erzeugen, der das Eigentum am Vektor übernimmt. Im Anschluss rufen
+wir den <code>filter</code>-Adapter auf, um einen neuen Iterator zu erzeugen, der nur
+Elemente enthält, für die der Closure <code>true</code> zurückgibt.</p>
+<p>Der Closure erfasst den <code>shoe_size</code>-Parameter aus seiner Umgebung und vergleicht
+dessen Wert mit der jeweiligen Schuhgröße und behält nur Schuhe der gewählten
+Größe. Zuletzt sammelt der Aufruf der Methode <code>collect</code> die zurückgegebenen
+Werte des angeschlossenen Adapters in den Vektor, der von der Funktion
+zurückgegeben wird.</p>
 <p>Der Test zeigt, wenn wir <code>shoes_in_size</code> aufrufen, bekommen wir nur Schuhe
 der spezifizierten Größe zurück.</p>
 

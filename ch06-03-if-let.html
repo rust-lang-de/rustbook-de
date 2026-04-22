@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -164,7 +164,7 @@
                         <h2 id="prägnanter-kontrollfluss-mit-if-let-und-letelse"><a class="header" href="#prägnanter-kontrollfluss-mit-if-let-und-letelse">Prägnanter Kontrollfluss mit <code>if let</code> und <code>let...else</code></a></h2>
 <p>Mit der Syntax <code>if let</code> kannst du <code>if</code> und <code>let</code> in einer weniger wortreichen
 Weise kombinieren, um mit Werten umzugehen, die einem Muster entsprechen,
-während der Rest ignoriert wird. Betrachte das Programm in Codeblock 6-6, das
+während der Rest ignoriert wird. Betrachte das Programm in Listing 6-6, das
 auf einen <code>Option&lt;u8&gt;</code>-Wert in der Variable <code>config_max</code> passt, aber nur dann
 Code ausführen soll, wenn der Wert die <code>Some</code>-Variante ist.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -175,7 +175,7 @@ match config_max {
     _ =&gt; (),
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 6-6: Ein <code>match</code>-Ausdruck, der nur dann Code
+<p><span class="caption">Listing 6-6: Ein <code>match</code>-Ausdruck, der nur dann Code
 ausführt, wenn der Wert <code>Some</code> ist</span></p>
 <p>Wenn der Wert <code>Some</code> ist, geben wir den Wert in der Variante <code>Some</code> aus, indem
 wir den Wert an die Variable <code>max</code> im Muster binden. Wir wollen nichts mit dem
@@ -184,7 +184,7 @@ Verarbeitung nur einer Variante <code>_ =&gt; ()</code> hinzufügen, was lästig
 ist.</p>
 <p>Stattdessen könnten wir dies in kürzerer Form schreiben, indem wir <code>if let</code>
 verwenden. Der folgende Code verhält sich genauso wie der <code>match</code>-Ausdruck in
-Codeblock 6-6:</p>
+Listing 6-6:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let config_max = Some(3u8);
@@ -211,7 +211,7 @@ ausführt und alle anderen Werte ignoriert.</p>
 <p>Wir können ein <code>else</code> an ein <code>if let</code> anhängen. Der Code-Block, der zum <code>else</code>
 gehört, ist der gleiche wie der Code-Block, der zum <code>_</code>-Zweig im
 <code>match</code>-Ausdruck gehören würde. Erinnere dich an die Aufzählung <code>Coin</code> in
-Codeblock 6-4, wo die Variante <code>Quarter</code> auch einen <code>UsState</code>-Wert enthielt.
+Listing 6-4, wo die Variante <code>Quarter</code> auch einen <code>UsState</code>-Wert enthielt.
 Wenn wir alle Nicht-25-Cent-Münzen zählen wollten, während wir die Eigenschaft
 der 25-Cent-Münzen ausgeben, könnten wir das mit einem <code>match</code>-Ausdruck wie
 diesem tun:</p>
@@ -310,7 +310,7 @@ Bundesstaates zu prüfen, etwa so:</p>
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Dann könnten wir <code>if let</code> verwenden, um die Art der Münze zu bestimmen, und
-eine Variable <code>state</code> in den Rumpf der Bedingung einfügen, wie in Codeblock
+eine Variable <code>state</code> in den Rumpf der Bedingung einfügen, wie in Listing
 6-7.</p>
 <p>Dateiname: src/main.rs</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)] // so we can inspect the state in a minute
@@ -354,13 +354,13 @@ eine Variable <code>state</code> in den Rumpf der Bedingung einfügen, wie in Co
 </span><span class="boring">        println!("{desc}");
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 6-7: Prüfen, ob ein Bundesstaat im Jahr 1900
+<p><span class="caption">Listing 6-7: Prüfen, ob ein Bundesstaat im Jahr 1900
 existierte, durch Verwenden von Bedingungen, die in <code>if let</code> verschachtelt
 sind.</span></p>
 <p>Damit ist die Aufgabe erledigt, aber die Arbeit wurde in den Rumpf der <code>if  let</code>-Anweisung verlagert. Und wenn die zu erledigende Arbeit komplizierter
 ist, könnte es schwierig sein, genau zu verfolgen, wie die Verzweigungen der
 obersten Ebene zusammenhängen. Wir könnten uns auch die Tatsache zunutze
-machen, dass Ausdrücke einen Wert erzeugen, um entweder <code>state</code> aus der <code>if let</code>-Anweisung zu setzen oder um früh zurückzukehren, wie in Codeblock 6-8.
+machen, dass Ausdrücke einen Wert erzeugen, um entweder <code>state</code> aus der <code>if let</code>-Anweisung zu setzen oder um früh zurückzukehren, wie in Listing 6-8.
 (Ähnliches könnte man auch mit einem <code>match</code> machen.)</p>
 <p>Dateiname: src/main.rs</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
@@ -406,7 +406,7 @@ machen, dass Ausdrücke einen Wert erzeugen, um entweder <code>state</code> aus 
 </span><span class="boring">        println!("{desc}");
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 6-8: Verwenden von <code>if let</code>, um einen Wert zu
+<p><span class="caption">Listing 6-8: Verwenden von <code>if let</code>, um einen Wert zu
 setzen oder frühzeitig zurückzukehren.</span></p>
 <p>Das ist allerdings auf gewisse Weise schwierig zu verstehen! Ein Zweig von <code>if let</code> erzeugt einen Wert und der andere verlässt die Funktion vollständig.</p>
 <p>Um dieses gängige Muster besser auszudrücken, gibt es in Rust <code>let...else</code>. Die
@@ -415,7 +415,7 @@ auf der rechten Seite, sehr ähnlich zu <code>if let</code>, aber sie hat keinen
 <code>if</code>-Zweig, nur einen <code>else</code>-Zweig. Wenn das Muster passt, wird der Wert des
 Musters im äußeren Gültigkeitsbereich gebunden. Wenn das Muster <em>nicht</em> passt,
 wird das Programm im <code>else</code>-Zweig fortgesetzt, der die Funktion beendet.</p>
-<p>In Codeblock 6-9 kannst du sehen, wie Codeblock 6-8 aussieht, wenn du
+<p>In Listing 6-9 kannst du sehen, wie Listing 6-8 aussieht, wenn du
 <code>let...else</code> anstelle von <code>if let</code> verwendest.</p>
 <p>Dateiname: src/main.rs</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
@@ -459,7 +459,7 @@ wird das Programm im <code>else</code>-Zweig fortgesetzt, der die Funktion beend
 </span><span class="boring">        println!("{desc}");
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 6-9: Verwenden von <code>let...else</code>, um den Fluss
+<p><span class="caption">Listing 6-9: Verwenden von <code>let...else</code>, um den Fluss
 durch die Funktion klarer darzustellen.</span></p>
 <p>Beachte, dass der Funktionsrumpf auf diese Weise „auf dem richtigen Weg“
 bleibt, ohne dass sich der Kontrollfluss für zwei Verzweigungen signifikant

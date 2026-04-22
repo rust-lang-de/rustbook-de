@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen - Die Programmiersprache Rust</title>
+        <title>Mit Box&lt;T&gt; auf Daten im Heap zeigen - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,66 +161,62 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="mit-boxt-auf-daten-im-haldenspeicher-heap-zeigen"><a class="header" href="#mit-boxt-auf-daten-im-haldenspeicher-heap-zeigen">Mit <code>Box&lt;T&gt;</code> auf Daten im Haldenspeicher (heap) zeigen</a></h2>
+                        <h2 id="mit-boxt-auf-daten-im-heap-zeigen"><a class="header" href="#mit-boxt-auf-daten-im-heap-zeigen">Mit <code>Box&lt;T&gt;</code> auf Daten im Heap zeigen</a></h2>
 <p>Der einfachste intelligente Zeiger ist Box, deren Typ <code>Box&lt;T&gt;</code> lautet. In
-<em>Boxen</em> kann man Daten statt auf dem Stapelspeicher (stack) im Haldenspeicher
-(heap) speichern. Was auf dem Stapelspeicher verbleibt, ist der Zeiger auf die
-Daten im Haldenspeicher. In Kapitel 4 findest du Informationen zum Unterschied
-zwischen dem Stapelspeicher und dem Haldenspeicher.</p>
-<p>Boxen haben keinen Performanz-Overhead, außer dass die Daten auf
-den Haldenspeicher anstatt auf dem Stapelspeicher gespeichert werden, aber
-sie haben auch nicht viele zusätzliche Funktionalitäten. Sie werden am
-häufigsten in folgenden Situationen verwendet:</p>
+<em>Boxen</em> kann man Daten im Heap anstatt auf dem Stack speichern. Was auf dem
+Stack verbleibt, ist der Zeiger auf die Daten im Heap. In Kapitel 4 findest du
+Informationen zum Unterschied zwischen Stack und Heap.</p>
+<p>Boxen haben keinen Performanz-Overhead, außer dass die Daten auf den Heap
+anstatt auf dem Stack gespeichert werden, aber sie haben auch nicht viele
+zusätzliche Funktionalitäten. Sie werden am häufigsten in folgenden
+Situationen verwendet:</p>
 <ul>
 <li>Wenn man einen Typ hat, dessen Größe zum Zeitpunkt der Kompilierung nicht
 bekannt ist, und man einen Wert dieses Typs in einem Kontext verwenden
 möchte, für den eine genaue Größe erforderlich ist.</li>
-<li>Wenn man über eine große Datenmenge verfügt und die Eigentümerschaft
-(ownership) übertragen möchte und sicherstellen will, dass die Daten dabei
-nicht kopiert werden.</li>
+<li>Wenn man über eine große Datenmenge verfügt und das Eigentum übertragen möchte
+und sicherstellen will, dass die Daten dabei nicht kopiert werden.</li>
 <li>Wenn man einen Wert besitzen und sich nur darum kümmern möchte, dass es sich
-um einen Typ handelt, der ein bestimmtes Merkmal implementiert, anstatt den
-Typ zu spezifizieren.</li>
+um einen Typ handelt, der ein bestimmtes Trait implementiert, anstatt den Typ
+zu spezifizieren.</li>
 </ul>
 <p>Wir werden die erste Situation in <a href="#ermöglichen-rekursiver-typen-mit-boxen">„Ermöglichen rekursiver Typen mit
 Boxen“</a> zeigen. Im zweiten Fall kann
-die Übertragung der Eigentümerschaft einer großen Datenmenge lange dauern, da
-die Daten auf dem Stapelspeicher kopiert werden. Um die Performanz in dieser
-Situation zu verbessern, können wir die große Datenmenge auf dem Haldenspeicher
-in einer Box speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem
-Stapelspeicher kopiert, während die Daten, auf die referenziert wird, im
-Haldenspeicher an einer Stelle verbleiben. Der dritte Fall ist als
-<em>Merkmalsobjekt</em> (trait object) bekannt, und <a href="ch18-02-trait-objects.html">„Verwendung von Merkmals-Objekten
-zur Abstraktion über gemeinsames Verhalten“</a> in Kapitel 18
-widmet sich diesem Thema. Was du hier lernst, wirst du in diesem Abschnitt
-erneut anwenden!</p>
-<h3 id="daten-im-haldenspeicher-speichern"><a class="header" href="#daten-im-haldenspeicher-speichern">Daten im Haldenspeicher speichern</a></h3>
-<p>Bevor wir den Haldenspeicher-Anwendungsfall für <code>Box&lt;T&gt;</code> besprechen, werden wir
-die Syntax und die Interaktion mit Werten behandeln, die in einer <code>Box&lt;T&gt;</code>
+die Übertragung des Eigentums an einer großen Datenmenge lange dauern, da die
+Daten auf dem Stack kopiert werden. Um die Performanz in dieser Situation zu
+verbessern, können wir die große Datenmenge auf dem Heap in einer Box speichern.
+Dann wird nur die kleine Menge von Zeigerdaten auf dem Stack kopiert, während
+die Daten, die referenziert werden, im Heap an einer Stelle verbleiben. Der
+dritte Fall ist als <em>Trait-Objekt</em> bekannt, und <a href="ch18-02-trait-objects.html">„Verwendung von Trait-Objekten
+zur Abstraktion über gemeinsames Verhalten“</a> in Kapitel 18 widmet
+sich diesem Thema. Was du hier lernst, wirst du in diesem Abschnitt erneut
+anwenden!</p>
+<h3 id="daten-im-heap-speichern"><a class="header" href="#daten-im-heap-speichern">Daten im Heap speichern</a></h3>
+<p>Bevor wir den Heap-Anwendungsfall für <code>Box&lt;T&gt;</code> besprechen, werden wir die
+Syntax und die Interaktion mit Werten behandeln, die in einer <code>Box&lt;T&gt;</code>
 gespeichert sind.</p>
-<p>Codeblock 15-1 zeigt, wie man mit einer Box einen <code>i32</code>-Wert auf dem
-Haldenspeicher speichert:</p>
+<p>Listing 15-1 zeigt, wie man mit einer Box einen <code>i32</code>-Wert auf dem
+Heap speichert:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let b = Box::new(5);
     println!("b = {b}");
 }</code></pre>
-<p><span class="caption">Codeblock 15-1: Speichern eines <code>i32</code>-Wertes in einer Box
-im Haldenspeicher</span></p>
-<p>Wir definieren die Variable <code>b</code> so, dass sie den Wert einer <code>Box</code> hat, die
-auf den Wert <code>5</code> zeigt, der auf dem Haldenspeicher allokiert ist. Dieses
-Programm gibt <code>b = 5</code> aus, in diesem Fall können wir auf die Daten in der Box
-zugreifen, ähnlich als würden sich die Daten im Stapelspeicher befinden. Genau
-wie bei Werten mit Eigentümerschaft wird auch eine Box freigegeben, wenn sie
-den Gültigkeitsbereich verlässt, wie dies bei <code>b</code> am Ende von <code>main</code> der Fall
-ist. Die Freigabe erfolgt sowohl für die Box (gespeichert im Stapelspeicher)
-als auch für die Daten, auf die sie zeigt (gespeichert im Haldenspeicher).</p>
-<p>Es ist nicht besonders hilfreich, einen einzelnen Wert im Haldenspeicher zu
-speichern, daher verwendet man Boxen selten alleine. Meistens ist es besser,
-Werte wie einen <code>i32</code> auf dem Stapelspeicher zu haben, wo sie standardmäßig
-gespeichert werden. Sehen wir uns einen Fall an, in dem Boxen es uns
-ermöglichen, Typen zu definieren, die wir nicht hätten, wenn es keine Boxen
-gäbe.</p>
+<p><span class="caption">Listing 15-1: Speichern eines <code>i32</code>-Wertes in einer Box
+im Heap</span></p>
+<p>Wir definieren die Variable <code>b</code> so, dass sie den Wert einer <code>Box</code> hat, die auf
+den Wert <code>5</code> zeigt, der auf dem Heap allokiert ist. Dieses Programm gibt <code>b = 5</code>
+aus, in diesem Fall können wir auf die Daten in der Box zugreifen, ähnlich als
+würden sich die Daten im Stack befinden. Genau wie bei Werten mit Eigentum wird
+auch eine Box freigegeben, wenn sie den Gültigkeitsbereich verlässt, wie dies
+bei <code>b</code> am Ende von <code>main</code> der Fall ist. Die Freigabe erfolgt sowohl für die Box
+(gespeichert im Stack) als auch für die Daten, auf die sie zeigt (gespeichert im
+Heap).</p>
+<p>Es ist nicht besonders hilfreich, einen einzelnen Wert im Heap zu speichern,
+daher verwendet man Boxen selten alleine. Meistens ist es besser, Werte wie
+einen <code>i32</code> auf dem Stack zu haben, wo sie standardmäßig gespeichert werden.
+Sehen wir uns einen Fall an, in dem Boxen es uns ermöglichen, Typen zu
+definieren, die wir nicht hätten, wenn es keine Boxen gäbe.</p>
 <h3 id="ermöglichen-rekursiver-typen-mit-boxen"><a class="header" href="#ermöglichen-rekursiver-typen-mit-boxen">Ermöglichen rekursiver Typen mit Boxen</a></h3>
 <p>Ein Wert eines <em>rekursiven Typs</em> kann einen anderen Wert desselben Typs als
 Teil von sich selbst haben. Rekursive Typen stellen ein Problem dar, weil Rust
@@ -247,7 +243,7 @@ die aus rekursiven Paaren bestehen.</p>
 Liste <code>1, 2, 3</code> enthält, wobei jedes Paar in Klammern steht:</p>
 <pre><code class="language-text">(1, (2, (3, Nil)))
 </code></pre>
-<p>Jedes Element in einer Cons-Liste enthält zwei Elemente: Den Wert des aktuellen
+<p>Jedes Element in einer Cons-Liste enthält zwei Elemente: den Wert des aktuellen
 Elements und das nächste Element. Das letzte Element in der Liste enthält nur
 ein Element namens <code>Nil</code> ohne ein nächstes Element. Eine Cons-Liste wird durch
 rekursives Aufrufen der Funktion <code>cons</code> erstellt. Der kanonische Name für den
@@ -256,11 +252,10 @@ Basisfall der Rekursion lautet <code>Nil</code>. Beachte, dass dies nicht mit de
 ungültigen Wert darstellt.</p>
 <p>Die Cons-Liste ist keine häufig verwendete Datenstruktur in Rust. Wenn man in
 Rust eine Liste von Elementen hat, ist <code>Vec&lt;T&gt;</code> die bessere Wahl. Andere,
-komplexere rekursive Datentypen sind in verschiedenen Situationen nützlich.
-Wenn wir jedoch mit der Cons-Liste beginnen, können wir untersuchen, wie Boxen
-es uns ermöglichen, ohne grosse Ablenkung einen rekursiven Datentyp zu
-definieren.</p>
-<p>Codeblock 15-2 enthält eine Aufzählungsdefinition (enum) für eine Cons-Liste.
+komplexere rekursive Datentypen sind in verschiedenen Situationen nützlich. Wenn
+wir jedoch mit der Cons-Liste beginnen, können wir untersuchen, wie Boxen es uns
+ermöglichen, ohne große Ablenkung einen rekursiven Datentyp zu definieren.</p>
+<p>Listing 15-2 enthält eine Aufzählungsdefinition (enum) für eine Cons-Liste.
 Beachte, dass dieser Code nicht kompiliert werden kann, da der Typ <code>List</code> keine
 bekannte Größe hat, wie wir nachfolgend sehen werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -270,7 +265,7 @@ bekannte Größe hat, wie wir nachfolgend sehen werden.</p>
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre>
-<p><span class="caption">Codeblock 15-2: Der erste Versuch eine Aufzählung zu
+<p><span class="caption">Listing 15-2: Der erste Versuch, eine Aufzählung zu
 definieren, um eine Datenstruktur der Cons-Liste von <code>i32</code>-Werten
 darzustellen</span></p>
 <blockquote>
@@ -280,7 +275,7 @@ können wie wir es in Kapitel 10 besprochen haben, um eine Cons-Liste zu
 erstellen, in der Werte eines beliebigen Typs gespeichert werden können.</p>
 </blockquote>
 <p>Die Verwendung des Typs <code>List</code>, um die Liste <code>1, 2, 3</code> zu speichern, würde wie
-in Codeblock 15-3 aussehen.</p>
+in Listing 15-3 aussehen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">enum List {
 </span><span class="boring">    Cons(i32, List),
@@ -294,15 +289,15 @@ use crate::List::{Cons, Nil};
 fn main() {
     let list = Cons(1, Cons(2, Cons(3, Nil)));
 }</code></pre>
-<p><span class="caption">Codeblock 15-3: Verwendung der <code>List</code>-Aufzählung um die
+<p><span class="caption">Listing 15-3: Verwendung der <code>List</code>-Aufzählung, um die
 Liste <code>1, 2, 3</code> zu speichern</span></p>
 <p>Der erste <code>Cons</code>-Wert enthält <code>1</code> und einen anderen <code>List</code>-Wert. Dieser
 <code>List</code>-Wert ist ein weiterer <code>Cons</code>-Wert, der <code>2</code> und einen anderen <code>List</code>-Wert
 enthält. Dieser <code>List</code>-Wert ist wiederum ein <code>Cons</code>-Wert, der <code>3</code> enthält und
 ein <code>List</code>, das schließlich <code>Nil</code> ist – die nicht-rekursive Variante, die
 das Ende der Liste signalisiert.</p>
-<p>Wenn wir versuchen den Programmcode in Codeblock 15-3 zu kompilieren,
-erhalten wir den Fehler der in Codeblock 15-4 gezeigt wird.</p>
+<p>Wenn wir versuchen, den Programmcode in Listing 15-3 zu kompilieren, erhalten
+wir den Fehler der in Listing 15-4 gezeigt wird.</p>
 <p><span class="filename">Dateiname: output.txt</span></p>
 <pre><code class="language-console">$ cargo run
    Compiling cons-list v0.1.0 (file:///projects/cons-list)
@@ -333,8 +328,8 @@ Some errors have detailed explanations: E0072, E0391.
 For more information about an error, try `rustc --explain E0072`.
 error: could not compile `cons-list` (bin "cons-list") due to 2 previous errors
 </code></pre>
-<p><span class="caption">Codeblock 15-4: Der Fehler den wir erhalten wenn wir
-versuchen eine rekursive Aufzählung zu definieren</span></p>
+<p><span class="caption">Listing 15-4: Fehler, den wir erhalten, wenn wir
+versuchen, eine rekursive Aufzählung zu definieren</span></p>
 <p>Der Fehler zeigt, dass dieser Typ „unendlich groß“ ist. Der Grund dafür ist,
 dass wir <code>List</code> mit einer rekursiven Variante definiert haben, sie enthält
 direkt einen anderen Wert von sich selbst, daher kann Rust nicht herausfinden,
@@ -343,7 +338,7 @@ uns zusammenfassen, warum wir diesen Fehler bekommen. Schauen wir uns zunächst
 an, wie Rust ermittelt, wie viel Speicherplatz zum Speichern des Werts eines
 nicht-rekursiven Typs benötigt wird.</p>
 <h4 id="die-größe-eines-nicht-rekursiven-typs-berechnen"><a class="header" href="#die-größe-eines-nicht-rekursiven-typs-berechnen">Die Größe eines nicht-rekursiven Typs berechnen</a></h4>
-<p>Erinnere dich an die in Codeblock 6-2 definierte <code>Message</code>-Aufzählung, als wir
+<p>Erinnere dich an die in Listing 6-2 definierte <code>Message</code>-Aufzählung, als wir
 die Definition von Aufzählungen in Kapitel 6 besprochen haben:</p>
 <pre class="playground"><code class="language-rust edition2024">enum Message {
     Quit,
@@ -356,12 +351,12 @@ die Definition von Aufzählungen in Kapitel 6 besprochen haben:</p>
 <p>Um zu bestimmen, wie viel Speicherplatz für einen <code>Message</code>-Wert benötigt wird,
 analysiert Rust alle Varianten, um festzustellen, welche Variante den meisten
 Speicherplatz benötigt. Rust erkennt, dass <code>Message::Quit</code> keinen Speicherplatz
-benötigt, und <code>Message::Move</code> so viel Speicherplatz braucht um zwei <code>i32</code>-Werte
+benötigt, und <code>Message::Move</code> so viel Speicherplatz braucht, um zwei <code>i32</code>-Werte
 zu speichern, und so weiter. Da nur eine Variante verwendet wird, ist der
 Speicherbedarf, den ein <code>Message</code>-Wert benötigt, gleich dem Speicherplatz, der
 zum Speichern der größten Variante benötigt wird.</p>
 <p>Übertrage das auf den Fall, bei dem Rust zu bestimmen versucht, wie viel
-Speicherplatz ein rekursiver Typ wie die Aufzählung <code>List</code> in Codeblock 15-2
+Speicherplatz ein rekursiver Typ wie die Aufzählung <code>List</code> in Listing 15-2
 benötigt. Der Compiler betrachtet zunächst die Variante <code>Cons</code>, die einen Typ
 <code>i32</code> und einen Wert vom Typ <code>List</code> enthält. Daher benötigt <code>Cons</code>
 Speicherplatz, der der Größe eines <code>i32</code> plus der Größe einer <code>List</code>
@@ -370,7 +365,7 @@ betrachtet der Compiler die Varianten, beginnend mit der Variante <code>Cons</co
 Variante <code>Cons</code> enthält einen Typ <code>i32</code> und einen Wert vom Typ <code>List</code>. Dieser
 Vorgang wird wie in Abbildung 15-1 dargestellt, unendlich fortgesetzt.</p>
 <img alt="Eine unendliche Cons-Liste" src="img/trpl15-01.svg" class="center" style="width: 50%;" />
-<p><span class="caption">Abbildung 15-1: Ein unendlicher <code>List</code>-Typ der aus
+<p><span class="caption">Abbildung 15-1: Ein unendlicher <code>List</code>-Typ, der aus
 unendlichen <code>Cons</code>-Varianten besteht</span></p>
 <h4 id="einen-rekursiven-typ-mit-einer-bekannten-größe-erhalten"><a class="header" href="#einen-rekursiven-typ-mit-einer-bekannten-größe-erhalten">Einen rekursiven Typ mit einer bekannten Größe erhalten</a></h4>
 <p>Da Rust nicht herausfinden kann, wie viel Speicherplatz für rekursiv definierte
@@ -388,13 +383,13 @@ Zeiger auf den Wert gespeichert wird.</p>
 benötigt: Die Größe eines Zeigers ändert sich nicht basierend auf der
 Datenmenge, auf die er zeigt. Dies bedeutet, dass wir anstelle eines anderen
 <code>List</code>-Wertes direkt eine <code>Box&lt;T&gt;</code> in die <code>Cons</code>-Variante einfügen können. Die
-<code>Box&lt;T&gt;</code> zeigt auf den nächsten <code>List</code>-Wert, der sich auf dem Haldenspeicher
-befindet und nicht in der <code>Cons</code>-Variante. Konzeptionell haben wir immer noch
-eine Liste, die mit Listen erstellt wurde, die andere Listen enthalten. Diese
+<code>Box&lt;T&gt;</code> zeigt auf den nächsten <code>List</code>-Wert, der sich auf dem Heap befindet und
+nicht in der <code>Cons</code>-Variante. Konzeptionell haben wir immer noch eine Liste,
+die mit Listen erstellt wurde, die andere Listen enthalten. Diese
 Implementierung ähnelt nun eher dem Platzieren der Elemente nebeneinander als
 ineinander.</p>
-<p>Wir können die Definition der Liste <code>List</code> in Codeblock 15-2 und die Verwendung
-von <code>List</code> in Codeblock 15-3 in den Programmcode von Codeblock 15-5 ändern, der
+<p>Wir können die Definition der Liste <code>List</code> in Listing 15-2 und die Verwendung
+von <code>List</code> in Listing 15-3 in den Programmcode von Listing 15-5 ändern, der
 kompilieren wird.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">enum List {
@@ -407,7 +402,7 @@ use crate::List::{Cons, Nil};
 fn main() {
     let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
 }</code></pre>
-<p><span class="caption">Codeblock 15-5: Definition von <code>List</code>, die <code>Box&lt;T&gt;</code>
+<p><span class="caption">Listing 15-5: Definition von <code>List</code>, die <code>Box&lt;T&gt;</code>
 benutzt, um eine bekannte Größe zu haben</span></p>
 <p>Die <code>Cons</code>-Variante benötigt die Größe eines <code>i32</code> plus Platz zum Speichern der
 Zeigerdaten der Box. Die <code>Nil</code>-Variante speichert keine Werte und benötigt
@@ -421,20 +416,19 @@ eines Listenwerts erforderlich ist. Abbildung 15-2 zeigt, wie die Variante
 <p><span class="caption">Abbildung 15-2: Ein <code>List</code>-Typ, der keine unendliche
 Größe hat, da <code>Cons</code> eine <code>Box</code> enthält</span></p>
 <p>Boxen kümmern sich nur um die Dereferenzierung und Speicherallokation auf dem
-Haldenspeicher, haben aber keine weiteren speziellen Funktionalitäten, wie wir
-sie bei anderen intelligenten Zeigertypen sehen werden. Sie haben aber auch
-keinen Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten
-verbunden ist. Daher können sie in Fällen wie der Cons-Liste nützlich sein, in
-denen die Dereferenzierung die einzige Funktionalität ist, die wir benötigen.
-Weitere Anwendungsfälle für Boxen werden wir uns auch in Kapitel 18 ansehen.</p>
-<p>Der Typ <code>Box&lt;T&gt;</code> ist ein intelligenter Zeiger, da er das Merkmal <code>Deref</code>
+Heap, haben aber keine weiteren speziellen Funktionalitäten, wie wir sie bei
+anderen intelligenten Zeigertypen sehen werden. Sie haben aber auch keinen
+Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten verbunden
+ist. Daher können sie in Fällen wie der Cons-Liste nützlich sein, in denen die
+Dereferenzierung die einzige Funktionalität ist, die wir benötigen. Weitere
+Anwendungsfälle für Boxen werden wir uns auch in Kapitel 18 ansehen.</p>
+<p>Der Typ <code>Box&lt;T&gt;</code> ist ein intelligenter Zeiger, da er das Trait <code>Deref</code>
 implementiert, mit dem <code>Box&lt;T&gt;</code>-Werte wie Referenzen behandelt werden können.
 Wenn ein <code>Box&lt;T&gt;</code>-Wert den Gültigkeitsbereich verlässt, werden die Daten am
-Haldenspeicher, auf die die Box zeigt, aufgrund der Implementierung des
-Merkmals <code>Drop</code> ebenfalls aufgeräumt. Diese beiden Merkmale sind für die
-Funktionalität der anderen intelligenten Zeigertypen, die wir im restlichen
-Kapitel erläutern, noch wichtiger. Lass uns diese beiden Merkmale genauer
-untersuchen.</p>
+Heap, auf die die Box zeigt, aufgrund der Implementierung des Traits <code>Drop</code>
+ebenfalls aufgeräumt. Diese beiden Traits sind für die Funktionalität der
+anderen intelligenten Zeigertypen, die wir im restlichen Kapitel erläutern,
+noch wichtiger. Lass uns diese beiden Traits genauer untersuchen.</p>
 
                     </main>
 

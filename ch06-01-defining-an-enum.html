@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Eine Aufzählung (enum) definieren - Die Programmiersprache Rust</title>
+        <title>Eine Aufzählung definieren - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="eine-aufzählung-enum-definieren"><a class="header" href="#eine-aufzählung-enum-definieren">Eine Aufzählung (enum) definieren</a></h2>
+                        <h2 id="eine-aufzählung-definieren"><a class="header" href="#eine-aufzählung-definieren">Eine Aufzählung definieren</a></h2>
 <p>Während Strukturen (structs) eine Möglichkeit bieten, zusammengehörige Felder
 und Daten zu gruppieren, wie ein <code>Rectangle</code> mit seiner <code>width</code> und <code>height</code>,
 bieten Aufzählungen (enums) eine Möglichkeit, einen Wert als einen aus einer
@@ -252,12 +252,12 @@ Beispiel eine Funktion definieren, die jedes <code>IpAddrKind</code> annimmt:</p
 <span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn route(ip_kind: IpAddrKind) {}</span></code></pre>
-<p>Aufzählungen haben noch weitere Vorteile. Wenn wir weiter über unseren
-IP-Adresstyp nachdenken, haben wir im Moment keine Möglichkeit, den <em>Wert</em> der
-tatsächlichen IP-Adresse zu speichern; wir wissen nur, um welche <em>Variante</em> es
-sich handelt. Mit dem was du gerade erst in Kapitel 5 über Strukturen gelernt
-hast, könntest du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
-Codeblock 6-1.</p>
+<p>Aufzählungen haben noch weitere Vorteile. Wenn wir noch einmal über unseren
+IP-Adresstyp nachdenken: Im Moment haben wir keine Möglichkeit, den <em>Wert</em> der
+tatsächlichen IP-Adresse abzulegen; wir wissen nur, um welche <em>Variante</em> es sich
+handelt. Da du in Kapitel 5 gerade Strukturen kennengelernt hast, könntest du in
+Versuchung geraten, dieses Problem mit Strukturen anzugehen, wie in Listing 6-1
+gezeigt.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum IpAddrKind {
@@ -280,7 +280,7 @@ let loopback = IpAddr {
     address: String::from("::1"),
 };
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 6-1: Speichern des Wertes und der
+<p><span class="caption">Listing 6-1: Speichern des Wertes und der
 <code>IpAddrKind</code>-Variante einer IP-Adresse mittels <code>struct</code></span></p>
 <p>Hier haben wir eine Struktur <code>IpAddr</code> definiert, die zwei Felder hat:  Ein Feld
 <code>kind</code> vom Typ <code>IpAddrKind</code> (die zuvor definierte Aufzählung) und ein Feld
@@ -314,13 +314,13 @@ Instanz der Aufzählung konstruiert. Das heißt, <code>IpAddr::V4()</code> ist e
 Funktionsaufruf der ein <code>String</code>-Argument entgegennimmt und eine Instanz des
 Typs <code>IpAddr</code> zurückgibt. Diese Konstruktorfunktion wird automatisch definiert
 als Ergebnis der Definition der Aufzählung.</p>
-<p>Es gibt noch einen weiteren Vorteil, eine Aufzählung statt einer Struktur zu
+<p>Es gibt noch einen weiteren Vorteil, eine Aufzählung anstelle einer Struktur zu
 verwenden: Jede Variante kann verschiedene Typen und verschieden viele
-zugehöriger Daten haben. IP-Adressen der Version vier haben stets vier
-numerische Komponenten, die Werte zwischen 0 und 255 haben. Wenn wir
-<code>V4</code>-Adressen als vier <code>u8</code>-Werte speichern und <code>V6</code>-Adressen als einen
-<code>String</code>-Wert ausdrücken wollten, wäre das mit einer Struktur nicht möglich.
-Aufzählungen lösen diesen Fall ganz einfach:</p>
+zugehörige Daten haben. IP-Adressen der Version vier haben stets vier numerische
+Komponenten, die Werte zwischen 0 und 255 haben. Wenn wir <code>V4</code>-Adressen als vier
+<code>u8</code>-Werte speichern und <code>V6</code>-Adressen als einen <code>String</code>-Wert ausdrücken
+wollten, wäre das mit einer Struktur nicht möglich. Aufzählungen lösen diesen
+Fall ganz einfach:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum IpAddr {
@@ -357,15 +357,15 @@ enum IpAddr {
 }
 <span class="boring">}</span></code></pre>
 <p>Dieser Code veranschaulicht, dass du jede Art von Daten in eine
-Aufzählungsvariante einfügen kannst: Zeichenketten, numerische Typen,
-Strukturen usw. Du kannst sogar eine weitere Aufzählung einfügen! Außerdem sind
+Aufzählungsvariante einfügen kannst: Strings, numerische Typen, Strukturen usw.
+Du kannst sogar eine weitere Aufzählung einfügen! Außerdem sind
 Standardbibliothekstypen oft nicht viel komplizierter als das, was du dir
 vielleicht ausdenkst. Beachte, dass wir, obwohl die Standardbibliothek eine
-Definition für <code>IpAddr</code> enthält, konfliktfrei unsere eigene Definition
-erstellen und verwenden können, da wir die Definition der Standardbibliothek
-nicht in unseren Gültigkeitsbereich aufgenommen haben. Wir werden in Kapitel 7
-mehr darauf eingehen, wie man Typen in den Gültigkeitsbereich aufnimmt.</p>
-<p>Schauen wir uns ein weiteres Beispiel für eine Aufzählung in Codeblock 6-2 an:
+Definition für <code>IpAddr</code> enthält, konfliktfrei unsere eigene Definition erstellen
+und verwenden können, da wir die Definition der Standardbibliothek nicht in
+unseren Gültigkeitsbereich aufgenommen haben. Wir werden in Kapitel 7 mehr
+darauf eingehen, wie man Typen in den Gültigkeitsbereich aufnimmt.</p>
+<p>Schauen wir uns ein weiteres Beispiel für eine Aufzählung in Listing 6-2 an:
 In dieser Aufzählung ist eine Vielzahl von Typen in ihren Varianten eingebettet.</p>
 <pre class="playground"><code class="language-rust edition2024">enum Message {
     Quit,
@@ -375,7 +375,7 @@ In dieser Aufzählung ist eine Vielzahl von Typen in ihren Varianten eingebettet
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre>
-<p><span class="caption">Codeblock 6-2: Eine Aufzählung <code>Message</code>, deren Varianten
+<p><span class="caption">Listing 6-2: Eine Aufzählung <code>Message</code>, deren Varianten
 jeweils eine unterschiedliche Anzahl an Werttypen speichern</span></p>
 <p>Diese Aufzählung hat vier Varianten mit unterschiedlichen Typen:</p>
 <ul>
@@ -384,7 +384,7 @@ jeweils eine unterschiedliche Anzahl an Werttypen speichern</span></p>
 <li><code>Write</code>: Enthält einen einzelnen <code>String</code>.</li>
 <li><code>ChangeColor</code>: Enthält drei <code>i32</code>-Werte.</li>
 </ul>
-<p>Die Definition einer Aufzählung mit Varianten wie in Codeblock 6-2 ist ähnlich
+<p>Die Definition einer Aufzählung mit Varianten wie in Listing 6-2 ist ähnlich
 zur Definition verschiedener Arten von Strukturdefinitionen, außer dass die
 Aufzählung nicht das Schlüsselwort <code>struct</code> verwendet und alle Varianten unter
 dem Typ <code>Message</code> zusammengefasst sind. Die folgenden Strukturen könnten die
@@ -400,7 +400,7 @@ struct ChangeColorMessage(i32, i32, i32); // Tupelstruktur
 </span><span class="boring">fn main() {}</span></code></pre>
 <p>Aber wenn wir die verschiedenen Strukturen verwenden würden, die jeweils ein
 eigener Typ sind, könnten wir nicht so einfach eine Funktion definieren, die
-eine dieser Nachrichtenarten entgegennimmt, wie wir es mit der in Codeblock 6-2
+eine dieser Nachrichtenarten entgegennimmt, wie wir es mit der in Listing 6-2
 definierten Aufzählung <code>Message</code> gemacht haben, bei der es sich um einen
 einzigen Typ handelt.</p>
 <p>Es gibt noch eine weitere Ähnlichkeit zwischen Aufzählungen und Strukturen: So
@@ -424,11 +424,10 @@ wir für unsere Aufzählung <code>Message</code> definieren könnten:</p>
     let m = Message::Write(String::from("hallo"));
     m.call();
 <span class="boring">}</span></code></pre>
-<p>Der Methodenrumpf würde <code>self</code> benutzen, um den Wert zu erhalten, auf den wir
-die Methode aufgerufen haben. In diesem Beispiel haben wir eine Variable <code>m</code>
-erstellt, die den Wert <code>Message::Write(String::from("hallo"))</code> hat. Genau
-diesen Wert wird <code>self</code> im Rumpf der Methode <code>call</code> haben, wenn <code>m.call()</code>
-ausgeführt wird.</p>
+<p>Der Methodenrumpf würde <code>self</code> verwenden, um den Wert zu erhalten, für den die
+Methode aufgerufen wurde. In diesem Beispiel haben wir eine Variable <code>m</code> mit dem
+Wert <code>Message::Write(String::from("hallo"))</code> angelegt. Genau diesen Wert wird
+<code>self</code> im Rumpf der Methode <code>call</code> haben, wenn <code>m.call()</code> ausgeführt wird.</p>
 <p>Sehen wir uns eine weitere Aufzählung in der Standardbibliothek an, die sehr
 verbreitet und hilfreich ist: <code>Option</code></p>
 <h3 id="die-aufzählung-option"><a class="header" href="#die-aufzählung-option">Die Aufzählung <code>Option</code></a></h3>
@@ -438,7 +437,7 @@ kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.
 <p>Wenn du zum Beispiel das erste Element einer nichtleeren Liste anforderst,
 erhältst du einen Wert. Wenn du das erste Element einer leeren Liste abfragst,
 erhältst du nichts. Im Sinne des Typsystems bedeutet das, dass der Compiler
-überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt haben solltest.
+überprüfen kann, ob du alle Fälle behandelt hast, die du behandeln solltest.
 Diese Funktionalität kann Fehler vermeiden, die in anderen Programmiersprachen
 extrem häufig auftreten.</p>
 <p>Bei der Entwicklung von Programmiersprachen wird oft überlegt, welche
@@ -448,7 +447,7 @@ vielen anderen Sprachen gibt. <em>Null</em> ist ein Wert, der bedeutet, dass kei
 vorhanden ist. In Sprachen mit null können sich Variablen immer in einem von
 zwei Zuständen befinden: null oder nicht null.</p>
 <p>In seinem Vortrag „Nullreferenzen: Der milliardenschwere Fehler“ von 2009 hat
-Tony Hoare, der Erfinder von null, folgendes gesagt:</p>
+Tony Hoare, der Erfinder von null, Folgendes gesagt:</p>
 <blockquote>
 <p>Ich nenne es meinen milliardenschweren Fehler. Zu dieser Zeit entwarf ich das
 erste umfangreiche Typsystem für Referenzen in einer objektorientierten
@@ -479,12 +478,12 @@ kann. Diese Aufzählung heißt <code>Option&lt;T&gt;</code> und ist
     Some(T),
 }
 <span class="boring">}</span></code></pre>
-<p>Die Aufzählung <code>Option&lt;T&gt;</code> ist so nützlich, dass sie sogar im Präludium
-enthalten ist; du musst sie nicht explizit in den Gültigkeitsbereich bringen.
-Ihre Varianten sind ebenfalls im Präludium enthalten: Du kannst <code>Some</code> und
-<code>None</code> direkt ohne Präfix <code>Option::</code> verwenden. Die Aufzählung <code>Option&lt;T&gt;</code> ist
-dennoch nur eine normale Aufzählung, und <code>Some(T)</code> und <code>None</code> sind nur
-Varianten des Typs <code>Option&lt;T&gt;</code>.</p>
+<p>Die Aufzählung <code>Option&lt;T&gt;</code> ist so nützlich, dass sie sogar im Prelude enthalten
+ist; du musst sie nicht explizit in den Gültigkeitsbereich bringen. Ihre
+Varianten sind ebenfalls im Prelude enthalten: Du kannst <code>Some</code> und <code>None</code>
+direkt verwenden, ohne das Präfix <code>Option::</code>. Die Aufzählung <code>Option&lt;T&gt;</code> ist
+dennoch nur eine normale Aufzählung, und <code>Some(T)</code> und <code>None</code> sind nur Varianten
+des Typs <code>Option&lt;T&gt;</code>.</p>
 <p>Die Syntax <code>&lt;T&gt;</code> ist eine Funktionalität von Rust, über die wir noch nicht
 gesprochen haben. Es handelt sich um einen generischen Typparameter, auf den
 wir in Kapitel 10 näher eingehen werden. Für den Moment musst du nur wissen,
@@ -512,10 +511,10 @@ der Wert innerhalb von <code>Some</code> gehalten wird. Wenn wir einen Wert <cod
 bedeutet das in gewisser Weise dasselbe wie Null: Wir haben keinen gültigen
 Wert. Warum ist nun besser <code>Option&lt;T&gt;</code> anstelle von Null zu verwenden?</p>
 <p>Kurz gesagt, weil <code>Option&lt;T&gt;</code> und <code>T</code> (wobei <code>T</code> ein beliebiger Typ sein kann)
-unterschiedliche Typen sind, erlaubt es der Compiler nicht <code>Option&lt;T&gt;</code> so zu
-verwenden als wäre es definitiv ein gültiger Wert. Beispielsweise lässt sich
-dieser Code nicht kompilieren, weil er versucht, ein <code>i8</code> mit einem
-<code>Option&lt;i8&gt;</code> zu addieren:</p>
+unterschiedliche Typen sind, erlaubt es der Compiler nicht, <code>Option&lt;T&gt;</code> so zu
+verwenden, als ob es definitiv ein gültiger Wert wäre. Beispielsweise lässt sich
+dieser Code nicht kompilieren, weil er versucht, ein <code>i8</code> zu einem <code>Option&lt;i8&gt;</code>
+zu addieren:</p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x: i8 = 5;

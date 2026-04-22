@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Nachrichtenaustausch zwischen Strängen (threads) - Die Programmiersprache Rust</title>
+        <title>Nachrichtenaustausch zwischen Threads - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,38 +161,37 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="nachrichtenaustausch-zwischen-strängen-threads"><a class="header" href="#nachrichtenaustausch-zwischen-strängen-threads">Nachrichtenaustausch zwischen Strängen (threads)</a></h2>
+                        <h2 id="nachrichtenaustausch-zwischen-threads"><a class="header" href="#nachrichtenaustausch-zwischen-threads">Nachrichtenaustausch zwischen Threads</a></h2>
 <p>Ein immer beliebter werdender Ansatz zur Gewährleistung einer sicheren
 Nebenläufigkeit (safe concurrency) ist der Nachrichtenaustausch (message
-passing), bei dem Stränge oder Akteure kommunizieren, indem sie sich
-gegenseitig Nachrichten mit Daten senden. Hier ist die Idee in einem Slogan aus
-der <a href="https://golang.org/doc/effective_go.html#concurrency">Go-Sprachdokumentation</a>: „Kommuniziere nicht, indem du
-Arbeitsspeicher teilst; teile stattdessen Arbeitsspeicher durch Kommunikation.“</p>
+passing), bei dem Threads oder Akteure kommunizieren, indem sie sich gegenseitig
+Nachrichten mit Daten senden. Hier ist die Idee in einem Slogan aus der
+<a href="https://golang.org/doc/effective_go.html#concurrency">Go-Sprachdokumentation</a>: „Kommuniziere nicht, indem du Arbeitsspeicher
+teilst; teile stattdessen Arbeitsspeicher durch Kommunikation.“</p>
 <p>Um Nebenläufigkeit beim Senden von Nachrichten zu erreichen, bietet die
 Standardbibliothek von Rust eine Implementierung für Kanäle. Ein <em>Kanal</em>
-(channel) ist ein allgemeines Programmierkonzept, mit dem Daten von einem
-Strang zu einem anderen gesendet werden.</p>
+(channel) ist ein allgemeines Programmierkonzept, mit dem Daten von einem Thread
+zu einem anderen gesendet werden.</p>
 <p>Du kannst dir einen Kanal in der Programmierung wie einen gerichteten
 Wasserkanal vorstellen, z.B. einen Bach oder einen Fluss. Wenn du etwas wie
 eine Gummiente in einen Fluss setzt, wird sie stromabwärts bis zum Ende des
 Wasserwegs reisen.</p>
-<p>Ein Kanal hat zwei Hälften: Einen Sender und einen Empfänger. Die Senderhälfte
+<p>Ein Kanal hat zwei Hälften: einen Sender und einen Empfänger. Die Senderhälfte
 ist die stromaufwärts gelegene Stelle, an der du die Gummiente in den Fluss
-setzt, und die Empfängerhälfte ist die Stelle, an der die Gummiente
-stromabwärts ankommt. Ein Teil deines Codes ruft Methoden auf dem Sender mit
-den Daten auf, die du senden möchtest, und ein anderer Teil überprüft die
-Empfangsseite auf ankommende Nachrichten. Ein Kanal gilt als <em>geschlossen</em>
-(closed), wenn entweder die Sender- oder die Empfängerhälfte aufgeräumt
-(dropped) wird.</p>
-<p>Hier erarbeiten wir uns ein Programm, das einen Strang hat, um Werte zu
-generieren und sie über einen Kanal zu senden, und einen anderen Strang, der
-die Werte empfängt und ausgibt. Wir werden einfache Werte zwischen den Strängen
-über einen Kanal senden, um die Funktionalität zu veranschaulichen. Sobald du
-mit der Technik vertraut bist, kannst du Kanäle für alle Stränge verwenden, die
+setzt, und die Empfängerhälfte ist die Stelle, an der die Gummiente stromabwärts
+ankommt. Ein Teil deines Codes ruft Methoden auf dem Sender mit den Daten auf,
+die du senden möchtest, und ein anderer Teil überprüft die Empfangsseite auf
+ankommende Nachrichten. Ein Kanal gilt als <em>geschlossen</em> (closed), wenn entweder
+die Sender- oder die Empfängerhälfte aufgeräumt (dropped) wird.</p>
+<p>Hier erarbeiten wir uns ein Programm, das einen Thread hat, um Werte zu
+generieren und sie über einen Kanal zu senden, und einen anderen Thread, der die
+Werte empfängt und ausgibt. Wir werden einfache Werte zwischen den Threads über
+einen Kanal senden, um die Funktionalität zu veranschaulichen. Sobald du mit der
+Technik vertraut bist, kannst du Kanäle für alle Threads verwenden, die
 miteinander kommunizieren müssen, z.B. für ein Chatsystem oder ein System, in
-dem viele Stränge Teile einer Berechnung durchführen und die Teile an einen
-Strang senden, der die Ergebnisse zusammenfasst.</p>
-<p>Erstens werden wir in Codeblock 16-6 einen Kanal erstellen, aber nichts damit
+dem viele Threads Teile einer Berechnung durchführen und die Teile an einen
+Thread senden, der die Ergebnisse zusammenfasst.</p>
+<p>Erstens werden wir in Listing 16-6 einen Kanal erstellen, aber nichts damit
 machen. Beachte, dass sich dieser Code noch nicht kompilieren lässt, weil Rust
 nicht sagen kann, welchen Typ von Werten wir über den Kanal senden wollen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -201,7 +200,7 @@ nicht sagen kann, welchen Typ von Werten wir über den Kanal senden wollen.</p>
 fn main() {
     let (tx, rx) = mpsc::channel();
 }</code></pre>
-<p><span class="caption">Codeblock 16-6: Erstellen eines Kanals und Zuweisen der
+<p><span class="caption">Listing 16-6: Erstellen eines Kanals und Zuweisen der
 beiden Hälften zu <code>tx</code> und <code>rx</code></span></p>
 <p>Wir erstellen einen neuen Kanal mit der Funktion <code>mpsc::channel</code>; <code>mpsc</code> steht
 für <em>mehrfacher Produzent, einzelner Konsument</em> (multiple producer, single
@@ -222,11 +221,11 @@ Verwendung von Mustern in <code>let</code>-Anweisungen und die Destrukturierung 
 19 besprechen. Für den Moment solltest du wissen, dass die Verwendung einer
 <code>let</code>-Anweisung auf diese Weise ein bequemer Ansatz ist, um die Teile des
 Tupels zu extrahieren, die von <code>mpsc::channel</code> zurückgegeben werden.</p>
-<p>Verschieben wir das sendende Ende in einen erzeugten Strang und lassen es eine
-Zeichenkette senden, sodass der erzeugte Strang mit dem Hauptstrang
-kommuniziert, wie in Codeblock 16-7 gezeigt. Das ist so, als würde man eine
-Gummiente flussaufwärts in den Fluss setzen oder eine Chat-Nachricht von einem
-Strang zum anderen senden.</p>
+<p>Verschieben wir das sendende Ende in einen erzeugten Thread und lassen ihn einen
+String senden, sodass der erzeugte Thread mit dem Haupt-Thread kommuniziert, wie
+in Listing 16-7 gezeigt. Das ist so, als würde man eine Gummiente flussaufwärts
+in den Fluss setzen oder eine Chat-Nachricht von einem Thread zum anderen
+senden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::sync::mpsc;
 use std::thread;
@@ -239,20 +238,20 @@ fn main() {
         tx.send(val).unwrap();
     });
 }</code></pre>
-<p><span class="caption">Codeblock 16-7: Verschieben von <code>tx</code> in einen erzeugten
-Strang und Senden von „hallo“</span></p>
-<p>Wieder verwenden wir <code>thread::spawn</code>, um einen neuen Strang zu erstellen, und
-dann <code>move</code>, um <code>tx</code> in den Funktionsabschluss zu verschieben, sodass der
-erzeugte Strang <code>tx</code> besitzt. Der erzeugte Strang muss den Sender besitzen, um
-in der Lage zu sein, Nachrichten durch den Kanal zu senden.</p>
+<p><span class="caption">Listing 16-7: Verschieben von <code>tx</code> in einen erzeugten
+Thread und Senden von „hallo“</span></p>
+<p>Wieder verwenden wir <code>thread::spawn</code>, um einen neuen Thread zu erstellen, und
+dann <code>move</code>, um <code>tx</code> in den Closure zu verschieben, sodass der erzeugte Thread
+<code>tx</code> besitzt. Der erzeugte Thread muss den Sender besitzen, um in der Lage zu
+sein, Nachrichten durch den Kanal zu senden.</p>
 <p>Der Sender hat eine Methode <code>send</code>, die den Wert entgegennimmt, den wir senden
 wollen. Die Methode <code>send</code> gibt ein <code>Result&lt;T, E&gt;</code> zurück; wenn also die
 empfangende Seite bereits aufgeräumt wurde und es keinen Ort gibt, an den ein
 Wert gesendet werden kann, wird die Sendeoperation einen Fehler zurückgeben. In
 diesem Beispiel rufen wir <code>unwrap</code> auf, um im Falle eines Fehlers abzubrechen.
-Aber in einer echten Anwendung würden wir es ordentlich handhaben: Kehre zu
-Kapitel 9 zurück, um Strategien für eine korrekte Fehlerbehandlung anzusehen.</p>
-<p>In Codeblock 16-8 erhalten wir den Wert vom Empfänger im Hauptstrang. Das ist
+Aber in einer echten Anwendung würden wir es ordentlich handhaben: Schlag in
+Kapitel 9 nach, um Strategien für eine korrekte Fehlerbehandlung anzusehen.</p>
+<p>In Listing 16-8 erhalten wir den Wert vom Empfänger im Haupt-Thread. Das ist
 so, als würde man die Gummiente am Ende des Flusses aus dem Wasser holen oder
 eine Chat-Nachricht erhalten.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -270,10 +269,10 @@ fn main() {
     let received = rx.recv().unwrap();
     println!("Erhalten: {received}");
 }</code></pre>
-<p><span class="caption">Codeblock 16-8: Empfangen des Wertes „hallo“ im
-Hauptstrang und Ausgeben des Wertes</span></p>
-<p>Das Empfänger hat zwei nützliche Methoden: <code>recv</code> und <code>try_recv</code>. Wir benutzen
-<code>recv</code>, kurz für <em>empfangen</em> (receive), was die Ausführung des Hauptstrangs
+<p><span class="caption">Listing 16-8: Empfangen des Wertes „hallo“ im
+Haupt-Thread und Ausgeben des Wertes</span></p>
+<p>Der Empfänger hat zwei nützliche Methoden: <code>recv</code> und <code>try_recv</code>. Wir benutzen
+<code>recv</code>, kurz für <em>empfangen</em> (receive), was die Ausführung des Haupt-Threads
 blockiert und wartet, bis ein Wert in den Kanal geschickt wird. Sobald ein Wert
 gesendet wurde, wird er von <code>recv</code> in einem <code>Result&lt;T, E&gt;</code> zurückgegeben. Wenn
 der Sender geschlossen ist, gibt <code>recv</code> einen Fehler zurück, um zu
@@ -281,28 +280,28 @@ signalisieren, dass keine weiteren Werte mehr kommen werden.</p>
 <p>Die Methode <code>try_recv</code> blockiert nicht, sondern gibt stattdessen sofort ein
 <code>Result&lt;T, E&gt;</code> zurück: Einen <code>Ok</code>-Wert, der eine Nachricht enthält, wenn eine
 verfügbar ist, und einen <code>Err</code>-Wert, wenn gerade keine Nachricht vorhanden ist.
-Die Verwendung von <code>try_recv</code> ist nützlich, wenn dieser Strang während des
+Die Verwendung von <code>try_recv</code> ist nützlich, wenn dieser Thread während des
 Wartens auf Nachrichten andere Arbeiten zu erledigen hat: Wir könnten eine
 Schleife schreiben, die <code>try_recv</code> ab und zu aufruft, eine Nachricht
 verarbeitet, wenn eine verfügbar ist, und ansonsten für eine Weile andere
 Arbeiten erledigt, bis sie erneut überprüft wird.</p>
 <p>Wir haben in diesem Beispiel der Einfachheit halber <code>recv</code> verwendet; wir haben
-keine andere Arbeit für den Hauptstrang zu erledigen, außer auf Nachrichten zu
-warten, daher ist es angebracht, den Hauptstrang zu blockieren.</p>
-<p>Wenn wir den Code in Codeblock 16-8 ausführen, sehen wir den durch den
-Hauptstrang ausgegebenen Wert:</p>
+keine andere Arbeit für den Haupt-Thread zu erledigen, außer auf Nachrichten zu
+warten, daher ist es angebracht, den Haupt-Thread zu blockieren.</p>
+<p>Wenn wir den Code in Listing 16-8 ausführen, sehen wir den durch den
+Haupt-Thread ausgegebenen Wert:</p>
 <pre><code class="language-text">Erhalten: hallo
 </code></pre>
 <p>Perfekt!</p>
-<h3 id="übertragen-der-eigentümerschaft-durch-kanäle"><a class="header" href="#übertragen-der-eigentümerschaft-durch-kanäle">Übertragen der Eigentümerschaft durch Kanäle</a></h3>
+<h3 id="übertragen-des-eigentums-durch-kanäle"><a class="header" href="#übertragen-des-eigentums-durch-kanäle">Übertragen des Eigentums durch Kanäle</a></h3>
 <p>Die Eigentumsregeln spielen beim Nachrichtenversand eine entscheidende Rolle,
 da sie dir helfen, sicheren, nebenläufigen Code zu schreiben. Die Vermeidung
 von Fehlern bei der nebenläufigen Programmierung ist der Vorteil, den du durch
 Berücksichtigen der Eigentümerschaft in deinen Rust-Programmen erhältst. Lass
 uns ein Experiment machen, um zu zeigen, wie Kanäle und Eigentümerschaft
 zusammenwirken, um Probleme zu vermeiden: Wir versuchen, einen Wert <code>val</code> im
-erzeugten Strang zu verwenden, <em>nachdem</em> wir ihn in den Kanal geschickt haben.
-Versuche, den Code in Codeblock 16-9 zu kompilieren, um zu sehen, warum dieser
+erzeugten Thread zu verwenden, <em>nachdem</em> wir ihn in den Kanal geschickt haben.
+Versuche, den Code in Listing 16-9 zu kompilieren, um zu sehen, warum dieser
 Code nicht erlaubt ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">use std::sync::mpsc;
@@ -320,15 +319,15 @@ fn main() {
     let received = rx.recv().unwrap();
     println!("Erhalten: {received}");
 }</code></pre>
-<p><span class="caption">Codeblock 16-9: Versuch, <code>val</code> zu benutzen, nachdem wir
+<p><span class="caption">Listing 16-9: Versuch, <code>val</code> zu benutzen, nachdem wir
 es in den Kanal geschickt haben</span></p>
 <p>Hier versuchen wir, <code>val</code> auszugeben, nachdem wir es per <code>tx.send</code> in den Kanal
 geschickt haben. Dies zuzulassen wäre eine schlechte Idee: Sobald der Wert an
-einen anderen Strang gesendet wurde, könnte dieser Strang ihn ändern oder
+einen anderen Thread gesendet wurde, könnte dieser Thread ihn ändern oder
 aufräumen, bevor wir versuchen, den Wert erneut zu verwenden. Möglicherweise
-können die Änderungen des anderen Strangs aufgrund inkonsistenter oder nicht
+können die Änderungen des anderen Threads aufgrund inkonsistenter oder nicht
 vorhandener Daten zu Fehlern oder unerwarteten Ergebnissen führen. Rust gibt
-uns jedoch einen Fehler, wenn wir versuchen, den Code in Codeblock 16-9 zu
+uns jedoch einen Fehler, wenn wir versuchen, den Code in Listing 16-9 zu
 kompilieren:</p>
 <pre><code class="language-console">$ cargo run
    Compiling message-passing v0.1.0 (file:///projects/message-passing)
@@ -348,16 +347,16 @@ For more information about this error, try `rustc --explain E0382`.
 error: could not compile `message-passing` (bin "message-passing") due to 1 previous error
 </code></pre>
 <p>Unser Nebenläufigkeitsfehler hat einen Kompilierzeitfehler verursacht. Die
-Funktion <code>send</code> übernimmt die Eigentümerschaft an ihrem Parameter und wenn der
-Wert verschoben wird, übernimmt der Empfänger die Eigentümerschaft an ihm.
-Dadurch wird verhindert, dass wir den Wert nach dem Senden versehentlich wieder
-verwenden; das Eigentumssystem prüft, ob alles in Ordnung ist.</p>
+Funktion <code>send</code> übernimmt das Eigentum an ihrem Parameter und wenn der Wert
+verschoben wird, übernimmt der Empfänger das Eigentum an ihm. Dadurch wird
+verhindert, dass wir den Wert nach dem Senden versehentlich wieder verwenden;
+das Eigentumssystem prüft, ob alles in Ordnung ist.</p>
 <h3 id="senden-mehrerer-werte"><a class="header" href="#senden-mehrerer-werte">Senden mehrerer Werte</a></h3>
-<p>Der Code in Codeblock 16-8 wurde kompiliert und ausgeführt, aber er zeigte uns
-nicht eindeutig, dass zwei getrennte Stränge über den Kanal miteinander
+<p>Der Code in Listing 16-8 wurde kompiliert und ausgeführt, aber er zeigte uns
+nicht eindeutig, dass zwei getrennte Threads über den Kanal miteinander
 sprachen.</p>
-<p>In Codeblock 16-10 haben wir einige Änderungen vorgenommen, die beweisen, dass
-der Code in Codeblock 16-8 nebenläufig ausgeführt wird: Der erzeugte Strang
+<p>In Listing 16-10 haben wir einige Änderungen vorgenommen, die beweisen, dass
+der Code in Listing 16-8 nebenläufig ausgeführt wird: Der erzeugte Thread
 sendet nun mehrere Nachrichten und macht dazwischen eine Pause von einer
 Sekunde.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -373,7 +372,7 @@ fn main() {
             String::from("hallo"),
             String::from("aus"),
             String::from("dem"),
-            String::from("Strang"),
+            String::from("Thread"),
         ];
 
         for val in vals {
@@ -386,31 +385,31 @@ fn main() {
         println!("Erhalten: {received}");
     }
 }</code></pre>
-<p><span class="caption">Codeblock 16-10: Senden mehrerer Nachrichten mit Pausen
+<p><span class="caption">Listing 16-10: Senden mehrerer Nachrichten mit Pausen
 dazwischen</span></p>
-<p>Diesmal verwendet der erzeugte Strang einen Vektor von Zeichenketten, die wir
-an den Hauptstrang senden wollen. Wir iterieren über diese Zeichenketten,
-senden jede einzeln und pausieren dazwischen, indem wir die Funktion
-<code>thread::sleep</code> mit einem <code>Duration</code>-Wert von einer Sekunde aufrufen.</p>
-<p>Im Hauptstrang rufen wir die Funktion <code>recv</code> nicht mehr explizit auf:
+<p>Diesmal verwendet der erzeugte Thread einen Vektor von Strings, die wir an den
+Haupt-Thread senden wollen. Wir iterieren über diese Strings, senden jeden
+einzeln und pausieren dazwischen, indem wir die Funktion <code>thread::sleep</code> mit
+einem <code>Duration</code>-Wert von einer Sekunde aufrufen.</p>
+<p>Im Haupt-Thread rufen wir die Funktion <code>recv</code> nicht mehr explizit auf:
 Stattdessen behandeln wir <code>rx</code> als Iterator. Jeden empfangenen Wert geben wir
 aus. Wenn der Kanal geschlossen wird, wird die Iteration beendet.</p>
-<p>Wenn du den Code in Codeblock 16-10 ausführst, solltest du die folgende Ausgabe
+<p>Wenn du den Code in Listing 16-10 ausführst, solltest du die folgende Ausgabe
 mit einer Ein-Sekunden-Pause zwischen jeder Zeile sehen:</p>
 <pre><code class="language-text">Erhalten: hallo
 Erhalten: aus
 Erhalten: dem
-Erhalten: Strang
+Erhalten: Thread
 </code></pre>
-<p>Da wir keinen Code haben, der die <code>for</code>-Schleife im Hauptstrang pausiert oder
-verzögert, können wir sagen, dass der Hauptstrang darauf wartet, Werte vom
-erzeugten Strang zu erhalten.</p>
+<p>Da wir keinen Code haben, der die <code>for</code>-Schleife im Haupt-Thread pausiert oder
+verzögert, können wir sagen, dass der Haupt-Thread darauf wartet, Werte vom
+erzeugten Thread zu erhalten.</p>
 <h3 id="erstellen-mehrerer-produzenten"><a class="header" href="#erstellen-mehrerer-produzenten">Erstellen mehrerer Produzenten</a></h3>
 <p>Vorhin haben wir erwähnt, dass <code>mpsc</code> ein Akronym für <em>mehrfacher Produzent,
-einzelner Konsument</em> ist. Lass uns <code>mpsc</code> verwenden und den Code in Codeblock
-16-10 erweitern, um mehrere Stränge zu erzeugen, die alle Werte an den gleichen
+einzelner Konsument</em> ist. Lass uns <code>mpsc</code> verwenden und den Code in Listing
+16-10 erweitern, um mehrere Threads zu erzeugen, die alle Werte an den gleichen
 Empfänger senden. Wir können dies tun, indem wir den Sender klonen, wie in
-Codeblock 16-11 gezeigt:</p>
+Listing 16-11 gezeigt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">use std::sync::mpsc;
 </span><span class="boring">use std::thread;
@@ -427,7 +426,7 @@ Codeblock 16-11 gezeigt:</p>
             String::from("hallo"),
             String::from("aus"),
             String::from("dem"),
-            String::from("Strang"),
+            String::from("Thread"),
         ];
 
         for val in vals {
@@ -456,12 +455,12 @@ Codeblock 16-11 gezeigt:</p>
 
     // --abschneiden--
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 16-11: Senden mehrerer Nachrichten von mehreren
+<p><span class="caption">Listing 16-11: Senden mehrerer Nachrichten von mehreren
 Produzenten</span></p>
-<p>Bevor wir den ersten Strang erzeugen, rufen wir dieses Mal <code>clone</code> auf dem
-Sender auf. Dadurch erhalten wir einen weiteren Sender, das wir an den ersten
-erzeugten Strang weitergeben können. Wir übergeben den ursprüngliche Sender an
-einen zweiten erzeugten Strang. Dadurch erhalten wir zwei Stränge, die jeweils
+<p>Bevor wir den ersten Thread erzeugen, rufen wir dieses Mal <code>clone</code> auf dem
+Sender auf. Dadurch erhalten wir einen weiteren Sender, den wir an den ersten
+erzeugten Thread weitergeben können. Wir übergeben den ursprünglichen Sender an
+einen zweiten erzeugten Thread. Dadurch erhalten wir zwei Threads, die jeweils
 unterschiedliche Nachrichten an den Empfänger senden.</p>
 <p>Wenn du den Code ausführst, sollte deine Ausgabe in etwa so aussehen:</p>
 <pre><code class="language-text">Erhalten: hallo
@@ -470,13 +469,13 @@ Erhalten: aus
 Erhalten: Nachrichten
 Erhalten: für
 Erhalten: dem
-Erhalten: Strang
+Erhalten: Thread
 Erhalten: dich
 </code></pre>
 <p>Möglicherweise siehst du die Werte in einer anderen Reihenfolge, dies hängt von
 deinem System ab. Das macht die Nebenläufigkeit sowohl interessant als auch
 schwierig. Wenn du mit <code>thread::sleep</code> experimentierst und ihm verschiedene
-Werte in den verschiedenen Strängen gibst, wird jeder Durchlauf
+Werte in den verschiedenen Threads gibst, wird jeder Durchlauf
 nicht-deterministischer sein und jedes Mal eine andere Ausgabe erzeugen.</p>
 <p>Nachdem wir uns nun angesehen haben, wie Kanäle funktionieren, wollen wir uns
 eine andere Methode der Nebenläufigkeit ansehen.</p>

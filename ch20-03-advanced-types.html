@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -164,35 +164,35 @@
                         <h2 id="fortgeschrittene-typen"><a class="header" href="#fortgeschrittene-typen">Fortgeschrittene Typen</a></h2>
 <p>Das Rust-Typsystem weist einige Funktionalitäten auf, die wir bisher erwähnt,
 aber noch nicht besprochen haben. Wir beginnen mit einer allgemeinen Diskussion
-über Newtypes und untersuchen, warum sie als Typen nützlich sind. Dann gehen
-wir zu Typ-Alias über, einer Funktionalität, die den Newtypes ähnlich ist, aber
+über Newtypes und untersuchen, warum sie als Typen nützlich sind. Dann gehen wir
+zu Typ-Aliasen über, einer Funktionalität, die den Newtypes ähnlich ist, aber
 eine etwas andere Semantik hat. Wir werden auch den Typ <code>!</code> und dynamisch große
 Typen besprechen.</p>
 <h3 id="typsicherheit-und-abstraktion-mit-dem-newtype-muster"><a class="header" href="#typsicherheit-und-abstraktion-mit-dem-newtype-muster">Typsicherheit und Abstraktion mit dem Newtype-Muster</a></h3>
-<p>Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt <a href="ch20-02-advanced-traits.html#externe-merkmale-mit-dem-newtype-muster-implementieren">„Externe
-Merkmale mit dem Newtype-Muster implementieren“</a> gelesen hast. Das
-Newtype-Muster ist auch für Aufgaben nützlich, die über die bisher besprochenen
-hinausgehen, einschließlich statisch sicherzustellen, dass Werte niemals
-verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein Beispiel
-für die Verwendung von Newtypes zum Angeben von Einheiten hast du in Codeblock
-20-16 gesehen: Erinnere dich daran, dass die Strukturen <code>Millimeters</code> und
-<code>Meters</code> <code>u32</code>-Werte in einem Newtype einpacken. Wenn wir eine Funktion mit
-einem Parameter vom Typ <code>Millimeters</code> schreiben würden, könnten wir kein
-Programm kompilieren, das versehentlich versucht, diese Funktion mit einem Wert
-vom Typ <code>Meters</code> oder einem einfachen <code>u32</code> aufzurufen.</p>
+<p>Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt <a href="ch20-02-advanced-traits.html#externe-traits-mit-dem-newtype-muster-implementieren">„Externe
+Traits mit dem Newtype-Muster implementieren“</a> gelesen hast. Das
+Newtype-Muster ist auch bei Aufgaben hilfreich, die über das bisher Besprochene
+hinausgehen, einschließlich um statisch sicherzustellen, dass Werte niemals
+verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein Beispiel für
+die Verwendung von Newtypes zum Angeben von Einheiten hast du in Listing 20-16
+gesehen: Erinnere dich daran, dass die Strukturen <code>Millimeters</code> und <code>Meters</code>
+<code>u32</code>-Werte in einem Newtype einpacken. Wenn wir eine Funktion mit einem
+Parameter vom Typ <code>Millimeters</code> schreiben würden, könnten wir kein Programm
+kompilieren, das versehentlich versucht, diese Funktion mit einem Wert vom Typ
+<code>Meters</code> oder einem einfachen <code>u32</code> aufzurufen.</p>
 <p>Wir können auch das Newtype-Muster verwenden, um einige Implementierungsdetails
 eines Typs zu abstrahieren: Der neue Typ kann eine öffentliche API
 bereitstellen, die sich von der API des privaten, inneren Typs unterscheidet.</p>
-<p>Newtypes können auch die interne Implementierung verbergen. Zum Beispiel
-könnten wir einen Typ <code>People</code> zur Verfügung stellen, um eine <code>HashMap&lt;i32, String&gt;</code> einzupacken, die die ID einer Person in Verbindung mit ihrem Namen
-speichert. Code, der <code>People</code> verwendet, würde nur mit der öffentlichen API
-interagieren, die wir zur Verfügung stellen, z.B. eine Methode, um eine
-Namenszeichenkette zur <code>People</code>-Kollektion hinzuzufügen; dieser Code müsste
-nicht wissen, dass wir Namen intern eine <code>i32</code>-ID zuordnen. Das Newtype-Muster
-ist ein leichtgewichtiger Weg, eine Kapselung zu erreichen, um
-Implementierungsdetails zu verbergen, die wir in <a href="ch18-01-what-is-oo.html#kapselung-die-implementierungsdetails-verbirgt">„Kapselung, die
-Implementierungsdetails verbirgt“</a> in Kapitel 18 besprochen
-haben.</p>
+<p>Newtypes können auch die interne Implementierung verbergen. Zum Beispiel könnten
+wir einen Typ <code>People</code> zur Verfügung stellen, um eine <code>HashMap&lt;i32, String&gt;</code>
+einzupacken, die die ID einer Person in Verbindung mit ihrem Namen speichert.
+Code, der <code>People</code> verwendet, würde nur mit der öffentlichen API interagieren,
+die wir zur Verfügung stellen, z.B. eine Methode, um einen Namens-String zur
+<code>People</code>-Kollektion hinzuzufügen; dieser Code müsste nicht wissen, dass wir
+Namen intern eine <code>i32</code>-ID zuordnen. Das Newtype-Muster ist ein
+leichtgewichtiger Weg, eine Kapselung zu erreichen, um Implementierungsdetails
+zu verbergen, die wir in <a href="ch18-01-what-is-oo.html#kapselung-die-implementierungsdetails-verbirgt">„Kapselung, die Implementierungsdetails
+verbirgt“</a> in Kapitel 18 besprochen haben.</p>
 <h3 id="typ-synonyme-und-typ-aliase"><a class="header" href="#typ-synonyme-und-typ-aliase">Typ-Synonyme und Typ-Aliase</a></h3>
 <p>Rust bietet die Möglichkeit, einen <em>Typ-Alias</em> zu deklarieren, um einem
 vorhandenen Typ einen anderen Namen zu geben. Hierfür verwenden wir das
@@ -208,7 +208,7 @@ so anlegen:</p>
 </span><span class="boring">println!("x + y = {}", x + y);
 </span><span class="boring">}</span></code></pre>
 <p>Der Alias <code>Kilometers</code> ist ein <em>Synonym</em> für <code>i32</code>; im Gegensatz zu den Typen
-<code>Millimeters</code> und <code>Meters</code>, die wir in Codeblock 20-16 erstellt haben, ist
+<code>Millimeters</code> und <code>Meters</code>, die wir in Listing 20-16 erstellt haben, ist
 <code>Kilometers</code> kein separater, neuer Typ. Werte, die den Typ <code>Kilometers</code> haben,
 werden genauso behandelt wie Werte des Typs <code>i32</code>:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -231,7 +231,7 @@ Zum Beispiel könnten wir einen längeren Typ wie diesen haben:</p>
 <pre><code class="language-rust ignore">Box&lt;dyn Fn() + Send + 'static&gt;</code></pre>
 <p>Das Schreiben dieses langen Typs in Funktionssignaturen und als
 Typ-Annotationen im gesamten Code kann ermüdend und fehleranfällig sein. Stelle
-dir vor, du hättest ein Projekt voller Code wie das in Codeblock 20-25.</p>
+dir vor, du hättest ein Projekt voller Code wie das in Listing 20-25.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let f: Box&lt;dyn Fn() + Send + 'static&gt; = Box::new(|| println!("hallo"));
@@ -245,10 +245,10 @@ fn returns_long_type() -&gt; Box&lt;dyn Fn() + Send + 'static&gt; {
 <span class="boring">    Box::new(|| ())
 </span>}
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-25: Verwenden eines langen Typs an vielen
+<p><span class="caption">Listing 20-25: Verwenden eines langen Typs an vielen
 Stellen</span></p>
 <p>Ein Typ-Alias macht diesen Code leichter handhabbar, indem er die Wiederholung
-reduziert. In Codeblock 20-26 haben wir einen Alias namens <code>Thunk</code> für den
+reduziert. In Listing 20-26 haben wir einen Alias namens <code>Thunk</code> für den
 verbosen Typ eingeführt und können alle Verwendungen des Typs durch den
 kürzeren Alias <code>Thunk</code> ersetzen.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -266,21 +266,21 @@ fn returns_long_type() -&gt; Thunk {
 <span class="boring">    Box::new(|| ())
 </span>}
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-26: Einführen eines Typ-Alias <code>Thunk</code> zur
+<p><span class="caption">Listing 20-26: Einführen eines Typ-Alias <code>Thunk</code> zur
 Reduzierung von Wiederholungen</span></p>
 <p>Dieser Code ist viel einfacher zu lesen und zu schreiben! Die Wahl eines
 aussagekräftigen Namens für einen Typ-Alias kann auch helfen, deine Absicht zu
 kommunizieren (<em>thunk</em> ist ein Wort für Code, der zu einem späteren Zeitpunkt
-ausgewertet wird, also ein passender Name für einen Funktionsabschluss
-(closure), der gespeichert wird).</p>
-<p>Typ-Alias werden auch häufig mit dem Typ <code>Result&lt;T, E&gt;</code> verwendet, um
+ausgewertet wird, also ein passender Name für einen Closure, der gespeichert
+wird).</p>
+<p>Typ-Aliase werden auch häufig mit dem Typ <code>Result&lt;T, E&gt;</code> verwendet, um
 Wiederholungen zu reduzieren. Betrachte das Modul <code>std::io</code> in der
 Standardbibliothek. E/A-Operationen geben oft ein <code>Result&lt;T, E&gt;</code> zurück, um
 Situationen zu behandeln, in denen Operationen nicht funktionieren. Diese
 Bibliothek hat eine Struktur <code>std::io::Error</code>, die alle möglichen E/A-Fehler
 repräsentiert. Viele der Funktionen in <code>std::io</code> geben <code>Result&lt;T, E&gt;</code> zurück,
 wobei für <code>E</code> der Typ <code>std::io::Error</code> verwendet wird, so wie bei diesen
-Funktionen im Merkmal (trait) <code>Write</code>:</p>
+Funktionen im Trait <code>Write</code>:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt;
@@ -311,9 +311,9 @@ Alias-Deklaration:</p>
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Da sich diese Deklaration im Modul <code>std::io</code> befindet, können wir den
-vollständig qualifizierten Alias <code>std::io::Result&lt;T&gt;</code> verwenden; das ist
-ein <code>Result&lt;T, E&gt;</code> mit <code>E</code> als <code>std::io::Error</code>. Die Funktionssignaturen des
-Merkmals <code>Write</code> sehen am Ende so aus:</p>
+vollständig qualifizierten Alias <code>std::io::Result&lt;T&gt;</code> verwenden; das ist ein
+<code>Result&lt;T, E&gt;</code> mit <code>E</code> als <code>std::io::Error</code>. Die Funktionssignaturen des Traits
+<code>Write</code> sehen am Ende so aus:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::fmt;
@@ -348,18 +348,18 @@ Beispiel:</p>
 <span class="boring">}</span></code></pre>
 <p>Dieser Code wird als „die Funktion <code>bar</code> kehrt niemals zurück“ gelesen.
 Funktionen, die niemals zurückkehren, werden <em>divergierende Funktionen</em>
-(diverging functions) genannt. Wir können keine Werte vom Typ <code>!</code> erzeugen,
-also kann <code>bar</code> niemals zurückkehren.</p>
+(diverging functions) genannt. Wir können keine Werte vom Typ <code>!</code> erzeugen, also
+kann <code>bar</code> niemals zurückkehren.</p>
 <p>Aber was nützt ein Typ, für den man nie Werte erzeugen kann? Erinnere dich an
-den Code aus Codeblock 2-5, der Teil des Zahlenratespiels ist; wir haben einen
-Teil davon hier in Codeblock 20-27 wiedergegeben.</p>
+den Code aus Listing 2-5, der Teil des Zahlenratespiels ist; wir haben einen
+Teil davon hier in Listing 20-27 wiedergegeben.</p>
 <pre><code class="language-rust noplayground"><span class="boring">use std::cmp::Ordering;
 </span><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">use rand::Rng;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
 </span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1..=100);
 </span><span class="boring">
@@ -395,7 +395,7 @@ Teil davon hier in Codeblock 20-27 wiedergegeben.</p>
 </span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-27: Ein <code>match</code> mit einem Zweig, der in
+<p><span class="caption">Listing 20-27: Ein <code>match</code> mit einem Zweig, der in
 <code>continue</code> endet</span></p>
 <p>Damals haben wir einige Details in diesem Code übersprungen. Im Abschnitt <a href="ch06-02-match.html">„Das
 Kontrollflusskonstrukt <code>match</code>“</a> in Kapitel 6 haben wir
@@ -409,11 +409,10 @@ zum Beispiel der folgende Code nicht:</p>
         Err(_) =&gt; "hallo",
     };
 <span class="boring">}</span></code></pre>
-<p>Der Typ von <code>guess</code> in diesem Code müsste eine ganze Zahl <em>und</em> eine
-Zeichenkette sein und Rust verlangt, dass <code>guess</code> nur einen Typ hat. Was gibt
-also <code>continue</code> zurück? Wie war es uns erlaubt, ein <code>u32</code> von einem Zweig
-zurückzugeben und einen anderen Zweig zu haben, der in Codeblock 20-27 mit
-<code>continue</code> endet?</p>
+<p>Der Typ von <code>guess</code> in diesem Code müsste eine ganze Zahl <em>und</em> ein String sein
+und Rust verlangt, dass <code>guess</code> nur einen Typ hat. Was gibt also <code>continue</code>
+zurück? Wie war es uns erlaubt, ein <code>u32</code> von einem Zweig zurückzugeben und
+einen anderen Zweig zu haben, der in Listing 20-27 mit <code>continue</code> endet?</p>
 <p>Wie du vielleicht schon vermutet hast, hat <code>continue</code> einen <code>!</code>-Wert. Das
 heißt, wenn Rust den Typ von <code>guess</code> berechnet, betrachtet es beide
 <code>match</code>-Zweige, den ersten mit einem Wert von <code>u32</code> und den zweiten mit einem
@@ -425,8 +424,8 @@ diesen <code>match</code>-Zweig mit <code>continue</code> zu beenden, weil <code
 zurückgibt; stattdessen bringt es die Kontrolle zurück an den Anfang der
 Schleife, sodass wir im <code>Err</code>-Fall <code>guess</code> niemals einen Wert zuweisen.</p>
 <p>Der Niemals-Typ ist auch beim Makro <code>panic!</code> nützlich. Erinnere dich an die
-Funktion <code>unwrap</code>, die wir auf <code>Option&lt;T&gt;</code> Werte aufrufen, um einen Wert zu
-erzeugen oder das Programm abstürzen zu lassen. Hier ist ihre Definition:</p>
+Funktion <code>unwrap</code>, die wir auf <code>Option&lt;T&gt;</code>-Werte aufrufen, um einen Wert zu
+erzeugen oder das Programm abzubrechen. Hier ist ihre Definition:</p>
 <pre><code class="language-rust ignore"><span class="boring">enum Option&lt;T&gt; {
 </span><span class="boring">    Some(T),
 </span><span class="boring">    None,
@@ -442,10 +441,10 @@ erzeugen oder das Programm abstürzen zu lassen. Hier ist ihre Definition:</p>
         }
     }
 }</code></pre>
-<p>In diesem Code geschieht dasselbe wie bei <code>match</code> in Codeblock 20-27: Rust
+<p>In diesem Code geschieht dasselbe wie bei <code>match</code> in Listing 20-27: Rust
 sieht, dass <code>val</code> den Typ <code>T</code> und <code>panic!</code> den Typ <code>!</code> hat, sodass das Ergebnis
 des gesamten <code>match</code>-Ausdrucks <code>T</code> ist. Dieser Code funktioniert, weil <code>panic!</code>
-keinen Wert produziert; es beendet das Programm. Im Fall von <code>None</code> geben wir
+keinen Wert produziert; es bricht das Programm ab. Im Fall von <code>None</code> geben wir
 keinen Wert von <code>unwrap</code> zurück, also ist dieser Code gültig.</p>
 <p>Ein letzter Ausdruck, der den Typ <code>!</code> hat, ist <code>loop</code>:</p>
 <pre><code class="language-rust noplayground">print!("für immer ");
@@ -456,20 +455,20 @@ loop {
 <p>Hier endet die Schleife nie, also ist <code>!</code> der Typ des Ausdrucks. Dies wäre
 jedoch nicht der Fall, wenn wir <code>break</code> einfügen würden, da die Schleife enden
 würde, wenn sie bei <code>break</code> ankommt.</p>
-<h3 id="dynamisch-große-typen-und-das-merkmal-sized"><a class="header" href="#dynamisch-große-typen-und-das-merkmal-sized">Dynamisch große Typen und das Merkmal <code>Sized</code></a></h3>
-<p>Rusts muss bestimmte Details über seine Typen kennen, z.B. wie viel Platz für
+<h3 id="dynamisch-große-typen-und-das-trait-sized"><a class="header" href="#dynamisch-große-typen-und-das-trait-sized">Dynamisch große Typen und das Trait <code>Sized</code></a></h3>
+<p>Rust muss bestimmte Details über seine Typen kennen, z.B. wie viel Platz für
 einen Wert eines bestimmten Typs zuzuweisen ist. Das lässt eine Ecke des
 Typsystems zunächst etwas verwirrend erscheinen: Das Konzept der <em>dynamisch
 großen Typen</em> (dynamically sized types). Diese Typen, die manchmal als <em>DSTs</em>
-oder <em>Typen ohne Größe</em> (unsized types) bezeichnet werden, erlauben es uns,
-Code mit Werten zu schreiben, deren Größe wir nur zur Laufzeit kennen können.</p>
-<p>Schauen wir uns die Details eines dynamisch großen Typs namens <code>str</code> an, den
-wir im ganzen Buch verwendet haben. Das stimmt, nicht <code>&amp;str</code>, sondern <code>str</code> an
-sich ist ein DST. In vielen Fällen, beispielsweise beim Speichern von durch
-einen Benutzer eingegebenem Text, können wir erst zur Laufzeit feststellen, wie
-lang die Zeichenkette ist. Das bedeutet, dass wir weder eine Variable vom Typ
-<code>str</code> erzeugen, noch wir ein Argument vom Typ <code>str</code> nehmen können. Betrachte
-den folgenden Code, der nicht funktioniert:</p>
+oder <em>Typen ohne Größe</em> (unsized types) bezeichnet werden, erlauben es uns, Code
+mit Werten zu schreiben, deren Größe wir nur zur Laufzeit kennen können.</p>
+<p>Schauen wir uns die Details eines dynamisch großen Typs namens <code>str</code> an, den wir
+im ganzen Buch verwendet haben. Das stimmt, nicht <code>&amp;str</code>, sondern <code>str</code> an sich
+ist ein DST. In vielen Fällen, beispielsweise beim Speichern von durch einen
+Benutzer eingegebenem Text, können wir erst zur Laufzeit feststellen, wie lang
+der String ist. Das bedeutet, dass wir weder eine Variable vom Typ <code>str</code>
+erzeugen, noch ein Argument vom Typ <code>str</code> nehmen können. Betrachte den folgenden
+Code, der nicht funktioniert:</p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1: str = "Guten Tag!";
@@ -483,35 +482,33 @@ unterschiedliche Längen: <code>s1</code> benötigt 10 Bytes Speicherplatz und <
 Bytes. Aus diesem Grund ist es nicht möglich, eine Variable zu erzeugen, die
 einen dynamisch großen Typ enthält.</p>
 <p>Was sollen wir also tun? In diesem Fall kennst du die Antwort bereits: Wir
-machen die Typen <code>s1</code> und <code>s2</code> zu einem Zeichenkettenanteilstyp (<code>&amp;str</code>)
-anstatt zu einem <code>str</code>. Erinnere dich, dass wir im Abschnitt
-<a href="ch04-03-slices.html#zeichenkettenanteilstypen-string-slices">„Zeichenkettenanteilstypen (string slices)“</a> in Kapitel 4
-gesagt haben, dass die Anteilstypen-Datenstruktur die Startposition und die
-Länge des Anteilstyps speichert. Obwohl also <code>&amp;T</code> ein einzelner Wert ist, der
-die Speicheradresse des Ortes speichert, an dem sich <code>T</code> befindet, hat ein
-Zeichenkettenanteilstyp <em>zwei</em> Werte: Die Adresse von <code>str</code> und seine Länge.
-Als solches können wir die Größe eines Zeichenkettenanteilstyp-Wertes zur
-Kompilierzeit kennen: Er ist doppelt so lang wie ein <code>usize</code>. Das heißt, wir
-wissen immer die Größe eine Zeichenkettenanteilstyps, egal wie lang die
-Zeichenkette ist, auf die er sich bezieht. Im Allgemeinen werden in Rust Typen
-mit dynamischer Größe auf diese Weise verwendet: Sie haben ein zusätzliches
-Stück Metadaten, das die Größe der dynamischen Information speichert. Die
-goldene Regel für Typen dynamischer Größe lautet, dass wir Werte von Typen mit
-dynamischer Größe immer hinter eine Art Zeiger stellen müssen.</p>
+machen die Typen <code>s1</code> und <code>s2</code> zu einem String Slice (<code>&amp;str</code>) anstatt zu einem
+<code>str</code>. Erinnere dich, dass wir im Abschnitt <a href="ch04-03-slices.html#string-slices">„String Slices“</a> in
+Kapitel 4 gesagt haben, dass die Slice-Datenstruktur die Startposition und die
+Länge des Slices speichert. Obwohl also <code>&amp;T</code> ein einzelner Wert ist, der die
+Speicheradresse des Ortes speichert, an dem sich <code>T</code> befindet, hat ein String
+Slice <em>zwei</em> Werte: Die Adresse von <code>str</code> und seine Länge. Als solches können
+wir die Größe eines String-Slice-Wertes zur Kompilierzeit kennen: Er ist doppelt
+so lang wie ein <code>usize</code>. Das heißt, wir wissen immer die Größe eines String
+Slices, egal wie lang der String ist, auf den er sich bezieht. Im Allgemeinen
+werden in Rust Typen mit dynamischer Größe auf diese Weise verwendet: Sie haben
+ein zusätzliches Stück Metadaten, das die Größe der dynamischen Information
+speichert. Die goldene Regel für Typen dynamischer Größe lautet, dass wir Werte
+von Typen mit dynamischer Größe immer hinter eine Art Zeiger stellen müssen.</p>
 <p>Wir können <code>str</code> mit allen Arten von Zeigern kombinieren: Zum Beispiel
 <code>Box&lt;str&gt;</code> oder <code>Rc&lt;str&gt;</code>. Tatsächlich hast du das schon einmal gesehen, aber
-mit einem anderen dynamisch großen Typ: Merkmale (traits). Jedes Merkmal ist
-ein dynamisch großer Typ, auf den wir uns beziehen können, indem wir den Namen
-des Merkmals verwenden. Im Abschnitt <a href="ch18-02-trait-objects.html">„Verwendung von Merkmals-Objekten zur
-Abstraktion über gemeinsames Verhalten“</a> in Kapitel 18
-haben wir erwähnt, dass wir, um Merkmale als Merkmalsobjekte zu verwenden,
-diese hinter einen Zeiger setzen müssen, z.B. <code>&amp;dyn Trait</code> oder <code>Box&lt;dyn Trait&gt;</code> (<code>Rc&lt;dyn Trait&gt;</code> würde auch funktionieren).</p>
-<p>Um mit DSTs zu arbeiten, hat Rust das Merkmal <code>Sized</code>, um zu bestimmen, ob die
-Größe eines Typs zur Kompilierzeit bekannt ist oder nicht. Dieses Merkmal wird
-automatisch für alles implementiert, dessen Größe zur Kompilierzeit bekannt
-ist. Zusätzlich fügt Rust implizit jeder generischen Funktion eine
-Merkmalsabgrenzung auf <code>Sized</code> hinzu. Das heißt, eine generische
-Funktionsdefinition wie diese:</p>
+mit einem anderen dynamisch großen Typ: Traits. Jedes Trait ist ein dynamisch
+großer Typ, auf den wir uns beziehen können, indem wir den Namen des Traits
+verwenden. Im Abschnitt <a href="ch18-02-trait-objects.html">„Verwendung von Trait-Objekten zur Abstraktion über
+gemeinsames Verhalten“</a> in Kapitel 18 haben wir erwähnt,
+dass wir, um Traits als Trait-Objekte zu verwenden, diese hinter einen Zeiger
+setzen müssen, z.B. <code>&amp;dyn Trait</code> oder <code>Box&lt;dyn Trait&gt;</code> (<code>Rc&lt;dyn Trait&gt;</code> würde
+auch funktionieren).</p>
+<p>Um mit DSTs zu arbeiten, hat Rust das Trait <code>Sized</code>, um zu bestimmen, ob die
+Größe eines Typs zur Kompilierzeit bekannt ist oder nicht. Dieses Trait wird
+automatisch für alles implementiert, dessen Größe zur Kompilierzeit bekannt ist.
+Zusätzlich fügt Rust implizit jeder generischen Funktion eine Trait Bound auf
+<code>Sized</code> hinzu. Das heißt, eine generische Funktionsdefinition wie diese:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn generic&lt;T&gt;(t: T) {
@@ -534,14 +531,14 @@ spezielle Syntax verwenden, um diese Einschränkung zu lockern:</p>
     // --abschneiden--
 }
 <span class="boring">}</span></code></pre>
-<p>Eine Merkmalsabgrenzung durch <code>?Sized</code> bedeutet „<code>T</code> kann <code>Sized</code> sein oder
-nicht“ und diese Notation hebt die Vorgabe auf, dass generische Typen zur
-Kompilierzeit eine bekannte Größe haben müssen. Die Syntax <code>?Trait</code> mit dieser
-Bedeutung ist nur für <code>Sized</code> verfügbar, nicht für andere Merkmale.</p>
+<p>Eine Trait Bound durch <code>?Sized</code> bedeutet „<code>T</code> kann <code>Sized</code> sein oder nicht“ und
+diese Notation hebt die Vorgabe auf, dass generische Typen zur Kompilierzeit
+eine bekannte Größe haben müssen. Die Syntax <code>?Trait</code> mit dieser Bedeutung ist
+nur für <code>Sized</code> verfügbar, nicht für andere Traits.</p>
 <p>Beachte auch, dass wir den Typ des Parameters <code>t</code> von <code>T</code> auf <code>&amp;T</code> geändert
 haben. Da der Typ möglicherweise nicht <code>Sized</code> ist, müssen wir ihn hinter einer
 Art Zeiger verwenden. In diesem Fall haben wir eine Referenz gewählt.</p>
-<p>Als nächstes werden wir über Funktionen und Funktionsabschlüsse sprechen!</p>
+<p>Als nächstes werden wir über Funktionen und Closures sprechen!</p>
 
                     </main>
 

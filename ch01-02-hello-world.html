@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -165,7 +165,7 @@
 <p>Nachdem du Rust installiert hast, lass uns dein erstes Rust-Programm schreiben.
 Wenn man eine neue Sprache lernt, ist es üblich, ein kleines Programm zu
 schreiben, das den Text <code>Hallo Welt!</code> auf dem Bildschirm ausgibt, also werden
-wir hier das gleiche tun!</p>
+wir hier dasselbe tun!</p>
 <blockquote>
 <p>Hinweis: Dieses Buch setzt grundlegende Vertrautheit mit der Kommandozeile
 voraus. Rust stellt keine besonderen Anforderungen an deine Textbearbeitung
@@ -177,7 +177,7 @@ Das Rust-Team hat sich darauf konzentriert, eine großartige IDE-Unterstützung
 mittels <code>rust-analyzer</code> zu ermöglichen. Siehe <a href="appendix-04-useful-development-tools.html">Anhang D</a> für
 weitere Details.</p>
 </blockquote>
-<h3 id="projektverzeichniss-aufsetzen"><a class="header" href="#projektverzeichniss-aufsetzen">Projektverzeichniss aufsetzen</a></h3>
+<h3 id="projektverzeichnis-aufsetzen"><a class="header" href="#projektverzeichnis-aufsetzen">Projektverzeichnis aufsetzen</a></h3>
 <p>Du beginnst damit, ein Verzeichnis zum Speichern deines Rust-Codes zu
 erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
 Projekte in diesem Buch schlagen wir vor, ein Verzeichnis <em>projects</em> in deinem
@@ -203,15 +203,15 @@ Rust-Dateien enden immer mit der Erweiterung <em>.rs</em>. Wenn du mehr als ein 
 in deinem Dateinamen verwendest, verwende einen Unterstrich, um sie zu trennen.
 Verwende zum Beispiel <em>hello_world.rs</em> statt <em>helloworld.rs</em>.</p>
 <p>Öffne nun die Datei <em>main.rs</em>, die du gerade erstellt hast, und gib den Code in
-Codeblock 1-1 ein.</p>
+Listing 1-1 ein.</p>
 <p><span class="filename">Dateiname: main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     println!("Hallo Welt!");
 }</code></pre>
-<p><span class="caption">Codeblock 1-1: Ein Programm, das <code>Hallo Welt!</code>
+<p><span class="caption">Listing 1-1: Ein Programm, das <code>Hallo Welt!</code>
 ausgibt</span></p>
 <p>Speichere die Datei und gehe zurück zu deinem Terminalfenster im Verzeichnis
-<em>~/projects/hello_world</em>. Gib unter Linux oder MacOS die folgenden Befehle ein,
+<em>~/projects/hello_world</em>. Gib unter Linux oder macOS die folgenden Befehle ein,
 um die Datei zu kompilieren und auszuführen:</p>
 <pre><code class="language-console">$ rustc main.rs
 $ ./main
@@ -222,27 +222,26 @@ Hallo Welt!
 &gt; .\main
 Hallo Welt!
 </code></pre>
-<p>Unabhängig von deinem Betriebssystem sollte die Zeichenkette <code>Hallo Welt!</code> im
-Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
-Abschnitt <a href="ch01-01-installation.html#fehlersuche">„Fehlersuche“</a> des Installationsabschnitts nach,
-wie du Hilfe erhalten kannst.</p>
+<p>Unabhängig von deinem Betriebssystem sollte der String <code>Hallo Welt!</code> im Terminal
+ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im Abschnitt
+<a href="ch01-01-installation.html#fehlersuche">„Fehlersuche“</a> des Installationsabschnitts nach, wie du Hilfe
+erhalten kannst.</p>
 <p>Wenn <code>Hallo Welt!</code> ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell
 ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
 – willkommen!</p>
 <h3 id="die-anatomie-eines-rust-programms"><a class="header" href="#die-anatomie-eines-rust-programms">Die Anatomie eines Rust-Programms</a></h3>
-<p>Lass uns im Detail Revue passieren, was gerade in deinem „Hallo Welt!“-Programm
+<p>Lass uns im Detail anschauen, was gerade in deinem „Hallo Welt!“-Programm
 passiert ist. Hier ist das erste Teil des Puzzles:</p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
 
 }</code></pre>
-<p>Diese Zeilen definieren eine Funktion namens <code>main</code> in Rust. Die Funktion
-<code>main</code> ist eine Besonderheit: Sie ist immer der erste Code, der in jedem
-ausführbaren Rust-Programm ausgeführt wird. In diesem Fall deklariert die erste
-Zeile eine Funktion mit dem namen <code>main</code>, die keine Parameter hat und nichts
-zurückgibt. Wenn es Parameter gäbe, würden sie innerhalb der Klammern <code>()</code>
-stehen.</p>
-<p>Der Funktionsrumpf in geschweifte Klammern <code>{}</code> eingehüllt. Rust erfordert
-diese um alle Funktionsrümpfe. Es ist guter Stil, die öffnende geschweifte
+<p>Diese Zeilen definieren eine Funktion namens <code>main</code> in Rust. Die Funktion <code>main</code>
+ist eine Besonderheit: Sie ist immer der erste Code, der in jedem ausführbaren
+Rust-Programm ausgeführt wird. In diesem Fall deklariert die erste Zeile eine
+Funktion mit dem Namen <code>main</code>, die keine Parameter hat und nichts zurückgibt.
+Wenn es Parameter gäbe, würden sie innerhalb der Klammern <code>()</code> stehen.</p>
+<p>Der Funktionsrumpf ist in geschweifte Klammern <code>{}</code> eingehüllt. Rust erfordert
+diese für alle Funktionsrümpfe. Es ist guter Stil, die öffnende geschweifte
 Klammer in dieselbe Zeile wie die Funktionsdeklaration zu platzieren und
 dazwischen ein Leerzeichen einzufügen.</p>
 <blockquote>
@@ -267,13 +266,12 @@ Rust-Syntax generiert. Wir werden sie in <a href="ch20-05-macros.html">Kapitel 2
 erläutern. Im Moment musst du nur wissen, dass die Verwendung eines <code>!</code>
 bedeutet, dass du ein Makro anstelle einer normalen Funktion aufrufst und dass
 Makros nicht immer denselben Regeln folgen wie Funktionen.</p>
-<p>Zweitens siehst du die Zeichenkette <code>"Hallo Welt!"</code>. Wir übergeben diese
-Zeichenkette als Argument an <code>println!</code>, und die Zeichenkette wird auf dem
-Bildschirm ausgegeben.</p>
+<p>Zweitens siehst du den String <code>"Hallo Welt!"</code>. Wir übergeben diesen String als
+Argument an <code>println!</code>, und er wird auf dem Bildschirm ausgegeben.</p>
 <p>Drittens beenden wir die Zeile mit einem Semikolon (<code>;</code>), was anzeigt, dass
 dieser Ausdruck beendet ist und der nächste beginnen kann. Die meisten Zeilen
 eines Rust-Codes enden mit einem Semikolon.</p>
-<h3 id="compilierung-und-ausführung"><a class="header" href="#compilierung-und-ausführung">Compilierung und Ausführung</a></h3>
+<h3 id="kompilierung-und-ausführung"><a class="header" href="#kompilierung-und-ausführung">Kompilierung und Ausführung</a></h3>
 <p>Du hast gerade ein neu erstelltes Programm ausgeführt, also lass uns jeden
 Schritt in diesem Prozess untersuchen.</p>
 <p>Bevor du ein Rust-Programm ausführst, musst du es mit dem Rust-Compiler
@@ -284,14 +282,14 @@ Quelldatei übergibst, so wie hier:</p>
 <p>Wenn du einen C- oder C++-Hintergrund hast, wirst du feststellen, dass dies
 ähnlich wie <code>gcc</code> oder <code>clang</code> ist. Nach erfolgreicher Kompilierung gibt Rust
 eine ausführbare Binärdatei aus.</p>
-<p>Unter Linux, MacOS und PowerShell unter Windows kannst du die ausführbare Datei
+<p>Unter Linux, macOS und PowerShell unter Windows kannst du die ausführbare Datei
 sehen, indem du den Befehl <code>ls</code> in deinem Terminal eingibst:</p>
 <pre><code class="language-console">$ ls
 main  main.rs
 </code></pre>
-<p>Unter Linux und MacOS siehst du zwei Dateien. Mit PowerShell unter Windows
+<p>Unter Linux und macOS siehst du zwei Dateien. Mit PowerShell unter Windows
 siehst du die gleichen drei Dateien, die du mit CMD sehen würdest. Bei CMD
-unter Windows würdest du folgendes eingeben:</p>
+unter Windows würdest du Folgendes eingeben:</p>
 <pre><code class="language-cmd">&gt; dir /B %= die Option /B bewirkt, dass nur die Dateinamen angezeigt werden =%
 main.exe
 main.pdb

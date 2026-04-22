@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -176,8 +176,7 @@ sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lege ein neues
 Projekt namens <em>variables</em> in deinem <em>projects</em>-Verzeichnis an, indem du
 <code>cargo new variables</code> aufrufst.</p>
 <p>Öffne dann in deinem neuen Verzeichnis <em>variables</em> die Datei <em>src/main.rs</em> und
-ersetze dessen Code durch folgenden Code, der sich sich noch nicht kompilieren
-lässt:</p>
+ersetze dessen Code durch folgenden Code, der sich noch nicht kompilieren lässt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let x = 5;
@@ -208,10 +207,10 @@ For more information about this error, try `rustc --explain E0384`.
 error: could not compile `variables` (bin "variables") due to 1 previous error
 </code></pre>
 <p>Dieses Beispiel zeigt, wie der Compiler dir hilft, Fehler in deinen Programmen
-zu finden. Kompilierfehler können frustrierend sein, aber eigentlich bedeuten
-sie nur, dass dein Programm noch nicht sicher das tut, was du willst; sie
-bedeuten <em>nicht</em>, dass du kein guter Programmierer bist! Erfahrene
-Rust-Entwickler bekommen ebenfalls noch Kompilierfehler.</p>
+zu finden. Compilerfehler können frustrierend sein, aber eigentlich bedeuten sie
+nur, dass dein Programm noch nicht sicher das tut, was du willst; sie bedeuten
+<em>nicht</em>, dass du kein guter Programmierer bist! Erfahrene Rust-Entwickler
+bekommen ebenfalls noch Compilerfehler.</p>
 <p>Du hast die Fehlermeldung <code>cannot assign twice to immutable variable x</code>
 erhalten, weil du versucht hast, der unveränderbaren Variablen <code>x</code> einen
 zweiten Wert zuzuweisen.</p>
@@ -327,7 +326,7 @@ Klammern geschaffen wird, verschattet die dritte <code>let</code>-Anweisung dann
 <code>x</code> und erzeugt eine neue Variable, wobei der vorherige Wert mit <code>2</code>
 multipliziert wird, um <code>x</code> einen Wert von <code>12</code> zu geben. Wenn dieser
 Gültigkeitsbereich zu Ende ist, endet die innere Verschattung und <code>x</code> wird
-wieder zu <code>6</code>. Wenn wir dieses Programm ausführen, wird es folgendes ausgeben:</p>
+wieder zu <code>6</code>. Wenn wir dieses Programm ausführen, wird Folgendes ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
@@ -336,11 +335,11 @@ Der Wert von x im inneren Gültigkeitsbereich ist: 12
 Der Wert von x ist: 6
 </code></pre>
 <p>Verschatten unterscheidet sich vom Markieren einer Variable mit <code>mut</code>, weil wir
-einen Kompilierfehler erhalten, wenn wir versehentlich versuchen, diese
-Variable neu zuzuweisen, ohne das Schlüsselwort <code>let</code> zu verwenden. Durch das
-Verwenden von <code>let</code> können wir einige wenige Transformationen an einem Wert
-durchführen, aber die Variable ist unveränderbar, nachdem diese
-Transformationen abgeschlossen sind.</p>
+einen Compilerfehler erhalten, wenn wir versehentlich versuchen, diese Variable
+neu zuzuweisen, ohne das Schlüsselwort <code>let</code> zu verwenden. Durch das Verwenden
+von <code>let</code> können wir einige wenige Transformationen an einem Wert durchführen,
+aber die Variable ist unveränderbar, nachdem diese Transformationen
+abgeschlossen sind.</p>
 <p>Der andere Unterschied zwischen <code>mut</code> und Verschatten besteht darin, dass wir,
 weil wir effektiv eine neue Variable erstellen, wenn wir das Schlüsselwort
 <code>let</code> erneut verwenden, den Typ des Wertes ändern können, aber denselben Namen
@@ -356,8 +355,8 @@ let spaces = spaces.len();
 <p>Die erste Variable <code>spaces</code> ist ein String-Typ und die zweite Variable <code>spaces</code>
 ist ein Zahlentyp Integer. Das Verschatten erspart es uns also, uns verschiedene
 Namen auszudenken, z.B. <code>spaces_str</code> und <code>spaces_num</code>; stattdessen können wir
-den einfacheren Namen <code>spaces</code> wiederverwenden. Wenn wir jedoch versuchen,
-dafür <code>mut</code> zu verwenden, wie hier gezeigt, erhalten wir einen Kompilierfehler:</p>
+den einfacheren Namen <code>spaces</code> wiederverwenden. Wenn wir jedoch versuchen, dafür
+<code>mut</code> zu verwenden, wie hier gezeigt, erhalten wir einen Compilerfehler:</p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut spaces = "   ";

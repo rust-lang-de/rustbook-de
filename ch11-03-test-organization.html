@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -166,7 +166,7 @@
 verschiedene Personen verwenden unterschiedliche Terminologien und
 Organisationen. Die Rust-Gemeinschaft teilt Tests in zwei Hauptkategorien ein:
 Modultests und Integrationstests. <em>Modultests</em> (unit tests) sind klein und
-zielgerichteter, testen jeweils ein Modul isoliert und können private
+zielgerichtet, testen jeweils ein Modul isoliert und können private
 Schnittstellen testen. <em>Integrationstests</em> (integration tests) sind völlig
 außerhalb deiner Bibliothek und verwenden deinen Code auf die gleiche Weise wie
 jeder andere externe Code, wobei nur die öffentliche Schnittstelle verwendet
@@ -221,10 +221,10 @@ Dies schließt alle Hilfsfunktionen ein, die sich innerhalb dieses Moduls
 befinden könnten, zusätzlich zu den mit <code>#[test]</code> annotierten Funktionen.</p>
 <h4 id="testen-privater-funktionen"><a class="header" href="#testen-privater-funktionen">Testen privater Funktionen</a></h4>
 <p>In der Testgemeinschaft wird darüber diskutiert, ob private Funktionen direkt
-getestet werden sollten oder nicht, und andere Sprachen machen es schwierig
-oder gar unmöglich, private Funktionen zu testen. Unabhängig davon, an welcher
-Testideologie du festhältst, erlauben dir Rusts Datenschutzregeln, private
-Funktionen zu testen. Betrachte den Code in Codeblock 11-12 mit der privaten
+getestet werden sollten oder nicht, und andere Sprachen machen es schwierig oder
+gar unmöglich, private Funktionen zu testen. Unabhängig davon, an welcher
+Testideologie du festhältst, erlauben dir Rusts Sichtbarkeitsregeln, private
+Funktionen zu testen. Betrachte den Code in Listing 11-12 mit der privaten
 Funktion <code>internal_adder</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -248,7 +248,7 @@ mod tests {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 11-12: Testen einer privaten Funktion</span></p>
+<p><span class="caption">Listing 11-12: Testen einer privaten Funktion</span></p>
 <p>Beachte, dass die Funktion <code>internal_adder</code> nicht mit <code>pub</code> markiert ist. Tests
 sind einfach nur Rust-Code, und das Modul <code>tests</code> ist nur ein weiteres Modul.
 Wie in <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum verweisen“</a>
@@ -273,8 +273,8 @@ Verzeichnis <em>tests</em>.</p>
 Projektverzeichnisses, neben <em>src</em>. Cargo weiß, dass es in diesem Verzeichnis
 nach Integrationstestdateien suchen soll. Wir können dann so viele Testdateien
 erstellen, wie wir wollen, und Cargo wird jede dieser Dateien als eine
-individuelle Kiste (crate) kompilieren.</p>
-<p>Lass uns einen Integrationstest erstellen. Wenn sich der Code in Codeblock
+individuelle Crate kompilieren.</p>
+<p>Lass uns einen Integrationstest erstellen. Wenn sich der Code in Listing
 11-12 noch in der Datei <em>src/lib.rs</em> befindet, erstelle ein Verzeichnis
 <em>tests</em> und eine neue Datei mit dem Namen <em>tests/integration_test.rs</em>. Deine
 Verzeichnisstruktur sollte folgendermaßen aussehen:</p>
@@ -286,7 +286,7 @@ Verzeichnisstruktur sollte folgendermaßen aussehen:</p>
 └── tests
     └── integration_test.rs
 </code></pre>
-<p>Gib den Code in Codeblock 11-13 in die Datei <em>tests/integration_test.rs</em> ein.</p>
+<p>Gib den Code in Listing 11-13 in die Datei <em>tests/integration_test.rs</em> ein.</p>
 <p><span class="filename">Dateiname: tests/integration_test.rs</span></p>
 <pre><code class="language-rust ignore">use adder::add_two;
 
@@ -295,12 +295,12 @@ fn it_adds_two() {
     let result = add_two(2);
     assert_eq!(result, 4);
 }</code></pre>
-<p><span class="caption">Codeblock 11-13: Integrationstest einer Funktion in der
-Kiste <code>adder</code></span></p>
-<p>Jede Datei im Verzeichnis <code>tests</code> ist eine separate Kiste, also müssen wir
-unsere Bibliothek in den Gültigkeitsbereich jeder Test-Kiste bringen. Aus
-diesem Grund fügen wir <code>use adder::add_two;</code> am Anfang des Codes hinzu, was wir
-in den Modultests nicht brauchten.</p>
+<p><span class="caption">Listing 11-13: Integrationstest einer Funktion in der
+Crate <code>adder</code></span></p>
+<p>Jede Datei im Verzeichnis <code>tests</code> ist eine separate Crate, also müssen wir
+unsere Bibliothek in den Gültigkeitsbereich jeder Test-Crate bringen. Aus diesem
+Grund fügen wir <code>use adder::add_two;</code> am Anfang des Codes hinzu, was wir in den
+Modultests nicht brauchten.</p>
 <p>Wir brauchen den Code in <em>tests/integration_test.rs</em> nicht mit <code>#[cfg(test)]</code>
 zu annotieren. Cargo behandelt das Verzeichnis <code>tests</code> speziell und kompiliert
 Dateien in diesem Verzeichnis nur dann, wenn wir <code>cargo test</code> ausführen. Führe
@@ -336,7 +336,7 @@ Dokumentations-Tests, da diese Tests nur ausgeführt werden, wenn alle
 Modultests erfolgreich sind.</p>
 <p>Der erste Abschnitt für die Modultests ist derselbe, wie wir ihn gesehen haben:
 Eine Zeile für jeden Modultest (eine Zeile mit der Bezeichnung <code>internal</code>, die
-wir in Codeblock 11-12 hinzugefügt haben) und dann eine zusammenfassende Zeile
+wir in Listing 11-12 hinzugefügt haben) und dann eine zusammenfassende Zeile
 für die Modultests.</p>
 <p>Der Abschnitt zu den Integrationstests beginnt mit der Zeile <code>Running tests/integration_test.rs</code>. Als nächstes kommt eine Zeile für jede Testfunktion
 in diesem Integrationstest und eine Zusammenfassung für die Ergebnisse des
@@ -346,7 +346,7 @@ Dateien im Verzeichnis <em>tests</em> hinzufügen, wird es mehr
 Integrationstest-Abschnitte geben.</p>
 <p>Wir können immer noch eine bestimmte Integrationstestfunktion ausführen, indem
 wir den Namen der Testfunktion als Argument bei <code>cargo test</code> angeben. Um alle
-Tests in einer bestimmten Integrationstestdatei auszuführen, verwenden bei
+Tests in einer bestimmten Integrationstestdatei auszuführen, verwenden wir bei
 <code>cargo test</code> das Argument <code>--test</code>, gefolgt vom Namen der Datei:</p>
 <pre><code class="language-console">$ cargo test --test integration_test
    Compiling adder v0.1.0 (file:///projects/adder)
@@ -365,19 +365,18 @@ aus.</p>
 eine Datei im Verzeichnis <em>tests</em> erstellen, um sie besser organisieren zu
 können; beispielsweise kannst du die Testfunktionen nach der Funktionalität
 gruppieren, die sie testen. Wie bereits erwähnt, wird jede Datei im Verzeichnis
-<em>tests</em> als eigene Kiste kompiliert, was nützlich ist, um getrennte Bereiche zu
-erstellen, um die Art und Weise, wie die Endbenutzer deine Kiste verwenden
+<em>tests</em> als eigene Crate kompiliert, was nützlich ist, um getrennte Bereiche zu
+erstellen, um die Art und Weise, wie die Endbenutzer deine Crate verwenden
 werden, besser zu imitieren. Das bedeutet jedoch, dass Dateien im Verzeichnis
-<em>tests</em> nicht dasselbe Verhalten aufweisen wie Dateien im Verzeichnis <em>src</em>,
-wie du in Kapitel 7 über die Trennung von Code in Module und Dateien gelernt
-hast.</p>
+<em>tests</em> nicht dasselbe Verhalten aufweisen wie Dateien im Verzeichnis <em>src</em>, wie
+du in Kapitel 7 über die Trennung von Code in Module und Dateien gelernt hast.</p>
 <p>Das unterschiedliche Verhalten von Dateien im Verzeichnis <em>tests</em> ist am
 deutlichsten, wenn du eine Reihe Hilfsfunktionen hast, die bei mehreren
 Integrationstestdateien verwendest, und du versuchst, die Schritte in <a href="ch07-05-separating-modules-into-different-files.html">„Module
 in verschiedene Dateien aufteilen“</a> in Kapitel 7
 zu befolgen, um sie in ein gemeinsames Modul zu extrahieren. Wenn wir zum
 Beispiel <em>tests/common.rs</em> erstellen und eine Funktion namens <code>setup</code> darin
-platzieren, können wir <code>setup</code> etwas Code hinzufügen, den wir von mehreren
+platzieren, können wir zu <code>setup</code> etwas Code hinzufügen, den wir von mehreren
 Testfunktionen in mehreren Testdateien aufrufen wollen:</p>
 <p><span class="filename">Dateiname: tests/common.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -440,7 +439,7 @@ Benennung der Datei wird Rust angewiesen, das Modul <code>common</code> nicht al
 Integrationstestdatei zu behandeln. Wenn wir den Funktionscode <code>setup</code> in
 <em>tests/common/mod.rs</em> verschieben und die Datei <em>tests/common.rs</em> löschen,
 erscheint der Abschnitt in der Testausgabe nicht mehr. Dateien in
-Unterverzeichnissen des Verzeichnisses <em>tests</em> werden nicht als separate Kisten
+Unterverzeichnissen des Verzeichnisses <em>tests</em> werden nicht als separate Crates
 kompiliert und erzeugen keine Abschnitte in der Testausgabe.</p>
 <p>Nachdem wir <em>tests/common/mod.rs</em> erstellt haben, können wir es von jeder der
 Integrationstestdateien als Modul verwenden. Hier ist ein Beispiel für den
@@ -459,21 +458,21 @@ fn it_adds_two() {
     assert_eq!(result, 4);
 }</code></pre>
 <p>Beachte, dass die Deklaration <code>mod common;</code> die gleiche ist wie die
-Moduldeklaration, die wir in Codeblock 7-21 gezeigt haben. In der Testfunktion
+Moduldeklaration, die wir in Listing 7-21 gezeigt haben. In der Testfunktion
 können wir dann die Funktion <code>common::setup()</code> aufrufen.</p>
-<h4 id="integrationstests-für-binäre-kisten"><a class="header" href="#integrationstests-für-binäre-kisten">Integrationstests für binäre Kisten</a></h4>
-<p>Wenn unser Projekt eine binäre Kiste ist, die nur eine Datei <em>src/main.rs</em>
+<h4 id="integrationstests-für-binäre-crates"><a class="header" href="#integrationstests-für-binäre-crates">Integrationstests für binäre Crates</a></h4>
+<p>Wenn unser Projekt eine binäre Crate ist, die nur eine Datei <em>src/main.rs</em>
 enthält und keine Datei <em>src/lib.rs</em>, können wir keine Integrationstests im
 <em>tests</em>-Verzeichnis erstellen und Funktionen, die in der <em>src/main.rs</em>-Datei
-definiert sind, mit einer <code>use</code>-Anweisung in den Gültigkeitsbereich bringen.
-Nur Bibliothekskisten stellen Funktionen zur Verfügung, die auch von anderen
-Kisten verwendet werden können; binäre Kisten sind für den eigenständigen
-Betrieb gedacht.</p>
+definiert sind, mit einer <code>use</code>-Anweisung in den Gültigkeitsbereich bringen. Nur
+Bibliotheks-Crates stellen Funktionen zur Verfügung, die auch von anderen Crates
+verwendet werden können; binäre Crates sind für den eigenständigen Betrieb
+gedacht.</p>
 <p>Dies ist einer der Gründe, warum Rust-Projekte, die eine Binärdatei
 bereitstellen, eine einfache <em>src/main.rs</em>-Datei haben, die Logik aufruft, die
 in der <em>src/lib.rs</em>-Datei lebt. Unter Verwendung dieser Struktur können
-Integrationstests die Bibliothekskiste mit <code>use</code> testen, um wichtige
-Funktionalität verfügbar zu machen. Wenn die Hauptfunktionalität korrekt ist,
+Integrationstests die Bibliotheks-Crate mit <code>use</code> testen, und dabei wichtige
+Funktionalität verfügbar machen. Wenn die Hauptfunktionalität korrekt ist,
 funktionieren auch die kleinen Codestücke in der Datei <em>src/main.rs</em>, und diese
 kleinen Codestücke müssen nicht getestet werden.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>

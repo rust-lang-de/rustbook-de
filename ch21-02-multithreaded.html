@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Von einem einsträngigen (single-threaded) zu einem mehrsträngigen (multi-threaded) Webserver - Die Programmiersprache Rust</title>
+        <title>Von einem single-threaded zu einem multi-threaded Webserver - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="von-einem-einsträngigen-single-threaded-zu-einem-mehrsträngigen-multi-threaded-webserver"><a class="header" href="#von-einem-einsträngigen-single-threaded-zu-einem-mehrsträngigen-multi-threaded-webserver">Von einem einsträngigen (single-threaded) zu einem mehrsträngigen (multi-threaded) Webserver</a></h2>
+                        <h2 id="von-einem-single-threaded-zu-einem-multi-threaded-webserver"><a class="header" href="#von-einem-single-threaded-zu-einem-multi-threaded-webserver">Von einem single-threaded zu einem multi-threaded Webserver</a></h2>
 <p>Im Moment verarbeitet der Server jede Anfrage der Reihe nach, d.h. er wird erst
 dann eine zweite Verbindung verarbeiten, wenn die erste Verbindung
 abgeschlossen ist. Würde der Server mehr und mehr Anfragen erhalten, wäre diese
@@ -173,13 +173,13 @@ das Problem in Aktion ansehen.</p>
 <h3 id="simulieren-einer-langsamen-anfrage"><a class="header" href="#simulieren-einer-langsamen-anfrage">Simulieren einer langsamen Anfrage</a></h3>
 <p>Wir werden untersuchen, wie sich eine Anfrage mit langsamer Verarbeitung auf
 andere Anfragen an unsere aktuelle Server-Implementierung auswirken kann.
-Codeblock 21-10 implementiert die Behandlung einer Anfrage an <em>/sleep</em> mit
+Listing 21-10 implementiert die Behandlung einer Anfrage an <em>/sleep</em> mit
 einer simulierten langsamen Antwort, die den Server veranlasst, fünf Sekunden
 lang zu schlafen, bevor er antwortet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust no_run edition2024">use std::{
     fs,
-    io::{prelude::*, BufReader},
+    io::{BufReader, prelude::*},
     net::{TcpListener, TcpStream},
     thread,
     time::Duration,
@@ -220,17 +220,16 @@ lang zu schlafen, bevor er antwortet.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span>}</code></pre>
-<p><span class="caption">Codeblock 21-10: Simulieren einer langsamen Anfrage durch
+<p><span class="caption">Listing 21-10: Simulieren einer langsamen Anfrage durch
 Schlafen von fünf Sekunden</span></p>
 <p>Wir haben von <code>if</code> zu <code>match</code> gewechselt, da wir nun drei Fälle haben. Wir
-müssen explizit auf ein Stück von <code>request_line</code> abgleichen, um einen
-Musterabgleich mit den Zeichenketten-Literalwerten durchzuführen; <code>match</code> führt
-keine automatische Referenzierung und Dereferenzierung durch, wie es die
-Gleichheitsmethode tut.</p>
-<p>Der erste Zweig ist der gleiche wie der <code>if</code>-Block aus Codeblock 21-9. Der
+müssen explizit auf ein Stück von <code>request_line</code> abgleichen, um Pattern Matching
+mit den String-Literalwerten durchzuführen; <code>match</code> führt keine automatische
+Referenzierung und Dereferenzierung durch, wie es die Gleichheitsmethode tut.</p>
+<p>Der erste Zweig ist der gleiche wie der <code>if</code>-Block aus Listing 21-9. Der
 zweite Zweig entspricht einer Anfrage an <em>/sleep</em>. Wenn diese Anfrage empfangen
 wird, schläft der Server für fünf Sekunden, bevor er die erfolgreiche
-HTML-Seite rendert. Der dritte Zweig entspricht dem <code>else</code>-Block aus Codeblock
+HTML-Seite rendert. Der dritte Zweig entspricht dem <code>else</code>-Block aus Listing
 21-9.</p>
 <p>Du kannst sehen, wie primitiv unser Server ist: Echte Bibliotheken würden das
 Erkennen mehrerer Anfragen viel weniger wortreich handhaben!</p>
@@ -242,44 +241,43 @@ sehen, dass <code>/</code> wartet, bis <code>sleep</code> für volle 5 Sekunden 
 es geladen wird.</p>
 <p>Es gibt mehrere Techniken, um zu vermeiden, dass sich Anfragen hinter einer
 langsamen Anfrage stauen; diejenige, die wir implementieren werden, ist ein
-Strang-Vorrat (thread pool).</p>
-<h3 id="verbessern-des-durchsatzes-mit-einem-strang-vorrat"><a class="header" href="#verbessern-des-durchsatzes-mit-einem-strang-vorrat">Verbessern des Durchsatzes mit einem Strang-Vorrat</a></h3>
-<p>Ein <em>Strang-Vorrat</em> (thread pool) ist eine Gruppe von erzeugten Strängen, die
-bereit sind und warten, eine Aufgabe zu bearbeiten. Wenn das Programm eine neue
-Aufgabe erhält, ordnet es einen der Stränge im Pool der Aufgabe zu, und dieser
-Strang wird die Aufgabe bearbeiten. Die verbleibenden Stränge im Pool stehen
-für alle anderen Aufgaben zur Verfügung, die während der Verarbeitung des
-ersten Strangs hereinkommen. Wenn der erste Strang mit der Verarbeitung seiner
-Aufgabe fertig ist, kehrt er in den Vorrat der unbeschäftigten Stränge zurück
-und ist bereit, eine neue Aufgabe zu bearbeiten. Ein Strang-Vorrat ermöglicht
-es dir, Verbindungen gleichzeitig zu verarbeiten und so den Durchsatz deines
-Servers zu erhöhen.</p>
-<p>Wir beschränken die Anzahl der Stränge im Vorrat auf eine kleine Anzahl, um uns
+Thread-Pool.</p>
+<h3 id="verbessern-des-durchsatzes-mit-einem-thread-pool"><a class="header" href="#verbessern-des-durchsatzes-mit-einem-thread-pool">Verbessern des Durchsatzes mit einem Thread-Pool</a></h3>
+<p>Ein <em>Thread-Pool</em> ist eine Gruppe von erzeugten Threads, die bereit sind und
+warten, eine Aufgabe zu bearbeiten. Wenn das Programm eine neue Aufgabe erhält,
+ordnet es einen der Threads im Pool der Aufgabe zu, und dieser Thread wird die
+Aufgabe bearbeiten. Die verbleibenden Threads im Pool stehen für alle anderen
+Aufgaben zur Verfügung, die während der Verarbeitung des ersten Threads
+hereinkommen. Wenn der erste Thread mit der Verarbeitung seiner Aufgabe fertig
+ist, kehrt er in den Pool der unbeschäftigten Threads zurück und ist bereit,
+eine neue Aufgabe zu bearbeiten. Ein Thread-Pool ermöglicht es dir, Verbindungen
+gleichzeitig zu verarbeiten und so den Durchsatz deines Servers zu erhöhen.</p>
+<p>Wir beschränken die Anzahl der Threads im Pool auf eine kleine Anzahl, um uns
 vor Dienstverweigerungsangriffen (Denial-of-Service, kurz DoS) zu schützen;
-wenn unser Programm für jede eingehende Anfrage einen neuen Strang erstellen
+wenn unser Programm für jede eingehende Anfrage einen neuen Thread erstellen
 würde, könnte jemand, der 10 Millionen Anfragen an unseren Server stellt, ein
 Chaos anrichten, indem er alle Ressourcen unseres Servers aufbraucht und die
 Bearbeitung der Anfragen zum Erliegen bringt.</p>
-<p>Anstatt unbegrenzt viele Stränge zu erzeugen, werden wir eine feste Anzahl von
-Strängen im Vorrat warten lassen. Wenn Anfragen eingehen, werden sie zur
-Verarbeitung an den Vorrat geschickt. Der Vorrat verwaltet eine Warteschlange
-für eingehende Anfragen. Jeder der Stränge im Vorrat wird eine Anfrage aus
-dieser Warteschlange holen, die Anfrage bearbeiten und dann die Warteschlange
-um eine weitere Anfrage fragen. Mit diesem Design können wir bis zu <em><code>N</code></em>
-Anfragen gleichzeitig bearbeiten, wobei <em><code>N</code></em> die Anzahl der Stränge ist. Wenn
-jeder Strang auf eine lang laufende Anfrage antwortet, können sich nachfolgende
+<p>Anstatt unbegrenzt viele Threads zu erzeugen, werden wir eine feste Anzahl von
+Threads im Pool warten lassen. Wenn Anfragen eingehen, werden sie zur
+Verarbeitung an den Pool geschickt. Der Pool verwaltet eine Warteschlange für
+eingehende Anfragen. Jeder der Threads im Pool wird eine Anfrage aus dieser
+Warteschlange holen, die Anfrage bearbeiten und dann die nächste Anfrage aus der
+Warteschlange holen. Mit diesem Design können wir bis zu <em><code>N</code></em> Anfragen
+gleichzeitig bearbeiten, wobei <em><code>N</code></em> die Anzahl der Threads ist. Wenn jeder
+Thread auf eine lang laufende Anfrage antwortet, können sich nachfolgende
 Anfragen immer noch in der Warteschlange rückstauen, aber wir haben die Anzahl
 der lang laufenden Anfragen erhöht, die wir bearbeiten können, bevor wir diesen
 Punkt erreichen.</p>
 <p>Diese Technik ist nur eine von vielen Möglichkeiten, den Durchsatz eines
 Webservers zu verbessern. Weitere Optionen, die du untersuchen könntest, sind
-das <em>Fork/Join-Modell</em>, das <em>asynchrone E/A-Modell mit einem Strang</em> und das
-<em>asynchrone E/A-Modell mit mehreren Strängen</em>. Wenn du an diesem Thema
+das <em>Fork/Join-Modell</em>, das <em>asynchrone E/A-Modell mit einem Thread</em> und das
+<em>asynchrone E/A-Modell mit mehreren Threads</em>. Wenn du an diesem Thema
 interessiert bist, kannst du mehr über andere Lösungen lesen und versuchen, sie
 in Rust zu implementieren; mit einer systemnahen Sprache wie Rust sind alle
 diese Optionen möglich.</p>
-<p>Bevor wir mit der Implementierung eines Strang-Vorrats beginnen, lass uns
-darüber sprechen, wie die Verwendung des Vorrats aussehen sollte. Wenn du
+<p>Bevor wir mit der Implementierung eines Thread-Pools beginnen, lass uns
+darüber sprechen, wie die Verwendung des Pools aussehen sollte. Wenn du
 versuchst, Code zu entwerfen, kann das Schreiben der Client-Benutzeroberfläche
 beim Entwurf helfen. Schreibe die API des Codes so, dass sie so strukturiert
 ist, wie du sie aufrufen möchtest; implementiere dann die Funktionalität
@@ -292,16 +290,16 @@ und dann schauen wir uns Fehler des Compilers an, um zu bestimmen, was wir als
 Nächstes ändern sollten, damit der Code funktioniert. Bevor wir das tun, werden
 wir jedoch die Technik erkunden, die wir nicht als Ausgangspunkt verwenden
 werden.</p>
-<h4 id="für-jede-anfrage-einen-eigenen-strang-erstellen"><a class="header" href="#für-jede-anfrage-einen-eigenen-strang-erstellen">Für jede Anfrage einen eigenen Strang erstellen</a></h4>
+<h4 id="für-jede-anfrage-einen-eigenen-thread-erstellen"><a class="header" href="#für-jede-anfrage-einen-eigenen-thread-erstellen">Für jede Anfrage einen eigenen Thread erstellen</a></h4>
 <p>Lass uns zunächst untersuchen, wie unser Code aussehen könnte, wenn er für jede
-Verbindung einen neuen Strang erstellen würde. Wie bereits erwähnt, ist dies
-nicht unser endgültiger Plan, da es Probleme mit dem potenziellen Erzeugen
-einer unbegrenzten Anzahl von Strängen gibt, aber es ist ein Ausgangspunkt, um
-zunächst einen funktionierenden mehrsträngigen Server zu erhalten. Dann fügen
-wir den Strang-Vorrat als Verbesserung hinzu, und es wird einfacher, die beiden
-Lösungen zu vergleichen.</p>
-<p>Codeblock 21-11 zeigt die Änderungen, die an <code>main</code> vorgenommen werden müssen,
-um einen neuen Strang zu erzeugen, der jeden Strom innerhalb der <code>for</code>-Schleife
+Verbindung einen neuen Thread erstellen würde. Wie bereits erwähnt, ist dies
+nicht unser endgültiger Plan, da es Probleme mit dem potenziellen Erzeugen einer
+unbegrenzten Anzahl von Threads gibt, aber es ist ein Ausgangspunkt, um zunächst
+einen funktionierenden multi-threaded Server zu erhalten. Dann fügen wir den
+Thread-Pool als Verbesserung hinzu, und es wird einfacher, die beiden Lösungen
+zu vergleichen.</p>
+<p>Listing 21-11 zeigt die Änderungen, die an <code>main</code> vorgenommen werden müssen, um
+einen neuen Thread zu erzeugen, der jeden Stream innerhalb der <code>for</code>-Schleife
 verarbeitet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
@@ -345,21 +343,21 @@ verarbeitet.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-11: Erstellen eines neuen Strangs für jeden
-Strom</span></p>
-<p>Wie du in Kapitel 16 gelernt hast, wird <code>thread::spawn</code> einen neuen Strang
-erstellen und dann den Code im Funktionsabschluss (closure) im neuen Strang
-ausführen. Wenn du diesen Code ausführst und <em>/sleep</em> in deinem Browser lädst,
-dann <code>/</code> in zwei weiteren Browser-Tabs, wirst du in der Tat sehen, dass die
-Anfragen an <code>/</code> nicht auf die Beendigung von <em>/sleep</em> warten müssen. Aber wie
-wir bereits erwähnt haben, wird dies letztendlich das System überfordern, weil
-du neue Stränge ohne jede Begrenzung erstellen würdest.</p>
-<h4 id="erstellen-einer-endlichen-anzahl-von-strängen"><a class="header" href="#erstellen-einer-endlichen-anzahl-von-strängen">Erstellen einer endlichen Anzahl von Strängen</a></h4>
-<p>Wir möchten, dass unser Strang-Vorrat in einer ähnlichen, vertrauten Weise
-arbeitet, sodass der Wechsel von Strängen zu einem Strang-Vorrat keine großen
-Änderungen am Code erfordert, der unsere API verwendet. Codeblock 21-12 zeigt
-die hypothetische Schnittstelle für eine Struktur (struct) <code>ThreadPool</code>, die
-wir anstelle von <code>thread::spawn</code> verwenden wollen.</p>
+<p><span class="caption">Listing 21-11: Erstellen eines neuen Threads für jeden
+Stream</span></p>
+<p>Wie du in Kapitel 16 gelernt hast, wird <code>thread::spawn</code> einen neuen Thread
+erstellen und dann den Code im Closure im neuen Thread ausführen. Wenn du diesen
+Code ausführst und <em>/sleep</em> in deinem Browser lädst, dann <code>/</code> in zwei weiteren
+Browser-Tabs, wirst du in der Tat sehen, dass die Anfragen an <code>/</code> nicht auf die
+Beendigung von <em>/sleep</em> warten müssen. Aber wie wir bereits erwähnt haben, wird
+dies letztendlich das System überfordern, weil du neue Threads ohne jede
+Begrenzung erstellen würdest.</p>
+<h4 id="erstellen-einer-endlichen-anzahl-von-threads"><a class="header" href="#erstellen-einer-endlichen-anzahl-von-threads">Erstellen einer endlichen Anzahl von Threads</a></h4>
+<p>Wir möchten, dass unser Thread-Pool in einer ähnlichen, vertrauten Weise
+arbeitet, sodass der Wechsel von Threads zu einem Thread-Pool keine großen
+Änderungen am Code erfordert, der unsere API verwendet. Listing 21-12 zeigt
+die hypothetische Schnittstelle für eine Struktur (struct) <code>ThreadPool</code>, die wir
+anstelle von <code>thread::spawn</code> verwenden wollen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::{
 </span><span class="boring">    fs,
@@ -403,20 +401,19 @@ wir anstelle von <code>thread::spawn</code> verwenden wollen.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-12: Unsere ideale
+<p><span class="caption">Listing 21-12: Unsere ideale
 <code>ThreadPool</code>-Schnittstelle</span></p>
-<p>Wir verwenden <code>ThreadPool::new</code>, um einen neuen Strang-Vorrat mit einer
-konfigurierbaren Anzahl von Strängen zu erstellen, in diesem Fall vier. In der
+<p>Wir verwenden <code>ThreadPool::new</code>, um einen neuen Thread-Pool mit einer
+konfigurierbaren Anzahl von Threads zu erstellen, in diesem Fall vier. In der
 <code>for</code>-Schleife hat <code>pool.execute</code> eine ähnliche Schnittstelle wie
-<code>thread::spawn</code>, indem es einen Funktionsabschluss entgegennimmt, den der
-Vorrat für jeden Strom ausführen soll. Wir müssen <code>pool.execute</code>
-implementieren, sodass es den Funktionsabschluss entgegennimmt und ihn einem
-Strang im Vorrat zur Ausführung übergibt. Dieser Code lässt sich noch nicht
-kompilieren, aber wir werden es versuchen, damit der Compiler uns anleiten
-kann, wie wir das Problem beheben können.</p>
+<code>thread::spawn</code>, indem es einen Closure entgegennimmt, den der Pool für jeden
+Stream ausführen soll. Wir müssen <code>pool.execute</code> implementieren, sodass es den
+Closure entgegennimmt und ihn einem Thread im Pool zur Ausführung übergibt.
+Dieser Code lässt sich noch nicht kompilieren, aber wir werden es versuchen,
+damit der Compiler uns anleiten kann, wie wir das Problem beheben können.</p>
 <h4 id="aufbau-von-threadpool-mit-compilergetriebener-entwicklung"><a class="header" href="#aufbau-von-threadpool-mit-compilergetriebener-entwicklung">Aufbau von <code>ThreadPool</code> mit compilergetriebener Entwicklung</a></h4>
-<p>Nimm die Änderungen in Codeblock 21-12 an <em>src/main.rs</em> vor und lass uns dann
-die Kompilierfehler von <code>cargo check</code> verwenden, um unsere Entwicklung
+<p>Nimm die Änderungen in Listing 21-12 an <em>src/main.rs</em> vor und lass uns dann die
+Compilerfehler von <code>cargo check</code> verwenden, um unsere Entwicklung
 voranzutreiben. Hier ist der erste Fehler, den wir erhalten:</p>
 <pre><code class="language-console">$ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
@@ -432,27 +429,28 @@ error: could not compile `hello` (bin "hello") due to 1 previous error
 <p>Großartig! Dieser Fehler sagt uns, dass wir einen Typ oder ein Modul
 <code>ThreadPool</code> benötigen, also werden wir jetzt eines bauen. Unsere
 <code>ThreadPool</code>-Implementierung wird unabhängig von der Art der Arbeit unseres
-Webservers sein. Lass uns also die Kiste (crate) <code>hello</code> von einer Binärkiste
-(binary crate) auf eine Bibliothekskiste (library crate) umstellen, um unsere
-<code>ThreadPool</code>-Implementierung aufzunehmen. Nachdem wir zu einer Bibliothekskiste
-umgestellt haben, könnten wir die separate Strang-Vorrats-Bibliothek auch für
-alle Arbeiten verwenden, die wir mit einem Strang-Vorrat durchführen wollen,
-nicht nur für die Bedienung von Webanfragen.</p>
+Webservers sein. Lass uns also die Crate <code>hello</code> von einer binären Crate auf
+eine Bibliotheks-Crate umstellen, um unsere <code>ThreadPool</code>-Implementierung
+aufzunehmen. Nachdem wir zu einer Bibliotheks-Crate umgestellt haben, könnten
+wir die separate Thread-Pool-Bibliothek auch für alle Arbeiten verwenden, die
+wir mit einem Thread-Pool durchführen wollen, nicht nur für die Bedienung von
+Webanfragen.</p>
 <p>Erstelle eine Datei <em>src/lib.rs</em>, die das Folgende enthält, was die einfachste
 Definition einer <code>ThreadPool</code>-Struktur ist, die wir im Moment haben können:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground">pub struct ThreadPool;</code></pre>
 <p>Bearbeite dann die Datei <em>main.rs</em>, um <code>ThreadPool</code> in den Gültigkeitsbereich
-der Bibliothekskiste zu bringen, indem du den folgenden Code am Anfang von
+der Bibliotheks-Crate zu bringen, indem du den folgenden Code am Anfang von
 <em>src/main.rs</em> hinzufügst:</p>
-<p><span class="filename">Dateiname: src/bin/main.rs</span></p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use hello::ThreadPool;
-<span class="boring">use std::fs;
-</span><span class="boring">use std::io::prelude::*;
-</span><span class="boring">use std::net::TcpListener;
-</span><span class="boring">use std::net::TcpStream;
-</span><span class="boring">use std::thread;
-</span><span class="boring">use std::time::Duration;
+<span class="boring">use std::{
+</span><span class="boring">    fs,
+</span><span class="boring">    io::{BufReader, prelude::*},
+</span><span class="boring">    net::{TcpListener, TcpStream},
+</span><span class="boring">    thread,
+</span><span class="boring">    time::Duration,
+</span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -518,9 +516,9 @@ impl ThreadPool {
 }
 <span class="boring">}</span></code></pre>
 <p>Wir haben <code>usize</code> als Typ des Parameters <code>size</code> gewählt, weil wir wissen, dass
-eine negative Anzahl von Strängen keinen Sinn macht. Wir wissen auch, dass wir
-diese <code>4</code> als die Anzahl der Elemente in einer Kollektion von Strängen
-verwenden werden, wofür der Typ <code>usize</code> gedacht ist, wie im Abschnitt
+eine negative Anzahl von Threads keinen Sinn macht. Wir wissen auch, dass wir
+diese <code>4</code> als die Anzahl der Elemente in einer Kollektion von Threads verwenden
+werden, wofür der Typ <code>usize</code> gedacht ist, wie im Abschnitt
 <a href="ch03-02-data-types.html#ganzzahl-typen">„Ganzzahl-Typen“</a> in Kapitel 3 besprochen.</p>
 <p>Lass uns den Code noch einmal überprüfen:</p>
 <pre><code class="language-console">$ cargo check
@@ -535,22 +533,21 @@ For more information about this error, try `rustc --explain E0599`.
 error: could not compile `hello` (bin "hello") due to 1 previous error
 </code></pre>
 <p>Der Fehler tritt jetzt auf, weil wir keine Methode <code>execute</code> auf <code>ThreadPool</code>
-haben. Erinnere dich an Abschnitt <a href="#erstellen-einer-endlichen-anzahl-von-strängen">„Erstellen einer endlichen Anzahl von
-Strängen“</a>, wo wir beschlossen haben, dass unser
-Strang-Vorrat eine ähnliche Schnittstelle wie <code>thread::spawn</code> haben sollte.
-Zusätzlich werden wir die Funktion <code>execute</code> implementieren, sodass sie den
-Funktionsabschluss, der ihr gegeben wird, nimmt und sie einem unbeschäftigten
-Strang im Vorrat zur Ausführung übergibt.</p>
-<p>Wir werden die Methode <code>execute</code> auf <code>ThreadPool</code> definieren, um einen
-Funktionsabschluss als Parameter zu nehmen. Aus Abschnitt <a href="ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen">„Verschieben
-erfasster Werte aus Funktionsabschlüssen“</a> in Kapitel
-13 erinnern wir uns, dass wir Funktionsabschlüsse als Parameter mit drei
-verschiedenen Merkmalen nehmen können: <code>Fn</code>, <code>FnMut</code> und <code>FnOnce</code>. Wir müssen
-entscheiden, welche Art von Funktionsabschluss wir hier verwenden. Wir wissen,
-dass wir am Ende etwas Ähnliches wie die Implementierung <code>thread::spawn</code> der
-Standardbibliothek tun werden, sodass wir uns ansehen können, welche
-Abgrenzungen die Signatur von <code>thread::spawn</code> in ihrem Parameter hat. Die
-Dokumentation zeigt uns Folgendes:</p>
+haben. Erinnere dich an Abschnitt <a href="#erstellen-einer-endlichen-anzahl-von-threads">„Erstellen einer endlichen Anzahl von
+Threads“</a>, wo wir beschlossen haben, dass unser Thread-Pool
+eine ähnliche Schnittstelle wie <code>thread::spawn</code> haben sollte. Zusätzlich werden
+wir die Funktion <code>execute</code> implementieren, sodass sie den Closure, der ihr
+gegeben wird, nimmt und sie einem unbeschäftigten Thread im Pool zur Ausführung
+übergibt.</p>
+<p>Wir werden die Methode <code>execute</code> auf <code>ThreadPool</code> definieren, um einen Closure
+als Parameter zu nehmen. Aus Abschnitt <a href="ch13-01-closures.html#verschieben-erfasster-werte-aus-closures">„Verschieben erfasster Werte aus
+Closures“</a> in Kapitel 13 erinnern wir uns, dass wir
+Closures als Parameter mit drei verschiedenen Traits nehmen können: <code>Fn</code>,
+<code>FnMut</code> und <code>FnOnce</code>. Wir müssen entscheiden, welche Art von Closure wir hier
+verwenden. Wir wissen, dass wir am Ende etwas Ähnliches wie die Implementierung
+<code>thread::spawn</code> der Standardbibliothek tun werden, sodass wir uns ansehen
+können, welche Abgrenzungen die Signatur von <code>thread::spawn</code> in ihrem Parameter
+hat. Die Dokumentation zeigt uns Folgendes:</p>
 <pre><code class="language-rust ignore">pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
     where
         F: FnOnce() -&gt; T,
@@ -558,20 +555,18 @@ Dokumentation zeigt uns Folgendes:</p>
         T: Send + 'static</code></pre>
 <p>Der Parameter vom Typ <code>F</code> ist derjenige, um den es hier geht; der Parameter vom
 Typ <code>T</code> bezieht sich auf den Rückgabewert, und darum geht es uns nicht. Wir
-können sehen, dass <code>spawn</code> <code>FnOnce</code> als Merkmal (trait) verwendet, das an <code>F</code>
-gebunden ist. Das ist wahrscheinlich auch das, was wir wollen, denn wir werden
-das Argument, das wir bei <code>execute</code> bekommen, letztendlich an <code>spawn</code>
-weitergeben. Wir können weiterhin zuversichtlich sein, dass <code>FnOnce</code> das
-Merkmal ist, das wir verwenden wollen, weil der Strang zum Ausführen einer
-Anfrage den Funktionsabschluss dieser Anfrage nur einmal ausführt, was zu
-<code>Once</code> in <code>FnOnce</code> passt.</p>
-<p>Der Parameter vom Typ <code>F</code> hat auch die Merkmalsabgrenzung <code>Send</code> und die
-Lebensdauer <code>'static</code>, die in unserer Situation nützlich sind: Wir brauchen
-<code>Send</code>, um die Merkmalsabgrenzung von einem Strang zu einem anderen zu
-übertragen und <code>'static</code>, weil wir nicht wissen, wie lange die Ausführung des
-Strangs dauern wird. Lass uns eine Methode <code>execute</code> auf <code>ThreadPool</code>
-erstellen, die einen generischen Parameter vom Typ <code>F</code> mit diesen Abgrenzungen
-annimmt:</p>
+können sehen, dass <code>spawn</code> <code>FnOnce</code> als Trait verwendet, das an <code>F</code> gebunden
+ist. Das ist wahrscheinlich auch das, was wir wollen, denn wir werden das
+Argument, das wir bei <code>execute</code> bekommen, letztendlich an <code>spawn</code> weitergeben.
+Wir können weiterhin zuversichtlich sein, dass <code>FnOnce</code> das Trait ist, das wir
+verwenden wollen, weil der Thread zum Ausführen einer Anfrage den Closure dieser
+Anfrage nur einmal ausführt, was zu <code>Once</code> in <code>FnOnce</code> passt.</p>
+<p>Der Parameter vom Typ <code>F</code> hat auch die Trait Bound <code>Send</code> und die Lebensdauer
+<code>'static</code>, die in unserer Situation nützlich sind: Wir brauchen <code>Send</code>, um die
+Trait Bound von einem Thread zu einem anderen zu übertragen und <code>'static</code>, weil
+wir nicht wissen, wie lange die Ausführung des Threads dauern wird. Lass uns
+eine Methode <code>execute</code> auf <code>ThreadPool</code> erstellen, die einen generischen
+Parameter vom Typ <code>F</code> mit diesen Abgrenzungen annimmt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -590,11 +585,11 @@ annimmt:</p>
     }
 }
 <span class="boring">}</span></code></pre>
-<p>Wir verwenden immer noch <code>()</code> nach <code>FnOnce</code>, weil dieses <code>FnOnce</code> einen
-Funktionsabschluss darstellt, der keine Parameter benötigt und den Einheitstyp
-<code>()</code> zurückgibt. Genau wie bei Funktionsdefinitionen kann der Rückgabetyp in
-der Signatur weggelassen werden, aber selbst wenn wir keine Parameter haben,
-benötigen wir immer noch die Klammern.</p>
+<p>Wir verwenden immer noch <code>()</code> nach <code>FnOnce</code>, weil dieses <code>FnOnce</code> einen Closure
+darstellt, der keine Parameter benötigt und den Einheitstyp <code>()</code> zurückgibt.
+Genau wie bei Funktionsdefinitionen kann der Rückgabetyp in der Signatur
+weggelassen werden, aber selbst wenn wir keine Parameter haben, benötigen wir
+immer noch die Klammern.</p>
 <p>Auch hier handelt es sich um die einfachste Implementierung der Methode
 <code>execute</code>: Sie tut nichts, aber wir versuchen nur, unseren Code kompilieren zu
 lassen. Lass es uns noch einmal überprüfen:</p>
@@ -603,9 +598,9 @@ lassen. Lass es uns noch einmal überprüfen:</p>
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.24s
 </code></pre>
 <p>Er kompiliert! Aber beachte, dass du, wenn du <code>cargo run</code> versuchst und eine
-Anfrage im Browser stellst, die Fehler im Browser sehen wirst, die wir am
-Anfang des Kapitels gesehen haben. Unsere Bibliothek ruft den
-Funktionsabschluss, den wir an <code>execute</code> übergeben, noch nicht wirklich auf!</p>
+Anfrage im Browser stellst, die Fehler im Browser sehen wirst, die wir am Anfang
+des Kapitels gesehen haben. Unsere Bibliothek ruft den Closure, den wir an
+<code>execute</code> übergeben, noch nicht wirklich auf!</p>
 <blockquote>
 <p>Hinweis: Ein Sprichwort, das man möglicherweise über Sprachen mit strengen
 Compilern wie Haskell und Rust hört, lautet: „Wenn der Code kompiliert,
@@ -615,19 +610,18 @@ vollständiges Projekt aufbauen würden, wäre dies ein guter Zeitpunkt, mit dem
 Schreiben von Modultests zu beginnen, um zu überprüfen, ob der Code
 kompiliert <em>und</em> das von uns gewünschte Verhalten aufweist.</p>
 </blockquote>
-<p>Bedenke Folgendes: Was wäre hier anders, wenn wir statt eines
-Funktionsabschlusses eine Future ausführen würden?</p>
-<h4 id="validieren-der-anzahl-der-stränge-in-new"><a class="header" href="#validieren-der-anzahl-der-stränge-in-new">Validieren der Anzahl der Stränge in <code>new</code></a></h4>
+<p>Bedenke Folgendes: Was wäre hier anders, wenn wir statt eines Closures eine
+Future ausführen würden?</p>
+<h4 id="validieren-der-anzahl-der-threads-in-new"><a class="header" href="#validieren-der-anzahl-der-threads-in-new">Validieren der Anzahl der Threads in <code>new</code></a></h4>
 <p>Wir tun nichts mit den Parametern von <code>new</code> und <code>execute</code>. Lass uns die Rümpfe
 dieser Funktionen mit dem Verhalten implementieren, das wir wollen. Lass uns
-zunächst über <code>new</code> nachdenken. Früher wählten wir einen vorzeichenlosen Typ
-für den Parameter <code>size</code>, weil ein Vorrat mit einer negativen Anzahl von
-Strängen keinen Sinn ergibt. Ein Vorrat mit null Strängen ergibt jedoch auch
-keinen Sinn, dennoch ist null ein vollkommen gültiges <code>usize</code>. Wir fügen Code
-hinzu, um zu prüfen, ob <code>size</code> größer als null ist, bevor wir eine
-<code>ThreadPool</code>-Instanz zurückgeben, und das Programm abstürzen lassen, wenn er
-eine Null erhält, indem wir das Makro <code>assert!</code> verwenden, wie in Codeblock
-21-13 gezeigt.</p>
+zunächst über <code>new</code> nachdenken. Früher wählten wir einen vorzeichenlosen Typ für
+den Parameter <code>size</code>, weil ein Pool mit einer negativen Anzahl von Threads
+keinen Sinn ergibt. Ein Pool mit null Threads ergibt jedoch auch keinen Sinn,
+dennoch ist null ein vollkommen gültiges <code>usize</code>. Wir fügen Code hinzu, um zu
+prüfen, ob <code>size</code> größer als null ist, bevor wir eine <code>ThreadPool</code>-Instanz
+zurückgeben; wenn <code>size</code> null ist, brechen wir das Programm ab, indem wir das
+Makro <code>assert!</code> verwenden, wie in Listing 21-13 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -636,11 +630,11 @@ eine Null erhält, indem wir das Makro <code>assert!</code> verwenden, wie in Co
 </span>impl ThreadPool {
     /// Erzeuge einen neuen ThreadPool.
     ///
-    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+    /// Die Größe ist die Anzahl der Threads im Pool.
     ///
     /// # Panics
     ///
-    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
     pub fn new(size: usize) -&gt; ThreadPool {
         assert!(size &gt; 0);
 
@@ -656,28 +650,28 @@ eine Null erhält, indem wir das Makro <code>assert!</code> verwenden, wie in Co
 </span><span class="boring">    }
 </span>}
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-13: Implementierung von <code>ThreadPool::new</code>
-stürzt ab, wenn <code>size</code> gleich Null ist</span></p>
+<p><span class="caption">Listing 21-13: Die Implementierung von <code>ThreadPool::new</code>
+bricht ab, wenn <code>size</code> gleich Null ist</span></p>
 <p>Wir haben auch etwas Dokumentation für unseren <code>ThreadPool</code> mit
 Dokumentationskommentaren (doc comments) hinzugefügt. Beachte, dass wir uns an
 gute Dokumentationspraktiken gehalten haben, indem wir einen Abschnitt
 hinzugefügt haben, der die Situationen aufzeigt, in denen unsere Funktion
-abstürzen kann, wie in Kapitel 14 besprochen. Versuche, <code>cargo doc --open</code>
+abbrechen kann, wie in Kapitel 14 besprochen. Versuche, <code>cargo doc --open</code>
 auszuführen und die Struktur <code>ThreadPool</code> anzuklicken, um zu sehen, wie die
 generierte Dokumentation für <code>new</code> aussieht!</p>
 <p>Anstatt das Makro <code>assert!</code> hinzuzufügen, wie wir es hier getan haben, könnten
 wir <code>new</code> zu <code>build</code> ändern und ein <code>Result</code> zurückgeben lassen, wie wir es mit
-<code>Config::build</code> im E/A-Projekt in Codeblock 12-9 getan haben. Aber wir haben in
-diesem Fall entschieden, dass der Versuch, einen Strang-Vorrat ohne Stränge zu
+<code>Config::build</code> im E/A-Projekt in Listing 12-9 getan haben. Aber wir haben in
+diesem Fall entschieden, dass der Versuch, einen Thread-Pool ohne Threads zu
 erstellen, ein nicht behebbarer Fehler sein sollte. Wenn du ehrgeizig bist,
 versuche, eine Funktion namens <code>build</code> mit der folgenden Signatur zu schreiben,
 um sie mit der Funktion <code>new</code> zu vergleichen:</p>
 <pre><code class="language-rust ignore">pub fn new(size: usize) -&gt; Result&lt;ThreadPool, PoolCreationError&gt; {</code></pre>
-<h4 id="platz-zum-speichern-der-stränge-schaffen"><a class="header" href="#platz-zum-speichern-der-stränge-schaffen">Platz zum Speichern der Stränge schaffen</a></h4>
+<h4 id="platz-zum-speichern-der-threads-schaffen"><a class="header" href="#platz-zum-speichern-der-threads-schaffen">Platz zum Speichern der Threads schaffen</a></h4>
 <p>Jetzt, da wir eine Möglichkeit haben, zu wissen, dass wir eine gültige Anzahl
-von Strängen im Vorrat haben, können wir diese Stränge erstellen und sie in der
+von Threads im Pool haben, können wir diese Threads erstellen und sie in der
 Struktur <code>ThreadPool</code> speichern, bevor wir die Struktur zurückgeben. Aber wie
-„speichern“ wir einen Strang? Werfen wir noch einmal einen Blick auf die
+„speichern“ wir einen Thread? Werfen wir noch einmal einen Blick auf die
 Signatur von <code>Thread::spawn</code>:</p>
 <pre><code class="language-rust ignore">pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
     where
@@ -685,16 +679,16 @@ Signatur von <code>Thread::spawn</code>:</p>
         F: Send + 'static,
         T: Send + 'static,</code></pre>
 <p>Die Funktion <code>spawn</code> gibt einen <code>JoinHandle&lt;T&gt;</code> zurück, wobei <code>T</code> der Typ ist,
-den der Funktionsabschluss zurückgibt. Lass uns versuchen, auch <code>JoinHandle</code> zu
-benutzen und sehen, was passiert. In unserem Fall werden die
-Funktionsabschlüsse, die wir an den Strang-Vorrat übergeben, die Verbindung
-behandeln und nichts zurückgeben, also wird <code>T</code> der Unit-Typ <code>()</code> sein.</p>
-<p>Der Code in Codeblock 21-14 lässt sich kompilieren, erzeugt aber noch keine
-Stränge. Wir haben die Definition von <code>ThreadPool</code> so geändert, dass sie einen
+den der Closure zurückgibt. Lass uns versuchen, auch <code>JoinHandle</code> zu benutzen
+und sehen, was passiert. In unserem Fall werden die Closures, die wir an den
+Thread-Pool übergeben, die Verbindung behandeln und nichts zurückgeben, also
+wird <code>T</code> der Unit-Typ <code>()</code> sein.</p>
+<p>Der Code in Listing 21-14 lässt sich kompilieren, erzeugt aber noch keine
+Threads. Wir haben die Definition von <code>ThreadPool</code> so geändert, dass sie einen
 Vektor von <code>thread::JoinHandle&lt;()&gt;</code>-Instanzen enthält, den Vektor mit der
-Kapazität <code>size</code> initialisiert, eine <code>for</code>-Schleife eingerichtet, die etwas
-Code zum Erzeugen der Stränge ausführt, und eine <code>ThreadPool</code>-Instanz
-zurückgibt, die diese enthält.</p>
+Kapazität <code>size</code> initialisiert, eine <code>for</code>-Schleife eingerichtet, die etwas Code
+zum Erzeugen der Threads ausführt, und eine <code>ThreadPool</code>-Instanz zurückgibt, die
+diese enthält.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -708,18 +702,18 @@ impl ThreadPool {
     // --abschneiden--
 <span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span>    pub fn new(size: usize) -&gt; ThreadPool {
         assert!(size &gt; 0);
 
         let mut threads = Vec::with_capacity(size);
 
         for _ in 0..size {
-            // einige Stränge erstellen und im Vektor speichern
+            // einige Threads erstellen und im Vektor speichern
         }
 
         ThreadPool { threads }
@@ -733,9 +727,9 @@ impl ThreadPool {
 </span><span class="boring">    }
 </span>}
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-14: Erstellen eines Vektors für <code>ThreadPool</code>
-zum Aufnehmen der Stränge</span></p>
-<p>Wir haben <code>std::thread</code> in der Bibliothekskiste in den Gültigkeitsbereich
+<p><span class="caption">Listing 21-14: Erstellen eines Vektors für <code>ThreadPool</code>
+zum Aufnehmen der Threads</span></p>
+<p>Wir haben <code>std::thread</code> in der Bibliotheks-Crate in den Gültigkeitsbereich
 gebracht, weil wir <code>thread::JoinHandle</code> als den Typ der Elemente im Vektor in
 <code>ThreadPool</code> verwenden.</p>
 <p>Sobald wir eine gültige Größe erhalten haben, erzeugt unser <code>ThreadPool</code> einen
@@ -746,49 +740,48 @@ Unterschied: Sie weist dem Vektor Platz im Voraus zu. Da wir wissen, dass wir
 etwas effizienter als die Verwendung von <code>Vec::new</code>, das sich selbst in der
 Größe verändert, wenn Elemente eingefügt werden.</p>
 <p>Wenn du <code>cargo check</code> erneut ausführst, sollte es erfolgreich sein.</p>
-<h4 id="senden-von-code-vom-threadpool-an-einen-strang"><a class="header" href="#senden-von-code-vom-threadpool-an-einen-strang">Senden von Code vom <code>ThreadPool</code> an einen Strang</a></h4>
-<p>Wir haben einen Kommentar in der <code>for</code>-Schleife in Codeblock 21-14 bezüglich
-der Erstellung von Strängen hinterlassen. Hier werden wir uns ansehen, wie wir
-tatsächlich Stränge erstellen. Die Standardbibliothek bietet <code>thread::spawn</code>
-als eine Möglichkeit, Stränge zu erstellen, und <code>thread::spawn</code> erwartet, dass
-es Code erhält, den der Strang ausführen soll, sobald der Strang erstellt ist.
-In unserem Fall wollen wir jedoch die Stränge erstellen und sie auf Code
-<em>warten</em> lassen, den wir später senden werden. Die Implementierung von Strängen
-in der Standardbibliothek enthält keine Möglichkeit, dies zu tun; wir müssen
-sie manuell implementieren.</p>
+<h4 id="senden-von-code-vom-threadpool-an-einen-thread"><a class="header" href="#senden-von-code-vom-threadpool-an-einen-thread">Senden von Code vom <code>ThreadPool</code> an einen Thread</a></h4>
+<p>Wir haben einen Kommentar in der <code>for</code>-Schleife in Listing 21-14 bezüglich der
+Erstellung von Threads hinterlassen. Hier werden wir uns ansehen, wie wir
+tatsächlich Threads erstellen. Die Standardbibliothek bietet <code>thread::spawn</code> als
+eine Möglichkeit, Threads zu erstellen, und <code>thread::spawn</code> erwartet, dass es
+Code erhält, den der Thread ausführen soll, sobald der Thread erstellt ist. In
+unserem Fall wollen wir jedoch die Threads erstellen und sie auf Code <em>warten</em>
+lassen, den wir später senden werden. Die Implementierung von Threads in der
+Standardbibliothek enthält keine Möglichkeit, dies zu tun; wir müssen sie
+manuell implementieren.</p>
 <p>Wir werden dieses Verhalten implementieren, indem wir eine neue Datenstruktur
-zwischen dem <code>ThreadPool</code> und den Strängen, die dieses neue Verhalten verwalten
+zwischen dem <code>ThreadPool</code> und den Threads, die dieses neue Verhalten verwalten
 werden, einführen. Wir nennen diese Datenstruktur <code>Worker</code>, was ein gängiger
-Begriff in Vorrats-Implementierungen ist. Der <code>Worker</code> holt den Code ab, der
-ausgeführt werden muss, und führt ihn in seinem Strang aus.</p>
+Begriff in Pool-Implementierungen ist. Der <code>Worker</code> holt den Code ab, der
+ausgeführt werden muss, und führt ihn in seinem Thread aus.</p>
 <p>Denke an Menschen, die in der Küche eines Restaurants arbeiten: Die Arbeiter
 warten, bis Bestellungen von Kunden eingehen, und dann sind sie dafür
 verantwortlich, diese Bestellungen entgegenzunehmen und auszuführen.</p>
-<p>Anstatt einen Vektor von <code>JoinHandle&lt;()&gt;</code>-Instanzen im Strang-Vorrat zu
+<p>Anstatt einen Vektor von <code>JoinHandle&lt;()&gt;</code>-Instanzen im Thread-Pool zu
 speichern, werden wir Instanzen der <code>Worker</code>-Struktur speichern. Jeder <code>Worker</code>
 wird eine einzelne <code>JoinHandle&lt;()&gt;</code>-Instanz speichern. Dann werden wir eine
-Methode auf <code>Worker</code> implementieren, die einen Funktionsabschluss zur
-Ausführung benötigt und ihn zur Ausführung an den bereits laufenden Strang
-sendet. Wir werden auch jedem <code>Worker</code> eine <code>id</code> geben, damit wir beim
-Protokollieren oder Debuggen zwischen den verschiedenen <code>Worker</code>-Instanzen im
-Vorrat unterscheiden können.</p>
+Methode auf <code>Worker</code> implementieren, die einen Closure zur Ausführung benötigt
+und ihn zur Ausführung an den bereits laufenden Thread sendet. Wir werden auch
+jedem <code>Worker</code> eine <code>id</code> geben, damit wir beim Protokollieren oder Debuggen
+zwischen den verschiedenen <code>Worker</code>-Instanzen im Pool unterscheiden können.</p>
 <p>Hier ist der neue Prozess, der abläuft, wenn wir einen <code>ThreadPool</code> erstellen.
-Wir werden den Code implementieren, der den Funktionsabschluss an den Strang
-sendet, nachdem wir <code>Worker</code> auf diese Weise eingerichtet haben:</p>
+Wir werden den Code implementieren, der den Closure an den Thread sendet,
+nachdem wir <code>Worker</code> auf diese Weise eingerichtet haben:</p>
 <ol>
 <li>Definiere eine Struktur <code>Worker</code>, die eine <code>id</code> und einen <code>JoinHandle&lt;()&gt;</code>
 enthält.</li>
 <li>Ändere <code>ThreadPool</code>, um einen Vektor von <code>Worker</code>-Instanzen zu halten.</li>
 <li>Definiere eine Funktion <code>Worker::new</code>, die eine <code>id</code>-Nummer nimmt und eine
-<code>Worker</code>-Instanz zurückgibt, die die <code>id</code> enthält, sowie einen Strang, der
-mit einem leeren Funktionsabschluss erzeugt wurde.</li>
+<code>Worker</code>-Instanz zurückgibt, die die <code>id</code> enthält, sowie einen Thread, der
+mit einem leeren Closure erzeugt wurde.</li>
 <li>Verwende in <code>ThreadPool::new</code> den <code>for</code>-Schleifenzähler, um eine <code>id</code> zu
 erzeugen, erzeuge einen neuen <code>Worker</code> mit dieser <code>id</code> und speichere den
 <code>Worker</code> im Vektor.</li>
 </ol>
 <p>Wenn du zu einer Herausforderung bereit bist, versuche, diese Änderungen selbst
-zu implementieren, bevor du dir den Code in Codeblock 21-15 ansiehst.</p>
-<p>Bereit? Hier ist Codeblock 21-15 mit einer Möglichkeit, die vorhergehenden
+zu implementieren, bevor du dir den Code in Listing 21-15 ansiehst.</p>
+<p>Bereit? Hier ist Listing 21-15 mit einer Möglichkeit, die vorhergehenden
 Änderungen vorzunehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -803,11 +796,11 @@ impl ThreadPool {
     // --abschneiden--
 <span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span>    pub fn new(size: usize) -&gt; ThreadPool {
         assert!(size &gt; 0);
 
@@ -841,8 +834,8 @@ impl Worker {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-15: Modifizieren von <code>ThreadPool</code>, um
-<code>Worker</code>-Instanzen zu halten, anstatt Stränge direkt zu halten</span></p>
+<p><span class="caption">Listing 21-15: Modifizieren von <code>ThreadPool</code>, um
+<code>Worker</code>-Instanzen zu halten, anstatt Threads direkt zu halten</span></p>
 <p>Wir haben den Namen des Feldes in <code>ThreadPool</code> von <code>threads</code> in <code>workers</code>
 geändert, weil es jetzt <code>Worker</code>-Instanzen statt <code>JoinHandle&lt;()&gt;</code>-Instanzen
 enthält. Wir benutzen den Zähler in der <code>for</code>-Schleife als Argument für
@@ -853,52 +846,51 @@ Implementierungsdetails bezüglich der Verwendung einer <code>Worker</code>-Stru
 innerhalb von <code>ThreadPool</code> nicht kennen, also machen wir die <code>Worker</code>-Struktur
 und ihre Funktion <code>new</code> privat. Die Funktion <code>Worker::new</code> verwendet die <code>id</code>,
 die wir ihr geben, und speichert eine <code>JoinHandle&lt;()&gt;</code>-Instanz, die durch das
-Erzeugen eines neuen Strangs unter Verwendung eines leeren Funktionsabschlusses
-erzeugt wird.</p>
+Erzeugen eines neuen Threads unter Verwendung eines leeren Closures erzeugt
+wird.</p>
 <blockquote>
-<p>Hinweis: Wenn das Betriebssystem keinen Strang erstellen kann, weil nicht
-genügend Systemressourcen vorhanden sind, bringt <code>thread::spawn</code> das Programm
-zum Abstürzen. Das führt dazu, dass unser gesamter Server abstürzt, auch wenn
-die Erstellung einiger Stränge erfolgreich wäre. Der Einfachheit halber
-lassen wir es bei diesem Verhalten, aber in einer produktiven
-Strang-Pool-Implementierung würdest du wahrscheinlich
+<p>Hinweis: Wenn das Betriebssystem keinen Thread erstellen kann, weil nicht
+genügend Systemressourcen vorhanden sind, bricht <code>thread::spawn</code> das Programm
+ab. Das führt dazu, dass unser gesamter Server abbricht, auch wenn die
+Erstellung einiger Threads erfolgreich wäre. Der Einfachheit halber lassen wir
+es bei diesem Verhalten, aber in einer produktionsreifen
+Thread-Pool-Implementierung würdest du wahrscheinlich
 <a href="https://doc.rust-lang.org/std/thread/struct.Builder.html"><code>std::thread::Builder</code></a> mit der Methode <a href="https://doc.rust-lang.org/std/thread/struct.Builder.html#method.spawn"><code>spawn</code></a>
 verwenden wollen, die stattdessen <code>Result</code> zurückgibt.</p>
 </blockquote>
 <p>Dieser Code kompiliert und speichert die Anzahl der <code>Worker</code>-Instanzen, die wir
 als Argument für <code>ThreadPool::new</code> angegeben haben. Aber wir <em>verarbeiten</em> noch
-nicht den Funktionsabschluss, den wir in <code>execute</code> erhalten. Schauen wir uns
-als Nächstes an, wie wir das machen.</p>
-<h4 id="senden-von-anfragen-an-stränge-über-kanäle"><a class="header" href="#senden-von-anfragen-an-stränge-über-kanäle">Senden von Anfragen an Stränge über Kanäle</a></h4>
-<p>Das nächste Problem, das wir angehen, ist dass die Funktionsabschlüsse bei
-<code>thread::spawn</code> absolut nichts bewirken. Gegenwärtig erhalten wir den
-Funktionsabschluss, den wir ausführen wollen, mit der Methode <code>execute</code>. Aber
-wir müssen <code>thread::spawn</code> einen Funktionsabschluss geben, der ausgeführt
-werden soll, wenn wir jeden <code>Worker</code> während der Erstellung des <code>ThreadPool</code>
-erstellen.</p>
+nicht den Closure, den wir in <code>execute</code> erhalten. Schauen wir uns als Nächstes
+an, wie wir das machen.</p>
+<h4 id="senden-von-anfragen-an-threads-über-kanäle"><a class="header" href="#senden-von-anfragen-an-threads-über-kanäle">Senden von Anfragen an Threads über Kanäle</a></h4>
+<p>Das nächste Problem, das wir angehen, ist, dass die Closures bei <code>thread::spawn</code>
+absolut nichts bewirken. Gegenwärtig erhalten wir den Closure, den wir ausführen
+wollen, mit der Methode <code>execute</code>. Aber wir müssen <code>thread::spawn</code> einen Closure
+geben, der ausgeführt werden soll, wenn wir jeden <code>Worker</code> während der
+Erstellung des <code>ThreadPool</code> erstellen.</p>
 <p>Wir möchten, dass die Struktur <code>Worker</code>, die wir gerade erstellt haben, um den
 Code aus einer Warteschlange im <code>ThreadPool</code> zu holen, diesen Code zur
-Ausführung an seinen Strang sendet.</p>
+Ausführung an seinen Thread sendet.</p>
 <p>In Kapitel 16 hast du etwas über <em>Kanäle</em> (channels) gelernt – eine
-einfache Art der Kommunikation zwischen zwei Strängen –, die für diesen
+einfache Art der Kommunikation zwischen zwei Threads –, die für diesen
 Anwendungsfall perfekt geeignet ist. Wir verwenden einen Kanal, der als
-Warteschlange von Aufträgen fungiert, und <code>execute</code> sendet einen Auftrag aus
-dem <code>ThreadPool</code> an die <code>Worker</code>-Instanzen, die den Auftrag an ihren Strang
-sendet. Hier ist der Plan:</p>
+Warteschlange von Aufträgen fungiert, und <code>execute</code> sendet einen Auftrag aus dem
+<code>ThreadPool</code> an die <code>Worker</code>-Instanzen, die den Auftrag an ihren Thread senden.
+Hier ist der Plan:</p>
 <ol>
 <li>Der <code>ThreadPool</code> erstellt einen Kanal und hält den Sender.</li>
 <li>Jeder <code>Worker</code> hält den Empfänger.</li>
-<li>Wir werden eine neue Struktur <code>Job</code> erstellen, die den Funktionsabschluss
-aufnimmt, den wir über den Kanal senden wollen.</li>
+<li>Wir werden eine neue Struktur <code>Job</code> erstellen, die den Closure aufnimmt, den
+wir über den Kanal senden wollen.</li>
 <li>Die Methode <code>execute</code> sendet den Auftrag, der ausgeführt werden soll, durch
 den Sender.</li>
-<li>In seinem Strang wird der <code>Worker</code> auf den Empfänger warten und die
-Funktionsabschlüsse aller Aufträge, die er erhält, ausführen.</li>
+<li>In seinem Thread wird der <code>Worker</code> auf den Empfänger warten und die Closures
+aller Aufträge, die er erhält, ausführen.</li>
 </ol>
-<p>Beginnen wir damit, einen Kanal in <code>ThreadPool::new</code> zu erstellen und den
-Sender in der <code>ThreadPool</code>-Instanz zu halten, wie in Codeblock 21-16
-gezeigt. Die Struktur <code>Job</code> enthält vorerst nichts, aber sie wird die Art von
-Element sein, die wir in den Kanal senden.</p>
+<p>Beginnen wir damit, einen Kanal in <code>ThreadPool::new</code> zu erstellen und den Sender
+in der <code>ThreadPool</code>-Instanz zu halten, wie in Listing 21-16 gezeigt. Die
+Struktur <code>Job</code> enthält vorerst nichts, sie wird aber der Element-Typ sein, den
+wir in den Kanal senden.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -915,11 +907,11 @@ impl ThreadPool {
     // --abschneiden--
 <span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span>    pub fn new(size: usize) -&gt; ThreadPool {
         assert!(size &gt; 0);
 
@@ -955,15 +947,15 @@ impl ThreadPool {
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-16: Ändern von <code>ThreadPool</code>, um den Sender
+<p><span class="caption">Listing 21-16: Ändern von <code>ThreadPool</code>, um den Sender
 zu speichern, der <code>Job</code>-Instanzen übermittelt</span></p>
 <p>In <code>ThreadPool::new</code> erstellen wir unseren neuen Kanal und lassen den Pool das
 sendende Ende halten. Dies kompiliert erfolgreich.</p>
-<p>Lass uns versuchen, einen Empfänger an jeden <code>Worker</code> weiterzugeben, während
-der Strang-Vorrat den Kanal erstellt. Wir wissen, dass wir den Empfänger
-im Strang verwenden wollen, den die <code>Worker</code>-Instanzen erzeugen, also werden
-wir den Parameter <code>receiver</code> im Funktionsabschluss referenzieren. Der Code in
-Codeblock 21-17 lässt sich noch nicht ganz kompilieren.</p>
+<p>Lass uns versuchen, einen Empfänger an jeden <code>Worker</code> weiterzugeben, während der
+Thread-Pool den Kanal erstellt. Wir wissen, dass wir den Empfänger im Thread
+verwenden wollen, den die <code>Worker</code>-Instanzen erzeugen, also werden wir den
+Parameter <code>receiver</code> im Closure referenzieren. Der Code in Listing 21-17 lässt
+sich noch nicht ganz kompilieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -980,11 +972,11 @@ Codeblock 21-17 lässt sich noch nicht ganz kompilieren.</p>
     // --abschneiden--
 <span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span>    pub fn new(size: usize) -&gt; ThreadPool {
         assert!(size &gt; 0);
 
@@ -1024,11 +1016,10 @@ Codeblock 21-17 lässt sich noch nicht ganz kompilieren.</p>
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-17: Übergeben des Empfängers an jeden
+<p><span class="caption">Listing 21-17: Übergeben des Empfängers an jeden
 <code>Worker</code></span></p>
-<p>Wir haben einige kleine und unkomplizierte Änderungen vorgenommen: Wir geben
-den Empfänger an <code>Worker::new</code> und dann verwenden wir ihn innerhalb des
-Funktionsabschlusses.</p>
+<p>Wir haben einige kleine und unkomplizierte Änderungen vorgenommen: Wir geben den
+Empfänger an <code>Worker::new</code> und dann verwenden wir ihn innerhalb des Closures.</p>
 <p>Wenn wir versuchen, diesen Code zu überprüfen, erhalten wir diesen Fehler:</p>
 <pre><code class="language-console">$ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
@@ -1064,25 +1055,24 @@ Kanalimplementierung, die Rust bietet, erlaubt mehrere <em>Produzenten</em> und 
 einzigen <em>Konsumenten</em>. Das bedeutet, dass wir nicht einfach das konsumierende
 Ende des Kanals klonen können, um diesen Code zu reparieren. Selbst wenn wir
 das könnten, ist das nicht die Technik, die wir anwenden wollen; stattdessen
-wollen wir die Aufträge auf mehrere Stränge verteilen, indem wir den einzigen
+wollen wir die Aufträge auf mehrere Threads verteilen, indem wir den einzigen
 <code>receiver</code> unter allen <code>Worker</code>-Instanzen aufteilen.</p>
-<p>Außerdem erfordert das Entfernen eines Auftrags aus der Warteschlange des
-Kanals eine Mutation von <code>receiver</code>, sodass die Stränge einen sicheren Weg
-benötigen, um <code>receiver</code> gemeinsam zu nutzen und zu modifizieren; andernfalls
-könnten wir Wettlaufsituationen (race conditions) erhalten (wie in Kapitel 16
-behandelt).</p>
-<p>Erinnere dich an die Strang-sicheren intelligenten Zeiger, die in Kapitel 16
-besprochen wurden: Um die Eigentümerschaft über mehrere Stränge zu teilen und
-den Strängen zu erlauben, den Wert zu mutieren, müssen wir <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>
-verwenden. Der Typ <code>Arc</code> ermöglicht es mehreren <code>Worker</code>-Instanzen, den
-Empfänger zu besitzen, und <code>Mutex</code> stellt sicher, dass immer nur ein <code>Worker</code>
-zur gleichen Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 21-18 zeigt
-die Änderungen, die wir vornehmen müssen.</p>
+<p>Außerdem erfordert das Entfernen eines Auftrags aus der Warteschlange des Kanals
+eine Mutation von <code>receiver</code>, sodass die Threads einen sicheren Weg benötigen,
+um <code>receiver</code> gemeinsam zu nutzen und zu modifizieren; andernfalls könnten wir
+Race Conditions erhalten (wie in Kapitel 16 behandelt).</p>
+<p>Erinnere dich an die Thread-sicheren intelligenten Zeiger, die in Kapitel 16
+besprochen wurden: Um das Eigentum über mehrere Threads zu teilen und den
+Threads zu erlauben, den Wert zu mutieren, müssen wir <code>Arc&lt;Mutex&lt;T&gt;&gt;</code> verwenden.
+Der Typ <code>Arc</code> ermöglicht es mehreren <code>Worker</code>-Instanzen, den Empfänger zu
+besitzen, und <code>Mutex</code> stellt sicher, dass immer nur ein <code>Worker</code> zur gleichen
+Zeit einen Auftrag vom Empfänger erhält. Listing 21-18 zeigt die Änderungen, die
+wir vornehmen müssen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::{
-    sync::{mpsc, Arc, Mutex},
+    sync::{Arc, Mutex, mpsc},
     thread,
 };
 // --abschneiden--
@@ -1098,11 +1088,11 @@ die Änderungen, die wir vornehmen müssen.</p>
     // --abschneiden--
 <span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span>    pub fn new(size: usize) -&gt; ThreadPool {
         assert!(size &gt; 0);
 
@@ -1146,26 +1136,24 @@ die Änderungen, die wir vornehmen müssen.</p>
 </span>    }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-18: Den Empfänger unter den <code>Worker</code>
+<p><span class="caption">Listing 21-18: Den Empfänger unter den <code>Worker</code>
 teilen, die <code>Arc</code> und <code>Mutex</code> benutzen</span></p>
-<p>In <code>ThreadPool::new</code> setzen wir den Empfänger in einen <code>Arc</code> und einen
-<code>Mutex</code>. Für jeden neuen <code>Worker</code> klonen wir den <code>Arc</code>, um die Referenzzählung
-zu erhöhen, sodass die <code>Worker</code>-Instanzen die Eigentümerschaft des Empfängers
-teilen können.</p>
+<p>In <code>ThreadPool::new</code> setzen wir den Empfänger in einen <code>Arc</code> und einen <code>Mutex</code>.
+Für jeden neuen <code>Worker</code> klonen wir den <code>Arc</code>, um die Referenzzählung zu
+erhöhen, sodass die <code>Worker</code>-Instanzen das Eigentum am Empfänger teilen können.</p>
 <p>Mit diesen Änderungen kompiliert der Code! Wir haben es geschafft!</p>
 <h4 id="implementieren-der-methode-execute"><a class="header" href="#implementieren-der-methode-execute">Implementieren der Methode <code>execute</code></a></h4>
 <p>Lass uns endlich die Methode <code>execute</code> auf <code>ThreadPool</code> implementieren. Wir
-werden auch <code>Job</code> von einer Struktur in einen Typ-Alias für ein Merkmalsobjekt
-(trait object) ändern, das den Typ des Funktionsabschlusses enthält, den
-<code>execute</code> erhält. Wie im Abschnitt <a href="ch20-03-advanced-types.html#typ-synonyme-und-typ-aliase">„Typ-Synonyme und
-Typ-Aliase“</a> in Kapitel 19 besprochen, ermöglichen uns
-Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher nutzen zu können.
-Siehe Codeblock 21-19.</p>
+werden auch <code>Job</code> von einer Struktur in einen Typ-Alias für ein Trait-Objekt
+ändern, das den Typ des Closures enthält, den <code>execute</code> erhält. Wie im Abschnitt
+<a href="ch20-03-advanced-types.html#typ-synonyme-und-typ-aliase">„Typ-Synonyme und Typ-Aliase“</a> in Kapitel 19 besprochen,
+ermöglichen uns Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher
+nutzen zu können. Siehe Listing 21-19.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
-</span><span class="boring">    sync::{mpsc, Arc, Mutex},
+</span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
 </span><span class="boring">
@@ -1182,11 +1170,11 @@ impl ThreadPool {
     // --abschneiden--
 <span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span><span class="boring">    pub fn new(size: usize) -&gt; ThreadPool {
 </span><span class="boring">        assert!(size &gt; 0);
 </span><span class="boring">
@@ -1230,31 +1218,29 @@ impl ThreadPool {
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-19: Erstellen eines Alias vom Typ <code>Job</code> für
-eine <code>Box</code>, die jeden Funktionsabschluss enthält, und danach Senden des
-Auftrags in den Kanal</span></p>
-<p>Nachdem wir eine neue <code>Job</code>-Instanz unter Verwendung des Funktionsabschlusses,
-den wir in <code>execute</code> erhalten, erstellt haben, senden wir diesen Auftrag an das
-sendende Ende des Kanals. Wir rufen <code>unwrap</code> auf <code>send</code> auf für den Fall, dass
-das Senden fehlschlägt. Das kann zum Beispiel passieren, wenn wir alle unsere
-Stränge von der Ausführung abhalten, was bedeutet, dass das empfangende Ende
-keine neuen Nachrichten mehr empfängt. Im Moment können wir die Ausführung
-unserer Stränge nicht stoppen: Unsere Stränge werden so lange ausgeführt, wie
-der Vorrat existiert. Der Grund, warum wir <code>unwrap</code> verwenden, ist, dass wir
-wissen, dass der Fehlerfall nicht passieren wird, aber der Compiler das nicht
-weiß.</p>
-<p>Aber wir sind noch nicht ganz fertig! Im <code>Worker</code> wird unser Funktionsabschluss
-an <code>thread::spawn</code> weitergereicht, der immer noch nur auf das empfangende Ende
-des Kanals <em>referenziert</em>. Stattdessen müssen wir den Funktionsabschluss für
-immer in einer Schleife laufen lassen, indem wir das empfangende Ende des
-Kanals um einen Auftrag bitten und den Auftrag ausführen, wenn er einen
-bekommt. Lass uns die in Codeblock 21-20 gezeigte Änderung in <code>Worker::new</code>
-vornehmen.</p>
+<p><span class="caption">Listing 21-19: Erstellen eines Alias vom Typ <code>Job</code> für
+eine <code>Box</code>, die jeden Closure enthält, und danach Senden des Auftrags in den
+Kanal</span></p>
+<p>Nachdem wir eine neue <code>Job</code>-Instanz unter Verwendung des Closures, den wir in
+<code>execute</code> erhalten, erstellt haben, senden wir diesen Auftrag an das sendende
+Ende des Kanals. Wir rufen <code>unwrap</code> auf <code>send</code> auf für den Fall, dass das Senden
+fehlschlägt. Das kann zum Beispiel passieren, wenn wir alle unsere Threads von
+der Ausführung abhalten, was bedeutet, dass das empfangende Ende keine neuen
+Nachrichten mehr empfängt. Im Moment können wir die Ausführung unserer Threads
+nicht stoppen: Unsere Threads werden so lange ausgeführt, wie der Pool
+existiert. Der Grund, warum wir <code>unwrap</code> verwenden, ist, dass wir wissen, dass
+der Fehlerfall nicht passieren wird, aber der Compiler das nicht weiß.</p>
+<p>Aber wir sind noch nicht ganz fertig! Im <code>Worker</code> wird unser Closure an
+<code>thread::spawn</code> weitergereicht, der immer noch nur auf das empfangende Ende des
+Kanals <em>referenziert</em>. Stattdessen müssen wir den Closure für immer in einer
+Schleife laufen lassen, indem wir das empfangende Ende des Kanals um einen
+Auftrag bitten und den Auftrag ausführen, wenn er einen bekommt. Lass uns die in
+Listing 21-20 gezeigte Änderung in <code>Worker::new</code> vornehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
-</span><span class="boring">    sync::{mpsc, Arc, Mutex},
+</span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
 </span><span class="boring">
@@ -1268,11 +1254,11 @@ vornehmen.</p>
 </span><span class="boring">impl ThreadPool {
 </span><span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span><span class="boring">    pub fn new(size: usize) -&gt; ThreadPool {
 </span><span class="boring">        assert!(size &gt; 0);
 </span><span class="boring">
@@ -1308,38 +1294,40 @@ vornehmen.</p>
 
 impl Worker {
     fn new(id: usize, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Job&gt;&gt;&gt;) -&gt; Worker {
-        let thread = thread::spawn(move || loop {
-            let job = receiver.lock().unwrap().recv().unwrap();
+        let thread = thread::spawn(move || {
+            loop {
+                let job = receiver.lock().unwrap().recv().unwrap();
 
-            println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
+                println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 
-            job();
+                job();
+            }
         });
 
         Worker { id, thread }
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-20: Empfangen und Ausführen der Aufträge im
-Strang des <code>Worker</code></span></p>
+<p><span class="caption">Listing 21-20: Empfangen und Ausführen der Aufträge im
+Thread des <code>Worker</code></span></p>
 <p>Hier rufen wir zuerst <code>lock</code> auf <code>receiver</code> auf, um den Mutex zu erwerben, und
-dann rufen wir <code>unwrap</code> auf, um das Programm bei eventuellen Fehlern abstürzen
-zu lassen. Das Akquirieren einer Sperre kann fehlschlagen, wenn sich der Mutex
+dann rufen wir <code>unwrap</code> auf, um das Programm bei eventuellen Fehlern
+abzubrechen. Das Akquirieren einer Sperre kann fehlschlagen, wenn sich der Mutex
 in einem <em>vergifteten</em> Zustand befindet, was passieren kann, wenn ein anderer
-Strang abstürzt, während er die Sperre hält, anstatt sie freizugeben. In dieser
-Situation ist der Aufruf von <code>unwrap</code>, damit dieser Strang abstürzt, die
-richtige Maßnahme. Fühle dich frei, dieses <code>unwrap</code> in ein <code>expect</code> mit einer
-Fehlermeldung zu ändern, die für dich von Bedeutung ist.</p>
+Thread abbricht, während er die Sperre hält, anstatt sie freizugeben. In dieser
+Situation ist der Aufruf von <code>unwrap</code> sinnvoll, damit dieser Thread abbricht.
+Fühle dich frei, dieses <code>unwrap</code> in ein <code>expect</code> mit einer Fehlermeldung zu
+ändern, die für dich von Bedeutung ist.</p>
 <p>Wenn wir die Sperre auf dem Mutex erhalten, rufen wir <code>recv</code> auf, um einen
 <code>Job</code> vom Kanal zu empfangen. Ein abschließendes <code>unwrap</code> geht auch hier an
-eventuellen Fehlern vorbei, die auftreten könnten, wenn sich der Strang, der
+eventuellen Fehlern vorbei, die auftreten könnten, wenn sich der Thread, der
 den Sender hält, beendet hat, ähnlich wie die Methode <code>send</code> den Wert <code>Err</code>
 zurückgibt, wenn der Empfänger abschaltet.</p>
 <p>Der Aufruf von <code>recv</code> blockiert, wenn also noch kein Auftrag vorhanden ist,
-wartet der aktuelle Strang, bis ein Auftrag verfügbar wird. Der <code>Mutex&lt;T&gt;</code>
-stellt sicher, dass immer nur ein <code>Worker</code>-Strang zur gleichen Zeit versucht,
+wartet der aktuelle Thread, bis ein Auftrag verfügbar wird. Der <code>Mutex&lt;T&gt;</code>
+stellt sicher, dass immer nur ein <code>Worker</code>-Thread zur gleichen Zeit versucht,
 einen Auftrag anzufordern.</p>
-<p>Unser Strang-Vorrat ist jetzt in einem funktionierenden Zustand! Führe <code>cargo run</code> aus und stelle einige Anfragen:</p>
+<p>Unser Thread-Pool ist jetzt in einem funktionierenden Zustand! Führe <code>cargo run</code> aus und stelle einige Anfragen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
 warning: field `workers` is never read
@@ -1376,11 +1364,11 @@ Worker 3 hat einen Auftrag erhalten; führe ihn aus.
 Worker 0 hat einen Auftrag erhalten; führe ihn aus.
 Worker 2 hat einen Auftrag erhalten; führe ihn aus.
 </code></pre>
-<p>Erfolg! Wir haben jetzt einen Strang-Vorrat, der Verbindungen asynchron
-ausführt. Es werden nie mehr als vier Stränge erzeugt, sodass unser System
-nicht überlastet wird, wenn der Server viele Anfragen erhält. Wenn wir eine
-Anfrage an <em>/sleep</em> stellen, ist der Server immer noch in der Lage, andere
-Anfragen zu bedienen, indem er sie von einem anderen Strang ausführen lässt.</p>
+<p>Erfolg! Wir haben jetzt einen Thread-Pool, der Verbindungen asynchron ausführt.
+Es werden nie mehr als vier Threads erzeugt, sodass unser System nicht
+überlastet wird, wenn der Server viele Anfragen erhält. Wenn wir eine Anfrage an
+<em>/sleep</em> stellen, ist der Server immer noch in der Lage, andere Anfragen zu
+bedienen, indem er sie von einem anderen Thread ausführen lässt.</p>
 <blockquote>
 <p>Hinweis: Wenn du <em>/sleep</em> in mehreren Browser-Fenstern gleichzeitig öffnest,
 werden diese möglicherweise in 5-Sekunden-Intervallen nacheinander geladen.
@@ -1389,13 +1377,13 @@ Instanzen der gleichen Anfrage nacheinander aus. Diese Beschränkung wird
 nicht durch unseren Webserver verursacht.</p>
 </blockquote>
 <p>Nachdem du die <code>while let</code>-Schleife in den Kapiteln 17 und 19 kennengelernt
-hast, fragst du dich vielleicht, warum wir den Code für den <code>Worker</code>-Strang
-nicht geschrieben haben, wie in Codeblock 21-21 gezeigt.</p>
+hast, fragst du dich vielleicht, warum wir den Code für den <code>Worker</code>-Thread
+nicht geschrieben haben, wie in Listing 21-21 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
-</span><span class="boring">    sync::{mpsc, Arc, Mutex},
+</span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
 </span><span class="boring">
@@ -1409,11 +1397,11 @@ nicht geschrieben haben, wie in Codeblock 21-21 gezeigt.</p>
 </span><span class="boring">impl ThreadPool {
 </span><span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span><span class="boring">    pub fn new(size: usize) -&gt; ThreadPool {
 </span><span class="boring">        assert!(size &gt; 0);
 </span><span class="boring">
@@ -1460,25 +1448,24 @@ impl Worker {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-21: Eine alternative Implementierung von
+<p><span class="caption">Listing 21-21: Eine alternative Implementierung von
 <code>Worker::new</code> unter Verwendung von <code>while let</code></span></p>
 <p>Dieser Code wird kompiliert und ausgeführt, führt aber nicht zum gewünschten
-Strang-Verhalten: Eine langsame Anfrage führt immer noch dazu, dass andere
+Thread-Verhalten: Eine langsame Anfrage führt immer noch dazu, dass andere
 Anfragen auf ihre Bearbeitung warten. Der Grund dafür ist etwas subtil: Die
-Struktur <code>Mutex</code> hat keine öffentliche Methode <code>unlock</code>, weil die
-Eigentümerschaft der Sperre auf der Lebensdauer von <code>MutexGuard&lt;T&gt;</code> innerhalb
-von <code>LockResult&lt;MutexGuard&lt;T&gt;&gt;</code> basiert, die die Methode <code>lock</code> zurückgibt. Zur
-Kompilierzeit kann der Ausleihenprüfer (borrow checker) dann die Regel
-durchsetzen, dass auf eine von einem <code>Mutex</code> bewachte Ressource nicht
-zugegriffen werden kann, wenn wir die Sperre nicht halten. Diese
-Implementierung kann aber auch dazu führen, dass die Sperre länger als
-beabsichtigt gehalten wird, wenn wir nicht sorgfältig über die Lebensdauer von
-<code>MutexGuard&lt;T&gt;</code> nachdenken.</p>
-<p>Der Code in Codeblock 21-20, der <code>let job = receiver.lock().unwrap().recv().unwrap();</code> verwendet, funktioniert, weil mit
+Struktur <code>Mutex</code> hat keine öffentliche Methode <code>unlock</code>, weil das Eigentum an
+der Sperre auf der Lebensdauer von <code>MutexGuard&lt;T&gt;</code> innerhalb von
+<code>LockResult&lt;MutexGuard&lt;T&gt;&gt;</code> basiert, die die Methode <code>lock</code> zurückgibt. Zur
+Kompilierzeit kann der Borrow Checker dann die Regel durchsetzen, dass auf eine
+von einem <code>Mutex</code> bewachte Ressource nicht zugegriffen werden kann, wenn wir die
+Sperre nicht halten. Diese Implementierung kann aber auch dazu führen, dass die
+Sperre länger als beabsichtigt gehalten wird, wenn wir nicht sorgfältig über die
+Lebensdauer von <code>MutexGuard&lt;T&gt;</code> nachdenken.</p>
+<p>Der Code in Listing 21-20, der <code>let job = receiver.lock().unwrap().recv().unwrap();</code> verwendet, funktioniert, weil mit
 <code>let</code> alle temporären Werte, die in dem Ausdruck auf der rechten Seite des
 Gleichheitszeichens verwendet werden, sofort verworfen werden, wenn die
 <code>let</code>-Anweisung endet. Allerdings gibt <code>while let</code> (und <code>if let</code> und <code>match</code>)
-temporäre Werte erst am Ende des zugehörigen Blocks frei. In Codeblock 21-21
+temporäre Werte erst am Ende des zugehörigen Blocks frei. In Listing 21-21
 bleibt die Sperre für die Dauer des Aufrufs von <code>job()</code> erhalten, was bedeutet,
 dass andere <code>Worker</code>-Instanzen keine Aufträge erhalten können.</p>
 

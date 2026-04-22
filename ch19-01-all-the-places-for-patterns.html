@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Alle Stellen an denen Muster (patterns) verwendet werden können - Die Programmiersprache Rust</title>
+        <title>Stellen, an denen Muster verwendet werden können - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,22 +161,22 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="alle-stellen-an-denen-muster-patterns-verwendet-werden-können"><a class="header" href="#alle-stellen-an-denen-muster-patterns-verwendet-werden-können">Alle Stellen an denen Muster (patterns) verwendet werden können</a></h2>
+                        <h2 id="stellen-an-denen-muster-verwendet-werden-können"><a class="header" href="#stellen-an-denen-muster-verwendet-werden-können">Stellen, an denen Muster verwendet werden können</a></h2>
 <p>Muster tauchen an vielen Stellen in Rust auf und du hast sie oft benutzt, ohne
 es zu merken! In diesem Abschnitt werden alle Stellen besprochen, an denen
 Muster gültig sind.</p>
 <h3 id="match-zweige"><a class="header" href="#match-zweige"><code>match</code>-Zweige</a></h3>
 <p>Wie in Kapitel 6 besprochen, verwenden wir Muster in den Zweigen von
-<code>match</code>-Ausdrücken. Formal werden <code>match</code>-Ausdrücke definiert mit dem
-Schlüsselwort <code>match</code>, einem Wert, mit dem verglichen wird, und einem oder
-mehreren <code>match</code>-Zweigen, die aus einem Muster und einem Ausdruck bestehen, der
+<code>match</code>-Ausdrücken. Formal bestehen <code>match</code>-Ausdrücke aus dem Schlüsselwort
+<code>match</code>, einem Wert, mit dem verglichen wird, und einem oder mehreren
+<code>match</code>-Zweigen, die aus einem Muster und einem Ausdruck bestehen, der
 ausgeführt wird, wenn der Wert zum Muster dieses Zweigs passt, wie hier:</p>
 <pre><code class="language-rust ignore">match WERT {
     MUSTER =&gt; AUSDRUCK,
     MUSTER =&gt; AUSDRUCK,
     MUSTER =&gt; AUSDRUCK,
 }</code></pre>
-<p>Hier ist zum Beispiel der <code>match</code>-Ausdruck aus Codeblock 6-5, der auf einen
+<p>Hier ist zum Beispiel der <code>match</code>-Ausdruck aus Listing 6-5, der auf einen
 <code>Option&lt;i32&gt;</code>-Wert in der Variablen <code>x</code> passt:</p>
 <pre><code class="language-rust ignore">match x {
     None =&gt; None,
@@ -190,12 +190,12 @@ in dem Sinne sein müssen, dass alle Möglichkeiten für den Wert im
 alle Möglichkeiten abgedeckt sind, ist ein Sammel-Muster (catchall pattern) für
 den letzten Zweig: Zum Beispiel kann ein Variablenname, der zu einem beliebigen
 Wert passt, niemals fehlschlagen und deckt somit jeden verbleibenden Fall ab.</p>
-<p>Das spezielle Muster <code>_</code> wird auf alles passen, aber es bindet nie an eine
-Variable, daher wird es oft im letzten <code>match</code>-Zweig verwendet. Das Muster <code>_</code>
-kann zum Beispiel nützlich sein, wenn du jeden nicht angegebenen Wert
-ignorieren willst. Wir werden das Muster <code>_</code> in <a href="ch19-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster">„Ignorieren von Werten in
-einem Muster“</a> später in diesem Kapitel
-ausführlicher behandeln.</p>
+<p>Das spezielle Muster <code>_</code> wird auf alles passen, aber es bindet keine Variablen,
+daher wird es oft im letzten <code>match</code>-Zweig verwendet. Das Muster <code>_</code> kann zum
+Beispiel nützlich sein, wenn du jeden nicht angegebenen Wert ignorieren willst.
+Wir werden das Muster <code>_</code> in <a href="ch19-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster">„Ignorieren von Werten in einem
+Muster“</a> später in diesem Kapitel ausführlicher
+behandeln.</p>
 <h3 id="let-ausdrücke"><a class="header" href="#let-ausdrücke"><code>let</code>-Ausdrücke</a></h3>
 <p>Vor diesem Kapitel hatten wir nur explizit die Verwendung von Mustern mit
 <code>match</code> und <code>if let</code> besprochen, aber tatsächlich haben wir Muster auch an
@@ -216,14 +216,13 @@ Im Beispiel <code>let x = 5;</code> ist <code>x</code> also ein Muster, das bede
 was hier übereinstimmt, an die Variable <code>x</code>.“ Da der Name <code>x</code> das gesamte
 Muster ist, bedeutet dieses Muster effektiv: „Binde alles an die Variable <code>x</code>,
 unabhängig vom Wert.“</p>
-<p>Um den Aspekt des Musterabgleichs (pattern matching) von <code>let</code> besser zu
-verstehen, betrachte Codeblock 19-1, der ein Muster mit <code>let</code> verwendet, um ein
-Tupel zu destrukturieren.</p>
+<p>Um Pattern Matching mit <code>let</code> besser zu verstehen, betrachte Listing 19-1, das
+<code>let</code> mit einem Muster verwendet, um ein Tupel zu destrukturieren.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let (x, y, z) = (1, 2, 3);
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 19-1: Verwenden eines Musters zum
+<p><span class="caption">Listing 19-1: Verwenden eines Musters zum
 Destrukturieren eines Tupels und zum gleichzeitigen Erzeugen von drei
 Variablen</span></p>
 <p>Hier gleichen wir ein Tupel mit einem Muster ab. Rust vergleicht den Wert <code>(1,  2, 3)</code> mit dem Muster <code>(x, y, z)</code> und stellt fest, dass der Wert zum Muster
@@ -232,14 +231,14 @@ Rust <code>1</code> an <code>x</code>, <code>2</code> an <code>y</code> und <cod
 als drei darin verschachtelte einzelne Variablenmuster vorstellen.</p>
 <p>Wenn die Anzahl der Elemente im Muster nicht mit der Anzahl der Elemente im
 Tupel übereinstimmt, passt der Gesamttyp nicht und es kommt zu einem
-Compilerfehler. Codeblock 19-2 zeigt beispielsweise einen Versuch, ein Tupel
+Compilerfehler. Listing 19-2 zeigt beispielsweise einen Versuch, ein Tupel
 mit drei Elementen in zwei Variablen zu destrukturieren, was nicht
 funktioniert.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let (x, y) = (1, 2, 3);
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 19-2: Fehlerhaft aufgebautes Musters, dessen
+<p><span class="caption">Listing 19-2: Fehlerhaft aufgebautes Muster, dessen
 Variablen nicht mit der Anzahl der Elemente im Tupel übereinstimmen</span></p>
 <p>Der Versuch, diesen Code zu kompilieren, führt zu folgendem Typfehler:</p>
 <pre><code class="language-console">$ cargo run
@@ -263,18 +262,18 @@ oder <code>..</code> ignorieren, wie du im Abschnitt <a href="ch19-03-pattern-sy
 Muster“</a> sehen wirst. Wenn das Problem darin
 besteht, dass wir zu viele Variablen im Muster haben, besteht die Lösung darin,
 die Typen aufeinander abzustimmen, indem Variablen entfernt werden, sodass die
-Anzahl der Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.</p>
+Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.</p>
 <h3 id="bedingte-if-let-ausdrücke"><a class="header" href="#bedingte-if-let-ausdrücke">Bedingte <code>if let</code>-Ausdrücke</a></h3>
 <p>In Kapitel 6 haben wir erörtert, wie man <code>if let</code>-Ausdrücke hauptsächlich als
 kürzeren Weg verwendet, um das Äquivalent eines <code>match</code>-Ausdrucks zu schreiben,
 der nur einen Fall prüft. Optional kann <code>if let</code> ein entsprechendes <code>else</code>
 haben mit Code, der ausgeführt wird, wenn das Muster in <code>if let</code> nicht passt.</p>
-<p>Codeblock 19-3 zeigt, dass es auch möglich ist, die Ausdrücke <code>if let</code>, <code>else if</code> und <code>else if let</code> zu mischen und anzupassen. Dies gibt uns mehr
+<p>Listing 19-3 zeigt, dass es auch möglich ist, die Ausdrücke <code>if let</code>, <code>else if</code> und <code>else if let</code> zu mischen und anzupassen. Dies gibt uns mehr
 Flexibilität als ein <code>match</code>-Ausdruck, in dem wir nur einen Wert zum Abgleich
 mit den Mustern haben können. Auch erfordert Rust nicht, dass die Bedingungen
 in einer Reihe von <code>if let</code>-, <code>else if</code>- und <code>else if let</code>-Zweigen sich
 notwendigerweise aufeinander beziehen.</p>
-<p>Der Code in Codeblock 19-3 bestimmt die Farbe des Hintergrunds auf der
+<p>Der Code in Listing 19-3 bestimmt die Farbe des Hintergrunds auf der
 Grundlage einer Reihe von Prüfungen mehrerer Bedingungen. Für dieses Beispiel
 haben wir Variablen mit hartkodierten Werten erstellt, die ein reales Programm
 von Benutzereingaben erhalten könnte.</p>
@@ -298,13 +297,13 @@ von Benutzereingaben erhalten könnte.</p>
         println!("Verwende blau als Hintergrundfarbe");
     }
 }</code></pre>
-<p><span class="caption">Codeblock 19-3: Mischen von <code>if let</code>, <code>else if</code>, <code>else if let</code> und <code>else</code></span></p>
+<p><span class="caption">Listing 19-3: Mischen von <code>if let</code>, <code>else if</code>, <code>else if let</code> und <code>else</code></span></p>
 <p>Wenn der Benutzer eine Lieblingsfarbe angibt, ist diese Farbe die
 Hintergrundfarbe. Wenn keine Lieblingsfarbe angegeben wurde und heute Dienstag
 ist, ist die Hintergrundfarbe grün. Ansonsten, wenn der Benutzer sein Alter als
-Zeichenkette angibt und wir es erfolgreich als Zahl parsen können, ist die
-Farbe entweder violett oder orange, je nach dem Wert der Zahl. Wenn keine
-dieser Bedingungen zutrifft, ist die Hintergrundfarbe blau.</p>
+String angibt und wir ihn erfolgreich als Zahl parsen können, ist die Farbe
+entweder violett oder orange, je nach dem Wert der Zahl. Wenn keine dieser
+Bedingungen zutrifft, ist die Hintergrundfarbe blau.</p>
 <p>Mit dieser bedingten Struktur können wir komplexe Anforderungen unterstützen.
 Mit den hartkodierten Werten, die wir hier haben, wird dieses Beispiel
 <code>Verwende violett als Hintergrundfarbe</code> ausgeben.</p>
@@ -312,11 +311,10 @@ Mit den hartkodierten Werten, die wir hier haben, wird dieses Beispiel
 vorhandene Variablen verschatten (shadow) können, so wie bei <code>match</code>-Zweigen:
 Die Zeile <code>if let Ok(age) = age</code> führt eine neue Variable <code>age</code> ein, die den
 Wert innerhalb der <code>Ok</code>-Variante enthält und die vorhandene Variable <code>age</code>
-verschattet. Das bedeutet, dass wir die Bedingung <code>if age &gt; 30</code> innerhalb
-dieses Blocks platzieren müssen: Wir können diese beiden Bedingungen nicht in
-<code>if let Ok(age) = age &amp;&amp; age &gt; 30</code> kombinieren. Die neue Variable <code>age</code>, die
-wir mit 30 vergleichen wollen, ist erst gültig, wenn der neue
-Gültigkeitsbereich mit der geschweiften Klammer beginnt.</p>
+verschattet. Das bedeutet, dass wir die Bedingung <code>if age &gt; 30</code> innerhalb dieses
+Blocks platzieren müssen: Wir können diese beiden Bedingungen nicht in <code>if let Ok(age) = age &amp;&amp; age &gt; 30</code> kombinieren. Die neue Variable <code>age</code>, die wir mit 30
+vergleichen wollen, ist erst gültig, wenn der neue Gültigkeitsbereich mit der
+geschweiften Klammer beginnt.</p>
 <p>Der Nachteil der Verwendung von <code>if let</code>-Ausdrücken ist, dass der Compiler die
 Vollständigkeit nicht prüft, während er dies bei <code>match</code>-Ausdrücken tut. Wenn
 wir den letzten <code>else</code>-Block weglassen und daher einige Fälle nicht behandelt
@@ -324,9 +322,9 @@ haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.</
 <h3 id="while-let-bedingte-schleifen"><a class="header" href="#while-let-bedingte-schleifen"><code>while let</code>-bedingte Schleifen</a></h3>
 <p>Analog zu <code>if let</code> ermöglicht die bedingte Schleife <code>while let</code>, dass eine
 <code>while</code>-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Auf
-ähnliche Weise zeigen wir in Codeblock 19-4 eine <code>while let</code>-Schleife, die auf
-Nachrichten wartet, die zwischen Strängen gesendet werden. In aktuellen Fall
-prüfen wir ein <code>Result</code> statt einer einer <code>Option</code>.</p>
+ähnliche Weise zeigen wir in Listing 19-4 eine <code>while let</code>-Schleife, die auf
+Nachrichten wartet, die zwischen Threads gesendet werden. Im aktuellen Fall
+prüfen wir ein <code>Result</code> statt einer <code>Option</code>.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let (tx, rx) = std::sync::mpsc::channel();
@@ -340,20 +338,20 @@ while let Ok(value) = rx.recv() {
     println!("{value}");
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 19-4: Das Verwenden einer <code>while let</code>-Schleife,
+<p><span class="caption">Listing 19-4: Das Verwenden einer <code>while let</code>-Schleife,
 um Werte so lange auszugeben, wie <code>rx.recv()</code> ein <code>Ok</code> zurückgibt</span></p>
 <p>Dieses Beispiel gibt <code>1</code>, <code>2</code> und <code>3</code> aus. Die Methode <code>recv</code> nimmt die erste
-Nachricht von der Empfängerseite des Kanals und gibt <code>Ok(value)</code> zurück. Als
-wir <code>recv</code> das erste Mal in Kapitel 16 gesehen haben, haben wir den Fehler
-direkt ausgepackt oder mit ihm als Iterator in einer <code>for</code>-Schleife
-interagiert. Wie Codeblock 19-4 zeigt, können wir aber auch <code>while let</code>
-verwenden, da die Methode <code>recv</code> nach jeder angekommenen Nachricht den Wert
-<code>Ok</code> zurückgibt, solange der Sender existiert, und schließlich <code>Err</code>
-zurückgibt, sobald die Senderseite die Verbindung trennt.</p>
+Nachricht von der Empfängerseite des Kanals und gibt <code>Ok(value)</code> zurück. Als wir
+<code>recv</code> zum ersten Mal in Kapitel 16 gesehen haben, haben wir den Fehler direkt
+ausgepackt oder mit ihm als Iterator in einer <code>for</code>-Schleife interagiert. Wie
+Listing 19-4 zeigt, können wir aber auch <code>while let</code> verwenden, da die Methode
+<code>recv</code> nach jeder angekommenen Nachricht den Wert <code>Ok</code> zurückgibt, solange der
+Sender existiert, und schließlich <code>Err</code> zurückgibt, sobald die Senderseite die
+Verbindung trennt.</p>
 <h3 id="for-schleifen"><a class="header" href="#for-schleifen"><code>for</code>-Schleifen</a></h3>
 <p>In einer <code>for</code>-Schleife ist der Wert, der direkt auf das Schlüsselwort <code>for</code>
 folgt, ein Muster. Zum Beispiel ist in <code>for x in y</code> das <code>x</code> das Muster.
-Codeblock 19-5 zeigt, wie man ein Muster in einer <code>for</code>-Schleife verwendet, um
+Listing 19-5 zeigt, wie man ein Muster in einer <code>for</code>-Schleife verwendet, um
 ein Tupel als Teil der <code>for</code>-Schleife zu destrukturieren oder zu zerlegen.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -363,9 +361,9 @@ for (index, value) in v.iter().enumerate() {
     println!("{value} ist beim Index {index}");
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 19-5: Verwenden eines Musters in einer
+<p><span class="caption">Listing 19-5: Verwenden eines Musters in einer
 <code>for</code>-Schleife zum Destrukturieren eines Tupels</span></p>
-<p>Der Code in Codeblock 19-5 wird Folgendes ausgeben:</p>
+<p>Der Code in Listing 19-5 wird Folgendes ausgeben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling patterns v0.1.0 (file:///projects/patterns)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.52s
@@ -380,7 +378,7 @@ Der erste Aufruf von <code>enumerate</code> erzeugt das Tupel <code>(0, 'a')</co
 zum Muster <code>(index, value)</code> passt, ist <code>index</code> gleich <code>0</code> und <code>value</code> gleich
 <code>'a'</code>, wodurch die erste Zeile der Ausgabe ausgegeben wird.</p>
 <h3 id="funktionsparameter"><a class="header" href="#funktionsparameter">Funktionsparameter</a></h3>
-<p>Funktionsparameter können auch Muster sein. Der Code in Codeblock 19-6, der
+<p>Funktionsparameter können auch Muster sein. Der Code in Listing 19-6, der
 eine Funktion namens <code>foo</code> deklariert, die einen Parameter namens <code>x</code> vom Typ
 <code>i32</code> benötigt, sollte inzwischen bekannt aussehen.</p>
 <pre class="playground"><code class="language-rust edition2024">fn foo(x: i32) {
@@ -388,10 +386,10 @@ eine Funktion namens <code>foo</code> deklariert, die einen Parameter namens <co
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre>
-<p><span class="caption">Codeblock 19-6: Eine Funktionssignatur verwendet Muster
+<p><span class="caption">Listing 19-6: Eine Funktionssignatur verwendet Muster
 in den Parametern</span></p>
 <p>Der Teil <code>x</code> ist ein Muster! Wie wir es mit <code>let</code> taten, konnten wir ein Tupel
-in den Argumenten einer Funktion dem Muster zuordnen. Codeblock 19-7 teilt die
+in den Argumenten einer Funktion dem Muster zuordnen. Listing 19-7 teilt die
 Werte in einem Tupel auf, wenn wir es an eine Funktion übergeben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn print_coordinates(&amp;(x, y): &amp;(i32, i32)) {
@@ -402,18 +400,18 @@ fn main() {
     let point = (3, 5);
     print_coordinates(&amp;point);
 }</code></pre>
-<p><span class="caption">Codeblock 19-7: Eine Funktion mit Parametern, die ein
+<p><span class="caption">Listing 19-7: Eine Funktion mit Parametern, die ein
 Tupel destrukturieren</span></p>
 <p>Dieser Code gibt <code>Aktuelle Position: (3, 5)</code> aus. Die Werte <code>&amp;(3, 5)</code> passen
 zum Muster <code>&amp;(x, y)</code>, sodass <code>x</code> den Wert <code>3</code> und <code>y</code> den Wert <code>5</code> hat.</p>
-<p>Wir können auch Muster in Funktionsabschlussparameterlisten (closure parameter
-lists) auf die gleiche Weise wie in Funktionsparameterlisten verwenden, da
-Funktionsabschlüsse ähnlich wie Funktionen sind, wie in Kapitel 13 besprochen.</p>
-<p>An diesem Punkt hast du verschiedene Möglichkeiten der Verwendung von Mustern
-gesehen, aber Muster funktionieren nicht an allen Stellen, an denen wir sie
-verwenden können, gleich. An manchen Stellen müssen die Muster unabweisbar
-(irrefutable) sein, unter anderen Umständen können sie abweisbar (refutable)
-sein. Wir werden diese beiden Konzepte als Nächstes besprechen.</p>
+<p>Wir können auch Muster in Closure-Parameterlisten auf die gleiche Weise wie in
+Funktionsparameterlisten verwenden, da Closures ähnlich wie Funktionen sind, wie
+in Kapitel 13 besprochen.</p>
+<p>An diesem Punkt hast du verschiedene Möglichkeiten gesehen, wie man Muster
+verwenden kann. Muster funktionieren jedoch nicht an allen Stellen
+gleichermaßen. An manchen Stellen müssen die Muster unabweisbar (irrefutable)
+sein, an anderen Stellen können sie abweisbar (refutable) sein. Wir werden diese
+beiden Konzepte als Nächstes besprechen.</p>
 
                     </main>
 

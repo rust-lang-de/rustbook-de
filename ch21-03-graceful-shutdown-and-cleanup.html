@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -162,31 +162,31 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h2 id="kontrolliertes-beenden-und-aufräumen"><a class="header" href="#kontrolliertes-beenden-und-aufräumen">Kontrolliertes Beenden und Aufräumen</a></h2>
-<p>Der Code in Codeblock 21-20 antwortet auf Anfragen asynchron durch die
-Verwendung eines Strang-Vorrats (thread pool), wie von uns beabsichtigt. Wir
-erhalten einige Warnungen über die Felder <code>workers</code>, <code>id</code> und <code>thread</code>, die wir
-nicht direkt benutzen, was uns daran erinnert, dass wir nichts aufräumen. Wenn
-wir die weniger elegante Methode <kbd>Strg</kbd>+<kbd>c</kbd> verwenden, um den
-Hauptstrang (main thread) anzuhalten, werden auch alle anderen Stränge sofort
+<p>Der Code in Listing 21-20 antwortet auf Anfragen asynchron durch die
+Verwendung eines Thread-Pools, wie von uns beabsichtigt. Wir erhalten einige
+Warnungen über die Felder <code>workers</code>, <code>id</code> und <code>thread</code>, die wir nicht direkt
+benutzen, was uns daran erinnert, dass wir nichts aufräumen. Wenn wir die
+weniger elegante Methode <kbd>Strg</kbd>+<kbd>c</kbd> verwenden, um den
+Haupt-Thread (main thread) anzuhalten, werden auch alle anderen Threads sofort
 gestoppt, selbst wenn sie gerade dabei sind, eine Anfrage zu bedienen.</p>
-<p>Als Nächstes werden wir das Merkmal (trait) <code>Drop</code> implementieren, um <code>join</code>
-für jeden der Stränge im Vorrat aufzurufen, damit sie die Anfragen, an denen
-sie arbeiten, vor dem Schließen beenden können. Dann werden wir einen Weg
-implementieren, um den Strängen mitzuteilen, dass sie keine neuen Anfragen mehr
-annehmen und herunterfahren sollen. Um diesen Code in Aktion zu sehen, werden
-wir unseren Server so modifizieren, dass er nur zwei Anfragen annimmt, bevor er
-seinen Strang-Vorrat kontrolliert herunterfährt.</p>
-<h3 id="implementieren-des-merkmals-drop-auf-threadpool"><a class="header" href="#implementieren-des-merkmals-drop-auf-threadpool">Implementieren des Merkmals <code>Drop</code> auf <code>ThreadPool</code></a></h3>
-<p>Lass uns damit beginnen, <code>Drop</code> auf unseren Strang-Vorrat zu implementieren.
-Wenn der Vorrat aufgeräumt wird, sollten wir auf das Ende unsere Stränge
-warten, um sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 21-22 zeigt
-einen ersten Versuch einer <code>Drop</code>-Implementierung; dieser Code wird noch nicht
-ganz funktionieren.</p>
+<p>Als Nächstes werden wir das Trait <code>Drop</code> implementieren, um <code>join</code> für jeden der
+Threads im Pool aufzurufen, damit sie die Anfragen, an denen sie arbeiten, vor
+dem Schließen beenden können. Dann werden wir einen Weg implementieren, um den
+Threads mitzuteilen, dass sie keine neuen Anfragen mehr annehmen und
+herunterfahren sollen. Um diesen Code in Aktion zu sehen, werden wir unseren
+Server so modifizieren, dass er nur zwei Anfragen annimmt, bevor er seinen
+Thread-Pool kontrolliert herunterfährt.</p>
+<h3 id="implementieren-des-traits-drop-auf-threadpool"><a class="header" href="#implementieren-des-traits-drop-auf-threadpool">Implementieren des Traits <code>Drop</code> auf <code>ThreadPool</code></a></h3>
+<p>Lass uns damit beginnen, <code>Drop</code> auf unseren Thread-Pool zu implementieren. Wenn
+der Pool aufgeräumt wird, sollten wir auf das Ende unseres Threads warten, um
+sicherzustellen, dass sie ihre Arbeit beenden. Listing 21-22 zeigt einen ersten
+Versuch einer <code>Drop</code>-Implementierung; dieser Code wird noch nicht ganz
+funktionieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
-</span><span class="boring">    sync::{mpsc, Arc, Mutex},
+</span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
 </span><span class="boring">
@@ -200,11 +200,11 @@ ganz funktionieren.</p>
 </span><span class="boring">impl ThreadPool {
 </span><span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span><span class="boring">    pub fn new(size: usize) -&gt; ThreadPool {
 </span><span class="boring">        assert!(size &gt; 0);
 </span><span class="boring">
@@ -248,27 +248,29 @@ ganz funktionieren.</p>
 </span><span class="boring">
 </span><span class="boring">impl Worker {
 </span><span class="boring">    fn new(id: usize, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Job&gt;&gt;&gt;) -&gt; Worker {
-</span><span class="boring">        let thread = thread::spawn(move || loop {
-</span><span class="boring">            let job = receiver.lock().unwrap().recv().unwrap();
+</span><span class="boring">        let thread = thread::spawn(move || {
+</span><span class="boring">            loop {
+</span><span class="boring">                let job = receiver.lock().unwrap().recv().unwrap();
 </span><span class="boring">
-</span><span class="boring">            println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
+</span><span class="boring">                println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 </span><span class="boring">
-</span><span class="boring">            job();
+</span><span class="boring">                job();
+</span><span class="boring">            }
 </span><span class="boring">        });
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-22: Warten auf das Ende der einzelnen
-Stränge, wenn der Strang-Vorrat den Gültigkeitsbereich verlässt</span></p>
-<p>Zuerst iterieren wir über alle <code>workers</code> im Strang-Vorrat. Wir verwenden dafür
-<code>&amp;mut</code>, weil <code>self</code> eine veränderbare Referenz ist und wir auch in der Lage
-sein müssen, <code>worker</code> zu verändern. Für jeden <code>worker</code> geben wir eine Nachricht
-aus, die besagt, dass diese bestimmte <code>worker</code>-Instanz heruntergefahren wird,
-und dann rufen wir auf dem Strang dieser <code>worker</code>-Instanz <code>join</code> auf. Wenn der
-Aufruf von <code>join</code> fehlschlägt, benutzen wir <code>unwrap</code>, um das Programm abstürzen
-zu lassen.</p>
+<p><span class="caption">Listing 21-22: Warten auf das Ende der einzelnen
+Threads, wenn der Thread-Pool den Gültigkeitsbereich verlässt</span></p>
+<p>Zuerst iterieren wir über alle <code>workers</code> im Thread-Pool. Wir verwenden dafür
+<code>&amp;mut</code>, weil <code>self</code> eine veränderbare Referenz ist und wir auch in der Lage sein
+müssen, <code>worker</code> zu verändern. Für jeden <code>worker</code> geben wir eine Nachricht aus,
+die besagt, dass diese bestimmte <code>worker</code>-Instanz heruntergefahren wird, und
+dann rufen wir auf dem Thread dieser <code>worker</code>-Instanz <code>join</code> auf. Wenn der
+Aufruf von <code>join</code> fehlschlägt, benutzen wir <code>unwrap</code>, um das Programm
+abzubrechen.</p>
 <p>Hier ist der Fehler, den wir erhalten, wenn wir diesen Code kompilieren:</p>
 <pre><code class="language-console">$ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
@@ -287,22 +289,22 @@ For more information about this error, try `rustc --explain E0507`.
 error: could not compile `hello` (lib) due to 1 previous error
 </code></pre>
 <p>Der Fehler sagt uns, dass wir <code>join</code> nicht aufrufen können, weil wir nur eine
-veränderbare Ausleihe von jedem <code>worker</code> haben und <code>join</code> die Eigentümerschaft
-für sein Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Strang
-<code>thread</code> aus der <code>Worker</code>-Instanz herausnehmen, damit <code>join</code> den Strang
-konsumieren kann. Eine Möglichkeit, dies zu tun, besteht darin, den gleichen
-Ansatz wie in Codeblock 18-15 zu verfolgen. Wenn <code>Worker</code> ein
-<code>Option&lt;Thread::JoinHandle&lt;()&gt;&gt;</code> hielte, könnten wir die Methode <code>take</code> auf
-<code>Option</code> aufrufen, um den Wert aus der Variante <code>Some</code> herauszuverschieben und
-eine Variante <code>None</code> an ihrer Stelle zu belassen. Mit anderen Worten, ein
-<code>Worker</code>, der läuft, würde eine Variante <code>Some</code> in <code>thread</code> haben, und wenn wir
-einen <code>Worker</code> aufräumen wollten, würden wir <code>Some</code> durch <code>None</code> ersetzen,
-sodass der <code>Worker</code> keinen Strang zum Laufen haben würde.</p>
+veränderbare Borrow von jedem <code>worker</code> haben und <code>join</code> das Eigentum an seinem
+Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Thread <code>thread</code>
+aus der <code>Worker</code>-Instanz herausnehmen, damit <code>join</code> den Thread konsumieren kann.
+Eine Möglichkeit, dies zu tun, besteht darin, den gleichen Ansatz wie in Listing
+18-15 zu verfolgen. Wenn <code>Worker</code> ein <code>Option&lt;thread::JoinHandle&lt;()&gt;&gt;</code> hielte,
+könnten wir die Methode <code>take</code> auf <code>Option</code> aufrufen, um den Wert aus der
+Variante <code>Some</code> herauszuverschieben und eine Variante <code>None</code> an ihrer Stelle zu
+belassen. Mit anderen Worten, ein <code>Worker</code>, der läuft, würde eine Variante
+<code>Some</code> in <code>thread</code> haben, und wenn wir einen <code>Worker</code> aufräumen wollten, würden
+wir <code>Some</code> durch <code>None</code> ersetzen, sodass der <code>Worker</code> keinen Thread zum Laufen
+haben würde.</p>
 <p>Das <em>einzige</em> Mal, dass dies der Fall wäre, wäre, wenn man den <code>Worker</code>
-aufräumt. Im Gegenzug müssten wir überall, wo wir auf <code>Worker.thread</code>
-zugreifen, mit einer <code>Option&lt;thread::JoinHandle&lt;()&gt;&gt;</code> umgehen. Idiomatisch
-verwendet Rust <code>Option</code> ziemlich oft, aber wenn du etwas in <code>Option</code> einpackst,
-von dem du weißt dass es immer vorhanden sein wird, ist es eine gute Idee, nach
+aufräumt. Im Gegenzug müssten wir überall, wo wir auf <code>Worker.thread</code> zugreifen,
+mit einer <code>Option&lt;thread::JoinHandle&lt;()&gt;&gt;</code> umgehen. Idiomatisch verwendet Rust
+<code>Option</code> ziemlich oft, aber wenn du etwas in <code>Option</code> einpackst, von dem du
+weißt, dass es immer vorhanden sein wird, ist es eine gute Idee, nach
 alternativen Ansätzen zu suchen, die deinen Code sauberer und weniger
 fehleranfällig machen.</p>
 <p>In diesem Fall gibt es eine bessere Alternative: Die Methode <code>Vec::drain</code>. Sie
@@ -327,11 +329,11 @@ aktualisieren:</p>
 </span><span class="boring">impl ThreadPool {
 </span><span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span><span class="boring">    pub fn new(size: usize) -&gt; ThreadPool {
 </span><span class="boring">        assert!(size &gt; 0);
 </span><span class="boring">
@@ -389,40 +391,40 @@ aktualisieren:</p>
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Dadurch wird der Compilerfehler behoben, und es sind keine weiteren Änderungen
-an unserem Code erforderlich. Beachte, das <code>drop</code> bei einem Programmabsturz
-aufgerufen werden kann, und wenn dann auch <code>unwrap</code> abstürzt, eine doppelte
+an unserem Code erforderlich. Beachte, dass <code>drop</code> bei einem Programmabbruch
+aufgerufen werden kann; und wenn dann auch <code>unwrap</code> abbricht, eine doppelte
 Fehlersituation verursacht werden könnte, was sofort zum Programmende und zum
 Abbruch aller laufenden Bereinigungsvorgänge führen würde. Für ein
 Beispielprogramm ist dies in Ordnung, für Produktionscode jedoch nicht zu
 empfehlen.</p>
-<h3 id="den-strängen-signalisieren-nicht-mehr-nach-aufträgen-zu-lauschen"><a class="header" href="#den-strängen-signalisieren-nicht-mehr-nach-aufträgen-zu-lauschen">Den Strängen signalisieren, nicht mehr nach Aufträgen zu lauschen</a></h3>
+<h3 id="den-threads-signalisieren-nicht-mehr-nach-aufträgen-zu-lauschen"><a class="header" href="#den-threads-signalisieren-nicht-mehr-nach-aufträgen-zu-lauschen">Den Threads signalisieren, nicht mehr nach Aufträgen zu lauschen</a></h3>
 <p>Mit all den Änderungen, die wir vorgenommen haben, lässt sich unser Code ohne
 jede Warnung kompilieren. Aber die schlechte Nachricht ist, dass dieser Code
-noch nicht so funktioniert, wie wir es uns wünschen. Der Schlüssel ist die
-Logik in den Funktionsabschlüssen, die von den Strängen der <code>Worker</code>-Instanzen
-ausgeführt werden: Im Moment rufen wir <code>join</code> auf, aber das wird die Stränge
-nicht herunterfahren, weil sie sich in einer Endlosschleife auf der Suche nach
-Aufträgen befinden. Wenn wir versuchen, unseren <code>ThreadPool</code> mit unserer
-aktuellen Implementierung von <code>Drop</code> aufräumen zu lassen, wird der Hauptstrang
-für immer blockieren und auf das Beenden des ersten Strangs warten.</p>
+noch nicht so funktioniert, wie wir es uns wünschen. Der Schlüssel ist die Logik
+in den Closures, die von den Threads der <code>Worker</code>-Instanzen ausgeführt werden:
+Im Moment rufen wir <code>join</code> auf, aber das wird die Threads nicht herunterfahren,
+weil sie sich in einer Endlosschleife auf der Suche nach Aufträgen befinden.
+Wenn wir versuchen, unseren <code>ThreadPool</code> mit unserer aktuellen Implementierung
+von <code>Drop</code> aufräumen zu lassen, wird der Haupt-Thread für immer blockieren und
+auf das Beenden des ersten Threads warten.</p>
 <p>Um dieses Problem zu beheben, brauchen wir eine Änderung in der Implementierung
 von <code>drop</code> in <code>ThreadPool</code> und dann eine Änderung in der <code>Worker</code>-Schleife.</p>
 <p>Zuerst ändern wir die Implementierung von <code>drop</code> in <code>ThreadPool</code>, um den
-<code>sender</code> explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
-Codeblock 21-23 zeigt die Änderungen an <code>ThreadPool</code>, um den <code>sender</code> explizit
-aufzuräumen. Anders als beim Strang, <em>müssen</em> wir hier eine <code>Option</code> verwenden,
+<code>sender</code> explizit aufzuräumen, bevor wir auf das Ende der Threads warten.
+Listing 21-23 zeigt die Änderungen an <code>ThreadPool</code>, um den <code>sender</code> explizit
+aufzuräumen. Anders als beim Thread, <em>müssen</em> wir hier eine <code>Option</code> verwenden,
 um den <code>sender</code> mit <code>Option::take</code> aus dem <code>ThreadPool</code> herausnehmen zu können.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
-</span><span class="boring">    sync::{mpsc, Arc, Mutex},
+</span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
 </span><span class="boring">
 </span>pub struct ThreadPool {
     workers: Vec&lt;Worker&gt;,
-    sender: mpsc::Sender&lt;Message&gt;,
+    sender: Option&lt;mpsc::Sender&lt;Job&gt;&gt;,
 }
 // --abschneiden--
 <span class="boring">
@@ -431,11 +433,11 @@ um den <code>sender</code> mit <code>Option::take</code> aus dem <code>ThreadPoo
 </span>impl ThreadPool {
 <span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span><span class="boring">    pub fn new(size: usize) -&gt; ThreadPool {
 </span>          // --abschneiden--
 
@@ -463,7 +465,7 @@ um den <code>sender</code> mit <code>Option::take</code> aus dem <code>ThreadPoo
     {
         let job = Box::new(f);
 
-        self.sender.send(Message::NewJob(job)).unwrap();
+        self.sender.as_ref().unwrap().send(job).unwrap();
     }
 }
 
@@ -471,56 +473,50 @@ impl Drop for ThreadPool {
     fn drop(&amp;mut self) {
         drop(self.sender.take());
 
-        for worker in &amp;mut self.workers {
+        for worker in self.workers.drain(..) {
             println!("Worker {} herunterfahren", worker.id);
 
-            if let Some(thread) = worker.thread.take() {
-                thread.join().unwrap();
-            }
+            worker.thread.join().unwrap();
         }
     }
 }
 <span class="boring">
 </span><span class="boring">struct Worker {
 </span><span class="boring">    id: usize,
-</span><span class="boring">    thread: Option&lt;thread::JoinHandle&lt;()&gt;&gt;,
+</span><span class="boring">    thread: thread::JoinHandle&lt;()&gt;,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Worker {
-</span><span class="boring">    fn new(id: usize, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Message&gt;&gt;&gt;) -&gt; Worker {
+</span><span class="boring">    fn new(id: usize, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Job&gt;&gt;&gt;) -&gt; Worker {
 </span><span class="boring">        let thread = thread::spawn(move || loop {
 </span><span class="boring">            let job = receiver.lock().unwrap().recv().unwrap();
 </span><span class="boring">         
-</span><span class="boring">            println!("Worker {id} got a job; executing.");
+</span><span class="boring">            println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 </span><span class="boring">         
 </span><span class="boring">            job();
 </span><span class="boring">        });
 </span><span class="boring">
-</span><span class="boring">        Worker {
-</span><span class="boring">            id,
-</span><span class="boring">            thread: Some(thread),
-</span><span class="boring">        }
+</span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-23: <code>sender</code> vor dem Warten auf die
-<code>Worker</code>-Stränge explizit aufräumen</span></p>
-<p>Das Aufräumen von <code>sender</code> schließt den Kanal, was bedeutet, dass keine
-weiteren Nachrichten gesendet werden. Wenn das passiert, geben alle Aufrufe
-von <code>recv</code>, die die <code>Worker</code>-Instanzen in der Endlosschleife machen, einen
-Fehler zurück. In Codeblock 21-24 ändern wir die <code>Worker</code>-Schleife so, dass die
-Schleife in diesem Fall ordnungsgemäß beendet wird, was bedeutet, dass die
-Stränge beendet werden, wenn die Implementierung von <code>drop</code> in <code>ThreadPool</code>
-<code>join</code> für sie aufruft.</p>
+<p><span class="caption">Listing 21-23: <code>sender</code> vor dem Warten auf die
+<code>Worker</code>-Threads explizit aufräumen</span></p>
+<p>Das Aufräumen von <code>sender</code> schließt den Kanal, was bedeutet, dass keine weiteren
+Nachrichten gesendet werden. Wenn das passiert, geben alle Aufrufe von <code>recv</code>,
+die die <code>Worker</code>-Instanzen in der Endlosschleife machen, einen Fehler zurück. In
+Listing 21-24 ändern wir die <code>Worker</code>-Schleife so, dass die Schleife in diesem
+Fall ordnungsgemäß beendet wird, was bedeutet, dass die Threads beendet werden,
+wenn die Implementierung von <code>drop</code> in <code>ThreadPool</code> <code>join</code> für sie aufruft.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">use std::{
-</span><span class="boring">    sync::{mpsc, Arc, Mutex},
+</span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">pub struct ThreadPool {
 </span><span class="boring">    workers: Vec&lt;Worker&gt;,
-</span><span class="boring">    sender: mpsc::Sender&lt;Message&gt;,
+</span><span class="boring">    sender: Option&lt;mpsc::Sender&lt;Job&gt;&gt;,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">type Job = Box&lt;dyn FnOnce() + Send + 'static&gt;;
@@ -528,11 +524,11 @@ Stränge beendet werden, wenn die Implementierung von <code>drop</code> in <code
 </span><span class="boring">impl ThreadPool {
 </span><span class="boring">    /// Erzeuge einen neuen ThreadPool.
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+</span><span class="boring">    /// Die Größe ist die Anzahl der Threads im Pool.
 </span><span class="boring">    ///
 </span><span class="boring">    /// # Panics
 </span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+</span><span class="boring">    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 </span><span class="boring">    pub fn new(size: usize) -&gt; ThreadPool {
 </span><span class="boring">        assert!(size &gt; 0);
 </span><span class="boring">
@@ -558,7 +554,7 @@ Stränge beendet werden, wenn die Implementierung von <code>drop</code> in <code
 </span><span class="boring">    {
 </span><span class="boring">        let job = Box::new(f);
 </span><span class="boring">
-</span><span class="boring">        self.sender.send(Message::NewJob(job)).unwrap();
+</span><span class="boring">        self.sender.as_ref().unwrap().send(job).unwrap();
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -569,53 +565,53 @@ Stränge beendet werden, wenn die Implementierung von <code>drop</code> in <code
 </span><span class="boring">        for worker in &amp;mut self.workers {
 </span><span class="boring">            println!("Worker {} herunterfahren", worker.id);
 </span><span class="boring">
-</span><span class="boring">            if let Some(thread) = worker.thread.take() {
-</span><span class="boring">                thread.join().unwrap();
-</span><span class="boring">            }
+</span><span class="boring">            worker.thread.join().unwrap();
 </span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">struct Worker {
 </span><span class="boring">    id: usize,
-</span><span class="boring">    thread: Option&lt;thread::JoinHandle&lt;()&gt;&gt;,
+</span><span class="boring">    thread: thread::JoinHandle&lt;()&gt;,
 </span><span class="boring">}
 </span><span class="boring">
 </span>impl Worker {
     fn new(id: usize, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Job&gt;&gt;&gt;) -&gt; Worker {
-        let thread = thread::spawn(move || loop {
-            match receiver.lock().unwrap().recv() {
-                Ok(job) =&gt; {
-                    println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
+        let thread = thread::spawn(move || {
+            loop {
+                let message = receiver.lock().unwrap().recv();
 
-                    job();
-                }
-                Err(_) =&gt; {
-                    println!("Worker {id} nicht mehr verbunden, wird beendet.");
-                    break;
+                match message {
+                    Ok(job) =&gt; {
+                        println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
+
+                        job();
+                    }
+                    Err(_) =&gt; {
+                        println!("Worker {id} nicht mehr verbunden, wird beendet.");
+                        break;
+                    }
                 }
             }
         });
 
-        Worker {
-            id,
-            thread: Some(thread),
-        }
+        Worker { id, thread }
     }
 }</code></pre>
-<p><span class="caption">Codeblock 21-24: Explizites Verlassen der Schleife, wenn
+<p><span class="caption">Listing 21-24: Explizites Verlassen der Schleife, wenn
 <code>recv</code> einen Fehler zurückgibt</span></p>
 <p>Um diesen Code in Aktion zu sehen, modifizieren wir <code>main</code> so, dass nur zwei
 Anfragen akzeptiert werden, bevor der Server kontrolliert heruntergefahren
-wird, wie in Codeblock 21-25 gezeigt.</p>
+wird, wie in Listing 21-25 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">use hello::ThreadPool;
-</span><span class="boring">use std::fs;
-</span><span class="boring">use std::io::prelude::*;
-</span><span class="boring">use std::net::TcpListener;
-</span><span class="boring">use std::net::TcpStream;
-</span><span class="boring">use std::thread;
-</span><span class="boring">use std::time::Duration;
+</span><span class="boring">use std::{
+</span><span class="boring">    fs,
+</span><span class="boring">    io::{BufReader, prelude::*},
+</span><span class="boring">    net::{TcpListener, TcpStream},
+</span><span class="boring">    thread,
+</span><span class="boring">    time::Duration,
+</span><span class="boring">};
 </span><span class="boring">
 </span>fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -653,12 +649,12 @@ wird, wie in Codeblock 21-25 gezeigt.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 21-25: Herunterfahren des Servers, nachdem er
+<p><span class="caption">Listing 21-25: Herunterfahren des Servers, nachdem er
 zwei Anfragen bearbeitet hat, durch Verlassen der Schleife</span></p>
 <p>Du würdest nicht wollen, dass ein Webserver aus der realen Welt
 heruntergefahren wird, nachdem er nur zwei Anfragen bearbeitet hat. Dieser Code
 zeigt nur, dass das kontrollierte Herunterfahren und Aufräumen funktioniert.</p>
-<p>Die Methode <code>take</code> ist im Merkmal <code>Iterator</code> definiert und beschränkt die
+<p>Die Methode <code>take</code> ist im Trait <code>Iterator</code> definiert und beschränkt die
 Iteration auf die ersten beiden Elemente. Der <code>ThreadPool</code> wird am Ende von
 <code>main</code> den Gültigkeitsbereich verlassen und die <code>drop</code>-Implementierung
 ausgeführt werden.</p>
@@ -689,21 +685,20 @@ anzunehmen, und die <code>Drop</code>-Implementierung auf <code>ThreadPool</code
 Ausführung, bevor <code>Worker 3</code> überhaupt seine Arbeit beginnt. Wenn man den
 <code>sender</code> aufräumt, werden alle <code>Worker</code>-Instanzen getrennt und angewiesen, sich
 zu beenden. Die <code>Worker</code>-Instanzen geben jeweils eine Nachricht aus, wenn sie
-die Verbindung trennen, und dann ruft der Strang-Vorrat <code>join</code> auf, um das Ende
-jedes <code>Worker</code>-Strangs zu warten.</p>
-<p>Beachte einen interessanten Aspekt diesem speziellen Programmlauf: Der
+die Verbindung trennen, und dann ruft der Thread-Pool <code>join</code> auf, um das Ende
+jedes <code>Worker</code>-Threads zu warten.</p>
+<p>Beachte einen interessanten Aspekt in diesem speziellen Programmlauf: Der
 <code>ThreadPool</code> hat den <code>sender</code> aufgeräumt, und bevor ein <code>Worker</code> einen Fehler
 erhalten hat, haben wir versucht, auf <code>Worker 0</code> zu warten. <code>Worker 0</code> hatte
-noch keinen Fehler von <code>recv</code> erhalten, also blockierte der Hauptstrang und
-wartete darauf, dass <code>Worker 0</code> fertig wird. In der Zwischenzeit erhielt
-<code>Worker 3</code> einen Auftrag, und dann erhielten alle Stränge einen Fehler. Als
-<code>Worker 0</code> fertig war, wartete der Hauptstrang darauf, dass die restlichen
+noch keinen Fehler von <code>recv</code> erhalten, also blockierte der Haupt-Thread und
+wartete darauf, dass <code>Worker 0</code> fertig wird. In der Zwischenzeit erhielt <code>Worker 3</code> einen Auftrag, und dann erhielten alle Threads einen Fehler. Als <code>Worker 0</code>
+fertig war, wartete der Haupt-Thread darauf, dass die restlichen
 <code>Worker</code>-Instanzen fertig wurden. Zu diesem Zeitpunkt hatten sie alle ihre
 Schleifen verlassen und konnten sich beenden.</p>
 <p>Herzlichen Glückwunsch! Wir haben jetzt unser Projekt abgeschlossen; wir haben
-einen einfachen Webserver, der einen Strang-Vorrat verwendet, um asynchron zu
+einen einfachen Webserver, der einen Thread-Pool verwendet, um asynchron zu
 antworten. Wir sind in der Lage, den Server kontrolliert herunterzufahren,
-wodurch alle Stränge im Vorrat aufgeräumt werden.</p>
+wodurch alle Threads im Pool aufgeräumt werden.</p>
 <p>Hier ist der vollständige Code als Referenz:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use hello::ThreadPool;
@@ -755,13 +750,13 @@ fn handle_connection(mut stream: TcpStream) {
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::{
-    sync::{mpsc, Arc, Mutex},
+    sync::{Arc, Mutex, mpsc},
     thread,
 };
 
 pub struct ThreadPool {
     workers: Vec&lt;Worker&gt;,
-    sender: mpsc::Sender&lt;Message&gt;,
+    sender: Option&lt;mpsc::Sender&lt;Job&gt;&gt;,
 }
 
 type Job = Box&lt;dyn FnOnce() + Send + 'static&gt;;
@@ -769,11 +764,11 @@ type Job = Box&lt;dyn FnOnce() + Send + 'static&gt;;
 impl ThreadPool {
     /// Erzeuge einen neuen ThreadPool.
     ///
-    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+    /// Die Größe ist die Anzahl der Threads im Pool.
     ///
     /// # Panics
     ///
-    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
     pub fn new(size: usize) -&gt; ThreadPool {
         assert!(size &gt; 0);
 
@@ -799,7 +794,7 @@ impl ThreadPool {
     {
         let job = Box::new(f);
 
-        self.sender.send(Message::NewJob(job)).unwrap();
+        self.sender.as_ref().unwrap().send(job).unwrap();
     }
 }
 
@@ -823,19 +818,21 @@ struct Worker {
 }
 
 impl Worker {
-    fn new(id: usize, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Message&gt;&gt;&gt;) -&gt; Worker {
-        let thread = thread::spawn(move || loop {
-            let message = receiver.lock().unwrap().recv().unwrap();
+    fn new(id: usize, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Job&gt;&gt;&gt;) -&gt; Worker {
+        let thread = thread::spawn(move || {
+            loop {
+                let message = receiver.lock().unwrap().recv();
 
-            match message {
-                Ok(job) =&gt; {
+                match message {
+                    Ok(job) =&gt; {
                     println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 
-                    job();
-                }
-                Err(_) =&gt; {
+                        job();
+                    }
+                    Err(_) =&gt; {
                     println!("Worker {id} nicht mehr verbunden, wird beendet.");
-                    break;
+                        break;
+                    }
                 }
             }
         });
@@ -856,17 +853,17 @@ hinzu.</li>
 <li>Ändere Aufrufe von <code>unwrap</code> in eine robustere Fehlerbehandlung.</li>
 <li>Verwende <code>ThreadPool</code>, um eine andere Aufgabe als das Beantworten von
 Web-Anfragen durchzuführen.</li>
-<li>Suche eine Strang-Vorrats-Kiste auf <a href="https://crates.io/">crates.io</a> und   implementiere
-damit einen ähnlichen Webserver unter Verwendung der Kiste. Vergleiche dann
-dessen API und Robustheit mit dem von uns implementierten Strang-Vorrat.</li>
+<li>Suche eine Thread-Pool-Crate auf <a href="https://crates.io/">crates.io</a> und implementiere
+damit einen ähnlichen Webserver unter Verwendung der Crate. Vergleiche dann
+dessen API und Robustheit mit dem von uns implementierten Thread-Pool.</li>
 </ul>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
-<p>Gut gemacht! Du hast es bis ans Ende des Buchs geschafft! Wir möchten dir
+<p>Gut gemacht! Du hast es bis ans Ende des Buches geschafft! Wir möchten dir
 danken, dass du uns auf dieser Tour durch Rust begleitet hast. Du bist nun
 bereit, deine eigenen Rust-Projekte umzusetzen und bei den Projekten anderer zu
-helfen. Denke daran, dass es eine gastfreundliche Gemeinschaft von anderen
-Rust-Entwicklern gibt, die dir bei allen Herausforderungen, denen du auf deiner
-Rust-Reise begegnest, gerne helfen würden.</p>
+helfen. Denke daran, dass es eine gastfreundliche Gemeinschaft von
+Rust-Entwicklern gibt, die dir bei jeder Herausforderung, denen du auf deiner
+Rust-Reise begegnest, gerne helfen.</p>
 
                     </main>
 

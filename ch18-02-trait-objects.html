@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames Verhalten - Die Programmiersprache Rust</title>
+        <title>Verwendung von Trait-Objekten zur Abstraktion über gemeinsames Verhalten - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,10 +161,10 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="verwendung-von-merkmals-objekten-zur-abstraktion-über-gemeinsames-verhalten"><a class="header" href="#verwendung-von-merkmals-objekten-zur-abstraktion-über-gemeinsames-verhalten">Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames Verhalten</a></h2>
+                        <h2 id="verwendung-von-trait-objekten-zur-abstraktion-über-gemeinsames-verhalten"><a class="header" href="#verwendung-von-trait-objekten-zur-abstraktion-über-gemeinsames-verhalten">Verwendung von Trait-Objekten zur Abstraktion über gemeinsames Verhalten</a></h2>
 <p>In Kapitel 8 haben wir erwähnt, dass eine Einschränkung von Vektoren darin
 besteht, dass sie nur Elemente eines einzigen Typs speichern können. Wir haben
-in Codeblock 8-9 eine Abhilfe geschaffen, indem wir die Aufzählung (enum)
+in Listing 8-9 eine Abhilfe geschaffen, indem wir die Aufzählung (enum)
 <code>SpreadsheetCell</code> definiert haben, die Varianten zur Aufnahme von Ganzzahlen,
 Fließkommazahlen und Text enthielt. Das bedeutete, dass wir in jeder Zelle
 verschiedene Datentypen speichern konnten und trotzdem einen Vektor hatten, der
@@ -177,12 +177,12 @@ erweitern. Um zu zeigen, wie wir dies erreichen können, werden wir ein Beispiel
 für ein GUI-Werkzeug (Graphical User Interface) erstellen, das über eine Liste
 von Elementen iteriert, wobei auf jedem Element eine Methode <code>draw</code> aufgerufen
 wird, um es auf den Bildschirm zu zeichnen – eine übliche Technik bei
-GUI-Werkzeugen. Wir werden eine Bibliothekskiste (library crate) namens <code>gui</code>
-erstellen, die die Struktur einer GUI-Bibliothek enthält. Diese Kiste (crate)
-könnte einige Typen enthalten, die Leute benutzen können, z.B. <code>Button</code> und
-<code>TextField</code>. Darüber hinaus werden <code>gui</code>-Benutzer ihre eigenen Typen erstellen
-wollen, die gezeichnet werden können: Zum Beispiel könnte ein Programmierer ein
-<code>Image</code> und ein anderer eine <code>SelectBox</code> hinzufügen.</p>
+GUI-Werkzeugen. Wir werden eine Bibliotheks-Crate namens <code>gui</code> erstellen, die
+die Struktur einer GUI-Bibliothek enthält. Diese Crate könnte einige Typen
+enthalten, die Leute benutzen können, z.B. <code>Button</code> und <code>TextField</code>. Darüber
+hinaus werden <code>gui</code>-Benutzer ihre eigenen Typen erstellen wollen, die gezeichnet
+werden können: Zum Beispiel könnte ein Programmierer ein <code>Image</code> und ein anderer
+eine <code>SelectBox</code> hinzufügen.</p>
 <p>Zum Zeitpunkt des Schreibens der Bibliothek können wir nicht alle Typen kennen
 und definieren, die andere Programmierer vielleicht erstellen möchten. Aber wir
 wissen, dass <code>gui</code> den Überblick über viele Werte unterschiedlicher Typen
@@ -200,34 +200,34 @@ Programmiergerüst (framework) könnte alle Typen so behandeln, als wären sie
 brauchen wir einen anderen Weg, die <code>gui</code>-Bibliothek zu strukturieren, damit
 die Benutzer neue Typen erstellen können, die mit der Bibliothek kompatibel
 sind.</p>
-<h3 id="definieren-eines-merkmals-trait-für-allgemeines-verhalten"><a class="header" href="#definieren-eines-merkmals-trait-für-allgemeines-verhalten">Definieren eines Merkmals (trait) für allgemeines Verhalten</a></h3>
+<h3 id="definieren-eines-traits-für-allgemeines-verhalten"><a class="header" href="#definieren-eines-traits-für-allgemeines-verhalten">Definieren eines Traits für allgemeines Verhalten</a></h3>
 <p>Um das Verhalten zu implementieren, das wir in <code>gui</code> haben wollen, werden wir
-ein Merkmal namens <code>Draw</code> definieren, das eine Methode namens <code>draw</code> haben
-wird. Dann können wir einen Vektor definieren, der ein Merkmalsobjekt annimmt.
-Ein <em>Merkmalsobjekt</em> (trait object) verweist sowohl auf eine Instanz eines
-Typs, der das von uns spezifizierte Merkmal implementiert, und eine Tabelle, in
-der Merkmalsmethoden dieses Typs zur Laufzeit nachgeschlagen werden können. Wir
-erstellen ein Merkmalsobjekt, indem wir eine Art Zeiger angeben, z.B. eine
-Referenz <code>&amp;</code> oder einen intelligenten Zeiger <code>Box&lt;T&gt;</code>, dann das Schlüsselwort
-<code>dyn</code> und dann das relevante Merkmal. (Wir werden über den Grund, warum
-Merkmalsobjekte einen Zeiger verwenden müssen, in <a href="ch20-03-advanced-types.html#dynamisch-große-typen-und-das-merkmal-sized">„Dynamisch große Typen und
-das Merkmal <code>Sized</code>“</a> in Kapitel 20 sprechen.) Wir können
-Merkmalsobjekte an Stelle eines generischen oder konkreten Typs verwenden. Wo
-immer wir ein Merkmalsobjekt verwenden, stellt Rusts Typsystem zur
-Kompilierzeit sicher, dass jeder in diesem Kontext verwendete Wert das Merkmal
-des Merkmalsobjekts implementiert. Folglich müssen wir zur Kompilierzeit nicht
-alle möglichen Typen kennen.</p>
+ein Trait namens <code>Draw</code> definieren, das eine Methode namens <code>draw</code> haben wird.
+Dann können wir einen Vektor definieren, der ein Trait-Objekt annimmt. Ein
+<em>Trait-Objekt</em> verweist sowohl auf eine Instanz eines Typs, der das von uns
+spezifizierte Trait implementiert, als auch eine Tabelle, in der Trait-Methoden
+dieses Typs zur Laufzeit nachgeschlagen werden können. Wir erstellen ein
+Trait-Objekt, indem wir eine Art Zeiger angeben, z.B. eine Referenz <code>&amp;</code> oder
+einen intelligenten Zeiger <code>Box&lt;T&gt;</code>, dann das Schlüsselwort <code>dyn</code> und dann das
+relevante Trait. (Wir werden über den Grund, warum Trait-Objekte einen Zeiger
+verwenden müssen, in <a href="ch20-03-advanced-types.html#dynamisch-große-typen-und-das-trait-sized">„Dynamisch große Typen und das Trait
+<code>Sized</code>“</a> in Kapitel 20 sprechen.) Wir können Trait-Objekte
+an Stelle eines generischen oder konkreten Typs verwenden. Wo immer wir ein
+Trait-Objekt verwenden, stellt Rusts Typsystem zur Kompilierzeit sicher, dass
+jeder in diesem Kontext verwendete Wert das vom Trait-Objekts verlangte Trait
+implementiert. Folglich müssen wir zur Kompilierzeit nicht alle möglichen Typen
+kennen.</p>
 <p>Wir haben erwähnt, dass wir in Rust davon absehen, Strukturen (structs) und
 Aufzählungen „Objekte“ zu nennen, um sie von den Objekten anderer Sprachen zu
 unterscheiden. In einer Struktur oder Aufzählung sind die Daten in den
 Struktur-Feldern vom Verhalten in <code>impl</code>-Blöcken getrennt, während in anderen
-Sprachen die Daten und das Verhalten, die in einem Konzept zusammengefasst
-sind, oft als ein Objekt bezeichnet werden. Merkmalsobjekte unterscheiden sich
-von Objekten in anderen Sprachen dadurch, dass wir einem Merkmalsobjekte keine
-Daten hinzufügen können. Merkmalsobjekte sind nicht so allgemein einsetzbar wie
-Objekte in anderen Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion
-über allgemeines Verhalten zu ermöglichen.</p>
-<p>In Codeblock 18-3 wird gezeigt, wie ein Merkmal <code>Draw</code> mit einer Methode <code>draw</code>
+Sprachen die Daten und das Verhalten, die in einem Konzept zusammengefasst sind,
+oft als ein Objekt bezeichnet werden. Trait-Objekte unterscheiden sich von
+Objekten in anderen Sprachen dadurch, dass wir einem Trait-Objekt keine Daten
+hinzufügen können. Trait-Objekte sind nicht so allgemein einsetzbar wie Objekte
+in anderen Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion über
+allgemeines Verhalten zu ermöglichen.</p>
+<p>In Listing 18-3 wird gezeigt, wie ein Trait <code>Draw</code> mit einer Methode <code>draw</code>
 definiert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -236,13 +236,13 @@ definiert werden kann.</p>
     fn draw(&amp;self);
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-3: Definition des Merkmals <code>Draw</code></span></p>
-<p>Diese Syntax sollte uns aus unseren Diskussionen über die Definition von
-Merkmalen in Kapitel 10 bekannt vorkommen. Als nächstes kommt eine neue Syntax:
-Codeblock 18-4 definiert eine Struktur namens <code>Screen</code>, die einen Vektor namens
+<p><span class="caption">Listing 18-3: Definition des Traits <code>Draw</code></span></p>
+<p>Diese Syntax sollte uns aus unseren Diskussionen über die Definition von Traits
+in Kapitel 10 bekannt vorkommen. Als nächstes kommt eine neue Syntax: Listing
+18-4 definiert eine Struktur namens <code>Screen</code>, die einen Vektor namens
 <code>components</code> enthält. Dieser Vektor ist vom Typ <code>Box&lt;dyn Draw&gt;</code>, der ein
-Merkmalsobjekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer
-<code>Box</code>, der das Merkmal <code>Draw</code> implementiert.</p>
+Trait-Objekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer <code>Box</code>,
+der das Trait <code>Draw</code> implementiert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -254,11 +254,11 @@ Merkmalsobjekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer
     pub components: Vec&lt;Box&lt;dyn Draw&gt;&gt;,
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-4: Definition der Struktur <code>Screen</code> mit
-einem Feld <code>components</code>, das einen Vektor von Merkmalsobjekten enthält, die das
-Merkmal <code>Draw</code> implementieren</span></p>
+<p><span class="caption">Listing 18-4: Definition der Struktur <code>Screen</code> mit einem
+Feld <code>components</code>, das einen Vektor von Trait-Objekten enthält, die das Trait
+<code>Draw</code> implementieren</span></p>
 <p>Auf der Struktur <code>Screen</code> definieren wir eine Methode namens <code>run</code>, die die
-Methode <code>draw</code> auf jeder ihrer <code>components</code> aufruft, wie in Codeblock 18-5
+Methode <code>draw</code> auf jeder ihrer <code>components</code> aufruft, wie in Listing 18-5
 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -279,15 +279,15 @@ gezeigt.</p>
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-5: Eine Methode <code>run</code> auf <code>Screen</code>, die die
+<p><span class="caption">Listing 18-5: Eine Methode <code>run</code> auf <code>Screen</code>, die die
 Methode <code>draw</code> jeder Komponente aufruft</span></p>
 <p>Dies funktioniert anders als die Definition einer Struktur, die einen
-generischen Typparameter mit Merkmalsabgrenzungen (trait bounds) verwendet. Ein
-generischer Typparameter kann jeweils nur durch einen konkreten Typ ersetzt
-werden, während Merkmalsobjekte die Möglichkeit bieten, zur Laufzeit mehrere
-konkrete Typen für das Merkmalsobjekt einzusetzen. Beispielsweise hätten wir
-die Struktur <code>Screen</code> mit einem generischen Typ und einer Merkmalsabgrenzung
-wie in Codeblock 18-6 definieren können.</p>
+generischen Typparameter mit Trait Bounds verwendet. Ein generischer
+Typparameter kann jeweils nur durch einen konkreten Typ ersetzt werden, während
+Trait-Objekte die Möglichkeit bieten, zur Laufzeit mehrere konkrete Typen für
+das Trait-Objekt einzusetzen. Beispielsweise hätten wir die Struktur <code>Screen</code>
+mit einem generischen Typ und einer Trait Bound wie in Listing 18-6 definieren
+können.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -310,26 +310,26 @@ where
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-6: Eine alternative Implementierung der
-Struktur <code>Screen</code> und ihrer Methode <code>run</code> unter Verwendung generischer Typen
-und Merkmalsabgrenzungen</span></p>
+<p><span class="caption">Listing 18-6: Eine alternative Implementierung der
+Struktur <code>Screen</code> und ihrer Methode <code>run</code> unter Verwendung generischer Typen und
+Trait Bounds</span></p>
 <p>Dies schränkt uns auf eine <code>Screen</code>-Instanz ein, die eine Liste von Komponenten
-hat, die alle vom Typ <code>Button</code> oder alle vom Typ <code>TextField</code> sind. Wenn du
-immer nur homogene Kollektionen haben wirst, ist das Verwenden von generischen
-Typen und Merkmalsabgrenzungen vorzuziehen, da die Definitionen zur
-Kompilierszeit monomorphisiert werden, um die konkreten Typen zu verwenden.</p>
-<p>Andererseits kann bei der Methode mit Merkmalsobjekten eine <code>Screen</code>-Instanz
-einen <code>Vec&lt;T&gt;</code> enthalten, der sowohl eine <code>Box&lt;Button&gt;</code> als auch eine
-<code>Box&lt;TextField&gt;</code> enthält. Schauen wir uns an, wie dies funktioniert, und dann
-werden wir über die Auswirkungen auf die Laufzeitperformanz sprechen.</p>
-<h3 id="implementieren-des-merkmals"><a class="header" href="#implementieren-des-merkmals">Implementieren des Merkmals</a></h3>
-<p>Nun fügen wir einige Typen hinzu, die das Merkmal <code>Draw</code> implementieren. Wir
+hat, die alle vom Typ <code>Button</code> oder alle vom Typ <code>TextField</code> sind. Wenn du immer
+nur homogene Kollektionen haben wirst, ist das Verwenden von generischen Typen
+und Trait Bounds vorzuziehen, da die Definitionen zur Kompilierszeit
+monomorphisiert werden, um die konkreten Typen zu verwenden.</p>
+<p>Andererseits kann bei der Methode mit Trait-Objekten eine <code>Screen</code>-Instanz einen
+<code>Vec&lt;T&gt;</code> enthalten, der sowohl eine <code>Box&lt;Button&gt;</code> als auch eine <code>Box&lt;TextField&gt;</code>
+enthält. Schauen wir uns an, wie dies funktioniert, und dann werden wir über die
+Auswirkungen auf die Laufzeitperformanz sprechen.</p>
+<h3 id="implementieren-des-traits"><a class="header" href="#implementieren-des-traits">Implementieren des Traits</a></h3>
+<p>Nun fügen wir einige Typen hinzu, die das Trait <code>Draw</code> implementieren. Wir
 werden den Typ <code>Button</code> zur Verfügung stellen. Auch hier liegt die eigentliche
 Implementierung einer GUI-Bibliothek jenseits des Rahmens dieses Buches, sodass
-die Methode <code>draw</code> keine nützliche Implementierung in ihrem Rumpf haben wird.
-Um sich vorzustellen, wie die Implementierung aussehen könnte, könnte eine
-Struktur <code>Button</code> Felder für <code>width</code>, <code>height</code> und <code>label</code> haben, wie in
-Codeblock 18-7 gezeigt.</p>
+die Methode <code>draw</code> keine nützliche Implementierung in ihrem Rumpf haben wird. Um
+sich vorzustellen, wie die Implementierung aussehen könnte, könnte eine Struktur
+<code>Button</code> Felder für <code>width</code>, <code>height</code> und <code>label</code> haben, wie in Listing 18-7
+gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -361,22 +361,22 @@ impl Draw for Button {
     }
 }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 18-7: Eine Struktur <code>Button</code>, die das Merkmal
+<p><span class="caption">Listing 18-7: Eine Struktur <code>Button</code>, die das Trait
 <code>Draw</code> implementiert</span></p>
 <p>Die Felder <code>width</code>, <code>height</code> und <code>label</code> in <code>Button</code> unterscheiden sich von den
 Feldern anderer Komponenten; beispielsweise könnte ein Typ <code>TextField</code> diese
 Felder und zusätzlich ein <code>placeholder</code> haben. Jeder der Typen, die wir auf dem
-Bildschirm zeichnen wollen, wird das Merkmal <code>Draw</code> implementieren, aber
+Bildschirm zeichnen wollen, wird das Trait <code>Draw</code> implementieren, aber
 unterschiedlichen Code in der Methode <code>draw</code> verwenden, um zu definieren, wie
 dieser bestimmte Typ gezeichnet werden soll, wie es hier bei <code>Button</code> der Fall
 ist (ohne wie erwähnt den eigentlichen GUI-Code). Der Typ <code>Button</code> könnte zum
 Beispiel einen zusätzlichen <code>impl</code>-Block haben, der Methoden enthält, die sich
 darauf beziehen, was passiert, wenn ein Benutzer auf die Schaltfläche klickt.
 Diese Art von Methoden trifft nicht auf Typen wie <code>TextField</code> zu.</p>
-<p>Wenn sich jemand, der unsere Bibliothek benutzt, dazu entschließt, eine
-Struktur <code>SelectBox</code> zu implementieren, die die Felder <code>width</code>, <code>height</code> und
-<code>options</code> enthält, würde er ebenfalls das Merkmal <code>Draw</code> für den Typ
-<code>SelectBox</code> implementieren, wie in Codeblock 18-8 gezeigt.</p>
+<p>Wenn sich jemand, der unsere Bibliothek benutzt, dazu entschließt, eine Struktur
+<code>SelectBox</code> zu implementieren, die die Felder <code>width</code>, <code>height</code> und <code>options</code>
+enthält, würde er ebenfalls das Trait <code>Draw</code> für den Typ <code>SelectBox</code>
+implementieren, wie in Listing 18-8 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use gui::Draw;
 
@@ -393,14 +393,14 @@ impl Draw for SelectBox {
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre>
-<p><span class="caption">Codeblock 18-8: Eine andere Kiste, die <code>gui</code> verwendet
-und das Merkmal <code>Draw</code> auf einer Struktur <code>SelectBox</code> implementiert</span></p>
+<p><span class="caption">Listing 18-8: Eine andere Crate, die <code>gui</code> verwendet und
+das Trait <code>Draw</code> auf einer Struktur <code>SelectBox</code> implementiert</span></p>
 <p>Der Benutzer unserer Bibliothek kann nun seine Funktion <code>main</code> schreiben, um
-eine <code>Screen</code>-Instanz zu erzeugen. Der <code>Screen</code>-Instanz kann er eine
-<code>SelectBox</code> und einen <code>Button</code> hinzufügen, indem er sie in eine <code>Box&lt;T&gt;</code> legt,
-um ein Merkmalsobjekt zu werden. Er kann dann die Methode <code>run</code> auf der
-<code>Screen</code>-Instanz aufrufen, die dann <code>draw</code> auf jeder der Komponenten aufruft.
-Der Codeblock 18-9 zeigt diese Umsetzung.</p>
+eine <code>Screen</code>-Instanz zu erzeugen. Der <code>Screen</code>-Instanz kann er eine <code>SelectBox</code>
+und einen <code>Button</code> hinzufügen, indem er sie in eine <code>Box&lt;T&gt;</code> legt, um ein
+Trait-Objekt zu werden. Er kann dann die Methode <code>run</code> auf der <code>Screen</code>-Instanz
+aufrufen, die dann <code>draw</code> auf jeder der Komponenten aufruft. Listing 18-9 zeigt
+diese Umsetzung.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use gui::Draw;
 </span><span class="boring">
@@ -440,33 +440,30 @@ fn main() {
 
     screen.run();
 }</code></pre>
-<p><span class="caption">Codeblock 18-9: Verwenden von Merkmalsobjekten zum
-Speichern von Werten verschiedener Typen, die das gleiche Merkmal
-implementieren</span></p>
+<p><span class="caption">Listing 18-9: Verwenden von Trait-Objekten zum Speichern
+von Werten verschiedener Typen, die das gleiche Trait implementieren</span></p>
 <p>Als wir die Bibliothek schrieben, wussten wir nicht, dass jemand den Typ
 <code>SelectBox</code> hinzufügen könnte, aber unsere <code>Screen</code>-Implementierung war in der
 Lage, mit dem neuen Typ umzugehen und ihn zu zeichnen, weil <code>SelectBox</code> das
-Merkmal <code>Draw</code> implementiert, was bedeutet, dass sie die Methode <code>draw</code>
+Trait <code>Draw</code> implementiert, was bedeutet, dass sie die Methode <code>draw</code>
 implementiert.</p>
 <p>Dieses Konzept – sich nur mit den Nachrichten zu befassen, auf die ein
 Wert reagiert, und nicht mit dem konkreten Typ des Wertes – ähnelt dem
 Konzept des <em>Duck-Typing</em> in dynamisch typisierten Sprachen: Wenn es wie eine
 Ente läuft und wie eine Ente quakt, dann muss es eine Ente sein! Bei der
-Implementierung von <code>run</code> auf <code>Screen</code> in Codeblock 18-5 braucht <code>run</code> nicht zu
-wissen, was der konkrete Typ jeder Komponente ist. Es prüft nicht, ob eine
+Implementierung von <code>run</code> auf <code>Screen</code> in Listing 18-5 braucht <code>run</code> nicht zu
+wissen, was der konkrete Typ jeder Komponente ist. Es weiß nicht, ob eine
 Komponente eine Instanz eines <code>Buttons</code> oder einer <code>SelectBox</code> ist, es ruft nur
-die Methode <code>draw</code> auf der Komponente auf. Durch die Spezifikation von
-<code>Box&lt;dyn Draw&gt;</code> als Typ der Werte im Vektor <code>components</code> haben wir <code>Screen</code> so
-definiert, dass wir Werte benötigen, auf denen wir die Methode <code>draw</code> aufrufen
-können.</p>
-<p>Der Vorteil der Verwendung von Merkmalsobjekten und des Rust-Typsystems zum
-Schreiben von Code, der dem Code mit Duck-Typing ähnelt, besteht darin, dass
-wir nie prüfen müssen, ob ein Wert eine bestimmte Methode zur Laufzeit
+die Methode <code>draw</code> auf der Komponente auf. Durch die Spezifikation von <code>Box&lt;dyn Draw&gt;</code> als Typ der Werte im Vektor <code>components</code> haben wir <code>Screen</code> so definiert,
+dass wir Werte benötigen, auf denen wir die Methode <code>draw</code> aufrufen können.</p>
+<p>Der Vorteil der Verwendung von Trait-Objekten und des Rust-Typsystems zum
+Schreiben von Code, der dem Code mit Duck-Typing ähnelt, besteht darin, dass wir
+nie prüfen müssen, ob ein Wert eine bestimmte Methode zur Laufzeit
 implementiert, oder uns Sorgen machen müssen, Fehler zu bekommen, wenn ein Wert
 eine Methode nicht implementiert, wir sie aber trotzdem aufrufen. Rust wird
-unseren Code nicht kompilieren, wenn die Werte nicht die Merkmale
-implementieren, die die Merkmalsobjekte benötigen.</p>
-<p>Beispielsweise zeigt Codeblock 18-10, was passiert, wenn wir versuchen, einen
+unseren Code nicht kompilieren, wenn die Werte nicht die Traits implementieren,
+die die Trait-Objekte benötigen.</p>
+<p>Beispielsweise zeigt Listing 18-10, was passiert, wenn wir versuchen, einen
 <code>Screen</code> mit einem <code>String</code> als Komponente zu erstellen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile">use gui::Screen;
@@ -478,9 +475,9 @@ fn main() {
 
     screen.run();
 }</code></pre>
-<p><span class="caption">Codeblock 18-10: Versuch, einen Typ zu verwenden, der das
-Merkmal des Merkmalsobjekts nicht implementiert</span></p>
-<p>Wir werden diesen Fehler erhalten, weil <code>String</code> das Merkmal <code>Draw</code> nicht
+<p><span class="caption">Listing 18-10: Versuch, einen Typ zu verwenden, der das
+Trait des Trait-Objekts nicht implementiert</span></p>
+<p>Wir werden diesen Fehler erhalten, weil <code>String</code> das Trait <code>Draw</code> nicht
 implementiert:</p>
 <pre><code class="language-console">$ cargo run
    Compiling gui v0.1.0 (file:///projects/gui)
@@ -501,33 +498,33 @@ das wir nicht übergeben wollten und einen anderen Typ übergeben sollten, oder
 wir sollten <code>Draw</code> auf <code>String</code> implementieren, sodass <code>Screen</code> in der Lage
 ist, <code>Draw</code> darauf aufzurufen.</p>
 <h3 id="dynamischen-aufruf-durchführen"><a class="header" href="#dynamischen-aufruf-durchführen">Dynamischen Aufruf durchführen</a></h3>
-<p>Erinnere dich <a href="ch10-01-syntax.html#code-performanz-beim-verwenden-generischer-datentypen">„Code-Performanz beim Verwenden generischer
+<p>Erinnere dich an <a href="ch10-01-syntax.html#code-performanz-beim-verwenden-generischer-datentypen">„Code-Performanz beim Verwenden generischer
 Datentypen“</a> in Kapitel 10 an unsere
 Diskussion über den Monomorphisierungsprozess bei generischen Typen, den der
 Compiler durchführt: Der Compiler generiert nicht-generische Implementierungen
 von Funktionen und Methoden für jeden konkreten Typ, den wir anstelle eines
 generischen Typparameters verwenden. Der Code, der sich aus der
-Monomorphisierung ergibt, macht <em>statische Aufrufe</em> (static dispatch), d.h.
-der Compiler weiß, welche Methode du zur Kompilierzeit aufrufst. Dies steht im
+Monomorphisierung ergibt, macht <em>statische Aufrufe</em> (static dispatch), d.h. der
+Compiler weiß, welche Methode du zur Kompilierzeit aufrufst. Dies steht im
 Gegensatz zum <em>dynamischen Aufruf</em> (dynamic dispatch), bei dem der Compiler zur
 Kompilierzeit nicht weiß, welche Methode du aufrufst. In Fällen von dynamischem
 Aufruf erzeugt der Compiler Code, der zur Laufzeit herausfindet, welche Methode
 aufzurufen ist.</p>
-<p>Wenn wir Merkmalsobjekte verwenden, muss Rust dynamische Aufrufe verwenden. Der
+<p>Wenn wir Trait-Objekte verwenden, muss Rust dynamische Aufrufe verwenden. Der
 Compiler kennt nicht alle Typen, die mit dem Code verwendet werden könnten, der
-Merkmalsobjekte verwendet, sodass er nicht weiß, welche Methode auf welchem Typ
+Trait-Objekte verwendet, sodass er nicht weiß, welche Methode auf welchem Typ
 implementiert ist, um sie aufzurufen. Stattdessen verwendet Rust zur Laufzeit
-die Zeiger innerhalb des Merkmalsobjekts, um zu wissen, welche Methode
-aufgerufen werden soll. Dieses Nachschlagen verursacht Laufzeitkosten, die
-beim statischen Aufruf nicht anfallen. Der dynamische Aufruf verhindert auch,
-dass der Compiler sich dafür entscheiden kann, den Code einer Methode inline zu
-verwenden, was wiederum einige Optimierungen verhindert. Und Rust hat einige
-Regeln, wo man dynamische Aufrufe verwenden kann und wo nicht. Diese Regeln
-gehen über den Rahmen dieser Diskussion hinaus, aber du kannst mehr über sie in
-der <a href="https://doc.rust-lang.org/reference/items/traits.html#dyn-compatibility">Dyn-Kompatibilitäts-Referenz</a> lesen. Wir haben jedoch
-zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 18-5
-geschrieben haben und in Codeblock 18-9 unterstützen konnten, sodass es sich um
-einen Kompromiss handelt, den es zu berücksichtigen gilt.</p>
+die Zeiger innerhalb des Trait-Objekts, um zu wissen, welche Methode aufgerufen
+werden soll. Dieses Nachschlagen verursacht Laufzeitkosten, die beim statischen
+Aufruf nicht anfallen. Der dynamische Aufruf verhindert auch, dass der Compiler
+sich dafür entscheiden kann, den Code einer Methode inline zu verwenden, was
+wiederum einige Optimierungen verhindert. Und Rust hat einige Regeln, wo man
+dynamische Aufrufe verwenden kann und wo nicht. Diese Regeln gehen über den
+Rahmen dieser Diskussion hinaus, aber du kannst mehr über sie in der
+<a href="https://doc.rust-lang.org/reference/items/traits.html#dyn-compatibility">Dyn-Kompatibilitäts-Referenz</a> lesen. Wir haben jedoch
+zusätzliche Flexibilität im Code erhalten, den wir in Listing 18-5 geschrieben
+haben und in Listing 18-9 unterstützen konnten, sodass es sich um einen
+Kompromiss handelt, den es zu berücksichtigen gilt.</p>
 
                     </main>
 

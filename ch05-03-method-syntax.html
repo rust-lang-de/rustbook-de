@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -164,17 +164,16 @@
                         <h2 id="methoden"><a class="header" href="#methoden">Methoden</a></h2>
 <p>Methoden sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort <code>fn</code>
 und ihrem Namen deklariert, sie können Parameter und einen Rückgabewert haben,
-und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden.
-Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
-einer Struktur (struct) (oder einer Aufzählung (enum) oder eines
-Merkmalsobjektes (trait object), die wir in <a href="ch06-00-enums.html">Kapitel 6</a> und <a href="ch18-02-trait-objects.html">Kapitel
-18</a> behandeln) definiert werden und ihr erster Parameter stets
-<code>self</code> ist. <code>self</code> repräsentiert die Instanz der Struktur, zu der die Methode
-aufgerufen wird.</p>
+und sie enthalten etwas Programmcode, der ausgeführt wird, wenn sie aufgerufen
+werden. Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im
+Kontext einer Struktur (struct) (oder einer Aufzählung (enum) oder eines
+Trait-Objekts, die wir in <a href="ch06-00-enums.html">Kapitel 6</a> und <a href="ch18-02-trait-objects.html">Kapitel 18</a>
+behandeln) definiert werden und ihr erster Parameter stets <code>self</code> ist. <code>self</code>
+repräsentiert die Instanz der Struktur, auf der die Methode aufgerufen wird.</p>
 <h3 id="methoden-syntax"><a class="header" href="#methoden-syntax">Methoden-Syntax</a></h3>
 <p>Lass uns die Funktion <code>area</code>, die eine <code>Rectangle</code>-Instanz als Parameter hat,
 ändern und stattdessen eine Methode <code>area</code> auf der Struktur <code>Rectangle</code>
-definieren, wie in Codeblock 5-13 zu sehen ist.</p>
+definieren, wie in Listing 5-13 zu sehen ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
 struct Rectangle {
@@ -199,7 +198,7 @@ fn main() {
         rect1.area()
     );
 }</code></pre>
-<p><span class="caption">Codeblock 5-13: Methode <code>area</code> der Struktur <code>Rectangle</code></span></p>
+<p><span class="caption">Listing 5-13: Methode <code>area</code> der Struktur <code>Rectangle</code></span></p>
 <p>Um die Funktion im Kontext von <code>Rectangle</code> zu definieren, beginnen wir mit dem
 Block <code>impl</code> (Implementierung) für <code>Rectangle</code>. Alles in diesem Block wird mit
 dem Typ <code>Rectangle</code> assoziiert. Dann verschieben wir die Funktion <code>area</code> in die
@@ -212,23 +211,22 @@ eine Instanz: Wir ergänzen einen Punkt, gefolgt vom Methodennamen, Klammern und
 Argumenten.</p>
 <p>In der Signatur von <code>area</code> verwenden wir <code>&amp;self</code> anstelle von <code>rectangle: &amp;Rectangle</code>. Das <code>&amp;self</code> ist eigentlich die Abkürzung für <code>self: &amp;Self</code>.
 Innerhalb eines <code>impl</code>-Blocks ist der Typ <code>Self</code> ein Alias für den Typ, für den
-der <code>impl</code>-Block steht. Methoden müssen einen Parameter mit dem Namen <code>self</code>
-vom Typ <code>Self</code> als ihren ersten Parameter haben, Rust lässt dich dies abkürzen,
+der <code>impl</code>-Block steht. Methoden müssen einen Parameter mit dem Namen <code>self</code> vom
+Typ <code>Self</code> als ihren ersten Parameter haben, Rust lässt dich dies abkürzen,
 indem du nur den Namen <code>self</code> an der Stelle des ersten Parameters angibst.
 Beachte, dass wir immer noch das <code>&amp;</code> vor der Abkürzung <code>self</code> verwenden müssen,
 um anzuzeigen, dass diese Methode die Instanz <code>Self</code> ausleiht, genau wie in
-<code>rectangle: &amp;Rectangle</code>. Methoden können die Eigentümerschaft von <code>self</code>
-übernehmen, <code>self</code> unveränderbar ausleihen, wie wir es hier getan haben, oder
-<code>self</code> veränderbar ausleihen, so wie bei jedem anderen Parameter auch.</p>
+<code>rectangle: &amp;Rectangle</code>. Methoden können das Eigentum an <code>self</code> übernehmen,
+<code>self</code> unveränderbar ausleihen, wie wir es hier getan haben, oder <code>self</code>
+veränderbar ausleihen, so wie bei jedem anderen Parameter auch.</p>
 <p>Wir haben hier <code>&amp;self</code> aus dem gleichen Grund gewählt wie <code>&amp;Rectangle</code> in der
-Funktionsvariante: Wir wollen keine Eigentümerschaft übernehmen, wir wollen die
-Daten der Struktur nur lesen, nicht schreiben. Wenn wir die Instanzdaten ändern
-wollten, müssten wir <code>&amp;mut self</code> als ersten Parameter verwenden. Es kommt nur
-selten vor, dass eine Methode die Eigentümerschaft der Instanz übernimmt, indem
-sie <code>self</code> als ersten Parameter verwendet. Diese Technik wird typischerweise
-dann verwendet, wenn die Methode <code>self</code> in etwas anderes transformiert und man
-verhindern will, dass der Aufrufer nach der Transformation die ursprüngliche
-Instanz verwendet.</p>
+Funktionsvariante: Wir wollen kein Eigentum übernehmen, wir wollen die Daten der
+Struktur nur lesen, nicht schreiben. Wenn wir die Instanzdaten ändern wollten,
+müssten wir <code>&amp;mut self</code> als ersten Parameter verwenden. Es kommt nur selten vor,
+dass eine Methode das Eigentum an der Instanz übernimmt, indem sie <code>self</code> als
+ersten Parameter verwendet. Diese Technik wird typischerweise dann verwendet,
+wenn die Methode <code>self</code> in etwas anderes transformiert und man verhindern will,
+dass der Aufrufer nach der Transformation die ursprüngliche Instanz verwendet.</p>
 <p>Der Hauptgrund für Methoden gegenüber Funktionen liegt abgesehen davon, dass
 bei jeder Methodendeklaration der Typ von <code>self</code> nicht ständig wiederholt
 werden muss, in der Organisation. Wir haben alle Dinge, die wir mit einer
@@ -278,11 +276,11 @@ man ein Feld oder eine Methode als öffentlich oder privat kennzeichnet, werden
 wir in <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#pfade-mit-dem-schlüsselwort-pub-öffentlich-machen">Kapitel 7</a> behandeln.</p>
 <blockquote>
 <h3 id="wo-ist-der-operator--"><a class="header" href="#wo-ist-der-operator--">Wo ist der Operator <code>-&gt;</code>?</a></h3>
-<p>In C und C++ werden zwei verschiedene Operatoren für den Aufruf von Methoden
-verwendet: Man verwendet <code>.</code>, wenn eine Methode direkt auf dem Objekt
-aufgerufen wird, und <code>-&gt;</code>, wenn die Methode auf einem Zeiger auf das Objekt
-aufrufen und der Zeiger zuerst dereferenziert werden muss. Anders gesagt,
-wenn <code>object</code> ein Zeiger ist, ist <code>object-&gt;something()</code> ähnlich zu
+<p>In C und C++ werden zwei verschiedene Operatoren verwendet, um Methoden
+aufzurufen: Du verwendest <code>.</code>, wenn du eine Methode direkt auf dem Objekt
+aufrufst, und <code>-&gt;</code>, wenn du die Methode über einen Zeiger auf das Objekt
+aufrufst und den Zeiger zuerst dereferenzieren musst. Mit anderen Worten: Wenn
+<code>object</code> ein Zeiger ist, entspricht <code>object-&gt;something()</code> in etwa
 <code>(*object).something()</code>.</p>
 <p>Rust hat kein Äquivalent zum Operator <code>-&gt;</code>. Stattdessen hat Rust eine
 Funktionalität namens <em>automatische Referenzierung und Dereferenzierung</em>
@@ -314,12 +312,12 @@ gleich:</p>
 (&amp;p1).distance(&amp;p2);
 <span class="boring">}</span></code></pre>
 <p>Der erste Aufruf sieht viel sauberer aus. Die automatische Referenzierung
-funktioniert, weil Methoden einen eindeutigen Empfänger haben - den Typ von
-<code>self</code>. Wenn man den Empfänger und den Namen einer Methode angibt, kann Rust
-eindeutig herausfinden, ob die Methode lesend (<code>&amp;self</code>), veränderbar
-(<code>&amp;mut self</code>) oder konsumierend (<code>self</code>) ist. Die Tatsache, dass Rust das
-Ausleihen für die Methodenempfänger implizit macht, ist ein großer Beitrag
-zur Ergonomie der Eigentümerschaft in der Praxis.</p>
+funktioniert, weil Methoden einen eindeutigen Empfänger haben – den
+Typ von <code>self</code>. Wenn man den Empfänger und den Namen einer Methode angibt,
+kann Rust eindeutig herausfinden, ob die Methode lesend (<code>&amp;self</code>),
+veränderbar (<code>&amp;mut self</code>) oder konsumierend (<code>self</code>) ist. Die Tatsache, dass
+Rust das Borrowing für die Methodenempfänger implizit macht, ist ein großer
+Beitrag zur Ergonomie der Eigentümerschaft in der Praxis.</p>
 </blockquote>
 <h3 id="methoden-mit-mehreren-parametern"><a class="header" href="#methoden-mit-mehreren-parametern">Methoden mit mehreren Parametern</a></h3>
 <p>Lass uns den Umgang mit Methoden üben, indem wir eine zweite Methode zur
@@ -328,7 +326,7 @@ Struktur <code>Rectangle</code> implementieren. Diesmal soll eine zweite Instanz
 <code>Rectangle</code> vollständig in <code>self</code> (dem ersten <code>Rectangle</code>) hineinpasst;
 andernfalls soll <code>false</code> zurückgegeben werden. Das heißt, sobald wir die
 Methode <code>can_hold</code> definiert haben, wollen wir in der Lage sein, das in
-Codeblock 5-14 gezeigte Programm zu schreiben.</p>
+Listing 5-14 gezeigte Programm zu schreiben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">fn main() {
     let rect1 = Rectangle {
@@ -347,7 +345,7 @@ Codeblock 5-14 gezeigte Programm zu schreiben.</p>
     println!("rect1 umschließt rect2? {}", rect1.can_hold(&amp;rect2));
     println!("rect1 umschließt rect3? {}", rect1.can_hold(&amp;rect3));
 }</code></pre>
-<p><span class="caption">Codeblock 5-14: Verwendung der noch nicht geschriebenen
+<p><span class="caption">Listing 5-14: Verwendung der noch nicht geschriebenen
 Methode <code>can_hold</code></span></p>
 <p>Die erwartete Ausgabe würde wie folgt aussehen, da beide Dimensionen von
 <code>rect2</code> kleiner als die Dimensionen von <code>rect1</code> sind, aber <code>rect3</code> breiter als
@@ -355,19 +353,19 @@ Methode <code>can_hold</code></span></p>
 <pre><code class="language-text">rect1 umschließt rect2? true
 rect1 umschließt rect3? false
 </code></pre>
-<p>Wir wissen, dass wir eine Methode definieren wollen, also wird sie innerhalb
-des Blocks <code>impl Rectangle</code> liegen. Die Methode wird <code>can_hold</code> heißen und sie
-wird einen weiteren Parameter vom Typ <code>Rectangle</code> unveränderbar ausleihen. Wir
-können den Typ des Parameters erkennen, indem wir uns den Code ansehen, der die
-Methode aufruft: <code>rect1.can_hold(&amp;rect2)</code> nimmt <code>&amp;rect2</code> entgegen, also eine
-unveränderbare Ausleihe von <code>rect2</code> vom Typ <code>Rectangle</code>. Das macht Sinn, da
-wir <code>rect2</code> nur lesen müssen (anstatt zu schreiben, wofür wir eine
-veränderbare Ausleihe bräuchten) und <code>main</code> die Eigentümerschaft an <code>rect2</code>
-zurückerhalten soll, sodass wir es nach dem Aufruf der Methode <code>can_hold</code>
-weiter verwenden können. Der Rückgabewert von <code>can_hold</code> ist ein boolescher
-Wert und die Implementierung prüft, ob Breite und Höhe von <code>self</code> jeweils
-größer als von <code>Rectangle</code> sind. Fügen wir die neue Methode <code>can_hold</code> zum
-Block <code>impl</code> aus Codeblock 5-13 hinzu, wie in Codeblock 5-15 gezeigt.</p>
+<p>Wir wissen, dass wir eine Methode definieren wollen, also wird sie innerhalb des
+Blocks <code>impl Rectangle</code> liegen. Die Methode wird <code>can_hold</code> heißen und sie wird
+einen weiteren Parameter vom Typ <code>Rectangle</code> unveränderbar ausleihen. Wir können
+den Typ des Parameters erkennen, indem wir uns den Code ansehen, der die Methode
+aufruft: <code>rect1.can_hold(&amp;rect2)</code> nimmt <code>&amp;rect2</code> entgegen, also eine
+unveränderbare Borrow von <code>rect2</code> vom Typ <code>Rectangle</code>. Das macht Sinn, da wir
+<code>rect2</code> nur lesen müssen (anstatt zu schreiben, wofür wir eine veränderbare
+Borrow bräuchten) und <code>main</code> das Eigentum an <code>rect2</code> zurückerhalten soll, sodass
+wir es nach dem Aufruf der Methode <code>can_hold</code> weiter verwenden können. Der
+Rückgabewert von <code>can_hold</code> ist ein boolescher Wert und die Implementierung
+prüft, ob Breite und Höhe von <code>self</code> jeweils größer als von <code>Rectangle</code> sind.
+Fügen wir die neue Methode <code>can_hold</code> zum Block <code>impl</code> aus Listing 5-13 hinzu,
+wie in Listing 5-15 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
 </span><span class="boring">struct Rectangle {
@@ -402,9 +400,9 @@ Block <code>impl</code> aus Codeblock 5-13 hinzu, wie in Codeblock 5-15 gezeigt.
 </span><span class="boring">    println!("rect1 umschließt rect2? {}", rect1.can_hold(&amp;rect2));
 </span><span class="boring">    println!("rect1 umschließt rect3? {}", rect1.can_hold(&amp;rect3));
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 5-15: Implementierung der Methode <code>can_hold</code>
+<p><span class="caption">Listing 5-15: Implementierung der Methode <code>can_hold</code>
 auf <code>Rectangle</code>, die eine weitere <code>Rectangle</code>-Instanz als Parameter hat</span></p>
-<p>Wenn wir diesen Code mit der Funktion <code>main</code> in Codeblock 5-14 ausführen,
+<p>Wenn wir diesen Code mit der Funktion <code>main</code> in Listing 5-14 ausführen,
 erhalten wir die gewünschte Ausgabe. Methoden können mehrere Parameter haben,
 die wir in der Signatur nach dem Parameter <code>self</code> angeben. Diese Parameter
 funktionieren genau wie Parameter in Funktionen.</p>
@@ -453,7 +451,7 @@ als auch für Namensräume, die von Modulen erzeugt werden, verwendet. Wir werde
 die Module in <a href="ch07-02-defining-modules-to-control-scope-and-privacy.html">Kapitel 7</a> besprechen.</p>
 <h3 id="mehrere-impl-blöcke"><a class="header" href="#mehrere-impl-blöcke">Mehrere <code>impl</code>-Blöcke</a></h3>
 <p>Jede Struktur darf mehrere <code>impl</code>-Blöcke haben. Beispielsweise entspricht
-Codeblock 5-15 dem in Codeblock 5-16 gezeigten Code, bei dem jede Methode in
+Listing 5-15 dem in Listing 5-16 gezeigten Code, bei dem jede Methode in
 einem eigenen <code>impl</code>-Block steht.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
 </span><span class="boring">struct Rectangle {
@@ -490,12 +488,12 @@ impl Rectangle {
 </span><span class="boring">    println!("rect1 umschließt rect2? {}", rect1.can_hold(&amp;rect2));
 </span><span class="boring">    println!("rect1 umschließt rect3? {}", rect1.can_hold(&amp;rect3));
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 5-16: Neuschreiben von Codeblock 5-15 unter
+<p><span class="caption">Listing 5-16: Neuschreiben von Listing 5-15 unter
 Verwendung mehrerer <code>impl</code>-Blöcke</span></p>
 <p>Es ist nicht nötig, diese Methoden hier auf mehrere <code>impl</code>-Blöcke zu verteilen,
 aber es handelt sich um eine gültige Syntax. Wir werden in Kapitel 10 einen
 Fall sehen, bei dem mehrere <code>impl</code>-Blöcke hilfreich sind, wenn wir generische
-Typen und Merkmale behandeln.</p>
+Typen und Traits behandeln.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Mit Strukturen kannst du benutzerdefinierte Typen erstellen, die in deiner
 Domäne eine Bedeutung haben. Durch die Verwendung von Strukturen kannst du

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Generische Typen, Merkmale (traits) und Lebensdauer - Die Programmiersprache Rust</title>
+        <title>Generische Typen, Traits und Lebensdauer - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5070249d.js"></script>
+        <script src="toc-c1610f93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="generische-typen-merkmale-traits-und-lebensdauer"><a class="header" href="#generische-typen-merkmale-traits-und-lebensdauer">Generische Typen, Merkmale (traits) und Lebensdauer</a></h1>
+                        <h1 id="generische-typen-traits-und-lebensdauer"><a class="header" href="#generische-typen-traits-und-lebensdauer">Generische Typen, Traits und Lebensdauer</a></h1>
 <p>Jede Programmiersprache verfügt über Werkzeuge, mit denen die Duplizierung von
 Konzepten (duplication of concepts) effektiv gehandhabt werden kann. In Rust
 ist ein solches Werkzeug der <em>generische Datentyp</em> (generics): Abstrakte
@@ -182,8 +182,8 @@ zwei Funktionen, die sich nur im Datentyp ihrer Parameter unterscheiden, eine
 generische Funktion zu machen. Wir werden auch erklären, wie generische Typen
 in Struktur- (struct) und Aufzählungsdefinitionen (enum) verwendet werden
 können.</p>
-<p>Dann wirst du lernen, wie man Merkmale (traits) verwendet, um Verhalten auf
-generische Weise zu definieren. Du kannst Merkmale mit generischen Typen
+<p>Dann wirst du lernen, wie man Traits (Merkmale) verwendet, um Verhalten auf
+generische Weise zu definieren. Du kannst Traits mit generischen Typen
 kombinieren, um einen generischen Typ auf solche Typen einzuschränken, die ein
 bestimmtes Verhalten aufweisen, im Gegensatz zu einem beliebigen Typ.</p>
 <p>Schließlich werden wir die <em>Lebensdauer</em> (lifetimes) besprechen: Eine Spielart
@@ -203,7 +203,7 @@ gleiche Technik an, um eine generische Funktion zu extrahieren! Wenn du dir
 ansiehst, wie du doppelten Code erkennst, den du in eine Funktion extrahieren
 kannst, wirst du beginnen, doppelten Code zu erkennen, der generische Typen
 verwenden kann.</p>
-<p>Wir werden mit dem kurzen Programm in Codeblock 10-1 beginnen, das die größte
+<p>Wir werden mit dem kurzen Programm in Listing 10-1 beginnen, das die größte
 Zahl in einer Liste findet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
@@ -220,7 +220,7 @@ Zahl in einer Liste findet.</p>
     println!("Die größte Zahl ist {largest}");
 <span class="boring">    assert_eq!(*largest, 100);
 </span>}</code></pre>
-<p><span class="caption">Codeblock 10-1: Finden der größten Zahl in einer Liste
+<p><span class="caption">Listing 10-1: Finden der größten Zahl in einer Liste
 von Zahlen</span></p>
 <p>Wir speichern eine Liste von ganzen Zahlen in der Variablen <code>number_list</code> und
 weisen eine Referenz der ersten Zahl der Liste einer Variablen namens <code>largest</code>
@@ -231,9 +231,9 @@ bisher gefundenen Zahl ist, ändert sich die Variable nicht, und der Code geht
 zur nächsten Zahl in der Liste weiter. Nach dem Durchlaufen aller Zahlen in der
 Liste sollte <code>largest</code> auf die größte Zahl referenzieren, in diesem Fall 100.</p>
 <p>Wir haben nun die Aufgabe bekommen, die größte Zahl in zwei verschiedenen
-Zahlenlisten zu finden. Zu diesem Zweck können wir den Code in Codeblock 10-1
+Zahlenlisten zu finden. Zu diesem Zweck können wir den Code in Listing 10-1
 duplizieren und dieselbe Logik an zwei verschiedenen Stellen im Programm
-verwenden, wie in Codeblock 10-2 gezeigt.</p>
+verwenden, wie in Listing 10-2 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
@@ -260,7 +260,7 @@ verwenden, wie in Codeblock 10-2 gezeigt.</p>
 
     println!("Die größte Zahl ist {largest}");
 }</code></pre>
-<p><span class="caption">Codeblock 10-2: Code zum Auffinden der größten Zahl in
+<p><span class="caption">Listing 10-2: Code zum Auffinden der größten Zahl in
 <em>zwei</em> Zahlenlisten</span></p>
 <p>Obwohl dieser Code funktioniert, ist das Duplizieren von Code mühsam und
 fehleranfällig. Außerdem müssen wir daran denken, den Code an mehreren Stellen
@@ -270,9 +270,9 @@ wir eine Funktion definieren, die auf einer beliebigen Liste ganzer Zahlen
 operiert, die ihr als Parameter übergeben wird. Diese Lösung macht unseren Code
 klarer und lässt uns das Konzept, die größte Zahl in einer Liste zu finden,
 abstrakter ausdrücken.</p>
-<p>In Codeblock 10-3 extrahieren wir den Code, der die größte Zahl findet, in eine
+<p>In Listing 10-3 extrahieren wir den Code, der die größte Zahl findet, in eine
 Funktion namens <code>largest</code>. Dann rufen wir die Funktion auf, um die größte Zahl
-in den beiden Listen aus Codeblock 10-2 zu finden. Wir könnten die Funktion
+in den beiden Listen aus Listing 10-2 zu finden. Wir könnten die Funktion
 auch auf jede andere Liste von <code>i32</code>-Werten anwenden, die wir in Zukunft haben
 könnten.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -301,14 +301,13 @@ fn main() {
     println!("Die größte Zahl ist {result}");
 <span class="boring">    assert_eq!(*result, 6000);
 </span>}</code></pre>
-<p><span class="caption">Codeblock 10-3: Abstrahierter Code, um die größte Zahl in
+<p><span class="caption">Listing 10-3: Abstrahierter Code, um die größte Zahl in
 zwei Listen zu finden</span></p>
-<p>Die Funktion <code>largest</code> hat einen Parameter <code>list</code>, der einen beliebigen
-Anteilstyp von <code>i32</code>-Werten repräsentiert, die wir an die Funktion übergeben
-könnten. Wenn wir die Funktion aufrufen, läuft der Code also auf den
-spezifischen Werten, die wir übergeben.</p>
+<p>Die Funktion <code>largest</code> hat einen Parameter <code>list</code>, der einen beliebigen Slice
+von <code>i32</code>-Werten repräsentiert, die wir an die Funktion übergeben könnten. Wenn
+wir die Funktion aufrufen, verarbeitet der Code die übergebenen Werte.</p>
 <p>Zusammenfassend hier die Schritte, die wir unternommen haben, um den Code aus
-Codeblock 10-2 in Codeblock 10-3 zu überführen:</p>
+Listing 10-2 in Listing 10-3 zu überführen:</p>
 <ol>
 <li>Identifiziere doppelten Code.</li>
 <li>Extrahiere den doppelten Code in den Funktionskörper und spezifiziere die
@@ -321,9 +320,9 @@ um doppelten Code zu reduzieren. Ähnlich wie der Funktionsrumpf auf einer
 abstrakten Liste anstelle spezifischer Werte arbeiten kann, erlauben es
 generische Datentypen, auf abstrakten Typen zu arbeiten.</p>
 <p>Nehmen wir zum Beispiel an, wir hätten zwei Funktionen: Eine, die das größte
-Element in einem Anteilstyp mit <code>i32</code>-Werten findet, und eine, die das größte
-Element in einem Anteilstyp mit <code>char</code>-Werten findet. Wie würden wir diese
-Duplizierung beseitigen? Lass es uns herausfinden!</p>
+Element in einem Slice mit <code>i32</code>-Werten findet, und eine, die das größte Element
+in einem Slice mit <code>char</code>-Werten findet. Wie würden wir diese Duplizierung
+beseitigen? Lass es uns herausfinden!</p>
 
                     </main>
 
