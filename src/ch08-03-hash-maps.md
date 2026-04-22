@@ -3,8 +3,8 @@
 Die letzte unserer allgemeinen Kollektionen ist die Hashtabelle (hash map). Der
 Typ `HashMap<K, V>` speichert eine Zuordnung von Schlüsseln vom Typ `K` zu
 Werten vom Typ `V` mittels einer _Hashfunktion_ (hash function), die bestimmt,
-wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
-unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
+wie sie diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
+unterstützen diese Art von Datenstruktur, aber sie verwenden oft einen anderen
 Namen wie _Hash_, _Abbildung_ (map), _Objekt_, _Hashtabelle_ (hash table),
 _Wörterbuch_ (dictionary) oder _assoziatives Array_ (associative array), um nur
 einige zu nennen.
@@ -24,9 +24,9 @@ Standardbibliotheksdokumentation.
 
 ### Erstellen einer neuen Hashtabelle
 
-Ein Weg um eine leere Hashtabelle zu erzeugen ist mit `new` und um Elemente
-hinzuzufügen mit `insert`. In Codeblock 8-20 verfolgen wir die Ergebnisse
-zweier Mannschaften mit den Namen Blau und Gelb. Das Team Blau startet mit 10
+Eine Möglichkeit, um eine leere Hashtabelle zu erzeugen, ist mit `new`. Elemente
+können mit `insert` eingefügt werden. In Listing 8-20 halten wir die Punktzahlen
+zweier Mannschaften fest, die Blau und Gelb heißen. Das Team Blau startet mit 10
 Punkten, das Team Gelb mit 50 Punkten.
 
 ```rust
@@ -38,7 +38,7 @@ scores.insert(String::from("Blau"), 10);
 scores.insert(String::from("Gelb"), 50);
 ```
 
-<span class="caption">Codeblock 8-20: Erstellen einer neuen Hashtabelle und
+<span class="caption">Listing 8-20: Erstellen einer neuen Hashtabelle und
 Einfügen einiger Schlüssel und Werte</span>
 
 Beachte, dass wir zuerst mit `use` die `HashMap` aus dem Kollektionsteil der
@@ -48,15 +48,15 @@ gehört, die automatisch in den Gültigkeitsbereich aufgenommen werden.
 Hashtabellen werden auch weniger von der Standardbibliothek unterstützt; es
 gibt zum Beispiel kein eingebautes Makro, um sie zu erzeugen.
 
-Genau wie Vektoren speichern Hashtabellen ihre Daten im Haldenspeicher. 
-Obige `HashMap` hat Schlüssel vom Typ `String` und Werte vom Typ `i32`.
-Hashtabellen sind homogen wie Vektoren: Alle Schlüssel müssen denselben Typ
-haben und alle Werte müssen denselben Typ haben.
+Genau wie Vektoren speichern Hashtabellen ihre Daten im Heap. Obige `HashMap`
+hat Schlüssel vom Typ `String` und Werte vom Typ `i32`. Hashtabellen sind
+homogen wie Vektoren: Alle Schlüssel müssen denselben Typ haben und alle
+Werte müssen denselben Typ haben.
 
 ### Zugreifen auf Werte in einer Hashtabelle
 
 Wir können einen Wert aus der Hashtabelle herausholen, indem wir die Methode
-`get` mit ihrem Schlüssel aufrufen, wie in Codeblock 8-21 gezeigt.
+`get` mit ihrem Schlüssel aufrufen, wie in Listing 8-21 gezeigt.
 
 ```rust
 use std::collections::HashMap;
@@ -70,7 +70,7 @@ let team_name = String::from("Blau");
 let score = scores.get(&team_name).copied().unwrap_or(0);
 ```
 
-<span class="caption">Codeblock 8-21: Zugreifen auf den Spielstand von Team
+<span class="caption">Listing 8-21: Zugreifen auf den Spielstand von Team
 Blau in der Hashtabelle</span>
 
 Hier wird `score` den Wert haben, der mit Team Blau assoziiert ist, und das
@@ -104,12 +104,12 @@ Gelb: 50
 Blau: 10
 ```
 
-### Verwalten der Eigentümerschaft in Hashtabellen
+### Verwalten des Eigentums in Hashtabellen
 
-Bei Typen wie `i32`, die das Merkmal `Copy` implementieren, werden die Werte in
-die Hashtabelle kopiert. Bei aneigenbaren Werten wie `String` werden die Werte
-verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Codeblock
-8-22 gezeigt wird.
+Bei Typen wie `i32`, die das Trait `Copy` implementieren, werden die Werte in
+die Hashtabelle kopiert. Bei besitzenden Werten wie `String` werden die Werte
+verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Listing 8-22
+gezeigt wird.
 
 ```rust
 use std::collections::HashMap;
@@ -120,10 +120,10 @@ let field_value = String::from("Blau");
 let mut map = HashMap::new();
 map.insert(field_name, field_value);
 // field_name und field_value sind nach diesem Zeitpunkt ungültig.
-// Versuche, sie zu benutzen und beobachte, welchen Kompilierfehler du erhältst!
+// Versuche, sie zu benutzen und beobachte, welchen Compilerfehler du erhältst!
 ```
 
-<span class="caption">Codeblock 8-22: Zeigt, dass Schlüssel und Werte nach dem
+<span class="caption">Listing 8-22: Zeigt, dass Schlüssel und Werte nach dem
 Aufruf von `insert` Eigentum der Hashtabelle sind</span>
 
 Wir können die Variablen `field_name` und `field_value` nicht mehr verwenden,
@@ -154,7 +154,7 @@ kombinieren. Schauen wir uns an, wie diese Varianten jeweils funktionieren!
 
 Wenn wir einen Schlüssel und einen Wert in eine Hashtabelle einfügen und dann
 denselben Schlüssel mit einem anderen Wert einfügen, wird der mit diesem
-Schlüssel assoziierte Wert ersetzt. Auch wenn der Code in Codeblock 8-23
+Schlüssel assoziierte Wert ersetzt. Auch wenn der Code in Listing 8-23
 zweimal `insert` aufruft, wird die Hashtabelle nur ein Schlüssel-Wert-Paar
 enthalten, weil wir beide Male einen Wert für den Schlüssel des Teams Blau
 einfügen.
@@ -170,7 +170,7 @@ scores.insert(String::from("Blau"), 25);
 println!("{scores:?}");
 ```
 
-<span class="caption">Codeblock 8-23: Ersetzen eines gespeicherten Wertes für
+<span class="caption">Listing 8-23: Ersetzen eines gespeicherten Wertes für
 einen bestimmten Schlüssel</span>
 
 Dieser Code wird `{"Blau": 25}` ausgeben. Der ursprüngliche Wert `10` wurde
@@ -190,7 +190,7 @@ Rückgabewert der Methode `entry` ist eine Aufzählung (enum) namens `Entry`, di
 einen Wert repräsentiert, der existieren könnte oder auch nicht. Nehmen wir an,
 wir wollen prüfen, ob der Schlüssel für das Team Gelb einen Wert hat. Wenn das
 nicht der Fall ist, wollen wir den Wert `50` einfügen, und dasselbe gilt für
-das Team Blau. Bei Verwendung von `entry` sieht der Code wie Codeblock 8-24
+das Team Blau. Bei Verwendung von `entry` sieht der Code wie Listing 8-24
 aus.
 
 ```rust
@@ -205,17 +205,17 @@ scores.entry(String::from("Blau")).or_insert(50);
 println!("{scores:?}");
 ```
 
-<span class="caption">Codeblock 8-24: Verwenden der Methode `entry` zum
+<span class="caption">Listing 8-24: Verwenden der Methode `entry` zum
 Einfügen, nur wenn der Schlüssel nicht bereits einen Wert hat</span>
 
-Die Methode `or_insert` von `Entry` ist so definiert, dass sie eine
-veränderbare Referenz auf den Wert des entsprechenden `Entry`-Schlüssels
-zurückgibt, wenn dieser Schlüssel existiert, andernfalls fügt sie den Parameter
-als neuen Wert für diesen Schlüssel ein und gibt eine veränderbare Referenz
-auf den neuen Wert zurück. Diese Technik ist viel sauberer, als die Logik
-selbst zu schreiben, und sie harmoniert besser mit dem Ausleihenprüfer.
+Die Methode `or_insert` von `Entry` ist so definiert, dass sie eine veränderbare
+Referenz auf den Wert des entsprechenden `Entry`-Schlüssels zurückgibt, wenn
+dieser Schlüssel existiert, andernfalls fügt sie den Parameter als neuen Wert
+für diesen Schlüssel ein und gibt eine veränderbare Referenz auf den neuen Wert
+zurück. Diese Technik ist viel sauberer, als die Logik selbst zu schreiben, und
+sie harmoniert besser mit dem Borrow Checker.
 
-Der Code in Codeblock 8-24 gibt `{"Gelb": 50, "Blau": 10}` aus. Beim ersten
+Der Code in Listing 8-24 gibt `{"Gelb": 50, "Blau": 10}` aus. Beim ersten
 Aufruf von `entry` wird der Schlüssel von Team Gelb mit dem Wert `50`
 eingefügt, da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von `entry`
 wird die Hashtabelle nicht verändern, da das Team Blau bereits den Wert `10`
@@ -225,7 +225,7 @@ hat.
 
 Ein weiterer gängiger Anwendungsfall für Hashtabellen besteht darin, den Wert
 eines Schlüssels nachzuschlagen und ihn dann auf Basis des alten Wertes zu
-aktualisieren. Beispielsweise zeigt Codeblock 8-25 einen Code, der zählt, wie
+aktualisieren. Beispielsweise zeigt Listing 8-25 einen Code, der zählt, wie
 oft jedes Wort in einem Text vorkommt. Wir verwenden eine Hashtabelle mit den
 Wörtern als Schlüssel und inkrementieren den Wert, um nachzuvollziehen, wie oft
 wir dieses Wort schon gesehen haben. Wenn es das erste Mal ist, dass wir ein
@@ -246,7 +246,7 @@ for word in text.split_whitespace() {
 println!("{map:?}");
 ```
 
-<span class="caption">Codeblock 8-25: Zählen des Vorkommens von Wörtern mit
+<span class="caption">Listing 8-25: Zählen des Vorkommens von Wörtern mit
 Hilfe einer Hashtabelle, die Wörter speichert und zählt</span>
 
 Dieser Code gibt `{"Welt": 2, "wunderbare": 1, "Hallo": 1}` aus. Es kann sein,
@@ -255,45 +255,45 @@ werden: Du erinnerst dich an [„Zugreifen auf Werte in einer
 Hashtabelle“][access], wo die Iteration über eine Hashtabelle in einer
 willkürlichen Reihenfolge erfolgt.
 
-Die Methode `split_whitespace` gibt einen Iterator über durch Leerzeichen
-getrennte Sub-Anteilstypen des Wertes in `text` zurück. Die Methode `or_insert`
+Die Methode `split_whitespace` gibt einen Iterator über Sub-Slices zurück, die
+durch Leerzeichen getrennte Werte in `text` enthalten. Die Methode `or_insert`
 gibt eine veränderbare Referenz (`&mut V`) auf den Wert für den angegebenen
-Schlüssel zurück. Hier speichern wir diese veränderbaren Referenz in der
-Variablen `count`. Um diesen Wert zuzuweisen, müssen wir also zuerst `count`
-mit dem Stern (`*`) derefenzieren. Die veränderbare Referenz verlässt am Ende
-der `for`-Schleife dem Gültigkeitsbereich, sodass alle diese Änderungen sicher
-und gemäß der Ausleihregeln zulässig sind.
+Schlüssel zurück. Hier speichern wir diese veränderbare Referenz in der
+Variablen `count`. Um diesen Wert zuzuweisen, müssen wir also zuerst `count` mit
+dem Stern (`*`) dereferenzieren. Die veränderbare Referenz verlässt am Ende der
+`for`-Schleife dem Gültigkeitsbereich, sodass alle diese Änderungen sicher und
+gemäß der Borrowing-Regeln zulässig sind.
 
 ### Hash-Funktionen
 
-Standardmäßig verwendet `HashMap` eine Hash-Funktion namens _SipHash_, die robust
-gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen[^siphash] ist. Dies
-ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der Kompromiss
-zugunsten einer höheren Sicherheit gegenüber einer geringeren Performanz ist es
-Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
-die Standard-Hash-Funktion für deine Zwecke zu langsam ist, kannst du zu einer
-anderen Funktion wechseln, indem du eine andere Hash-Funktion angibst. Eine
-_Hash-Funktion_ ist ein Typ, der das Merkmal `BuildHasher` implementiert. Wir
-werden in [Kapitel 10][traits] über Merkmale und ihre Implementierung sprechen.
-Du musst nicht unbedingt deine eigene Hash-Funktion von Grund auf
-implementieren; [crates.io][crates] verfügt über Bibliotheken, die von anderen
-Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
+Standardmäßig verwendet `HashMap` eine Hash-Funktion namens _SipHash_, die
+robust gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen[^siphash] ist.
+Dies ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der
+Kompromiss zugunsten einer höheren Sicherheit gegenüber einer geringeren
+Performanz lohnt sich. Wenn du eine Performanzanalyse deines Codes machst und
+feststellst, dass die Standard-Hash-Funktion für deine Zwecke zu langsam ist,
+kannst du zu einer anderen Funktion wechseln, indem du eine andere Hash-Funktion
+angibst. Eine _Hash-Funktion_ ist ein Typ, der das Trait `BuildHasher`
+implementiert. Wir werden in [Kapitel 10][traits] über Traits und ihre
+Implementierung sprechen. Du musst nicht unbedingt deine eigene Hash-Funktion
+von Grund auf implementieren; [crates.io][crates] verfügt über Bibliotheken, die
+von anderen Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
 implementieren.
 
 [^siphash]: <https://en.wikipedia.org/wiki/SipHash>
 
 ## Zusammenfassung
 
-Vektoren, Zeichenketten und Hashtabellen bieten eine große Menge an
-Funktionalität, die in Programmen benötigt wird, wenn du Daten speichern,
-darauf zugreifen und sie verändern willst. Hier sind einige Übungen, für deren
-Lösung du jetzt gerüstet sein solltest:
+Vektoren, Strings und Hashtabellen bieten eine große Menge an Funktionalität,
+die in Programmen benötigt wird, wenn du Daten speichern, darauf zugreifen und
+sie verändern willst. Hier sind einige Übungen, für deren Lösung du jetzt
+gerüstet sein solltest:
 
 1. Verwende bei einer Liste von ganzen Zahlen einen Vektor und gib den
    Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
    der am häufigsten vorkommt; eine Hashtabelle ist hier hilfreich) der Liste
    zurück.
-2. Wandle Zeichenketten in Schweinelatein (pig latin) um. Der erste Konsonant
+2. Wandle Strings in Schweinelatein (pig latin) um. Der erste Konsonant
    jedes Wortes wird an das Ende des Wortes verschoben und „ay“ angehängt,
    sodass „zuerst“ zu „uerst-zay“ wird. Bei Wörtern, die mit einem Vokal
    beginnen, wird stattdessen „hay“ an das Ende angefügt („ansehen“ wird zu
@@ -305,8 +305,8 @@ Lösung du jetzt gerüstet sein solltest:
    sortierte Liste aller Personen in einer Abteilung oder aller Personen in der
    Firma nach Abteilung ausgeben.
 
-Die API-Dokumentation der Standard-Bibliothek beschreibt Methoden für Vektoren,
-Zeichenketten und Hashtabellen, die für diese Übungen hilfreich sind!
+Die API-Dokumentation der Standardbibliothek beschreibt Methoden für Vektoren,
+Strings und Hashtabellen, die für diese Übungen hilfreich sind!
 
 Wir steigen in komplexere Programme ein, in denen Operationen fehlschlagen
 können, daher ist es ein perfekter Zeitpunkt, auf die Fehlerbehandlung

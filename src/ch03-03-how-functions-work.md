@@ -5,10 +5,10 @@ wichtigsten Funktionen in der Sprache gesehen: Die Funktion `main`, die der
 Einstiegspunkt vieler Programme ist. Du hast auch das Schlüsselwort `fn`
 gesehen, mit dem du neue Funktionen deklarieren kannst.
 
-Rust-Code verwendet die _Schlangenschrift_-Stil-Konvention (snake case) für
-Funktions- und Variablennamen, bei der alle Buchstaben klein geschrieben sind
-und Unterstriche Wörter separieren. Hier ist ein Programm, das eine
-Beispiel-Funktionsdefinition enthält:
+Rust-Code verwendet die _Snake Case_-Konvention für Funktions- und
+Variablennamen, bei der alle Buchstaben klein geschrieben sind und Unterstriche
+Wörter separieren. Hier ist ein Programm, das eine Beispiel-Funktionsdefinition
+enthält:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -25,16 +25,16 @@ fn another_function() {
 ```
 
 Wir definieren eine Funktion in Rust durch die Eingabe von `fn`, gefolgt von
-einem Funktionsnamen und einem Satz Klammern. Die geschweiften Klammern teilen
+einem Funktionsnamen und einem Klammernpaar. Die geschweiften Klammern teilen
 dem Compiler mit, wo der Funktionsrumpf beginnt und endet.
 
 Wir können jede Funktion, die wir definiert haben, aufrufen, indem wir ihren
-Namen gefolgt von einem Satz Klammern eingeben. Da `another_function` im
-Programm definiert ist, kann sie von innerhalb der Funktion `main` aufgerufen
-werden. Beachte, dass wir `another_function` _nach_ der Funktion `main` im
-Quellcode definiert haben; wir hätten sie auch vorher definieren können. Rust
-interessiert es nicht, wo du deine Funktionen definierst, nur dass sie irgendwo
-definiert sind.
+Namen gefolgt von einem Klammernpaar eingeben. Da `another_function` im Programm
+definiert ist, kann sie von innerhalb der Funktion `main` aufgerufen werden.
+Beachte, dass wir `another_function` _nach_ der Funktion `main` im Quellcode
+definiert haben; wir hätten sie auch vorher definieren können. Rust interessiert
+es nicht, wo du deine Funktionen definierst, nur dass sie irgendwo definiert
+sind.
 
 Lass uns ein neues Binärprojekt namens „functions“ anfangen, um Funktionen
 weiter zu erforschen. Platziere das Beispiel `another_function` in
@@ -92,8 +92,7 @@ Der Wert von x ist: 5
 Die Deklaration `another_function` hat einen Parameter namens `x`. Der Typ von
 `x` wird als `i32` angegeben. Wenn wir `5` an `another_function` übergeben,
 setzt das Makro `println!` den Wert `5` an die Stelle, an der sich das Paar
-geschweifter Klammern mit dem `x` darin in der Formatierungszeichenkette
-befand.
+geschweifter Klammern mit dem `x` darin im Formatierungs-String befand.
 
 In Funktionssignaturen _musst_ du den Typ jedes Parameters deklarieren. Dies
 ist eine bewusste Designentscheidung von Rust: Das Erfordernis von
@@ -154,7 +153,7 @@ Funktionsrümpfe auswirken.
   Schauen wir uns einige Beispiele an.
 
 Eine Variable zu erstellen und ihr mit dem Schlüsselwort `let` einen Wert
-zuzuweisen, ist eine Anweisung. In Codeblock 3-1 ist `let y = 6;` eine
+zuzuweisen, ist eine Anweisung. In Listing 3-1 ist `let y = 6;` eine
 Anweisung.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -165,7 +164,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 3-1: Eine Funktionsdeklaration `main`, die eine
+<span class="caption">Listing 3-1: Eine Funktionsdeklaration `main`, die eine
 Anweisung enthält</span>
 
 Auch Funktionsdefinitionen sind Anweisungen; das gesamte vorhergehende Beispiel
@@ -223,7 +222,7 @@ als auch `y` haben den Wert `6`; das ist in Rust nicht der Fall.
 Ausdrücke werten zu einem Wert aus und machen den größten Teil des restlichen
 Codes aus, den du in Rust schreiben wirst. Betrachte eine mathematische
 Operation, z.B. `5 + 6`, die ein Ausdruck ist, der zum Wert `11` ausgewertet
-wird. Ausdrücke können Teil von Anweisungen sein: In Codeblock 3-1 ist die `6`
+wird. Ausdrücke können Teil von Anweisungen sein: In Listing 3-1 ist die `6`
 in der Anweisung `let y = 6;` ein Ausdruck, der den Wert `6` ergibt. Der Aufruf
 einer Funktion ist ein Ausdruck. Der Aufruf eines Makros ist ein Ausdruck. Ein
 neuer Gültigkeitsbereichsblock, der mit geschweiften Klammern erstellt wird,

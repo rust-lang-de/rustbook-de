@@ -1,4 +1,4 @@
-# Strukturen (structs) für zusammenhängende Daten verwenden
+# Strukturen für zusammenhängende Daten verwenden
 
 Eine _Struktur_ (struct) ist ein benutzerdefinierter Datentyp, mit dem man
 mehrere zusammenhängende Werte, die eine sinnvolle Gruppe bilden,

@@ -1,6 +1,6 @@
-## Referenzen und Ausleihen (borrowing)
+## Referenzen und Borrowing
 
-Das Problem mit dem Tupelcode in Codeblock 4-5 ist, dass wir der aufrufenden
+Das Problem mit dem Tupelcode in Listing 4-5 ist, dass wir der aufrufenden
 Funktion den `String` zurückgeben müssen, damit wir den `String` nach dem
 Aufruf von `calculate_length` weiter verwenden können, weil der `String` in
 `calculate_length` verschoben wurde. Stattdessen können wir eine Referenz auf
@@ -12,7 +12,7 @@ Wert eines bestimmten Typs zeigt.
 
 Im Folgenden siehst du, wie du eine Funktion `calculate_length` definieren und
 verwenden kannst, die eine Referenz auf ein Objekt als Parameter hat, anstatt
-die Eigentümerschaft (ownership) des Wertes zu übernehmen:
+das Eigentum am Wert zu übernehmen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -31,16 +31,15 @@ fn calculate_length(s: &String) -> usize {
 ```
 
 Beachte, dass der gesamte Tupelcode aus der Variablendeklaration und dem
-Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
-`&s1` an `calculate_length` übergeben und in seiner Definition `&String` statt
-`String` steht. Das `&`-Zeichen steht für eine Referenz, und sie ermöglicht
-es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
-übernehmen. Abbildung 4-6 zeigt die Speicherdarstellung.
+Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir `&s1`
+an `calculate_length` übergeben und in seiner Definition `&String` statt
+`String` steht. Das `&`-Zeichen steht für eine Referenz, und sie ermöglicht es
+dir, dich auf einen Wert zu beziehen, ohne dessen Eigentum zu übernehmen.
+Abbildung 4-6 zeigt die Speicherdarstellung.
 
 <img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
-Tabelle für s1. Die Tabelle für s1 enthält die Stapelspeicher-Daten für s1 und
-zeigt auf die Zeichenketten-Daten auf dem Haldenspeicher."
-src="img/trpl04-06.svg" class="center" />
+Tabelle für s1. Die Tabelle für s1 enthält die Stack-Daten für s1 und zeigt auf
+die String-Daten auf dem Heap." src="img/trpl04-06.svg" class="center" />
 
 <span class="caption">Abbildung 4-6: Eine Grafik mit `&String s`, das auf
 `String s1` zeigt</span>
@@ -85,25 +84,25 @@ Anmerkungen ergänzen:
 # }
 #
 fn calculate_length(s: &String) -> usize { // s ist eine Referenz
-                                           // auf eine Zeichenkette
+                                           // auf einen String
     s.len()
-} // Hier verlässt s den Gültigkeitsbereich. Aber weil es keine
-  // Eigentümerschaft an dem hat, worauf es referenziert, passiert nichts.
+} // Hier verlässt s den Gültigkeitsbereich. Aber weil es kein
+  // Eigentum daran hat, worauf es referenziert, passiert nichts.
 ```
 
-Der Gültigkeitsbereich, in dem die Variable `s` gültig ist, ist derselbe wie
-der Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
+Der Gültigkeitsbereich, in dem die Variable `s` gültig ist, ist derselbe wie der
+Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
 Referenz zeigt, wird nicht aufgeräumt, wenn `s` nicht mehr verwendet wird, weil
-`s` keine Eigentümerschaft hat. Wenn Funktionen statt der tatsächlichen Werte
-Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
-die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.
+`s` kein Eigentum hat. Wenn Funktionen statt der tatsächlichen Werte Referenzen
+als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um das Eigentum
+zurückzugeben, denn wir hatten nie das Eigentum.
 
-Wir nennen den Vorgang des Erstellens einer Referenz _Ausleihen_ (borrowing).
+Wir nennen den Vorgang des Erstellens einer Referenz _Borrowing_ (Ausleihen).
 Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von ihr
 ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir nicht.
 
-Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns
-ausleihen? Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!
+Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns ausleihen?
+Versuche den Code in Listing 4-6. Achtung: Es funktioniert nicht!
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -119,7 +118,7 @@ fn change(some_string: &String) {
 }
 ```
 
-<span class="caption">Codeblock 4-6: Versuch, einen ausgeliehenen Wert zu
+<span class="caption">Listing 4-6: Versuch, einen ausgeliehenen Wert zu
 verändern</span>
 
 Hier ist die Fehlermeldung:
@@ -148,9 +147,9 @@ Referenz haben.
 
 ### Veränderbare Referenzen
 
-Wir können den Code aus Codeblock 4-6 so ändern, dass wir einen geliehenen Wert
-mit ein paar kleinen Änderungen ändern können, die stattdessen eine
-_veränderbare Referenz_ verwenden:
+Wir können den Code aus Listing 4-6 mit nur wenigen kleinen Anpassungen so
+ändern, dass wir einen ausgeliehenen Wert verändern können; dabei setzen wir
+stattdessen eine _veränderbare Referenz_ ein:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -210,28 +209,27 @@ error: could not compile `playground` (bin "playground") due to 1 previous error
 
 Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir `s` nicht mehr
 als einmal zur gleichen Zeit als veränderbar ausleihen können. Die erste
-veränderbare Ausleihe ist in `r1` und muss beibehalten werden, bis sie in
+veränderbare Borrow ist in `r1` und muss beibehalten werden, bis sie in
 `println!` verwendet wird, aber zwischen dem Erstellen dieser veränderbaren
 Referenz und ihrer Verwendung haben wir versucht, eine andere veränderbare
 Referenz in `r2` zu erstellen, der die gleichen Daten wie `r1` ausleiht.
 
-Die Beschränkung, die mehrere veränderbare Referenz auf dieselben Daten zur
-gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr
-kontrollierten Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn
-in den meisten Sprachen kann man verändern wann immer man will. Diese
-Beschränkung hat den Vorteil, dass Rust Daten-Wettlaufsituation zur
-Kompilierzeit verhindern kann. Eine _Daten-Wettlaufsituation_ (data race) ist
-ähnlich einer Wettlaufsituation (race condition) und tritt auf, wenn diese drei
-Verhaltensweisen auftreten:
+Die Beschränkung, die mehrere veränderbare Referenzen auf dieselben Daten zur
+gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr kontrollierten
+Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn in den meisten
+Sprachen kann man verändern wann immer man will. Diese Beschränkung hat den
+Vorteil, dass Rust Data Races zur Kompilierzeit verhindern kann. Eine _Data
+Race_ ist ähnlich einer Race Condition (Wettlaufsituation) und tritt auf, wenn
+diese drei Verhaltensweisen vorliegen:
 
 - Zwei oder mehr Zeiger greifen gleichzeitig auf die gleichen Daten zu.
 - Mindestens einer der Zeiger wird zum Schreiben auf die Daten verwendet.
 - Es gibt keinen Mechanismus, um den Zugriff auf die Daten zu synchronisieren.
 
-Daten-Wettlaufsituationen verursachen undefiniertes Verhalten und können
-schwierig zu diagnostizieren und zu beheben sein, wenn du versuchst, sie zur
-Laufzeit aufzuspüren; Rust verhindert dieses Problem, indem es Code mit
-Daten-Wettlaufsituationen gar nicht erst kompiliert!
+Data Races verursachen undefiniertes Verhalten und können schwierig zu
+diagnostizieren und zu beheben sein, wenn du versuchst, sie zur Laufzeit
+aufzuspüren; Rust verhindert dieses Problem, indem es Code mit Data Races gar
+nicht erst kompiliert!
 
 Wie immer können wir geschweifte Klammern verwenden, um einen neuen
 Gültigkeitsbereich zu schaffen, der mehrere veränderbare Referenzen erlaubt,
@@ -315,11 +313,11 @@ veränderbare Referenz `r3` erstellt wird. Diese Gültigkeitsbereiche
 erkennen, dass die Referenz bereits vor dem Ende des Gültigkeitsbereichs nicht
 mehr verwendet wird.
 
-Auch wenn Fehler durch Ausleihen manchmal frustrierend sein können, denke
-daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
-nicht zur Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo
-das Problem liegt. Dann musst du nicht aufspüren, warum deine Daten nicht so
-sind, wie du dachtest.
+Auch wenn Fehler durch Borrowing manchmal frustrierend sein können, denke daran,
+dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und nicht zur
+Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo das
+Problem liegt. Dann musst du nicht aufspüren, warum deine Daten nicht so sind,
+wie du dachtest.
 
 ### Hängende Referenzen
 
@@ -332,8 +330,8 @@ niemals hängende Referenzen sein können: Wenn du eine Referenz auf Daten hast,
 stellt der Compiler sicher, dass die Daten nicht den Gültigkeitsbereich
 verlassen, bevor die Referenz auf die Daten dies tut.
 
-Versuchen wir, eine hängende Referenz zu erstellen, um zu sehen wie Rust das
-mit einem Kompilierfehler verhindert:
+Versuchen wir, eine hängende Referenz zu erstellen, um zu sehen wie Rust das mit
+einem Compilerfehler verhindert:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -396,11 +394,11 @@ Lass uns einen genaueren Blick auf das werfen, was in jeder Phase unseres
 # }
 #
 fn dangle() -> &String { // dangle gibt eine Referenz
-                         // auf eine Zeichenkette zurück
+                         // auf einen String zurück
 
-    let s = String::from("Hallo"); // s ist eine neue Zeichenkette
+    let s = String::from("Hallo"); // s ist ein neuer String
 
-    &s // wir geben einen Verweis auf die Zeichenkette s zurück
+    &s // wir geben eine Referenz auf den String s zurück
 } // Hier verlässt s den Gültigkeitsbereich und wird verworfen.
   // Sein Speicherplatz wird aufgeräumt. Gefahr!
 ```
@@ -424,8 +422,8 @@ fn no_dangle() -> String {
 }
 ```
 
-Dies funktioniert ohne Probleme. Die Eigentümerschaft wird nach außen
-verschoben, und nichts wird freigegeben.
+Dies funktioniert ohne Probleme. Das Eigentum wird nach außen verschoben, und
+nichts wird freigegeben.
 
 ### Regeln für Referenzen
 
@@ -435,5 +433,4 @@ Lass uns rekapitulieren, was wir über Referenzen gelernt haben:
   Referenz _oder_ eine beliebige Anzahl unveränderbarer Referenzen haben.
 - Referenzen müssen immer gültig sein.
 
-Als Nächstes werden wir uns mit einer anderen Art von Referenz befassen:
-Anteilstypen (slice).
+Als Nächstes werden wir uns mit einer anderen Art von Referenz befassen: Slices.

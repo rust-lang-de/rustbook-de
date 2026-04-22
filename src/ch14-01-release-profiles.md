@@ -1,9 +1,9 @@
-## Bauvorgang anpassen mit Freigabeprofilen (release profiles)
+## Bauvorgang anpassen mit Freigabeprofilen
 
-In Rust sind _Freigabeprofile_ vordefinierte und anpassbare Profile mit
-unterschiedlichen Konfigurationen, durch die ein Programmierer mehr Kontrolle
-über verschiedene Optionen zum Kompilieren von Programmcode hat. Jedes Profil
-wird von den anderen unabhängig konfiguriert.
+In Rust sind _Freigabeprofile_ (release profiles) vordefinierte und anpassbare
+Profile mit unterschiedlichen Konfigurationen, durch die ein Programmierer mehr
+Kontrolle über verschiedene Optionen zum Kompilieren von Programmcode hat. Jedes
+Profil wird von den anderen unabhängig konfiguriert.
 
 Cargo hat zwei Hauptprofile: Das Profil `dev`, das von Cargo verwendet wird, wenn
 du `cargo build` ausführst, und das Profil `release`, das Cargo verwendet, wenn
@@ -11,7 +11,8 @@ du `cargo build` ausführst, und das Profil `release`, das Cargo verwendet, wenn
 Standardeinstellungen für die Entwicklung (development) definiert und `release`
 hat gute Standardeinstellungen für Releasebuilds. [^1]
 
-Profilnamen die dir möglicherweise aus der Ausgabe beim Bauvorgang bekannt sind:
+Profilnamen, die dir möglicherweise aus der Ausgabe beim Bauvorgang bekannt
+sind:
 
 ```console
 $ cargo build
@@ -74,6 +75,6 @@ Releasebuild.
 Eine vollständige Liste der Konfigurationsoptionen und Standardeinstellungen für
 jedes Profil findest du in der [Cargo-Dokumentation][cargo1].
 
-[^1]: **Release**: Veröffentlichung, **Build**: Kompilierter Quelltext
+[^1]: **Release:** Veröffentlichung, **Build:** Kompilierter Quelltext
 
 [cargo1]: https://doc.rust-lang.org/cargo/reference/profiles.html

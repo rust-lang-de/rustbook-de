@@ -7,10 +7,9 @@ und liest Dateien. Für eine so kleine Funktion ist dies kein großes Problem.
 Wenn wir jedoch unser Programm innerhalb der Funktion `main` weiter ausbauen,
 wird die Anzahl der einzelnen Aufgaben, die die Funktion `main` bearbeitet,
 zunehmen. In dem Maße, wie eine Funktion an Verantwortung hinzugewinnt, wird es
-schwieriger sie zu verstehen, schwieriger sie zu testen und schwieriger sie zu
-ändern, ohne dass eines ihrer Teile kaputtgeht. Am besten ist es, die
-Funktionalität so aufzuteilen, dass jede Funktion für eine Aufgabe zuständig
-ist.
+schwieriger, sie zu verstehen, sie zu testen und sie zu ändern, ohne dass eines
+ihrer Teile kaputtgeht. Am besten ist es, die Funktionalität so aufzuteilen,
+dass jede Funktion für eine Aufgabe zuständig ist.
 
 Diese Frage hängt auch mit dem zweiten Problem zusammen: Obwohl `query` und
 `file_path` Konfigurationsvariablen unseres Programms sind, werden Variablen
@@ -77,7 +76,7 @@ folgen.
      
 Wir werden die Funktionalität für das Parsen von Argumenten in eine Funktion
 extrahieren, die von `main` aufgerufen wird, um das Verschieben der
-Kommandozeilen-Parselogik nach _src/lib.rs_ vorzubereiten. Codeblock 12-5 zeigt
+Kommandozeilen-Parselogik nach _src/lib.rs_ vorzubereiten. Listing 12-5 zeigt
 den neuen Anfang von `main`, der eine neue Funktion `parse_config` aufruft, die
 wir vorerst in _src/main.rs_ definieren werden.
 
@@ -100,7 +99,7 @@ fn main() {
 #     let contents = fs::read_to_string(file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 }
 
 fn parse_config(args: &[String]) -> (&str, &str) {
@@ -111,7 +110,7 @@ fn parse_config(args: &[String]) -> (&str, &str) {
 }
 ```
 
-<span class="caption">Codeblock 12-5: Extrahieren einer Funktion `parse_config`
+<span class="caption">Listing 12-5: Extrahieren einer Funktion `parse_config`
 aus `main`</span>
 
 Wir sammeln immer noch die Kommandozeilenargumente in einem Vektor, aber
@@ -148,7 +147,7 @@ Namen. Auf diese Weise wird es künftigen Entwicklern dieses Codes leichter
 fallen, zu verstehen, wie die verschiedenen Werte miteinander in Beziehung
 stehen und was ihr Zweck ist.
                                                    
-Codeblock 12-6 zeigt die Verbesserungen der Funktion `parse_config`.
+Listing 12-6 zeigt die Verbesserungen der Funktion `parse_config`.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -169,7 +168,7 @@ fn main() {
 
     // --abschneiden--
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 }
 
 struct Config {
@@ -185,43 +184,42 @@ fn parse_config(args: &[String]) -> Config {
 }
 ```
 
-<span class="caption">Codeblock 12-6: Refactorieren von `parse_config` zur
+<span class="caption">Listing 12-6: Refactorieren von `parse_config` zur
 Rückgabe einer Instanz einer `Config`-Struktur</span>
 
 Wir haben eine Struktur namens `Config` hinzugefügt, die so definiert ist, dass
 sie Felder mit den Namen `query` und `file_path` enthält. Die Signatur von
-`parse_config` zeigt nun an, dass sie einen `Config`-Wert zurückgibt. Im
-Rumpf von `parse_config`, wo wir früher Zeichenkettenanteilstypen (string
-slices) zurückgegeben haben, die auf `String`-Werte in `args` referenzieren,
-definieren wir `Config` jetzt so, dass es aneigenbare (owned) `String`-Werte
-enthält. Die `args`-Variable in `main` ist der Eigentümer der Argumentwerte und
-lässt die Funktion `parse_config` diese nur ausleihen, was bedeutet, dass wir
-Rusts Regeln für das Ausleihen verletzen würden, wenn `Config` versucht, die
-Eigentümerschaft für die Werte in `args` zu nehmen.
+`parse_config` zeigt nun an, dass sie einen `Config`-Wert zurückgibt. Im Rumpf
+von `parse_config`, wo wir früher String Slices zurückgegeben haben, die auf
+`String`-Werte in `args` referenzieren, definieren wir `Config` jetzt so, dass
+es besitzende (owned) `String`-Werte enthält. Die `args`-Variable in `main` ist
+der Eigentümer der Argumentwerte und lässt die Funktion `parse_config` diese nur
+ausleihen, was bedeutet, dass wir Rusts Regeln für das Borrowing verletzen
+würden, wenn `Config` versucht, das Eigentum an den Werten in `args` zu
+übernehmen.
 
 Wir könnten die `String`-Daten auf verschiedene Weise verwalten, aber der
 einfachste, wenn auch etwas ineffiziente Weg ist es, die Methode `clone` der
 Werte aufzurufen. Dadurch wird eine vollständige Kopie der Daten erstellt, die
 die `Config`-Instanz besitzen soll, was mehr Zeit und Speicherplatz in Anspruch
-nimmt als das Speichern einer Referenz auf die Zeichenkettendaten. Das Klonen
-der Daten macht unseren Code jedoch auch sehr unkompliziert, weil wir die
-Lebensdauer der Referenzen nicht verwalten müssen; unter diesen Umständen ist
-es ein lohnender Kompromiss, ein wenig Leistung aufzugeben, um Einfachheit zu
+nimmt als das Speichern einer Referenz auf die String-Daten. Das Klonen der
+Daten macht unseren Code jedoch auch sehr unkompliziert, weil wir die
+Lebensdauer der Referenzen nicht verwalten müssen; unter diesen Umständen ist es
+ein lohnender Kompromiss, ein wenig Leistung aufzugeben, um Einfachheit zu
 bekommen.
 
 > ### Die Kompromisse beim Verwenden von `clone`
 >
 > Viele Rust-Entwickler neigen dazu, das Verwenden von `clone` zur Lösung von
-> Eigentümerschaftsproblemen wegen der Laufzeitkosten zu vermeiden. In [Kapitel
-> 13][ch13] erfährst du, wie du in solchen Situationen effizientere Methoden
-> einsetzen kannst. Aber für den Moment ist es in Ordnung, ein paar
-> Zeichenketten zu kopieren, um weiter voranzukommen, da du diese Kopien nur
-> einmal erstellen wirst und dein Dateipfad und deine Suchzeichenkette sehr
-> klein sind. Es ist besser, ein funktionierendes Programm zu haben, das ein
-> bisschen ineffizient ist, als zu versuchen, den Code beim ersten Durchgang zu
-> hyperoptimieren. Je mehr Erfahrung du mit Rust sammelst, desto einfacher wird
-> es, mit der effizientesten Lösung zu beginnen, aber im Moment ist es völlig
-> akzeptabel, `clone` aufzurufen.
+> Eigentumsproblemen wegen der Laufzeitkosten zu vermeiden. In [Kapitel 13][ch13]
+> erfährst du, wie du in solchen Situationen effizientere Methoden einsetzen
+> kannst. Aber für den Moment ist es in Ordnung, ein paar Strings zu kopieren, um
+> weiter voranzukommen, da du diese Kopien nur einmal erstellen wirst und dein
+> Dateipfad und deinen Such-String sehr klein sind. Es ist besser, ein
+> funktionierendes Programm zu haben, das ein bisschen ineffizient ist, als zu
+> versuchen, den Code beim ersten Durchgang zu hyperoptimieren. Je mehr Erfahrung
+> du mit Rust sammelst, desto einfacher wird es, mit der effizientesten Lösung zu
+> beginnen, aber im Moment ist es völlig akzeptabel, `clone` aufzurufen.
 
 Wir haben `main` aktualisiert, sodass es die Instanz von `Config`, die von
 `parse_config` zurückgegeben wird, in eine Variable namens `config` setzt, und
@@ -252,7 +250,7 @@ assoziiert ist. Durch diese Änderung wird der Code idiomatischer. Wir können
 Instanzen von Typen in der Standardbibliothek erstellen, wie bei `String`,
 indem wir `String::new` aufrufen. In ähnlicher Weise können wir durch Ändern
 von `parse_config` in eine Funktion `new`, die mit `Config` assoziiert ist,
-Instanzen von `Config` durch Aufrufen von `Config::new` erzeugen. Codeblock
+Instanzen von `Config` durch Aufrufen von `Config::new` erzeugen. Listing
 12-7 zeigt die Änderungen, die wir vornehmen müssen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -272,7 +270,7 @@ fn main() {
 #     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 #
     // --abschneiden--
 }
@@ -294,7 +292,7 @@ impl Config {
 }
 ```
 
-<span class="caption">Codeblock 12-7: Ändern von `parse_config` in
+<span class="caption">Listing 12-7: Ändern von `parse_config` in
 `Config::new`</span>
 
 Wir haben `main` aktualisiert, wo wir `parse_config` aufgerufen haben, um
@@ -306,10 +304,10 @@ kompilieren, um sicherzustellen, dass er funktioniert.
 ### Korrigieren der Fehlerbehandlung
 
 Jetzt werden wir daran arbeiten, unsere Fehlerbehandlung zu korrigieren.
-Erinnere dich, dass der Versuch, auf die Werte im `args`-Vektor bei Index 1
-oder Index 2 zuzugreifen, das Programm zum Absturz bringt, wenn der Vektor
-weniger als drei Elemente enthält. Versuche, das Programm ohne irgendwelche
-Argumente laufen zu lassen; es wird so aussehen:
+Erinnere dich, dass der Versuch, auf die Werte im `args`-Vektor bei Index 1 oder
+Index 2 zuzugreifen, das Programm abbrecht, wenn der Vektor weniger als drei
+Elemente enthält. Versuche, das Programm ohne irgendwelche Argumente laufen zu
+lassen; es wird so aussehen:
 
 ```console
 $ cargo run
@@ -328,10 +326,10 @@ korrigieren.
 
 #### Verbessern der Fehlermeldung
 
-In Codeblock 12-8 fügen wir eine Prüfung in der Funktion `new` hinzu, die
-überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und Index 2
-zugegriffen wird. Wenn der Anteilstyp nicht lang genug ist, stürzt das Programm
-ab und zeigt eine bessere Fehlermeldung an.
+In Listing 12-8 fügen wir eine Prüfung in der Funktion `new` hinzu, die
+überprüft, ob der Slice lang genug ist, bevor auf Index 1 und Index 2
+zugegriffen wird. Wenn der Slice nicht lang genug ist, bricht das Programm ab
+und zeigt eine bessere Fehlermeldung an.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -350,7 +348,7 @@ ab und zeigt eine bessere Fehlermeldung an.
 #     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 # }
 #
 # struct Config {
@@ -374,17 +372,17 @@ ab und zeigt eine bessere Fehlermeldung an.
 # }
 ```
 
-<span class="caption">Codeblock 12-8: Hinzufügen einer Prüfung für die Anzahl
+<span class="caption">Listing 12-8: Hinzufügen einer Prüfung für die Anzahl
 der Argumente</span>
 
-Dieser Code ähnelt [der Funktion `Guess::new`, die wir in Codeblock
+Dieser Code ähnelt [der Funktion `Guess::new`, die wir in Listing
 9-13][ch9-custom-types] geschrieben haben, wo wir `panic!` aufgerufen haben,
-wenn das Argument `value` außerhalb des gültigen Wertebereichs lag. Anstatt
-hier auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von `args`
-mindestens `3` beträgt und der Rest der Funktion unter der Annahme arbeiten
-kann, dass diese Bedingung erfüllt ist. Wenn `args` weniger als drei Elemente
-hat, wird diese Bedingung `true` und wir rufen das Makro `panic!` auf, um das
-Programm sofort zu beenden.
+wenn das Argument `value` außerhalb des gültigen Wertebereichs lag. Anstatt hier
+auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von `args` mindestens
+`3` beträgt und der Rest der Funktion unter der Annahme arbeiten kann, dass
+diese Bedingung erfüllt ist. Wenn `args` weniger als drei Elemente hat, wird
+diese Bedingung `true` und wir rufen das Makro `panic!` auf, um das Programm
+sofort abzubrechen.
 
 Mit diesen zusätzlichen wenigen Zeilen Code in `new` lassen wir das Programm
 ohne Argumente erneut laufen, um zu sehen, wie der Fehler jetzt aussieht:
@@ -402,7 +400,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 Diese Ausgabe ist besser: Wir haben jetzt eine vernünftige Fehlermeldung. Wir
 haben jedoch auch irrelevante Informationen, die wir unseren Benutzern nicht
-geben wollen. Vielleicht ist die Technik, die wir in Codeblock 9-13 verwendet
+geben wollen. Vielleicht ist die Technik, die wir in Listing 9-13 verwendet
 haben, hier nicht die beste: Das Aufrufen von `panic!` ist für ein
 Programmierproblem besser geeignet als für ein Nutzungsproblem, [wie in Kapitel
 9 besprochen][ch9-error-guidelines]. Stattdessen können wir die andere Technik
@@ -421,10 +419,10 @@ um zu signalisieren, dass ein Problem aufgetreten ist. Dann können wir `main`
 Benutzer umzuwandeln, ohne den umgebenden Text über `thread 'main'` und
 `RUST_BACKTRACE`, den ein Aufruf von `panic!` verursacht.
 
-Codeblock 12-9 zeigt die Änderungen, die wir am Rückgabewert der Funktion, die
+Listing 12-9 zeigt die Änderungen, die wir am Rückgabewert der Funktion, die
 nun `Config::build` aufruft, und am Funktionsrumpf vornehmen müssen, um ein
 `Result` zurückzugeben. Beachte, dass dies nicht kompiliert werden kann, bis
-wir auch `main` aktualisieren, was wir im nächsten Codeblock tun werden.
+wir auch `main` aktualisieren, was wir im nächsten Listing tun werden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -443,7 +441,7 @@ wir auch `main` aktualisieren, was wir im nächsten Codeblock tun werden.
 #     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 # }
 #
 # struct Config {
@@ -465,12 +463,12 @@ impl Config {
 }
 ```
 
-<span class="caption">Codeblock 12-9: Rückgabe eines `Result` von
+<span class="caption">Listing 12-9: Rückgabe eines `Result` von
 `Config::build`</span>
 
 Unsere Funktion `build` liefert ein `Result` mit einer `Config`-Instanz im
-Erfolgsfall und ein Zeichenkettenliteral im Fehlerfall. Unsere Fehlerwerte
-werden immer Zeichenketten-Literale sein, die eine `'static` Lebensdauer haben.
+Erfolgsfall und ein String-Literal im Fehlerfall. Unsere Fehlerwerte werden
+immer String-Literale sein, die eine `'static` Lebensdauer haben.
 
 Wir haben zwei Änderungen im Rumpf der Funktion vorgenommen: Anstatt `panic!`
 aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben wir jetzt
@@ -486,7 +484,7 @@ und den Prozess im Fehlerfall sauberer zu beenden.
 
 Um den Fehlerfall zu behandeln und eine benutzerfreundliche Meldung auszugeben,
 müssen wir `main` aktualisieren, um das von `Config::build` zurückgegebene
-`Result` zu behandeln, wie in Codeblock 12-10 gezeigt. Wir werden auch die
+`Result` zu behandeln, wie in Listing 12-10 gezeigt. Wir werden auch die
 Verantwortung dafür übernehmen, das Kommandozeilenwerkzeug mit einem Fehlercode
 ungleich Null wie bei `panic!` zu beenden und es von Hand zu implementieren.
 Ein Exit-Status ungleich Null ist eine Konvention, um dem Prozess, der unser
@@ -516,7 +514,7 @@ fn main() {
 #     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 # }
 #
 # struct Config {
@@ -538,33 +536,32 @@ fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 12-10: Beenden mit einem Fehlercode, wenn das
+<span class="caption">Listing 12-10: Beenden mit einem Fehlercode, wenn das
 Erstellen einer `Config` fehlschlägt</span>
 
-In diesem Codeblock haben wir eine Methode verwendet, die wir bisher noch
-nicht behandelt haben: `unwrap_or_else`, die in der Standardbibliothek unter
-`Result<T, E>` definiert ist. Das Verwenden von `unwrap_or_else` erlaubt es
-uns, eine benutzerdefinierte nicht-`panic!`-Fehlerbehandlung zu definieren.
-Wenn das `Result` ein `Ok`-Wert ist, verhält sich diese Methode ähnlich wie
-`unwrap`: Sie gibt den inneren Wert von `Ok` zurück. Wenn der Wert jedoch ein
-`Err`-Wert ist, ruft diese Methode den Code im Funktionsabschluss (closure)
-auf, die eine anonyme Funktion ist, die wir definieren und als Argument an
-`unwrap_or_else` übergeben. Auf Funktionsabschlüsse gehen wir ausführlicher in
-[Kapitel 13][ch13] ein. Im Moment musst du nur wissen, dass `unwrap_or_else`
-den inneren Wert des `Err`, in diesem Fall die statische Zeichenkette `Nicht
-genügend Argumente`, die wir in Codeblock 12-9 hinzugefügt haben, an unseren
-Funktionsabschluss im Argument `err`, das zwischen den senkrechten Strichen
-erscheint, weitergibt. Der Code im Funktionsabschluss kann dann den `err`-Wert
-verwenden, wenn sie ausgeführt wird.
+In diesem Listing haben wir eine Methode verwendet, die wir bisher noch nicht
+behandelt haben: `unwrap_or_else`, die in der Standardbibliothek unter
+`Result<T, E>` definiert ist. Das Verwenden von `unwrap_or_else` erlaubt es uns,
+eine benutzerdefinierte nicht-`panic!`-Fehlerbehandlung zu definieren. Wenn das
+`Result` ein `Ok`-Wert ist, verhält sich diese Methode ähnlich wie `unwrap`: Sie
+gibt den inneren Wert von `Ok` zurück. Wenn der Wert jedoch ein `Err`-Wert ist,
+ruft diese Methode den Code im Closure auf, der eine anonyme Funktion ist, die
+wir definieren und als Argument an `unwrap_or_else` übergeben. Auf Closures
+gehen wir ausführlicher in [Kapitel 13][ch13] ein. Im Moment musst du nur
+wissen, dass `unwrap_or_else` den inneren Wert von `Err`, in diesem Fall der
+statische String `Nicht genügend Argumente`, den wir in Listing 12-9 hinzugefügt
+haben, an unseren Closure im Argument `err`, das zwischen den senkrechten
+Strichen erscheint, weitergibt. Der Code im Closure kann dann den `err`-Wert
+verwenden, wenn der ausgeführt wird.
 
 Wir haben eine neue Zeile `use` hinzugefügt, um `process` aus der
-Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code im
-Funktionsabschluss, der im Fehlerfall ausgeführt wird, besteht nur aus zwei
-Zeilen: Wir geben den `err`-Wert aus und rufen dann `process::exit` auf. Die
-Funktion `process::exit` stoppt das Programm sofort und gibt die Zahl zurück,
-die als Exit-Statuscode übergeben wurde. Dies ähnelt der `panic!`-basierten
-Behandlung, die wir in Codeblock 12-8 verwendet haben, aber wir erhalten nicht
-mehr die gesamte zusätzliche Ausgabe. Lass es uns versuchen:
+Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code im Closure,
+der im Fehlerfall ausgeführt wird, besteht nur aus zwei Zeilen: Wir geben den
+`err`-Wert aus und rufen dann `process::exit` auf. Die Funktion `process::exit`
+stoppt das Programm sofort und gibt die Zahl zurück, die als Exit-Statuscode
+übergeben wurde. Dies ähnelt der `panic!`-basierten Behandlung, die wir in
+Listing 12-8 verwendet haben, aber wir erhalten nicht mehr die gesamte
+zusätzliche Ausgabe. Lass es uns versuchen:
 
 ```console
 $ cargo run
@@ -588,7 +585,7 @@ fertig sind, wird die Funktion `main` übersichtlich und leicht zu verifizieren
 sein. Zudem werden wir in der Lage sein, Tests für all die andere Logik zu
 schreiben.
 
-Codeblock 12-11 zeigt die extrahierte Funktion `run`. Im Moment machen wir nur
+Listing 12-11 zeigt die extrahierte Funktion `run`. Im Moment machen wir nur
 die kleine, inkrementelle Verbesserung durch Extrahieren der Funktion. Wir sind
 immer noch dabei, die Funktion in _src/main.rs_ zu definieren.
 
@@ -619,7 +616,7 @@ fn run(config: Config) {
     let contents = fs::read_to_string(config.file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
-    println!("Mit text:\n{contents}");
+    println!("Mit Text:\n{contents}");
 }
 
 // --abschneiden--
@@ -643,7 +640,7 @@ fn run(config: Config) {
 # }
 ```
 
-<span class="caption">Codeblock 12-11: Extrahieren einer Funktion `run`, die
+<span class="caption">Listing 12-11: Extrahieren einer Funktion `run`, die
 den Rest der Programmlogik enthält</span>
 
 Die Funktion `run` enthält nun die gesamte restliche Logik von `main`,
@@ -652,14 +649,14 @@ beginnend mit dem Lesen der Datei. Die Funktion `run` nimmt die
 
 #### Fehlerrückgabe aus `run`
 
-Wenn die verbleibende Programmlogik in die Funktion `run` separiert wird,
-können wir die Fehlerbehandlung verbessern, wie wir es mit `Config::build` in
-Codeblock 12-9 getan haben. Anstatt das Programm durch den Aufruf von `expect`
-abstürzen zu lassen, gibt die Funktion `run` ein `Result<T, E>` zurück, wenn
-etwas schief läuft. Auf diese Weise können wir in `main` die Logik rund um den
-Umgang mit Fehlern auf benutzerfreundliche Weise weiter konsolidieren.
-Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
-`run` vornehmen müssen.
+Wenn die verbleibende Programmlogik in die Funktion `run` separiert wird, können
+wir die Fehlerbehandlung verbessern, wie wir es mit `Config::build` in Listing
+12-9 getan haben. Anstatt das Programm durch den Aufruf von `expect` abbrechen
+zu lassen, gibt die Funktion `run` ein `Result<T, E>` zurück, wenn etwas schief
+läuft. Auf diese Weise können wir in `main` die Logik rund um den Umgang mit
+Fehlern auf benutzerfreundliche Weise weiter konsolidieren. Listing 12-12
+zeigt die Änderungen, die wir an der Signatur und dem Rumpf von `run` vornehmen
+müssen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -688,7 +685,7 @@ use std::error::Error;
 fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.file_path)?;
 
-    println!("Mit text:\n{contents}");
+    println!("Mit Text:\n{contents}");
 
     Ok(())
 }
@@ -712,7 +709,7 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 # }
 ```
 
-<span class="caption">Codeblock 12-12: Ändern der Funktion `run`, um ein
+<span class="caption">Listing 12-12: Ändern der Funktion `run`, um ein
 `Result` zurückzugeben</span>
 
 Wir haben hier drei wesentliche Änderungen vorgenommen. Erstens haben wir den
@@ -720,13 +717,13 @@ Rückgabetyp der Funktion `run` in `Result<(), Box<dyn Error>>` geändert. Diese
 Funktion gab zuvor den Einheitstyp `()` zurück und wir behalten diesen als
 Rückgabewert im Fall `Ok` bei.
 
-Für den Fehlertyp haben wir das Merkmalsobjekt (trait object) `Box<dyn Error>`
-verwendet (und wir haben `std::error::Error` mit einer `use`-Anweisung am
-Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
-[Kapitel 18][ch18] behandeln. Für den Moment solltest du nur wissen, dass
-`Box<dyn Error>` bedeutet, dass die Funktion einen Typ zurückgibt, der das
-Merkmal `Error` implementiert, aber wir müssen nicht angeben, welcher bestimmte
-Typ der Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
+Für den Fehlertyp haben wir das Trait-Objekt `Box<dyn Error>` verwendet (und wir
+haben `std::error::Error` mit einer `use`-Anweisung am Anfang des
+Gültigkeitsbereichs eingebunden). Wir werden Trait-Objekte in [Kapitel 18][ch18]
+behandeln. Für den Moment solltest du nur wissen, dass `Box<dyn Error>`
+bedeutet, dass die Funktion einen Typ zurückgibt, der das Trait `Error`
+implementiert, aber wir müssen nicht angeben, welcher bestimmte Typ der
+Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
 zurückzugeben, die in verschiedenen Fehlerfällen von unterschiedlichem Typ sein
 können. Das Schlüsselwort `dyn` ist die Abkürzung für _dynamisch_.
 
@@ -767,7 +764,7 @@ warning: `minigrep` (bin "minigrep") generated 1 warning
      Running `target/debug/minigrep the poem.txt`
 Suche nach the
 In Datei poem.txt
-Mit text:
+Mit Text:
 I'm nobody! Who are you?
 Are you nobody, too?
 Then there's a pair of us - don't tell!
@@ -788,7 +785,7 @@ Fehlerbehandlungscode zu haben! Lass uns dieses Problem jetzt beheben.
 #### Behandeln von Fehlern, die von `run` in `main` zurückgegeben wurden
 
 Wir werden nach Fehlern suchen und sie mit einer Technik behandeln, die ähnlich
-der Technik ist, die wir mit `Config::build` in Codeblock 12-10 verwendet
+der Technik ist, die wir mit `Config::build` in Listing 12-10 verwendet
 haben, aber mit einem kleinen Unterschied:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -821,7 +818,7 @@ fn main() {
 # fn run(config: Config) -> Result<(), Box<dyn Error>> {
 #     let contents = fs::read_to_string(config.file_path)?;
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 #
 #     Ok(())
 # }
@@ -856,7 +853,7 @@ ausgepackten Wert zurückzugeben, der nur `()` wäre.
 Die Rümpfe von `if let` und der `unwrap_or_else`-Funktionen sind in beiden
 Fällen gleich: Wir geben den Fehler aus und beenden.
 
-### Code in eine Bibliothekskiste aufteilen
+### Code in eine Bibliotheks-Crate aufteilen
 
 Unser `minigrep`-Projekt sieht soweit gut aus! Jetzt teilen wir die Datei
 _src/main.rs_ auf und fügen etwas Code in die Datei _src/lib.rs_ ein. Auf
@@ -869,7 +866,7 @@ Bibliothek `minigrep` verwendet) die Suchfunktion aus mehr Kontexten als nur
 unserer Binärdatei `minigrep` aufrufen.
 
 Zunächst definieren wir die Signatur der Funktion `search` in _src/lib.rs_, wie
-in Codeblock 12-13 gezeigt, mit einem Rumpf, der das Makro `unimplemented!`
+in Listing 12-13 gezeigt, mit einem Rumpf, der das Makro `unimplemented!`
 aufruft. Wir werden die Signatur genauer erklären, wenn wir die Implementierung
 ausfüllen.
 
@@ -881,16 +878,16 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 }
 ```
 
-<span class="caption">Codeblock 12-13: Definieren der Funktion `search` in
+<span class="caption">Listing 12-13: Definieren der Funktion `search` in
 _src/lib.rs_</span>
 
 Wir haben das Schlüsselwort `pub` in der Funktionsdefinition verwendet, um
-`search` als Teil der öffentlichen API unserer Bibliothekskiste zu
-kennzeichnen. Wir haben nun eine Bibliothekskiste, die wir aus unserer
-Binärkiste heraus verwenden und testen können!
+`search` als Teil der öffentlichen API unserer Bibliotheks-Crate zu
+kennzeichnen. Wir haben nun eine Bibliotheks-Crate, die wir aus unserer binären
+Crate heraus verwenden und testen können!
 
 Jetzt müssen wir den in _src/lib.rs_ definierten Code in den Gültigkeitsbereich
-der Binärkiste in _src/main.rs_ bringen und ihn aufrufen, wie in Codeblock
+der binären Crate in _src/main.rs_ bringen und ihn aufrufen, wie in Listing
 12-14 zu sehen ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -950,11 +947,11 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 }
 ```
 
-<span class="caption">Codeblock 12-14: Verwenden der
-`minigrep`-Bibliothekskiste in _src/main.rs_</span>
+<span class="caption">Listing 12-14: Verwenden der Bibliotheks-Crate
+`minigrep` in _src/main.rs_</span>
 
-Wir fügen eine Zeile `use minigrep::Config` hinzu, um den Typ `Config` aus der
-Bibliothekskiste in den Gültigkeitsbereich der Binärkiste zu bringen. Dann
+Wir fügen eine Zeile `use minigrep::search` hinzu, um den Typ `Config` aus der
+Bibliotheks-Crate in den Gültigkeitsbereich der binären Crate zu bringen. Dann
 rufen wir in der Funktion `run` anstatt den Inhalt der Datei auszugeben die
 Funktion `search` auf und übergeben den Wert `config.query` und `contents` als
 Argumente. Anschließend verwendet `run` eine `for`-Schleife, um jede von

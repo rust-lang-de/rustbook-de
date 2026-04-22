@@ -16,8 +16,7 @@ Projekt namens _variables_ in deinem _projects_-Verzeichnis an, indem du
 `cargo new variables` aufrufst.
 
 Öffne dann in deinem neuen Verzeichnis _variables_ die Datei _src/main.rs_ und
-ersetze dessen Code durch folgenden Code, der sich sich noch nicht kompilieren
-lässt:
+ersetze dessen Code durch folgenden Code, der sich noch nicht kompilieren lässt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -56,10 +55,10 @@ error: could not compile `variables` (bin "variables") due to 1 previous error
 ```
 
 Dieses Beispiel zeigt, wie der Compiler dir hilft, Fehler in deinen Programmen
-zu finden. Kompilierfehler können frustrierend sein, aber eigentlich bedeuten
-sie nur, dass dein Programm noch nicht sicher das tut, was du willst; sie
-bedeuten _nicht_, dass du kein guter Programmierer bist! Erfahrene
-Rust-Entwickler bekommen ebenfalls noch Kompilierfehler.
+zu finden. Compilerfehler können frustrierend sein, aber eigentlich bedeuten sie
+nur, dass dein Programm noch nicht sicher das tut, was du willst; sie bedeuten
+_nicht_, dass du kein guter Programmierer bist! Erfahrene Rust-Entwickler
+bekommen ebenfalls noch Compilerfehler.
 
 Du hast die Fehlermeldung `cannot assign twice to immutable variable x`
 erhalten, weil du versucht hast, der unveränderbaren Variablen `x` einen
@@ -203,7 +202,7 @@ Klammern geschaffen wird, verschattet die dritte `let`-Anweisung dann ebenfalls
 `x` und erzeugt eine neue Variable, wobei der vorherige Wert mit `2`
 multipliziert wird, um `x` einen Wert von `12` zu geben. Wenn dieser
 Gültigkeitsbereich zu Ende ist, endet die innere Verschattung und `x` wird
-wieder zu `6`. Wenn wir dieses Programm ausführen, wird es folgendes ausgeben:
+wieder zu `6`. Wenn wir dieses Programm ausführen, wird Folgendes ausgegeben:
 
 ```console
 $ cargo run
@@ -215,11 +214,11 @@ Der Wert von x ist: 6
 ```
 
 Verschatten unterscheidet sich vom Markieren einer Variable mit `mut`, weil wir
-einen Kompilierfehler erhalten, wenn wir versehentlich versuchen, diese
-Variable neu zuzuweisen, ohne das Schlüsselwort `let` zu verwenden. Durch das
-Verwenden von `let` können wir einige wenige Transformationen an einem Wert
-durchführen, aber die Variable ist unveränderbar, nachdem diese
-Transformationen abgeschlossen sind.
+einen Compilerfehler erhalten, wenn wir versehentlich versuchen, diese Variable
+neu zuzuweisen, ohne das Schlüsselwort `let` zu verwenden. Durch das Verwenden
+von `let` können wir einige wenige Transformationen an einem Wert durchführen,
+aber die Variable ist unveränderbar, nachdem diese Transformationen
+abgeschlossen sind.
 
 Der andere Unterschied zwischen `mut` und Verschatten besteht darin, dass wir,
 weil wir effektiv eine neue Variable erstellen, wenn wir das Schlüsselwort
@@ -237,8 +236,8 @@ let spaces = spaces.len();
 Die erste Variable `spaces` ist ein String-Typ und die zweite Variable `spaces`
 ist ein Zahlentyp Integer. Das Verschatten erspart es uns also, uns verschiedene
 Namen auszudenken, z.B. `spaces_str` und `spaces_num`; stattdessen können wir
-den einfacheren Namen `spaces` wiederverwenden. Wenn wir jedoch versuchen,
-dafür `mut` zu verwenden, wie hier gezeigt, erhalten wir einen Kompilierfehler:
+den einfacheren Namen `spaces` wiederverwenden. Wenn wir jedoch versuchen, dafür
+`mut` zu verwenden, wie hier gezeigt, erhalten wir einen Compilerfehler:
 
 ```rust,does_not_compile
 let mut spaces = "   ";

@@ -1,4 +1,4 @@
-# Generische Typen, Merkmale (traits) und Lebensdauer
+# Generische Typen, Traits und Lebensdauer
 
 Jede Programmiersprache verfügt über Werkzeuge, mit denen die Duplizierung von
 Konzepten (duplication of concepts) effektiv gehandhabt werden kann. In Rust
@@ -23,8 +23,8 @@ generische Funktion zu machen. Wir werden auch erklären, wie generische Typen
 in Struktur- (struct) und Aufzählungsdefinitionen (enum) verwendet werden
 können.
 
-Dann wirst du lernen, wie man Merkmale (traits) verwendet, um Verhalten auf
-generische Weise zu definieren. Du kannst Merkmale mit generischen Typen
+Dann wirst du lernen, wie man Traits (Merkmale) verwendet, um Verhalten auf
+generische Weise zu definieren. Du kannst Traits mit generischen Typen
 kombinieren, um einen generischen Typ auf solche Typen einzuschränken, die ein
 bestimmtes Verhalten aufweisen, im Gegensatz zu einem beliebigen Typ.
 
@@ -48,7 +48,7 @@ ansiehst, wie du doppelten Code erkennst, den du in eine Funktion extrahieren
 kannst, wirst du beginnen, doppelten Code zu erkennen, der generische Typen
 verwenden kann.
 
-Wir werden mit dem kurzen Programm in Codeblock 10-1 beginnen, das die größte
+Wir werden mit dem kurzen Programm in Listing 10-1 beginnen, das die größte
 Zahl in einer Liste findet.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -70,7 +70,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 10-1: Finden der größten Zahl in einer Liste
+<span class="caption">Listing 10-1: Finden der größten Zahl in einer Liste
 von Zahlen</span>
 
 Wir speichern eine Liste von ganzen Zahlen in der Variablen `number_list` und
@@ -83,9 +83,9 @@ zur nächsten Zahl in der Liste weiter. Nach dem Durchlaufen aller Zahlen in der
 Liste sollte `largest` auf die größte Zahl referenzieren, in diesem Fall 100.
 
 Wir haben nun die Aufgabe bekommen, die größte Zahl in zwei verschiedenen
-Zahlenlisten zu finden. Zu diesem Zweck können wir den Code in Codeblock 10-1
+Zahlenlisten zu finden. Zu diesem Zweck können wir den Code in Listing 10-1
 duplizieren und dieselbe Logik an zwei verschiedenen Stellen im Programm
-verwenden, wie in Codeblock 10-2 gezeigt.
+verwenden, wie in Listing 10-2 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -117,7 +117,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 10-2: Code zum Auffinden der größten Zahl in
+<span class="caption">Listing 10-2: Code zum Auffinden der größten Zahl in
 _zwei_ Zahlenlisten</span>
 
 Obwohl dieser Code funktioniert, ist das Duplizieren von Code mühsam und
@@ -130,9 +130,9 @@ operiert, die ihr als Parameter übergeben wird. Diese Lösung macht unseren Cod
 klarer und lässt uns das Konzept, die größte Zahl in einer Liste zu finden,
 abstrakter ausdrücken.
 
-In Codeblock 10-3 extrahieren wir den Code, der die größte Zahl findet, in eine
+In Listing 10-3 extrahieren wir den Code, der die größte Zahl findet, in eine
 Funktion namens `largest`. Dann rufen wir die Funktion auf, um die größte Zahl
-in den beiden Listen aus Codeblock 10-2 zu finden. Wir könnten die Funktion
+in den beiden Listen aus Listing 10-2 zu finden. Wir könnten die Funktion
 auch auf jede andere Liste von `i32`-Werten anwenden, die wir in Zukunft haben
 könnten.
 
@@ -166,16 +166,15 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 10-3: Abstrahierter Code, um die größte Zahl in
+<span class="caption">Listing 10-3: Abstrahierter Code, um die größte Zahl in
 zwei Listen zu finden</span>
 
-Die Funktion `largest` hat einen Parameter `list`, der einen beliebigen
-Anteilstyp von `i32`-Werten repräsentiert, die wir an die Funktion übergeben
-könnten. Wenn wir die Funktion aufrufen, läuft der Code also auf den
-spezifischen Werten, die wir übergeben.
+Die Funktion `largest` hat einen Parameter `list`, der einen beliebigen Slice
+von `i32`-Werten repräsentiert, die wir an die Funktion übergeben könnten. Wenn
+wir die Funktion aufrufen, verarbeitet der Code die übergebenen Werte.
 
 Zusammenfassend hier die Schritte, die wir unternommen haben, um den Code aus
-Codeblock 10-2 in Codeblock 10-3 zu überführen:
+Listing 10-2 in Listing 10-3 zu überführen:
 
 1. Identifiziere doppelten Code.
 2. Extrahiere den doppelten Code in den Funktionskörper und spezifiziere die
@@ -189,6 +188,6 @@ abstrakten Liste anstelle spezifischer Werte arbeiten kann, erlauben es
 generische Datentypen, auf abstrakten Typen zu arbeiten.
 
 Nehmen wir zum Beispiel an, wir hätten zwei Funktionen: Eine, die das größte
-Element in einem Anteilstyp mit `i32`-Werten findet, und eine, die das größte
-Element in einem Anteilstyp mit `char`-Werten findet. Wie würden wir diese
-Duplizierung beseitigen? Lass es uns herausfinden!
+Element in einem Slice mit `i32`-Werten findet, und eine, die das größte Element
+in einem Slice mit `char`-Werten findet. Wie würden wir diese Duplizierung
+beseitigen? Lass es uns herausfinden!

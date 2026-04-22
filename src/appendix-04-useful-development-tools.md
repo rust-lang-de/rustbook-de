@@ -24,7 +24,7 @@ formatieren, gibst du Folgendes ein:
 $ cargo fmt
 ```
 
-Mit diesem Befehl wird der gesamte Rust-Code in der aktuellen Kiste neu
+Mit diesem Befehl wird der gesamte Rust-Code in der aktuellen Crate neu
 formatiert. Dies sollte nur den Stil des Codes ändern, nicht die Semantik des
 Codes. Weitere Informationen zu `rustfmt` findest du in [seiner
 Dokumentation][rustfmt].
@@ -94,11 +94,11 @@ E][appendix-e] aufgeführt.
 
 ### Mehr statische Codeanalyse mit Clippy
 
-Das Tool Clippy ist eine Sammlung von Tools zur statischen Codeanalyse, mit dem
+Das Tool Clippy ist eine Sammlung von Tools zur statischen Codeanalyse, mit der
 du häufige Fehler aufspüren und deinen Rust-Code verbessern kannst. Clippy ist
 in den Standardinstallationen von Rust enthalten.
 
-Um Clippy bei einem Cargo-Projekt auszuführen, gib folgendes ein:
+Um Clippy bei einem Cargo-Projekt auszuführen, gib Folgendes ein:
 
 ```console
 $ cargo clippy
@@ -167,7 +167,7 @@ eingeblendete Fehlermeldungen erhalten.
 
 [appendix-e]: appendix-05-editions.html
 [clippy]: https://github.com/rust-lang/rust-clippy
-[lsp]: http://langserver.org/
+[lsp]: https://langserver.org/
 [rustfmt]: https://github.com/rust-lang/rustfmt
 [rust-analyzer]: https://rust-analyzer.github.io
 [vscode]: https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer

@@ -1,13 +1,13 @@
 ## Das Kontrollflusskonstrukt `match`
 
 Rust verfügt über ein extrem leistungsfähiges Kontrollflusskonstrukt namens
-`match`, der es dir ermöglicht, einen Wert mit einer Reihe von Mustern
+`match`, das es dir ermöglicht, einen Wert mit einer Reihe von Mustern
 abzugleichen und dann Code zum jeweils passenden Muster auszuführen. Muster
 können sich aus Literalen, Variablennamen, Platzhaltern und vielen anderen
 Dingen zusammensetzen. [Kapitel 19][ch19-00-patterns] befasst sich mit all den
-verschiedenen Musterarten und wie sie funktionieren. Die Mächtigkeit von
-`match` kommt von der Ausdruckskraft der Muster und der Tatsache, dass der
-Compiler sicherstellt, dass alle möglichen Fälle behandelt werden.
+verschiedenen Musterarten und wie sie funktionieren. Die Mächtigkeit von `match`
+kommt von der Ausdruckskraft der Muster und der Tatsache, dass der Compiler
+sicherstellt, dass alle möglichen Fälle behandelt werden.
 
 Stelle dir einen `match`-Ausdruck wie eine Münzsortiermaschine vor:  Die Münzen
 rutschen eine Bahn mit unterschiedlich großen Löchern entlang, und jede Münze
@@ -19,7 +19,7 @@ werden soll.
 Apropos Münzen, nehmen wir sie als Beispiel für die Verwendung von `match`! Wir
 können eine Funktion schreiben, die eine unbekannte US-Münze nimmt und, ähnlich
 wie die Zählmaschine, bestimmt, um welche Münze es sich handelt und ihren Wert
-in Cent zurückgibt, wie in Codeblock 6-3 gezeigt.
+in Cent zurückgibt, wie in Listing 6-3 gezeigt.
 
 ```rust
 enum Coin {
@@ -41,7 +41,7 @@ fn value_in_cents(coin: Coin) -> u8 {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 6-3: Eine Aufzählung und ein `match`-Ausdruck,
+<span class="caption">Listing 6-3: Eine Aufzählung und ein `match`-Ausdruck,
 der die Varianten der Aufzählung als Muster hat</span>
 
 Lass uns den `match`-Ausdruck in der Funktion `value_in_cents` aufschlüsseln. 
@@ -53,25 +53,25 @@ hier kann ein beliebiger Typ zurückgegeben werden. Der Typ von `coin` ist in
 diesem Beispiel die Aufzählung `Coin`, die wir in der ersten Zeile definiert
 haben.
 
-Als nächstes kommen die `match`-Zweige. Ein Zweig hat zwei Teile: Ein Muster
+Als Nächstes kommen die `match`-Zweige. Ein Zweig hat zwei Teile: Ein Muster
 und etwas Code. Der erste Zweig hat als Muster den Wert `Coin::Penny`, dann den
 Operator `=>`, der das Muster und den auszuführenden Code trennt. Der Code ist
 in diesem Fall nur der Wert `1`. Jeder Zweig wird durch ein Komma vom nächsten
 getrennt.
 
 Wenn der `match`-Ausdruck ausgeführt wird, gleicht er den Ergebniswert mit dem
-Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum Wert
-passt, wird der zu diesem Muster gehörende Code ausgeführt. Wenn das Muster
-nicht zum Wert passt, wird die Ausführung beim nächsten Zweig fortgesetzt,
-ähnlich wie bei einer Münzsortiermaschine. Wir können so viele Zweige haben,
-wie wir brauchen: In Codeblock 6-3 hat unser `match`-Ausdruck vier Zweige.
+Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum Wert passt,
+wird der zu diesem Muster gehörige Code ausgeführt. Wenn das Muster nicht zum
+Wert passt, wird die Ausführung beim nächsten Zweig fortgesetzt, ähnlich wie bei
+einer Münzsortiermaschine. Wir können so viele Zweige haben, wie wir brauchen:
+In Listing 6-3 hat unser `match`-Ausdruck vier Zweige.
 
-Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der Ergebniswert des
-Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
-`match`-Ausdruck zurückgegeben wird. 
+Der zu jedem Zweig gehörige Code ist ein Ausdruck, und der Ergebniswert des
+Ausdrucks im zugehörigen Zweig ist der Wert, der für den gesamten
+`match`-Ausdruck zurückgegeben wird.
 
 Wir verwenden üblicherweise keine geschweiften Klammern, wenn der Zweig-Code
-kurz ist, so wie in Codeblock 6-3, wo jeder Zweig nur einen Wert zurückgibt.
+kurz ist, so wie in Listing 6-3, wo jeder Zweig nur einen Wert zurückgibt.
 Wenn du mehrere Codezeilen in einem Zweig ausführen möchtest, musst du
 geschweifte Klammern verwenden, und das Komma nach dem Zweig ist dann optional.
 Zum Beispiel gibt der folgende Code jedes Mal „Glückspfennig!“ aus, wenn die
@@ -113,7 +113,7 @@ mit unterschiedlichem Aussehen auf einer Seite für jeden der 50 Staaten. Keine
 andere Münze hatte ein Staaten-spezifisches Aussehen, sodass nur 25-Cent-Münzen
 diese zusätzliche Eigenschaft haben. Wir können diese Information in unserer
 Aufzählung unterbringen, indem wir die Variante `Quarter` so ändern, dass sie
-einen `UsState`-Wert enthält, wie in Codeblock 6-4 umgesetzt.
+einen `UsState`-Wert enthält, wie in Listing 6-4 umgesetzt.
 
 ```rust
 enum UsState {
@@ -132,7 +132,7 @@ enum Coin {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 6-4: Aufzählung `Coin`, bei der die Variante
+<span class="caption">Listing 6-4: Aufzählung `Coin`, bei der die Variante
 `Quarter` zusätzlich einen `UsState`-Wert enthält</span>
 
 Stellen wir uns vor, dass ein Freund versucht, 25-Cent-Münzen aller 50
@@ -199,7 +199,7 @@ kein Wert enthalten ist, soll die Funktion den Wert `None` zurückgeben und
 nicht versuchen, irgendwelche Operationen durchzuführen.
 
 Diese Funktion ist dank `match` sehr einfach zu schreiben und wird wie in
-Codeblock 6-5 aussehen.
+Listing 6-5 aussehen.
 
 ```rust
 fn plus_one(x: Option<i32>) -> Option<i32> {
@@ -214,7 +214,7 @@ let six = plus_one(five);
 let none = plus_one(None);
 ```
 
-<span class="caption">Codeblock 6-5: Eine Funktion, die einen `match`-Ausdruck
+<span class="caption">Listing 6-5: Eine Funktion, die einen `match`-Ausdruck
 auf einer `Option<i32>` verwendet</span>
 
 Lass uns die erste Ausführung von `plus_one` näher betrachten. Wenn wir
@@ -255,7 +255,7 @@ bindet den in `Some` enthaltenen Wert, sodass `i` den Wert `5` annimmt. Dann
 wird der Code im `match`-Zweig ausgeführt, also fügen wir 1 zum Wert von `i`
 hinzu und erzeugen einen neuen `Some`-Wert mit der Summe `6` darin.
 
-Betrachten wir nun den zweiten Aufruf von `plus_one` in Codeblock 6-5, wo `x`
+Betrachten wir nun den zweiten Aufruf von `plus_one` in Listing 6-5, wo `x`
 den Wert `None` hat. Wir betreten den `match`-Block und vergleichen mit dem
 ersten Zweig:
 
@@ -276,12 +276,12 @@ Er passt! Es gibt keinen Wert zum Hinzufügen, also stoppt das Programm und gibt
 den Wert `None` auf der rechten Seite von `=>` zurück. Da der erste Zweig
 passt, werden keine anderen Zweige abgeglichen.
 
-Die Kombination von `match` und Aufzählungen ist in vielen Situationen
-nützlich. Du wirst dieses Muster häufig in Rust-Code sehen: `match` mit einer
-Aufzählung, eine Variable an die darin enthaltenen Daten binden und dann
-dazugehörenden Code ausführen. Am Anfang ist es etwas knifflig, aber wenn man
-sich erst einmal daran gewöhnt hat, wird man sich wünschen, es in allen
-Sprachen zu haben. Es ist durchweg ein beliebtes Werkzeug.
+Die Kombination von `match` und Aufzählungen ist in vielen Situationen nützlich.
+Du wirst dieses Muster häufig in Rust-Code sehen: `match` mit einer Aufzählung,
+eine Variable an die darin enthaltenen Daten binden und dann zugehörigen Code
+ausführen. Am Anfang ist es etwas knifflig, aber wenn man sich erst einmal daran
+gewöhnt hat, wird man sich wünschen, es in allen Sprachen zu haben. Es ist
+durchweg ein beliebtes Werkzeug.
 
 ### Abgleiche sind vollständig
 
@@ -367,8 +367,8 @@ fn move_player(num_spaces: u8) {}
 ```
 
 Bei den ersten beiden Zweigen sind die Muster die literalen Werte `3` und `7`.
-Beim letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster
-die Variable die wir als `other` bezeichnet haben. Der Code, der für den
+Beim letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster die
+Variable, die wir als `other` bezeichnet haben. Der Code, der für den
 `other`-Zweig läuft, verwendet die Variable, indem er sie an die Funktion
 `move_player` übergibt.
 

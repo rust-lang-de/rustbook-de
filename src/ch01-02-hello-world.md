@@ -3,7 +3,7 @@
 Nachdem du Rust installiert hast, lass uns dein erstes Rust-Programm schreiben.
 Wenn man eine neue Sprache lernt, ist es üblich, ein kleines Programm zu
 schreiben, das den Text `Hallo Welt!` auf dem Bildschirm ausgibt, also werden
-wir hier das gleiche tun!
+wir hier dasselbe tun!
 
 > Hinweis: Dieses Buch setzt grundlegende Vertrautheit mit der Kommandozeile
 > voraus. Rust stellt keine besonderen Anforderungen an deine Textbearbeitung
@@ -15,7 +15,7 @@ wir hier das gleiche tun!
 > mittels `rust-analyzer` zu ermöglichen. Siehe [Anhang D][devtools] für
 > weitere Details.
 
-### Projektverzeichniss aufsetzen
+### Projektverzeichnis aufsetzen
 
 Du beginnst damit, ein Verzeichnis zum Speichern deines Rust-Codes zu
 erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
@@ -52,7 +52,7 @@ in deinem Dateinamen verwendest, verwende einen Unterstrich, um sie zu trennen.
 Verwende zum Beispiel _hello_world.rs_ statt _helloworld.rs_.
 
 Öffne nun die Datei _main.rs_, die du gerade erstellt hast, und gib den Code in
-Codeblock 1-1 ein.
+Listing 1-1 ein.
 
 <span class="filename">Dateiname: main.rs</span>
 
@@ -62,11 +62,11 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 1-1: Ein Programm, das `Hallo Welt!`
+<span class="caption">Listing 1-1: Ein Programm, das `Hallo Welt!`
 ausgibt</span>
 
 Speichere die Datei und gehe zurück zu deinem Terminalfenster im Verzeichnis
-_~/projects/hello_world_. Gib unter Linux oder MacOS die folgenden Befehle ein,
+_~/projects/hello_world_. Gib unter Linux oder macOS die folgenden Befehle ein,
 um die Datei zu kompilieren und auszuführen:
 
 ```console
@@ -83,10 +83,10 @@ Unter Windows gib den Befehl `.\main` anstelle von `./main` ein:
 Hallo Welt!
 ```
 
-Unabhängig von deinem Betriebssystem sollte die Zeichenkette `Hallo Welt!` im
-Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
-Abschnitt [„Fehlersuche“][troubleshooting] des Installationsabschnitts nach,
-wie du Hilfe erhalten kannst.
+Unabhängig von deinem Betriebssystem sollte der String `Hallo Welt!` im Terminal
+ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im Abschnitt
+[„Fehlersuche“][troubleshooting] des Installationsabschnitts nach, wie du Hilfe
+erhalten kannst.
 
 Wenn `Hallo Welt!` ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell
 ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
@@ -94,7 +94,7 @@ ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
 
 ### Die Anatomie eines Rust-Programms
 
-Lass uns im Detail Revue passieren, was gerade in deinem „Hallo Welt!“-Programm
+Lass uns im Detail anschauen, was gerade in deinem „Hallo Welt!“-Programm
 passiert ist. Hier ist das erste Teil des Puzzles:
 
 ```rust
@@ -103,15 +103,14 @@ fn main() {
 }
 ```
 
-Diese Zeilen definieren eine Funktion namens `main` in Rust. Die Funktion
-`main` ist eine Besonderheit: Sie ist immer der erste Code, der in jedem
-ausführbaren Rust-Programm ausgeführt wird. In diesem Fall deklariert die erste
-Zeile eine Funktion mit dem namen `main`, die keine Parameter hat und nichts
-zurückgibt. Wenn es Parameter gäbe, würden sie innerhalb der Klammern `()`
-stehen.
+Diese Zeilen definieren eine Funktion namens `main` in Rust. Die Funktion `main`
+ist eine Besonderheit: Sie ist immer der erste Code, der in jedem ausführbaren
+Rust-Programm ausgeführt wird. In diesem Fall deklariert die erste Zeile eine
+Funktion mit dem Namen `main`, die keine Parameter hat und nichts zurückgibt.
+Wenn es Parameter gäbe, würden sie innerhalb der Klammern `()` stehen.
 
-Der Funktionsrumpf in geschweifte Klammern `{}` eingehüllt. Rust erfordert
-diese um alle Funktionsrümpfe. Es ist guter Stil, die öffnende geschweifte
+Der Funktionsrumpf ist in geschweifte Klammern `{}` eingehüllt. Rust erfordert
+diese für alle Funktionsrümpfe. Es ist guter Stil, die öffnende geschweifte
 Klammer in dieselbe Zeile wie die Funktionsdeklaration zu platzieren und
 dazwischen ein Leerzeichen einzufügen.
 
@@ -139,15 +138,14 @@ erläutern. Im Moment musst du nur wissen, dass die Verwendung eines `!`
 bedeutet, dass du ein Makro anstelle einer normalen Funktion aufrufst und dass
 Makros nicht immer denselben Regeln folgen wie Funktionen.
 
-Zweitens siehst du die Zeichenkette `"Hallo Welt!"`. Wir übergeben diese
-Zeichenkette als Argument an `println!`, und die Zeichenkette wird auf dem
-Bildschirm ausgegeben.
+Zweitens siehst du den String `"Hallo Welt!"`. Wir übergeben diesen String als
+Argument an `println!`, und er wird auf dem Bildschirm ausgegeben.
 
 Drittens beenden wir die Zeile mit einem Semikolon (`;`), was anzeigt, dass
 dieser Ausdruck beendet ist und der nächste beginnen kann. Die meisten Zeilen
 eines Rust-Codes enden mit einem Semikolon.
 
-### Compilierung und Ausführung
+### Kompilierung und Ausführung
 
 Du hast gerade ein neu erstelltes Programm ausgeführt, also lass uns jeden
 Schritt in diesem Prozess untersuchen.
@@ -164,7 +162,7 @@ Wenn du einen C- oder C++-Hintergrund hast, wirst du feststellen, dass dies
 ähnlich wie `gcc` oder `clang` ist. Nach erfolgreicher Kompilierung gibt Rust
 eine ausführbare Binärdatei aus.
 
-Unter Linux, MacOS und PowerShell unter Windows kannst du die ausführbare Datei
+Unter Linux, macOS und PowerShell unter Windows kannst du die ausführbare Datei
 sehen, indem du den Befehl `ls` in deinem Terminal eingibst:
 
 ```console
@@ -172,9 +170,9 @@ $ ls
 main  main.rs
 ```
 
-Unter Linux und MacOS siehst du zwei Dateien. Mit PowerShell unter Windows
+Unter Linux und macOS siehst du zwei Dateien. Mit PowerShell unter Windows
 siehst du die gleichen drei Dateien, die du mit CMD sehen würdest. Bei CMD
-unter Windows würdest du folgendes eingeben:
+unter Windows würdest du Folgendes eingeben:
 
 ```cmd
 > dir /B %= die Option /B bewirkt, dass nur die Dateinamen angezeigt werden =%

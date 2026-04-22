@@ -1,4 +1,4 @@
-## Eine Aufzählung (enum) definieren
+## Eine Aufzählung definieren
 
 Während Strukturen (structs) eine Möglichkeit bieten, zusammengehörige Felder
 und Daten zu gruppieren, wie ein `Rectangle` mit seiner `width` und `height`,
@@ -111,12 +111,12 @@ Und wir können diese Funktion mit beiden Varianten aufrufen:
 # fn route(ip_kind: IpAddrKind) {}
 ```
 
-Aufzählungen haben noch weitere Vorteile. Wenn wir weiter über unseren
-IP-Adresstyp nachdenken, haben wir im Moment keine Möglichkeit, den _Wert_ der
-tatsächlichen IP-Adresse zu speichern; wir wissen nur, um welche _Variante_ es
-sich handelt. Mit dem was du gerade erst in Kapitel 5 über Strukturen gelernt
-hast, könntest du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
-Codeblock 6-1.
+Aufzählungen haben noch weitere Vorteile. Wenn wir noch einmal über unseren
+IP-Adresstyp nachdenken: Im Moment haben wir keine Möglichkeit, den _Wert_ der
+tatsächlichen IP-Adresse abzulegen; wir wissen nur, um welche _Variante_ es sich
+handelt. Da du in Kapitel 5 gerade Strukturen kennengelernt hast, könntest du in
+Versuchung geraten, dieses Problem mit Strukturen anzugehen, wie in Listing 6-1
+gezeigt.
 
 ```rust
 enum IpAddrKind {
@@ -140,7 +140,7 @@ let loopback = IpAddr {
 };
 ```
 
-<span class="caption">Codeblock 6-1: Speichern des Wertes und der
+<span class="caption">Listing 6-1: Speichern des Wertes und der
 `IpAddrKind`-Variante einer IP-Adresse mittels `struct`</span>
 
 Hier haben wir eine Struktur `IpAddr` definiert, die zwei Felder hat:  Ein Feld
@@ -178,13 +178,13 @@ Funktionsaufruf der ein `String`-Argument entgegennimmt und eine Instanz des
 Typs `IpAddr` zurückgibt. Diese Konstruktorfunktion wird automatisch definiert
 als Ergebnis der Definition der Aufzählung.
 
-Es gibt noch einen weiteren Vorteil, eine Aufzählung statt einer Struktur zu
+Es gibt noch einen weiteren Vorteil, eine Aufzählung anstelle einer Struktur zu
 verwenden: Jede Variante kann verschiedene Typen und verschieden viele
-zugehöriger Daten haben. IP-Adressen der Version vier haben stets vier
-numerische Komponenten, die Werte zwischen 0 und 255 haben. Wenn wir
-`V4`-Adressen als vier `u8`-Werte speichern und `V6`-Adressen als einen
-`String`-Wert ausdrücken wollten, wäre das mit einer Struktur nicht möglich.
-Aufzählungen lösen diesen Fall ganz einfach:
+zugehörige Daten haben. IP-Adressen der Version vier haben stets vier numerische
+Komponenten, die Werte zwischen 0 und 255 haben. Wenn wir `V4`-Adressen als vier
+`u8`-Werte speichern und `V6`-Adressen als einen `String`-Wert ausdrücken
+wollten, wäre das mit einer Struktur nicht möglich. Aufzählungen lösen diesen
+Fall ganz einfach:
 
 ```rust
 enum IpAddr {
@@ -223,16 +223,16 @@ enum IpAddr {
 ```
 
 Dieser Code veranschaulicht, dass du jede Art von Daten in eine
-Aufzählungsvariante einfügen kannst: Zeichenketten, numerische Typen,
-Strukturen usw. Du kannst sogar eine weitere Aufzählung einfügen! Außerdem sind
+Aufzählungsvariante einfügen kannst: Strings, numerische Typen, Strukturen usw.
+Du kannst sogar eine weitere Aufzählung einfügen! Außerdem sind
 Standardbibliothekstypen oft nicht viel komplizierter als das, was du dir
 vielleicht ausdenkst. Beachte, dass wir, obwohl die Standardbibliothek eine
-Definition für `IpAddr` enthält, konfliktfrei unsere eigene Definition
-erstellen und verwenden können, da wir die Definition der Standardbibliothek
-nicht in unseren Gültigkeitsbereich aufgenommen haben. Wir werden in Kapitel 7
-mehr darauf eingehen, wie man Typen in den Gültigkeitsbereich aufnimmt.
+Definition für `IpAddr` enthält, konfliktfrei unsere eigene Definition erstellen
+und verwenden können, da wir die Definition der Standardbibliothek nicht in
+unseren Gültigkeitsbereich aufgenommen haben. Wir werden in Kapitel 7 mehr
+darauf eingehen, wie man Typen in den Gültigkeitsbereich aufnimmt.
 
-Schauen wir uns ein weiteres Beispiel für eine Aufzählung in Codeblock 6-2 an:
+Schauen wir uns ein weiteres Beispiel für eine Aufzählung in Listing 6-2 an:
 In dieser Aufzählung ist eine Vielzahl von Typen in ihren Varianten eingebettet.
 
 ```rust
@@ -246,7 +246,7 @@ enum Message {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 6-2: Eine Aufzählung `Message`, deren Varianten
+<span class="caption">Listing 6-2: Eine Aufzählung `Message`, deren Varianten
 jeweils eine unterschiedliche Anzahl an Werttypen speichern</span>
 
 Diese Aufzählung hat vier Varianten mit unterschiedlichen Typen:
@@ -256,7 +256,7 @@ Diese Aufzählung hat vier Varianten mit unterschiedlichen Typen:
 - `Write`: Enthält einen einzelnen `String`.
 - `ChangeColor`: Enthält drei `i32`-Werte.
 
-Die Definition einer Aufzählung mit Varianten wie in Codeblock 6-2 ist ähnlich
+Die Definition einer Aufzählung mit Varianten wie in Listing 6-2 ist ähnlich
 zur Definition verschiedener Arten von Strukturdefinitionen, außer dass die
 Aufzählung nicht das Schlüsselwort `struct` verwendet und alle Varianten unter
 dem Typ `Message` zusammengefasst sind. Die folgenden Strukturen könnten die
@@ -276,7 +276,7 @@ struct ChangeColorMessage(i32, i32, i32); // Tupelstruktur
 
 Aber wenn wir die verschiedenen Strukturen verwenden würden, die jeweils ein
 eigener Typ sind, könnten wir nicht so einfach eine Funktion definieren, die
-eine dieser Nachrichtenarten entgegennimmt, wie wir es mit der in Codeblock 6-2
+eine dieser Nachrichtenarten entgegennimmt, wie wir es mit der in Listing 6-2
 definierten Aufzählung `Message` gemacht haben, bei der es sich um einen
 einzigen Typ handelt.
 
@@ -305,11 +305,10 @@ wir für unsere Aufzählung `Message` definieren könnten:
 # }
 ```
 
-Der Methodenrumpf würde `self` benutzen, um den Wert zu erhalten, auf den wir
-die Methode aufgerufen haben. In diesem Beispiel haben wir eine Variable `m`
-erstellt, die den Wert `Message::Write(String::from("hallo"))` hat. Genau
-diesen Wert wird `self` im Rumpf der Methode `call` haben, wenn `m.call()`
-ausgeführt wird.
+Der Methodenrumpf würde `self` verwenden, um den Wert zu erhalten, für den die
+Methode aufgerufen wurde. In diesem Beispiel haben wir eine Variable `m` mit dem
+Wert `Message::Write(String::from("hallo"))` angelegt. Genau diesen Wert wird
+`self` im Rumpf der Methode `call` haben, wenn `m.call()` ausgeführt wird.
 
 Sehen wir uns eine weitere Aufzählung in der Standardbibliothek an, die sehr
 verbreitet und hilfreich ist: `Option`
@@ -323,7 +322,7 @@ kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.
 Wenn du zum Beispiel das erste Element einer nichtleeren Liste anforderst,
 erhältst du einen Wert. Wenn du das erste Element einer leeren Liste abfragst,
 erhältst du nichts. Im Sinne des Typsystems bedeutet das, dass der Compiler
-überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt haben solltest.
+überprüfen kann, ob du alle Fälle behandelt hast, die du behandeln solltest.
 Diese Funktionalität kann Fehler vermeiden, die in anderen Programmiersprachen
 extrem häufig auftreten.
 
@@ -335,7 +334,7 @@ vorhanden ist. In Sprachen mit null können sich Variablen immer in einem von
 zwei Zuständen befinden: null oder nicht null.
 
 In seinem Vortrag „Nullreferenzen: Der milliardenschwere Fehler“ von 2009 hat
-Tony Hoare, der Erfinder von null, folgendes gesagt:
+Tony Hoare, der Erfinder von null, Folgendes gesagt:
 
 > Ich nenne es meinen milliardenschweren Fehler. Zu dieser Zeit entwarf ich das
 > erste umfangreiche Typsystem für Referenzen in einer objektorientierten
@@ -369,12 +368,12 @@ enum Option<T> {
 }
 ```
 
-Die Aufzählung `Option<T>` ist so nützlich, dass sie sogar im Präludium
-enthalten ist; du musst sie nicht explizit in den Gültigkeitsbereich bringen.
-Ihre Varianten sind ebenfalls im Präludium enthalten: Du kannst `Some` und
-`None` direkt ohne Präfix `Option::` verwenden. Die Aufzählung `Option<T>` ist
-dennoch nur eine normale Aufzählung, und `Some(T)` und `None` sind nur
-Varianten des Typs `Option<T>`.
+Die Aufzählung `Option<T>` ist so nützlich, dass sie sogar im Prelude enthalten
+ist; du musst sie nicht explizit in den Gültigkeitsbereich bringen. Ihre
+Varianten sind ebenfalls im Prelude enthalten: Du kannst `Some` und `None`
+direkt verwenden, ohne das Präfix `Option::`. Die Aufzählung `Option<T>` ist
+dennoch nur eine normale Aufzählung, und `Some(T)` und `None` sind nur Varianten
+des Typs `Option<T>`.
 
 Die Syntax `<T>` ist eine Funktionalität von Rust, über die wir noch nicht
 gesprochen haben. Es handelt sich um einen generischen Typparameter, auf den
@@ -406,10 +405,10 @@ bedeutet das in gewisser Weise dasselbe wie Null: Wir haben keinen gültigen
 Wert. Warum ist nun besser `Option<T>` anstelle von Null zu verwenden?
 
 Kurz gesagt, weil `Option<T>` und `T` (wobei `T` ein beliebiger Typ sein kann)
-unterschiedliche Typen sind, erlaubt es der Compiler nicht `Option<T>` so zu
-verwenden als wäre es definitiv ein gültiger Wert. Beispielsweise lässt sich
-dieser Code nicht kompilieren, weil er versucht, ein `i8` mit einem
-`Option<i8>` zu addieren:
+unterschiedliche Typen sind, erlaubt es der Compiler nicht, `Option<T>` so zu
+verwenden, als ob es definitiv ein gültiger Wert wäre. Beispielsweise lässt sich
+dieser Code nicht kompilieren, weil er versucht, ein `i8` zu einem `Option<i8>`
+zu addieren:
 
 ```rust,does_not_compile
 let x: i8 = 5;

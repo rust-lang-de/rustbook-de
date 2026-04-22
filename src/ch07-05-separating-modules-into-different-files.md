@@ -4,19 +4,19 @@ Bisher haben alle Beispiele in diesem Kapitel mehrere Module in einer Datei
 definiert. Wenn Module groß werden, solltest du ihre Definitionen in eine
 separate Datei verschieben, um die Navigation im Code zu erleichtern.
 
-Gehen wir zum Beispiel von dem Code in Codeblock 7-17 aus, der mehrere
+Gehen wir zum Beispiel von dem Code in Listing 7-17 aus, der mehrere
 Restaurantmodule enthält. Wir verschieben das Modul `front_of_house` in seine
-eigene Datei _src/front_of_house.rs_, indem wir die Kistenwurzeldatei so
-ändern, dass sie den in Codeblock 7-21 gezeigten Code enthält. In diesem Fall
-ist die Kistenwurzeldatei _src/lib.rs_, aber diese Vorgehensweise funktioniert
-auch mit binären Kisten, deren Kistenwurzeldatei _src/main.rs_ ist.
+eigene Datei _src/front_of_house.rs_, indem wir die Crate-Wurzeldatei so ändern,
+dass sie den in Listing 7-21 gezeigten Code enthält. In diesem Fall ist die
+Crate-Wurzeldatei _src/lib.rs_, aber diese Vorgehensweise funktioniert auch mit
+binären Crates, deren Crate-Wurzeldatei _src/main.rs_ ist.
 
 Zuerst extrahieren wir das Modul `front_of_house` in eine eigene Datei.
 Entferne den Code innerhalb der geschweiften Klammern des Moduls
 `front_of_house` und lasse nur die Deklaration `mod front_of_house;` übrig,
-sodass _src/lib.rs_ den in Codeblock 7-21 gezeigten Code enthält. Beachte, dass
+sodass _src/lib.rs_ den in Listing 7-21 gezeigten Code enthält. Beachte, dass
 dies nicht kompiliert und wir noch die Datei _src/front_of_house.rs_ in
-Codeblock 7-22 erstellen müssen.
+Listing 7-22 erstellen müssen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -30,13 +30,13 @@ pub fn eat_at_restaurant() {
 }
 ```
 
-<span class="caption">Codeblock 7-21: Deklarieren des Moduls `front_of_house`,
+<span class="caption">Listing 7-21: Deklarieren des Moduls `front_of_house`,
 dessen Rumpf sich in _src/front_of_house.rs_ befinden wird</span>
 
 Als nächstes fügst du den Code in den geschweiften Klammern in eine neue Datei
-namens _src/front_of_house.rs_ ein, wie in Codeblock 7-22 zu sehen ist. Der
+namens _src/front_of_house.rs_ ein, wie in Listing 7-22 zu sehen ist. Der
 Compiler weiß, dass er in dieser Datei suchen muss, weil er auf die
-Moduldeklaration in der Kistenwurzel mit dem Namen `front_of_house` gestoßen
+Moduldeklaration in der Crate-Wurzel mit dem Namen `front_of_house` gestoßen
 ist.
 
 <span class="filename">Dateiname: src/front_of_house.rs</span>
@@ -47,7 +47,7 @@ pub mod hosting {
 }
 ```
 
-<span class="caption">Codeblock 7-22: Definitionen innerhalb des Moduls
+<span class="caption">Listing 7-22: Definitionen innerhalb des Moduls
 `front_of_house` in _src/front_of_house.rs_</span>
 
 Beachte, dass du den Inhalt einer Datei mit einer `mod`-Deklaration nur
@@ -86,18 +86,18 @@ pub fn add_to_waitlist() {}
 ```
 
 Wenn wir stattdessen _hosting.rs_ in das _src_-Verzeichnis legen, würde der
-Compiler erwarten, dass der _hosting.rs_-Code in einem `hosting`-Modul
-enthalten ist, das im Stammverzeichnis der Kiste deklariert ist, und nicht als
-Kind des `front_of_house`-Moduls. Die Regeln des Compilers dafür, welche
-Dateien auf den Code welcher Module zu prüfen sind, bedeuten, dass die
-Verzeichnisse und Dateien dem Modulbaum besser entsprechen.
+Compiler erwarten, dass der _hosting.rs_-Code in einem `hosting`-Modul enthalten
+ist, das im Stammverzeichnis der Crate deklariert ist, und nicht als Kind des
+`front_of_house`-Moduls. Die Regeln des Compilers dafür, welche Dateien auf den
+Code welcher Module zu prüfen sind, bedeuten, dass die Verzeichnisse und Dateien
+dem Modulbaum besser entsprechen.
 
 > ### Alternative Dateipfade
 >
 > Bis jetzt haben wir die idiomatischsten Dateipfade behandelt, die der
 > Rust-Compiler verwendet, aber Rust unterstützt auch eine ältere Art von
 > Dateipfaden. Für ein Modul mit dem Namen `front_of_house`, das in der
-> Kistenwurzel deklariert ist, sucht der Compiler den Code des Moduls in:
+> Crate-Wurzel deklariert ist, sucht der Compiler den Code des Moduls in:
 >
 > - _src/front_of_house.rs_ (was wir behandelt haben)
 > - _src/front_of_house/mod.rs_ (älterer Stil, noch unterstützter Pfad)
@@ -108,7 +108,7 @@ Verzeichnisse und Dateien dem Modulbaum besser entsprechen.
 > - _src/front_of_house/hosting.rs_ (was wir behandelt haben)
 > - _src/front_of_house/hosting/mod.rs_ (älterer Stil, noch unterstützter Pfad)
 >
-> Wenn du beide Stile für dasselbe Modul verwendest, erhältst einen
+> Wenn du beide Stile für dasselbe Modul verwendest, erhältst du einen
 > Compilerfehler. Die Verwendung einer Mischung beider Stile für verschiedene
 > Module im selben Projekt ist zulässig, kann aber für die Benutzer verwirrend
 > sein, die durch dein Projekt navigieren.
@@ -126,20 +126,20 @@ verschieben, wenn diese größer werden.
 
 Beachte, dass sich die Anweisung `pub use crate::front_of_house::hosting` in
 _src/lib.rs_ ebenfalls nicht geändert hat und dass `use` keinen Einfluss darauf
-hat, welche Dateien als Teil der Kiste kompiliert werden. Das Schlüsselwort
+hat, welche Dateien als Teil der Crate kompiliert werden. Das Schlüsselwort
 `mod` deklariert Module und Rust sucht in einer Datei mit dem Modulnamen nach
 dem Code, der zu diesem Modul gehört.
 
 ## Zusammenfassung
 
-Mit Rust kannst du ein Paket in mehrere Kisten und eine Kiste in Module
-aufteilen, sodass du auf in einem Modul definierte Elemente aus einem anderen
-Modul verweisen kannst. Du kannst dies tun, indem du absolute oder relative
-Pfade angibst. Diese Pfade können mit einer `use`-Anweisung in den
-Gültigkeitsbereich gebracht werden, sodass du einen kürzeren Pfad für mehrere
-Verwendungen des Elements in diesem Gültigkeitsbereich angeben kannst. Der
-Modulcode ist standardmäßig privat, aber du kannst Definitionen öffentlich
-machen, indem du das Schlüsselwort `pub` angibst.
+Rust erlaubt es dir, ein Paket in mehrere Crates und eine Crate in Module
+aufzuteilen, damit du auf Elemente, die in einem Modul definiert sind, von einem
+anderen Modul aus verweisen kannst. Dazu gibst du absolute oder relative Pfade
+an. Diese Pfade kannst du mit einer `use`-Anweisung in den Gültigkeitsbereich
+bringen, sodass du in diesem Gültigkeitsbereich einen kürzeren Pfad verwenden
+kannst, wenn du das Element mehrfach brauchst. Modulcode ist standardmäßig
+privat; mit dem Schlüsselwort `pub` kannst du Definitionen jedoch öffentlich
+machen.
 
 Im nächsten Kapitel werden wir uns einige Kollektionsdatenstrukturen in der
 Standardbibliothek ansehen, die du in deinem ordentlich organisierten Code

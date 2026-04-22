@@ -1,4 +1,4 @@
-## Steuern wie Tests ausgeführt werden
+## Steuern, wie Tests ausgeführt werden
 
 So wie `cargo run` deinen Code kompiliert und dann die resultierende Binärdatei
 ausführt, kompiliert `cargo test` deinen Code im Testmodus und führt die
@@ -10,23 +10,22 @@ Testergebnisse erleichtert wird. Du kannst jedoch Kommandozeilen-Optionen
 angeben, um dieses Standardverhalten zu ändern.
 
 Einige Kommandozeilen-Optionen betreffen `cargo test` und einige betreffen die
-resultierende Testbinärdatei. Um diese beiden Argumentarten
-auseinanderzuhalten, gibst du zuerst die Argumente für `cargo test`, gefolgt
-vom Trennzeichen `--`, und danach die der Testbinärdatei an. Wenn du `cargo
-test --help` ausführst, werden die Optionen angezeigt, die du für `cargo test`
-verwenden kannst, und wenn du `cargo test -- --help` ausführst, werden die
-Optionen angezeigt, die du nach dem Trennzeichen verwenden kannst. Diese
-Optionen sind auch im [Abschnitt „Tests“ des rustc-Buchs][tests] dokumentiert.
+resultierende Testbinärdatei. Um diese beiden Argumentarten auseinanderzuhalten,
+gibst du zuerst die Argumente für `cargo test`, gefolgt vom Trennzeichen `--`
+an, und dahinter die Argumente der Testbinärdatei. Wenn du `cargo test --help`
+ausführst, werden die Optionen angezeigt, die du für `cargo test` verwenden
+kannst, und wenn du `cargo test -- --help` ausführst, werden die Optionen
+angezeigt, die du nach dem Trennzeichen verwenden kannst. Diese Optionen sind
+auch im [Abschnitt „Tests“ des rustc-Buchs][tests] dokumentiert.
 
 ### Tests parallel oder nacheinander ausführen
 
-Wenn du mehrere Tests ausführst, werden diese standardmäßig parallel in
-Strängen (threads) ausgeführt, das bedeutet, dass die Tests schneller
-abgeschlossen werden und du schneller Rückmeldung erhältst. Da die Tests
-gleichzeitig ausgeführt werden, musst du sicherstellen, dass deine Tests nicht
-voneinander oder von einem gemeinsam genutzten Zustand abhängen, einschließlich
-einer gemeinsam genutzten Umgebung, z.B. dem aktuellen Arbeitsverzeichnis oder
-Umgebungsvariablen.
+Wenn du mehrere Tests ausführst, werden diese standardmäßig parallel in Threads
+ausgeführt; das bedeutet, dass die Tests schneller abgeschlossen werden und du
+schneller Rückmeldung erhältst. Da die Tests gleichzeitig ausgeführt werden,
+musst du sicherstellen, dass deine Tests nicht voneinander oder von einem
+gemeinsam genutzten Zustand abhängen, einschließlich einer gemeinsam genutzten
+Umgebung, z.B. dem aktuellen Arbeitsverzeichnis oder Umgebungsvariablen.
 
 Angenommen, jeder deiner Tests führt einen Code aus, der eine Datei auf der
 Festplatte mit dem Namen *test-output.txt* erstellt und einige Daten in diese
@@ -40,18 +39,17 @@ Lösung besteht darin, dafür zu sorgen, dass jeder Test in eine eigene Datei
 schreibt; eine andere Lösung besteht darin, die Tests einzeln nacheinander
 auszuführen.
 
-Wenn du die Tests nicht parallel ausführen möchtest oder wenn du eine
-feingranularere Kontrolle über die Anzahl der verwendeten Stränge haben willst,
-kannst du den Schalter `--test-threads` mit der Anzahl der Stränge, die du
-verwenden möchtest, an die Testbinärdatei übergeben. Sieh dir das folgende
-Beispiel an:
+Wenn du die Tests nicht parallel ausführen möchtest oder wenn du eine feinere
+Kontrolle über die Anzahl der verwendeten Threads haben willst, kannst du den
+Schalter `--test-threads` mit der Anzahl der Threads, die du verwenden möchtest,
+an die Testbinärdatei übergeben. Sieh dir das folgende Beispiel an:
 
 ```console
 $ cargo test -- --test-threads=1
 ```
 
-Wir setzen die Anzahl der Teststränge auf `1` und weisen das Programm an, keine
-Parallelität zu verwenden. Die Ausführung der Tests mit einem Strang dauert
+Wir setzen die Anzahl der Test-Threads auf `1` und weisen das Programm an, keine
+Parallelität zu verwenden. Die Ausführung der Tests mit einem Thread dauert
 länger als die parallele Ausführung, aber die Tests stören sich nicht
 gegenseitig, wenn sie den gleichen Zustand verwenden.
 
@@ -64,7 +62,7 @@ Ausgabe von `println!` im Terminal nicht; wir sehen nur die Zeile, die den
 bestandenen Test anzeigt. Wenn ein Test fehlschlägt, sehen wir das, was in die
 Standardausgabe ausgegeben wurde, mit dem Rest der Fehlermeldung.
 
-Als Beispiel hat Codebock 11-10 eine dumme Funktion, die den Wert ihres
+Als Beispiel hat Listing 11-10 eine dumme Funktion, die den Wert ihres
 Parameters ausgibt und 10 zurückgibt, sowie einen Test, der bestanden wird, und
 einen Test, der fehlschlägt.
 
@@ -94,7 +92,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codebock 11-10: Tests einer Funktion, die `println!`
+<span class="caption">Listing 11-10: Tests einer Funktion, die `println!`
 aufruft</span>
 
 Wenn wir diese Tests mit `cargo test` ausführen, werden wir folgende Ausgabe
@@ -143,7 +141,7 @@ anzuzeigen:
 $ cargo test -- --show-output
 ```
 
-Wenn wir die Tests in Codeblock 11-10 mit dem Schalter `--show-output` erneut
+Wenn wir die Tests in Listing 11-10 mit dem Schalter `--show-output` erneut
 ausführen, sehen wir folgende Ausgabe:
 
 ```console
@@ -184,16 +182,16 @@ test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 error: test failed, to rerun pass `--lib`
 ```
 
-### Ausführen einer Test-Teilmenge mittels Name
+### Ausführen einer Teilmenge der Tests mittels Name
 
-Manchmal kann die Ausführung einer vollständigen Testsammlung sehr lange
-dauern. Wenn du an Code in einem bestimmten Bereich arbeitest, solltest du
-vielleicht nur die Tests ausführen, die diesen Code betreffen. Du kannst
-wählen, welche Tests ausgeführt werden sollen, indem du `cargo test` den oder
-die Namen der Tests, die du ausführen willst, als Argument übergibst.
+Manchmal kann die Ausführung aller Tests sehr lange dauern. Wenn du an Code in
+einem bestimmten Bereich arbeitest, solltest du vielleicht nur die Tests
+ausführen, die diesen Code betreffen. Du kannst wählen, welche Tests ausgeführt
+werden sollen, indem du `cargo test` den oder die Namen der Tests, die du
+ausführen willst, als Argument übergibst.
 
 Um zu demonstrieren, wie man eine Teilmenge von Tests ausführt, werden wir
-zuerst drei Tests für unsere Funktion `add_two` erstellen, wie in Codeblock
+zuerst drei Tests für unsere Funktion `add_two` erstellen, wie in Listing
 11-11 zu sehen ist, und auswählen, welche wir ausführen wollen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -227,10 +225,10 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 11-11: Drei Tests mit drei verschiedenen
+<span class="caption">Listing 11-11: Drei Tests mit drei verschiedenen
 Namen</span>
 
-Wenn wir die Tests ohne Argumente durchführen, wie vorhin gesehen, werden alle
+Wenn wir die Tests ohne Argumente ausführen, wie vorhin gesehen, werden alle
 Tests parallel laufen:
 
 ```console
@@ -337,7 +335,7 @@ mod tests {
 }
 ```
 
-Unterhalb `#[test]` fügen wir die Zeile `#[ignore]` beim Test ein, den wir
+Direkt unter `#[test]` fügen wir die Zeile `#[ignore]` beim Test ein, den wir
 ausschließen wollen. Wenn wir nun unsere Tests ausführen, läuft `it_works`,
 aber `expensive_test` nicht:
 

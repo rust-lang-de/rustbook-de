@@ -18,7 +18,7 @@ hat. Wir werden die TDD-Methode weiter verfolgen, sodass der erste Schritt
 wieder darin besteht, einen fehlschlagenden Test zu schreiben. Wir werden einen
 neuen Test für die neue Funktion `search_case_insensitive` hinzufügen und
 unseren alten Test von `one_result` in `case_sensitive` umbenennen, um die
-Unterschiede zwischen den beiden Tests zu verdeutlichen, wie in Codeblock 12-20
+Unterschiede zwischen den beiden Tests zu verdeutlichen, wie in Listing 12-20
 gezeigt wird.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -69,7 +69,7 @@ Trust me.";
 }
 ```
 
-<span class="caption">Codeblock 12-20: Hinzufügen eines neuen fehlschlagenden
+<span class="caption">Listing 12-20: Hinzufügen eines neuen fehlschlagenden
 Tests für die Funktion `search_case_insensitive`, die wir gleich hinzufügen
 werden</span>
 
@@ -91,12 +91,12 @@ als der Abfragetext. Dies ist unser fehlschlagender Test und er wird sich nicht
 kompilieren lassen, weil wir die Funktion `search_case_insensitive` noch nicht
 definiert haben. Es steht dir frei, eine Skelett-Implementierung hinzuzufügen,
 die immer einen leeren Vektor zurückgibt, ähnlich wie wir es für die Funktion
-`search` in Codeblock 12-16 getan haben, um zu sehen, wie der Test kompilieren
+`search` in Listing 12-16 getan haben, um zu sehen, wie der Test kompilieren
 wird und fehlschlägt.
 
 ### Implementieren der Funktion `search_case_insensitive`
 
-Die Funktion `search_case_insensitive`, die in Codeblock 12-21 gezeigt wird,
+Die Funktion `search_case_insensitive`, die in Listing 12-21 gezeigt wird,
 wird fast die gleiche sein wie die Funktion `search`. Der einzige Unterschied
 besteht darin, dass wir `query` und `line` in Kleinbuchstaben umwandeln, sodass
 sie unabhängig von der Groß-/Kleinschreibung der Eingabe-Argumente sind, wenn
@@ -166,30 +166,29 @@ pub fn search_case_insensitive<'a>(
 # }
 ```
 
-<span class="caption">Codeblock 12-21: Definieren der Funktion
+<span class="caption">Listing 12-21: Definieren der Funktion
 `search_case_insensitive`, um den Abfragetext und die Zeile vor dem Vergleich
 in Kleinbuchstaben umzuwandeln</span>
 
-Zuerst wandeln wir die Zeichenkette `query` in Kleinbuchstaben um und speichern
-ihn in einer neuen Variablen mit dem gleichen Namen, die die ursprüngliche
-Variable `query` verschattetet. Der Aufruf von `to_lowercase` beim Abfragetext
-ist notwendig, sodass wir unabhängig davon, ob die Abfrage des Benutzers
-`"rust"`, `"RUST"`, `"RUST"` oder `"rUsT"` ist, die Abfrage so behandeln, als
-ob sie `"rust"` wäre, und die Groß-/Kleinschreibung nicht beachten. Obwohl
+Zuerst wandeln wir den String `query` in Kleinbuchstaben um und speichern ihn in
+einer neuen Variablen mit dem gleichen Namen, die die ursprüngliche Variable
+`query` verschattet. Der Aufruf von `to_lowercase` beim Abfragetext ist
+notwendig, sodass wir unabhängig davon, ob die Abfrage des Benutzers `"rust"`,
+`"RUST"`, `"RUST"` oder `"rUsT"` ist, die Abfrage so behandeln, als ob sie
+`"rust"` wäre, und die Groß-/Kleinschreibung nicht beachten. Obwohl
 `to_lowercase` mit einfachem Unicode umgehen kann, wird es nicht 100 Prozent
 genau sein. Wenn wir eine echte Anwendung schreiben würden, würden wir hier
 etwas mehr Arbeit spendieren wollen, aber in diesem Abschnitt geht es um
 Umgebungsvariablen, nicht um Unicode, also belassen wir es hier dabei.
 
-Beachte, dass `query` jetzt ein `String` und nicht mehr ein
-Zeichenkettenanteilstyp ist, weil der Aufruf von `to_lowercase` neue Daten
-erzeugt, anstatt auf bestehende Daten zu referenzieren. Nehmen wir als Beispiel
-an, der Abfragetext sei `"rUsT"`, dieser Zeichenkettenanteilstyp enthält kein
-kleingeschriebenes `u` oder `t`, das wir verwenden könnten, also müssen wir
-einen neuen `String` zuweisen, der `"rust"` enthält. Wenn wir nun `query` als
-Argument an die Methode `contains` übergeben, müssen wir ein `&`-Zeichen
-angeben, weil die Signatur von `contains` so definiert ist, dass sie einen
-Zeichenkettenanteilstyp nimmt.
+Beachte, dass `query` jetzt ein `String` und nicht mehr ein String Slice ist,
+weil der Aufruf von `to_lowercase` neue Daten erzeugt, anstatt auf bestehende
+Daten zu referenzieren. Nehmen wir als Beispiel an, der Abfragetext sei
+`"rUsT"`, dieser String Slice enthält kein kleingeschriebenes `u` oder `t`, das
+wir verwenden könnten, also müssen wir einen neuen `String` zuweisen, der
+`"rust"` enthält. Wenn wir nun `query` als Argument an die Methode `contains`
+übergeben, müssen wir ein `&`-Zeichen angeben, weil die Signatur von `contains`
+so definiert ist, dass sie einen String Slice nimmt.
 
 Als nächstes fügen wir einen Aufruf von `to_lowercase` für jede `line` ein,
 um alle Zeichen kleinzuschreiben. Da wir nun `line` und `query` in
@@ -224,11 +223,11 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 ```
 
 Großartig! Sie haben bestanden. Lass uns nun die neue Funktion
-`search_case_insensitive` von der Funktion `run` aufrufen. Zuerst fügen wir
-eine Konfigurationsoption zur `Config`-Struktur hinzu, um zwischen der Suche
-mit und ohne Berücksichtigung der Groß- und Kleinschreibung umzuschalten. Das
-Hinzufügen dieses Feldes führt zu Kompilierfehlern, da wir dieses Feld noch
-nirgendwo initialisiert haben:
+`search_case_insensitive` von der Funktion `run` aufrufen. Zuerst fügen wir eine
+Konfigurationsoption zur `Config`-Struktur hinzu, um zwischen der Suche mit und
+ohne Berücksichtigung der Groß- und Kleinschreibung umzuschalten. Das Hinzufügen
+dieses Feldes führt zu Compilerfehlern, da wir dieses Feld noch nirgendwo
+initialisiert haben:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -292,11 +291,11 @@ pub struct Config {
 # }
 ```
 
-Wir haben das Feld `ignore_case` hinzugefügt, das ein Boolean enthält. Als
-Nächstes benötigen wir die Funktion `run`, um den Wert des Feldes `ignore_case`
-auszuwerten, und verwenden diese, um zu entscheiden, ob die Funktion `search`
-oder die Funktion `search_case_insensitive` aufgerufen werden soll, wie in
-Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.
+Wir haben das Feld `ignore_case` hinzugefügt, das einen booleschen Wert enthält.
+Als Nächstes benötigen wir die Funktion `run`, um den Wert des Feldes
+`ignore_case` auszuwerten und zu entscheiden, ob die Funktion `search` oder die
+Funktion `search_case_insensitive` aufgerufen werden soll, wie in Listing 12-22
+gezeigt. Dies kompiliert noch immer nicht.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -360,15 +359,15 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 }
 ```
 
-<span class="caption">Codeblock 12-22: Aufruf von entweder `search` oder
+<span class="caption">Listing 12-22: Aufruf von entweder `search` oder
 `search_case_insensitive` basierend auf dem Wert in `config.ignore_case`</span>
 
 Schließlich müssen wir nach der Umgebungsvariablen suchen. Die Funktionen zum
 Arbeiten mit Umgebungsvariablen befinden sich im Modul `env` in der
 Standardbibliothek, die bereits im Gültigkeitsbereich am Anfang von
 _src/main.rs_ ist. Dann werden wir die Funktion `var` aus dem Modul `env`
-verwenden, um zu prüfen ob eine Umgebungsvariable namens `IGNORE_CASE` einen
-Wert hat, wie in Codeblock 12-23 gezeigt.
+verwenden, um zu prüfen, ob eine Umgebungsvariable namens `IGNORE_CASE` einen
+Wert hat, wie in Listing 12-23 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -436,7 +435,7 @@ impl Config {
 # }
 ```
 
-<span class="caption">Codeblock 12-23: Prüfen, ob eine Umgebungsvariable namens
+<span class="caption">Listing 12-23: Prüfen, ob eine Umgebungsvariable namens
 `IGNORE_CASE` einen Wert hat</span>
 
 Hier erstellen wir eine neue Variable `ignore_case`. Um ihren Wert zu setzen,
@@ -459,7 +458,7 @@ die wir bei `Result` gesehen haben.
 Wir übergeben den Wert in der Variablen `ignore_case` an die
 `Config`-Instanz, sodass die Funktion `run` diesen Wert lesen und entscheiden
 kann, ob sie `search_case_insensitive` oder `search` aufrufen soll, wie wir es
-in Codeblock 12-22 implementiert haben.
+in Listing 12-22 implementiert haben.
 
 Lass es uns versuchen! Zuerst führen wir unser Programm ohne die gesetzte
 Umgebungsvariable und mit dem Abfragetext `to` aus, die zu den Zeilen passen
@@ -489,8 +488,8 @@ das Ausführen des Programms separate Befehle:
 PS> $Env:IGNORE_CASE=1; cargo run to poem.txt
 ```
 
-Dadurch bleibt `IGNORE_CASE` für den Rest deiner Shell-Sitzung bestehen. Sie
-kann mit `Remove-Item` zurückgesetzt werden:
+Dadurch bleibt `IGNORE_CASE` für den Rest deiner Shell-Sitzung bestehen. Die
+Umgebungsvariable kann mit `Remove-Item` zurückgesetzt werden:
 
 ```console
 PS> Remove-Item Env:IGNORE_CASE

@@ -11,10 +11,10 @@ $ cd minigrep
 ```
 
 Die erste Aufgabe besteht darin, `minigrep` dazu zu bringen, seine beiden
-Kommandozeilenargumente entgegennehmen: Den Dateipfad und eine Zeichenkette,
-nach der gesucht werden soll. Das heißt, wir wollen in der Lage sein, unser
-Programm mit `cargo run`, einer zu suchenden Zeichenkette und einem Pfad zu
-einer Datei, in der gesucht werden soll, auszuführen:
+Kommandozeilenargumente entgegennehmen: den Dateipfad und einen String, nach dem
+gesucht werden soll. Das heißt, wir wollen in der Lage sein, unser Programm mit
+`cargo run`, einem zu suchenden String und einem Pfad zu einer Datei, in der
+gesucht werden soll, auszuführen:
 
 ```console
 $ cargo run -- searchstring example-filename.txt
@@ -38,7 +38,7 @@ erzeugen eine Reihe von Werten und wir können die Methode `collect` auf einem
 Iterator aufrufen, um ihn in eine Kollektion, z.B. einen Vektor, zu verwandeln,
 der alle Elemente enthält, die der Iterator erzeugt.
 
-Der Code in Codeblock 12-1 ermöglicht deinem `minigrep`-Programm, alle ihm
+Der Code in Listing 12-1 ermöglicht deinem `minigrep`-Programm, alle ihm
 übergebenen Befehlszeilenargumente zu lesen und die Werte dann in einem Vektor
 zu sammeln.
 
@@ -53,7 +53,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 12-1: Sammeln der Befehlszeilenargumente in
+<span class="caption">Listing 12-1: Sammeln der Befehlszeilenargumente in
 einem Vektor und Ausgeben dieser Werte</span>
 
 Zuerst bringen wir das Modul `std::env` mit einer `use`-Anweisung in den
@@ -70,23 +70,22 @@ werden könnte, die im aktuellen Modul definiert ist.
 
 > ### Die Funktion `args` und ungültiger Unicode
 >
-> Beachte, dass `std::env::args` abstürzt, wenn ein Argument einen ungültigen
-> Unicode enthält. Wenn dein Programm Argumente mit ungültigem Unicode
-> akzeptieren muss, verwende stattdessen `std::env::args_os`. Diese Funktion
-> gibt einen Iterator zurück, der `OsString`-Werte anstelle von `String`-Werten
-> erzeugt. Wir haben uns hier aus Gründen der Einfachheit für die Verwendung
-> von `std::env::args` entschieden, weil `OsString`-Werte sich je nach
-> Plattform unterscheiden und die Arbeit mit ihnen komplexer ist als mit
-> `String`-Werten.
+> Beachte, dass `std::env::args` abbricht, wenn ein Argument einen ungültigen
+> Unicode enthält. Wenn dein Programm Argumente mit ungültigem Unicode akzeptieren
+> muss, verwende stattdessen `std::env::args_os`. Diese Funktion gibt einen
+> Iterator zurück, der `OsString`-Werte anstelle von `String`-Werten erzeugt. Wir
+> haben uns hier aus Gründen der Einfachheit für die Verwendung von
+> `std::env::args` entschieden, weil `OsString`-Werte sich je nach Plattform
+> unterscheiden und die Arbeit mit ihnen komplexer ist als mit `String`-Werten.
 
 In der ersten Zeile von `main` rufen wir `env::args` auf und wir verwenden
 sofort `collect`, um den Iterator in einen Vektor zu verwandeln, der alle vom
 Iterator erzeugten Werte enthält. Wir können die Funktion `collect` verwenden,
 um viele Arten von Kollektionen zu erstellen, also vermerken wir explizit den
-Typ von `args`, um anzugeben, dass wir einen Vektor mit Zeichenketten wollen.
-Obwohl du in Rust nur sehr selten Typen mit Annotationen versehen musst, ist
-`collect` eine Funktion, die du häufig mit Annotationen versehen musst, da Rust
-nicht in der Lage ist, auf die Art der gewünschten Kollektion zu schließen.
+Typ von `args`, um anzugeben, dass wir einen Vektor mit Strings wollen. Obwohl
+du in Rust nur sehr selten Typen mit Annotationen versehen musst, ist `collect`
+eine Funktion, die du häufig mit Annotationen versehen musst, da Rust nicht in
+der Lage ist, auf die Art der gewünschten Kollektion zu schließen.
 
 Zum Schluss geben wir den Vektor mit dem Debug-Makro aus. Versuchen wir, den
 Code zuerst ohne Argumente und dann mit zwei Argumenten laufen zu lassen:
@@ -127,7 +126,7 @@ ihn und speichern nur die beiden Argumente, die wir brauchen.
 Das Programm ist derzeit in der Lage, auf die als Kommandozeilenargumente
 angegebenen Werte zuzugreifen. Jetzt müssen wir die Werte der beiden Argumente
 in Variablen speichern, damit wir die Werte im restlichen Programm verwenden
-können. Das tun wir in Codeblock 12-2.
+können. Das tun wir in Listing 12-2.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -145,16 +144,15 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 12-2: Erstellen von Variablen zur Aufnahme des
+<span class="caption">Listing 12-2: Erstellen von Variablen zur Aufnahme des
 Such-Arguments und des Dateipfad-Arguments</span>
 
 Wie wir gesehen haben, als wir den Vektor ausgegeben haben, nimmt der
-Programmname den ersten Wert im Vektor bei `args[0]` ein, also beginnen wir
-beim Index `1`. Das erste Argument, das `minigrep` annimmt, ist die
-Zeichenkette, nach der wir suchen, also setzen wir eine Referenz auf das erste
-Argument in die Variable `query`. Das zweite Argument wird der Dateipfad sein,
-also setzen wir eine Referenz auf das zweite Argument in die Variable
-`file_path`.
+Programmname den ersten Wert im Vektor bei `args[0]` ein, also beginnen wir beim
+Index `1`. Das erste Argument, das `minigrep` annimmt, ist der String, nach dem
+wir suchen, also setzen wir eine Referenz auf das erste Argument in die Variable
+`query`. Das zweite Argument wird der Dateipfad sein, also setzen wir eine
+Referenz auf das zweite Argument in die Variable `file_path`.
 
 Wir geben vorübergehend die Werte dieser Variablen aus, um zu belegen, dass der
 Code so funktioniert, wie wir es beabsichtigen. Lassen wir dieses Programm mit

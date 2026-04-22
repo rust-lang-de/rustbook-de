@@ -1,36 +1,34 @@
-## Der Anteilstyp (slice)
+## Der Slice-Typ
 
-Mit _Anteilstypen_ kannst du auf eine zusammenhängende Folge von Elementen in
-einer [Kollektion][collection] referenzieren. Ein Anteilstyp ist eine Art
-Referenz und hat daher keine Eigentümerschaft.
+Mit _Slices_ kannst du auf eine zusammenhängende Folge von Elementen in einer
+[Kollektion][collection] referenzieren. Ein Slice ist eine Art Referenz und hat
+daher kein Eigentum.
 
-Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die eine
-Zeichenkette mit durch Leerzeichen getrennten Wörtern entgegennimmt und das
-erste Wort zurückgibt, das sie in dieser Zeichenkette findet. Wenn die Funktion
-kein Leerzeichen in der Zeichenkette findet, muss die gesamte Zeichenkette ein
-Wort sein, also sollte die gesamte Zeichenkette zurückgegeben werden.
+Hier ist eine kleine Programmieraufgabe: Schreibe eine Funktion, die einen
+String aus Wörtern entgegennimmt, die durch Leerzeichen getrennt sind, und das
+erste Wort in diesem String zurückgibt. Wenn die Funktion im String kein
+Leerzeichen findet, muss der gesamte String ein einziges Wort sein; in diesem
+Fall soll der komplette String zurückgegeben werden.
 
-> Hinweis: Zur Einführung in Anteilstypen gehen wir in diesem Abschnitt nur von
-> ASCII aus. Eine ausführlichere Erörterung der UTF-8-Verarbeitung findest du
-> im Abschnitt [„UTF-8-kodierten Text in Zeichenketten (strings)
-> ablegen“][strings] in Kapitel 8.
+> Hinweis: Zur Einführung in Slices gehen wir in diesem Abschnitt nur von ASCII
+> aus. Eine ausführlichere Erörterung der UTF-8-Verarbeitung findest du im
+> Abschnitt [„UTF-8-kodierten Text in Strings ablegen“][strings] in Kapitel 8.
 
-Gehen wir einmal durch, wie wir die Signatur dieser Funktion ohne Verwendung
-von Anteilstypen schreiben würden, um das Problem zu verstehen, das durch
-Anteilstypen gelöst wird:
+Gehen wir einmal durch, wie wir die Signatur dieser Funktion ohne Verwendung von
+Slices schreiben würden, um das Problem zu verstehen, das durch Slices gelöst
+wird:
 
 ```rust,ignore
 fn first_word(s: &String) -> ?
 ```
 
 Die Funktion `first_word` hat einen Parameter vom Typ `&String`. Wir benötigen
-keine Eigentümerschaft, also ist das in Ordnung. (In idiomatischem Rust
-übernehmen Funktionen nicht die Eigentümerschaft an ihren Argumenten, es sei
-denn, sie müssen es, und die Gründe dafür werden im weiteren Verlauf klar
-werden.) Aber was sollen wir zurückgeben? Wir haben nicht wirklich die
-Mittel, _einen Teil_ einer Zeichenkette zu referenzieren. Wir könnten jedoch
-den Index des Wortendes zurückgeben. Versuchen wir das, wie in Codeblock 4-7
-gezeigt.
+kein Eigentum, also ist das in Ordnung. (In idiomatischem Rust übernehmen
+Funktionen nicht das Eigentum an ihren Argumenten, es sei denn, sie müssen es,
+und die Gründe dafür werden im weiteren Verlauf klar werden.) Aber was sollen
+wir zurückgeben? Wir haben nicht wirklich die Mittel, _einen Teil_ eines Strings
+zu referenzieren. Wir könnten jedoch den Index des Wortendes zurückgeben.
+Versuchen wir das, wie in Listing 4-7 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -50,7 +48,7 @@ fn first_word(s: &String) -> usize {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 4-7: Die Funktion `first_word`, die einen
+<span class="caption">Listing 4-7: Die Funktion `first_word`, die einen
 Byte-Indexwert zum Parameter `String` zurückgibt</span>
 
 Da wir den `String` Zeichen für Zeichen durchgehen und prüfen müssen, ob ein
@@ -107,10 +105,10 @@ Mustern befassen. In der `for`-Schleife spezifizieren wir also ein Muster, das
 wir eine Referenz auf das Element aus `.iter().enumerate()` erhalten, verwenden
 wir `&` im Muster.
 
-Innerhalb der `for`-Schleife suchen wir mit Hilfe der Byte-Literal-Syntax
-`b' '` nach dem Byte, das das Leerzeichen repräsentiert. Wenn wir ein
-Leerzeichen finden, geben wir die Position zurück. Andernfalls geben wir die
-Länge der Zeichenkette zurück, indem wir `s.len()` verwenden.
+Innerhalb der `for`-Schleife suchen wir mit Hilfe der Byte-Literal-Syntax `b' '`
+nach dem Byte, das das Leerzeichen repräsentiert. Wenn wir ein Leerzeichen
+finden, geben wir die Position zurück. Andernfalls geben wir die Länge des
+Strings zurück, indem wir `s.len()` verwenden.
 
 ```rust
 # fn first_word(s: &String) -> usize {
@@ -128,13 +126,13 @@ Länge der Zeichenkette zurück, indem wir `s.len()` verwenden.
 # fn main() {}
 ```
 
-Wir haben jetzt eine Möglichkeit, den Index des ersten Wortendes in der
-Zeichenkette herauszufinden, aber es gibt ein Problem. Wir geben ein `usize`
-für sich allein zurück, aber die Zahl ist nur aussagekräftig im Kontext des
-`&String`. Mit anderen Worten: Da es sich um einen vom `String` getrennten Wert
-handelt, gibt es keine Garantie, dass er auch in Zukunft noch gültig ist.
-Betrachte das Programm in Codeblock 4-8, das die Funktion `first_word` aus
-Codeblock 4-7 verwendet.
+Wir haben jetzt eine Möglichkeit, den Index des ersten Wortendes im String
+herauszufinden, aber es gibt ein Problem. Wir geben ein `usize` für sich allein
+zurück, aber die Zahl ist nur aussagekräftig im Kontext des `&String`. Mit
+anderen Worten: Da es sich um einen vom `String` getrennten Wert handelt, gibt
+es keine Garantie, dass er auch in Zukunft noch gültig ist. Betrachte das
+Programm in Listing 4-8, das die Funktion `first_word` aus Listing 4-7
+verwendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -156,17 +154,17 @@ fn main() {
 
     let word = first_word(&s); // word erhält den Wert 5
 
-    s.clear(); // leert die Zeichenkette und macht sie gleich ""
+    s.clear(); // leert den String und macht ihn gleich ""
 
-    // word hat noch immer den Wert 5, aber es gibt keine Zeichenkette mehr,
-    // mit der wir den Wert 5 sinnvoll verwenden könnten.
+    // word hat noch immer den Wert 5, aber es gibt keinen String mehr,
+    // mit dem wir den Wert 5 sinnvoll verwenden könnten.
     // word ist jetzt völlig ungültig!
 }
 ```
 
-<span class="caption">Codeblock 4-8: Speichern des Ergebnisses des
-Funktionsaufrufs `first_word` und anschließendes Ändern des Inhalts der
-Zeichenkette</span>
+<span class="caption">Listing 4-8: Speichern des Ergebnisses des
+Funktionsaufrufs `first_word` und anschließendes Ändern des Inhalts des
+Strings</span>
 
 Dieses Programm kompiliert fehlerfrei und würde dies auch tun, wenn wir `word`
 nach dem Aufruf von `s.clear()` benutzen würden. Da `word` überhaupt nicht mit
@@ -189,13 +187,12 @@ mehr Werte, die aus Daten in einem bestimmten Zustand berechnet wurden, aber
 überhaupt nicht an diesen Zustand gebunden sind. Wir haben drei unverbundene
 Variablen, die synchron gehalten werden müssen.
 
-Glücklicherweise hat Rust eine Lösung für dieses Problem:
-Zeichenkettenanteilstypen
+Glücklicherweise hat Rust eine Lösung für dieses Problem: String Slices
 
-### Zeichenkettenanteilstypen (string slices)
+### String Slices
 
-Ein _Zeichenkettenanteilstyp_  (string slice) ist ein Verweis auf einen Teil
-eines `String`, und er sieht so aus:
+Ein _String Slice_ ist eine Referenz auf einen Teil eines `String`, und er sieht
+so aus:
 
 ```rust
 let s = String::from("Hallo Welt");
@@ -205,31 +202,30 @@ let world = &s[6..10];
 ```
 
 Anstelle einer Referenz auf den gesamten `String` ist `hello` eine Referenz auf
-einen Teil des `String`, der mit dem zusätzlichen `[0..5]` spezifiziert ist.
-Wir erstellen Anteilstypen unter Angabe eines Bereichs innerhalb von Klammern,
-indem wir `[starting_index..ending_index]` angeben, wobei _`starting_index`_
-die erste Position im Anteilstyp und _`ending_index`_ eine Position mehr als die
-letzte Position im Anteilstyp ist. Intern speichert die
-Anteilstyp-Datenstruktur die Anfangsposition und die Länge des Anteilstypen,
-was `ending_index` minus `starting_index` entspricht. Im Fall von `let world =
-&s[6..10];` wäre `world` also ein Anteilstyp, der einen Zeiger auf das Byte bei
-Index 6 von `s` mit dem Längenwert `4` enthält.
+einen Teil des `String`, der mit dem zusätzlichen `[0..5]` spezifiziert ist. Wir
+erstellen Slices unter Angabe eines Bereichs innerhalb von Klammern, indem wir
+`[starting_index..ending_index]` angeben, wobei _`starting_index`_ die erste
+Position im Slice und _`ending_index`_ eine Position mehr als die letzte
+Position im Slice ist. Intern speichert die Slice-Datenstruktur die
+Anfangsposition und die Länge des Slices, was `ending_index` minus
+`starting_index` entspricht. Im Fall von `let world = &s[6..10];` wäre `world`
+also ein Slice, der einen Zeiger auf das Byte bei Index 6 von `s` mit dem
+Längenwert `4` enthält.
 
 Abbildung 4-7 stellt dies dar.
 
-<img alt="Drei Tabellen: Eine Tabelle, die die Stapelspeicher-Daten von s
-darstellt, die auf das Byte bei Index 0 in einer Tabelle der
-Zeichenketten-Daten &quot;Hallo Welt&quot; auf dem Haldenspeicher zeigt. Die
-dritte Tabelle repräsentiert die Stapelspeicher-Daten des Anteilstypen Welt,
-der den Längenwert 4 hat und auf Byte 6 der Haldenspeicher-Datentabelle zeigt."
-src="img/trpl04-07.svg" class="center" style="width: 50%;" />
+<img alt="Drei Tabellen: Eine Tabelle, die die Stack-Daten von s darstellt, die
+auf das Byte bei Index 0 in einer Tabelle der String-Daten &quot;Hallo
+Welt&quot; auf dem Heap zeigt. Die dritte Tabelle repräsentiert die Stack-Daten
+des Slices Welt, der den Längenwert 4 hat und auf Byte 6 der Heap-Datentabelle
+zeigt." src="img/trpl04-07.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Abbildung 4-7: Ein Zeichenkettenanteilstyp, der auf einen
-Teil eines `String` referenziert</span>
+<span class="caption">Abbildung 4-7: Ein String Slice, der auf einen Teil eines
+`String` referenziert</span>
 
-Wenn du mit der Bereichssyntax `..` in Rust beim Index 0 beginnen willst,
-kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten sind diese
-gleich:
+Wenn du mit der Bereichssyntax `..` in Rust beim Index 0 beginnen willst, kannst
+du den Wert vor den zwei Punkten weglassen. Mit anderen Worten sind diese
+Ausdrücke gleich:
 
 ```rust
 let s = String::from("Hallo");
@@ -238,8 +234,8 @@ let slice = &s[0..2];
 let slice = &s[..2];
 ```
 
-Ebenso kannst du den Endindex weglassen, wenn dein Anteilstyp das letzte Byte
-des `String` enthält. Das bedeutet, dass diese gleich sind:
+Ebenso kannst du den Endindex weglassen, wenn dein Slice das letzte Byte des
+`String` enthält. Das bedeutet, dass diese gleich sind:
 
 ```rust
 let s = String::from("Hallo");
@@ -250,8 +246,8 @@ let slice = &s[3..len];
 let slice = &s[3..];
 ```
 
-Du kannst auch beide Werte weglassen, um einen Ausschnitt der gesamten
-Zeichenkette zu beschreiben. Diese sind also gleichwertig:
+Du kannst auch beide Werte weglassen, um einen Ausschnitt des gesamten Strings
+zu beschreiben. Diese sind also gleichwertig:
 
 ```rust
 let s = String::from("Hallo");
@@ -262,14 +258,14 @@ let slice = &s[0..len];
 let slice = &s[..];
 ```
 
-> Hinweis: Bereichsindizes bei Zeichenkettenanteilstypen müssen sich nach
-> gültigen UTF-8-Zeichengrenzen richten. Wenn du versuchst, einen
-> Zeichenkettenanteilstyp in der Mitte eines Mehrbyte-Zeichens zu erstellen,
-> wird dein Programm mit einem Fehler abbrechen.
+> Hinweis: Bereichsindizes bei String Slices müssen sich nach gültigen
+> UTF-8-Zeichengrenzen richten. Wenn du versuchst, einen String Slice in der Mitte
+> eines Mehrbyte-Zeichens zu erstellen, wird dein Programm mit einem Fehler
+> abbrechen.
 
 Mit all diesen Informationen im Hinterkopf schreiben wir `first_word` so um,
-dass es einen Anteilstyp zurückgibt. Der Typ mit der Bedeutung
-„Zeichenkettenanteilstyp“ wird `&str` geschrieben:
+dass es einen Slice zurückgibt. Der Typ mit der Bedeutung „String Slice“ wird
+`&str` geschrieben:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -289,18 +285,17 @@ fn first_word(s: &String) -> &str {
 # fn main() {}
 ```
 
-Den Index für das Wortende erhalten wir auf die gleiche Weise wie in Codeblock
-4-7, indem wir nach dem ersten Vorkommen eines Leerzeichens suchen. Wenn wir
-ein Leerzeichen finden, geben wir einen Zeichenkettenanteilstyp zurück, wobei
-wir den Anfang der Zeichenkette und den Index des Leerzeichens als Anfangs-
-bzw. Endindex verwenden.
+Den Index für das Wortende erhalten wir auf die gleiche Weise wie in Listing
+4-7, indem wir nach dem ersten Vorkommen eines Leerzeichens suchen. Wenn wir ein
+Leerzeichen finden, geben wir einen String Slice zurück, wobei wir den Anfang
+des Strings und den Index des Leerzeichens als Anfangs- bzw. Endindex verwenden.
 
 Wenn wir nun `first_word` aufrufen, erhalten wir einen einzelnen Wert zurück,
 der an die zugrundeliegenden Daten gebunden ist. Der Wert setzt sich aus einer
-Referenz auf den Startpunkt des Anteilstyps und der Anzahl der Elemente im
-Anteilstyp zusammen.
+Referenz auf den Startpunkt des Slices und der Anzahl der Elemente im Slice
+zusammen.
 
-Die Rückgabe eines Anteilstyps würde auch für eine Funktion `second_word`
+Die Rückgabe eines Slices würde auch für eine Funktion `second_word`
 funktionieren:
 
 ```rust,ignore
@@ -308,16 +303,15 @@ fn second_word(s: &String) -> &str {
 ```
 
 Wir haben jetzt eine einfache API, die viel schwieriger durcheinanderzubringen
-ist, weil der Compiler sicherstellt, dass die Referenzen auf den `String`
-gültig bleiben. Erinnere dich an den Fehler im Programm in Codeblock 4-8, als
-wir den Index bis zum Ende des ersten Wortes erhielten, dann aber die
-Zeichenkette löschten, sodass unser Index ungültig wurde. Dieser Code war
-logisch falsch, zeigte aber keine unmittelbaren Fehler. Die Probleme würden
-sich später zeigen, wenn wir weiterhin versuchen würden, den ersten Wortindex
-mit einer leeren Zeichenkette zu verwenden. Anteilstypen machen diesen Fehler
-unmöglich und lassen uns viel früher wissen, dass wir ein Problem mit unserem
-Code haben. Die Anteilstypen-Variante von `first_word` führt zu einem
-Kompilierfehler:
+ist, weil der Compiler sicherstellt, dass die Referenzen auf den `String` gültig
+bleiben. Erinnere dich an den Fehler im Programm in Listing 4-8, als wir den
+Index bis zum Ende des ersten Wortes erhielten, dann aber den String löschten,
+sodass unser Index ungültig wurde. Dieser Code war logisch falsch, zeigte aber
+keine unmittelbaren Fehler. Die Probleme würden sich später zeigen, wenn wir
+weiterhin versuchen würden, den ersten Wortindex mit einem leeren String zu
+verwenden. Slices machen diesen Fehler unmöglich und lassen uns viel früher
+wissen, dass wir ein Problem mit unserem Code haben. Die Slice-Variante von
+`first_word` führt zu einem Compilerfehler:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -345,7 +339,7 @@ fn main() {
 }
 ```
 
-Hier ist der Kompilierfehler:
+Hier ist der Compilerfehler:
 
 ```console
 $ cargo run
@@ -366,43 +360,42 @@ For more information about this error, try `rustc --explain E0502`.
 error: could not compile `ownership` (bin "ownership") due to 1 previous error
 ```
 
-Erinnere dich an die Ausleihregeln, durch die wir, wenn wir eine
-unveränderbare Referenz auf etwas haben, nicht noch eine veränderbare
-Referenz anlegen können. Da `clear` den `String` abschneiden muss, muss es
-eine veränderbare Referenz erhalten. Das `println!` nach dem Aufruf von
-`clear` verwendet die Referenz in `word`, sodass die unveränderbare Referenz
-zu diesem Zeitpunkt noch aktiv sein muss. Rust verbietet, dass die
-veränderbare Referenz in `clear` und die unveränderbare Referenz in `word`
-nicht gleichzeitig existieren, und die Kompilierung schlägt fehl. Rust hat
-nicht nur die Benutzung unserer API vereinfacht, sondern auch eine ganze Klasse
-von Fehlern zur Kompilierzeit beseitigt!
+Erinnere dich an die Borrowing-Regeln, durch die wir, wenn wir eine
+unveränderbare Referenz auf etwas haben, nicht noch eine veränderbare Referenz
+anlegen können. Da `clear` den `String` abschneiden muss, muss es eine
+veränderbare Referenz erhalten. Das `println!` nach dem Aufruf von `clear`
+verwendet die Referenz in `word`, sodass die unveränderbare Referenz zu diesem
+Zeitpunkt noch aktiv sein muss. Rust verbietet, dass die veränderbare Referenz
+in `clear` und die unveränderbare Referenz in `word` nicht gleichzeitig
+existieren, und die Kompilierung schlägt fehl. Rust hat nicht nur die Benutzung
+unserer API vereinfacht, sondern auch eine ganze Klasse von Fehlern zur
+Kompilierzeit beseitigt!
 
-#### Zeichenkettenliterale als Anteilstypen
+#### String-Literale als Slices
 
-Erinnere dich, dass wir darüber sprachen, dass Zeichenkettenliterale in der
-Binärdatei gespeichert werden. Jetzt, da wir über Anteilstypen Bescheid wissen,
-können wir Zeichenkettenliterale richtig verstehen:
+Erinnere dich, dass wir darüber sprachen, dass String-Literale in der Binärdatei
+gespeichert werden. Jetzt, da wir über Slices Bescheid wissen, können wir
+String-Literale richtig verstehen:
 
 ```rust
 let s = "Hallo Welt!";
 ```
 
-Der Typ von `s` hier ist `&str`: Es ist ein Anteilstyp, der auf diesen
-speziellen Punkt der Binärdatei zeigt. Das ist auch der Grund, warum
-Zeichenkettenliterale unveränderbar sind; `&str` ist eine unveränderbare
-Referenz.
+Der Typ von `s` hier ist `&str`: Es ist ein Slice, der auf diesen speziellen
+Punkt der Binärdatei zeigt. Das ist auch der Grund, warum String-Literale
+unveränderbar sind; `&str` ist eine unveränderbare Referenz.
 
-#### Zeichenkettenanteilstypen als Parameter
+#### String Slices als Parameter
 
-Das Wissen, dass man Anteilstypen von Literalen und `String`-Werten erstellen
-kann, führt uns zu einer weiteren Verbesserung von `first_word`, und das ist
-ihre Signatur:
+Das Wissen, dass man Slices von Literalen und `String`-Werten erstellen kann,
+führt uns zu einer weiteren Verbesserung von `first_word`, und das ist ihre
+Signatur:
 
 ```rust,ignore
 fn first_word(s: &String) -> &str {
 ```
 
-Ein erfahrenerer Rust-Entwickler würde stattdessen die in Codeblock 4-9
+Ein erfahrenerer Rust-Entwickler würde stattdessen die in Listing 4-9
 gezeigte Signatur schreiben, da sie es uns erlaubt, dieselbe Funktion sowohl
 auf `&String`-Werte als auch auf `&str`-Werte anzuwenden.
 
@@ -422,38 +415,37 @@ fn first_word(s: &str) -> &str {
 # fn main() {
 #     let my_string = String::from("Hallo Welt");
 #
-#     // `first_word` funktioniert mit Anteilstypen von `String`, ob teilweise oder ganz
+#     // `first_word` funktioniert mit Slices von `String`, ob teilweise oder ganz
 #     let word = first_word(&my_string[0..6]);
 #     let word = first_word(&my_string[..]);
 #     // `first_word` funktioniert auch bei Referenzen auf `String`, die
-#     // äquivalent zu ganzen Anteilstypen von `String` sind
+#     // äquivalent zu ganzen Slices von `String` sind
 #     let word = first_word(&my_string);
 #
 #     let my_string_literal = "Hallo Welt";
 #
-#     // `first_word` funktioniert mit Anteilstypen von Zeichenkettenliteralen, ob teilweise oder ganz
+#     // `first_word` funktioniert mit Slices von String-Literalen, ob teilweise oder ganz
 #     let word = first_word(&my_string_literal[0..6]);
 #     let word = first_word(&my_string_literal[..]);
 #
-#     // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
-#     // funktioniert dies auch ohne die Anteilstypensyntax!
+#     // Da String-Literale bereits String Slices sind,
+#     // funktioniert dies auch ohne Slice-Syntax!
 #     let word = first_word(my_string_literal);
 # }
 ```
 
-<span class="caption">Codeblock 4-9: Verbessern der Funktion `first_word` durch
-Verwenden eines Zeichenkettenanteilstyps für den Typ des Parameters `s`</span>
+<span class="caption">Listing 4-9: Verbessern der Funktion `first_word` durch
+Verwenden eines String Slices für den Typ des Parameters `s`</span>
 
-Wenn wir einen Zeichenkettenanteilstyp haben, können wir diesen direkt
-übergeben. Wenn wir einen `String` haben, können wir einen Anteilstyp des
-`String` oder eine Referenz auf den `String` übergeben. Diese Flexibilität
-nutzt die Vorteile der automatischen Umwandlung, eine Funktionalität, die wir
-im Abschnitt [„Automatische Umwandlung in Funktionen und Methoden
-verwenden“][deref-coercions] in Kapitel 15 behandeln.
+Wenn wir einen String Slice haben, können wir diesen direkt übergeben. Wenn wir
+einen `String` haben, können wir einen Slice des `String` oder eine Referenz auf
+den `String` übergeben. Diese Flexibilität nutzt die Vorteile der automatischen
+Umwandlung, eine Funktionalität, die wir im Abschnitt [„Automatische Umwandlung
+in Funktionen und Methoden verwenden“][deref-coercions] in Kapitel 15 behandeln.
 
-Das Definieren einer Funktion, die einen Zeichenkettenanteilstyp statt einer
-Referenz auf einen `String` entgegennimmt, macht unsere API allgemeiner und
-nützlicher, ohne an Funktionalität einzubüßen:
+Das Definieren einer Funktion, die einen String Slice statt einer Referenz auf
+einen `String` entgegennimmt, macht unsere API allgemeiner und nützlicher, ohne
+an Funktionalität einzubüßen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -473,36 +465,35 @@ nützlicher, ohne an Funktionalität einzubüßen:
 fn main() {
     let my_string = String::from("Hallo Welt");
 
-    // `first_word` funktioniert mit Anteilstypen von `String`, ob teilweise oder ganz
+    // `first_word` funktioniert mit Slices von `String`, ob teilweise oder ganz
     let word = first_word(&my_string[0..6]);
     let word = first_word(&my_string[..]);
     // `first_word` funktioniert auch bei Referenzen auf `String`, die
-    // äquivalent zu ganzen Anteilstypen von `String` sind
+    // äquivalent zu ganzen Slices von `String` sind
     let word = first_word(&my_string);
 
     let my_string_literal = "Hallo Welt";
 
-    // `first_word` funktioniert mit Anteilstypen von Zeichenkettenliteralen, ob teilweise oder ganz
+    // `first_word` funktioniert mit Slices von String-Literalen, ob teilweise oder ganz
     let word = first_word(&my_string_literal[0..6]);
     let word = first_word(&my_string_literal[..]);
 
-    // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
-    // funktioniert dies auch ohne die Anteilstypensyntax!
+    // Da String-Literale bereits String Slices sind,
+    // funktioniert dies auch ohne Slice-Syntax!
     let word = first_word(my_string_literal);
 }
 ```
 
-### Andere Anteilstypen
+### Andere Slices
 
-Zeichenkettenanteilstypen sind, wie du dir vorstellen kannst, spezifisch für
-Zeichenketten. Es gibt aber auch einen allgemeineren Anteilstyp. Betrachte
-dieses Array:
+String Slices sind, wie du dir vorstellen kannst, spezifisch für Strings. Es
+gibt aber auch einen allgemeineren Slice-Typ. Betrachte dieses Array:
 
 ```rust
 let a = [1, 2, 3, 4, 5];
 ```
 
-Genauso wie wir vielleicht auf einen Teil einer Zeichenkette verweisen möchten,
+Genauso wie wir vielleicht auf einen Teil eines Strings verweisen möchten,
 möchten wir vielleicht auf einen Teil eines Arrays verweisen. Wir würden das so
 machen:
 
@@ -514,24 +505,24 @@ let slice = &a[1..3];
 assert_eq!(slice, &[2, 3]);
 ```
 
-Dieser Anteilstyp hat den Typ `&[i32]`. Es funktioniert auf die gleiche Weise
-wie bei Zeichenkettenanteilstypen, indem es eine Referenz auf das erste Element
-und eine Länge speichert. Du wirst diese Art von Anteilstyp für alle möglichen
-anderen Kollektionen verwenden. Wir werden diese Kollektionen im Detail
-besprechen, wenn wir in Kapitel 8 über Vektoren sprechen.
+Dieser Slice hat den Typ `&[i32]`. Es funktioniert auf die gleiche Weise wie bei
+String Slices, indem es eine Referenz auf das erste Element und eine Länge
+speichert. Du wirst diese Art von Slices für alle möglichen anderen Kollektionen
+verwenden. Wir werden diese Kollektionen im Detail besprechen, wenn wir in
+Kapitel 8 über Vektoren sprechen.
 
 ## Zusammenfassung
 
-Die Konzepte von Eigentümerschaft, Ausleihen und Anteilstypen gewährleisten
+Die Konzepte von Eigentümerschaft, Borrowing und Slices gewährleisten
 Speichersicherheit zur Kompilierzeit in Rust-Programmen. Die Sprache Rust gibt
 dir Kontrolle über die Speicherverwendung auf die gleiche Weise wie andere
 Systemprogrammiersprachen, aber dadurch, dass der Eigentümer der Daten diese
 automatisch aufräumt, wenn der Eigentümer den Gültigkeitsbereich verlässt,
-bedeutet dies, dass du keinen zusätzlichen Code schreiben und debuggen musst,
-um diese Kontrolle zu erhalten.
+bedeutet dies, dass du keinen zusätzlichen Code schreiben und debuggen musst, um
+diese Kontrolle zu erhalten.
 
 Die Eigentümerschaft wirkt sich auf die Funktionsweise vieler anderer Teile von
-Rust aus, deshalb werden wir im weiteren Verlauf des Buchs weiter über diese
+Rust aus, deshalb werden wir im weiteren Verlauf des Buches weiter über diese
 Konzepte sprechen. Lass uns zu Kapitel 5 übergehen und uns das Gruppieren von
 Datenteilen zu einer `struct` ansehen.
 

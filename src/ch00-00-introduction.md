@@ -1,13 +1,13 @@
 # Einführung
 
-Willkommen bei _Die Programmiersprache Rust_, einem einführenden Buch über
+Willkommen im Buch _Die Programmiersprache Rust_, einem einführenden Buch über
 Rust. Die Programmiersprache Rust hilft dir, schnellere und zuverlässigere
 Software zu schreiben. Ergonomie und systemnahe Kontrolle stehen beim Entwurf
 von Programmiersprachen oft im Widerspruch &ndash; Rust stellt sich diesem
 Konflikt. Durch den Ausgleich zwischen leistungsstarken, technischen
 Möglichkeiten und einer großartigen Entwicklererfahrung bietet dir Rust die
-Möglichkeit, Details systemnah (z.B. Speichernutzung) zu kontrollieren, ohne
-den ganzen Ärger, der damit typischerweise einhergeht.
+Möglichkeit, Details systemnah (z.B. Speichernutzung) zu kontrollieren, ohne den
+ganzen Ärger, der damit typischerweise einhergeht.
 
 ## Für wen Rust ist
 
@@ -17,14 +17,14 @@ uns einige der wichtigsten Nutzergruppen an.
 ### Entwicklerteams
 
 Rust erweist sich als produktives Werkzeug in der Zusammenarbeit großer
-Entwicklerteams mit unterschiedlichem Kenntnisstand in der
-Systemprogrammierung. Systemnaher Code ist anfällig für eine Vielzahl subtiler
-Fehler, die in den meisten anderen Sprachen nur durch ausgiebige Tests und
-sorgfältige Überprüfung des Codes durch erfahrene Entwickler erkannt werden
-können. In Rust spielt der Compiler eine Art Pförtnerrolle, indem er Code
-mit diesen schwer fassbaren Fehlern verweigert zu kompilieren, darunter auch
-Nebenläufigkeitsfehler. Mit der Arbeit an der Seite des Compilers kann sich
-das Team auf die Programmlogik konzentrieren, anstatt Fehler zu suchen.
+Entwicklerteams mit unterschiedlichem Kenntnisstand in der Systemprogrammierung.
+Systemnaher Code ist anfällig für eine Vielzahl subtiler Fehler, die in den
+meisten anderen Sprachen nur durch ausgiebige Tests und sorgfältige Überprüfung
+des Codes durch erfahrene Entwickler erkannt werden können. In Rust spielt der
+Compiler eine Art Pförtnerrolle, indem er Code mit diesen schwer fassbaren
+Fehlern zu kompilieren verweigert, darunter auch Nebenläufigkeitsfehler. Mit der
+Arbeit an der Seite des Compilers kann sich das Team auf die Programmlogik
+konzentrieren, anstatt Fehler zu suchen.
 
 Rust bringt auch zeitgemäße Entwicklerwerkzeuge in die Welt der
 Systemprogrammierung:
@@ -71,17 +71,16 @@ Rust ist für Menschen, die sich nach Geschwindigkeit und Stabilität einer
 Sprache sehnen. Mit Geschwindigkeit meinen wir sowohl die Geschwindigkeit, mit
 der Rust-Code ausgeführt werden kann, als auch die Geschwindigkeit, mit der du
 mit Rust Programme schreiben kannst. Die Prüfungen des Rust-Compilers
-gewährleisten Stabilität während du neue Funktionen hinzufügst und deinen Code
+gewährleisten Stabilität, während du neue Funktionen hinzufügst und deinen Code
 änderst. Dies steht im Gegensatz zu brüchigen Code-Altlasten in Sprachen ohne
-diese Prüfungen, die Entwickler sich oft scheuen zu verändern. Durch das
-Streben nach kostenneutralen Abstraktionen, also Funktionalität auf höherer
-Ebene, die zu genauso schnellem Code wie manuell geschriebener Code auf
-niedrigerer Ebene kompiliert, bemüht sich Rust, sicheren Code auch zu schnellem
-Code zu machen.
+diese Prüfungen, die Entwickler sich oft scheuen zu verändern. Durch das Streben
+nach kostenneutralen Abstraktionen, also Funktionalität auf höherer Ebene, die
+zu genauso schnellem Code wie manuell geschriebener Code auf niedrigerer Ebene
+kompiliert, bemüht sich Rust, sicheren Code auch zu schnellem Code zu machen.
 
 Die Sprache Rust hofft, auch viele andere Nutzer zu unterstützen; die hier
-genannten sind nur einige der größten Interessensgruppen. Insgesamt ist es
-Rusts größtes Bestreben, den Zielkonflikt zu beseitigen, den Programmierer
+genannten sind nur einige der größten Interessensgruppen. Insgesamt ist es Rusts
+größtes Bestreben, den Zielkonflikt zu beseitigen, den die Programmierer
 jahrzehntelang hingenommen haben, wenn sie Sicherheit _und_ Produktivität bzw.
 Geschwindigkeit _und_ Ergonomie erreichen wollten. Versuche es mit Rust und
 finde heraus, ob dessen Möglichkeiten für dich geeignet sind.
@@ -89,7 +88,7 @@ finde heraus, ob dessen Möglichkeiten für dich geeignet sind.
 ## Für wen dieses Buch gedacht ist
 
 In diesem Buch wird davon ausgegangen, dass du bereits Code in einer anderen
-Programmiersprache geschrieben hast, es spielt aber keine Rolle in welcher. Wir
+Programmiersprache geschrieben hast, es spielt aber keine Rolle, in welcher. Wir
 haben versucht, das Material einem breiten Publikum mit unterschiedlichem
 Programmierhintergrund zugänglich zu machen. Wir verbringen nicht viel Zeit
 damit, darüber zu sprechen, was Programmieren _ist_ oder wie man darüber denkt.
@@ -123,21 +122,21 @@ Programmiersprachen ähneln. Anschließend kannst du zu Kapitel 2 zurückkehren,
 wenn du an einem Projekt arbeiten möchtest, bei dem du die gelernten Details
 anwenden kannst.
 
-In **Kapitel 4** lernst du den Eigentümerschaftsansatz von Rust kennen.
+In **Kapitel 4** lernst du die Eigentümerschaft in Rust kennen.
 **Kapitel 5** bespricht Strukturen und Methoden, und **Kapitel 6** behandelt
 Aufzählungen, `match`-Ausdrücke und die Kontrollflusskonstrukte `if let` und
 `let...else`. Du wirst Strukturen und Aufzählungen verwenden, um
 benutzerdefinierte Typen zu erstellen.
 
 In **Kapitel 7** erfährst du mehr über das Modulsystem von Rust und über die
-Datenschutzregeln zum Organisieren deines Codes und dessen öffentlich
+Sichtbarkeitregeln zum Organisieren deines Codes und dessen öffentlich
 zugängliche Programmierschnittstelle (API). In **Kapitel 8** werden einige
 gängige Kollektionsdatenstrukturen, die die Standardbibliothek zur Verfügung
-stellt, behandelt: Vektoren, Zeichenketten und Hashtabellen. **Kapitel 9**
-befasst sich mit Rusts Philosophie und Techniken der Fehlerbehandlung.
+stellt, behandelt: Vektoren, Strings und Hashtabellen. **Kapitel 9** befasst
+sich mit Rusts Philosophie und Techniken der Fehlerbehandlung.
 
-**Kapitel 10** vertieft generische Datentypen, Merkmale und Lebensdauern, die
-dir die Möglichkeit geben, Code zu schreiben, der für mehrere Typen passt. In
+**Kapitel 10** vertieft generische Datentypen, Traits und Lebensdauern, die dir
+die Möglichkeit geben, Code zu schreiben, der für mehrere Typen passt. In
 **Kapitel 11** dreht sich alles um das Testen, das selbst mit den
 Sicherheitsgarantien von Rust erforderlich ist, um eine korrekte Logik deines
 Programms sicherzustellen. In **Kapitel 12** werden wir unsere eigene
@@ -145,39 +144,38 @@ Implementierung für eine Teilfunktionalität des Kommandozeilenwerkzeugs `grep`
 schreiben, das nach Text in Dateien sucht. Dazu werden wir viele Konzepte
 anwenden, die wir in den vorangegangenen Kapiteln kennengelernt haben.
 
-**Kapitel 13** befasst sich mit Funktionsabschlüssen und Iteratoren, also
-Sprachmerkmalen, die von funktionalen Programmiersprachen stammen. In **Kapitel
-14** werden wir einen genaueren Blick auf Cargo werfen und über bewährte
-Vorgehensweisen beim Bereitstellen deiner Bibliotheken für andere sprechen. In
-**Kapitel 15** werden intelligente Zeiger, die die Standardbibliothek
-bereitstellt, und Merkmale, die ihre Funktionalität ermöglichen, erörtert.
+**Kapitel 13** befasst sich mit Closures und Iteratoren, also Sprachmerkmalen,
+die von funktionalen Programmiersprachen stammen. In **Kapitel 14** werden wir
+einen genaueren Blick auf Cargo werfen und über bewährte Vorgehensweisen beim
+Bereitstellen deiner Bibliotheken für andere sprechen. In **Kapitel 15** werden
+intelligente Zeiger, die die Standardbibliothek bereitstellt, und Traits, die
+ihre Funktionalität ermöglichen, erörtert.
 
 In **Kapitel 16** gehen wir durch verschiedene Modelle der nebenläufigen
 Programmierung und sprechen darüber, wie Rust dir hilft, furchtlos mit mehreren
-Strängen zu programmieren. In **Kapitel 17** bauen wir darauf auf, indem wir
-die async- und await-Syntax von Rust zusammen mit Aufgaben (tasks), Futures und
-Strömen (streams) und dem leichtgewichtigen Nebenläufigkeitsmodell, das sie
-ermöglichen, untersuchen.
+Threads zu programmieren. In **Kapitel 17** bauen wir darauf auf, indem wir die
+async- und await-Syntax von Rust zusammen mit Aufgaben (tasks), Futures und
+Streams und dem leichtgewichtigen Nebenläufigkeitsmodell, das sie ermöglichen,
+untersuchen.
 
 **Kapitel 18** befasst sich mit dem Vergleich von Rust-Idiomen mit
-objektorientierten Programmierprinzipien, mit denen du vielleicht vertraut
-bist. **Kapitel 19** ist ein Nachschlagewerk zu Muster und Musterabgleich,
-einem mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. **Kapitel
-20** enthält ein Sammelsurium an interessanten fortgeschrittenen Themen,
-darunter unsicheres Rust, Makros und mehr zu Lebensdauer, Merkmalen, Typen,
-Funktionen und Funktionsabschlüssen.
+objektorientierten Programmierprinzipien, mit denen du vielleicht vertraut bist.
+**Kapitel 19** ist ein Nachschlagewerk zu Muster und Pattern Matching, einem
+mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. **Kapitel 20**
+enthält ein Sammelsurium an interessanten fortgeschrittenen Themen, darunter
+unsafe Rust, Makros und mehr zu Lebensdauer, Traits, Typen, Funktionen und
+Closures.
 
 In *Kapitel 21* werden wir ein Projekt abschließen, bei dem wir einen
 systemnahen, nebenläufigen Webdienst implementieren!
 
-Schließlich enthalten einige Anhänge nützliche Informationen über die Sprache
-in einem eher referenzartigen Format. **Anhang A** enthält die Schlüsselwörter
-von Rust, **Anhang B** die Operatoren und Symbole von Rust, **Anhang C**
-ableitbare Merkmalen, die von der Standardbibliothek mitgebracht werden,
-**Anhang D** nützliche Entwicklungswerkzeuge und **Anhang E** erläutert die
-Rust-Editionen. In **Anhang F** findest du Übersetzungen des Buches, und in
-**Anhang G* erfährst du, wie Rust erstellt wird und was nächtliches (nightly)
-Rust ist.
+Schließlich enthalten einige Anhänge nützliche Informationen über die Sprache in
+einem eher referenzartigen Format. **Anhang A** enthält die Schlüsselwörter von
+Rust, **Anhang B** die Operatoren und Symbole von Rust, **Anhang C** ableitbare
+Traits, die von der Standardbibliothek mitgebracht werden, **Anhang D** nützliche
+Entwicklungswerkzeuge und **Anhang E** erläutert die Rust-Editionen. In **Anhang
+F** findest du Übersetzungen des Buches, und in **Anhang G** erfährst du, wie Rust
+erstellt wird und was nächtliches (nightly) Rust ist.
 
 Es gibt keinen falschen Weg, dieses Buch zu lesen: Wenn du was überspringen
 willst, nur zu! Möglicherweise musst du zu früheren Kapiteln zurückkehren, wenn

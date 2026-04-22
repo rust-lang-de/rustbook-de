@@ -24,9 +24,9 @@ Codes, der den Test bestehen lässt, trägt dazu bei, während des gesamten
 Entwicklungsprozesses eine hohe Testabdeckung aufrechtzuerhalten.
 
 Wir werden die Implementierung der Funktionalität testen, die tatsächlich die
-Suche nach der Suchzeichenkette im Dateiinhalt durchführt und eine Liste von
-Zeilen erzeugt, die der Suchabfrage entsprechen. Wir werden diese
-Funktionalität in einer Funktion namens `search` hinzufügen.
+Suche nach dem Such-String im Dateiinhalt durchführt und eine Liste von Zeilen
+erzeugt, die der Suchabfrage entsprechen. Wir werden diese Funktionalität in
+einer Funktion namens `search` hinzufügen.
 
 ### Schreiben eines fehlschlagenden Tests
 
@@ -34,7 +34,7 @@ In _src/lib.rs_ fügen wir ein Modul `tests` mit einer Testfunktion hinzu, wie
 wir es in [Kapitel 11][ch11-anatomy] getan haben. Die Testfunktion spezifiziert
 das Verhalten, das die Funktion `search` haben soll: Sie nimmt eine Suchabfrage
 und den Text, in dem gesucht werden soll, entgegen und gibt nur die Zeilen aus
-dem Text zurück, die die Suchabfrage enthalten. Codeblock 12-15 zeigt diesen
+dem Text zurück, die die Suchabfrage enthalten. Listing 12-15 zeigt diesen
 Test.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -63,22 +63,22 @@ Nimm drei.";
 }
 ```
 
-<span class="caption">Codeblock 12-15: Erstellen eines fehlschlagenden Tests
+<span class="caption">Listing 12-15: Erstellen eines fehlschlagenden Tests
 für die Funktion `search`, die wir uns wünschen</span>
 
-Dieser Test sucht nach der Zeichenkette `"dukt"`. Der Text, den wir
-durchsuchen, besteht aus drei Zeilen, von denen nur eine `"dukt"` enthält.
-(Beachte, dass der Backslash nach dem öffnenden doppelten Anführungszeichen
-Rust anweist, keinen Zeilenumbruch an den Anfang des Zeichenkettenliterals zu
-setzen.) Wir verlangen, dass der von der Funktion `search` zurückgegebene Wert
-nur die Zeile enthält, die wir erwarten.
+Dieser Test sucht nach dem String `"dukt"`. Der Text, den wir durchsuchen,
+besteht aus drei Zeilen, von denen nur eine `"dukt"` enthält. (Beachte, dass der
+Backslash nach dem öffnenden doppelten Anführungszeichen Rust anweist, keinen
+Zeilenumbruch an den Anfang des String-Literals zu setzen.) Wir verlangen, dass
+der von der Funktion `search` zurückgegebene Wert nur die Zeile enthält, die wir
+erwarten.
 
 Wir sind noch nicht in der Lage, diesen Test auszuführen und zuzusehen, wie er
 fehlschlägt, weil der Test noch nicht mal kompiliert: Die Funktion `search`
 existiert noch nicht! In Übereinstimmung mit den TDD-Prinzipien werden wir
 jetzt gerade genug Code hinzufügen, um den Test zum Kompilieren und Ausführen
 zu bringen, indem wir eine Definition der Funktion `search` hinzufügen, die
-immer einen leeren Vektor zurückgibt, wie in Codeblock 12-16 gezeigt. Dann
+immer einen leeren Vektor zurückgibt, wie in Listing 12-16 gezeigt. Dann
 sollte der Test kompiliert werden können und fehlschlagen, weil ein leerer
 Vektor nicht mit einem Vektor übereinstimmt, der die Zeile `"sicher, schnell,
 produktiv."` enthält.
@@ -107,7 +107,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 # }
 ```
 
-<span class="caption">Codeblock 12-16: Definiere gerade genug von der Funktion
+<span class="caption">Listing 12-16: Definiere gerade genug von der Funktion
 `search`, damit unser Test kompiliert</span>
 
 Beachte, dass wir eine explizite Lebensdauer `'a` in der Signatur von `search`
@@ -115,17 +115,15 @@ definieren müssen und diese Lebensdauer beim Argument `contents` und dem
 Rückgabewert verwenden. Erinnere dich in [Kapitel 10][ch10-lifetimes] daran,
 dass die Lebensdauer-Parameter angeben, welche Argument-Lebensdauer mit der
 Lebensdauer des Rückgabewertes verbunden ist. In diesem Fall geben wir an, dass
-der zurückgegebene Vektor Zeichenkettenanteilstypen enthalten sollte, die auf
-Anteilstypen des Arguments `contents` (und nicht auf das Argument `query`)
-referenzieren.
+der zurückgegebene Vektor String Slices enthalten sollte, die auf Slices des
+Arguments `contents` (und nicht auf das Argument `query`) referenzieren.
 
 Mit anderen Worten sagen wir Rust, dass die von der Funktion `search`
 zurückgegebenen Daten so lange leben, wie die Daten, die im Argument `contents`
 an die Funktion `search` übergeben werden. Das ist wichtig! Die Daten, auf die
-durch einen Anteilstyp _referenziert_ wird, müssen gültig sein, damit die
-Referenz gültig ist; wenn der Compiler annimmt, dass wir
-Zeichenkettenanteilstypen aus `query` statt aus `contents` erstellen, wird er
-seine Sicherheitsprüfung falsch durchführen.
+ein Slice _referenziert_, müssen gültig sein, damit die Referenz gültig ist;
+wenn der Compiler annimmt, dass wir String Slices aus `query` statt aus
+`contents` erstellen, wird er seine Sicherheitsprüfung falsch durchführen.
 
 Wenn wir die Lebensdauer-Annotationen vergessen und versuchen, diese Funktion
 zu kompilieren, erhalten wir diesen Fehler:
@@ -178,8 +176,8 @@ Zeilen.
 
 #### Iterieren über Zeilen mit der Methode `lines`
 
-Rust hat eine hilfreiche Methode zum zeilenweisen Iterieren von Zeichenketten,
-bequemerweise `lines` genannt, die wie in Codeblock 12-17 gezeigt funktioniert.
+Rust hat eine hilfreiche Methode zum zeilenweisen Iterieren von Strings,
+bequemerweise `lines` genannt, die wie in Listing 12-17 gezeigt funktioniert.
 Beachte, dass dies noch nicht kompiliert.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -208,22 +206,22 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 # }
 ```
 
-<span class="caption">Codeblock 12-17: Iteriere über jede Zeile in
+<span class="caption">Listing 12-17: Iteriere über jede Zeile in
 `contents`</span>
 
 Die Methode `lines` gibt einen Iterator zurück. Wir werden in [Kapitel
-13][ch13-iterators] ausführlich über Iteratoren sprechen, aber erinnere dich
-daran, dass du diese Art der Verwendung eines Iterators in [Codeblock
+13][ch13-iterators] ausführlich über Iteratoren sprechen; aber erinnere dich
+daran, dass du diese Art der Verwendung eines Iterators in [Listing
 3-5][ch3-iter] gesehen hast, wo wir eine `for`-Schleife mit einem Iterator
-benutzt haben, um etwas Code für jedes Element in einer Kollektion auszuführen.
+benutzt haben, um Code für jedes Element in einer Kollektion auszuführen.
 
 #### Durchsuchen aller Zeilen nach dem Abfragetext
 
-Als nächstes prüfen wir, ob die aktuelle Zeile unsere Abfragezeichenkette
-enthält. Glücklicherweise haben Zeichenketten eine hilfreiche Methode namens
-`contains`, die dies für uns erledigt! Füge einen Aufruf der Methode `contains`
-in der Funktion `search` hinzu, wie in Codeblock 12-18 gezeigt. Beachte, dass
-dies noch nicht kompiliert werden kann.
+Als nächstes prüfen wir, ob die aktuelle Zeile unseren Abfrage-String enthält.
+Glücklicherweise haben Strings eine hilfreiche Methode namens `contains`, die
+dies für uns erledigt! Füge einen Aufruf der Methode `contains` in der Funktion
+`search` hinzu, wie in Listing 12-18 gezeigt. Beachte, dass dies noch nicht
+kompiliert werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -253,8 +251,8 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 # }
 ```
 
-<span class="caption">Codeblock 12-18: Hinzufügen von Funktionalität, um zu
-sehen, ob die Zeile die Zeichenkette in `query` enthält</span>
+<span class="caption">Listing 12-18: Hinzufügen von Funktionalität, um zu sehen,
+ob die Zeile den String in `query` enthält</span>
 
 Im Moment bauen wir die Funktionalität auf. Damit sie kompiliert werden kann,
 müssen wir einen Wert aus dem Rumpf zurückgeben, wie wir es in der
@@ -266,7 +264,7 @@ Um diese Funktion zu vervollständigen, brauchen wir auch eine Möglichkeit, die
 passenden Zeilen zu speichern, die wir zurückgeben wollen. Dafür können wir
 einen veränderbaren Vektor vor der `for`-Schleife erstellen und die Methode
 `push` aufrufen, um eine `line` im Vektor zu speichern. Nach der `for`-Schleife
-geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.
+geben wir den Vektor zurück, wie in Listing 12-19 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -300,7 +298,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 # }
 ```
 
-<span class="caption">Codeblock 12-19: Speichern der passenden Zeilen, damit
+<span class="caption">Listing 12-19: Speichern der passenden Zeilen, damit
 wir sie zurückgeben können</span>
 
 Jetzt sollte die Funktion `search` nur noch die Zeilen zurückgeben, die `query`
@@ -330,7 +328,7 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-Unser Test war erfolgreich, also wissen wir, dass es funktioniert!
+Unser Test war erfolgreich, also wissen wir, dass der Code funktioniert!
 
 An diesem Punkt könnten wir Möglichkeiten für eine Refaktorierung der
 Implementierung der Suchfunktion in Betracht ziehen, während die Tests

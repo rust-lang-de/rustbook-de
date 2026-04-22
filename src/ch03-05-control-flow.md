@@ -14,7 +14,7 @@ Bedingung erfüllt ist, führe diesen Codeblock aus. Wenn die Bedingung nicht
 erfüllt ist, darf dieser Codeblock nicht ausgeführt werden.“
 
 Erstelle in deinem _projects_-Verzeichnis ein neues Projekt namens _branches_,
-um den `if`-Ausdruck zu erforschen. Gibt in der Datei _src/main.rs_ folgendes
+um den `if`-Ausdruck zu erforschen. Gib in der Datei _src/main.rs_ Folgendes
 ein:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -115,12 +115,12 @@ For more information about this error, try `rustc --explain E0308`.
 error: could not compile `branches` (bin "branches") due to 1 previous error
 ```
 
-Der Fehler gibt an, dass Rust ein `bool` erwartet, aber eine ganze Zahl
-erhalten hat. Im Gegensatz zu Sprachen wie Ruby und JavaScript wird Rust nicht
-automatisch versuchen, nicht-boolsche Typen in ein Boolean zu konvertieren. Du
-musst explizit sein und immer `if` mit einer Booleschen Bedingung versehen.
-Wenn wir beispielsweise wollen, dass der `if`-Codeblock nur ausgeführt wird,
-wenn eine Zahl ungleich `0` ist, können wir den `if`-Ausdruck wie folgt ändern:
+Der Fehler gibt an, dass Rust ein `bool` erwartet, aber eine ganze Zahl erhalten
+hat. Im Gegensatz zu Sprachen wie Ruby und JavaScript wird Rust nicht
+automatisch versuchen, nicht-boolsche Typen zu Boolean zu konvertieren. Du musst
+explizit sein und immer `if` mit einer Booleschen Bedingung versehen. Wenn wir
+beispielsweise wollen, dass der `if`-Codeblock nur ausgeführt wird, wenn eine
+Zahl ungleich `0` ist, können wir den `if`-Ausdruck wie folgt ändern:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -161,7 +161,7 @@ fn main() {
 ```
 
 Dieses Programm hat vier mögliche Wege, die es nehmen kann. Nachdem du es
-ausgeführt hast, solltest du folgende Ausgabe sehen:
+ausgeführt hast, solltest du die folgende Ausgabe sehen:
 
 ```console
 $ cargo run
@@ -188,7 +188,7 @@ Rust-Verzweigungskonstrukt namens `match` für solche Fälle.
 
 Weil `if` ein Ausdruck ist, können wir ihn auf der rechten Seite einer
 `let`-Anweisung verwenden, um das Ergebnis einer Variablen zuzuordnen, wie in
-Codeblock 3-2.
+Listing 3-2.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -201,7 +201,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 3-2: Zuweisen des Ergebnisses eines
+<span class="caption">Listing 3-2: Zuweisen des Ergebnisses eines
 `if`-Ausdrucks an eine Variable</span>
 
 Die Variable `number` wird an einen Wert gebunden, der auf dem Ergebnis des
@@ -219,7 +219,7 @@ Denke daran, dass Codeblöcke bis zum letzten Ausdruck in ihnen ausgewertet
 werden, und auch Zahlen an sich sind Ausdrücke. In diesem Fall hängt der Wert
 des gesamten `if`-Ausdrucks davon ab, welcher Codeblock ausgeführt wird. Dies
 bedeutet, dass die Werte, die potentielle Ergebnisse eines `if`-Zweigs sein
-können, vom gleichen Typ sein müssen; in Codeblock 3-2 waren die Ergebnisse
+können, vom gleichen Typ sein müssen; in Listing 3-2 waren die Ergebnisse
 sowohl des `if`-Zweigs als auch des `else`-Zweigs `i32`-Ganzzahlen. Wenn die
 Typen nicht übereinstimmen, wie im folgenden Beispiel, erhalten wir einen
 Fehler:
@@ -256,14 +256,14 @@ error: could not compile `branches` (bin "branches") due to 1 previous error
 ```
 
 Der Ausdruck im `if`-Block wird zu einer ganzen Zahl und der Ausdruck im
-`else`-Block zu einer Zeichenkette ausgewertet. Dies wird nicht funktionieren,
-da Variablen einen einzigen Typ haben müssen. Rust muss zur Kompilierzeit
-definitiv wissen, welchen Typ die Variable `number` hat, damit es zur
-Kompilierzeit überprüfen kann, ob ihr Typ überall gültig ist, wo wir `number`
-verwenden. Rust wäre dazu nicht in der Lage, wenn der Typ von `number` erst zur
-Laufzeit bestimmt würde; der Compiler wäre komplexer und würde weniger
-Garantien über den Code geben, wenn er mehrere hypothetische Typen für jede
-Variable verfolgen müsste.
+`else`-Block zu einem String ausgewertet. Dies wird nicht funktionieren, da
+Variablen einen einzigen Typ haben müssen. Rust muss zur Kompilierzeit definitiv
+wissen, welchen Typ die Variable `number` hat, damit es zur Kompilierzeit
+überprüfen kann, ob ihr Typ überall gültig ist, wo wir `number` verwenden. Rust
+wäre dazu nicht in der Lage, wenn der Typ von `number` erst zur Laufzeit
+bestimmt würde; der Compiler wäre komplexer und würde weniger Garantien über den
+Code geben, wenn er mehrere hypothetische Typen für jede Variable verfolgen
+müsste.
 
 ### Wiederholung mit Schleifen
 
@@ -279,8 +279,8 @@ jede einzelne aus.
 #### Wiederholen von Code mit `loop`
 
 Das Schlüsselwort `loop` weist Rust an, einen Codeblock immer und immer wieder
-auszuführen, und zwar für immer oder bis du ihm explizit sagst, dass er
-aufhören soll.
+auszuführen, und zwar für immer oder bis du ihm explizit sagst, dass er aufhören
+soll.
 
 Als Beispiel änderst du die Datei _src/main.rs_ in deinem _loops_-Verzeichnis
 so, dass sie wie folgt aussieht:
@@ -336,12 +336,12 @@ das Programm anweist, jeden restlichen Code in dieser Iteration der Schleife zu
 
 Eine der Verwendungen von `loop` besteht darin, eine Operation, von der du
 weißt, dass sie fehlschlagen könnte, erneut zu versuchen, z.B. um zu prüfen, ob
-ein Strang (thread) seine Arbeit abgeschlossen hat. Möglicherweise musst du
-jedoch das Ergebnis dieser Operation aus der Schleife heraus an den Rest deines
-Codes weitergeben. Dazu kannst du den Wert, der zurückgegeben werden soll,
-hinter dem `break`-Ausdruck angeben, den du zum Beenden der Schleife
-verwendest; dieser Wert wird aus der Schleife zurückgegeben, sodass du ihn
-verwenden kannst, wie hier gezeigt:
+ein Thread seine Arbeit abgeschlossen hat. Möglicherweise musst du jedoch das
+Ergebnis dieser Operation aus der Schleife heraus an den Rest deines Codes
+weitergeben. Dazu kannst du den Wert, der zurückgegeben werden soll, hinter dem
+`break`-Ausdruck angeben, den du zum Beenden der Schleife verwendest; dieser
+Wert wird aus der Schleife zurückgegeben, sodass du ihn verwenden kannst, wie
+hier gezeigt:
 
 ```rust
 fn main() {
@@ -410,7 +410,7 @@ Die äußere Schleife hat das Label `'counting_up` und zählt von 0 bis 2
 aufwärts. Die innere Schleife ohne Label zählt von 10 bis 9 herunter. Das erste
 `break`, das kein Label angibt, beendet nur die innere Schleife. Mit der
 Anweisung `break 'counting_up;` wird die äußere Schleife verlassen. Dieser Code
-gibt folgendes aus:
+gibt Folgendes aus:
 
 ```console
 $ cargo run
@@ -437,7 +437,7 @@ die Schleife. Es ist möglich, derartiges Verhalten mittels einer Kombination
 von `loop`, `if`, `else` und `break` zu implementieren; du kannst das jetzt in
 einem Programm versuchen, wenn du möchtest. Dieses Muster ist jedoch so weit
 verbreitet, dass Rust ein eingebautes Sprachkonstrukt dafür hat, die sogenannte
-`while`-Schleife. In Codeblock 3-3 wird `while` verwendet: Das Programm
+`while`-Schleife. In Listing 3-3 wird `while` verwendet: Das Programm
 durchläuft dreimal eine Schleife, in der es jedes Mal abwärts zählt, und dann
 nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.
 
@@ -457,7 +457,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 3-3: Verwenden einer `while`-Schleife, um Code
+<span class="caption">Listing 3-3: Verwenden einer `while`-Schleife, um Code
 auszuführen, solange eine Bedingung wahr ist</span>
 
 Dieses Konstrukt eliminiert eine Menge von Verschachtelungen, die notwendig
@@ -468,7 +468,7 @@ andernfalls wird die Schleife verlassen.
 #### Durchlaufen einer Kollektion mit `for`
 
 Du kannst das `while`-Konstrukt verwenden, um die Elemente einer Kollektion,
-z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4
+z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Listing 3-4
 gibt zum Beispiel jedes Element im Array `a` aus.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -486,7 +486,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 3-4: Wiederholen anhand aller Elemente einer
+<span class="caption">Listing 3-4: Wiederholen anhand aller Elemente einer
 Kollektion unter Verwendung einer `while`-Schleife</span>
 
 Hier zählt der Code die Elemente im Array aufwärts. Er beginnt bei Index `0`
@@ -510,17 +510,17 @@ Alle fünf Array-Werte erscheinen erwartungsgemäß im Terminal. Wenn `index` de
 Wert `5` erreicht hat, stoppt die Schleife ihre Ausführung, bevor sie versucht,
 einen sechsten Wert aus dem Array zu holen.
 
-Aber dieser Ansatz ist fehleranfällig; wir könnten das Programm zum Abstürzen
+Aber dieser Ansatz ist fehleranfällig; wir könnten das Programm zum Abbrechen
 bringen, wenn der Indexwert oder die Testbedingung falsch ist. Wenn du zum
 Beispiel die Definition des Arrays `a` so änderst, dass es vier Elemente hat,
 aber vergisst, die Bedingung `while index < 4` zu aktualisieren, würde der Code
-abstürzen. Er ist zudem langsam, weil der Compiler Laufzeitcode erzeugt, der
-die Bedingungsprüfung, ob der Index innerhalb der Arraygrenzen liegt, bei jeder
+abbrechen. Er ist zudem langsam, weil der Compiler Laufzeitcode erzeugt, der die
+Bedingungsprüfung, ob der Index innerhalb der Arraygrenzen liegt, bei jeder
 Schleifeniteration durchführt.
 
 Als prägnantere Alternative kannst du eine `for`-Schleife verwenden und für
 jedes Element einer Kollektion etwas Code ausführen. Eine `for`-Schleife sieht
-wie der Code in Codeblock 3-5 aus.
+wie der Code in Listing 3-5 aus.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -534,10 +534,10 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 3-5: Wiederholen anhand aller Elemente einer
+<span class="caption">Listing 3-5: Wiederholen anhand aller Elemente einer
 Kollektion unter Verwendung einer `for`-Schleife</span>
 
-Wenn wir diesen Code ausführen, werden wir die gleiche Ausgabe wie in Codeblock
+Wenn wir diesen Code ausführen, werden wir die gleiche Ausgabe wie in Listing
 3-4 sehen. Noch wichtiger ist, dass wir jetzt die Sicherheit des Codes erhöht
 und die Möglichkeit von Fehlern eliminiert haben, die dadurch entstehen
 könnten, dass wir über das Ende des Arrays hinausgehen oder nicht weit genug
@@ -548,12 +548,12 @@ Iteration mit der Länge des Arrays verglichen werden muss.
 
 Wenn du die `for`-Schleife verwendest, brauchst du nicht daran zu denken,
 irgendeinen anderen Code zu ändern, wenn du die Anzahl der Werte im Array
-änderst, wie bei der Methode in Codeblock 3-4 verwendet.
+änderst, wie bei der Methode in Listing 3-4 verwendet.
 
 Die Sicherheit und Prägnanz der `for`-Schleifen machen sie zum am häufigsten
 verwendeten Schleifenkonstrukt in Rust. Sogar in Situationen, in denen du einen
 Code bestimmt oft laufen lassen willst, wie im Countdown-Beispiel, das in
-Codeblock 3-3 eine `while`-Schleife verwendet hat, würden die meisten
+Listing 3-3 eine `while`-Schleife verwendet hat, würden die meisten
 Rust-Entwickler eine `for`-Schleife verwenden. Der Weg, dies zu erreichen, wäre
 das Verwenden eines `Range`, der von der Standardbibliothek zur Verfügung
 gestellt wird und alle Zahlen in Folge generiert, beginnend mit einer Zahl und
@@ -592,7 +592,5 @@ Wenn du bereit bist, weiterzumachen, werden wir in Rust über ein Konzept
 sprechen, das es in anderen Programmiersprachen üblicherweise _nicht_ gibt:
 Eigentümerschaft (ownership).
 
-[comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
-[quitting-after-a-correct-guess]:
-ch02-00-guessing-game-tutorial.html#beenden-nach-einer-korrekten-schätzung
+[comparing-the-guess-to-the-secret-number]: ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
+[quitting-after-a-correct-guess]: ch02-00-guessing-game-tutorial.html#beenden-nach-einer-korrekten-schätzung

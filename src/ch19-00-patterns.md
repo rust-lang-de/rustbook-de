@@ -1,4 +1,4 @@
-# Muster (patterns) und Abgleich (matching)
+# Muster und Pattern Matching
 
 Muster sind eine spezielle Syntax in Rust für den Abgleich mit der Struktur von
 Typen, sowohl komplexen als auch einfachen Typen. Das Verwenden von Mustern in
@@ -19,11 +19,11 @@ festzustellen, ob es die richtige Datenform hat, um ein bestimmtes Stück Code
 weiter auszuführen.
 
 Um ein Muster zu verwenden, vergleichen wir es mit einem Wert. Wenn das Muster
-zum Wert passt, verwenden wir die Wertteile in unserem Code. Erinnere dich an
-die `match`-Ausdrücke in Kapitel 6, in denen Muster verwendet wurden, z.B. die
-Münzsortiermaschine. Wenn der Wert zur Form des Musters passt, können wir die
-genannten Teile verwenden. Wenn dies nicht der Fall ist, wird der mit dem
-Muster verbundene Code nicht ausgeführt.
+zum Wert passt, verwenden wir die die passenden Wertteile in unserem Code.
+Erinnere dich an die `match`-Ausdrücke in Kapitel 6, in denen Muster verwendet
+wurden, z.B. die Münzsortiermaschine. Wenn der Wert zur Form des Musters passt,
+können wir die genannten Teile verwenden. Wenn dies nicht der Fall ist, wird der
+mit dem Muster verbundene Code nicht ausgeführt.
 
 Dieses Kapitel ist eine Referenz zu allen Dingen, die mit Mustern zu tun haben.
 Wir behandeln die gültigen Stellen, an denen Muster verwendet werden können,

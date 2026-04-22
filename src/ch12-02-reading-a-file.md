@@ -5,7 +5,7 @@ Befehlszeilenargument `file_path` angegeben ist. Zuerst brauchen wir eine
 Beispieldatei, um sie zu testen: Die beste Art von Datei, die wir benutzen
 können, um sicherzustellen, dass `minigrep` funktioniert, ist eine Datei mit
 einer kleinen Menge Text über mehrere Zeilen mit einigen sich wiederholenden
-Wörtern. In Codeblock 12-3 ist ein Gedicht von Emily Dickinson, das gut
+Wörtern. In Listing 12-3 ist ein Gedicht von Emily Dickinson, das gut
 funktionieren wird! Erstelle eine Datei namens _poem.txt_ im Hauptverzeichnis
 deines Projekts und gib das Gedicht „I'm Nobody! Who are you?“ ein.
 
@@ -23,11 +23,11 @@ To tell your name the livelong day
 To an admiring bog!
 ```
 
-<span class="caption">Codeblock 12-3: Ein Gedicht von Emily Dickinson ist ein
+<span class="caption">Listing 12-3: Ein Gedicht von Emily Dickinson ist ein
 guter Testfall</span>
 
 Wenn der Text vorhanden ist, editiere _src/main.rs_ und füge Code zum Lesen der
-Datei hinzu, wie in Codeblock 12-4 gezeigt.
+Datei hinzu, wie in Listing 12-4 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -48,11 +48,11 @@ fn main() {
     let contents = fs::read_to_string(file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
-    println!("Mit text:\n{contents}");
+    println!("Mit Text:\n{contents}");
 }
 ```
 
-<span class="caption">Codeblock 12-4: Lesen des Inhalts der Datei, die durch
+<span class="caption">Listing 12-4: Lesen des Inhalts der Datei, die durch
 das zweite Argument angegeben wurde</span>
 
 Zuerst fügen wir eine weitere `use`-Anweisung hinzu, um einen relevanten Teil
@@ -67,7 +67,7 @@ Nach dieser Anweisung haben wir wieder eine temporäre `println!`-Anweisung
 hinzugefügt, die den Wert von `contents` ausgibt, nachdem die Datei eingelesen
 wurde, sodass wir überprüfen können, ob das Programm soweit funktioniert.
 
-Lassen wir diesen Code mit einer beliebigen Zeichenkette als erstes
+Lassen wir diesen Code mit einem beliebigen String als erstes
 Kommandozeilenargument laufen (weil wir den Suchteil noch nicht implementiert
 haben) und die Datei _poem.txt_ als zweites Argument:
 
@@ -78,7 +78,7 @@ $ cargo run -- the poem.txt
      Running `target/debug/minigrep the poem.txt`
 Suche nach the
 In Datei poem.txt
-Mit text:
+Mit Text:
 I'm nobody! Who are you?
 Are you nobody, too?
 Then there's a pair of us - don't tell!
@@ -97,6 +97,6 @@ warten, wenn jede Funktion nur für eine Idee verantwortlich ist. Das andere
 Problem ist, dass wir mit Fehlern nicht so gut umgehen, wie wir es könnten. Das
 Programm ist noch klein, sodass diese Fehler kein großes Problem darstellen,
 aber je größer das Programm wird, desto schwieriger wird es, sie sauber zu
-beheben. Es ist eine gute Praxis, schon früh mit dem Umformen (refactor) zu
-beginnen, wenn man ein Programm entwickelt, denn es ist viel einfacher,
-kleinere Code-Mengen umzuformen. Das werden wir als Nächstes tun.
+beheben. Es ist eine gute Praxis, schon früh mit dem Refactoring zu beginnen,
+wenn man ein Programm entwickelt, denn es ist viel einfacher, kleinere
+Code-Mengen umzuformen. Das werden wir als Nächstes tun.

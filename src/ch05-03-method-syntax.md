@@ -2,19 +2,18 @@
 
 Methoden sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort `fn`
 und ihrem Namen deklariert, sie können Parameter und einen Rückgabewert haben,
-und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden. 
-Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
-einer Struktur (struct) (oder einer Aufzählung (enum) oder eines
-Merkmalsobjektes (trait object), die wir in [Kapitel 6][enums] und [Kapitel
-18][trait-objects] behandeln) definiert werden und ihr erster Parameter stets
-`self` ist. `self` repräsentiert die Instanz der Struktur, zu der die Methode
-aufgerufen wird.
+und sie enthalten etwas Programmcode, der ausgeführt wird, wenn sie aufgerufen
+werden. Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im
+Kontext einer Struktur (struct) (oder einer Aufzählung (enum) oder eines
+Trait-Objekts, die wir in [Kapitel 6][enums] und [Kapitel 18][trait-objects]
+behandeln) definiert werden und ihr erster Parameter stets `self` ist. `self`
+repräsentiert die Instanz der Struktur, auf der die Methode aufgerufen wird.
 
 ### Methoden-Syntax
 
 Lass uns die Funktion `area`, die eine `Rectangle`-Instanz als Parameter hat,
 ändern und stattdessen eine Methode `area` auf der Struktur `Rectangle`
-definieren, wie in Codeblock 5-13 zu sehen ist.
+definieren, wie in Listing 5-13 zu sehen ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -44,7 +43,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-13: Methode `area` der Struktur `Rectangle`</span>
+<span class="caption">Listing 5-13: Methode `area` der Struktur `Rectangle`</span>
 
 Um die Funktion im Kontext von `Rectangle` zu definieren, beginnen wir mit dem
 Block `impl` (Implementierung) für `Rectangle`. Alles in diesem Block wird mit
@@ -60,24 +59,23 @@ Argumenten.
 In der Signatur von `area` verwenden wir `&self` anstelle von `rectangle:
 &Rectangle`. Das `&self` ist eigentlich die Abkürzung für `self: &Self`.
 Innerhalb eines `impl`-Blocks ist der Typ `Self` ein Alias für den Typ, für den
-der `impl`-Block steht. Methoden müssen einen Parameter mit dem Namen `self`
-vom Typ `Self` als ihren ersten Parameter haben, Rust lässt dich dies abkürzen,
+der `impl`-Block steht. Methoden müssen einen Parameter mit dem Namen `self` vom
+Typ `Self` als ihren ersten Parameter haben, Rust lässt dich dies abkürzen,
 indem du nur den Namen `self` an der Stelle des ersten Parameters angibst.
 Beachte, dass wir immer noch das `&` vor der Abkürzung `self` verwenden müssen,
 um anzuzeigen, dass diese Methode die Instanz `Self` ausleiht, genau wie in
-`rectangle: &Rectangle`. Methoden können die Eigentümerschaft von `self`
-übernehmen, `self` unveränderbar ausleihen, wie wir es hier getan haben, oder
-`self` veränderbar ausleihen, so wie bei jedem anderen Parameter auch.
+`rectangle: &Rectangle`. Methoden können das Eigentum an `self` übernehmen,
+`self` unveränderbar ausleihen, wie wir es hier getan haben, oder `self`
+veränderbar ausleihen, so wie bei jedem anderen Parameter auch.
 
 Wir haben hier `&self` aus dem gleichen Grund gewählt wie `&Rectangle` in der
-Funktionsvariante: Wir wollen keine Eigentümerschaft übernehmen, wir wollen die
-Daten der Struktur nur lesen, nicht schreiben. Wenn wir die Instanzdaten ändern
-wollten, müssten wir `&mut self` als ersten Parameter verwenden. Es kommt nur
-selten vor, dass eine Methode die Eigentümerschaft der Instanz übernimmt, indem
-sie `self` als ersten Parameter verwendet. Diese Technik wird typischerweise
-dann verwendet, wenn die Methode `self` in etwas anderes transformiert und man
-verhindern will, dass der Aufrufer nach der Transformation die ursprüngliche
-Instanz verwendet.
+Funktionsvariante: Wir wollen kein Eigentum übernehmen, wir wollen die Daten der
+Struktur nur lesen, nicht schreiben. Wenn wir die Instanzdaten ändern wollten,
+müssten wir `&mut self` als ersten Parameter verwenden. Es kommt nur selten vor,
+dass eine Methode das Eigentum an der Instanz übernimmt, indem sie `self` als
+ersten Parameter verwendet. Diese Technik wird typischerweise dann verwendet,
+wenn die Methode `self` in etwas anderes transformiert und man verhindern will,
+dass der Aufrufer nach der Transformation die ursprüngliche Instanz verwendet.
 
 Der Hauptgrund für Methoden gegenüber Funktionen liegt abgesehen davon, dass
 bei jeder Methodendeklaration der Typ von `self` nicht ständig wiederholt
@@ -136,11 +134,11 @@ wir in [Kapitel 7][public] behandeln.
 
 > ### Wo ist der Operator `->`?
 >
-> In C und C++ werden zwei verschiedene Operatoren für den Aufruf von Methoden
-> verwendet: Man verwendet `.`, wenn eine Methode direkt auf dem Objekt
-> aufgerufen wird, und `->`, wenn die Methode auf einem Zeiger auf das Objekt
-> aufrufen und der Zeiger zuerst dereferenziert werden muss. Anders gesagt,
-> wenn `object` ein Zeiger ist, ist `object->something()` ähnlich zu
+> In C und C++ werden zwei verschiedene Operatoren verwendet, um Methoden
+> aufzurufen: Du verwendest `.`, wenn du eine Methode direkt auf dem Objekt
+> aufrufst, und `->`, wenn du die Methode über einen Zeiger auf das Objekt
+> aufrufst und den Zeiger zuerst dereferenzieren musst. Mit anderen Worten: Wenn
+> `object` ein Zeiger ist, entspricht `object->something()` in etwa
 > `(*object).something()`.
 >
 > Rust hat kein Äquivalent zum Operator `->`. Stattdessen hat Rust eine
@@ -175,12 +173,12 @@ wir in [Kapitel 7][public] behandeln.
 > ```
 >
 > Der erste Aufruf sieht viel sauberer aus. Die automatische Referenzierung
-> funktioniert, weil Methoden einen eindeutigen Empfänger haben - den Typ von
-> `self`. Wenn man den Empfänger und den Namen einer Methode angibt, kann Rust
-> eindeutig herausfinden, ob die Methode lesend (`&self`), veränderbar
-> (`&mut self`) oder konsumierend (`self`) ist. Die Tatsache, dass Rust das
-> Ausleihen für die Methodenempfänger implizit macht, ist ein großer Beitrag
-> zur Ergonomie der Eigentümerschaft in der Praxis.
+> funktioniert, weil Methoden einen eindeutigen Empfänger haben &ndash; den
+> Typ von `self`. Wenn man den Empfänger und den Namen einer Methode angibt,
+> kann Rust eindeutig herausfinden, ob die Methode lesend (`&self`),
+> veränderbar (`&mut self`) oder konsumierend (`self`) ist. Die Tatsache, dass
+> Rust das Borrowing für die Methodenempfänger implizit macht, ist ein großer
+> Beitrag zur Ergonomie der Eigentümerschaft in der Praxis.
 
 ### Methoden mit mehreren Parametern
 
@@ -190,7 +188,7 @@ Struktur `Rectangle` implementieren. Diesmal soll eine zweite Instanz von
 `Rectangle` vollständig in `self` (dem ersten `Rectangle`) hineinpasst;
 andernfalls soll `false` zurückgegeben werden. Das heißt, sobald wir die
 Methode `can_hold` definiert haben, wollen wir in der Lage sein, das in
-Codeblock 5-14 gezeigte Programm zu schreiben.
+Listing 5-14 gezeigte Programm zu schreiben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -214,7 +212,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-14: Verwendung der noch nicht geschriebenen
+<span class="caption">Listing 5-14: Verwendung der noch nicht geschriebenen
 Methode `can_hold`</span>
 
 Die erwartete Ausgabe würde wie folgt aussehen, da beide Dimensionen von
@@ -226,19 +224,19 @@ rect1 umschließt rect2? true
 rect1 umschließt rect3? false
 ```
 
-Wir wissen, dass wir eine Methode definieren wollen, also wird sie innerhalb
-des Blocks `impl Rectangle` liegen. Die Methode wird `can_hold` heißen und sie
-wird einen weiteren Parameter vom Typ `Rectangle` unveränderbar ausleihen. Wir
-können den Typ des Parameters erkennen, indem wir uns den Code ansehen, der die
-Methode aufruft: `rect1.can_hold(&rect2)` nimmt `&rect2` entgegen, also eine
-unveränderbare Ausleihe von `rect2` vom Typ `Rectangle`. Das macht Sinn, da
-wir `rect2` nur lesen müssen (anstatt zu schreiben, wofür wir eine
-veränderbare Ausleihe bräuchten) und `main` die Eigentümerschaft an `rect2`
-zurückerhalten soll, sodass wir es nach dem Aufruf der Methode `can_hold`
-weiter verwenden können. Der Rückgabewert von `can_hold` ist ein boolescher
-Wert und die Implementierung prüft, ob Breite und Höhe von `self` jeweils
-größer als von `Rectangle` sind. Fügen wir die neue Methode `can_hold` zum
-Block `impl` aus Codeblock 5-13 hinzu, wie in Codeblock 5-15 gezeigt.
+Wir wissen, dass wir eine Methode definieren wollen, also wird sie innerhalb des
+Blocks `impl Rectangle` liegen. Die Methode wird `can_hold` heißen und sie wird
+einen weiteren Parameter vom Typ `Rectangle` unveränderbar ausleihen. Wir können
+den Typ des Parameters erkennen, indem wir uns den Code ansehen, der die Methode
+aufruft: `rect1.can_hold(&rect2)` nimmt `&rect2` entgegen, also eine
+unveränderbare Borrow von `rect2` vom Typ `Rectangle`. Das macht Sinn, da wir
+`rect2` nur lesen müssen (anstatt zu schreiben, wofür wir eine veränderbare
+Borrow bräuchten) und `main` das Eigentum an `rect2` zurückerhalten soll, sodass
+wir es nach dem Aufruf der Methode `can_hold` weiter verwenden können. Der
+Rückgabewert von `can_hold` ist ein boolescher Wert und die Implementierung
+prüft, ob Breite und Höhe von `self` jeweils größer als von `Rectangle` sind.
+Fügen wir die neue Methode `can_hold` zum Block `impl` aus Listing 5-13 hinzu,
+wie in Listing 5-15 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -278,10 +276,10 @@ impl Rectangle {
 # }
 ```
 
-<span class="caption">Codeblock 5-15: Implementierung der Methode `can_hold`
+<span class="caption">Listing 5-15: Implementierung der Methode `can_hold`
 auf `Rectangle`, die eine weitere `Rectangle`-Instanz als Parameter hat</span>
 
-Wenn wir diesen Code mit der Funktion `main` in Codeblock 5-14 ausführen,
+Wenn wir diesen Code mit der Funktion `main` in Listing 5-14 ausführen,
 erhalten wir die gewünschte Ausgabe. Methoden können mehrere Parameter haben,
 die wir in der Signatur nach dem Parameter `self` angeben. Diese Parameter
 funktionieren genau wie Parameter in Funktionen.
@@ -341,7 +339,7 @@ die Module in [Kapitel 7][modules] besprechen.
 ### Mehrere `impl`-Blöcke
 
 Jede Struktur darf mehrere `impl`-Blöcke haben. Beispielsweise entspricht
-Codeblock 5-15 dem in Codeblock 5-16 gezeigten Code, bei dem jede Methode in
+Listing 5-15 dem in Listing 5-16 gezeigten Code, bei dem jede Methode in
 einem eigenen `impl`-Block steht.
 
 ```rust
@@ -382,13 +380,13 @@ impl Rectangle {
 # }
 ```
 
-<span class="caption">Codeblock 5-16: Neuschreiben von Codeblock 5-15 unter
+<span class="caption">Listing 5-16: Neuschreiben von Listing 5-15 unter
 Verwendung mehrerer `impl`-Blöcke</span>
 
 Es ist nicht nötig, diese Methoden hier auf mehrere `impl`-Blöcke zu verteilen,
 aber es handelt sich um eine gültige Syntax. Wir werden in Kapitel 10 einen
 Fall sehen, bei dem mehrere `impl`-Blöcke hilfreich sind, wenn wir generische
-Typen und Merkmale behandeln.
+Typen und Traits behandeln.
 
 ## Zusammenfassung
 

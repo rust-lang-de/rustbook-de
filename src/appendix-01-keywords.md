@@ -3,43 +3,40 @@
 Die folgende Liste enthält Schlüsselwörter, die für die gegenwärtige oder
 zukünftige Verwendung durch die Sprache Rust reserviert sind. Als solche können
 sie nicht als Bezeichner verwendet werden (außer als Roh-Bezeichner, die wir im
-Abschnitt [„Roh-Bezeichner“][raw-identifiers] besprechen). _Bezeichner_
-sind Namen von Funktionen, Variablen, Parametern, Strukturfeldern
-(struct fields), Modulen, Kisten (crates), Konstanten, Makros, statischen
-Werten, Attributen, Typen, Merkmalen (traits) und Lebensdauern (lifetimes).
+Abschnitt [„Roh-Bezeichner“][raw-identifiers] besprechen). _Bezeichner_ sind
+Namen von Funktionen, Variablen, Parametern, Strukturfeldern (struct fields),
+Modulen, Crates, Konstanten, Makros, statischen Werten, Attributen, Typen,
+Traits und Lebensdauern (lifetimes).
 
 ### Derzeit verwendete Schlüsselwörter
 
 Nachstehend findest du eine Liste der derzeit verwendeten Schlüsselwörter mit
 einer Beschreibung ihrer Funktion.
 
-- `as` &ndash; primitive Typen umwandeln; ein spezifisches Merkmal mit einem
+- `as` &ndash; primitive Typen umwandeln; ein spezifisches Trait mit einem
   Element eindeutig machen; Elemente in `use`-Anweisungen umbenennen 
-- `async` &ndash; ein `Future` zurückgeben, anstatt den aktuellen Strang
-  (thread) zu blockieren
+- `async` &ndash; ein `Future` zurückgeben, anstatt den aktuellen Thread zu blockieren
 - `await` &ndash; Ausführung anhalten, bis das Ergebnis eines `Future` vorliegt
 - `break` &ndash; Schleife sofort verlassen
 - `const` &ndash; konstante Elemente oder konstante Roh-Referenzen definieren
 - `continue` &ndash; weiter zur nächsten Schleifeniteration
-- `crate` &ndash; in einem Modulpfad verweist auf das Stammverzeichnis der Kiste (crate)
-- `dyn` &ndash; dynamischer Aufruf (dispatch) eines Merkmalsobjekts (trait
-  object)
+- `crate` &ndash; in einem Modulpfad verweist auf das Stammverzeichnis der Crate
+- `dyn` &ndash; dynamischer Aufruf (dispatch) eines Trait-Objekts
 - `else` &ndash; Ersatzkontrollflusszweig bei `if` und `if let`
 - `enum` &ndash; eine Aufzählung (enumeration) definieren
 - `extern` &ndash; externe Funktion oder Variable verlinken
 - `false` &ndash; Boolesches Literal für „falsch“
 - `fn` &ndash; Funktion oder Funktionsreferenztyp definieren
-- `for` &ndash; wiederhole über Elemente einer Iteration; ein Merkmal (trait)
+- `for` &ndash; wiederhole über Elemente einer Iteration; ein Trait
   implementieren; eine höherrangige Lebensdauer angeben
 - `if` &ndash; Verzweigen abhängig vom Ergebnis eines Bedingungsausdrucks
-- `impl` &ndash; Implementieren einer inhärenten oder Merkmalsfunktionalität
-  (trait functionality)
+- `impl` &ndash; Implementieren einer inhärenten oder Trait-Funktionalität
 - `in` &ndash; Teil der `for`-Schleifensyntax
 - `let` &ndash; eine Variable binden
 - `loop` &ndash; wiederhole bedingungslos
 - `match` &ndash; einen Wert mit Muster abgleichen
 - `mod` &ndash; ein Modul definieren
-- `move` &ndash; Funktionsabschluss (closure) übernimmt Eigentümerschaft
+- `move` &ndash; Closure übernimmt Eigentum
   (ownership) all seiner Parameter
 - `mut` &ndash; Referenzen, Roh-Referenzen und Variablenbindungen als
   veränderbar kennzeichnen
@@ -53,13 +50,13 @@ einer Beschreibung ihrer Funktion.
   Programmausführung
 - `struct` &ndash; eine Struktur definieren
 - `super` &ndash; Elternmodul des aktuellen Moduls
-- `trait` &ndash; ein Merkmal (trait) definieren
+- `trait` &ndash; ein Trait definieren
 - `true` &ndash; Boolesches Literal für „wahr“
 - `type` &ndash; einen Typ-Alias oder assoziierten Typ definieren
 - `union` &ndash; eine [Vereinigung (union)][union] definieren; ist nur ein
-  Schlüsselwort innerhalb einer Vereinigungdeklaration
-- `unsafe` &ndash; Code, Funktionen, Merkmale (traits) und Implementierungen
-  als unsicher kennzeichnen
+  Schlüsselwort innerhalb einer Union-Deklaration
+- `unsafe` &ndash; Code, Funktionen, Trait und Implementierungen als unsicher
+  kennzeichnen
 - `use` &ndash; Symbole in den Gültigkeitsbereich bringen; genaue Spezifikation
   von generischen und Lebensdauer-Grenzen
 - `where` &ndash; Klauseln zur Typabgrenzung angeben
@@ -137,17 +134,16 @@ Funktionsnamen in seiner Definition sowie an der Stelle, an der die Funktion in
 
 Roh-Bezeichner erlauben es dir, jedes beliebige Wort als Bezeichner zu
 verwenden, auch wenn dieses Wort ein reserviertes Schlüsselwort ist. Dies gibt
-uns mehr Freiheit bei der Wahl der Bezeichner und ermöglicht uns die
-Integration in Programme, die in einer Sprache geschrieben wurden, in der diese
-Wörter keine Schlüsselwörter sind. Darüber hinaus ermöglicht dir der
-Roh-Bezeichner das Verwenden von Bibliotheken, die in einer anderen
-Rust-Edition, als deine Kiste verwendet, geschrieben wurden. Zum Beispiel ist
-`try` in Edition 2015 kein Schlüsselwort, in den Editionen 2018, 2021 und 2024
-aber schon. Wenn du auf eine Bibliothek angewiesen bist, die mit Edition 2015
-geschrieben wurde und eine Funktion `try` hat, musst du die
-Roh-Bezeichner-Syntax verwenden, in diesem Fall `r#try`, um diese Funktion von
-deinem Code in einer neueren Edition aus aufzurufen. Siehe [Anhang
-E][appendix-e] für weitere Informationen zu Editionen.
+uns mehr Freiheit bei der Wahl der Bezeichner und ermöglicht uns die Integration
+in Programme, die in einer Sprache geschrieben wurden, in der diese Wörter keine
+Schlüsselwörter sind. Darüber hinaus ermöglicht dir der Roh-Bezeichner das
+Verwenden von Bibliotheken, die in einer anderen Rust-Edition als deine Crate
+verwendet, geschrieben wurden. Zum Beispiel ist `try` in Edition 2015 kein
+Schlüsselwort, in den Editionen 2018, 2021 und 2024 aber schon. Wenn du auf eine
+Bibliothek angewiesen bist, die mit Edition 2015 geschrieben wurde und eine
+Funktion `try` hat, musst du die Roh-Bezeichner-Syntax verwenden, in diesem Fall
+`r#try`, um diese Funktion von deinem Code in einer neueren Edition aufzurufen.
+Siehe [Anhang E][appendix-e] für weitere Informationen zu Editionen.
 
 [appendix-e]: appendix-05-editions.html
 [raw-identifiers]: #roh-bezeichner

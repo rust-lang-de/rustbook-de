@@ -2,10 +2,10 @@
 
 Die Nachrichtenübermittlung ist eine gute Methode zur Behandlung von
 Nebenläufigkeit, aber sie ist nicht die einzige. Eine andere Methode wäre, dass
-mehrere Stränge auf dieselben gemeinsamen Daten zugreifen. Betrachte folgenden
+mehrere Threads auf dieselben gemeinsamen Daten zugreifen. Betrachte folgenden
 Teil des Slogans aus der Go-Sprachdokumentation noch einmal: „Kommuniziere
 nicht, indem du Arbeitsspeicher teilst.“
-                                                    
+
 Wie würde Kommunikation durch gemeinsame Nutzung von Arbeitsspeicher aussehen?
 Und warum sollten Liebhaber der Nachrichtenübermittlung davor warnen,
 gemeinsamen Arbeitsspeicher zu verwenden?
@@ -13,32 +13,32 @@ gemeinsamen Arbeitsspeicher zu verwenden?
 In gewisser Weise ähneln Kanäle in jeder Programmiersprache dem Alleineigentum,
 denn sobald du einen Wert in einen Kanal übertragen hast, solltest du diesen
 Wert nicht mehr verwenden. Nebenläufigkeit mit gemeinsam genutztem
-Arbeitsspeicher ist wie Mehrfacheigentum: Mehrere Stränge können gleichzeitig
+Arbeitsspeicher ist wie Mehrfacheigentum: Mehrere Threads können gleichzeitig
 auf denselben Speicherplatz zugreifen. Wie du in Kapitel 15 gesehen hast, wo
 intelligente Zeiger Mehrfacheigentum ermöglichten, kann Mehrfacheigentum zu
 zusätzlicher Komplexität führen, da die verschiedenen Eigentümer verwaltet
 werden müssen. Das Typsystem und die Eigentumsregeln von Rust sind eine große
-Hilfe, um diese Verwaltung korrekt zu gestalten. Betrachten wir als Beispiel
-den Mutex, eines der gebräuchlicheren Nebenläufigkeitsprimitive für gemeinsam
+Hilfe, um diese Verwaltung korrekt zu gestalten. Betrachten wir als Beispiel den
+Mutex, eines der gebräuchlicheren Nebenläufigkeitsprimitive für gemeinsam
 genutzten Speicher.
 
 ### Datenzugriff steuern mit Mutexen
 
-_Mutex_ ist eine Abkürzung für _mutual exclusion_ (engl. wechselseitiger
-Ausschluss), da ein Mutex zu einem bestimmten Zeitpunkt nur einem Strang
-(thread) den Zugriff auf Daten erlaubt. Um auf die Daten in einem Mutex
-zuzugreifen, muss ein Strang zunächst signalisieren, dass er Zugriff wünscht,
-indem er darum bittet, die _Sperre_ (lock) des Mutex zu erwerben. Die Sperre
-ist eine Datenstruktur, die Teil des Mutex ist, die verfolgt, wer derzeit
-exklusiven Zugriff auf die Daten hat. Daher wird der Mutex als _Schutz_ der
-Daten beschrieben, die er über das Sperrsystem hält.
+_Mutex_ ist eine Abkürzung für _mutual exclusion_ (wechselseitiger Ausschluss),
+da ein Mutex zu einem bestimmten Zeitpunkt nur einem Thread (thread) den Zugriff
+auf Daten erlaubt. Um auf die Daten in einem Mutex zuzugreifen, muss ein Thread
+zunächst signalisieren, dass er Zugriff wünscht, indem er darum bittet, die
+_Sperre_ (lock) des Mutex zu erwerben. Die Sperre ist eine Datenstruktur, die
+Teil des Mutex ist, der verfolgt, wer derzeit exklusiven Zugriff auf die Daten
+hat. Daher wird der Mutex als _Schutz_ der Daten beschrieben, die er über das
+Sperrsystem hält.
 
 Mutexe haben den Ruf, dass sie schwierig anzuwenden sind, weil man sich zwei
 Regeln merken muss:
 
 1. Du musst versuchen, die Sperre zu erwerben, bevor du die Daten verwendest.
 2. Wenn du mit den Daten, die der Mutex schützt, fertig bist, musst du die Daten
-   entsperren, damit andere Stränge die Sperre übernehmen können.
+   entsperren, damit andere Threads die Sperre übernehmen können.
 
 Als reale Metapher für einen Mutex stelle dir eine Podiumsdiskussion auf einer
 Konferenz mit nur einem Mikrofon vor. Bevor ein Podiumsteilnehmer das Wort
@@ -58,8 +58,7 @@ falsch machen.
 #### Die API von `Mutex<T>`
 
 Als Beispiel für die Verwendung eines Mutex beginnen wir mit der Verwendung
-eines Mutex in einem einsträngigen (single-threaded) Kontext, wie in Codeblock
-16-12 gezeigt.
+eines Mutex in einem single-threaded Kontext, wie in Listing 16-12 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -78,19 +77,19 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-12: Untersuchen der API von `Mutex<T>` in
-einem einsträngigen Kontext zur Vereinfachung</span>
+<span class="caption">Listing 16-12: Untersuchen der API von `Mutex<T>` in
+einem single-threaded Kontext zur Vereinfachung</span>
 
 Wie bei vielen Typen erzeugen wir einen `Mutex<T>` mit der zugehörigen Funktion
 `new`. Um auf die Daten innerhalb des Mutex zuzugreifen, verwenden wir die
 Methode `lock`, um die Sperre zu erhalten. Dieser Aufruf blockiert den
-aktuellen Strang, sodass er keine Arbeit verrichten kann, bis wir an der Reihe
+aktuellen Thread, sodass er keine Arbeit verrichten kann, bis wir an der Reihe
 sind und die Sperre bekommen.
 
-Der Aufruf von `lock` würde fehlschlagen, wenn ein anderer Strang, der die
-Sperre hält, abstürzte. In diesem Fall wäre niemand jemals in der Lage, die
+Der Aufruf von `lock` würde fehlschlagen, wenn ein anderer Thread, der die
+Sperre hält, abbricht. In diesem Fall wäre niemand jemals in der Lage, die
 Sperre zu erhalten, also haben wir uns entschieden, `unwrap` zu benutzen und
-diesen Strang abstürzen zu lassen, wenn wir uns in dieser Situation befinden.
+diesen Thread abzubrechen, wenn wir uns in dieser Situation befinden.
 
 Nachdem wir die Sperre bekommen haben, können wir den Rückgabewert, in diesem
 Fall `num` genannt, als veränderbare Referenz auf die darin enthaltenen Daten
@@ -105,23 +104,23 @@ pointer). Genauer gesagt gibt der Aufruf von `lock` einen intelligenten Zeiger
 namens `MutexGuard` zurück, der in ein `LockResult` verpackt ist, das wir mit
 dem Aufruf von `unwrap` behandelt haben. Der intelligente Zeiger `MutexGuard`
 implementiert `Deref`, um auf unsere inneren Daten zu zeigen; der intelligente
-Zeiger hat auch eine `Drop`-Implementierung, die die Sperre automatisch
-aufhebt, wenn ein `MutexGuard` den Gültigkeitsbereich verlässt, was am Ende des
-inneren Gültigkeitsbereichs geschieht. Dadurch laufen wir nicht Gefahr, zu
-vergessen, die Sperre freizugeben und die Verwendung des Mutex durch andere
-Stränge zu blockieren, da die Freigabe der Sperre automatisch erfolgt.
+Zeiger hat auch eine `Drop`-Implementierung, die die Sperre automatisch aufhebt,
+wenn ein `MutexGuard` den Gültigkeitsbereich verlässt, was am Ende des inneren
+Gültigkeitsbereichs geschieht. Dadurch laufen wir nicht Gefahr, zu vergessen,
+die Sperre freizugeben und die Verwendung des Mutex durch andere Threads zu
+blockieren, da die Freigabe der Sperre automatisch erfolgt.
 
 Nachdem wir die Sperre aufgehoben haben, können wir den Mutex-Wert ausgeben und
 sehen, dass wir den inneren `i32` in 6 ändern konnten.
 
 #### Gemeinsamer Zugriff auf `Mutex<T>`
 
-Versuchen wir nun, einen Wert zwischen mehreren Strängen mit `Mutex<T>` zu
-teilen. Wir starten 10 Stränge und lassen sie jeweils einen Zählerwert um 1
-erhöhen, sodass der Zähler von 0 auf 10 geht. Das Beispiel in Codeblock 16-13
-wird einen Kompilierfehler haben und wir werden diesen Fehler verwenden, um
-mehr über die Verwendung von `Mutex<T>` zu erfahren und darüber, wie Rust uns
-hilft, ihn korrekt zu verwenden.
+Versuchen wir nun, einen Wert zwischen mehreren Threads mit `Mutex<T>` zu
+teilen. Wir starten 10 Threads und lassen sie jeweils einen Zählerwert um 1
+erhöhen, sodass der Zähler von 0 auf 10 geht. Das Beispiel in Listing 16-13 wird
+einen Compilerfehler haben und wir werden diesen Fehler verwenden, um mehr über
+die Verwendung von `Mutex<T>` zu erfahren und wie Rust uns hilft, ihn korrekt zu
+verwenden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -150,22 +149,21 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-13: Zehn Stränge inkrementieren jeweils
+<span class="caption">Listing 16-13: Zehn Threads inkrementieren jeweils
 einen Zähler, der durch einen `Mutex<T>` geschützt ist</span>
 
 Wir erstellen eine Variable `counter`, um ein `i32` innerhalb eines `Mutex<T>`
-zu halten, wie wir es in Codeblock 16-12 getan haben. Als Nächstes erstellen
-wir 10 Stränge, indem wir über einen Zahlenbereich iterieren. Wir verwenden
-`thread::spawn` und geben allen Strängen den gleichen Funktionsabschluss
-(closure), der den Zähler in den Strang verschiebt, eine Sperre auf dem
-`Mutex<T>` durch Aufrufen der Methode `lock` erwirbt und dann 1 zum Wert im
-Mutex addiert. Wenn ein Strang die Ausführung seines Funktionsabschlusses
-beendet hat, verlässt `num` den Gültigkeitsbereich und gibt die Sperre frei,
-sodass ein anderer Strang sie erwerben kann.
+zu halten, wie wir es in Listing 16-12 getan haben. Als Nächstes erstellen wir
+10 Threads, indem wir über einen Zahlenbereich iterieren. Wir verwenden
+`thread::spawn` und geben allen Threads den gleichen Closure, der den Zähler in
+den Thread verschiebt, eine Sperre auf dem `Mutex<T>` durch Aufrufen der Methode
+`lock` erwirbt und dann 1 zum Wert im Mutex addiert. Wenn ein Thread die
+Ausführung seines Closures beendet hat, verlässt `num` den Gültigkeitsbereich
+und gibt die Sperre frei, sodass ein anderer Thread sie erwerben kann.
 
-Im Hauptstrang sammeln wir alle `JoinHandle`. Dann rufen wir analog zu
-Codeblock 16-2 `join` auf jedem Strang auf, um sicherzustellen, dass alle
-Stränge beendet sind. An diesem Punkt erhält der Hauptstrang die Sperre und
+Im Haupt-Thread sammeln wir alle `JoinHandle`. Dann rufen wir analog zu
+Listing 16-2 `join` auf jedem Thread auf, um sicherzustellen, dass alle
+Threads beendet sind. An diesem Punkt erhält der Haupt-Thread die Sperre und
 gibt das Ergebnis dieses Programms aus.
 
 Wir haben angedeutet, dass sich dieses Beispiel nicht kompilieren lässt. Jetzt
@@ -201,18 +199,17 @@ error: could not compile `shared-state` (bin "shared-state") due to 1 previous e
 ```
 
 Die Fehlermeldung besagt, dass der Wert `counter` in der vorherigen Iteration
-der Schleife verschoben wurde. Rust sagt uns, dass wir die Eigentümerschaft von
-`counter` nicht in mehrere Stränge verschieben können. Lass uns den
-Kompilierfehler mit einer Mehrfacheigentums-Methode beheben, die wir in Kapitel
-15 besprochen haben.
+der Schleife verschoben wurde. Rust sagt uns, dass wir das Eigentum an `counter`
+nicht in mehrere Threads verschieben können. Lass uns den Compilerfehler mit
+einer Mehrfacheigentums-Methode beheben, die wir in Kapitel 15 besprochen haben.
 
-#### Mehrfacheigentum mit mehreren Strängen
+#### Mehrfacheigentum mit mehreren Threads
 
 In Kapitel 15 gaben wir einen Wert an mehrere Eigentümer, indem wir den
 intelligenten Zeiger `Rc<T>` verwendet haben, um einen Referenzzählwert zu
-erstellen. Lass uns hier das Gleiche tun und sehen, was passiert. Wir packen
-den `Mutex<T>` in `Rc<T>` in Codeblock 16-14 ein und klonen `Rc<T>`, bevor wir
-die Eigentümerschaft an den Strang übertragen.
+erstellen. Lass uns hier das Gleiche tun und sehen, was passiert. Wir packen den
+`Mutex<T>` in `Rc<T>` in Listing 16-14 ein und klonen `Rc<T>`, bevor wir das
+Eigentum an den Thread übertragen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -243,11 +240,11 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-14: Versuch, `Rc<T>` zu verwenden, um
-mehreren Strängen zu erlauben, den `Mutex<T>` zu besitzen</span>
+<span class="caption">Listing 16-14: Versuch, `Rc<T>` zu verwenden, um
+mehreren Threads zu erlauben, den `Mutex<T>` zu besitzen</span>
 
-Wir kompilieren erneut und bekommen verschiedene Fehler! Der Compiler lehrt uns
-eine Menge.
+Wir kompilieren erneut und bekommen verschiedene Fehler! Der Compiler teilt uns
+viel mit.
 
 ```console
 $ cargo run
@@ -282,22 +279,22 @@ error: could not compile `shared-state` (bin "shared-state") due to 1 previous e
 
 Toll, diese Fehlermeldung ist sehr wortreich! Hier ist der wichtige Teil, auf
 den wir uns konzentrieren müssen: `` `Rc<Mutex<i32>>` cannot be sent between
- threads safely`` Der Compiler teilt uns auch den Grund dafür mit: Das Merkmal
+threads safely`` Der Compiler teilt uns auch den Grund dafür mit: Das Trait
 (trait) `Send` ist für `Rc<Mutex<i32>>` nicht implementiert. Wir werden im
-nächsten Abschnitt über das Merkmal `Send` sprechen: Es ist eines der Merkmale,
-das sicherstellt, dass die Typen, die wir mit Strängen verwenden, für die
-Verwendung in nebenläufigen Situationen gedacht sind.
+nächsten Abschnitt über das Trait `Send` sprechen: Es ist eines der Traits, das
+sicherstellt, dass die Typen, die wir mit Threads verwenden, für die Verwendung
+in nebenläufigen Situationen gedacht sind.
 
-Leider ist es nicht sicher, `Rc<T>` über verschiedene Stränge hinweg gemeinsam
+Leider ist es nicht sicher, `Rc<T>` über verschiedene Threads hinweg gemeinsam
 zu nutzen. Wenn `Rc<T>` den Referenzzähler verwaltet, inkrementiert es den
 Zähler bei jedem Aufruf von `clone` und dekrementiert den Zähler bei jedem
 Klon, der aufgeräumt wird. Es werden jedoch keine Nebenläufigkeitsprimitive
 verwendet, um sicherzustellen, dass Änderungen am Zähler nicht durch einen
-anderen Strang unterbrochen werden können. Dies könnte zu falschen Zählungen
+anderen Thread unterbrochen werden können. Dies könnte zu falschen Zählungen
 führen &ndash; subtile Fehler, die wiederum zu Speicherlecks (memory leaks)
 oder zum Aufräumen eines Wertes führen könnten, obwohl wir ihn noch nutzen
 wollen. Was wir brauchen, ist ein Typ genau wie `Rc<T>`, aber einer, der
-Änderungen am Referenzzähler auf Strang-sichere (thread-safe) Weise vornimmt.
+Änderungen am Referenzzähler auf Thread-sichere (thread-safe) Weise vornimmt.
 
 #### Atomare Referenzzählung mit `Arc<T>`
 
@@ -308,20 +305,20 @@ counted) Typ. Atomare Typen (atomics) sind eine zusätzliche Art von
 Nebenläufigkeitsprimitiven, die wir hier nicht im Detail behandeln werden:
 Weitere Einzelheiten findest du in der Standardbibliotheksdokumentation für
 [`std::sync::atomic`][atomic]. An dieser Stelle musst du nur wissen, dass
-atomare Typen wie primitive Typen funktionieren, aber sicher über Stränge
+atomare Typen wie primitive Typen funktionieren, aber sicher über Threads
 hinweg gemeinsam genutzt werden können.
 
 Du wirst dich dann vielleicht fragen, warum nicht alle primitiven Typen atomar
 sind und warum Standardbibliothekstypen nicht so implementiert sind, dass sie
-standardmäßig `Arc<T>` verwenden. Der Grund dafür ist, dass Strang-Sicherheit
+standardmäßig `Arc<T>` verwenden. Der Grund dafür ist, dass Thread-Sicherheit
 mit Performanzeinbußen verbunden ist, die du nur dann zahlen willst, wenn du
 sie wirklich brauchst. Wenn du nur Operationen an Werten innerhalb eines
-einzelnen Strangs durchführst, kann dein Code schneller laufen, wenn er nicht
+einzelnen Threads durchführst, kann dein Code schneller laufen, wenn er nicht
 die Garantien erzwingen muss, die atomare Typen bieten.
 
 Kehren wir zu unserem Beispiel zurück: `Arc<T>` und `Rc<T>` haben die gleiche
 API, also reparieren wir unser Programm, indem wir die `use`-Zeile, den Aufruf
-von `new` und den Aufruf von `clone` ändern. Der Code in Codeblock 16-15 wird
+von `new` und den Aufruf von `clone` ändern. Der Code in Listing 16-15 wird
 schließlich kompilieren und laufen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -352,23 +349,22 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-15: Verwenden von `Arc<T>`, um den `Mutex<T>`
-einzupacken, um die Eigentümerschaft mit mehreren Strängen teilen zu
-können</span>
+<span class="caption">Listing 16-15: Verwenden von `Arc<T>`, um den `Mutex<T>`
+einzupacken und das Eigentum mit mehreren Threads zu teilen</span>
 
-Dieser Code gibt folgendes aus:
+Dieser Code gibt Folgendes aus:
 
 ```text
 Ergebnis: 10
 ```
 
 Wir haben es geschafft! Wir zählten von 0 bis 10, was nicht sehr beeindruckend
-erscheinen mag, aber wir haben viel über `Mutex<T>` und Strangsicherheit
+erscheinen mag, aber wir haben viel über `Mutex<T>` und Threadsicherheit
 gelernt. Du kannst die Struktur dieses Programms auch dazu nutzen,
 kompliziertere Operationen durchzuführen als nur einen Zähler zu
 inkrementieren. Mit dieser Strategie kannst du eine Berechnung in unabhängige
-Teile aufteilen, diese Teile auf Stränge verteilen und dann `Mutex<T>`
-verwenden, damit jeder Strang das Endergebnis mit seinem Teil aktualisiert.
+Teile aufteilen, diese Teile auf Threads verteilen und dann `Mutex<T>`
+verwenden, damit jeder Thread das Endergebnis mit seinem Teil aktualisiert.
 
 Beachte, dass es für einfache numerische Operationen einfachere Typen als
 `Mutex<T>` gibt, die durch das [Modul `std::sync::atomic` der
@@ -388,21 +384,21 @@ wie wir `RefCell<T>` in Kapitel 15 benutzt haben, um Inhalte innerhalb eines
 `Rc<T>` verändern zu können, benutzen wir `Mutex<T>`, um Inhalte innerhalb
 eines `Arc<T>` zu verändern.
 
-Ein weiteres zu beachtendes Detail ist, dass Rust dich nicht vor allen Arten
-von Logikfehlern schützen kann, wenn du `Mutex<T>` verwendest. Erinnere dich an
+Ein weiteres zu beachtendes Detail ist, dass Rust dich nicht vor allen Arten von
+Logikfehlern schützen kann, wenn du `Mutex<T>` verwendest. Erinnere dich an
 Kapitel 15, dass die Verwendung von `Rc<T>` mit dem Risiko verbunden ist,
 Referenzzyklen zu erzeugen, bei denen sich zwei `Rc<T>`-Werte gegenseitig
 referenzieren und dadurch Speicherlecks verursachen. In ähnlicher Weise ist
 `Mutex<T>` mit dem Risiko verbunden, _Deadlocks_ zu schaffen. Diese treten auf,
-wenn eine Operation zwei Ressourcen sperren muss und zwei Stränge jeweils eine
+wenn eine Operation zwei Ressourcen sperren muss und zwei Threads jeweils eine
 der Sperren erworben haben, was dazu führt, dass sie ewig aufeinander warten.
 Wenn du an Deadlocks interessiert bist, versuche ein Programm in Rust zu
 schreiben, das einen Deadlock hat; dann recherchiere Strategien zur Vermeidung
-von Deadlocks mit Mutexe in einer beliebigen Sprache und versuche, sie in Rust
+von Deadlocks mit Mutexes in einer beliebigen Sprache und versuche, sie in Rust
 zu implementieren. Die Standardbibliotheks-API-Dokumentation für `Mutex<T>` und
 `MutexGuard` bietet nützliche Informationen.
 
-Wir runden dieses Kapitel ab, indem wir über die Merkmale `Send` und `Sync`
+Wir runden dieses Kapitel ab, indem wir über die Traits `Send` und `Sync`
 sprechen und wie wir sie mit benutzerdefinierten Typen verwenden können.
 
 [atomic]: https://doc.rust-lang.org/std/sync/atomic/index.html

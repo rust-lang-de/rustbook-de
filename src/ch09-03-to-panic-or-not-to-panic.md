@@ -1,19 +1,18 @@
 ## Wann `panic!` aufrufen und wann nicht?
 
 Wie entscheidest du also, wann du `panic!` aufrufen und wann `Result`
-zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit sich vom
+zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit, sich vom
 Fehler zu erholen. Du könntest `panic!` in jeder Fehlersituation aufrufen,
 unabhängig davon, ob es eine Möglichkeit zur Fehlerbehebung gibt oder nicht,
 aber dann triffst du die Entscheidung für den aufrufenden Code, dass eine
 Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
 `Result`-Wert zurückzugeben, überlässt du dem aufrufenden Code die
 Wahlmöglichkeit, anstatt die Entscheidung für ihn zu treffen. Der aufrufende
-Code könnte sich dafür entscheiden, sich vom Fehler auf eine sinnvolle Weise
-zu erholen, oder er könnte sich dafür entscheiden, dass ein `Err`-Wert in
-diesem Fall nicht behebbar ist und `panic!` aufrufen, und so deinen behebbaren
-Fehler in einen nicht behebbaren verwandeln. Daher ist die Rückgabe von
-`Result` eine gute Standardwahl, wenn du eine Funktion definierst, die
-fehlschlagen könnte.
+Code könnte sich dafür entscheiden, sich vom Fehler auf eine sinnvolle Weise zu
+erholen, oder er könnte sich dafür entscheiden, dass ein `Err`-Wert in diesem
+Fall nicht behebbar ist und `panic!` aufrufen, und so deinen behebbaren Fehler
+in einen nicht behebbaren verwandeln. Daher ist die Rückgabe von `Result` eine
+gute Standardwahl, wenn du eine Funktion definierst, die fehlschlagen könnte.
 
 In Beispielen, Prototyp-Code und Tests ist es sinnvoller, Code zu schreiben,
 der das Programm abbricht, anstatt ein `Result` zurückzugeben. Lass uns
@@ -63,17 +62,16 @@ let home: IpAddr = "127.0.0.1"
     .expect("Fest programmierte IP-Adresse sollte gültig sein");
 ```
 
-Wir erstellen eine `IpAddr`-Instanz, indem wir eine hartkodierte Zeichenkette
+Wir erstellen eine `IpAddr`-Instanz, indem wir einen hartkodierten String
 parsen. Wir können sehen, dass `127.0.0.1` eine gültige IP-Adresse ist, sodass
-es akzeptabel ist, hier `expect` zu verwenden. Eine hartkodierte, gültige
-Zeichenkette ändert jedoch nicht den Rückgabetyp der Methode `parse`: Wir
-erhalten immer noch einen `Result`-Wert und der Compiler wird von uns
-verlangen, `Result` so zu behandeln, als ob die `Err`-Variante möglich wäre,
-weil der Compiler nicht klug genug ist, um zu erkennen, dass diese
-Zeichenkette stets eine gültige IP-Adresse ist. Wenn die
-IP-Adressen-Zeichenkette von einem Benutzer kam, anstatt fest im Programm
-kodiert zu sein, und daher möglicherweise fehlschlagen könnte, würden wir
-stattdessen definitiv `Result` auf eine robustere Weise behandeln wollen.
+es akzeptabel ist, hier `expect` zu verwenden. Ein hartkodierter, gültiger
+String ändert jedoch nicht den Rückgabetyp der Methode `parse`: Wir erhalten
+immer noch einen `Result`-Wert und der Compiler wird von uns verlangen, `Result`
+so zu behandeln, als ob die `Err`-Variante möglich wäre, weil der Compiler nicht
+klug genug ist, um zu erkennen, dass dieser String stets eine gültige IP-Adresse
+ist. Wenn der IP-Adressen-String von einem Benutzer kam, anstatt fest im
+Programm kodiert zu sein, und daher möglicherweise fehlschlagen könnte, würden
+wir stattdessen definitiv `Result` auf eine robustere Weise behandeln wollen.
 
 ### Richtlinien zur Fehlerbehandlung
 
@@ -167,7 +165,7 @@ Eine Möglichkeit, dies zu tun, wäre, die Eingabe als `i32` statt nur als `u32`
 zu parsen, um potenziell negative Zahlen zuzulassen, und dann eine
 Bereichsprüfung der Zahl zu ergänzen, etwa so:
 
-<span class="Dateiname">Dateiname: src/main.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
 # use rand::Rng;
@@ -228,11 +226,11 @@ Stattdessen können wir einen neuen Typ in einem bestimmten Modul erstellen und
 die Validierungen in eine Funktion geben, um eine Instanz des Typs zu erzeugen,
 anstatt die Validierungen überall zu wiederholen. Auf diese Weise ist es für
 die Funktionen sicher, den neuen Typ in ihren Signaturen zu verwenden und die
-erhaltenen Werte bedenkenlos zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit,
+erhaltenen Werte bedenkenlos zu nutzen. Listing 9-13 zeigt eine Möglichkeit,
 einen Typ `Guess` zu definieren, der nur dann eine Instanz von `Guess` erzeugt,
 wenn die Funktion `new` einen Wert zwischen 1 und 100 erhält.
 
-<span class="Dateiname">Dateiname: src/main.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
 pub struct Guess {
@@ -254,7 +252,7 @@ impl Guess {
 }
 ```
 
-<span class="caption">Codeblock 9-13: Ein Typ `Guess`, der nur bei Werten
+<span class="caption">Listing 9-13: Ein Typ `Guess`, der nur bei Werten
 zwischen 1 und 100 fortsetzt</span>
 
 Beachte, dass dieser Code in *src/guessing_game.rs* davon abhängt, dass in
@@ -263,21 +261,21 @@ wir hier nicht gezeigt haben. In dieser neuen Moduldatei definieren wir eine
 Struktur namens `Guess` mit einem Feld `value`, das einen `i32` enthält. Hier
 wird die Zahl gespeichert.
 
-Dann implementieren wir die zugehörige Funktion `new` für `Guess`, die
-Instanzen von `Guess` erzeugt. Die Funktion `new` ist so definiert, dass sie
-einen Parameter `value` vom Typ `i32` entgegen nimmt und eine `Guess`-Instanz
+Dann implementieren wir die zugehörige Funktion `new` für `Guess`, die Instanzen
+von `Guess` erzeugt. Die Funktion `new` ist so definiert, dass sie einen
+Parameter `value` vom Typ `i32` entgegennimmt und eine `Guess`-Instanz
 zurückgibt. Der Code im Funktionsrumpf von `new` testet den Wert in `value`, um
 sicherzustellen, dass er zwischen 1 und 100 liegt. Wenn `value` diesen Test
 nicht besteht, rufen wir `panic!` auf, was den Programmierer des aufrufenden
 Codes darauf aufmerksam macht, dass er einen Fehler hat, den er beheben muss,
-denn ein `Guess` mit einem Wert außerhalb dieses Bereichs zu erzeugen, würde
-den Vertrag verletzen, auf den sich `Guess::new` verlässt. Die Bedingungen,
-unter denen `Guess::new` das Programm abbricht, sollten in der öffentlich
-zugänglichen API-Dokumentation genannt werden; wir werden die
-Dokumentationskonventionen, die auf die Möglichkeit eines `panic!`-Aufrufs
-hinweisen, in der API-Dokumentation behandeln, die du in Kapitel 14 erstellst. 
-Wenn `value` den Test besteht, erstellen wir eine neue `Guess`-Instanz, deren
-Feld `value` den Parameterwert `value` erhält, und geben die Instanz zurück.
+denn ein `Guess` mit einem Wert außerhalb dieses Bereichs zu erzeugen, würde den
+Vertrag verletzen, auf den sich `Guess::new` verlässt. Die Bedingungen, unter
+denen `Guess::new` das Programm abbricht, sollten in der öffentlich zugänglichen
+API-Dokumentation genannt werden; wir werden die Dokumentationskonventionen, die
+auf die Möglichkeit eines `panic!`-Aufrufs hinweisen, in der API-Dokumentation
+behandeln, die du in Kapitel 14 erstellst. Wenn `value` den Test besteht,
+erstellen wir eine neue `Guess`-Instanz, deren Feld `value` den Parameterwert
+`value` erhält, und geben die Instanz zurück.
 
 Als nächstes implementieren wir eine Methode namens `value`, die `self`
 ausleiht, keine anderen Parameter hat und ein `i32` zurückgibt. Diese
@@ -288,7 +286,7 @@ Es ist wichtig, dass das Feld `value` privat ist, damit Code, der die Struktur
 `Guess` verwendet, `value` nicht direkt setzen kann: Code außerhalb des Moduls
 `guessing_game` _muss_ die Funktion `Guess::new` verwenden, um eine Instanz von
 `Guess` zu erzeugen, wodurch sichergestellt wird, dass es keine Möglichkeit
-gibt, dass `Guess` einen `Wert` hat, der nicht durch die Bedingungen in der
+gibt, dass `Guess` einen `value` hat, der nicht durch die Bedingungen in der
 Funktion `Guess::new` überprüft wurde.
 
 Eine Funktion, die einen Parameter hat oder nur Zahlen zwischen 1 und 100

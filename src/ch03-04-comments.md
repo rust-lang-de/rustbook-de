@@ -16,7 +16,7 @@ Kommentar reicht dann bis zum Ende der Zeile. Für Kommentare, die über eine
 einzelne Zeile hinausgehen, musst du bei jedem Zeilenanfang `//` angeben:
 
 ```rust
-// Hier passiert etwas kompliziertes, so komplex dass wir
+// Hier passiert etwas kompliziertes, so komplex, dass wir
 // mehrere Kommentarzeilen brauchen! Puh! Hoffentlich erklärt
 // dieser Kommentar, was hier passiert.
 ```
@@ -43,8 +43,8 @@ fn main() {
 }
 ```
 
-Rust kennt noch eine weitere Kommentarart, nämlich Dokumentationskommentare,
-die wir im Abschnitt [„Kisten (crate) auf crates.io
-veröffentlichen“][publishing] in Kapitel 14 besprechen werden.
+Rust kennt noch eine weitere Kommentarart, nämlich Dokumentationskommentare, die
+wir im Abschnitt [„Crates auf crates.io veröffentlichen“][publishing] in Kapitel
+14 besprechen werden.
 
 [publishing]: ch14-02-publishing-to-crates-io.html

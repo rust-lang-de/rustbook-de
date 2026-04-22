@@ -2,7 +2,7 @@
 
 Cargo ist das Bau-System (build system) und der Paketmanager von Rust. Die
 meisten Rust-Entwickler verwenden dieses Werkzeug, um ihre Rust-Projekte zu
-verwalten, weil Cargo viele Aufgaben für dich erledigt, z.B. Bauen deines
+verwalten, weil Cargo viele Aufgaben für dich erledigt, z.B. das Bauen deines
 Codes, Herunterladen der Bibliotheken, von denen dein Code abhängt, und das
 Bauen dieser Bibliotheken. (Wir nennen Bibliotheken, die dein Code benötigt,
 _Abhängigkeiten_ (dependencies).)
@@ -62,7 +62,7 @@ eines existierenden Git-Repositories ausführst; du kannst dieses Verhalten
 > Führe `cargo new --help` aus, um die verfügbaren Optionen zu sehen.
 
 Öffne _Cargo.toml_ in einem Texteditor deiner Wahl. Es sollte ähnlich wie der
-Code in Codeblock 1-2 aussehen.
+Code in Listing 1-2 aussehen.
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -75,7 +75,7 @@ edition = "2024"
 [dependencies]
 ```
 
-<span class="caption">Codeblock 1-2: Inhalt von _Cargo.toml_ erzeugt durch
+<span class="caption">Listing 1-2: Inhalt von _Cargo.toml_ erzeugt durch
 `cargo new`</span>
 
 Diese Datei liegt im Format [_TOML_][toml] (_Tom's Obvious, Minimal
@@ -92,10 +92,10 @@ verwendende Rust-Edition. Über den Schlüssel `edition` sprechen wir in [Anhang
 E][appendix-e].
 
 Die letzte Zeile `[dependencies]` ist der Anfang eines Abschnitts, in dem du
-alle Abhängigkeiten deines Projekts auflisten kannst. In Rust werden
-Code-Pakete als _Kisten_ (crates) bezeichnet. Wir werden keine anderen Kisten
-für dieses Projekt benötigen, aber wir werden es im ersten Projekt in Kapitel 2
-tun, also werden wir dann diesen Abhängigkeits-Abschnitt verwenden.
+alle Abhängigkeiten deines Projekts auflisten kannst. In Rust werden Codepakete
+als _Crates_ (Kisten) bezeichnet. Wir werden keine anderen Crates für dieses
+Projekt benötigen, aber wir werden es im ersten Projekt in Kapitel 2 tun, also
+werden wir dann diesen Abhängigkeits-Abschnitt verwenden.
 
 Öffne nun _src/main.rs_ und wirf einen Blick darauf:
 
@@ -108,7 +108,7 @@ fn main() {
 ```
 
 Cargo hat für dich ein „Hello, world!“-Programm generiert, genau wie das, das
-wir in Codeblock 1-1 geschrieben haben! Die Unterschiede zwischen unserem
+wir in Listing 1-1 geschrieben haben! Die Unterschiede zwischen unserem
 Projekt und dem Projekt, das Cargo generiert hat, bestehen bisher darin, dass
 Cargo den Code im Verzeichnis _src_ abgelegt hat, und wir haben eine
 Konfigurationsdatei _Cargo.toml_ im obersten Verzeichnis.
@@ -205,7 +205,7 @@ Programms regelmäßig `cargo check` aus, um sicherzustellen, dass das Programm
 kompiliert. Dann lassen sie `cargo build` laufen, wenn sie bereit sind, die
 ausführbare Datei zu benutzen.
 
-Lasse uns zusammenfassen, was wir bisher über Cargo gelernt haben:
+Lass uns zusammenfassen, was wir bisher über Cargo gelernt haben:
 
 - Wir können ein Projekt mit `cargo new` erstellen.
 - Wir können ein Projekt mit `cargo build` bauen.
@@ -269,11 +269,11 @@ gelernt, wie es geht:
 - Schreibe und führe ein „Hallo Welt!“-Programm aus, direkt mittels `rustc`.
 - Schreibe und führe ein neues Projekt aus mittels Cargo-Konventionen.
 
-Dies ist ein guter Zeitpunkt, ein umfangreicheres Programm zu erstellen, um
-sich an das Lesen und Schreiben von Rust-Code zu gewöhnen. In Kapitel 2 werden
-wir also ein Ratespielprogramm erstellen. Wenn du lieber damit beginnen
-möchtest, zu lernen, wie gängige Programmierkonzepte in Rust funktionieren,
-lies Kapitel 3 und kehre dann zu Kapitel 2 zurück.
+Dies ist ein guter Zeitpunkt, ein umfangreicheres Programm zu erstellen, um dich
+an das Lesen und Schreiben von Rust-Code zu gewöhnen. In Kapitel 2 werden wir
+also ein Ratespielprogramm erstellen. Wenn du lieber damit beginnen möchtest, zu
+lernen, wie gängige Programmierkonzepte in Rust funktionieren, lies Kapitel 3
+und kehre dann zu Kapitel 2 zurück.
 
 [appendix-e]: appendix-05-editions.html
 [cargo-doc]: https://doc.rust-lang.org/cargo/

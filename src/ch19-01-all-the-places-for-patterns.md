@@ -1,4 +1,4 @@
-## Alle Stellen an denen Muster (patterns) verwendet werden können
+## Stellen, an denen Muster verwendet werden können
 
 Muster tauchen an vielen Stellen in Rust auf und du hast sie oft benutzt, ohne
 es zu merken! In diesem Abschnitt werden alle Stellen besprochen, an denen
@@ -7,9 +7,9 @@ Muster gültig sind.
 ### `match`-Zweige
 
 Wie in Kapitel 6 besprochen, verwenden wir Muster in den Zweigen von
-`match`-Ausdrücken. Formal werden `match`-Ausdrücke definiert mit dem
-Schlüsselwort `match`, einem Wert, mit dem verglichen wird, und einem oder
-mehreren `match`-Zweigen, die aus einem Muster und einem Ausdruck bestehen, der
+`match`-Ausdrücken. Formal bestehen `match`-Ausdrücke aus dem Schlüsselwort
+`match`, einem Wert, mit dem verglichen wird, und einem oder mehreren
+`match`-Zweigen, die aus einem Muster und einem Ausdruck bestehen, der
 ausgeführt wird, wenn der Wert zum Muster dieses Zweigs passt, wie hier:
 
 ```rust,ignore
@@ -20,7 +20,7 @@ match WERT {
 }
 ```
 
-Hier ist zum Beispiel der `match`-Ausdruck aus Codeblock 6-5, der auf einen
+Hier ist zum Beispiel der `match`-Ausdruck aus Listing 6-5, der auf einen
 `Option<i32>`-Wert in der Variablen `x` passt:
 
 ```rust,ignore
@@ -40,12 +40,12 @@ alle Möglichkeiten abgedeckt sind, ist ein Sammel-Muster (catchall pattern) fü
 den letzten Zweig: Zum Beispiel kann ein Variablenname, der zu einem beliebigen
 Wert passt, niemals fehlschlagen und deckt somit jeden verbleibenden Fall ab.
 
-Das spezielle Muster `_` wird auf alles passen, aber es bindet nie an eine
-Variable, daher wird es oft im letzten `match`-Zweig verwendet. Das Muster `_`
-kann zum Beispiel nützlich sein, wenn du jeden nicht angegebenen Wert
-ignorieren willst. Wir werden das Muster `_` in [„Ignorieren von Werten in
-einem Muster“][ignoring-values-in-a-pattern] später in diesem Kapitel
-ausführlicher behandeln.
+Das spezielle Muster `_` wird auf alles passen, aber es bindet keine Variablen,
+daher wird es oft im letzten `match`-Zweig verwendet. Das Muster `_` kann zum
+Beispiel nützlich sein, wenn du jeden nicht angegebenen Wert ignorieren willst.
+Wir werden das Muster `_` in [„Ignorieren von Werten in einem
+Muster“][ignoring-values-in-a-pattern] später in diesem Kapitel ausführlicher
+behandeln.
 
 ### `let`-Ausdrücke
 
@@ -74,15 +74,14 @@ was hier übereinstimmt, an die Variable `x`.“ Da der Name `x` das gesamte
 Muster ist, bedeutet dieses Muster effektiv: „Binde alles an die Variable `x`,
 unabhängig vom Wert.“
 
-Um den Aspekt des Musterabgleichs (pattern matching) von `let` besser zu
-verstehen, betrachte Codeblock 19-1, der ein Muster mit `let` verwendet, um ein
-Tupel zu destrukturieren.
+Um Pattern Matching mit `let` besser zu verstehen, betrachte Listing 19-1, das
+`let` mit einem Muster verwendet, um ein Tupel zu destrukturieren.
 
 ```rust
 let (x, y, z) = (1, 2, 3);
 ```
 
-<span class="caption">Codeblock 19-1: Verwenden eines Musters zum
+<span class="caption">Listing 19-1: Verwenden eines Musters zum
 Destrukturieren eines Tupels und zum gleichzeitigen Erzeugen von drei
 Variablen</span>
 
@@ -94,7 +93,7 @@ als drei darin verschachtelte einzelne Variablenmuster vorstellen.
 
 Wenn die Anzahl der Elemente im Muster nicht mit der Anzahl der Elemente im
 Tupel übereinstimmt, passt der Gesamttyp nicht und es kommt zu einem
-Compilerfehler. Codeblock 19-2 zeigt beispielsweise einen Versuch, ein Tupel
+Compilerfehler. Listing 19-2 zeigt beispielsweise einen Versuch, ein Tupel
 mit drei Elementen in zwei Variablen zu destrukturieren, was nicht
 funktioniert.
 
@@ -102,7 +101,7 @@ funktioniert.
 let (x, y) = (1, 2, 3);
 ```
 
-<span class="caption">Codeblock 19-2: Fehlerhaft aufgebautes Musters, dessen
+<span class="caption">Listing 19-2: Fehlerhaft aufgebautes Muster, dessen
 Variablen nicht mit der Anzahl der Elemente im Tupel übereinstimmen</span>
 
 Der Versuch, diesen Code zu kompilieren, führt zu folgendem Typfehler:
@@ -130,7 +129,7 @@ oder `..` ignorieren, wie du im Abschnitt [„Ignorieren von Werten in einem
 Muster“][ignoring-values-in-a-pattern] sehen wirst. Wenn das Problem darin
 besteht, dass wir zu viele Variablen im Muster haben, besteht die Lösung darin,
 die Typen aufeinander abzustimmen, indem Variablen entfernt werden, sodass die
-Anzahl der Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.
+Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.
 
 ### Bedingte `if let`-Ausdrücke
 
@@ -139,14 +138,14 @@ kürzeren Weg verwendet, um das Äquivalent eines `match`-Ausdrucks zu schreiben
 der nur einen Fall prüft. Optional kann `if let` ein entsprechendes `else`
 haben mit Code, der ausgeführt wird, wenn das Muster in `if let` nicht passt.
 
-Codeblock 19-3 zeigt, dass es auch möglich ist, die Ausdrücke `if let`, `else
+Listing 19-3 zeigt, dass es auch möglich ist, die Ausdrücke `if let`, `else
 if` und `else if let` zu mischen und anzupassen. Dies gibt uns mehr
 Flexibilität als ein `match`-Ausdruck, in dem wir nur einen Wert zum Abgleich
 mit den Mustern haben können. Auch erfordert Rust nicht, dass die Bedingungen
 in einer Reihe von `if let`-, `else if`- und `else if let`-Zweigen sich
 notwendigerweise aufeinander beziehen.
 
-Der Code in Codeblock 19-3 bestimmt die Farbe des Hintergrunds auf der
+Der Code in Listing 19-3 bestimmt die Farbe des Hintergrunds auf der
 Grundlage einer Reihe von Prüfungen mehrerer Bedingungen. Für dieses Beispiel
 haben wir Variablen mit hartkodierten Werten erstellt, die ein reales Programm
 von Benutzereingaben erhalten könnte.
@@ -175,15 +174,15 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-3: Mischen von `if let`, `else if`, `else if
+<span class="caption">Listing 19-3: Mischen von `if let`, `else if`, `else if
 let` und `else`</span>
 
 Wenn der Benutzer eine Lieblingsfarbe angibt, ist diese Farbe die
 Hintergrundfarbe. Wenn keine Lieblingsfarbe angegeben wurde und heute Dienstag
 ist, ist die Hintergrundfarbe grün. Ansonsten, wenn der Benutzer sein Alter als
-Zeichenkette angibt und wir es erfolgreich als Zahl parsen können, ist die
-Farbe entweder violett oder orange, je nach dem Wert der Zahl. Wenn keine
-dieser Bedingungen zutrifft, ist die Hintergrundfarbe blau.
+String angibt und wir ihn erfolgreich als Zahl parsen können, ist die Farbe
+entweder violett oder orange, je nach dem Wert der Zahl. Wenn keine dieser
+Bedingungen zutrifft, ist die Hintergrundfarbe blau.
 
 Mit dieser bedingten Struktur können wir komplexe Anforderungen unterstützen.
 Mit den hartkodierten Werten, die wir hier haben, wird dieses Beispiel
@@ -193,11 +192,11 @@ Du kannst sehen, dass `if let` auch neue Variablen einführen kann, die
 vorhandene Variablen verschatten (shadow) können, so wie bei `match`-Zweigen:
 Die Zeile `if let Ok(age) = age` führt eine neue Variable `age` ein, die den
 Wert innerhalb der `Ok`-Variante enthält und die vorhandene Variable `age`
-verschattet. Das bedeutet, dass wir die Bedingung `if age > 30` innerhalb
-dieses Blocks platzieren müssen: Wir können diese beiden Bedingungen nicht in
-`if let Ok(age) = age && age > 30` kombinieren. Die neue Variable `age`, die
-wir mit 30 vergleichen wollen, ist erst gültig, wenn der neue
-Gültigkeitsbereich mit der geschweiften Klammer beginnt.
+verschattet. Das bedeutet, dass wir die Bedingung `if age > 30` innerhalb dieses
+Blocks platzieren müssen: Wir können diese beiden Bedingungen nicht in `if let
+Ok(age) = age && age > 30` kombinieren. Die neue Variable `age`, die wir mit 30
+vergleichen wollen, ist erst gültig, wenn der neue Gültigkeitsbereich mit der
+geschweiften Klammer beginnt.
 
 Der Nachteil der Verwendung von `if let`-Ausdrücken ist, dass der Compiler die
 Vollständigkeit nicht prüft, während er dies bei `match`-Ausdrücken tut. Wenn
@@ -208,9 +207,9 @@ haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.
 
 Analog zu `if let` ermöglicht die bedingte Schleife `while let`, dass eine
 `while`-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Auf
-ähnliche Weise zeigen wir in Codeblock 19-4 eine `while let`-Schleife, die auf
-Nachrichten wartet, die zwischen Strängen gesendet werden. In aktuellen Fall
-prüfen wir ein `Result` statt einer einer `Option`.
+ähnliche Weise zeigen wir in Listing 19-4 eine `while let`-Schleife, die auf
+Nachrichten wartet, die zwischen Threads gesendet werden. Im aktuellen Fall
+prüfen wir ein `Result` statt einer `Option`.
 
 ```rust
 let (tx, rx) = std::sync::mpsc::channel();
@@ -225,23 +224,23 @@ while let Ok(value) = rx.recv() {
 }
 ```
 
-<span class="caption">Codeblock 19-4: Das Verwenden einer `while let`-Schleife,
+<span class="caption">Listing 19-4: Das Verwenden einer `while let`-Schleife,
 um Werte so lange auszugeben, wie `rx.recv()` ein `Ok` zurückgibt</span>
 
 Dieses Beispiel gibt `1`, `2` und `3` aus. Die Methode `recv` nimmt die erste
-Nachricht von der Empfängerseite des Kanals und gibt `Ok(value)` zurück. Als
-wir `recv` das erste Mal in Kapitel 16 gesehen haben, haben wir den Fehler
-direkt ausgepackt oder mit ihm als Iterator in einer `for`-Schleife
-interagiert. Wie Codeblock 19-4 zeigt, können wir aber auch `while let`
-verwenden, da die Methode `recv` nach jeder angekommenen Nachricht den Wert
-`Ok` zurückgibt, solange der Sender existiert, und schließlich `Err`
-zurückgibt, sobald die Senderseite die Verbindung trennt.
+Nachricht von der Empfängerseite des Kanals und gibt `Ok(value)` zurück. Als wir
+`recv` zum ersten Mal in Kapitel 16 gesehen haben, haben wir den Fehler direkt
+ausgepackt oder mit ihm als Iterator in einer `for`-Schleife interagiert. Wie
+Listing 19-4 zeigt, können wir aber auch `while let` verwenden, da die Methode
+`recv` nach jeder angekommenen Nachricht den Wert `Ok` zurückgibt, solange der
+Sender existiert, und schließlich `Err` zurückgibt, sobald die Senderseite die
+Verbindung trennt.
 
 ### `for`-Schleifen
 
 In einer `for`-Schleife ist der Wert, der direkt auf das Schlüsselwort `for`
 folgt, ein Muster. Zum Beispiel ist in `for x in y` das `x` das Muster.
-Codeblock 19-5 zeigt, wie man ein Muster in einer `for`-Schleife verwendet, um
+Listing 19-5 zeigt, wie man ein Muster in einer `for`-Schleife verwendet, um
 ein Tupel als Teil der `for`-Schleife zu destrukturieren oder zu zerlegen.
 
 ```rust
@@ -252,10 +251,10 @@ for (index, value) in v.iter().enumerate() {
 }
 ```
 
-<span class="caption">Codeblock 19-5: Verwenden eines Musters in einer
+<span class="caption">Listing 19-5: Verwenden eines Musters in einer
 `for`-Schleife zum Destrukturieren eines Tupels</span>
 
-Der Code in Codeblock 19-5 wird Folgendes ausgeben:
+Der Code in Listing 19-5 wird Folgendes ausgeben:
 
 ```console
 $ cargo run
@@ -275,7 +274,7 @@ zum Muster `(index, value)` passt, ist `index` gleich `0` und `value` gleich
 
 ### Funktionsparameter
 
-Funktionsparameter können auch Muster sein. Der Code in Codeblock 19-6, der
+Funktionsparameter können auch Muster sein. Der Code in Listing 19-6, der
 eine Funktion namens `foo` deklariert, die einen Parameter namens `x` vom Typ
 `i32` benötigt, sollte inzwischen bekannt aussehen.
 
@@ -287,11 +286,11 @@ fn foo(x: i32) {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 19-6: Eine Funktionssignatur verwendet Muster
+<span class="caption">Listing 19-6: Eine Funktionssignatur verwendet Muster
 in den Parametern</span>
 
 Der Teil `x` ist ein Muster! Wie wir es mit `let` taten, konnten wir ein Tupel
-in den Argumenten einer Funktion dem Muster zuordnen. Codeblock 19-7 teilt die
+in den Argumenten einer Funktion dem Muster zuordnen. Listing 19-7 teilt die
 Werte in einem Tupel auf, wenn wir es an eine Funktion übergeben.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -307,20 +306,20 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-7: Eine Funktion mit Parametern, die ein
+<span class="caption">Listing 19-7: Eine Funktion mit Parametern, die ein
 Tupel destrukturieren</span>
 
 Dieser Code gibt `Aktuelle Position: (3, 5)` aus. Die Werte `&(3, 5)` passen
 zum Muster `&(x, y)`, sodass `x` den Wert `3` und `y` den Wert `5` hat.
 
-Wir können auch Muster in Funktionsabschlussparameterlisten (closure parameter
-lists) auf die gleiche Weise wie in Funktionsparameterlisten verwenden, da
-Funktionsabschlüsse ähnlich wie Funktionen sind, wie in Kapitel 13 besprochen.
+Wir können auch Muster in Closure-Parameterlisten auf die gleiche Weise wie in
+Funktionsparameterlisten verwenden, da Closures ähnlich wie Funktionen sind, wie
+in Kapitel 13 besprochen.
 
-An diesem Punkt hast du verschiedene Möglichkeiten der Verwendung von Mustern
-gesehen, aber Muster funktionieren nicht an allen Stellen, an denen wir sie
-verwenden können, gleich. An manchen Stellen müssen die Muster unabweisbar
-(irrefutable) sein, unter anderen Umständen können sie abweisbar (refutable)
-sein. Wir werden diese beiden Konzepte als Nächstes besprechen.
+An diesem Punkt hast du verschiedene Möglichkeiten gesehen, wie man Muster
+verwenden kann. Muster funktionieren jedoch nicht an allen Stellen
+gleichermaßen. An manchen Stellen müssen die Muster unabweisbar (irrefutable)
+sein, an anderen Stellen können sie abweisbar (refutable) sein. Wir werden diese
+beiden Konzepte als Nächstes besprechen.
 
 [ignoring-values-in-a-pattern]: ch19-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster

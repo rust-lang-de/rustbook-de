@@ -24,8 +24,8 @@ werden, weiterhin auf dem Bildschirm angezeigt werden.
 Von Kommandozeilenprogrammen wird erwartet, dass sie Fehlermeldungen an die
 Standardfehlerausgabe senden, sodass wir Fehlermeldungen auch dann noch auf dem
 Bildschirm sehen können, wenn wir die Standardausgabe in eine Datei umleiten.
-Unser Programm ist zur Zeit nicht sehr brav: Wir werden gleich sehen, dass es
-die ausgegebenen Fehlermeldungen stattdessen in eine Datei speichert!
+Unser Programm ist zurzeit nicht sehr brav: Wir werden gleich sehen, dass es die
+ausgegebenen Fehlermeldungen stattdessen in eine Datei speichert!
 
 Der Weg, dieses Verhalten zu demonstrieren, besteht darin, das Programm mit `>`
 und dem Dateipfad _output.txt_ laufen zu lassen, zu dem wir die
@@ -52,7 +52,7 @@ landen. Das werden wir ändern.
 
 ### Fehler auf der Standardfehlerausgabe ausgeben
 
-Wir werden den Code in Codeblock 12-24 verwenden, um zu ändern, wie
+Wir werden den Code in Listing 12-24 verwenden, um zu ändern, wie
 Fehlermeldungen ausgegeben werden. Aufgrund der Refaktorierung, die wir früher
 in diesem Kapitel vorgenommen haben, befindet sich der gesamte Code, der
 Fehlermeldungen ausgibt, in einer einzigen Funktion, nämlich der Funktion
@@ -127,7 +127,7 @@ fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 12-24: Schreiben von Fehlermeldungen auf die
+<span class="caption">Listing 12-24: Schreiben von Fehlermeldungen auf die
 Standardfehlerausgabe anstelle der Standardausgabe durch Verwenden von
 `eprintln!`</span>
 
@@ -168,11 +168,10 @@ Dieses Kapitel rekapituliert einige der wichtigsten Konzepte, die du bisher
 gelernt hast, und behandelt das Durchführen gängiger E/A-Operationen in Rust.
 Durch das Verwenden von Kommandozeilenargumenten, Dateien, Umgebungsvariablen
 und des Makros `eprintln!` für die Fehlerausgabe bist du jetzt bereit,
-Kommandozeilenanwendungen zu schreiben. Wenn du die Konzepte mit denen in den
-vorhergehenden Kapiteln kombinierst, wird dein Code gut organisiert sein, Daten
-effektiv in den entsprechenden Datenstrukturen speichern, Fehler gut behandeln
-und gut getestet sein.
+Kommandozeilenanwendungen zu schreiben. Wenn du die Konzepte mit den Konzepten
+aus den vorhergehenden Kapiteln kombinierst, wird dein Code gut organisiert
+sein, Daten effektiv in den entsprechenden Datenstrukturen speichern, Fehler gut
+behandeln und gut getestet sein.
 
 Als Nächstes werden wir einige Rust-Funktionalitäten untersuchen, die von
-funktionalen Sprachen beeinflusst wurden: Funktionsabschlüsse (closures) und
-Iteratoren.
+funktionalen Sprachen beeinflusst wurden: Closures und Iteratoren.

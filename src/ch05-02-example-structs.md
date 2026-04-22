@@ -1,4 +1,4 @@
-## Beispielprogramm mit Strukturen (structs)
+## Beispielprogramm mit Strukturen
 
 Um besser zu verstehen, wann wir Strukturen verwenden können, schreiben wir ein
 Programm, das die Fläche eines Rechtecks berechnet. Wir beginnen mit einzelnen
@@ -7,7 +7,7 @@ einsetzen.
 
 Legen wir mit Cargo ein neues Binärprojekt namens _rectangles_ an, das die
 Breite und Höhe eines in Pixeln angegebenen Rechtecks nimmt und die Fläche des
-Rechtecks berechnet. Codeblock 5-8 zeigt ein kurzes Programm, das genau das in
+Rechtecks berechnet. Listing 5-8 zeigt ein kurzes Programm, das genau das in
 _src/main.rs_ unseres Projekts macht.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -28,7 +28,7 @@ fn area(width: u32, height: u32) -> u32 {
 }
 ```
 
-<span class="caption">Codeblock 5-8: Berechnen der Fläche eines Rechtecks, das
+<span class="caption">Listing 5-8: Berechnen der Fläche eines Rechtecks, das
 durch separate Breiten- und Höhenvariablen beschrieben wird</span>
 
 Nun führe dieses Programm mit `cargo run` aus:
@@ -72,8 +72,7 @@ vorgestellt: Der Einsatz von Tupeln.
 
 ### Refaktorierung mit Tupeln
 
-Codeblock 5-9 zeigt eine weitere Version unseres Programms, die Tupel
-verwendet.
+Listing 5-9 zeigt eine weitere Version unseres Programms, die Tupel verwendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -92,7 +91,7 @@ fn area(dimensions: (u32, u32)) -> u32 {
 }
 ```
 
-<span class="caption">Codeblock 5-9: Breite und Höhe des Rechtecks werden mit
+<span class="caption">Listing 5-9: Breite und Höhe des Rechtecks werden mit
 einem Tupel beschrieben</span>
 
 In einem Punkt ist dieses Programm besser. Das Tupel bringt etwas Struktur
@@ -113,7 +112,7 @@ es jetzt einfacher, Fehler zu machen.
 
 Verwenden wir Strukturen, um durch die Benennung der Daten deren Bedeutung
 anzugeben. Wir können das verwendete Tupel in eine Struktur mit einem Namen
-für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Codeblock
+für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Listing
 5-10 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -141,7 +140,7 @@ fn area(rectangle: &Rectangle) -> u32 {
 }
 ```
 
-<span class="caption">Codeblock 5-10: Definieren der Struktur `Rectangle`</span>
+<span class="caption">Listing 5-10: Definieren der Struktur `Rectangle`</span>
 
 Hier haben wir eine Struktur definiert und sie `Rectangle` genannt. Innerhalb
 der geschweiften Klammern haben wir die Felder `width` und `height` definiert,
@@ -149,26 +148,25 @@ die beide den Typ `u32` haben. Dann erzeugten wir in `main` eine Instanz von
 `Rectangle` mit der Breite `30` und Höhe `50`.
 
 Unsere Funktion `area` hat nun einen Parameter, den wir `rectangle` genannt
-haben und dessen Typ eine unveränderbare Ausleihe (immutable borrow) einer
-Strukturinstanz `Rectangle` ist. Wie in Kapitel 4 erwähnt, wollen wir die
-Struktur nur ausleihen, nicht aber deren Eigentümerschaft (ownership)
-übernehmen. Auf diese Weise behält `main` seine Eigentümerschaft und kann
-weiterhin `rect1` verwenden, weshalb wir `&` in der Funktionssignatur und an
-der Aufrufstelle verwenden.
+haben und dessen Typ eine unveränderbare Borrow einer Strukturinstanz
+`Rectangle` ist. Wie in Kapitel 4 erwähnt, wollen wir die Struktur nur
+ausleihen, nicht aber deren Eigentum übernehmen. Auf diese Weise behält `main`
+das Eigentum und kann weiterhin `rect1` verwenden, weshalb wir `&` in der
+Funktionssignatur und an der Aufrufstelle verwenden.
 
 Die Funktion `area` greift auf die Felder `width` und `height` der Instanz
 `Rectangle` zu. (Beachte, dass der Zugriff auf Felder einer ausgeliehenen
-Struktur-Instanz die Feldwerte nicht verschiebt, weshalb du häufig Ausleihen
+Struktur-Instanz die Feldwerte nicht verschiebt, weshalb du häufig Borrowing
 von Strukturen siehst.) Unsere Funktionssignatur für `area` sagt jetzt genau,
 was wir meinen: Berechne die Fläche von `Rectangle` unter Verwendung seiner
 Felder `width` und `height`. Dies drückt aus, dass Breite und Höhe in Beziehung
 zueinander stehen, und gibt den Werten beschreibende Namen, ohne die
 Tupelindexwerte `0` und `1` zu verwenden. Das erhöht die Lesbarkeit.
 
-### Funktionalität mit abgeleiteten Merkmalen (derived traits) hinzufügen
+### Funktionalität mit abgeleiteten Traits hinzufügen
 
 Es wäre hilfreich, eine Instanz von `Rectangle` samt der Werte seiner Felder
-ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
+ausgeben zu können, während wir unser Programm debuggen. In Listing 5-11
 versuchen wir, das [Makro `println!`][println] zu verwenden, das wir in den
 vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.
 
@@ -190,7 +188,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-11: Versuch, eine `Rectangle`-Instanz
+<span class="caption">Listing 5-11: Versuch, eine `Rectangle`-Instanz
 auszugeben</span>
 
 Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:
@@ -199,18 +197,18 @@ Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:
 error[E0277]: `Rectangle` doesn't implement `std::fmt::Display`
 ```
 
-Das Makro `println!` kann diverse Formatierungen vornehmen. Die geschweiften
+Das Makro `println!` kann viele Arten von Formatierung. Die geschweiften
 Klammern weisen `println!` an, die Formatierung `Display` zu verwenden, bei der
 die Ausgabe direkt für den Endbenutzer bestimmt ist. Die primitiven Typen, die
-wir bisher gesehen haben, implementieren `Display` standardmäßig, denn es gibt
-nur eine Möglichkeit, dem Benutzer eine `1` oder einen anderen primitiven Typ
-zu zeigen. Aber bei Strukturen ist die Formatierung, die `println!` verwenden
-soll, weniger klar, da es mehrere Darstellungsmöglichkeiten gibt: Möchtest du
-Kommas oder nicht? Möchtest du die geschweiften Klammern ausgeben? Sollen alle
-Felder angezeigt werden? Aufgrund der vielen Möglichkeiten versucht Rust nicht
-zu erraten, was wir wollen. Strukturen haben daher keine
-Standardimplementierung von `Display`, um die mit `println!` und dem
-Platzhalter `{}` verwenden zu können.
+wir bisher gesehen haben, implementieren standardmäßig `Display`, weil es nur
+eine sinnvolle Art gibt, dem Benutzer eine `1` oder einen anderen primitiven Typ
+anzuzeigen. Bei Strukturen ist dagegen weniger klar, wie `println!` die Ausgabe
+formatieren soll, weil es mehr Darstellungsmöglichkeiten gibt: Sollen Kommas
+verwendet werden oder nicht? Sollen die geschweiften Klammern mit ausgegeben
+werden? Sollen alle Felder angezeigt werden? Aufgrund der vielen Möglichkeiten
+versucht Rust nicht zu erraten, was wir wollen. Strukturen haben daher keine
+Standardimplementierung von `Display`, die man mit `println!` und dem
+Platzhalter `{}` verwenden könnte.
 
 Wenn wir die Fehlerausgabe weiterlesen, werden wir diesen hilfreichen Hinweis
 finden:
@@ -222,7 +220,7 @@ finden:
 Lass es uns versuchen! Der Makroaufruf `println!` wird geändert in
 `println!("rect1 ist {rect1:?}");`. Wenn wir den Bezeichner `:?` innerhalb der
 geschweiften Klammern angeben, teilen wir `println!` mit, dass wir das
-Ausgabeformat `Debug` verwenden wollen. Das Merkmal `Debug` ermöglicht es, die
+Ausgabeformat `Debug` verwenden wollen. Das Trait `Debug` ermöglicht es, die
 Struktur so auszugeben, dass Entwickler ihren Wert erkennen können, während sie
 den Code debuggen.
 
@@ -243,7 +241,7 @@ Aber auch hier gibt uns der Compiler einen hilfreichen Hinweis:
 Rust enthält durchaus eine Funktionalität zum Ausgeben von Debug-Informationen,
 aber wir müssen diese explizit für unsere Struktur aktivieren. Dazu fügen wir
 das äußere Attribut `#[derive(Debug)]` unmittelbar vor der Strukturdefinition
-ein, wie in Codeblock 5-12 gezeigt.
+ein, wie in Listing 5-12 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -264,8 +262,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-12: Attribut zum Verwenden des Merkmals
-`Debug` und Ausgeben der Instanz `Rectangle` mittels Debug-Formatierung</span>
+<span class="caption">Listing 5-12: Attribut zum Verwenden des Trait `Debug`
+und Ausgeben der Instanz `Rectangle` mittels Debug-Formatierung</span>
 
 Wenn wir das Programm nun ausführen, werden wir keinen Fehler mehr erhalten und
 folgende Ausgabe sehen:
@@ -283,7 +281,7 @@ dieser Instanz, was bei der Fehlersuche definitiv hilfreich ist. Bei größeren
 Strukturen ist es hilfreich, eine leichter lesbare Ausgabe zu erhalten.
 In diesen Fällen können wir `{:#?}` anstelle von `{:?}` in der
 `println!`-Meldung verwenden. In diesem Beispiel wird bei Verwendung von
-`{:#?}` folgendes ausgegeben:
+`{:#?}` Folgendes ausgegeben:
 
 ```console
 $ cargo run
@@ -297,11 +295,11 @@ rect1 ist Rectangle {
 ```
 
 Eine andere Möglichkeit, einen Wert im `Debug`-Format auszugeben, ist die
-Verwendung des [Makros `dbg!`][dbg], das die Eigentümerschaft eines Ausdrucks
-übernimmt (im Gegensatz zu `println!`, das eine Referenz nimmt), die Datei und
+Verwendung des [Makros `dbg!`][dbg], das das Eigentum eines Ausdrucks übernimmt
+(im Gegensatz zu `println!`, das eine Referenz nimmt), die Datei und
 Zeilennummer, in der der `dbg!`-Makroaufruf in deinem Code vorkommt, zusammen
-mit dem resultierenden Wert des Ausdrucks ausgibt und die Eigentümerschaft am
-Wert zurückgibt.
+mit dem resultierenden Wert des Ausdrucks ausgibt und das Eigentum am Wert
+zurückgibt.
 
 > Hinweis: Der Aufruf des Makros `dbg!` schreibt in die
 > Standardfehlerausgabe (`stderr`), im Gegensatz zu `println!`, das in
@@ -330,12 +328,11 @@ fn main() {
 }
 ```
 
-Wir können `dbg!` um den Ausdruck `30 * scale` setzen, und da `dbg!` die
-Eigentümerschaft des Werts des Ausdrucks zurückgibt, erhält das Feld `width`
-denselben Wert, als wenn wir den `dbg!`-Aufruf dort nicht hätten. Wir wollen
-nicht, dass `dbg!` die Eigentümerschaft von `rect1` übernimmt, also übergeben
-wir eine Referenz auf `rect1` im nächsten Aufruf. So sieht die Ausgabe dieses
-Beispiels aus:
+Wir können `dbg!` um den Ausdruck `30 * scale` setzen, und da `dbg!` das
+Eigentum am Wert des Ausdrucks zurückgibt, erhält das Feld `width` denselben
+Wert, als wenn wir den `dbg!`-Aufruf dort nicht hätten. Wir wollen nicht, dass
+`dbg!` das Eigentum an `rect1` übernimmt, also übergeben wir eine Referenz auf
+`rect1` im nächsten Aufruf. So sieht die Ausgabe dieses Beispiels aus:
 
 ```console
 $ cargo run
@@ -357,12 +354,12 @@ von `&rect1` aus, der die Struktur `Rectangle` ist. Diese Ausgabe verwendet die
 hübsche `Debug`-Formatierung des Typs `Rectangle`. Das Makro `dbg!` kann sehr
 hilfreich sein, wenn du versuchst, herauszufinden, was dein Code macht!
 
-Zusätzlich zum Merkmal `Debug` hat Rust eine Reihe von Merkmalen für uns
+Zusätzlich zum Trait `Debug` hat Rust eine Reihe von Traits für uns
 bereitgestellt, die wir mit dem Attribut `derive` verwenden können und die
 unseren benutzerdefinierten Typen nützliches Verhalten verleihen können. Diese
-Merkmale und ihr Verhalten sind in [Anhang C][app-c] aufgeführt. In Kapitel 10
-werden wir behandeln, wie man diese Merkmale mit benutzerdefiniertem Verhalten
-implementiert und wie man eigene Merkmale erstellt. Es gibt auch viele andere
+Traits und ihr Verhalten sind in [Anhang C][app-c] aufgeführt. In Kapitel 10
+werden wir behandeln, wie man diese Traits mit benutzerdefiniertem Verhalten
+implementiert und wie man eigene Traits erstellt. Es gibt auch viele andere
 Attribute als `derive`; für weitere Informationen, siehe den [Abschnitt
 „Attribute“ in der Rust-Referenz][attributes].
 

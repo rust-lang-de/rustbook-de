@@ -1,16 +1,16 @@
 ## Anhang B: Operatoren und Symbole
 
-Dieser Anhang enthält ein Glossar der Rust-Syntax, einschließlich Operatoren
-und anderer Symbole, die allein oder im Zusammenhang mit Pfaden, generischen
-Datentypen (generics), Merkmalsabgrenzungen (trait bounds), Makros, Attributen,
-Kommentaren, Tupeln und Klammern auftreten.
+Dieser Anhang enthält ein Glossar der Rust-Syntax, einschließlich Operatoren und
+anderer Symbole, die allein oder im Zusammenhang mit Pfaden, generischen
+Datentypen (generics), Trait Bounds, Makros, Attributen, Kommentaren, Tupeln und
+Klammern auftreten.
 
 ### Operatoren
 
 Tabelle B-1 enthält die Operatoren in Rust, ein Beispiel, wie der Operator im
 Kontext erscheinen würde, eine kurze Erklärung und ob dieser Operator überladen
-werden kann. Wenn ein Operator überladen werden kann, wird das relevante
-Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
+werden kann. Wenn ein Operator überladen werden kann, wird das relevante Trait
+aufgeführt, mit dem dieser Operator überladen werden kann.
 
 <span class="caption">Tabelle B-1: Operatoren</span>
 
@@ -19,10 +19,10 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
 | `!` | `ident!(...)`,<br> `ident!{...}`,<br> `ident![...]` | Makro-Expansion | |
 | `!` | `!expr` | Bitweises oder logisches Komplement | `Not` |
 | `!=` | `expr != expr` | Vergleich auf Ungleichheit | `PartialEq` |
-| `%` | `expr % expr` | Arithmetischer Restbetrag | `Rem` |
-| `%=` | `var %= expr` | Arithmetischer Restbetrag und Zuweisung | `RemAssign` |
-| `&` | `&expr`,<br> `&mut expr` | Ausleihe | |
-| `&` | `&type`,<br> `&mut type`,<br> `&'a type`,<br> `&'a mut type` | Ausleih-Referenz-Typ | |
+| `%` | `expr % expr` | Divisionsrest | `Rem` |
+| `%=` | `var %= expr` | Divisionsrest und Zuweisung | `RemAssign` |
+| `&` | `&expr`,<br> `&mut expr` | Borrow | |
+| `&` | `&type`,<br> `&mut type`,<br> `&'a type`,<br> `&'a mut type` | Borrowed-Zeigertyp | |
 | `&` | `expr & expr` | Bitweises UND | `BitAnd` |
 | `&=` | `var &= expr` | Bitweises UND und Zuweisung | `BitAndAssign` |
 | `&&` | `expr && expr` | Logisches UND mit Kurzschlussauswertung | |
@@ -37,7 +37,7 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
 | `-` | `- expr` | Arithmetische Negation | `Neg` |
 | `-` | `expr - expr` | Arithmetische Subtraktion | `Sub` |
 | `-=` | `var -= expr` | Arithmetische Subtraktion und Zuweisung | `SubAssign` |
-| `->` | `fn(...) -> type`,<br> <code>&vert;...&vert; -> type</code> | Funktion und Funktionsabschlussrückgabetyp | |
+| `->` | `fn(...) -> type`,<br> <code>&vert;...&vert; -> type</code> | Rückgabetyp einer Funktion und eines Closures | |
 | `.` | `expr.ident` | Feldzugriff | |
 | `.` | `expr.ident(expr, ...)` | Methodenaufruf | |
 | `.` | `expr.0`, `expr.1`, usw. | Tupel-Indexzugriff | |
@@ -87,13 +87,13 @@ Stellen gültig sind.
 |:------------|:---------------------------------------------|
 | `'ident` | Benannte Lebensdauer oder Schleifenbeschriftung |
 | `...u8`,<br> `...i32`,<br> `...f64`,<br> `...usize`<br> usw. | Numerisches Literal eines bestimmten Typs |
-| `"..."` | Zeichenketten-Literal |
-| `r"..."`,<br> `r#"..."#`,<br> `r##"..."##`<br> usw. | Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet |
-| `b"..."` | Byte-Zeichenkettenliteral, erzeugt ein Byte-Array anstelle einer Zeichenkette |
-| `br"..."`,<br> `br#"..."#`,<br> `br##"..."##`<br> usw. | Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral |
+| `"..."` | String-Literal |
+| `r"..."`,<br> `r#"..."#`,<br> `r##"..."##`<br> usw. | Roh-String-Literal, Escape-Zeichen werden nicht verarbeitet |
+| `b"..."` | Byte-String-Literal, erzeugt ein Byte-Array anstelle eines Strings |
+| `br"..."`,<br> `br#"..."#`,<br> `br##"..."##`<br> usw. | Roh-Byte-String-Literal, Kombination aus Roh- und Byte-String-Literal |
 | `'...'` | Zeichen-Literal |
 | `b'...'` | ASCII-Byte-Literal |
-| <code>&vert;...&vert; expr</code> | Funktionsabschluss (closure) |
+| <code>&vert;...&vert; expr</code> | Closure |
 | `!` | Leerer Typ (bottom type) für nicht-endende Funktionen |
 | `_` | Musterbindung für „sonstige“; wird auch verwendet, um Ganzzahl-Literale lesbar zu machen |
 
@@ -105,14 +105,14 @@ Modulhierarchie eines Elements vorkommen.
 | Symbol | Erklärung |
 |:-----------------|:---------------------------------------------|
 | `ident::ident` | Namensraum-Pfad |
-| `::path` | Pfad relativ zur Kistenwurzel, auf dem alle anderen Kisten basieren<br> (d.h. ein explizit absoluter Pfad inklusive Kistenname) |
+| `::path` | Pfad relativ zur Crate-Wurzel, auf dem alle anderen Crates basieren<br> (d.h. ein explizit absoluter Pfad inklusive Crate-Name) |
 | `self::path` | Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad) |
 | `super::path` | Pfad relativ zum Elternmodul |
 | `type::ident`,<br> `<type as trait>::ident` | Zugehörige Konstanten, Funktionen<br> und Typen |
-| `<type>::...` | Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. `<&T>::...`, `<[T]>:::...` usw.) |
-| `trait::method(...)` | Methodenaufruf durch Angeben des<br> Merkmals eindeutig machen |
+| `<type>::...` | Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. `<&T>::...`, `<[T]>::...` usw.) |
+| `trait::method(...)` | Methodenaufruf durch Angeben des<br> Traits eindeutig machen |
 | `type::method(...)` | Methodenaufruf durch Angeben des<br> Typs eindeutig machen |
-| `<type as trait>::method(...)` | Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen |
+| `<type as trait>::method(...)` | Methodenaufruf durch Angeben des<br> Traits und Typs eindeutig machen |
 
 Tabelle B-4 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
 auftreten.
@@ -130,10 +130,10 @@ auftreten.
 | `for<...> type` | Höherstufige Lebensdauerbegrenzungen |
 | `type<ident=type>` | Generischer Typ, bei dem ein oder mehrere assoziierte Typen bestimmte Zuordnungen haben (z.B. `Iterator<Item=T>`) |
 
-Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
-mit Merkmalsabgrenzung (trait bounds) auftreten.
+Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern mit
+Trait Bounds auftreten.
 
-<span class="caption">Tabelle B-5: Merkmalsabgrenzungen</span>
+<span class="caption">Tabelle B-5: Trait Bounds</span>
 
 | Symbol | Erklärung |
 |:-------|:-------------------|
@@ -204,5 +204,5 @@ Tabelle B-10 zeigt die Kontexte, in denen eckige Klammern verwendet werden.
 | `[...]` | Array-Literal |
 | `[expr; len]` | Array-Literal mit `len` Kopien von `expr` |
 | `[type; len]` | Array-Typ mit `len` Instanzen von `type` |
-| `expr[expr]` | Sammlungs-Indexierung, ist überladbar (`Index`, `IndexMut`) |
-| `expr[..]`,<br> `expr[a..]`,<br> `expr[..b]`,<br> `expr[a..b]` | Sammlungs-Indexierung, die wie ein Sammlungsanteil aussieht, unter Verwendung von `Range`, `RangeFrom`, `RangeTo` oder `RangeFull` als „Index“ |
+| `expr[expr]` | Kollektions-Indexierung, ist überladbar (`Index`, `IndexMut`) |
+| `expr[..]`,<br> `expr[a..]`,<br> `expr[..b]`,<br> `expr[a..b]` | Kollektions-Indexierung, die wie ein Kollektions-Slice aussieht, unter Verwendung von `Range`, `RangeFrom`, `RangeTo` oder `RangeFull` als „Index“ |
