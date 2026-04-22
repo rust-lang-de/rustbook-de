@@ -185,7 +185,7 @@ trait Add<Rhs=Self> {
 Dieser Code sollte allgemein bekannt aussehen: Ein Trait mit einer Methode und
 einem assoziierten Typ. Der neue Teil ist `Rhs=Self`: Diese Syntax heißt
 _Standardtypparameter_ (default type parameters). Der generische Typparameter
-`Rhs` (kurz für „right hand side“, engl. „rechte Seite“) definiert den Typ des
+`Rhs` (kurz für „right hand side“, „rechte Seite“) definiert den Typ des
 Parameters `rhs` in der Methode `add`. Wenn wir keinen konkreten Typ für `Rhs`
 angeben, wenn wir das Trait `Add` implementieren, wird der Typ `Rhs`
 standardmäßig auf `Self` gesetzt, was der Typ sein wird, auf dem wir `Add`
@@ -250,10 +250,10 @@ ermöglichen, ohne den vorhandenen Implementierungscode zu brechen.
 
 ### Eindeutiger Aufruf von Methoden mit identischen Namen
 
-Nichts in Rust hindert ein Trait daran, eine Methode mit demselben Namen wie die
-Methode eines anderen Traits zu haben, und Rust hindert dich auch nicht daran,
-beide Traits auf einem Typ zu implementieren. Es ist auch möglich, eine Methode
-direkt auf dem Typ mit dem gleichen Namen wie Methoden von Traits zu
+Rust hindert dich nicht daran, dass ein Trait eine Methode mit demselben Namen
+wie die Methode eines anderen Traits hat, und Rust hindert dich auch nicht
+daran, beide Traits auf einem Typ zu implementieren. Es ist auch möglich, eine
+Methode direkt auf dem Typ mit dem gleichen Namen wie Methoden von Traits zu
 implementieren.
 
 Wenn du Methoden mit dem gleichen Namen aufrufst, musst du Rust mitteilen,
@@ -418,14 +418,14 @@ _Typen_ hätten, die beide ein _Trait_ implementieren, herausfinden, welche
 Implementierung eines Traits basierend auf dem Typ von `self` zu verwenden ist.
 
 Assoziierte Funktionen, die keine Methoden sind, haben jedoch keinen
-`self`-Parameter. Wenn es mehrere Typen oder Traits gibt, die
-Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
-nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine
-voll-qualifizierte Syntax. In Listing 20-20 erstellen wir zum Beispiel ein
-Trait für ein Tierheim, das alle Hundebabys Spot nennen möchte. Wir erstellen
-ein Trait `Animal` mit einer assoziierten Nicht-Methodenfunktion `baby_name`.
-Das Trait `Animal` ist für die Struktur `Dog` implementiert, für die wir auch
-direkt eine assoziierte Nicht-Methodenfunktion `baby_name` bereitstellen.
+`self`-Parameter. Wenn es mehrere Typen oder Traits gibt, die assoziierte
+Funktionen mit demselben Funktionsnamen definieren, weiß Rust nicht immer,
+welchen Typ du meinst, es sei denn, du verwendest eine voll-qualifizierte
+Syntax. In Listing 20-20 erstellen wir zum Beispiel ein Trait für ein Tierheim,
+das alle Hundewelpen Spot nennen möchte. Wir erstellen ein Trait `Animal` mit
+einer assoziierten Funktion `baby_name`. Das Trait `Animal` ist für die Struktur
+`Dog` implementiert, für die wir auch direkt eine assoziierte Funktion
+`baby_name` bereitstellen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -834,24 +834,24 @@ fn main() {
 Die Implementierung von `Display` verwendet `self.0`, um auf den inneren
 `Vec<T>` zuzugreifen, da `Wrapper` eine Tupelstruktur ist und `Vec<T>` das
 Element mit dem Index 0 im Tupel ist. Dann können wir die Funktionalität des
-`Display`-Typs auf `Wrapper` verwenden.
+Traits `Display` auf `Wrapper` verwenden.
 
 Der Nachteil der Verwendung dieser Technik ist, dass `Wrapper` ein neuer Typ
 ist, sodass er nicht die Methoden des Wertes hat, den er hält. Wir müssten alle
 Methoden von `Vec<T>` direkt auf `Wrapper` implementieren, sodass die Methoden
 an `self.0` delegieren, was uns erlauben würde, `Wrapper` genau wie einen
 `Vec<T>` zu behandeln. Wenn wir wollten, dass der neue Typ jede Methode des
-inneren Typs hat, wäre die Implementierung des Traits `Deref` auf dem
-`Wrapper` eine Lösung, um den inneren Typ zurückzugeben (wir haben die
-Implementierung des Traits `Deref` in [„Intelligente Zeiger wie normale
-Referenzen behandeln“][smart-pointer-deref] in Kapitel 15 besprochen). Wenn wir
-nicht wollten, dass der `Wrapper`-Typ alle Methoden des inneren Typs hat
-&ndash; zum Beispiel, um das Verhalten des `Wrapper`-Typs einzuschränken
-&ndash; müssten wir nur die Methoden, die wir wollen, manuell implementieren.
+inneren Typs hat, wäre die Implementierung des Traits `Deref` auf dem `Wrapper`
+eine Lösung, um den inneren Typ zurückzugeben (wir haben die Implementierung des
+Traits `Deref` in [„Intelligente Zeiger wie normale Referenzen
+behandeln“][smart-pointer-deref] in Kapitel 15 besprochen). Wenn wir nicht
+wollten, dass der `Wrapper`-Typ alle Methoden des inneren Typs hat &ndash; zum
+Beispiel, um das Verhalten des `Wrapper`-Typs einzuschränken &ndash; müssten wir
+nur die Methoden, die wir wollen, manuell implementieren.
 
-Dieses Newtype-Muster ist auch dann nützlich, wenn keine Traits beteiligt
-sind. Wechseln wir den Fokus und schauen wir uns einige fortgeschrittene
-Möglichkeiten an, mit dem Typsystem von Rust zu interagieren.
+Dieses Newtype-Muster ist auch dann nützlich, wenn keine Traits beteiligt sind.
+Wechseln wir den Fokus und schauen wir uns einige fortgeschrittene Möglichkeiten
+an, mit dem Typsystem von Rust zu interagieren.
 
 [implementing-a-trait-on-a-type]: ch10-02-traits.html#ein-trait-für-einen-typ-implementieren
 [newtype]: #externe-traits-mit-dem-newtype-muster-implementieren

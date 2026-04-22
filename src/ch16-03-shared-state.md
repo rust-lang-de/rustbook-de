@@ -24,14 +24,14 @@ genutzten Speicher.
 
 ### Datenzugriff steuern mit Mutexen
 
-_Mutex_ ist eine Abkürzung für _mutual exclusion_ (engl. wechselseitiger
-Ausschluss), da ein Mutex zu einem bestimmten Zeitpunkt nur einem Thread
-(thread) den Zugriff auf Daten erlaubt. Um auf die Daten in einem Mutex
-zuzugreifen, muss ein Thread zunächst signalisieren, dass er Zugriff wünscht,
-indem er darum bittet, die _Sperre_ (lock) des Mutex zu erwerben. Die Sperre ist
-eine Datenstruktur, die Teil des Mutex ist, der verfolgt, wer derzeit exklusiven
-Zugriff auf die Daten hat. Daher wird der Mutex als _Schutz_ der Daten
-beschrieben, die er über das Sperrsystem hält.
+_Mutex_ ist eine Abkürzung für _mutual exclusion_ (wechselseitiger Ausschluss),
+da ein Mutex zu einem bestimmten Zeitpunkt nur einem Thread (thread) den Zugriff
+auf Daten erlaubt. Um auf die Daten in einem Mutex zuzugreifen, muss ein Thread
+zunächst signalisieren, dass er Zugriff wünscht, indem er darum bittet, die
+_Sperre_ (lock) des Mutex zu erwerben. Die Sperre ist eine Datenstruktur, die
+Teil des Mutex ist, der verfolgt, wer derzeit exklusiven Zugriff auf die Daten
+hat. Daher wird der Mutex als _Schutz_ der Daten beschrieben, die er über das
+Sperrsystem hält.
 
 Mutexe haben den Ruf, dass sie schwierig anzuwenden sind, weil man sich zwei
 Regeln merken muss:

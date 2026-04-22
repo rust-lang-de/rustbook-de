@@ -7,20 +7,20 @@ dieser Protokolle sprengen den Rahmen dieses Buches, aber ein kurzer Überblick
 wird dir die Informationen geben, die du benötigst.
 
 Die beiden wichtigsten Protokolle, die bei Webservern zum Einsatz kommen, sind
-das _Hypertext-Übertragungsprotokoll_ (Hypertext Transfer Protocol, kurz
-_HTTP_) und das _Übertragungssteuerungsprotokoll_ (Transmission Control
-Protocol, kurz _TCP_). Beide Protokolle sind _Anfrage-Antwort-Protokolle_, d.h.
-ein _Client_ initiiert Anfragen und ein _Server_ hört auf die Anfragen und gibt
-eine Antwort an den Client. Der Inhalt dieser Anfragen und Antworten wird durch
-die Protokolle definiert.
+das _Hypertext-Übertragungsprotokoll_ (Hypertext Transfer Protocol, kurz _HTTP_)
+und das _Übertragungssteuerungsprotokoll_ (Transmission Control Protocol, kurz
+_TCP_). Beide Protokolle sind _Anfrage-Antwort-Protokolle_, d.h. ein _Client_
+sendet Anfragen und ein _Server_ nimmt Anfragen entgegen und gibt eine Antwort
+an den Client zurück. Der Inhalt dieser Anfragen und Antworten wird durch die
+Protokolle definiert.
 
-TCP ist das Protokoll der untergeordneten Ebene, das im Detail beschreibt, wie
-Informationen von einem Server zu einem anderen gelangen, aber nicht
-spezifiziert, um welche Informationen es sich dabei handelt. HTTP baut auf TCP
-auf, indem es den Inhalt der Anfragen und Antworten definiert. Es ist technisch
-möglich, HTTP mit anderen Protokollen zu verwenden, aber in den allermeisten
-Fällen sendet HTTP seine Daten über TCP. Wir werden mit den Roh-Bytes von TCP-
-und HTTP-Anfragen und -Antworten arbeiten.
+TCP ist ein Basisprotokoll, das im Detail beschreibt, wie Informationen von
+einem Rechner zu einem anderen gelangen, aber nicht spezifiziert, um welche
+Informationen es sich dabei handelt. HTTP baut auf TCP auf, indem es den Inhalt
+der Anfragen und Antworten definiert. Es ist technisch möglich, HTTP mit anderen
+Protokollen zu verwenden, aber in den allermeisten Fällen sendet HTTP seine
+Daten über TCP. Wir werden mit den Roh-Bytes von TCP- und HTTP-Anfragen und
+-Antworten arbeiten.
 
 ### Lauschen auf eine TCP-Verbindung
 
@@ -124,19 +124,20 @@ Grund dafür könnte sein, dass der Browser sowohl eine Anfrage für die Seite a
 auch eine Anfrage für andere Ressourcen stellt, z.B. das Symbol _favicon.ico_,
 das in der Browser-Registerkarte erscheint.
 
-Es könnte auch sein, dass der Browser mehrmals versucht, eine Verbindung mit
-dem Server herzustellen, weil der Server nicht mit Daten antwortet. Wenn
-`stream` den Gültigkeitsbereich verlässt und am Ende der Schleife aufgeräumt
-wird, wird die Verbindung als Teil der `drop`-Implementierung geschlossen.
-Browser reagieren auf geschlossene Verbindungen manchmal damit, es erneut zu
-versuchen, weil das Problem möglicherweise nur vorübergehend ist.
+Es könnte auch sein, dass der Browser mehrmals versucht, eine Verbindung mit dem
+Server herzustellen, weil der Server nicht mit Daten antwortet. Wenn `stream`
+den Gültigkeitsbereich verlässt und am Ende der Schleife aufgeräumt wird, wird
+die Verbindung als Teil der `drop`-Implementierung geschlossen. Browser
+reagieren auf geschlossene Verbindungen manchmal damit, diese erneut aufzubauen
+und es erneut zu versuchen, weil das Problem möglicherweise nur vorübergehend
+besteht.
 
 Browser öffnen manchmal auch mehrere Verbindungen zum Server, ohne Anfragen zu
 senden, damit _spätere_ Anfragen schneller bearbeitet werden können. In diesem
 Fall sieht unser Server alle Verbindungen, unabhängig davon, ob über diese
-Verbindung Anfragen gesendet werden. Viele Versionen Chrome-basierter Browser
-verhalten sich beispielsweise so. Du kannst diese Optimierung deaktivieren,
-indem du den privaten Modus verwendest oder einen anderen Browser nutzt.
+Verbindung Anfragen gesendet werden. Viele Chrome-basierte Browser verhalten
+sich beispielsweise so. Du kannst diese Optimierung deaktivieren, indem du den
+privaten Modus verwendest oder einen anderen Browser nutzt.
 
 Der wichtige Punkt ist, dass wir erfolgreich eine TCP-Verbindung hergestellt
 haben!
@@ -201,7 +202,7 @@ In der Funktion `handle_connection` erstellen wir eine neue `BufReader`-Instanz,
 die eine Referenz auf den `stream` enthält. `BufReader` sorgt für die Pufferung,
 indem es die Aufrufe der Trait-Methoden von `std::io::Read` für uns verwaltet.
 
-Wir erstellen eine Variable namens `http_request`, um die Zeilen der Anfrage zu
+Wir erstellen eine Variable namens `http_request`, um die Zeilen der Anfrage
 aufzusammeln, die der Browser an unseren Server sendet. Wir geben an, dass wir
 diese Zeilen in einem Vektor sammeln wollen, indem wir die Typ-Annotation
 `Vec<_>` hinzufügen.
@@ -271,10 +272,10 @@ headers CRLF
 message-body
 ```
 
-Die erste Zeile ist die _Anfragezeile_ (request line), die Informationen
-darüber enthält, was der Client anfragt. Der erste Teil der Anfragezeile gibt
-die Methode an, die verwendet wird, z.B. `GET` oder `POST`, die beschreibt, wie
-der Client diese Anfrage stellt. Unser Client benutzte eine `GET`-Anfrage, was
+Die erste Zeile ist die _Anfragezeile_ (request line), die Informationen darüber
+enthält, was der Client anfragt. Der erste Teil der Anfragezeile gibt die
+Methode an, die verwendet wird, z.B. `GET` oder `POST`, die beschreibt, wie der
+Client diese Anfrage stellt. Unser Client hat eine `GET`-Anfrage verwendet, was
 bedeutet, dass er nach Informationen fragt.
 
 Der nächste Teil der Anfragezeile ist `/`, der den _einheitlichen
@@ -373,12 +374,12 @@ fn handle_connection(mut stream: TcpStream) {
 HTTP-Antwort in den Stream</span>
 
 Die erste neue Zeile definiert die Variable `response`, die die Daten der
-Erfolgsmeldung enthält. Dann rufen wir `as_bytes` auf unserer `response` auf,
-um die String-Daten in Bytes zu konvertieren. Die Methode `write_all` auf
-`stream` nimmt ein `&[u8]` und sendet diese Bytes direkt in die Verbindung. Da
-die Operation `write_all` fehlschlagen könnte, verwenden wir wie bisher bei
-jedem Fehlerergebnis `unwrap` . Auch hier würdest du in einer echten Anwendung
-eine Fehlerbehandlung hinzufügen.
+Erfolgsmeldung enthält. Dann rufen wir `as_bytes` auf unserer `response` auf, um
+die String-Daten in Bytes zu konvertieren. Die Methode `write_all` auf `stream`
+nimmt ein `&[u8]` und sendet diese Bytes direkt in die Verbindung. Da die
+Operation `write_all` fehlschlagen könnte, verwenden wir wie bisher bei jedem
+Fehlerergebnis `unwrap`. Auch hier würdest du in einer echten Anwendung eine
+Fehlerbehandlung hinzufügen.
 
 Lass uns mit diesen Änderungen unseren Code ausführen und eine Anfrage stellen.
 Wir geben keine Daten mehr im Terminal aus, sodass wir außer der Ausgabe von
@@ -467,9 +468,9 @@ verwendet, als wir den Inhalt einer Datei für unser E/A-Projekt in Listing 12-4
 gelesen haben.
 
 Als Nächstes verwenden wir `format!`, um den Inhalt der Datei als Rumpf der
-Erfolgsantwort hinzuzufügen. Um eine gültige HTTP-Antwort zu gewährleisten,
-fügen wir den Header `Content-Length` hinzu, der auf die Größe unseres
-Antwortrumpfs gesetzt wird, in diesem Fall auf die Größe von `hello.html`. 
+Erfolgsantwort hinzuzufügen. Um eine gültige HTTP-Antwort zu formulieren, fügen
+wir den Header `Content-Length` hinzu, der auf die Größe unseres Antwortrumpfs
+gesetzt wird, in diesem Fall auf die Größe von `hello.html`.
 
 Führe diesen Code mit `cargo run` aus und lade _127.0.0.1:7878_ im Browser; du
 solltest dein HTML gerendert sehen!
@@ -542,13 +543,13 @@ gesamte Anfrage in einen Vektor zu lesen, rufen wir `next` auf, um das erste
 Element aus dem Iterator zu erhalten. Das erste `unwrap` kümmert sich um die
 `Option` und hält das Programm an, wenn der Iterator keine Elemente hat. Das
 zweite `unwrap` behandelt das `Result` und hat den gleichen Effekt wie das
-`unwrap` in  `map` in Listing 21-2.
+`unwrap` in `map` in Listing 21-2.
 
 Als nächstes überprüfen wir `request_line`, um zu sehen, ob es der Anfragezeile
 einer GET-Anfrage mit dem Pfad `/` entspricht. Ist dies der Fall, gibt der
 `if`-Block den Inhalt unserer HTML-Datei zurück.
 
-Wenn `request_line` _nicht_ der GET-Anfrage mit dem `/` Pfad entspricht,
+Wenn `request_line` _nicht_ der GET-Anfrage mit dem Pfad `/` entspricht,
 bedeutet das, dass wir eine andere Anfrage erhalten haben. Wir werden dem
 `else`-Block gleich Code hinzufügen, um auf alle anderen Anfragen zu reagieren.
 
@@ -616,7 +617,7 @@ Fehlerseite, wenn etwas anderes als `/` angefragt wurde</span>
 
 Hier hat unsere Antwort eine Statuszeile mit Statuscode 404 und der
 Begründungsphrase `NOT FOUND` (nicht gefunden). Der Rumpf der Antwort wird das
-HTML in der Datei _404.html_ sein. Du musst neben _hallo.html_ eine Datei
+HTML in der Datei _404.html_ sein. Du musst neben _hello.html_ eine Datei
 _404.html_ für die Fehlerseite erstellen; auch hier kannst du jedes beliebige
 HTML verwenden oder das Beispiel-HTML in Listing 21-8.
 
@@ -640,7 +641,7 @@ HTML verwenden oder das Beispiel-HTML in Listing 21-8.
 jeder 404-Antwort zurückgesendet werden soll</span>
 
 Lass deinen Server mit diesen Änderungen erneut laufen. Die Anfrage
-_127.0.0.1:7878_ sollte den Inhalt von _hallo.html_ zurückgeben und jede andere
+_127.0.0.1:7878_ sollte den Inhalt von _hello.html_ zurückgeben und jede andere
 Anfrage, wie _127.0.0.1:7878/foo_, sollte das Fehler-HTML von _404.html_
 zurückgeben.
 

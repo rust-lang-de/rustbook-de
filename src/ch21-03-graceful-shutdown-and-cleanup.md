@@ -19,16 +19,16 @@ Thread-Pool kontrolliert herunterfährt.
 ### Implementieren des Traits `Drop` auf `ThreadPool`
 
 Lass uns damit beginnen, `Drop` auf unseren Thread-Pool zu implementieren. Wenn
-der Pool aufgeräumt wird, sollten wir auf das Ende unsere Threads warten, um
-sicherzustellen, dass sie ihre Arbeit beenden. Listing 21-22 zeigt einen
-ersten Versuch einer `Drop`-Implementierung; dieser Code wird noch nicht ganz
+der Pool aufgeräumt wird, sollten wir auf das Ende unseres Threads warten, um
+sicherzustellen, dass sie ihre Arbeit beenden. Listing 21-22 zeigt einen ersten
+Versuch einer `Drop`-Implementierung; dieser Code wird noch nicht ganz
 funktionieren.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,does_not_compile
 # use std::{
-#     sync::{mpsc, Arc, Mutex},
+#     sync::{Arc, Mutex, mpsc},
 #     thread,
 # };
 #
@@ -46,7 +46,7 @@ funktionieren.
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #
@@ -90,12 +90,14 @@ impl Drop for ThreadPool {
 #
 # impl Worker {
 #     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
-#         let thread = thread::spawn(move || loop {
-#             let job = receiver.lock().unwrap().recv().unwrap();
+#         let thread = thread::spawn(move || {
+#             loop {
+#                 let job = receiver.lock().unwrap().recv().unwrap();
 #
-#             println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
+#                 println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 #
-#             job();
+#                 job();
+#             }
 #         });
 #
 #         Worker { id, thread }
@@ -139,7 +141,7 @@ veränderbare Borrow von jedem `worker` haben und `join` das Eigentum an seinem
 Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Thread `thread`
 aus der `Worker`-Instanz herausnehmen, damit `join` den Thread konsumieren kann.
 Eine Möglichkeit, dies zu tun, besteht darin, den gleichen Ansatz wie in Listing
-18-15 zu verfolgen. Wenn `Worker` ein `Option<Thread::JoinHandle<()>>` hielte,
+18-15 zu verfolgen. Wenn `Worker` ein `Option<thread::JoinHandle<()>>` hielte,
 könnten wir die Methode `take` auf `Option` aufrufen, um den Wert aus der
 Variante `Some` herauszuverschieben und eine Variante `None` an ihrer Stelle zu
 belassen. Mit anderen Worten, ein `Worker`, der läuft, würde eine Variante
@@ -148,10 +150,10 @@ wir `Some` durch `None` ersetzen, sodass der `Worker` keinen Thread zum Laufen
 haben würde.
 
 Das _einzige_ Mal, dass dies der Fall wäre, wäre, wenn man den `Worker`
-aufräumt. Im Gegenzug müssten wir überall, wo wir auf `Worker.thread`
-zugreifen, mit einer `Option<thread::JoinHandle<()>>` umgehen. Idiomatisch
-verwendet Rust `Option` ziemlich oft, aber wenn du etwas in `Option` einpackst,
-von dem du weißt dass es immer vorhanden sein wird, ist es eine gute Idee, nach
+aufräumt. Im Gegenzug müssten wir überall, wo wir auf `Worker.thread` zugreifen,
+mit einer `Option<thread::JoinHandle<()>>` umgehen. Idiomatisch verwendet Rust
+`Option` ziemlich oft, aber wenn du etwas in `Option` einpackst, von dem du
+weißt, dass es immer vorhanden sein wird, ist es eine gute Idee, nach
 alternativen Ansätzen zu suchen, die deinen Code sauberer und weniger
 fehleranfällig machen.
 
@@ -185,7 +187,7 @@ aktualisieren:
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #
@@ -246,7 +248,7 @@ impl Drop for ThreadPool {
 
 Dadurch wird der Compilerfehler behoben, und es sind keine weiteren Änderungen
 an unserem Code erforderlich. Beachte, dass `drop` bei einem Programmabbruch
-aufgerufen werden kann, und wenn dann auch `unwrap` abbricht, eine doppelte
+aufgerufen werden kann; und wenn dann auch `unwrap` abbricht, eine doppelte
 Fehlersituation verursacht werden könnte, was sofort zum Programmende und zum
 Abbruch aller laufenden Bereinigungsvorgänge führen würde. Für ein
 Beispielprogramm ist dies in Ordnung, für Produktionscode jedoch nicht zu
@@ -277,13 +279,13 @@ um den `sender` mit `Option::take` aus dem `ThreadPool` herausnehmen zu können.
 
 ```rust
 # use std::{
-#     sync::{mpsc, Arc, Mutex},
+#     sync::{Arc, Mutex, mpsc},
 #     thread,
 # };
 #
 pub struct ThreadPool {
     workers: Vec<Worker>,
-    sender: mpsc::Sender<Message>,
+    sender: Option<mpsc::Sender<Job>>,
 }
 // --abschneiden--
 #
@@ -296,7 +298,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 #     pub fn new(size: usize) -> ThreadPool {
           // --abschneiden--
 
@@ -324,7 +326,7 @@ impl ThreadPool {
     {
         let job = Box::new(f);
 
-        self.sender.send(Message::NewJob(job)).unwrap();
+        self.sender.as_ref().unwrap().send(job).unwrap();
     }
 }
 
@@ -332,35 +334,30 @@ impl Drop for ThreadPool {
     fn drop(&mut self) {
         drop(self.sender.take());
 
-        for worker in &mut self.workers {
+        for worker in self.workers.drain(..) {
             println!("Worker {} herunterfahren", worker.id);
 
-            if let Some(thread) = worker.thread.take() {
-                thread.join().unwrap();
-            }
+            worker.thread.join().unwrap();
         }
     }
 }
 #
 # struct Worker {
 #     id: usize,
-#     thread: Option<thread::JoinHandle<()>>,
+#     thread: thread::JoinHandle<()>,
 # }
 #
 # impl Worker {
-#     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker {
+#     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
 #         let thread = thread::spawn(move || loop {
 #             let job = receiver.lock().unwrap().recv().unwrap();
 #          
-#             println!("Worker {id} got a job; executing.");
+#             println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 #          
 #             job();
 #         });
 #
-#         Worker {
-#             id,
-#             thread: Some(thread),
-#         }
+#         Worker { id, thread }
 #     }
 # }
 ```
@@ -379,13 +376,13 @@ wenn die Implementierung von `drop` in `ThreadPool` `join` für sie aufruft.
 
 ```rust,noplayground
 # use std::{
-#     sync::{mpsc, Arc, Mutex},
+#     sync::{Arc, Mutex, mpsc},
 #     thread,
 # };
 #
 # pub struct ThreadPool {
 #     workers: Vec<Worker>,
-#     sender: mpsc::Sender<Message>,
+#     sender: Option<mpsc::Sender<Job>>,
 # }
 #
 # type Job = Box<dyn FnOnce() + Send + 'static>;
@@ -397,7 +394,7 @@ wenn die Implementierung von `drop` in `ThreadPool` `join` für sie aufruft.
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #
@@ -423,7 +420,7 @@ wenn die Implementierung von `drop` in `ThreadPool` `join` für sie aufruft.
 #     {
 #         let job = Box::new(f);
 #
-#         self.sender.send(Message::NewJob(job)).unwrap();
+#         self.sender.as_ref().unwrap().send(job).unwrap();
 #     }
 # }
 #
@@ -434,38 +431,37 @@ wenn die Implementierung von `drop` in `ThreadPool` `join` für sie aufruft.
 #         for worker in &mut self.workers {
 #             println!("Worker {} herunterfahren", worker.id);
 #
-#             if let Some(thread) = worker.thread.take() {
-#                 thread.join().unwrap();
-#             }
+#             worker.thread.join().unwrap();
 #         }
 #     }
 # }
 #
 # struct Worker {
 #     id: usize,
-#     thread: Option<thread::JoinHandle<()>>,
+#     thread: thread::JoinHandle<()>,
 # }
 #
 impl Worker {
     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
-        let thread = thread::spawn(move || loop {
-            match receiver.lock().unwrap().recv() {
-                Ok(job) => {
-                    println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
+        let thread = thread::spawn(move || {
+            loop {
+                let message = receiver.lock().unwrap().recv();
 
-                    job();
-                }
-                Err(_) => {
-                    println!("Worker {id} nicht mehr verbunden, wird beendet.");
-                    break;
+                match message {
+                    Ok(job) => {
+                        println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
+
+                        job();
+                    }
+                    Err(_) => {
+                        println!("Worker {id} nicht mehr verbunden, wird beendet.");
+                        break;
+                    }
                 }
             }
         });
 
-        Worker {
-            id,
-            thread: Some(thread),
-        }
+        Worker { id, thread }
     }
 }
 ```
@@ -481,12 +477,13 @@ wird, wie in Listing 21-25 gezeigt.
 
 ```rust,noplayground
 # use hello::ThreadPool;
-# use std::fs;
-# use std::io::prelude::*;
-# use std::net::TcpListener;
-# use std::net::TcpStream;
-# use std::thread;
-# use std::time::Duration;
+# use std::{
+#     fs,
+#     io::{BufReader, prelude::*},
+#     net::{TcpListener, TcpStream},
+#     thread,
+#     time::Duration,
+# };
 #
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -642,13 +639,13 @@ fn handle_connection(mut stream: TcpStream) {
 
 ```rust
 use std::{
-    sync::{mpsc, Arc, Mutex},
+    sync::{Arc, Mutex, mpsc},
     thread,
 };
 
 pub struct ThreadPool {
     workers: Vec<Worker>,
-    sender: mpsc::Sender<Message>,
+    sender: Option<mpsc::Sender<Job>>,
 }
 
 type Job = Box<dyn FnOnce() + Send + 'static>;
@@ -660,7 +657,7 @@ impl ThreadPool {
     ///
     /// # Panics
     ///
-    /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -686,7 +683,7 @@ impl ThreadPool {
     {
         let job = Box::new(f);
 
-        self.sender.send(Message::NewJob(job)).unwrap();
+        self.sender.as_ref().unwrap().send(job).unwrap();
     }
 }
 
@@ -710,19 +707,21 @@ struct Worker {
 }
 
 impl Worker {
-    fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker {
-        let thread = thread::spawn(move || loop {
-            let message = receiver.lock().unwrap().recv().unwrap();
+    fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
+        let thread = thread::spawn(move || {
+            loop {
+                let message = receiver.lock().unwrap().recv();
 
-            match message {
-                Ok(job) => {
+                match message {
+                    Ok(job) => {
                     println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 
-                    job();
-                }
-                Err(_) => {
+                        job();
+                    }
+                    Err(_) => {
                     println!("Worker {id} nicht mehr verbunden, wird beendet.");
-                    break;
+                        break;
+                    }
                 }
             }
         });
@@ -744,17 +743,17 @@ findest du hier einige Ideen:
 - Ändere Aufrufe von `unwrap` in eine robustere Fehlerbehandlung.
 - Verwende `ThreadPool`, um eine andere Aufgabe als das Beantworten von
   Web-Anfragen durchzuführen.
-- Suche eine Thread-Pool-Crate auf [crates.io][crates] und   implementiere
+- Suche eine Thread-Pool-Crate auf [crates.io][crates] und implementiere
   damit einen ähnlichen Webserver unter Verwendung der Crate. Vergleiche dann
   dessen API und Robustheit mit dem von uns implementierten Thread-Pool.
 
 ## Zusammenfassung
 
-Gut gemacht! Du hast es bis ans Ende des Buchs geschafft! Wir möchten dir
+Gut gemacht! Du hast es bis ans Ende des Buches geschafft! Wir möchten dir
 danken, dass du uns auf dieser Tour durch Rust begleitet hast. Du bist nun
 bereit, deine eigenen Rust-Projekte umzusetzen und bei den Projekten anderer zu
-helfen. Denke daran, dass es eine gastfreundliche Gemeinschaft von anderen
-Rust-Entwicklern gibt, die dir bei allen Herausforderungen, denen du auf deiner
-Rust-Reise begegnest, gerne helfen würden.
+helfen. Denke daran, dass es eine gastfreundliche Gemeinschaft von
+Rust-Entwicklern gibt, die dir bei jeder Herausforderung, denen du auf deiner
+Rust-Reise begegnest, gerne helfen.
 
 [crates]: https://crates.io/

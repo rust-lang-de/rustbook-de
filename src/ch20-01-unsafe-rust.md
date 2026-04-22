@@ -80,7 +80,7 @@ Im Abschnitt [„Hängende Referenzen“][dangling-references] in Kapitel 4 habe
 erwähnt, dass der Compiler sicherstellt, dass Referenzen immer gültig sind.
 Unsafe Rust hat zwei neue Typen namens _Rohzeiger_ (raw pointers), die ähnlich
 wie Referenzen sind. Wie bei Referenzen können Rohzeiger unveränderbar oder
-veränderbar sein und werden als `_const T` bzw. `_mut T` geschrieben. Das
+veränderbar sein und werden als `*const T` bzw. `*mut T` geschrieben. Das
 Sternchen ist nicht der Dereferenzierungsoperator (dereference operator); es ist
 Teil des Typnamens. Im Zusammenhang mit Rohzeigern bedeutet _unveränderbar_
 (immutable), dass der Zeiger nach der Dereferenzierung nicht direkt zugewiesen
@@ -145,8 +145,8 @@ let r = address as *const i32;
 willkürliche Speicheradresse</span>
 
 Erinnere dich, dass wir Rohzeiger in sicherem Code erstellen können, aber wir
-können keine Rohzeiger dereferenzieren und die Daten lesen, auf die gezeigt
-wird. In Listing 20-3 wenden wir den Dereferenzierungsoperator `*` auf einen
+können keine Rohzeiger dereferenzieren und die Daten lesen, auf die der Zeiger
+zeigt. In Listing 20-3 wenden wir den Dereferenzierungsoperator `*` auf einen
 Rohzeiger an, was einen `unsafe`-Block erfordert.
 
 ```rust
@@ -243,7 +243,7 @@ möglicherweise nicht im gesamten Funktionsrumpf benötigt werden.
 
 Nur weil eine Funktion unsicheren Code enthält, bedeutet das nicht, dass wir die
 gesamte Funktion als unsicher markieren müssen. Tatsächlich ist das Einpacken
-von unsicheren Codes in eine sichere Funktion eine gängige Abstraktion. Als
+von unsicheren Code in eine sichere Funktion eine gängige Abstraktion. Als
 Beispiel betrachten wir die Funktion `split_at_mut` aus der Standardbibliothek,
 die unsicheren Code verwendet. Wir untersuchen, wie wir sie implementieren
 könnten. Diese sichere Methode ist auf veränderbaren Slices definiert: Sie nimmt
@@ -356,16 +356,15 @@ fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
 # }
 ```
 
-<span class="caption">Listing 20-6: Verwenden von unsicheren Codes bei der
+<span class="caption">Listing 20-6: Verwenden von unsicheren Code bei der
 Implementierung der Funktion `split_at_mut`</span>
 
-Erinnere dich an den Abschnitt [„Der Slice-Typ“][the-slice-type] in Kapitel 4,
-dass Slices Zeiger auf Daten und die Länge des Slices sind. Wir verwenden die
-Methode `len`, um die Länge eines Slices zu erhalten, und die Methode
-`as_mut_ptr`, um auf den Rohzeiger eines Slices zuzugreifen. Da wir in diesem
-Fall einen veränderbaren Slice von `i32`-Werten haben, gibt `as_mut_ptr` einen
-Rohzeiger vom Typ `*mut i32` zurück, den wir in der Variable `ptr` gespeichert
-haben.
+Erinnere dich an den Abschnitt [„Der Slice-Typ“][the-slice-type] in Kapitel 4;
+Slices sind Zeiger auf Daten und die Länge des Slices. Wir verwenden die Methode
+`len`, um die Länge eines Slices zu erhalten, und die Methode `as_mut_ptr`, um
+auf den Rohzeiger eines Slices zuzugreifen. Da wir in diesem Fall einen
+veränderbaren Slice von `i32`-Werten haben, gibt `as_mut_ptr` einen Rohzeiger
+vom Typ `*mut i32` zurück, den wir in der Variable `ptr` gespeichert haben.
 
 Wir halten an der Zusicherung fest, dass der Index `mid` innerhalb des Slices
 liegt. Dann kommen wir zum unsicheren Code: Die Funktion
@@ -502,11 +501,10 @@ gegeben haben, in einen anderen Namen ändert, der mehr Informationen für ander
 Teile des Kompiliervorgangs enthält, aber weniger menschenlesbar ist. Jeder
 Programmiersprachen-Compiler verändert Namen etwas anders. Damit eine
 Rust-Funktion von anderen Sprachen aufgerufen werden kann, müssen wir also die
-Namensveränderung des Rust-Compilers deaktivieren. Dies ist unsicher, da es
-ohne die eingebaute Namensveränderung-Funktion zu Namenskollisionen in
-verschiedenen Bibliotheken kommen kann. Es liegt also in unserer Verantwortung,
-sicherzustellen, dass der von uns gewählte Name ohne Namensveränderung sicher
-exportiert werden kann.
+Namensveränderung des Rust-Compilers deaktivieren. Dies ist unsicher, da es ohne
+eingebautes Mangling zu Namenskollisionen in verschiedenen Bibliotheken kommen
+kann. Es liegt also in unserer Verantwortung, sicherzustellen, dass der von uns
+gewählte Name ohne Namensveränderung sicher exportiert werden kann.
 
 Im folgenden Beispiel machen wir die Funktion `call_from_c` von C-Code aus
 zugänglich, nachdem sie in eine gemeinsame Bibliothek kompiliert und von C
@@ -580,7 +578,7 @@ unsafe fn add_to_count(inc: u32) {
 
 fn main() {
     unsafe {
-        // SAFETY: Aufruf aus nur von einem einzigen Thread in `main`.
+        // SAFETY: Aufruf aus einem einzigen Thread in `main`.
         add_to_count(3);
         println!("COUNTER: {}", *(&raw const COUNTER));
     }
@@ -692,7 +690,7 @@ installieren, indem du `rustup +nightly component add miri` ausführst. Dies
 ändert nicht die Rust-Version deines Projekts, sondern fügt das Werkzeug nur zu
 deinem System hinzu, damit du es verwenden kannst, wenn du willst. Du kannst
 Miri für ein Projekt ausführen, indem du `cargo +nightly miri run` oder `cargo
- +nightly miri test` eingibst.
++nightly miri test` eingibst.
 
 Ein Beispiel dafür, wie hilfreich dies sein kann, siehst du beim Ausführen mit
 Listing 20-7:
@@ -732,12 +730,12 @@ note: some details are omitted, run with `MIRIFLAGS=-Zmiri-backtrace=full` for a
 error: aborting due to 1 previous error; 1 warning emitted
 ```
 
-Miri warnt uns richtigerweise, dass wir gemeinsame Referenzen auf veränderbare
-Daten haben. Hier gibt Miri nur eine Warnung aus, da in diesem Fall nicht
-garantiert ist, dass es sich um undefiniertes Verhalten handelt, und es sagt
-uns nicht, wie wir das Problem beheben können. In einigen Fällen kann Miri auch
-eindeutige Fehler erkennen &ndash; Codemuster, die _mit Sicherheit_ falsch sind
-&ndash; und Empfehlungen geben, wie diese Fehler behoben werden können.
+Miri warnt uns richtigerweise vor gemeinsamen Referenzen auf veränderbare Daten.
+Hier gibt Miri nur eine Warnung aus, da in diesem Fall nicht garantiert ist,
+dass es sich um undefiniertes Verhalten handelt, und es sagt uns nicht, wie wir
+das Problem beheben können. In einigen Fällen kann Miri auch eindeutige Fehler
+erkennen &ndash; Codemuster, die _mit Sicherheit_ falsch sind &ndash; und
+Empfehlungen geben, wie diese Fehler behoben werden können.
 
 Miri deckt nicht alles auf, was man beim Schreiben von unsicherem Code falsch
 machen könnte. Miri ist ein dynamisches Analysewerkzeug, d.h. es erkennt nur

@@ -25,8 +25,8 @@ sich auf eine sehr verbreitete Datenstruktur konzentrieren: Strings.
 
 > ### Stack und Heap
 >
-> Viele Programmiersprachen erfordern nicht, dass du sehr oft über Stack (engl.
-> Stapelspeicher) und Heap (engl. Haldenspeicher) nachdenken musst. Aber in
+> Viele Programmiersprachen erfordern nicht, dass du sehr oft über Stack
+> (Stapelspeicher) und Heap (Haldenspeicher) nachdenken musst. Aber in
 > einer Systemprogrammiersprache wie Rust hat die Frage, ob ein Wert auf dem
 > Stack oder im Heap liegt, einen größeren Einfluss darauf, wie sich die
 > Sprache verhält und warum du bestimmte Entscheidungen treffen musst. Teile

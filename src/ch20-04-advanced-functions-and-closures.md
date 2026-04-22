@@ -18,7 +18,7 @@ Funktionen zu verwenden.
 Die Syntax für die Angabe, dass ein Parameter ein Funktionszeiger ist, ähnelt
 der von Closures, wie in Listing 20-28 gezeigt, wo wir eine Funktion `add_one`
 definiert haben, die ihrem Parameter 1 hinzufügt. Die Funktion `do_twice` nimmt
-zwei Parameter entgegen: Einen Funktionszeiger auf eine beliebige Funktion mit
+zwei Parameter entgegen: einen Funktionszeiger auf eine beliebige Funktion mit
 einem `i32`-Parameter und einem `i32`-Rückgabewert, und einen `i32`-Parameter.
 Die Funktion `do_twice` ruft die Funktion `f` zweimal auf, übergibt ihr den Wert
 `arg` und addiert dann die Ergebnisse der beiden Funktionsaufrufe zusammen. Die
@@ -81,7 +81,7 @@ let list_of_strings: Vec<String> =
 <span class="caption">Listing 20-29: Verwendung eines Closure mit der Methode
 `map` zur Umwandlung von Zahlen in Strings</span>
 
-Oder wir könnten eine Funktion als Argument für `map` angeben anstelle des
+Oder wir könnten eine Funktion als Argument für `map` angeben, anstelle des
 Closures. Listing 20-30 zeigt, wie das aussehen würde.
 
 ```rust
@@ -106,7 +106,7 @@ dass der Name jeder definierten Aufzählungsvariante auch eine
 Initialisierungsfunktion ist. Wir können diese Initialisierungsfunktionen als
 Funktionszeiger verwenden, die die Closure-Traits implementieren, was bedeutet,
 dass wir die Initialisierungsfunktionen als Argumente für Methoden angeben
-können, die Closures nehmen, wie in Listing 20-32 zu sehen ist.
+können, die Closures nehmen, wie in Listing 20-31 zu sehen ist.
 
 ```rust
 enum Status {
@@ -213,16 +213,16 @@ error: could not compile `functions-example` (bin "functions-example") due to 1 
 
 Die Fehlermeldung sagt uns, dass Rust jedes Mal, wenn wir ein `impl Trait`
 zurückgeben, einen eindeutigen _undurchsichtigen Typ_ (opaque type) erzeugt,
-einen Typ, bei dem wir weder die Details dessen sehen können, was Rust für uns
-konstruiert, noch den Typ erraten können, den Rust generieren wird. Obwohl diese
-Funktionen also beide Closures zurückgeben, die dasselbe Trait implementieren,
-nämlich `Fn(i32) -> i32`, sind die undurchsichtigen Typen, die Rust für jede
-Funktion erzeugt, unterschiedlich. (Dies ist vergleichbar mit der Art und Weise,
-wie Rust unterschiedliche konkrete Typen für verschiedene asynchrone Blöcke
-erzeugt, selbst wenn sie denselben Ausgabetyp haben, wie wir im Abschnitt [„Der
-Typ `Pin` und das Trait `Unpin`“][future-types] in Kapitel 17 gesehen haben.)
-Eine Lösung für dieses Problem haben wir jetzt schon ein paar Mal gesehen: Wir
-können ein Trait-Objekt verwenden, wie in Listing 20-34.
+einen Typ, bei dem wir weder dessen Details dessen sehen können, was Rust für
+uns konstruiert, noch den Typ erraten können, den Rust generieren wird. Obwohl
+diese Funktionen also beide Closures zurückgeben, die dasselbe Trait
+implementieren, nämlich `Fn(i32) -> i32`, sind die undurchsichtigen Typen, die
+Rust für jede Funktion erzeugt, unterschiedlich. (Dies ist vergleichbar mit der
+Art und Weise, wie Rust unterschiedliche konkrete Typen für verschiedene
+asynchrone Blöcke erzeugt, selbst wenn sie denselben Ausgabetyp haben, wie wir
+im Abschnitt [„Der Typ `Pin` und das Trait `Unpin`“][future-types] in Kapitel 17
+gesehen haben.) Eine Lösung für dieses Problem haben wir jetzt schon ein paar
+Mal gesehen: Wir können ein Trait-Objekt verwenden, wie in Listing 20-34.
 
 ```rust
 # fn main() {

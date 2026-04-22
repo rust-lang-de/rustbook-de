@@ -93,9 +93,9 @@ E][appendix-e].
 
 Die letzte Zeile `[dependencies]` ist der Anfang eines Abschnitts, in dem du
 alle Abhängigkeiten deines Projekts auflisten kannst. In Rust werden Codepakete
-als _Crates_ (engl. Kisten) bezeichnet. Wir werden keine anderen Crates für
-dieses Projekt benötigen, aber wir werden es im ersten Projekt in Kapitel 2 tun,
-also werden wir dann diesen Abhängigkeits-Abschnitt verwenden.
+als _Crates_ (Kisten) bezeichnet. Wir werden keine anderen Crates für dieses
+Projekt benötigen, aber wir werden es im ersten Projekt in Kapitel 2 tun, also
+werden wir dann diesen Abhängigkeits-Abschnitt verwenden.
 
 Öffne nun _src/main.rs_ und wirf einen Blick darauf:
 

@@ -1,13 +1,13 @@
 # Fortgeschrittene Sprachelemente
 
 Inzwischen hast du die am häufigsten verwendeten Teile der Programmiersprache
-Rust gelernt. Bevor wir in Kapitel 20 ein weiteres Projekt durchführen, werden
+Rust gelernt. Bevor wir in Kapitel 21 ein weiteres Projekt durchführen, werden
 wir uns einige Aspekte der Sprache ansehen, auf die du hin und wieder stoßen
 könntest, aber nicht jeden Tag verwenden wirst. Du kannst dieses Kapitel als
 Referenz verwenden, wenn du auf Unbekanntes stößt. Die hier beschriebenen
 Funktionalitäten sind in ganz bestimmten Situationen nützlich. Auch wenn du sie
 vielleicht nicht oft brauchst, möchten wir sicherstellen, dass du alle
-Funktionen von Rust kennst. 
+Funktionen von Rust kennst.
 
 In diesem Kapitel werden wir behandeln:
 
@@ -22,5 +22,5 @@ In diesem Kapitel werden wir behandeln:
 - Makros: Möglichkeiten, Code zu definieren, der zur Kompilierzeit mehr Code
   definiert
 
-Es ist eine Reihe von Rust-Funktionalitäten, die für jeden etwas bietet! Lass
+Das ist eine Reihe von Rust-Funktionalitäten, die für jeden etwas bietet! Lass
 uns eintauchen!

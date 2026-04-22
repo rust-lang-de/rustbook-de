@@ -23,8 +23,8 @@ generische Funktion zu machen. Wir werden auch erklären, wie generische Typen
 in Struktur- (struct) und Aufzählungsdefinitionen (enum) verwendet werden
 können.
 
-Dann wirst du lernen, wie man Traits (engl. Merkmale) verwendet, um Verhalten
-auf generische Weise zu definieren. Du kannst Traits mit generischen Typen
+Dann wirst du lernen, wie man Traits (Merkmale) verwendet, um Verhalten auf
+generische Weise zu definieren. Du kannst Traits mit generischen Typen
 kombinieren, um einen generischen Typ auf solche Typen einzuschränken, die ein
 bestimmtes Verhalten aufweisen, im Gegensatz zu einem beliebigen Typ.
 

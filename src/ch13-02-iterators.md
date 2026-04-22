@@ -1,4 +1,4 @@
-## Eine Reihe von Elementen verarbeiten mit Iteratoren
+## Eine Reihe von Elementen mit Iteratoren verarbeiten
 
 Iteratoren ermöglichen dir, nacheinander eine Aufgabe für eine Folge von
 Elementen auszuführen. Der Iterator ist für die Logik verantwortlich, die

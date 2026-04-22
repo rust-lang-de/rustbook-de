@@ -2,7 +2,7 @@
 
 An verschiedenen Stellen im Buch haben wir das Attribut `derive` besprochen, das
 du auf eine Struktur- oder Aufzählungsdefinition anwenden kannst. Das Attribut
-`derive` generiert Code, der ein Trait (engl. Merkmal) mit seiner eigenen
+`derive` generiert Code, der ein Trait (Merkmal) mit seiner eigenen
 Standard-Implementierung auf dem Typ implementiert, den du mit der
 `derive`-Syntax annotiert hast.
 

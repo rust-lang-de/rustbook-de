@@ -1,12 +1,12 @@
-## Mit Threads Programmcode gleichzeitig ausführen
+## Programmcode mit Threads gleichzeitig ausführen
 
 In den meisten aktuellen Betriebssystemen wird der Code eines ausgeführten
 Programms in einem _Prozess_ ausgeführt und das Betriebssystem verwaltet mehrere
 Prozesse gleichzeitig. Innerhalb eines Programms kannst du auch unabhängige
 Teile haben, die gleichzeitig laufen. Die Funktionalitäten, die diese
-unabhängigen Teile ausführen, werden _Threads_ (engl. Stränge) genannt. Ein
-Webserver könnte beispielsweise mehrere Threads haben, damit er auf mehrere
-Anfragen gleichzeitig reagieren kann.
+unabhängigen Teile ausführen, werden _Threads_ (Stränge) genannt. Ein Webserver
+könnte beispielsweise mehrere Threads haben, damit er auf mehrere Anfragen
+gleichzeitig reagieren kann.
 
 Das Aufteilen der Berechnung in deinem Programm in mehrere Threads, um mehrere
 Aufgaben gleichzeitig auszuführen, kann die Performanz erhöhen, aber es erhöht

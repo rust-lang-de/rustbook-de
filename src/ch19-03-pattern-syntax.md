@@ -65,7 +65,7 @@ Das Muster im zweiten Zweig führt eine neue Variable namens `y` ein, die zu
 jedem Wert innerhalb eines `Some`-Wertes passt. Da wir uns in einem neuen
 Gültigkeitsbereich innerhalb des `match`-Ausdrucks befinden, ist dies eine neue
 Variable `y`, nicht das `y`, das wir am Anfang mit dem Wert `10` deklariert
-haben. Diese neue `y`-Bindung wird mit jedem Wert innerhalb eines `Some`
+haben. Diese neue `y`-Bindung wird mit jedem Wert innerhalb von `Some`
 übereinstimmen, das ist das, was wir in `x` haben. Daher bindet dieses neue `y`
 an den inneren Wert des `Some` in `x`. Dieser Wert ist `5`, sodass der Ausdruck
 für diesen Zweig ausgeführt und `Passt, y = 5` ausgegeben wird.
@@ -255,7 +255,7 @@ immer noch eine Variable `x`, die wir im Code für diesen Zweig verwenden
 können.
 
 In ähnlicher Weise passt der zweite Zweig zu jedem Punkt auf der y-Achse, indem
-er angibt, dass der Wert des `x`-Feldes 0 ist, und eine Variable `y`  für den
+er angibt, dass der Wert des `x`-Feldes 0 ist, und eine Variable `y` für den
 Wert des `y` -Feldes erzeugt. Der dritte Zweig spezifiziert keine Literale,
 sodass er zu jedem anderen `Point` passt und Variablen für die Felder `x` und
 `y` erzeugt.
@@ -263,10 +263,10 @@ sodass er zu jedem anderen `Point` passt und Variablen für die Felder `x` und
 In diesem Beispiel passt der Wert `p` zum zweiten Zweig, da `x` den Wert `0`
 hat, sodass dieser Code `Auf der y-Achse bei 7` ausgeben wird.
 
-Denke daran, dass ein `match`-Ausdruck aufhört, weitere Zweige zu prüfen,
-sobald er das erste übereinstimmende Muster gefunden hat, d.h. auch wenn der
-`Point { x: 0, y: 0}` auf der `x`-Achse und der `y`-Achse liegt, würde dieser
-Code nur `Auf der x-Achse bei 0` ausgeben.
+Denke daran, dass ein `match`-Ausdruck aufhört, weitere Zweige zu prüfen, sobald
+er das erste übereinstimmende Muster gefunden hat, d.h. auch wenn `Point { x: 0,
+y: 0 }` auf der `x`-Achse und der `y`-Achse liegt, würde dieser Code nur `Auf
+der x-Achse bei 0` ausgeben.
 
 #### Aufzählungen
 
@@ -307,8 +307,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 19-15: Destrukturieren von
-Aufzählungsvarianten, die verschiedene Arten von Werten enthalten</span>
+<span class="caption">Listing 19-15: Destrukturieren von Aufzählungsvarianten,
+die verschiedene Arten von Werten enthalten</span>
 
 Dieser Code gibt `Ändere Farbe in rot 0, grün 160 und blau 255` aus. Versuche,
 den Wert von `msg` zu ändern, um den Code der anderen Zweige laufen zu sehen.
@@ -369,14 +369,13 @@ fn main() {
 <span class="caption">Listing 19-16: Abgleich bei verschachtelten
 Aufzählungen</span>
 
-Das Muster des ersten Zweigs im `match`-Ausdruck passt zu einer
-`Message::ChangeColor`-Aufzählungsvariante, die eine `Color::Rgb`-Variante
-enthält; dann bindet das Muster an die drei inneren `i32`-Werte. Das Muster des
-zweiten Zweigs passt ebenfalls mit einer
-`Message::ChangeColor`-Aufzählungsvariante, aber die innere Aufzählung passt
-stattdessen zur `Color::Hsv`-Variante. Wir können diese komplexen Bedingungen
-in einem einzigen `match`-Ausdruck angeben, auch wenn es sich um zwei
-Aufzählungen handelt.
+Das Muster des ersten Zweigs im `match`-Ausdruck passt zur Aufzählungsvariante
+`Message::ChangeColor`, die eine `Color::Rgb`-Variante enthält; dann bindet das
+Muster die drei inneren `i32`-Werte. Das Muster des zweiten Zweigs passt
+ebenfalls zur Aufzählungsvariante `Message::ChangeColor`, aber die innere
+Aufzählung passt stattdessen zur `Color::Hsv`-Variante. Wir können diese
+komplexen Bedingungen in einem einzigen `match`-Ausdruck angeben, auch wenn es
+sich um zwei Aufzählungen handelt.
 
 #### Strukturen und Tupel
 
@@ -415,8 +414,8 @@ wann jedes dieser Muster zu verwenden ist.
 #### Gesamtwert mit `_`
 
 Wir haben den Unterstrich (`_`) als Platzhalter verwendet, der zu jedem Wert
-passt, aber nicht an den Wert gebunden ist. Dies ist besonders nützlich als
-letzter Zweig in einem `match`-Ausdruck ist, aber wir können es in jedem Muster
+passt, aber keinen Wert bindet. Dies ist besonders beim letzten Zweig eines
+`match`-Ausdrucks nützlich, wir können den Unterstrich jedoch in jedem Muster
 verwenden, einschließlich Funktionsparameter, wie in Listing 19-17 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -437,14 +436,13 @@ Funktionssignatur</span>
 Dieser Code ignoriert den als erstes Argument übergebenen Wert `3` vollständig
 und gibt `Dieser Code verwendet nur den Parameter y: 4` aus.
 
-In den meisten Fällen, wenn du einen bestimmten Funktionsparameter nicht mehr
-benötigst, würdest du die Signatur so ändern, dass sie den unbenutzten Parameter
+Wenn du einen bestimmten Funktionsparameter nicht mehr benötigst, würdest du die
+Signatur in den meisten Fällen so ändern, dass sie den ungenutzten Parameter
 nicht mehr enthält. Das Ignorieren eines Funktionsparameters kann in einigen
-Fällen besonders nützlich sein, z.B. bei der Implementierung eines Traits, wenn
-du eine bestimmte Typsignatur benötigst, der Funktionsrumpf in deiner
-Implementierung jedoch keinen der Parameter benötigt. Du kannst dann vermeiden,
-dass der Compiler vor unbenutzten Funktionsparametern warnt, wie es der Fall
-wäre, wenn du stattdessen einen Namen verwenden würdest.
+Fällen besonders hilfreich sein, z.B. wenn du bei der Implementierung eines
+Traits eine bestimmte Typsignatur benötigst, jedoch der Funktionsrumpf in deiner
+Implementierung keinen der Parameter verwendet. Du kannst dann vermeiden, dass
+der Compiler vor unbenutzten Funktionsparametern warnt.
 
 #### Teile eines Wertes mit einem verschachtelten `_`
 
@@ -811,11 +809,10 @@ hätte `ja` ausgegeben.
 ### `@`-Bindungen verwenden
 
 Mit dem _at_-Operator `@` können wir eine Variable erstellen, die einen Wert
-enthält, während wir gleichzeitig diesen Wert testen, um festzustellen, ob er
-zu einem Muster passt. Listing 19-29 zeigt ein Beispiel, bei dem wir testen
-wollen, dass ein `Message::Hello`-Feld `id` innerhalb des Bereichs `3..=7`
-liegt. Wir wollen den Wert auch an die Variable `id` binden, damit wir ihn in
-dem mit dem Zweig verbundenen Code verwenden können.
+enthält, der zu einem Muster passt. Listing 19-29 zeigt ein Beispiel, bei dem
+wir testen wollen, dass ein `Message::Hello`-Feld `id` innerhalb des Bereichs
+`3..=7` liegt. Wir binden den Wert an die Variable `id`, damit wir ihn in im
+Code des Zweigs verwenden können.
 
 ```rust
 enum Message {
@@ -825,9 +822,9 @@ enum Message {
 let msg = Message::Hello { id: 5 };
 
 match msg {
-    Message::Hello {
-        id: id_variable @ 3..=7,
-    } => println!("id im Bereich gefunden: {id_variable}"),
+    Message::Hello { id: id @ 3..=7 } => {
+        println!("id im Bereich gefunden: {id}"),
+    }
     Message::Hello { id: 10..=12 } => {
         println!("id in einem anderen Bereich gefunden")
     }
@@ -839,16 +836,15 @@ match msg {
 einem Muster zu binden und ihn gleichzeitig zu testen</span>
 
 In diesem Beispiel wird `id im Bereich gefunden: 5` ausgegeben. Durch das
-Angeben von `id @` vor dem Bereich `3..=7` erfassen wir den Wert, der mit dem
-Bereich übereinstimmt, in einer Variable namens `id` und testen gleichzeitig,
-ob der Wert zum Bereichsmuster passt.
+Angeben von `id @` mit dem Bereich `3..=7` erfassen wir nur Werte, die in diesem
+Bereich sind, und weisen ihn der inneren Variablen mit demselben Namen `id` zu.
 
-Im zweiten Zweig, wo wir im Muster nur einen Bereich spezifiziert haben, hat
-der zum Zweig gehörende Code keine Variable, die den tatsächlichen Wert des
+Im zweiten Zweig, wo wir im Muster nur einen Bereich spezifiziert haben, hat der
+zum Zweig gehörende Code keine Variable, die den tatsächlichen Wert des
 `id`-Feldes enthält. Der Wert des `id`-Feldes hätte 10, 11 oder 12 sein können,
-aber der Code, der zu diesem Muster gehört, weiß nicht, welcher es ist. Der
-Code des Musters ist nicht in der Lage, den Wert des `id`-Feldes zu verwenden,
-weil wir den `id`-Wert nicht in einer Variablen gespeichert haben.
+aber der Code, der zu diesem Muster gehört, weiß nicht, welcher es ist. Der Code
+des Musters ist nicht in der Lage, den Wert des `id`-Feldes zu verwenden, weil
+wir den `id`-Wert nicht in einer Variablen gespeichert haben.
 
 Im letzten Zweig, in dem wir eine Variable ohne Bereich angegeben haben, haben
 wir den Wert, der im Code des Zweigs verfügbar ist, in einer Variablen namens

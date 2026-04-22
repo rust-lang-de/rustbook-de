@@ -4,8 +4,8 @@ Erinnere dich daran, wie wir den Empfänger unseres asynchronen Kanals weiter in
 Abschnitt [„Datenaustausch zwischen zwei Aufgaben mit
 Nachrichtenübermittlung“][17-02-messages] oben in diesem Kapitel verwendet
 haben. Die asynchrone Methode `recv` erzeugt eine Sequenz von Elementen. Dies
-ist ein Beispiel eines viel allgemeineren Musters, bekannt als _Stream_ (engl.
-Strom, Fluss). Viele Konzepte lassen sich ganz natürlich als Streams darstellen:
+ist ein Beispiel eines viel allgemeineren Musters, bekannt als _Stream_ (Strom,
+Fluss). Viele Konzepte lassen sich ganz natürlich als Streams darstellen:
 Elemente, die in einer Warteschlange verfügbar werden, Datenblöcke, die
 schrittweise aus dem Dateisystem eingelesen werden, wenn der gesamte Datensatz
 zu groß für den Arbeitsspeicher des Computers ist, oder Daten, die nach und nach
@@ -89,7 +89,7 @@ Wie diese Ausgabe erklärt, liegt der Grund für den Compilerfehler darin, dass
 wir das richtige Trait im Gültigkeitsbereich benötigen, um die Methode `next`
 verwenden zu können. In Anbetracht der bisherigen Diskussion könnte man
 erwarten, dass es sich um das Trait `Stream` handelt, aber ist das Trait
-`StreamExt`. `Ext` steht hier für „extension“ (engl. Erweiterung): Dies ist eine
+`StreamExt`. `Ext` steht hier für „extension“ (Erweiterung): Dies ist eine
 gängige Vorgehensweise in der Rust-Gemeinschaft, um ein Trait mit einem anderen
 zu erweitern.
 

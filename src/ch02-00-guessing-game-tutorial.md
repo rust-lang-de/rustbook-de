@@ -672,9 +672,9 @@ fn main() {
 <span class="caption">Listing 2-3: Hinzufügen von Code zum Generieren einer
 Zufallszahl</span>
 
-Zuerst fügen wir die Zeile `use rand::Rng;` hinzu. Das Trait (engl. Merkmal)
-`Rng` definiert Methoden, die Zufallszahlengeneratoren implementieren, und
-dieses Trait muss im Gültigkeitsbereich sein, damit wir diese Methoden verwenden
+Zuerst fügen wir die Zeile `use rand::Rng;` hinzu. Das Trait (Merkmal) `Rng`
+definiert Methoden, die Zufallszahlengeneratoren implementieren, und dieses
+Trait muss im Gültigkeitsbereich sein, damit wir diese Methoden verwenden
 können. In Kapitel 10 werden Traits im Detail behandelt.
 
 Als nächstes fügen wir zwei Zeilen in der Mitte hinzu. In der ersten Zeile rufen

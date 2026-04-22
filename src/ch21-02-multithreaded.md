@@ -22,7 +22,7 @@ lang zu schlafen, bevor er antwortet.
 ```rust,no_run
 use std::{
     fs,
-    io::{prelude::*, BufReader},
+    io::{BufReader, prelude::*},
     net::{TcpListener, TcpStream},
     thread,
     time::Duration,
@@ -116,8 +116,8 @@ Anstatt unbegrenzt viele Threads zu erzeugen, werden wir eine feste Anzahl von
 Threads im Pool warten lassen. Wenn Anfragen eingehen, werden sie zur
 Verarbeitung an den Pool geschickt. Der Pool verwaltet eine Warteschlange für
 eingehende Anfragen. Jeder der Threads im Pool wird eine Anfrage aus dieser
-Warteschlange holen, die Anfrage bearbeiten und dann die Warteschlange um eine
-weitere Anfrage fragen. Mit diesem Design können wir bis zu _`N`_ Anfragen
+Warteschlange holen, die Anfrage bearbeiten und dann die nächste Anfrage aus der
+Warteschlange holen. Mit diesem Design können wir bis zu _`N`_ Anfragen
 gleichzeitig bearbeiten, wobei _`N`_ die Anzahl der Threads ist. Wenn jeder
 Thread auf eine lang laufende Anfrage antwortet, können sich nachfolgende
 Anfragen immer noch in der Warteschlange rückstauen, aber wir haben die Anzahl
@@ -328,16 +328,17 @@ Bearbeite dann die Datei _main.rs_, um `ThreadPool` in den Gültigkeitsbereich
 der Bibliotheks-Crate zu bringen, indem du den folgenden Code am Anfang von
 _src/main.rs_ hinzufügst:
 
-<span class="filename">Dateiname: src/bin/main.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
 use hello::ThreadPool;
-# use std::fs;
-# use std::io::prelude::*;
-# use std::net::TcpListener;
-# use std::net::TcpStream;
-# use std::thread;
-# use std::time::Duration;
+# use std::{
+#     fs,
+#     io::{BufReader, prelude::*},
+#     net::{TcpListener, TcpStream},
+#     thread,
+#     time::Duration,
+# };
 #
 # fn main() {
 #     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -532,8 +533,8 @@ den Parameter `size`, weil ein Pool mit einer negativen Anzahl von Threads
 keinen Sinn ergibt. Ein Pool mit null Threads ergibt jedoch auch keinen Sinn,
 dennoch ist null ein vollkommen gültiges `usize`. Wir fügen Code hinzu, um zu
 prüfen, ob `size` größer als null ist, bevor wir eine `ThreadPool`-Instanz
-zurückgeben, und das Programm abzubrechen, wenn er eine Null erhält, indem wir
-das Makro `assert!` verwenden, wie in Listing 21-13 gezeigt.
+zurückgeben; wenn `size` null ist, brechen wir das Programm ab, indem wir das
+Makro `assert!` verwenden, wie in Listing 21-13 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -547,7 +548,7 @@ impl ThreadPool {
     ///
     /// # Panics
     ///
-    /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+    /// Die Funktion `new` bricht ab, wenn die Größe null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -633,7 +634,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -739,7 +740,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -795,9 +796,10 @@ wird.
 > genügend Systemressourcen vorhanden sind, bricht `thread::spawn` das Programm
 > ab. Das führt dazu, dass unser gesamter Server abbricht, auch wenn die
 > Erstellung einiger Threads erfolgreich wäre. Der Einfachheit halber lassen wir
-> es bei diesem Verhalten, aber in einer produktiven Thread-Pool-Implementierung
-> würdest du wahrscheinlich [`std::thread::Builder`][builder] mit der Methode
-> [`spawn`][builder-spawn] verwenden wollen, die stattdessen `Result` zurückgibt.
+> es bei diesem Verhalten, aber in einer produktionsreifen
+> Thread-Pool-Implementierung würdest du wahrscheinlich
+> [`std::thread::Builder`][builder] mit der Methode [`spawn`][builder-spawn]
+> verwenden wollen, die stattdessen `Result` zurückgibt.
 
 Dieser Code kompiliert und speichert die Anzahl der `Worker`-Instanzen, die wir
 als Argument für `ThreadPool::new` angegeben haben. Aber wir _verarbeiten_ noch
@@ -806,7 +808,7 @@ an, wie wir das machen.
 
 #### Senden von Anfragen an Threads über Kanäle
 
-Das nächste Problem, das wir angehen, ist dass die Closures bei `thread::spawn`
+Das nächste Problem, das wir angehen, ist, dass die Closures bei `thread::spawn`
 absolut nichts bewirken. Gegenwärtig erhalten wir den Closure, den wir ausführen
 wollen, mit der Methode `execute`. Aber wir müssen `thread::spawn` einen Closure
 geben, der ausgeführt werden soll, wenn wir jeden `Worker` während der
@@ -820,7 +822,7 @@ In Kapitel 16 hast du etwas über _Kanäle_ (channels) gelernt &ndash; eine
 einfache Art der Kommunikation zwischen zwei Threads &ndash;, die für diesen
 Anwendungsfall perfekt geeignet ist. Wir verwenden einen Kanal, der als
 Warteschlange von Aufträgen fungiert, und `execute` sendet einen Auftrag aus dem
-`ThreadPool` an die `Worker`-Instanzen, die den Auftrag an ihren Thread sendet.
+`ThreadPool` an die `Worker`-Instanzen, die den Auftrag an ihren Thread senden.
 Hier ist der Plan:
 
 1. Der `ThreadPool` erstellt einen Kanal und hält den Sender.
@@ -832,10 +834,10 @@ Hier ist der Plan:
 5. In seinem Thread wird der `Worker` auf den Empfänger warten und die Closures
    aller Aufträge, die er erhält, ausführen.
 
-Beginnen wir damit, einen Kanal in `ThreadPool::new` zu erstellen und den
-Sender in der `ThreadPool`-Instanz zu halten, wie in Listing 21-16
-gezeigt. Die Struktur `Job` enthält vorerst nichts, aber sie wird die Art von
-Element sein, die wir in den Kanal senden.
+Beginnen wir damit, einen Kanal in `ThreadPool::new` zu erstellen und den Sender
+in der `ThreadPool`-Instanz zu halten, wie in Listing 21-16 gezeigt. Die
+Struktur `Job` enthält vorerst nichts, sie wird aber der Element-Typ sein, den
+wir in den Kanal senden.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -857,7 +859,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -926,7 +928,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -1031,7 +1033,7 @@ wir vornehmen müssen.
 
 ```rust
 use std::{
-    sync::{mpsc, Arc, Mutex},
+    sync::{Arc, Mutex, mpsc},
     thread,
 };
 // --abschneiden--
@@ -1051,7 +1053,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -1118,7 +1120,7 @@ nutzen zu können. Siehe Listing 21-19.
 
 ```rust
 # use std::{
-#     sync::{mpsc, Arc, Mutex},
+#     sync::{Arc, Mutex, mpsc},
 #     thread,
 # };
 #
@@ -1139,7 +1141,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #
@@ -1209,7 +1211,7 @@ Listing 21-20 gezeigte Änderung in `Worker::new` vornehmen.
 
 ```rust
 # use std::{
-#     sync::{mpsc, Arc, Mutex},
+#     sync::{Arc, Mutex, mpsc},
 #     thread,
 # };
 #
@@ -1227,7 +1229,7 @@ Listing 21-20 gezeigte Änderung in `Worker::new` vornehmen.
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #
@@ -1263,12 +1265,14 @@ Listing 21-20 gezeigte Änderung in `Worker::new` vornehmen.
 
 impl Worker {
     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
-        let thread = thread::spawn(move || loop {
-            let job = receiver.lock().unwrap().recv().unwrap();
+        let thread = thread::spawn(move || {
+            loop {
+                let job = receiver.lock().unwrap().recv().unwrap();
 
-            println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
+                println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 
-            job();
+                job();
+            }
         });
 
         Worker { id, thread }
@@ -1360,7 +1364,7 @@ nicht geschrieben haben, wie in Listing 21-21 gezeigt.
 
 ```rust,not_desired_behavior
 # use std::{
-#     sync::{mpsc, Arc, Mutex},
+#     sync::{Arc, Mutex, mpsc},
 #     thread,
 # };
 #
@@ -1378,7 +1382,7 @@ nicht geschrieben haben, wie in Listing 21-21 gezeigt.
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #

@@ -1,12 +1,12 @@
 ## Closures
 
-Rusts Closures (engl. Funktionsabschlüsse) sind anonyme Funktionen, die du in
-einer Variable speichern oder anderen Funktionen als Argument übergeben kannst.
-Du kannst einen Closure erstellen und dann in einem anderen Zusammenhang
-aufrufen und auswerten. Im Gegensatz zu Funktionen können Closures auf Werte
-(values) im Gültigkeitsbereich (scope) zugreifen, in dem sie erstellt wurden.
-Wir werden im Folgenden zeigen, wie die Funktionalität von Closures die
-Wiederverwendung von Code erlaubt und sein Verhalten anpassen kann.
+Rusts Closures (Funktionsabschlüsse) sind anonyme Funktionen, die du in einer
+Variable speichern oder anderen Funktionen als Argument übergeben kannst. Du
+kannst einen Closure erstellen und dann in einem anderen Zusammenhang aufrufen
+und auswerten. Im Gegensatz zu Funktionen können Closures auf Werte (values) im
+Gültigkeitsbereich (scope) zugreifen, in dem sie erstellt wurden. Wir werden im
+Folgenden zeigen, wie die Funktionalität von Closures die Wiederverwendung von
+Code erlaubt und sein Verhalten anpassen kann.
 
 ### Erfassen der Umgebung
 

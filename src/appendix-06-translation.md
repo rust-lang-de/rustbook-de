@@ -1,4 +1,4 @@
-## Anhang F: Übersetzungen des Buchs
+## Anhang F: Übersetzungen des Buches
 
 Für Ressourcen in anderen Sprachen als Englisch. Die meisten sind noch in
 Arbeit; siehe das [Label `Translations`][label], um zu helfen oder uns über

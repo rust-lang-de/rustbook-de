@@ -78,8 +78,8 @@ let v: Vec<u32> = vec![1, 2, 3];
 
 Wir könnten auch das Makro `vec!` verwenden, um einen Vektor aus zwei ganzen
 Zahlen oder einen Vektor aus fünf String Slices zu erstellen. Mit einer Funktion
-wäre das nicht möglich, da uns weder die Anzahl noch den Typ der Werte im Voraus
-bekannt ist.
+wäre das nicht möglich, da weder die Anzahl noch der Typ der Werte im Voraus
+bekannt sind.
 
 Listing 20-35 zeigt eine leicht vereinfachte Definition des Makros `vec!`.
 
@@ -105,7 +105,7 @@ Makrodefinition `vec!`</span>
 
 > Hinweis: Die eigentliche Definition des Makros `vec!` in der
 > Standardbibliothek enthält Code zum Vorbelegen der korrekten Speichermenge.
-> Dieser Code ist eine Optimierung, die wir hier zur Vereinfachung des 
+> Dieser Code ist eine Optimierung, die wir hier zur Vereinfachung des
 > Beispiels nicht darstellen.
 
 Die Annotation `#[macro_export]` gibt an, dass dieses Makro immer dann zur
@@ -114,21 +114,21 @@ definiert ist, in den Gültigkeitsbereich gebracht wird. Ohne diese Annotation
 kann das Makro nicht in den Gültigkeitsbereich gebracht werden.
 
 Dann beginnen wir die Makrodefinition mit `macro_rules!` und dem Namen des
-Makros, das wir definieren, _ohne_ Ausrufezeichen. Auf den Name, in diesem Fall
-`vec`, folgen geschweifte Klammern, die den Rumpf der
-Makrodefinition kennzeichnen.
+Makros, das wir definieren, _ohne_ Ausrufezeichen. Auf den Namen, in diesem Fall
+`vec`, folgen geschweifte Klammern, die den Rumpf der Makrodefinition
+kennzeichnen.
 
-Die Struktur im `vec!` -Rumpf ähnelt der Struktur eines `match`-Ausdrucks. Hier
+Die Struktur im `vec!`-Rumpf ähnelt der Struktur eines `match`-Ausdrucks. Hier
 haben wir einen Zweig mit dem Muster `( $( $x:expr ),* )`, gefolgt von `=>` und
-dem mit diesem Muster verknüpften Listing. Wenn das Muster passt, wird der
-zugehörige Codeblock ausgegeben. Da dies das einzige Muster in diesem Makro
-ist, kann es nur einen passenden Zweig geben; jedes andere Muster führt
-zu einem Fehler. Komplexere Makros werden mehr als einen Zweig haben.
+dem mit diesem Muster verknüpften Codeblock. Wenn das Muster passt, wird der
+zugehörige Codeblock ausgegeben. Da dies das einzige Muster in diesem Makro ist,
+kann es nur einen passenden Zweig geben; jedes andere Muster führt zu einem
+Fehler. Komplexere Makros werden mehr als einen Zweig haben.
 
 Die gültige Mustersyntax in Makrodefinitionen unterscheidet sich von der in
 Kapitel 19 behandelten Mustersyntax, da Makromuster mit der Rust-Codestruktur
-und nicht mit Werten abgeglichen werden. Lass uns im Folgenden die Bedeutung
-der Musterteile in Listing 20-28 betrachten; die vollständige Makromustersyntax
+und nicht mit Werten abgeglichen werden. Lass uns im Folgenden die Bedeutung der
+Musterteile in Listing 20-35 betrachten; die vollständige Makromustersyntax
 findest du in der [Rust-Referenz][macro-reference].
 
 Zunächst verwenden wir ein äußeres Klammernpaar, um das gesamte Muster zu
@@ -172,7 +172,7 @@ kann, der die angegebenen Elemente enthält.
 
 Um mehr darüber zu erfahren, wie man Makros schreibt, konsultiere die
 Online-Dokumentation oder andere Ressourcen, wie zum Beispiel [„The Little Book
-of Rust Macros“][tlborm] (engl. „Das kleine Buch der Rust-Makros“).
+of Rust Macros“][tlborm].
 
 ### Prozedurale Makros zur Code-Generierung aus Attributen
 
@@ -369,7 +369,7 @@ pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
 ```
 
 <span class="caption">Listing 20-40: Code, den die meisten prozeduralen
-Makro-Crate benötigen, um Rust-Code zu verarbeiten</span>
+Makro-Crates benötigen, um Rust-Code zu verarbeiten</span>
 
 Beachte, dass wir den Code aufgeteilt haben in die Funktion
 `hello_macro_derive`, die für das Parsen des `TokenStream` verantwortlich ist,
@@ -428,16 +428,14 @@ DeriveInput {
 }
 ```
 
-<span class="caption">Listing 20-41: Die `DeriveInput`-Instanz erhalten wir
-beim Parsen des Codes, den das Attribut des Makros in Listing 20-37
-hat</span>
+<span class="caption">Listing 20-41: Die `DeriveInput`-Instanz, die wir
+erhalten, wir den Codes mit dem Makro-Attribut aus Listing 20-37 parsen</span>
 
 Die Felder dieser Struktur zeigen, dass der Rust-Code, den wir geparst haben,
-eine Einheitsstruktur (unit struct) mit dem `ident` (_identifier_, engl.
-Bezeichner, d.h. dem Namen) von `Pancakes` ist. Es gibt weitere Felder in
-dieser Struktur zur Beschreibung aller Arten von Rust-Code; weitere
-Informationen findest du in der [`syn`-Dokumentation für
-`DeriveInput`][syn-docs].
+eine Einheitsstruktur (unit struct) mit dem `ident` (_identifier_, Bezeichner,
+d.h. dem Namen) von `Pancakes` ist. Es gibt weitere Felder in dieser Struktur
+zur Beschreibung aller Arten von Rust-Code; weitere Informationen findest du in
+der [`syn`-Dokumentation für `DeriveInput`][syn-docs].
 
 Bald werden wir die Funktion `impl_hello_macro` definieren, wo wir den neuen
 Rust-Code bauen werden, den wir einbinden wollen. Aber bevor wir das tun,
@@ -523,18 +521,18 @@ annotierten Typs.
 
 Das hier verwendete Makro `stringify!` ist in Rust eingebaut. Es nimmt einen
 Rust-Ausdruck, z.B. `1 + 2`, und verwandelt diesen zur Kompilierzeit in ein
-String-Literal, z.B. `"1 + 2"`. Dies unterscheidet sich von `format!` oder
-`println!`; Makros, die den Ausdruck auswerten und dann das Ergebnis in einen
-`String` umwandeln. Es besteht die Möglichkeit, dass die Eingabe `#Name` ein
+String-Literal, z.B. `"1 + 2"`. Dies unterscheidet sich von Makros wie `format!`
+und `println!`, die den Ausdruck auswerten und dann das Ergebnis in einen
+`String` umwandeln. Es besteht die Möglichkeit, dass die Eingabe `#name` ein
 Ausdruck ist, der literal auszugeben ist, also verwenden wir `stringify!`. Die
 Verwendung von `stringify!` erspart zudem eine Speicherzuweisung, indem `#name`
 zur Kompilierzeit in ein String-Literal umgewandelt wird.
 
 An diesem Punkt sollte `cargo build` sowohl bei `hello_macro` als auch bei
 `hello_macro_derive` erfolgreich durchlaufen. Schließen wir diese Crates an den
-Code in Listing 20-31 an, um das prozedurale Makro in Aktion zu sehen!
-Erstelle ein neues Binärprojekt in deinem _projects_-Verzeichnis durch Aufrufen
-von `cargo new pancakes`. Wir müssen `hello_macro` und `hello_macro_derive` als
+Code in Listing 20-37 an, um das prozedurale Makro in Aktion zu sehen! Erstelle
+ein neues Binärprojekt in deinem _projects_-Verzeichnis durch Aufrufen von
+`cargo new pancakes`. Wir müssen `hello_macro` und `hello_macro_derive` als
 Abhängigkeiten in der Datei _Cargo.toml_ der Crate `pancakes` hinzufügen. Wenn
 du deine Versionen von `hello_macro` und `hello_macro_derive` in
 [crates.io][crates] veröffentlichst, wären das reguläre Abhängigkeiten; wenn
@@ -621,12 +619,12 @@ Code zurück, den wir generieren wollen.
 
 ## Zusammenfassung
 
-Puh! Jetzt hast du einige Rust-Funktionalitäten in deinem Werkzeugkasten, die
-du nicht oft verwenden wirst, aber du wirst wissen, dass sie unter ganz
-bestimmten Umständen verfügbar sind. Wir haben mehrere komplexe Themen
-eingeführt, sodass du diese Konzepte und Syntax erkennen kannst, wenn du ihnen
-in Vorschlägen für Fehlermeldungen oder im Code anderer Leute begegnest.
-Verwende dieses Kapitel als Referenz, um Lösungen zu finden.
+Puh! Jetzt hast du einige Rust-Funktionalitäten in deinem Werkzeugkasten, die du
+nicht oft verwenden wirst, aber du wirst wissen, dass sie unter ganz bestimmten
+Umständen verfügbar sind. Wir haben mehrere komplexe Themen eingeführt, sodass
+du diese Konzepte und Syntax erkennen kannst, wenn du ihnen in Vorschlägen für
+Fehlermeldungen oder im Code anderer Leute begegnest. Verwende dieses Kapitel
+als Referenz, um Lösungen zu finden.
 
 Als Nächstes werden wir alles, was wir im Laufe des Buches besprochen haben, in
 die Praxis umsetzen und ein weiteres Projekt durchführen!

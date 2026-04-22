@@ -522,7 +522,7 @@ bedeutet dies, dass du keinen zusätzlichen Code schreiben und debuggen musst, u
 diese Kontrolle zu erhalten.
 
 Die Eigentümerschaft wirkt sich auf die Funktionsweise vieler anderer Teile von
-Rust aus, deshalb werden wir im weiteren Verlauf des Buchs weiter über diese
+Rust aus, deshalb werden wir im weiteren Verlauf des Buches weiter über diese
 Konzepte sprechen. Lass uns zu Kapitel 5 übergehen und uns das Gruppieren von
 Datenteilen zu einer `struct` ansehen.
 

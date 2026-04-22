@@ -95,9 +95,9 @@ ungültig ist? Es verwendet einen Borrow Checker.
 
 ### Der Borrow Checker
 
-Der Rust-Compiler verfügt über einen _Borrow Checker_ (engl. Ausleihenprüfer), der
-Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Borrows gültig
-sind. Listing 10-17 zeigt den gleichen Code wie Listing 10-16, jedoch mit
+Der Rust-Compiler verfügt über einen _Borrow Checker_ (Ausleihenprüfer), der
+Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Borrows gültig sind.
+Listing 10-17 zeigt den gleichen Code wie Listing 10-16, jedoch mit
 Annotationen, die die Lebensdauer der Variablen angeben.
 
 ```rust,does_not_compile

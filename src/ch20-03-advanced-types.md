@@ -2,8 +2,8 @@
 
 Das Rust-Typsystem weist einige Funktionalitäten auf, die wir bisher erwähnt,
 aber noch nicht besprochen haben. Wir beginnen mit einer allgemeinen Diskussion
-über Newtypes und untersuchen, warum sie als Typen nützlich sind. Dann gehen
-wir zu Typ-Alias über, einer Funktionalität, die den Newtypes ähnlich ist, aber
+über Newtypes und untersuchen, warum sie als Typen nützlich sind. Dann gehen wir
+zu Typ-Aliasen über, einer Funktionalität, die den Newtypes ähnlich ist, aber
 eine etwas andere Semantik hat. Wir werden auch den Typ `!` und dynamisch große
 Typen besprechen.
 
@@ -11,8 +11,8 @@ Typen besprechen.
 
 Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt [„Externe
 Traits mit dem Newtype-Muster implementieren“][newtype] gelesen hast. Das
-Newtype-Muster ist auch für Aufgaben nützlich, die über die bisher besprochenen
-hinausgehen, einschließlich statisch sicherzustellen, dass Werte niemals
+Newtype-Muster ist auch bei Aufgaben hilfreich, die über das bisher Besprochene
+hinausgehen, einschließlich um statisch sicherzustellen, dass Werte niemals
 verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein Beispiel für
 die Verwendung von Newtypes zum Angeben von Einheiten hast du in Listing 20-16
 gesehen: Erinnere dich daran, dass die Strukturen `Millimeters` und `Meters`
@@ -129,7 +129,7 @@ kommunizieren (_thunk_ ist ein Wort für Code, der zu einem späteren Zeitpunkt
 ausgewertet wird, also ein passender Name für einen Closure, der gespeichert
 wird).
 
-Typ-Alias werden auch häufig mit dem Typ `Result<T, E>` verwendet, um
+Typ-Aliase werden auch häufig mit dem Typ `Result<T, E>` verwendet, um
 Wiederholungen zu reduzieren. Betrachte das Modul `std::io` in der
 Standardbibliothek. E/A-Operationen geben oft ein `Result<T, E>` zurück, um
 Situationen zu behandeln, in denen Operationen nicht funktionieren. Diese
@@ -210,8 +210,8 @@ fn bar() -> ! {
 
 Dieser Code wird als „die Funktion `bar` kehrt niemals zurück“ gelesen.
 Funktionen, die niemals zurückkehren, werden _divergierende Funktionen_
-(diverging functions) genannt. Wir können keine Werte vom Typ `!` erzeugen,
-also kann `bar` niemals zurückkehren.
+(diverging functions) genannt. Wir können keine Werte vom Typ `!` erzeugen, also
+kann `bar` niemals zurückkehren.
 
 Aber was nützt ein Typ, für den man nie Werte erzeugen kann? Erinnere dich an
 den Code aus Listing 2-5, der Teil des Zahlenratespiels ist; wir haben einen
@@ -224,7 +224,7 @@ Teil davon hier in Listing 20-27 wiedergegeben.
 # use rand::Rng;
 #
 # fn main() {
-#     println!("Guess the number!");
+#     println!("Rate die Zahl!");
 #
 #     let secret_number = rand::thread_rng().gen_range(1..=100);
 #
@@ -296,7 +296,7 @@ zurückgibt; stattdessen bringt es die Kontrolle zurück an den Anfang der
 Schleife, sodass wir im `Err`-Fall `guess` niemals einen Wert zuweisen.
 
 Der Niemals-Typ ist auch beim Makro `panic!` nützlich. Erinnere dich an die
-Funktion `unwrap`, die wir auf `Option<T>` Werte aufrufen, um einen Wert zu
+Funktion `unwrap`, die wir auf `Option<T>`-Werte aufrufen, um einen Wert zu
 erzeugen oder das Programm abzubrechen. Hier ist ihre Definition:
 
 ```rust,ignore
@@ -351,8 +351,8 @@ im ganzen Buch verwendet haben. Das stimmt, nicht `&str`, sondern `str` an sich
 ist ein DST. In vielen Fällen, beispielsweise beim Speichern von durch einen
 Benutzer eingegebenem Text, können wir erst zur Laufzeit feststellen, wie lang
 der String ist. Das bedeutet, dass wir weder eine Variable vom Typ `str`
-erzeugen, noch wir ein Argument vom Typ `str` nehmen können. Betrachte den
-folgenden Code, der nicht funktioniert:
+erzeugen, noch ein Argument vom Typ `str` nehmen können. Betrachte den folgenden
+Code, der nicht funktioniert:
 
 ```rust,does_not_compile
 let s1: str = "Guten Tag!";
@@ -376,7 +376,7 @@ Speicheradresse des Ortes speichert, an dem sich `T` befindet, hat ein String
 Slice _zwei_ Werte: Die Adresse von `str` und seine Länge. Als solches können
 wir die Größe eines String-Slice-Wertes zur Kompilierzeit kennen: Er ist doppelt
 so lang wie ein `usize`. Das heißt, wir wissen immer die Größe eines String
-Slices, egal wie lang der String ist, auf die er sich bezieht. Im Allgemeinen
+Slices, egal wie lang der String ist, auf den er sich bezieht. Im Allgemeinen
 werden in Rust Typen mit dynamischer Größe auf diese Weise verwendet: Sie haben
 ein zusätzliches Stück Metadaten, das die Größe der dynamischen Information
 speichert. Die goldene Regel für Typen dynamischer Größe lautet, dass wir Werte

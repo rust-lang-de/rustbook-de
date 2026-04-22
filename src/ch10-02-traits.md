@@ -1,10 +1,10 @@
 ## Gemeinsames Verhalten definieren mit Traits
 
-Ein _Trait_ (engl. Merkmal) definiert die Funktionalität, die ein bestimmter Typ
-hat und mit anderen Typen teilen kann. Wir können Traits verwenden, um
-gemeinsames Verhalten auf abstrakte Weise zu definieren. Wir können Trait Bounds
-verwenden, um anzugeben, dass ein generischer Typ jeder Typ sein kann, der ein
-bestimmtes Verhalten aufweist.
+Ein _Trait_ (Merkmal) definiert die Funktionalität, die ein bestimmter Typ hat
+und mit anderen Typen teilen kann. Wir können Traits verwenden, um gemeinsames
+Verhalten auf abstrakte Weise zu definieren. Wir können Trait Bounds verwenden,
+um anzugeben, dass ein generischer Typ jeder Typ sein kann, der ein bestimmtes
+Verhalten aufweist.
 
 > Anmerkung: Traits sind einer Funktionalität recht ähnlich, die in anderen
 > Sprachen oft _Schnittstelle_ (interface) genannt wird, wenn auch mit einigen

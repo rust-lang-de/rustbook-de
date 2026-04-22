@@ -97,10 +97,9 @@ Referenz zeigt, wird nicht aufgeräumt, wenn `s` nicht mehr verwendet wird, weil
 als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um das Eigentum
 zurückzugeben, denn wir hatten nie das Eigentum.
 
-Wir nennen den Vorgang des Erstellens einer Referenz _Borrowing_ (engl.
-Ausleihen). Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von
-ihr ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir
-nicht.
+Wir nennen den Vorgang des Erstellens einer Referenz _Borrowing_ (Ausleihen).
+Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von ihr
+ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir nicht.
 
 Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns ausleihen?
 Versuche den Code in Listing 4-6. Achtung: Es funktioniert nicht!
@@ -220,8 +219,8 @@ gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr kontrollierte
 Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn in den meisten
 Sprachen kann man verändern wann immer man will. Diese Beschränkung hat den
 Vorteil, dass Rust Data Races zur Kompilierzeit verhindern kann. Eine _Data
-Race_ ist ähnlich einer Race Condition (engl. Wettlaufsituation) und tritt auf,
-wenn diese drei Verhaltensweisen vorliegen:
+Race_ ist ähnlich einer Race Condition (Wettlaufsituation) und tritt auf, wenn
+diese drei Verhaltensweisen vorliegen:
 
 - Zwei oder mehr Zeiger greifen gleichzeitig auf die gleichen Daten zu.
 - Mindestens einer der Zeiger wird zum Schreiben auf die Daten verwendet.

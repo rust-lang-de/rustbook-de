@@ -16,11 +16,11 @@ Das Schlüsselwort `async` kann auf Blöcke und Funktionen angewendet werden, um
 anzugeben, dass sie unterbrochen und fortgesetzt werden können. Innerhalb eines
 asynchronen Blocks oder einer asynchronen Funktion kannst du mit dem
 Schlüsselwort `await` auf ein Future warten (d.h. warten bis es fertig ist).
-Jede Stelle, an der du innerhalb eines asynchronen Blocks oder einer
-asynchronen Funktion auf ein Future wartest, ist eine Stelle, an der der
-Block oder die Funktion unterbrochen und fortgesetzt werden kann. Der Vorgang,
-bei dem bei einem Future geprüft wird, ob sein Wert bereits verfügbar ist, wird
-_polling_ (engl. Abfragen) genannt.
+Jede Stelle, an der du innerhalb eines asynchronen Blocks oder einer asynchronen
+Funktion auf ein Future wartest, ist eine Stelle, an der der Block oder die
+Funktion unterbrochen und fortgesetzt werden kann. Der Vorgang, bei dem bei
+einem Future geprüft wird, ob sein Wert bereits verfügbar ist, wird _polling_
+(Abfragen) genannt.
 
 Andere Sprachen wie C# und JavaScript verwenden ebenfalls die Schlüsselwörter
 `async` und `await` für die asynchrone Programmierung. Wenn du mit diesen
@@ -126,7 +126,7 @@ Wir müssen beide Futures explizit abwarten, weil Futures in Rust _faul_ (lazy)
 sind: Sie tun nichts, bis man sie mit dem Schlüsselwort `await` dazu
 auffordert. (Tatsächlich zeigt Rust eine Compiler-Warnung an, wenn du keine
 Futures verwendest.) Das dürfte dich an unsere Diskussion über Iteratoren in
-[„Eine Reihe von Elementen verarbeiten mit Iteratoren“][iterators-lazy] in
+[„Eine Reihe von Elementen mit Iteratoren verarbeiten“][iterators-lazy] in
 Kapitel 13 erinnern. Iteratoren tun nichts, es sei denn, du rufst ihre Methode
 `next` auf &ndash; entweder direkt oder mit Hilfe von `for`-Schleifen
 oder Methoden wie `map`, die `next` unter der Haube verwenden. Ebenso machen

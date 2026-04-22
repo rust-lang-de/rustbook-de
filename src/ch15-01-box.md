@@ -1,10 +1,9 @@
 ## Mit `Box<T>` auf Daten im Heap zeigen
 
 Der einfachste intelligente Zeiger ist Box, deren Typ `Box<T>` lautet. In
-_Boxen_ kann man Daten im Heap (engl. Haldenspeicher) anstatt auf dem Stack
-(engl. Stapelspeicher) speichern. Was auf dem Stack verbleibt, ist der Zeiger
-auf die Daten im Heap. In Kapitel 4 findest du Informationen zum Unterschied
-zwischen Stack und Heap.
+_Boxen_ kann man Daten im Heap anstatt auf dem Stack speichern. Was auf dem
+Stack verbleibt, ist der Zeiger auf die Daten im Heap. In Kapitel 4 findest du
+Informationen zum Unterschied zwischen Stack und Heap.
 
 Boxen haben keinen Performanz-Overhead, außer dass die Daten auf den Heap
 anstatt auf dem Stack gespeichert werden, aber sie haben auch nicht viele

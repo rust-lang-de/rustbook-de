@@ -19,7 +19,7 @@ Sprache Rust, wie du sie heute kennst, vereint jahrelange Forschung im Bereich
 der Systemprogrammierung mit dem praktischen Wissen einer lebendigen und
 leidenschaftlichen Gemeinschaft. Diese Sprache wurde mit Bedacht entwickelt und
 sorgfältig gestaltet, um Entwicklern ein Werkzeug an die Hand zu geben, mit dem
-sie einfacher sicheren, schnellen und zuverlässigen Code schreiben können.
+sie sicheren, schnellen und zuverlässigen Code einfacher schreiben können.
 
 Was Rust jedoch wirklich besonders macht, sind seine Wurzeln, die dir, dem
 Benutzer, die Möglichkeit geben, deine Ziele zu erreichen. Diese Sprache möchte,
@@ -33,8 +33,8 @@ Nachhaltigkeit von Rust zu gewährleisten.
 
 Diese Ausgabe von „Die Programmiersprache Rust“ ist eine umfassende
 Aktualisierung, die die Entwicklung der Sprache im Laufe der Jahre widerspiegelt
-und wertvolle neue Informationen liefert. Aber es ist nicht nur ein Leitfaden
-für Syntax und Bibliotheken &ndash; es ist eine Einladung, Teil einer
+und wertvolle neue Informationen liefert. Aber dieses Buch ist nicht nur ein
+Leitfaden für Syntax und Bibliotheken &ndash; es ist eine Einladung, Teil einer
 Gemeinschaft zu werden, die Wert auf Qualität, Leistung und durchdachtes Design
 legt. Egal, ob du ein versierter Entwickler bist, der Rust zum ersten Mal
 ausprobieren möchte, oder ein erfahrener Rust-Entwickler, der seine Fähigkeiten

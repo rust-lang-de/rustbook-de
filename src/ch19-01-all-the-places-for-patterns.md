@@ -1,4 +1,4 @@
-## Alle Stellen an denen Muster (patterns) verwendet werden können
+## Stellen, an denen Muster verwendet werden können
 
 Muster tauchen an vielen Stellen in Rust auf und du hast sie oft benutzt, ohne
 es zu merken! In diesem Abschnitt werden alle Stellen besprochen, an denen
@@ -7,9 +7,9 @@ Muster gültig sind.
 ### `match`-Zweige
 
 Wie in Kapitel 6 besprochen, verwenden wir Muster in den Zweigen von
-`match`-Ausdrücken. Formal werden `match`-Ausdrücke definiert mit dem
-Schlüsselwort `match`, einem Wert, mit dem verglichen wird, und einem oder
-mehreren `match`-Zweigen, die aus einem Muster und einem Ausdruck bestehen, der
+`match`-Ausdrücken. Formal bestehen `match`-Ausdrücke aus dem Schlüsselwort
+`match`, einem Wert, mit dem verglichen wird, und einem oder mehreren
+`match`-Zweigen, die aus einem Muster und einem Ausdruck bestehen, der
 ausgeführt wird, wenn der Wert zum Muster dieses Zweigs passt, wie hier:
 
 ```rust,ignore
@@ -40,12 +40,12 @@ alle Möglichkeiten abgedeckt sind, ist ein Sammel-Muster (catchall pattern) fü
 den letzten Zweig: Zum Beispiel kann ein Variablenname, der zu einem beliebigen
 Wert passt, niemals fehlschlagen und deckt somit jeden verbleibenden Fall ab.
 
-Das spezielle Muster `_` wird auf alles passen, aber es bindet nie an eine
-Variable, daher wird es oft im letzten `match`-Zweig verwendet. Das Muster `_`
-kann zum Beispiel nützlich sein, wenn du jeden nicht angegebenen Wert
-ignorieren willst. Wir werden das Muster `_` in [„Ignorieren von Werten in
-einem Muster“][ignoring-values-in-a-pattern] später in diesem Kapitel
-ausführlicher behandeln.
+Das spezielle Muster `_` wird auf alles passen, aber es bindet keine Variablen,
+daher wird es oft im letzten `match`-Zweig verwendet. Das Muster `_` kann zum
+Beispiel nützlich sein, wenn du jeden nicht angegebenen Wert ignorieren willst.
+Wir werden das Muster `_` in [„Ignorieren von Werten in einem
+Muster“][ignoring-values-in-a-pattern] später in diesem Kapitel ausführlicher
+behandeln.
 
 ### `let`-Ausdrücke
 
@@ -192,11 +192,11 @@ Du kannst sehen, dass `if let` auch neue Variablen einführen kann, die
 vorhandene Variablen verschatten (shadow) können, so wie bei `match`-Zweigen:
 Die Zeile `if let Ok(age) = age` führt eine neue Variable `age` ein, die den
 Wert innerhalb der `Ok`-Variante enthält und die vorhandene Variable `age`
-verschattet. Das bedeutet, dass wir die Bedingung `if age > 30` innerhalb
-dieses Blocks platzieren müssen: Wir können diese beiden Bedingungen nicht in
-`if let Ok(age) = age && age > 30` kombinieren. Die neue Variable `age`, die
-wir mit 30 vergleichen wollen, ist erst gültig, wenn der neue
-Gültigkeitsbereich mit der geschweiften Klammer beginnt.
+verschattet. Das bedeutet, dass wir die Bedingung `if age > 30` innerhalb dieses
+Blocks platzieren müssen: Wir können diese beiden Bedingungen nicht in `if let
+Ok(age) = age && age > 30` kombinieren. Die neue Variable `age`, die wir mit 30
+vergleichen wollen, ist erst gültig, wenn der neue Gültigkeitsbereich mit der
+geschweiften Klammer beginnt.
 
 Der Nachteil der Verwendung von `if let`-Ausdrücken ist, dass der Compiler die
 Vollständigkeit nicht prüft, während er dies bei `match`-Ausdrücken tut. Wenn
@@ -228,13 +228,13 @@ while let Ok(value) = rx.recv() {
 um Werte so lange auszugeben, wie `rx.recv()` ein `Ok` zurückgibt</span>
 
 Dieses Beispiel gibt `1`, `2` und `3` aus. Die Methode `recv` nimmt die erste
-Nachricht von der Empfängerseite des Kanals und gibt `Ok(value)` zurück. Als
-wir `recv` das erste Mal in Kapitel 16 gesehen haben, haben wir den Fehler
-direkt ausgepackt oder mit ihm als Iterator in einer `for`-Schleife
-interagiert. Wie Listing 19-4 zeigt, können wir aber auch `while let`
-verwenden, da die Methode `recv` nach jeder angekommenen Nachricht den Wert
-`Ok` zurückgibt, solange der Sender existiert, und schließlich `Err`
-zurückgibt, sobald die Senderseite die Verbindung trennt.
+Nachricht von der Empfängerseite des Kanals und gibt `Ok(value)` zurück. Als wir
+`recv` zum ersten Mal in Kapitel 16 gesehen haben, haben wir den Fehler direkt
+ausgepackt oder mit ihm als Iterator in einer `for`-Schleife interagiert. Wie
+Listing 19-4 zeigt, können wir aber auch `while let` verwenden, da die Methode
+`recv` nach jeder angekommenen Nachricht den Wert `Ok` zurückgibt, solange der
+Sender existiert, und schließlich `Err` zurückgibt, sobald die Senderseite die
+Verbindung trennt.
 
 ### `for`-Schleifen
 
@@ -316,10 +316,10 @@ Wir können auch Muster in Closure-Parameterlisten auf die gleiche Weise wie in
 Funktionsparameterlisten verwenden, da Closures ähnlich wie Funktionen sind, wie
 in Kapitel 13 besprochen.
 
-An diesem Punkt hast du verschiedene Möglichkeiten der Verwendung von Mustern
-gesehen, aber Muster funktionieren nicht an allen Stellen, an denen wir sie
-verwenden können, gleich. An manchen Stellen müssen die Muster unabweisbar
-(irrefutable) sein, unter anderen Umständen können sie abweisbar (refutable)
-sein. Wir werden diese beiden Konzepte als Nächstes besprechen.
+An diesem Punkt hast du verschiedene Möglichkeiten gesehen, wie man Muster
+verwenden kann. Muster funktionieren jedoch nicht an allen Stellen
+gleichermaßen. An manchen Stellen müssen die Muster unabweisbar (irrefutable)
+sein, an anderen Stellen können sie abweisbar (refutable) sein. Wir werden diese
+beiden Konzepte als Nächstes besprechen.
 
 [ignoring-values-in-a-pattern]: ch19-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster

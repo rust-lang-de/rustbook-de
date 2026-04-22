@@ -7,7 +7,7 @@ alles passt und daher nicht fehlschlagen kann. Muster, die für irgendeinen
 möglichen Wert nicht passen können, sind _abweisbar_. Ein Beispiel wäre
 `Some(x)` im Ausdruck `if let Some(x) = a_value`, denn wenn der Wert in der
 Variablen `a_value` eher `None` als `Some` ist, wird das Muster `Some(x)` nicht
-passen. 
+passen.
 
 Funktionsparameter, `let`-Anweisungen und `for`-Schleifen können nur
 unabweisbare Muster akzeptieren, da das Programm nichts Sinnvolles tun kann,
@@ -26,10 +26,10 @@ oder das Konstrukt, in dem du das Muster verwendest, ändern, je nach dem
 beabsichtigten Verhalten des Codes.
 
 Betrachten wir ein Beispiel dafür, was passiert, wenn wir versuchen, ein
-abweisbares Muster zu verwenden, wo Rust ein unabweisbares Muster erfordert und
-umgekehrt. Listing 19-8 zeigt eine `let`-Anweisung, allerdings haben wir für
-das Muster `Some(x)` angegeben, ein abweisbares Muster. Wie zu erwarten ist,
-lässt sich dieser Code nicht kompilieren.
+abweisbares Muster zu verwenden, wo Rust ein unabweisbares Muster erfordert.
+Listing 19-8 zeigt eine `let`-Anweisung, allerdings haben wir für das Muster
+`Some(x)` angegeben, ein abweisbares Muster. Wie zu erwarten ist, lässt sich
+dieser Code nicht kompilieren.
 
 ```rust,does_not_compile
 # let some_option_value: Option<i32> = None;

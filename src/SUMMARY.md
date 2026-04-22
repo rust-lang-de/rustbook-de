@@ -70,7 +70,7 @@
 
 - [Funktionale Sprachelemente: Iteratoren und Closures](ch13-00-functional-features.md)
   - [Closures](ch13-01-closures.md)
-  - [Eine Reihe von Elementen verarbeiten mit Iteratoren](ch13-02-iterators.md)
+  - [Eine Reihe von Elementen mit Iteratoren verarbeiten](ch13-02-iterators.md)
   - [Unser E/A-Projekt verbessern](ch13-03-improving-our-io-project.md)
   - [Performanz von Schleifen vs. Iteratoren](ch13-04-performance.md)
 
@@ -90,7 +90,7 @@
   - [Referenzzyklen können zu einem Speicherleck führen](ch15-06-reference-cycles.md)
 
 - [Furchtlose Nebenläufigkeit](ch16-00-concurrency.md)
-  - [Mit Threads Programmcode gleichzeitig ausführen](ch16-01-threads.md)
+  - [Programmcode mit Threads gleichzeitig ausführen](ch16-01-threads.md)
   - [Nachrichtenaustausch zwischen Threads](ch16-02-message-passing.md)
   - [Nebenläufigkeit mit gemeinsamem Zustand](ch16-03-shared-state.md)
   - [Erweiterbare Nebenläufigkeit mit `Send` und `Sync`](ch16-04-extensible-concurrency-sync-and-send.md)
@@ -98,7 +98,7 @@
 - [Grundlagen der asynchronen Programmierung: Async, Await, Futures und Streams](ch17-00-async-await.md)
   - [Futures und die asynchrone Syntax](ch17-01-futures-and-syntax.md)
   - [Anwenden von Nebenläufigkeit mit async](ch17-02-concurrency-with-async.md)
-  - [Abgeben der Kontrolle an die Laufzeitumgebung](ch17-03-more-futures.md)
+  - [Kontrolle an die Laufzeitumgebung abgeben](ch17-03-more-futures.md)
   - [Streams: Sequenz von Futures](ch17-04-streams.md)
   - [Ein genauerer Blick auf die Traits für Async](ch17-05-traits-for-async.md)
   - [Futures, Aufgaben und Threads](ch17-06-futures-tasks-threads.md)
@@ -109,7 +109,7 @@
   - [Ein objektorientiertes Entwurfsmuster implementieren](ch18-03-oo-design-patterns.md)
 
 - [Muster und Pattern Matching](ch19-00-patterns.md)
-  - [Alle Stellen an denen Muster verwendet werden können](ch19-01-all-the-places-for-patterns.md)
+  - [Stellen, an denen Muster verwendet werden können](ch19-01-all-the-places-for-patterns.md)
   - [Abweisbarkeit: Falls ein Muster mal nicht passt](ch19-02-refutability.md)
   - [Mustersyntax](ch19-03-pattern-syntax.md)
 
@@ -131,5 +131,5 @@
   - [C - Ableitbare Traits](appendix-03-derivable-traits.md)
   - [D - Nützliche Entwicklungswerkzeuge](appendix-04-useful-development-tools.md)
   - [E - Editionen](appendix-05-editions.md)
-  - [F - Übersetzungen des Buchs](appendix-06-translation.md)
+  - [F - Übersetzungen des Buches](appendix-06-translation.md)
   - [G - Wie Rust erstellt wird und „nightly Rust“](appendix-07-nightly-rust.md)

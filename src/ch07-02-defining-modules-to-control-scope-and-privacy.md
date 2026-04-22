@@ -39,9 +39,9 @@ erinnern, wie Module funktionieren.
 - **Pfade zum Code in Modulen:** Sobald ein Modul Teil deiner Crate ist, kannst
   du auf den Code in diesem Modul von jedem anderen Ort in derselben Crate aus
   referenzieren, solange die Sichtbarkeitsregeln dies zulassen, indem du den
-  Pfad zum Code verwendest. Zum Beispiel würde ein Typ `Asparagus` (engl.
-  Spargel) im Gartengemüse-Modul unter `crate::garden::vegetables::Asparagus` zu
-  finden sein.
+  Pfad zum Code verwendest. Zum Beispiel würde ein Typ `Asparagus` (Spargel) im
+  Gartengemüse-Modul unter `crate::garden::vegetables::Asparagus` zu finden
+  sein.
 - **Privat vs. öffentlich:** Der Code innerhalb eines Moduls ist standardmäßig
   für seine übergeordneten Module nicht zugänglich. Um ein Modul öffentlich zu
   machen, deklariere es mit `pub mod` anstelle von `mod`. Um Elemente innerhalb

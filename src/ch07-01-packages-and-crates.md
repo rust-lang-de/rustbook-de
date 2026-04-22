@@ -3,14 +3,13 @@
 Die ersten Teile des Modulsystems, die wir behandeln werden, sind Pakete und
 Crates.
 
-Eine _Crate_ (engl. Kiste) ist die kleinste Menge an Code, die der Rust-Compiler
-zu einem bestimmten Zeitpunkt berücksichtigt. Selbst wenn du `rustc` anstelle
-von `cargo` ausführst und eine einzelne Quellcodedatei übergibst (wie wir es
-bereits im Abschnitt [„Grundlagen eines Rust-Programms“][basics] in Kapitel 1
-getan haben), betrachtet der Compiler diese Datei als eine Crate. Crates können
-Module enthalten, und die Module können in anderen Dateien definiert sein, die
-mit der Crate kompiliert werden, wie wir in den nächsten Abschnitten sehen
-werden.
+Eine _Crate_ (Kiste) ist die kleinste Menge an Code, die der Rust-Compiler zu
+einem bestimmten Zeitpunkt berücksichtigt. Selbst wenn du `rustc` anstelle von
+`cargo` ausführst und eine einzelne Quellcodedatei übergibst (wie wir es bereits
+im Abschnitt [„Grundlagen eines Rust-Programms“][basics] in Kapitel 1 getan
+haben), betrachtet der Compiler diese Datei als eine Crate. Crates können Module
+enthalten, und die Module können in anderen Dateien definiert sein, die mit der
+Crate kompiliert werden, wie wir in den nächsten Abschnitten sehen werden.
 
 Es gibt zwei Arten von Crates: Binäre Crates und Bibliotheks-Crates. _Binäre
 Crates_ (binary crates) sind Programme, die du zu einer ausführbaren Datei
