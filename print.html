@@ -5106,19 +5106,18 @@ gleich jeder Instanz eines beliebigen anderen Typs ist – vielleicht, um
 für Tests ein bekanntes Ergebnis zu haben. Dafür bräuchten wir keine Daten! In
 Kapitel 10 wirst du sehen, wie man Traits definiert und sie für beliebige Typen
 implementiert, einschließlich unit-artiker Strukturen.</p>
-<blockquote>
 <h3 id="eigentümerschaft-von-strukturdaten"><a class="header" href="#eigentümerschaft-von-strukturdaten">Eigentümerschaft von Strukturdaten</a></h3>
 <p>In der Strukturdefinition <code>User</code> in Listing 5-1 haben wir den Typ <code>String</code>
 anstelle von <code>&amp;str</code> verwendet. Dies ist eine bewusste Entscheidung, denn wir
-wollen, dass Instanzen dieser Struktur all ihre Daten besitzen und diese
-Daten so lange gültig sind, wie die gesamte Struktur gültig ist.</p>
-<p>Bei Strukturen ist es möglich, Referenzen auf Daten zu speichern, die im
-Besitz von etwas anderem sind, aber das erfordert die Verwendung von
-<em>Lebensdauern</em>, einer Rust-Funktionalität, die wir in Kapitel 10 besprechen
-werden. Die Lebensdauer stellt sicher, dass die von einer Struktur
-referenzierten Daten so lange gültig sind, wie die Struktur gültig ist.
-Angenommen, du versuchst eine Referenz in einer Struktur zu speichern, ohne
-eine Lebensdauer anzugeben, wird das nicht funktionieren:</p>
+wollen, dass Instanzen dieser Struktur all ihre Daten besitzen und diese Daten
+so lange gültig sind, wie die gesamte Struktur gültig ist.</p>
+<p>Bei Strukturen ist es möglich, Referenzen auf Daten zu speichern, die im Besitz
+von etwas anderem sind, aber das erfordert die Verwendung von <em>Lebensdauern</em>,
+einer Rust-Funktionalität, die wir in Kapitel 10 besprechen werden. Die
+Lebensdauer stellt sicher, dass die von einer Struktur referenzierten Daten so
+lange gültig sind, wie die Struktur gültig ist. Angenommen, du versuchst eine
+Referenz in einer Struktur zu speichern, ohne eine Lebensdauer anzugeben, wird
+das nicht funktionieren:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">struct User {
     active: bool,
@@ -5168,11 +5167,10 @@ help: consider introducing a named lifetime parameter
 For more information about this error, try `rustc --explain E0106`.
 error: could not compile `structs` (bin "structs") due to 2 previous errors
 </code></pre>
-<p>In Kapitel 10 werden wir klären, wie man diese Fehler behebt und Referenzen
-in Strukturen speichern kann. Aber für den Moment werden wir Fehler wie diese
+<p>In Kapitel 10 werden wir klären, wie man diese Fehler behebt und Referenzen in
+Strukturen speichern kann. Aber für den Moment werden wir Fehler wie diese
 vermeiden, indem wir Typen wie <code>String</code> anstelle von Referenzen wie <code>&amp;str</code>
 verwenden.</p>
-</blockquote>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="beispielprogramm-mit-strukturen-1"><a href="#beispielprogramm-mit-strukturen-1" class="header">Beispielprogramm mit Strukturen</a></h1>
 <h2 id="beispielprogramm-mit-strukturen"><a class="header" href="#beispielprogramm-mit-strukturen">Beispielprogramm mit Strukturen</a></h2>
