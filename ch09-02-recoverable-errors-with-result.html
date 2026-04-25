@@ -303,7 +303,6 @@ brauchen wir einen zweiten Zweig im inneren <code>match</code>-Ausdruck. Wenn di
 nicht erstellt werden kann, wird eine andere Fehlermeldung ausgegeben. Der
 zweite Zweig des äußeren <code>match</code> bleibt gleich, sodass das Programm bei jedem
 Fehler, außer dem Fehler der fehlenden Datei, abbricht.</p>
-<blockquote>
 <h4 id="alternativen-zur-verwendung-von-match-mit-resultt-e"><a class="header" href="#alternativen-zur-verwendung-von-match-mit-resultt-e">Alternativen zur Verwendung von <code>match</code> mit <code>Result&lt;T, E&gt;</code></a></h4>
 <p>Das sind viele <code>match</code>! Der Ausdruck <code>match</code> ist sehr nützlich, aber auch
 sehr primitiv. In Kapitel 13 wirst du etwas über Closures lernen, die mit
@@ -312,7 +311,7 @@ Methoden können prägnanter sein als die Verwendung von <code>match</code> bei 
 Behandlung von <code>Result&lt;T, E&gt;</code>-Werten in deinem Code.</p>
 <p>Hier ist zum Beispiel eine andere Möglichkeit, die gleiche Logik wie in
 Listing 9-5 zu schreiben, aber unter Verwendung von Closures und der Methode
-<code>unwrap_or_else</code>:</p>
+nwrap_or_else`:</p>
 <pre class="playground"><code class="language-rust edition2024">use std::fs::File;
 use std::io::ErrorKind;
 
@@ -333,7 +332,6 @@ zurück, nachdem du Kapitel 13 gelesen hast, und schlage die Methode
 <code>unwrap_or_else</code> in der Standardbibliotheksdokumentation nach. Viele weitere
 dieser Methoden können große, verschachtelte <code>match</code>-Ausdrücke vermeiden,
 wenn du mit Fehlern zu tun hast.</p>
-</blockquote>
 <h4 id="abkürzungen-zum-abbrechen-im-fehlerfall"><a class="header" href="#abkürzungen-zum-abbrechen-im-fehlerfall">Abkürzungen zum Abbrechen im Fehlerfall</a></h4>
 <p>Das Verwenden von <code>match</code> funktioniert gut genug, aber es kann etwas langatmig
 sein und vermittelt das Vorhaben nicht immer gut. Der Typ <code>Result&lt;T, E&gt;</code> bietet

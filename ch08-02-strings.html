@@ -446,14 +446,14 @@ wäre, der den Byte-Wert zurückgibt, würde er <code>104</code> zurückgeben, n
 Fehler entstehen, die möglicherweise nicht sofort entdeckt werden, kompiliert
 Rust diesen Code überhaupt nicht und verhindert so Missverständnisse in einem
 frühen Stadium des Entwicklungsprozesses.</p>
-<h4 id="bytes-skalare-werte-und-graphemgruppen-grapheme-clusters"><a class="header" href="#bytes-skalare-werte-und-graphemgruppen-grapheme-clusters">Bytes, skalare Werte und Graphemgruppen (grapheme clusters)</a></h4>
+<h4 id="bytes-skalare-werte-und-graphemgruppen"><a class="header" href="#bytes-skalare-werte-und-graphemgruppen">Bytes, skalare Werte und Graphemgruppen</a></h4>
 <p>Ein weiterer Punkt bei UTF-8 ist, dass es eigentlich drei relevante
-Möglichkeiten gibt, Strings aus Rusts Perspektive zu betrachten: Als Bytes, als
-skalare Werte und als Graphemgruppen (das, was wir am ehesten als <em>Buchstaben</em>
+Möglichkeiten gibt, Strings aus Rusts Perspektive zu betrachten: als Bytes, als
+skalare Werte und als Graphemgruppen (was wir am ehesten als <em>Buchstaben</em>
 bezeichnen würden).</p>
 <p>Wenn wir uns das in der Devanagari-Schrift geschriebene Hindi-Wort „नमस्ते“
-(<a href="https://de.wikipedia.org/wiki/Namaste"><em>Namaste</em></a>) ansehen, wird es als ein
-Vektor von <code>u8</code>-Werten gespeichert, der wie folgt aussieht:</p>
+(<a href="https://de.wikipedia.org/wiki/Namaste"><em>Namaste</em></a>) ansehen, wird es als ein Vektor von <code>u8</code>-Werten
+gespeichert, der wie folgt aussieht:</p>
 <pre><code class="language-text">[224, 164, 168, 224, 164, 174, 224, 164, 184, 224, 165, 141, 224, 164, 164,
 224, 165, 135]
 </code></pre>
