@@ -358,81 +358,81 @@ für Tests ein bekanntes Ergebnis zu haben. Dafür bräuchten wir keine Daten! I
 Kapitel 10 wirst du sehen, wie man Traits definiert und sie für beliebige Typen
 implementiert, einschließlich unit-artiker Strukturen.
 
-> ### Eigentümerschaft von Strukturdaten
->
-> In der Strukturdefinition `User` in Listing 5-1 haben wir den Typ `String`
-> anstelle von `&str` verwendet. Dies ist eine bewusste Entscheidung, denn wir
-> wollen, dass Instanzen dieser Struktur all ihre Daten besitzen und diese
-> Daten so lange gültig sind, wie die gesamte Struktur gültig ist.
->
-> Bei Strukturen ist es möglich, Referenzen auf Daten zu speichern, die im
-> Besitz von etwas anderem sind, aber das erfordert die Verwendung von
-> _Lebensdauern_, einer Rust-Funktionalität, die wir in Kapitel 10 besprechen
-> werden. Die Lebensdauer stellt sicher, dass die von einer Struktur
-> referenzierten Daten so lange gültig sind, wie die Struktur gültig ist.
-> Angenommen, du versuchst eine Referenz in einer Struktur zu speichern, ohne
-> eine Lebensdauer anzugeben, wird das nicht funktionieren:
->
-> <span class="filename">Dateiname: src/main.rs</span>
->
-> ```rust,does_not_compile
-> struct User {
->     active: bool,
->     username: &str,
->     email: &str,
->     sign_in_count: u64,
-> }
->
-> fn main() {
->     let user1 = User {
->         active: true,
->         username: "benutzername123",
->         email: "jemand@example.com",
->         sign_in_count: 1,
->     };
-> }
-> ```
->
-> Der Compiler wird sich beschweren, dass die Lebensdauer nicht angegeben ist:
->
-> ```console
-> $ cargo run
->    Compiling structs v0.1.0 (file:///projects/structs)
-> error[E0106]: missing lifetime specifier
->  --> src/main.rs:3:15
->   |
-> 3 |     username: &str,
->   |               ^ expected named lifetime parameter
->   |
-> help: consider introducing a named lifetime parameter
->   |
-> 1 ~ struct User<'a> {
-> 2 |     active: bool,
-> 3 ~     username: &'a str,
->   |
->
-> error[E0106]: missing lifetime specifier
->  --> src/main.rs:4:12
->   |
-> 4 |     email: &str,
->   |            ^ expected named lifetime parameter
->   |
-> help: consider introducing a named lifetime parameter
->   |
-> 1 ~ struct User<'a> {
-> 2 |     active: bool,
-> 3 |     username: &str,
-> 4 ~     email: &'a str,
->   |
->
-> For more information about this error, try `rustc --explain E0106`.
-> error: could not compile `structs` (bin "structs") due to 2 previous errors
-> ```
->
-> In Kapitel 10 werden wir klären, wie man diese Fehler behebt und Referenzen
-> in Strukturen speichern kann. Aber für den Moment werden wir Fehler wie diese
-> vermeiden, indem wir Typen wie `String` anstelle von Referenzen wie `&str`
-> verwenden.
+### Eigentümerschaft von Strukturdaten
+
+In der Strukturdefinition `User` in Listing 5-1 haben wir den Typ `String`
+anstelle von `&str` verwendet. Dies ist eine bewusste Entscheidung, denn wir
+wollen, dass Instanzen dieser Struktur all ihre Daten besitzen und diese Daten
+so lange gültig sind, wie die gesamte Struktur gültig ist.
+
+Bei Strukturen ist es möglich, Referenzen auf Daten zu speichern, die im Besitz
+von etwas anderem sind, aber das erfordert die Verwendung von _Lebensdauern_,
+einer Rust-Funktionalität, die wir in Kapitel 10 besprechen werden. Die
+Lebensdauer stellt sicher, dass die von einer Struktur referenzierten Daten so
+lange gültig sind, wie die Struktur gültig ist. Angenommen, du versuchst eine
+Referenz in einer Struktur zu speichern, ohne eine Lebensdauer anzugeben, wird
+das nicht funktionieren:
+
+<span class="filename">Dateiname: src/main.rs</span>
+
+```rust,does_not_compile
+struct User {
+    active: bool,
+    username: &str,
+    email: &str,
+    sign_in_count: u64,
+}
+
+fn main() {
+    let user1 = User {
+        active: true,
+        username: "benutzername123",
+        email: "jemand@example.com",
+        sign_in_count: 1,
+    };
+}
+```
+
+Der Compiler wird sich beschweren, dass die Lebensdauer nicht angegeben ist:
+
+```console
+$ cargo run
+   Compiling structs v0.1.0 (file:///projects/structs)
+error[E0106]: missing lifetime specifier
+ --> src/main.rs:3:15
+  |
+3 |     username: &str,
+  |               ^ expected named lifetime parameter
+  |
+help: consider introducing a named lifetime parameter
+  |
+1 ~ struct User<'a> {
+2 |     active: bool,
+3 ~     username: &'a str,
+  |
+
+error[E0106]: missing lifetime specifier
+ --> src/main.rs:4:12
+  |
+4 |     email: &str,
+  |            ^ expected named lifetime parameter
+  |
+help: consider introducing a named lifetime parameter
+  |
+1 ~ struct User<'a> {
+2 |     active: bool,
+3 |     username: &str,
+4 ~     email: &'a str,
+  |
+
+For more information about this error, try `rustc --explain E0106`.
+error: could not compile `structs` (bin "structs") due to 2 previous errors
+```
+
+In Kapitel 10 werden wir klären, wie man diese Fehler behebt und Referenzen in
+Strukturen speichern kann. Aber für den Moment werden wir Fehler wie diese
+vermeiden, indem wir Typen wie `String` anstelle von Referenzen wie `&str`
+verwenden.
 
 [copy]: ch04-01-what-is-ownership.html#reine-stack-daten-copy
 [move]: ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-move
