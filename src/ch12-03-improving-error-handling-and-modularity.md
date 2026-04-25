@@ -1,4 +1,4 @@
-## Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern
+## Refactoring, um die Modularität und Fehlerbehandlung zu verbessern
 
 Um unser Programm zu verbessern, werden wir vier Probleme beheben, die mit der
 Struktur des Programms und dem Umgang mit potenziellen Fehlern zu tun haben.
@@ -38,7 +38,7 @@ Wenn sich der gesamte Fehlerbehandlungscode an einer Stelle befindet, wird auch
 sichergestellt, dass wir Meldungen ausgeben, die für unsere Endbenutzer
 aussagekräftig sind.
 
-Lass uns diese vier Probleme angehen, indem wir unser Projekt refaktorieren.
+Lass uns diese vier Probleme mittels Refactoring angehen.
 
 ### Trennen der Zuständigkeiten in Binärprojekten
 
@@ -575,15 +575,14 @@ Großartig! Diese Ausgabe ist viel benutzerfreundlicher.
 
 ### Extrahieren von Logik aus `main`
 
-Da wir mit dem Refaktorieren des Konfigurations-Parsers nun fertig sind, wollen
-wir uns der Logik des Programms zuwenden. Wie wir in [„Trennen der
-Zuständigkeiten in Binärprojekten“][trennen-der-zustaendigkeiten] erklärt
-haben, werden wir eine Funktion namens `run` extrahieren, die die gesamte Logik
-enthält, die sich derzeit in der Funktion `main` befindet und nicht mit dem
-Aufsetzen der Konfiguration oder dem Behandeln von Fehlern zu tun hat. Wenn wir
-fertig sind, wird die Funktion `main` übersichtlich und leicht zu verifizieren
-sein. Zudem werden wir in der Lage sein, Tests für all die andere Logik zu
-schreiben.
+Da wir mit dem Refactoring des Konfigurations-Parsers fertig sind, wollen wir
+uns der Logik des Programms zuwenden. Wie wir in [„Trennen der Zuständigkeiten
+in Binärprojekten“][trennen-der-zustaendigkeiten] erklärt haben, werden wir eine
+Funktion namens `run` extrahieren, die die gesamte Logik enthält, die sich
+derzeit in der Funktion `main` befindet und nicht mit dem Aufsetzen der
+Konfiguration oder dem Behandeln von Fehlern zu tun hat. Wenn wir fertig sind,
+wird die Funktion `main` übersichtlich und leicht zu verifizieren sein. Zudem
+werden wir in der Lage sein, Tests für all die andere Logik zu schreiben.
 
 Listing 12-11 zeigt die extrahierte Funktion `run`. Im Moment machen wir nur
 die kleine, inkrementelle Verbesserung durch Extrahieren der Funktion. Wir sind
