@@ -339,16 +339,16 @@ Fehler entstehen, die möglicherweise nicht sofort entdeckt werden, kompiliert
 Rust diesen Code überhaupt nicht und verhindert so Missverständnisse in einem
 frühen Stadium des Entwicklungsprozesses.
 
-#### Bytes, skalare Werte und Graphemgruppen (grapheme clusters)
+#### Bytes, skalare Werte und Graphemgruppen
 
 Ein weiterer Punkt bei UTF-8 ist, dass es eigentlich drei relevante
-Möglichkeiten gibt, Strings aus Rusts Perspektive zu betrachten: Als Bytes, als
-skalare Werte und als Graphemgruppen (das, was wir am ehesten als _Buchstaben_
+Möglichkeiten gibt, Strings aus Rusts Perspektive zu betrachten: als Bytes, als
+skalare Werte und als Graphemgruppen (was wir am ehesten als _Buchstaben_
 bezeichnen würden).
 
 Wenn wir uns das in der Devanagari-Schrift geschriebene Hindi-Wort „नमस्ते“
-([_Namaste_](https://de.wikipedia.org/wiki/Namaste)) ansehen, wird es als ein 
-Vektor von `u8`-Werten gespeichert, der wie folgt aussieht:
+([_Namaste_][namaste]) ansehen, wird es als ein Vektor von `u8`-Werten
+gespeichert, der wie folgt aussieht:
 
 ```text
 [224, 164, 168, 224, 164, 174, 224, 164, 184, 224, 165, 141, 224, 164, 164,
@@ -492,3 +492,5 @@ Methoden wie `contains` zum Suchen in einem String und `replace` zum Ersetzen
 von Teilen eines Strings durch einen anderen String.
 
 Lass uns zu etwas weniger Kompliziertem übergehen: Hashtabellen!
+
+[namaste]: https://de.wikipedia.org/wiki/Namaste

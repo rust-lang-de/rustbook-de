@@ -417,7 +417,7 @@ use std::io::{self, Write};
 
 Diese Zeile bringt `std::io` und `std::io::Write` in den Gültigkeitsbereich.
 
-### Elemente mit dem Stern-Operator (glob) importieren
+### Elemente mit dem Stern-Operator importieren
 
 Wenn wir _alle_ öffentlichen Elemente, die in einem Pfad definiert sind, in den
 Gültigkeitsbereich bringen wollen, können wir diesen Pfad gefolgt vom
