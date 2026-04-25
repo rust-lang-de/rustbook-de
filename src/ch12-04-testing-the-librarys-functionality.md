@@ -14,7 +14,7 @@ Softwareentwicklungstechnik folgt diesen Schritten:
 1. Schreibe einen Test, der fehlschlägt, und führe ihn aus, um sicherzustellen,
    dass er aus dem von dir erwarteten Grund fehlschlägt.
 2. Schreibe oder modifiziere gerade genug Code, um den neuen Test zu bestehen.
-3. Refaktoriere den Code, den du gerade hinzugefügt oder geändert hast, und
+3. Refactoring des Codes, den du gerade hinzugefügt oder geändert hast, und
    stelle sicher, dass die Tests weiterhin bestanden werden.
 4. Wiederhole ab Schritt 1!
 
@@ -330,13 +330,13 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 Unser Test war erfolgreich, also wissen wir, dass der Code funktioniert!
 
-An diesem Punkt könnten wir Möglichkeiten für eine Refaktorierung der
-Implementierung der Suchfunktion in Betracht ziehen, während die Tests
-weiterlaufen, um die gleiche Funktionalität zu erhalten. Der Code in der
+An diesem Punkt könnten wir Möglichkeiten zum Refactoring der
+Suchfunktion-Implementierung in Betracht ziehen, während die Tests weiter
+funktionieren und die gleiche Funktionalität sicherstellen. Der Code in der
 Suchfunktion ist nicht allzu schlecht, aber er macht sich einige nützliche
 Funktionen der Iteratoren nicht zunutze. Wir kehren zu diesem Beispiel in
-[Kapitel 13][ch13-iterators] zurück, wo wir Iteratoren im Detail untersuchen
-und uns ansehen, wie man sie verbessern kann.
+[Kapitel 13][ch13-iterators] zurück, wo wir Iteratoren im Detail untersuchen und
+uns ansehen, wie man sie verbessern kann.
 
 Jetzt sollte das gesamte Programm funktionieren! Lass es uns ausprobieren,
 zunächst mit einem Wort, das genau eine Zeile aus dem Emily-Dickinson-Gedicht

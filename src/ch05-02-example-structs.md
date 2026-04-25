@@ -70,7 +70,7 @@ und überschaubarer, Breite und Höhe zusammenzufassen. Eine Möglichkeit dazu
 haben wir bereits im Abschnitt [„Der Tupel-Typ“][the-tuple-type] in Kapitel 3
 vorgestellt: Der Einsatz von Tupeln.
 
-### Refaktorierung mit Tupeln
+### Refactoring mit Tupeln
 
 Listing 5-9 zeigt eine weitere Version unseres Programms, die Tupel verwendet.
 
@@ -108,7 +108,7 @@ herauszufinden und im Kopf zu behalten, wenn sie unseren Code verwenden würden.
 Da wir die Bedeutung unserer Daten nicht in unseren Code übertragen haben, ist
 es jetzt einfacher, Fehler zu machen.
 
-### Refaktorierung mit Strukturen
+### Refactoring mit Strukturen
 
 Verwenden wir Strukturen, um durch die Benennung der Daten deren Bedeutung
 anzugeben. Wir können das verwendete Tupel in eine Struktur mit einem Namen

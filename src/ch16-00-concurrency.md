@@ -9,24 +9,23 @@ werden immer wichtiger, da immer mehr Computer die Vorteile mehrerer
 Prozessoren nutzen. In der Vergangenheit war die Programmierung in diesen
 Bereichen schwierig und fehleranfällig: Rust hofft, das ändern zu können.
 
-Ursprünglich dachte das Rust-Team, dass das Gewährleisten von
-Speichersicherheit (memory safety) und das Verhindern von
-Nebenläufigkeitsproblemen (concurrency problems) zwei separate
-Herausforderungen seien, die mit unterschiedlichen Methoden gelöst werden
-müssten. Im Laufe der Zeit entdeckte das Team, dass Eigentümerschaft
-(ownership) und Typsysteme ein leistungsstarkes Instrumentarium zur Bewältigung
-von Speichersicherheits- _und_ Nebenläufigkeitsproblemen sind! Durch das Nutzen
-der Eigentümerschaft und Typprüfung werden viele Nebenläufigkeitsfehler zu
-Kompilierzeitfehlern in Rust anstatt Laufzeitfehlern. Anstatt dass du viel Zeit
-damit verbringen musst, die genauen Umstände zu reproduzieren, unter denen ein
-Laufzeit-Nebenläufigkeitsfehler auftritt, wird der fehlerhafte Code nicht
-kompilieren und einen Fehler anzeigen, der das Problem erklärt. Dadurch kannst
-du deinen Code reparieren, während du daran arbeitest, und nicht möglicherweise
-erst, nachdem er in Produktion ausgeliefert wurde. Wir haben diesem Aspekt von
-Rust den Spitznamen _furchtlose Nebenläufigkeit_ (fearless concurrency)
-gegeben. Die furchtlose Nebenläufigkeit ermöglicht es dir, Code zu schreiben,
-der frei von subtilen Fehlern und leicht zu refaktorieren ist, ohne neue
-Fehler zu erzeugen.
+Ursprünglich dachte das Rust-Team, dass das Gewährleisten von Speichersicherheit
+(memory safety) und das Verhindern von Nebenläufigkeitsproblemen (concurrency
+problems) zwei separate Herausforderungen seien, die mit unterschiedlichen
+Methoden gelöst werden müssten. Im Laufe der Zeit entdeckte das Team, dass
+Eigentümerschaft (ownership) und Typsysteme ein leistungsstarkes Instrumentarium
+zur Bewältigung von Speichersicherheits- _und_ Nebenläufigkeitsproblemen sind!
+Durch das Nutzen der Eigentümerschaft und Typprüfung werden viele
+Nebenläufigkeitsfehler zu Kompilierzeitfehlern in Rust anstatt Laufzeitfehlern.
+Anstatt dass du viel Zeit damit verbringen musst, die genauen Umstände zu
+reproduzieren, unter denen ein Laufzeit-Nebenläufigkeitsfehler auftritt, wird
+der fehlerhafte Code nicht kompilieren und einen Fehler anzeigen, der das
+Problem erklärt. Dadurch kannst du deinen Code reparieren, während du daran
+arbeitest, und nicht möglicherweise erst, nachdem er in Produktion ausgeliefert
+wurde. Wir haben diesem Aspekt von Rust den Spitznamen _furchtlose
+Nebenläufigkeit_ (fearless concurrency) gegeben. Die furchtlose Nebenläufigkeit
+ermöglicht es dir, Code zu schreiben, der frei von subtilen Fehlern und mittels
+Refactoring leicht zu ändern ist, ohne neue Fehler zu erzeugen.
 
 > Anmerkung: Der Einfachheit halber werden wir viele der Probleme als
 > _nebenläufig_ bezeichnen, anstatt präziser zu sein, indem wir _nebenläufig

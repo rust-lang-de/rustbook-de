@@ -52,14 +52,13 @@ landen. Das werden wir ändern.
 
 ### Fehler auf der Standardfehlerausgabe ausgeben
 
-Wir werden den Code in Listing 12-24 verwenden, um zu ändern, wie
-Fehlermeldungen ausgegeben werden. Aufgrund der Refaktorierung, die wir früher
-in diesem Kapitel vorgenommen haben, befindet sich der gesamte Code, der
-Fehlermeldungen ausgibt, in einer einzigen Funktion, nämlich der Funktion
-`main`. Die Standardbibliothek stellt das Makro `eprintln!` zur Verfügung, das
-in die Standardfehlerausgabe schreibt. Lass uns also die beiden Stellen, an
-denen wir `println!` aufgerufen haben, um Fehler auszugeben, ändern und
-stattdessen `eprintln!` verwenden.
+Wir werden den Code in Listing 12-24 verwenden und abändern, wie Fehlermeldungen
+ausgegeben werden. Aufgrund unseres Refactorings früher in diesem Kapitel
+befindet sich der gesamte Code, der Fehlermeldungen ausgibt, in einer einzigen
+Funktion, nämlich der Funktion `main`. Die Standardbibliothek stellt das Makro
+`eprintln!` zur Verfügung, das in die Standardfehlerausgabe schreibt. Lass uns
+also die beiden Stellen, an denen wir `println!` aufgerufen haben, um Fehler
+auszugeben, ändern und stattdessen `eprintln!` verwenden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
