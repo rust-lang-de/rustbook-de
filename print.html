@@ -42,7 +42,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-c1610f93.js"></script>
+        <script src="toc-c41dadfc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -5228,7 +5228,7 @@ nirgendwo klar hervor, dass die Parameter zusammenhängen. Es wäre besser lesba
 und überschaubarer, Breite und Höhe zusammenzufassen. Eine Möglichkeit dazu
 haben wir bereits im Abschnitt <a href="#der-tupel-typ">„Der Tupel-Typ“</a> in Kapitel 3
 vorgestellt: Der Einsatz von Tupeln.</p>
-<h3 id="refaktorierung-mit-tupeln"><a class="header" href="#refaktorierung-mit-tupeln">Refaktorierung mit Tupeln</a></h3>
+<h3 id="refactoring-mit-tupeln"><a class="header" href="#refactoring-mit-tupeln">Refactoring mit Tupeln</a></h3>
 <p>Listing 5-9 zeigt eine weitere Version unseres Programms, die Tupel verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
@@ -5257,7 +5257,7 @@ der Tupelindex <code>1</code> ist. Für andere wäre es noch schwieriger, dies
 herauszufinden und im Kopf zu behalten, wenn sie unseren Code verwenden würden.
 Da wir die Bedeutung unserer Daten nicht in unseren Code übertragen haben, ist
 es jetzt einfacher, Fehler zu machen.</p>
-<h3 id="refaktorierung-mit-strukturen"><a class="header" href="#refaktorierung-mit-strukturen">Refaktorierung mit Strukturen</a></h3>
+<h3 id="refactoring-mit-strukturen"><a class="header" href="#refactoring-mit-strukturen">Refactoring mit Strukturen</a></h3>
 <p>Verwenden wir Strukturen, um durch die Benennung der Daten deren Bedeutung
 anzugeben. Wir können das verwendete Tupel in eine Struktur mit einem Namen
 für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Listing
@@ -14097,8 +14097,8 @@ beheben. Es ist eine gute Praxis, schon früh mit dem Refactoring zu beginnen,
 wenn man ein Programm entwickelt, denn es ist viel einfacher, kleinere
 Code-Mengen umzuformen. Das werden wir als Nächstes tun.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="refaktorierung-um-die-modularität-und-fehlerbehandlung-zu-verbessern-1"><a href="#refaktorierung-um-die-modularität-und-fehlerbehandlung-zu-verbessern-1" class="header">Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></h1>
-<h2 id="refaktorierung-um-die-modularität-und-fehlerbehandlung-zu-verbessern"><a class="header" href="#refaktorierung-um-die-modularität-und-fehlerbehandlung-zu-verbessern">Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></h2>
+<h1 id="refactoring-um-die-modularität-und-fehlerbehandlung-zu-verbessern-1"><a href="#refactoring-um-die-modularität-und-fehlerbehandlung-zu-verbessern-1" class="header">Refactoring, um die Modularität und Fehlerbehandlung zu verbessern</a></h1>
+<h2 id="refactoring-um-die-modularität-und-fehlerbehandlung-zu-verbessern"><a class="header" href="#refactoring-um-die-modularität-und-fehlerbehandlung-zu-verbessern">Refactoring, um die Modularität und Fehlerbehandlung zu verbessern</a></h2>
 <p>Um unser Programm zu verbessern, werden wir vier Probleme beheben, die mit der
 Struktur des Programms und dem Umgang mit potenziellen Fehlern zu tun haben.
 Erstens erfüllt unsere Funktion <code>main</code> jetzt zwei Aufgaben: Sie parst Argumente
@@ -14133,7 +14133,7 @@ konsultieren bräuchten, falls sich die Fehlerbehandlungslogik ändern sollte.
 Wenn sich der gesamte Fehlerbehandlungscode an einer Stelle befindet, wird auch
 sichergestellt, dass wir Meldungen ausgeben, die für unsere Endbenutzer
 aussagekräftig sind.</p>
-<p>Lass uns diese vier Probleme angehen, indem wir unser Projekt refaktorieren.</p>
+<p>Lass uns diese vier Probleme mittels Refactoring angehen.</p>
 <h3 id="trennen-der-zuständigkeiten-in-binärprojekten"><a class="header" href="#trennen-der-zuständigkeiten-in-binärprojekten">Trennen der Zuständigkeiten in Binärprojekten</a></h3>
 <p>Das organisatorische Problem der Zuweisung der Verantwortung für mehrere
 Aufgaben an die Funktion <code>main</code> ist vielen Binärprojekten gemein.
@@ -14595,15 +14595,14 @@ Fehler beim Parsen der Argumente: Nicht genügend Argumente
 </code></pre>
 <p>Großartig! Diese Ausgabe ist viel benutzerfreundlicher.</p>
 <h3 id="extrahieren-von-logik-aus-main"><a class="header" href="#extrahieren-von-logik-aus-main">Extrahieren von Logik aus <code>main</code></a></h3>
-<p>Da wir mit dem Refaktorieren des Konfigurations-Parsers nun fertig sind, wollen
-wir uns der Logik des Programms zuwenden. Wie wir in <a href="#trennen-der-zuständigkeiten-in-binärprojekten">„Trennen der
-Zuständigkeiten in Binärprojekten“</a> erklärt
-haben, werden wir eine Funktion namens <code>run</code> extrahieren, die die gesamte Logik
-enthält, die sich derzeit in der Funktion <code>main</code> befindet und nicht mit dem
-Aufsetzen der Konfiguration oder dem Behandeln von Fehlern zu tun hat. Wenn wir
-fertig sind, wird die Funktion <code>main</code> übersichtlich und leicht zu verifizieren
-sein. Zudem werden wir in der Lage sein, Tests für all die andere Logik zu
-schreiben.</p>
+<p>Da wir mit dem Refactoring des Konfigurations-Parsers fertig sind, wollen wir
+uns der Logik des Programms zuwenden. Wie wir in <a href="#trennen-der-zuständigkeiten-in-binärprojekten">„Trennen der Zuständigkeiten
+in Binärprojekten“</a> erklärt haben, werden wir eine
+Funktion namens <code>run</code> extrahieren, die die gesamte Logik enthält, die sich
+derzeit in der Funktion <code>main</code> befindet und nicht mit dem Aufsetzen der
+Konfiguration oder dem Behandeln von Fehlern zu tun hat. Wenn wir fertig sind,
+wird die Funktion <code>main</code> übersichtlich und leicht zu verifizieren sein. Zudem
+werden wir in der Lage sein, Tests für all die andere Logik zu schreiben.</p>
 <p>Listing 12-11 zeigt die extrahierte Funktion <code>run</code>. Im Moment machen wir nur
 die kleine, inkrementelle Verbesserung durch Extrahieren der Funktion. Wir sind
 immer noch dabei, die Funktion in <em>src/main.rs</em> zu definieren.</p>
@@ -14963,7 +14962,7 @@ Softwareentwicklungstechnik folgt diesen Schritten:</p>
 <li>Schreibe einen Test, der fehlschlägt, und führe ihn aus, um sicherzustellen,
 dass er aus dem von dir erwarteten Grund fehlschlägt.</li>
 <li>Schreibe oder modifiziere gerade genug Code, um den neuen Test zu bestehen.</li>
-<li>Refaktoriere den Code, den du gerade hinzugefügt oder geändert hast, und
+<li>Refactoring des Codes, den du gerade hinzugefügt oder geändert hast, und
 stelle sicher, dass die Tests weiterhin bestanden werden.</li>
 <li>Wiederhole ab Schritt 1!</li>
 </ol>
@@ -15241,13 +15240,13 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Unser Test war erfolgreich, also wissen wir, dass der Code funktioniert!</p>
-<p>An diesem Punkt könnten wir Möglichkeiten für eine Refaktorierung der
-Implementierung der Suchfunktion in Betracht ziehen, während die Tests
-weiterlaufen, um die gleiche Funktionalität zu erhalten. Der Code in der
+<p>An diesem Punkt könnten wir Möglichkeiten zum Refactoring der
+Suchfunktion-Implementierung in Betracht ziehen, während die Tests weiter
+funktionieren und die gleiche Funktionalität sicherstellen. Der Code in der
 Suchfunktion ist nicht allzu schlecht, aber er macht sich einige nützliche
 Funktionen der Iteratoren nicht zunutze. Wir kehren zu diesem Beispiel in
-<a href="#eine-reihe-von-elementen-mit-iteratoren-verarbeiten-1">Kapitel 13</a> zurück, wo wir Iteratoren im Detail untersuchen
-und uns ansehen, wie man sie verbessern kann.</p>
+<a href="#eine-reihe-von-elementen-mit-iteratoren-verarbeiten-1">Kapitel 13</a> zurück, wo wir Iteratoren im Detail untersuchen und
+uns ansehen, wie man sie verbessern kann.</p>
 <p>Jetzt sollte das gesamte Programm funktionieren! Lass es uns ausprobieren,
 zunächst mit einem Wort, das genau eine Zeile aus dem Emily-Dickinson-Gedicht
 wiedergeben sollte: <em>frog</em></p>
@@ -15793,14 +15792,13 @@ nützlicher, wenn Fehlermeldungen wie diese auf der Standardfehlerausgabe
 ausgegeben werden, sodass nur Daten aus einem erfolgreichen Lauf in der Datei
 landen. Das werden wir ändern.</p>
 <h3 id="fehler-auf-der-standardfehlerausgabe-ausgeben"><a class="header" href="#fehler-auf-der-standardfehlerausgabe-ausgeben">Fehler auf der Standardfehlerausgabe ausgeben</a></h3>
-<p>Wir werden den Code in Listing 12-24 verwenden, um zu ändern, wie
-Fehlermeldungen ausgegeben werden. Aufgrund der Refaktorierung, die wir früher
-in diesem Kapitel vorgenommen haben, befindet sich der gesamte Code, der
-Fehlermeldungen ausgibt, in einer einzigen Funktion, nämlich der Funktion
-<code>main</code>. Die Standardbibliothek stellt das Makro <code>eprintln!</code> zur Verfügung, das
-in die Standardfehlerausgabe schreibt. Lass uns also die beiden Stellen, an
-denen wir <code>println!</code> aufgerufen haben, um Fehler auszugeben, ändern und
-stattdessen <code>eprintln!</code> verwenden.</p>
+<p>Wir werden den Code in Listing 12-24 verwenden und abändern, wie Fehlermeldungen
+ausgegeben werden. Aufgrund unseres Refactorings früher in diesem Kapitel
+befindet sich der gesamte Code, der Fehlermeldungen ausgibt, in einer einzigen
+Funktion, nämlich der Funktion <code>main</code>. Die Standardbibliothek stellt das Makro
+<code>eprintln!</code> zur Verfügung, das in die Standardfehlerausgabe schreibt. Lass uns
+also die beiden Stellen, an denen wir <code>println!</code> aufgerufen haben, um Fehler
+auszugeben, ändern und stattdessen <code>eprintln!</code> verwenden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;
@@ -20514,24 +20512,23 @@ bei der verschiedene Teile eines Programms gleichzeitig ausgeführt werden,
 werden immer wichtiger, da immer mehr Computer die Vorteile mehrerer
 Prozessoren nutzen. In der Vergangenheit war die Programmierung in diesen
 Bereichen schwierig und fehleranfällig: Rust hofft, das ändern zu können.</p>
-<p>Ursprünglich dachte das Rust-Team, dass das Gewährleisten von
-Speichersicherheit (memory safety) und das Verhindern von
-Nebenläufigkeitsproblemen (concurrency problems) zwei separate
-Herausforderungen seien, die mit unterschiedlichen Methoden gelöst werden
-müssten. Im Laufe der Zeit entdeckte das Team, dass Eigentümerschaft
-(ownership) und Typsysteme ein leistungsstarkes Instrumentarium zur Bewältigung
-von Speichersicherheits- <em>und</em> Nebenläufigkeitsproblemen sind! Durch das Nutzen
-der Eigentümerschaft und Typprüfung werden viele Nebenläufigkeitsfehler zu
-Kompilierzeitfehlern in Rust anstatt Laufzeitfehlern. Anstatt dass du viel Zeit
-damit verbringen musst, die genauen Umstände zu reproduzieren, unter denen ein
-Laufzeit-Nebenläufigkeitsfehler auftritt, wird der fehlerhafte Code nicht
-kompilieren und einen Fehler anzeigen, der das Problem erklärt. Dadurch kannst
-du deinen Code reparieren, während du daran arbeitest, und nicht möglicherweise
-erst, nachdem er in Produktion ausgeliefert wurde. Wir haben diesem Aspekt von
-Rust den Spitznamen <em>furchtlose Nebenläufigkeit</em> (fearless concurrency)
-gegeben. Die furchtlose Nebenläufigkeit ermöglicht es dir, Code zu schreiben,
-der frei von subtilen Fehlern und leicht zu refaktorieren ist, ohne neue
-Fehler zu erzeugen.</p>
+<p>Ursprünglich dachte das Rust-Team, dass das Gewährleisten von Speichersicherheit
+(memory safety) und das Verhindern von Nebenläufigkeitsproblemen (concurrency
+problems) zwei separate Herausforderungen seien, die mit unterschiedlichen
+Methoden gelöst werden müssten. Im Laufe der Zeit entdeckte das Team, dass
+Eigentümerschaft (ownership) und Typsysteme ein leistungsstarkes Instrumentarium
+zur Bewältigung von Speichersicherheits- <em>und</em> Nebenläufigkeitsproblemen sind!
+Durch das Nutzen der Eigentümerschaft und Typprüfung werden viele
+Nebenläufigkeitsfehler zu Kompilierzeitfehlern in Rust anstatt Laufzeitfehlern.
+Anstatt dass du viel Zeit damit verbringen musst, die genauen Umstände zu
+reproduzieren, unter denen ein Laufzeit-Nebenläufigkeitsfehler auftritt, wird
+der fehlerhafte Code nicht kompilieren und einen Fehler anzeigen, der das
+Problem erklärt. Dadurch kannst du deinen Code reparieren, während du daran
+arbeitest, und nicht möglicherweise erst, nachdem er in Produktion ausgeliefert
+wurde. Wir haben diesem Aspekt von Rust den Spitznamen <em>furchtlose
+Nebenläufigkeit</em> (fearless concurrency) gegeben. Die furchtlose Nebenläufigkeit
+ermöglicht es dir, Code zu schreiben, der frei von subtilen Fehlern und mittels
+Refactoring leicht zu ändern ist, ohne neue Fehler zu erzeugen.</p>
 <blockquote>
 <p>Anmerkung: Der Einfachheit halber werden wir viele der Probleme als
 <em>nebenläufig</em> bezeichnen, anstatt präziser zu sein, indem wir <em>nebenläufig

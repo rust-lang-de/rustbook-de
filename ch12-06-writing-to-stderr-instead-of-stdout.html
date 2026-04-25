@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-c1610f93.js"></script>
+        <script src="toc-c41dadfc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -201,14 +201,13 @@ nützlicher, wenn Fehlermeldungen wie diese auf der Standardfehlerausgabe
 ausgegeben werden, sodass nur Daten aus einem erfolgreichen Lauf in der Datei
 landen. Das werden wir ändern.</p>
 <h3 id="fehler-auf-der-standardfehlerausgabe-ausgeben"><a class="header" href="#fehler-auf-der-standardfehlerausgabe-ausgeben">Fehler auf der Standardfehlerausgabe ausgeben</a></h3>
-<p>Wir werden den Code in Listing 12-24 verwenden, um zu ändern, wie
-Fehlermeldungen ausgegeben werden. Aufgrund der Refaktorierung, die wir früher
-in diesem Kapitel vorgenommen haben, befindet sich der gesamte Code, der
-Fehlermeldungen ausgibt, in einer einzigen Funktion, nämlich der Funktion
-<code>main</code>. Die Standardbibliothek stellt das Makro <code>eprintln!</code> zur Verfügung, das
-in die Standardfehlerausgabe schreibt. Lass uns also die beiden Stellen, an
-denen wir <code>println!</code> aufgerufen haben, um Fehler auszugeben, ändern und
-stattdessen <code>eprintln!</code> verwenden.</p>
+<p>Wir werden den Code in Listing 12-24 verwenden und abändern, wie Fehlermeldungen
+ausgegeben werden. Aufgrund unseres Refactorings früher in diesem Kapitel
+befindet sich der gesamte Code, der Fehlermeldungen ausgibt, in einer einzigen
+Funktion, nämlich der Funktion <code>main</code>. Die Standardbibliothek stellt das Makro
+<code>eprintln!</code> zur Verfügung, das in die Standardfehlerausgabe schreibt. Lass uns
+also die beiden Stellen, an denen wir <code>println!</code> aufgerufen haben, um Fehler
+auszugeben, ändern und stattdessen <code>eprintln!</code> verwenden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;

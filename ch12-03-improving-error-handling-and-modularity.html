@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern - Die Programmiersprache Rust</title>
+        <title>Refactoring, um die Modularität und Fehlerbehandlung zu verbessern - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-c1610f93.js"></script>
+        <script src="toc-c41dadfc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="refaktorierung-um-die-modularität-und-fehlerbehandlung-zu-verbessern"><a class="header" href="#refaktorierung-um-die-modularität-und-fehlerbehandlung-zu-verbessern">Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></h2>
+                        <h2 id="refactoring-um-die-modularität-und-fehlerbehandlung-zu-verbessern"><a class="header" href="#refactoring-um-die-modularität-und-fehlerbehandlung-zu-verbessern">Refactoring, um die Modularität und Fehlerbehandlung zu verbessern</a></h2>
 <p>Um unser Programm zu verbessern, werden wir vier Probleme beheben, die mit der
 Struktur des Programms und dem Umgang mit potenziellen Fehlern zu tun haben.
 Erstens erfüllt unsere Funktion <code>main</code> jetzt zwei Aufgaben: Sie parst Argumente
@@ -196,7 +196,7 @@ konsultieren bräuchten, falls sich die Fehlerbehandlungslogik ändern sollte.
 Wenn sich der gesamte Fehlerbehandlungscode an einer Stelle befindet, wird auch
 sichergestellt, dass wir Meldungen ausgeben, die für unsere Endbenutzer
 aussagekräftig sind.</p>
-<p>Lass uns diese vier Probleme angehen, indem wir unser Projekt refaktorieren.</p>
+<p>Lass uns diese vier Probleme mittels Refactoring angehen.</p>
 <h3 id="trennen-der-zuständigkeiten-in-binärprojekten"><a class="header" href="#trennen-der-zuständigkeiten-in-binärprojekten">Trennen der Zuständigkeiten in Binärprojekten</a></h3>
 <p>Das organisatorische Problem der Zuweisung der Verantwortung für mehrere
 Aufgaben an die Funktion <code>main</code> ist vielen Binärprojekten gemein.
@@ -658,15 +658,14 @@ Fehler beim Parsen der Argumente: Nicht genügend Argumente
 </code></pre>
 <p>Großartig! Diese Ausgabe ist viel benutzerfreundlicher.</p>
 <h3 id="extrahieren-von-logik-aus-main"><a class="header" href="#extrahieren-von-logik-aus-main">Extrahieren von Logik aus <code>main</code></a></h3>
-<p>Da wir mit dem Refaktorieren des Konfigurations-Parsers nun fertig sind, wollen
-wir uns der Logik des Programms zuwenden. Wie wir in <a href="#trennen-der-zuständigkeiten-in-binärprojekten">„Trennen der
-Zuständigkeiten in Binärprojekten“</a> erklärt
-haben, werden wir eine Funktion namens <code>run</code> extrahieren, die die gesamte Logik
-enthält, die sich derzeit in der Funktion <code>main</code> befindet und nicht mit dem
-Aufsetzen der Konfiguration oder dem Behandeln von Fehlern zu tun hat. Wenn wir
-fertig sind, wird die Funktion <code>main</code> übersichtlich und leicht zu verifizieren
-sein. Zudem werden wir in der Lage sein, Tests für all die andere Logik zu
-schreiben.</p>
+<p>Da wir mit dem Refactoring des Konfigurations-Parsers fertig sind, wollen wir
+uns der Logik des Programms zuwenden. Wie wir in <a href="#trennen-der-zuständigkeiten-in-binärprojekten">„Trennen der Zuständigkeiten
+in Binärprojekten“</a> erklärt haben, werden wir eine
+Funktion namens <code>run</code> extrahieren, die die gesamte Logik enthält, die sich
+derzeit in der Funktion <code>main</code> befindet und nicht mit dem Aufsetzen der
+Konfiguration oder dem Behandeln von Fehlern zu tun hat. Wenn wir fertig sind,
+wird die Funktion <code>main</code> übersichtlich und leicht zu verifizieren sein. Zudem
+werden wir in der Lage sein, Tests für all die andere Logik zu schreiben.</p>
 <p>Listing 12-11 zeigt die extrahierte Funktion <code>run</code>. Im Moment machen wir nur
 die kleine, inkrementelle Verbesserung durch Extrahieren der Funktion. Wir sind
 immer noch dabei, die Funktion in <em>src/main.rs</em> zu definieren.</p>
