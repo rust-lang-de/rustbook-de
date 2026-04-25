@@ -173,41 +173,41 @@ nicht erstellt werden kann, wird eine andere Fehlermeldung ausgegeben. Der
 zweite Zweig des äußeren `match` bleibt gleich, sodass das Programm bei jedem
 Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 
-> #### Alternativen zur Verwendung von `match` mit `Result<T, E>`
->
-> Das sind viele `match`! Der Ausdruck `match` ist sehr nützlich, aber auch
-> sehr primitiv. In Kapitel 13 wirst du etwas über Closures lernen, die mit
-> vielen der auf `Result<T, E>` definierten Methoden verwendet werden. Diese
-> Methoden können prägnanter sein als die Verwendung von `match` bei der
-> Behandlung von `Result<T, E>`-Werten in deinem Code.
->
-> Hier ist zum Beispiel eine andere Möglichkeit, die gleiche Logik wie in
-> Listing 9-5 zu schreiben, aber unter Verwendung von Closures und der Methode
-`unwrap_or_else`:
->
-> ```rust
-> use std::fs::File;
-> use std::io::ErrorKind;
->
-> fn main() {
->     let greeting_file = File::open("hallo.txt").unwrap_or_else(|error| {
->         if error.kind() == ErrorKind::NotFound {
->             File::create("hallo.txt").unwrap_or_else(|error| {
->                 panic!("Problem beim Erstellen der Datei: {error:?}");
->             })
->         } else {
->             panic!("Problem beim Öffnen der Datei: {error:?}");
->         }
->     });
-> }
-> ```
->
-> Obwohl dieser Code dasselbe Verhalten wie Listing 9-5 aufweist, enthält er
-> keine `match`-Ausdrücke und ist einfacher zu lesen. Kehre zu diesem Beispiel
-> zurück, nachdem du Kapitel 13 gelesen hast, und schlage die Methode
-> `unwrap_or_else` in der Standardbibliotheksdokumentation nach. Viele weitere
-> dieser Methoden können große, verschachtelte `match`-Ausdrücke vermeiden,
-> wenn du mit Fehlern zu tun hast.
+#### Alternativen zur Verwendung von `match` mit `Result<T, E>`
+
+Das sind viele `match`! Der Ausdruck `match` ist sehr nützlich, aber auch
+sehr primitiv. In Kapitel 13 wirst du etwas über Closures lernen, die mit
+vielen der auf `Result<T, E>` definierten Methoden verwendet werden. Diese
+Methoden können prägnanter sein als die Verwendung von `match` bei der
+Behandlung von `Result<T, E>`-Werten in deinem Code.
+
+Hier ist zum Beispiel eine andere Möglichkeit, die gleiche Logik wie in
+Listing 9-5 zu schreiben, aber unter Verwendung von Closures und der Methode
+nwrap_or_else`:
+
+```rust
+use std::fs::File;
+use std::io::ErrorKind;
+
+fn main() {
+    let greeting_file = File::open("hallo.txt").unwrap_or_else(|error| {
+        if error.kind() == ErrorKind::NotFound {
+            File::create("hallo.txt").unwrap_or_else(|error| {
+                panic!("Problem beim Erstellen der Datei: {error:?}");
+            })
+        } else {
+            panic!("Problem beim Öffnen der Datei: {error:?}");
+        }
+    });
+}
+```
+
+Obwohl dieser Code dasselbe Verhalten wie Listing 9-5 aufweist, enthält er
+keine `match`-Ausdrücke und ist einfacher zu lesen. Kehre zu diesem Beispiel
+zurück, nachdem du Kapitel 13 gelesen hast, und schlage die Methode
+`unwrap_or_else` in der Standardbibliotheksdokumentation nach. Viele weitere
+dieser Methoden können große, verschachtelte `match`-Ausdrücke vermeiden,
+wenn du mit Fehlern zu tun hast.
 
 #### Abkürzungen zum Abbrechen im Fehlerfall
 
