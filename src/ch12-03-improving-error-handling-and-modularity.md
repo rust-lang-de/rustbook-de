@@ -1,4 +1,4 @@
-## Refactoring, um die Modularität und Fehlerbehandlung zu verbessern
+## Refactoring zum Verbessern der Modularität und Fehlerbehandlung
 
 Um unser Programm zu verbessern, werden wir vier Probleme beheben, die mit der
 Struktur des Programms und dem Umgang mit potenziellen Fehlern zu tun haben.
