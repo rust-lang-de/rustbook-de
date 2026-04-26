@@ -496,7 +496,7 @@ hast), Verwenden des Musters <code>_</code> innerhalb eines anderen Musters, Ver
 eines Namens, der mit einem Unterstrich beginnt, oder Verwenden von <code>..</code>, um
 verbleibende Teile eines Wertes zu ignorieren. Lass uns untersuchen, wie und
 wann jedes dieser Muster zu verwenden ist.</p>
-<h4 id="gesamtwert-mit-_"><a class="header" href="#gesamtwert-mit-_">Gesamtwert mit <code>_</code></a></h4>
+<h4 id="den-gesamten-wert-ignorieren-mit-_"><a class="header" href="#den-gesamten-wert-ignorieren-mit-_">Den gesamten Wert ignorieren mit <code>_</code></a></h4>
 <p>Wir haben den Unterstrich (<code>_</code>) als Platzhalter verwendet, der zu jedem Wert
 passt, aber keinen Wert bindet. Dies ist besonders beim letzten Zweig eines
 <code>match</code>-Ausdrucks nützlich, wir können den Unterstrich jedoch in jedem Muster
@@ -520,7 +520,7 @@ Fällen besonders hilfreich sein, z.B. wenn du bei der Implementierung eines
 Traits eine bestimmte Typsignatur benötigst, jedoch der Funktionsrumpf in deiner
 Implementierung keinen der Parameter verwendet. Du kannst dann vermeiden, dass
 der Compiler vor unbenutzten Funktionsparametern warnt.</p>
-<h4 id="teile-eines-wertes-mit-einem-verschachtelten-_"><a class="header" href="#teile-eines-wertes-mit-einem-verschachtelten-_">Teile eines Wertes mit einem verschachtelten <code>_</code></a></h4>
+<h4 id="teile-eines-wertes-ignorieren-mit-einem-inneren-_"><a class="header" href="#teile-eines-wertes-ignorieren-mit-einem-inneren-_">Teile eines Wertes ignorieren mit einem inneren <code>_</code></a></h4>
 <p>Wir können <code>_</code> auch innerhalb eines anderen Musters verwenden, um nur einen Teil
 eines Wertes zu ignorieren, z.B. wenn wir nur auf einen Teil eines Wertes testen
 wollen, aber keine Verwendung für die anderen Teile in dem entsprechenden Code

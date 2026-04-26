@@ -809,17 +809,15 @@ die Lebensdauer der zurückgegebenen Referenz mit der Lebensdauer des Arguments
 Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert. Die
 Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und ist
 nicht über den gesamten <code>Post</code> verstreut.</p>
-<blockquote>
 <h3 id="warum-keine-aufzählung"><a class="header" href="#warum-keine-aufzählung">Warum keine Aufzählung?</a></h3>
 <p>Vielleicht hast du dich gefragt, warum wir nicht ein <code>enum</code> mit den
 verschiedenen möglichen <code>Post</code>-Status als Varianten verwendet haben. Das ist
 sicherlich eine mögliche Lösung. Probiere es aus und vergleiche die
-Endergebnisse, um zu sehen, was du bevorzugst! Ein Nachteil der Verwendung
-einer Aufzählung ist, dass jede Stelle, die den Wert der Aufzählung prüft,
-einen <code>match</code>-Ausdruck oder ähnliches benötigt, um jede mögliche Variante zu
+Endergebnisse, um zu sehen, was du bevorzugst! Ein Nachteil der Verwendung einer
+Aufzählung ist, dass jede Stelle, die den Wert der Aufzählung prüft, einen
+<code>match</code>-Ausdruck oder ähnliches benötigt, um jede mögliche Variante zu
 behandeln. Dies könnte zu mehr Wiederholungen führen als die Lösung mit dem
 Trait-Objekt.</p>
-</blockquote>
 <h4 id="bewerten-des-zustandsmusters"><a class="header" href="#bewerten-des-zustandsmusters">Bewerten des Zustandsmusters</a></h4>
 <p>Wir haben gezeigt, dass Rust in der Lage ist, das objektorientierte
 Zustandsmuster zu implementieren, um die verschiedenen Verhaltensweisen, die ein

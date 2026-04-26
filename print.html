@@ -25131,17 +25131,15 @@ die Lebensdauer der zurückgegebenen Referenz mit der Lebensdauer des Arguments
 Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert. Die
 Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und ist
 nicht über den gesamten <code>Post</code> verstreut.</p>
-<blockquote>
 <h3 id="warum-keine-aufzählung"><a class="header" href="#warum-keine-aufzählung">Warum keine Aufzählung?</a></h3>
 <p>Vielleicht hast du dich gefragt, warum wir nicht ein <code>enum</code> mit den
 verschiedenen möglichen <code>Post</code>-Status als Varianten verwendet haben. Das ist
 sicherlich eine mögliche Lösung. Probiere es aus und vergleiche die
-Endergebnisse, um zu sehen, was du bevorzugst! Ein Nachteil der Verwendung
-einer Aufzählung ist, dass jede Stelle, die den Wert der Aufzählung prüft,
-einen <code>match</code>-Ausdruck oder ähnliches benötigt, um jede mögliche Variante zu
+Endergebnisse, um zu sehen, was du bevorzugst! Ein Nachteil der Verwendung einer
+Aufzählung ist, dass jede Stelle, die den Wert der Aufzählung prüft, einen
+<code>match</code>-Ausdruck oder ähnliches benötigt, um jede mögliche Variante zu
 behandeln. Dies könnte zu mehr Wiederholungen führen als die Lösung mit dem
 Trait-Objekt.</p>
-</blockquote>
 <h4 id="bewerten-des-zustandsmusters"><a class="header" href="#bewerten-des-zustandsmusters">Bewerten des Zustandsmusters</a></h4>
 <p>Wir haben gezeigt, dass Rust in der Lage ist, das objektorientierte
 Zustandsmuster zu implementieren, um die verschiedenen Verhaltensweisen, die ein
@@ -26160,7 +26158,7 @@ hast), Verwenden des Musters <code>_</code> innerhalb eines anderen Musters, Ver
 eines Namens, der mit einem Unterstrich beginnt, oder Verwenden von <code>..</code>, um
 verbleibende Teile eines Wertes zu ignorieren. Lass uns untersuchen, wie und
 wann jedes dieser Muster zu verwenden ist.</p>
-<h4 id="gesamtwert-mit-_"><a class="header" href="#gesamtwert-mit-_">Gesamtwert mit <code>_</code></a></h4>
+<h4 id="den-gesamten-wert-ignorieren-mit-_"><a class="header" href="#den-gesamten-wert-ignorieren-mit-_">Den gesamten Wert ignorieren mit <code>_</code></a></h4>
 <p>Wir haben den Unterstrich (<code>_</code>) als Platzhalter verwendet, der zu jedem Wert
 passt, aber keinen Wert bindet. Dies ist besonders beim letzten Zweig eines
 <code>match</code>-Ausdrucks nützlich, wir können den Unterstrich jedoch in jedem Muster
@@ -26184,7 +26182,7 @@ Fällen besonders hilfreich sein, z.B. wenn du bei der Implementierung eines
 Traits eine bestimmte Typsignatur benötigst, jedoch der Funktionsrumpf in deiner
 Implementierung keinen der Parameter verwendet. Du kannst dann vermeiden, dass
 der Compiler vor unbenutzten Funktionsparametern warnt.</p>
-<h4 id="teile-eines-wertes-mit-einem-verschachtelten-_"><a class="header" href="#teile-eines-wertes-mit-einem-verschachtelten-_">Teile eines Wertes mit einem verschachtelten <code>_</code></a></h4>
+<h4 id="teile-eines-wertes-ignorieren-mit-einem-inneren-_"><a class="header" href="#teile-eines-wertes-ignorieren-mit-einem-inneren-_">Teile eines Wertes ignorieren mit einem inneren <code>_</code></a></h4>
 <p>Wir können <code>_</code> auch innerhalb eines anderen Musters verwenden, um nur einen Teil
 eines Wertes zu ignorieren, z.B. wenn wir nur auf einen Teil eines Wertes testen
 wollen, aber keine Verwendung für die anderen Teile in dem entsprechenden Code
@@ -28901,7 +28899,7 @@ Crate-Benutzer schreiben. Wenn sie also ihre Crate kompilieren, erhalten sie die
 zusätzliche Funktionalität, die wir im modifizierten <code>TokenStream</code> zur Verfügung
 stellen.</p>
 <p>Du hast vielleicht bemerkt, dass wir <code>unwrap</code> aufrufen, um die Funktion
-<code>hello_macro_derive</code> abzubrechen, wenn der Aufruf der Funktion <code>syn::parse</code> hier
+<code>hello_macro_derive</code> abzubrechen, wenn der Aufruf der Funktion <code>syn::parse</code>
 fehlschlägt. Es ist notwendig, dass unser prozedurales Makro bei Fehlern
 abbricht, weil <code>proc_macro_derive</code>-Funktionen einen <code>TokenStream</code> zurückgeben
 müssen, kein <code>Result</code>, um mit der prozeduralen Makro-API konform zu sein. Wir

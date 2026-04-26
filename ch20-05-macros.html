@@ -526,7 +526,7 @@ Crate-Benutzer schreiben. Wenn sie also ihre Crate kompilieren, erhalten sie die
 zusätzliche Funktionalität, die wir im modifizierten <code>TokenStream</code> zur Verfügung
 stellen.</p>
 <p>Du hast vielleicht bemerkt, dass wir <code>unwrap</code> aufrufen, um die Funktion
-<code>hello_macro_derive</code> abzubrechen, wenn der Aufruf der Funktion <code>syn::parse</code> hier
+<code>hello_macro_derive</code> abzubrechen, wenn der Aufruf der Funktion <code>syn::parse</code>
 fehlschlägt. Es ist notwendig, dass unser prozedurales Makro bei Fehlern
 abbricht, weil <code>proc_macro_derive</code>-Funktionen einen <code>TokenStream</code> zurückgeben
 müssen, kein <code>Result</code>, um mit der prozeduralen Makro-API konform zu sein. Wir
