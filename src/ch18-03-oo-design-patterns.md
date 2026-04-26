@@ -709,16 +709,16 @@ Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert. Die
 Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und ist
 nicht über den gesamten `Post` verstreut.
 
-> ### Warum keine Aufzählung?
->
-> Vielleicht hast du dich gefragt, warum wir nicht ein `enum` mit den
-> verschiedenen möglichen `Post`-Status als Varianten verwendet haben. Das ist
-> sicherlich eine mögliche Lösung. Probiere es aus und vergleiche die
-> Endergebnisse, um zu sehen, was du bevorzugst! Ein Nachteil der Verwendung
-> einer Aufzählung ist, dass jede Stelle, die den Wert der Aufzählung prüft,
-> einen `match`-Ausdruck oder ähnliches benötigt, um jede mögliche Variante zu
-> behandeln. Dies könnte zu mehr Wiederholungen führen als die Lösung mit dem
-> Trait-Objekt.
+### Warum keine Aufzählung?
+
+Vielleicht hast du dich gefragt, warum wir nicht ein `enum` mit den
+verschiedenen möglichen `Post`-Status als Varianten verwendet haben. Das ist
+sicherlich eine mögliche Lösung. Probiere es aus und vergleiche die
+Endergebnisse, um zu sehen, was du bevorzugst! Ein Nachteil der Verwendung einer
+Aufzählung ist, dass jede Stelle, die den Wert der Aufzählung prüft, einen
+`match`-Ausdruck oder ähnliches benötigt, um jede mögliche Variante zu
+behandeln. Dies könnte zu mehr Wiederholungen führen als die Lösung mit dem
+Trait-Objekt.
 
 #### Bewerten des Zustandsmusters
 

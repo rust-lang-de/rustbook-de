@@ -446,7 +446,7 @@ zusätzliche Funktionalität, die wir im modifizierten `TokenStream` zur Verfüg
 stellen.
 
 Du hast vielleicht bemerkt, dass wir `unwrap` aufrufen, um die Funktion
-`hello_macro_derive` abzubrechen, wenn der Aufruf der Funktion `syn::parse` hier
+`hello_macro_derive` abzubrechen, wenn der Aufruf der Funktion `syn::parse`
 fehlschlägt. Es ist notwendig, dass unser prozedurales Makro bei Fehlern
 abbricht, weil `proc_macro_derive`-Funktionen einen `TokenStream` zurückgeben
 müssen, kein `Result`, um mit der prozeduralen Makro-API konform zu sein. Wir

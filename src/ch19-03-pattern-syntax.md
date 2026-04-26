@@ -411,7 +411,7 @@ eines Namens, der mit einem Unterstrich beginnt, oder Verwenden von `..`, um
 verbleibende Teile eines Wertes zu ignorieren. Lass uns untersuchen, wie und
 wann jedes dieser Muster zu verwenden ist.
 
-#### Gesamtwert mit `_`
+#### Den gesamten Wert ignorieren mit `_`
 
 Wir haben den Unterstrich (`_`) als Platzhalter verwendet, der zu jedem Wert
 passt, aber keinen Wert bindet. Dies ist besonders beim letzten Zweig eines
@@ -444,7 +444,7 @@ Traits eine bestimmte Typsignatur benötigst, jedoch der Funktionsrumpf in deine
 Implementierung keinen der Parameter verwendet. Du kannst dann vermeiden, dass
 der Compiler vor unbenutzten Funktionsparametern warnt.
 
-#### Teile eines Wertes mit einem verschachtelten `_`
+#### Teile eines Wertes ignorieren mit einem inneren `_`
 
 Wir können `_` auch innerhalb eines anderen Musters verwenden, um nur einen Teil
 eines Wertes zu ignorieren, z.B. wenn wir nur auf einen Teil eines Wertes testen
