@@ -217,9 +217,7 @@ Standardausgabe ausgegeben wurde, mit dem Rest der Fehlermeldung.</p>
 Parameters ausgibt und 10 zurückgibt, sowie einen Test, der bestanden wird, und
 einen Test, der fehlschlägt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust panics edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn prints_and_returns_10(a: i32) -&gt; i32 {
+<pre><code class="language-rust panics ignore">fn prints_and_returns_10(a: i32) -&gt; i32 {
     println!("Ich habe den Wert {a} erhalten.");
     10
 }
@@ -239,8 +237,7 @@ mod tests {
         let value = prints_and_returns_10(8);
         assert_eq!(value, 5);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-10: Tests einer Funktion, die <code>println!</code>
 aufruft</span></p>
 <p>Wenn wir diese Tests mit <code>cargo test</code> ausführen, werden wir folgende Ausgabe
@@ -330,9 +327,7 @@ ausführen willst, als Argument übergibst.</p>
 zuerst drei Tests für unsere Funktion <code>add_two</code> erstellen, wie in Listing
 11-11 zu sehen ist, und auswählen, welche wir ausführen wollen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_two(a: u64) -&gt; u64 {
+<pre><code class="language-rust ignore">pub fn add_two(a: u64) -&gt; u64 {
     a + 2
 }
 
@@ -357,8 +352,7 @@ mod tests {
         let result = add_two(100);
         assert_eq!(result, 102);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-11: Drei Tests mit drei verschiedenen
 Namen</span></p>
 <p>Wenn wir die Tests ohne Argumente ausführen, wie vorhin gesehen, werden alle
@@ -428,9 +422,7 @@ solltest. Anstatt alle Tests, die du ausführen möchtest, als Argumente
 aufzulisten, kannst du die zeitaufwendigen Tests stattdessen mit dem Attribut
 <code>ignore</code> annotieren, um sie auszuschließen, wie hier gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
+<pre><code class="language-rust ignore"><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
 </span><span class="boring">    left + right
 </span><span class="boring">}
 </span><span class="boring">
@@ -449,8 +441,7 @@ mod tests {
     fn expensive_test() {
         // code that takes an hour to run
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Direkt unter <code>#[test]</code> fügen wir die Zeile <code>#[ignore]</code> beim Test ein, den wir
 ausschließen wollen. Wenn wir nun unsere Tests ausführen, läuft <code>it_works</code>,
 aber <code>expensive_test</code> nicht:</p>

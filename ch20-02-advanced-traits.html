@@ -184,14 +184,11 @@ das die Standardbibliothek zur Verfügung stellt. Der assoziierte Typ wird <code
 genannt und steht für den Typ der Werte, über die der Typ, der das Trait
 <code>Iterator</code> implementiert, iteriert. Die Definition des Traits <code>Iterator</code> ist in
 Listing 20-13 zu sehen.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Iterator {
+<pre><code class="language-rust ignore">pub trait Iterator {
     type Item;
 
     fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt;;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-13: Definition des Traits <code>Iterator</code>, das
 einen assoziierten Typ <code>Item</code> hat</span></p>
 <p>Der Typ <code>Item</code> ist ein Platzhalter und die Definition der Methode <code>next</code> zeigt,
@@ -205,9 +202,7 @@ beiden Konzepten zu untersuchen, betrachten wir eine Implementierung des Traits
 <code>Iterator</code> für einen Typ namens <code>Counter</code>, der angibt, dass der <code>Item</code>-Typ <code>u32</code>
 ist:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">struct Counter {
+<pre><code class="language-rust ignore"><span class="boring">struct Counter {
 </span><span class="boring">    count: u32,
 </span><span class="boring">}
 </span><span class="boring">
@@ -229,17 +224,13 @@ ist:</p>
 </span><span class="boring">            None
 </span><span class="boring">        }
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Diese Syntax scheint mit der von generischen Datentypen vergleichbar zu sein.
 Warum also nicht einfach das Trait <code>Iterator</code> mit generischen Datentypen
 definieren, wie in Listing 20-14 gezeigt?</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Iterator&lt;T&gt; {
+<pre><code class="language-rust ignore">pub trait Iterator&lt;T&gt; {
     fn next(&amp;mut self) -&gt; Option&lt;T&gt;;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-14: Eine hypothetische Definition des Traits
 <code>Iterator</code> unter Verwendung eines generischen Datentyps</span></p>
 <p>Der Unterschied ist, dass wir beim Verwenden von generischen Datentypen, wie in
@@ -311,14 +302,11 @@ Trait <code>Add</code> hat einen assoziierten Typ namens <code>Output</code>, de
 <code>add</code> zurückgegebenen Typ bestimmt.</p>
 <p>Der generische Standardtyp in diesem Code befindet sich innerhalb des Traits
 <code>Add</code>. Hier ist seine Definition:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait Add&lt;Rhs=Self&gt; {
+<pre><code class="language-rust ignore">trait Add&lt;Rhs=Self&gt; {
     type Output;
 
     fn add(self, rhs: Rhs) -&gt; Self::Output;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Dieser Code sollte allgemein bekannt aussehen: Ein Trait mit einer Methode und
 einem assoziierten Typ. Der neue Teil ist <code>Rhs=Self</code>: Diese Syntax heißt
 <em>Standardtypparameter</em> (default type parameters). Der generische Typparameter
@@ -340,9 +328,7 @@ Implementierung von <code>Add</code> die Umrechnung korrekt durchführen lassen.
 <code>Add</code> für <code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code> implementieren, wie in Listing
 20-16 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::ops::Add;
+<pre><code class="language-rust ignore">use std::ops::Add;
 
 struct Millimeters(u32);
 struct Meters(u32);
@@ -353,8 +339,7 @@ impl Add&lt;Meters&gt; for Millimeters {
     fn add(self, other: Meters) -&gt; Millimeters {
         Millimeters(self.0 + (other.0 * 1000))
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-16: Implementieren des Traits <code>Add</code> auf
 <code>Millimeters</code>, um <code>Millimeters</code> zu <code>Meters</code> zu addieren</span></p>
 <p>Um <code>Millimeters</code> und <code>Meters</code> zu addieren, geben wir <code>impl Add&lt;Meters&gt;</code> an, um

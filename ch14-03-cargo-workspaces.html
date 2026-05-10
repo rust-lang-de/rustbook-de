@@ -364,9 +364,7 @@ Versionen wie möglich aufzulösen.</p>
 <p>Füge für eine weitere Verbesserung innerhalb der Crate <code>add_one</code> einen Test der
 Funktion <code>add_one::add_one</code> hinzu:</p>
 <p><span class="filename">Dateiname: add_one/src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_one(x: i32) -&gt; i32 {
+<pre><code class="language-rust ignore">pub fn add_one(x: i32) -&gt; i32 {
     x + 1
 }
 
@@ -378,8 +376,7 @@ mod tests {
     fn it_works() {
         assert_eq!(3, add_one(2));
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Führen wir nun <code>cargo test</code> in der obersten Ebene im Verzeichnis <em>add</em> aus. Die
 Ausführung von <code>cargo test</code> in einem Arbeitsbereich, der wie dieser strukturiert
 ist, führt die Tests für alle Crates im Arbeitsbereich aus:</p>

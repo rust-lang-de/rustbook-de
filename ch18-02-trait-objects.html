@@ -230,12 +230,9 @@ allgemeines Verhalten zu ermöglichen.</p>
 <p>In Listing 18-3 wird gezeigt, wie ein Trait <code>Draw</code> mit einer Methode <code>draw</code>
 definiert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Draw {
+<pre><code class="language-rust ignore">pub trait Draw {
     fn draw(&amp;self);
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-3: Definition des Traits <code>Draw</code></span></p>
 <p>Diese Syntax sollte uns aus unseren Diskussionen über die Definition von Traits
 in Kapitel 10 bekannt vorkommen. Als nächstes kommt eine neue Syntax: Listing
@@ -244,16 +241,13 @@ in Kapitel 10 bekannt vorkommen. Als nächstes kommt eine neue Syntax: Listing
 Trait-Objekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer <code>Box</code>,
 der das Trait <code>Draw</code> implementiert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Draw {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
 </span><span class="boring">}
 </span><span class="boring">
 </span>pub struct Screen {
     pub components: Vec&lt;Box&lt;dyn Draw&gt;&gt;,
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-4: Definition der Struktur <code>Screen</code> mit einem
 Feld <code>components</code>, das einen Vektor von Trait-Objekten enthält, die das Trait
 <code>Draw</code> implementieren</span></p>
@@ -261,9 +255,7 @@ Feld <code>components</code>, das einen Vektor von Trait-Objekten enthält, die 
 Methode <code>draw</code> auf jeder ihrer <code>components</code> aufruft, wie in Listing 18-5
 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Draw {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
 </span><span class="boring">}
 </span><span class="boring">
@@ -277,8 +269,7 @@ gezeigt.</p>
             component.draw();
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-5: Eine Methode <code>run</code> auf <code>Screen</code>, die die
 Methode <code>draw</code> jeder Komponente aufruft</span></p>
 <p>Dies funktioniert anders als die Definition einer Struktur, die einen
@@ -289,9 +280,7 @@ das Trait-Objekt einzusetzen. Beispielsweise hätten wir die Struktur <code>Scre
 mit einem generischen Typ und einer Trait Bound wie in Listing 18-6 definieren
 können.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Draw {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
 </span><span class="boring">}
 </span><span class="boring">
@@ -308,8 +297,7 @@ where
             component.draw();
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-6: Eine alternative Implementierung der
 Struktur <code>Screen</code> und ihrer Methode <code>run</code> unter Verwendung generischer Typen und
 Trait Bounds</span></p>
@@ -331,9 +319,7 @@ sich vorzustellen, wie die Implementierung aussehen könnte, könnte eine Strukt
 <code>Button</code> Felder für <code>width</code>, <code>height</code> und <code>label</code> haben, wie in Listing 18-7
 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Draw {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
 </span><span class="boring">}
 </span><span class="boring">
@@ -359,8 +345,7 @@ impl Draw for Button {
     fn draw(&amp;self) {
         // Code zum tatsächlichen Zeichnen einer Schaltfläche
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-7: Eine Struktur <code>Button</code>, die das Trait
 <code>Draw</code> implementiert</span></p>
 <p>Die Felder <code>width</code>, <code>height</code> und <code>label</code> in <code>Button</code> unterscheiden sich von den

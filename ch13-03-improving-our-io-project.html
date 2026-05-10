@@ -560,9 +560,7 @@ wir kehren vorzeitig mit einem <code>Err</code> zurück. Dasselbe machen wir fü
 E/A-Projekts nutzen, die hier in Listing 13-21 wiedergegeben ist, wie im
 Listing 12-19.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust ignore">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     let mut results = Vec::new();
 
     for line in contents.lines() {
@@ -588,7 +586,6 @@ Listing 12-19.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 13-21: Implementierung der Funktion <code>search</code>
 aus Listing 12-19</span></p>
@@ -601,9 +598,7 @@ Verbesserungen ermöglichen, um die Suche parallel auszuführen, da wir uns nich
 um die Verwaltung des simultanen Zugriffs auf den Vektor <code>results</code> kümmern
 müssen. Listing 13-22 zeigt diese Änderung.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust ignore">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     contents
         .lines()
         .filter(|line| line.contains(query))
@@ -656,7 +651,6 @@ müssen. Listing 13-22 zeigt diese Änderung.</p>
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 13-22: Verwendung von Iteratoradapter-Methoden
 bei der Implementierung der Funktion <code>search</code></span></p>

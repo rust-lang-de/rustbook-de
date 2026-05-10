@@ -264,9 +264,7 @@ definiert, das alle Zustandsobjekte für einen <code>Post</code> haben müssen.<
 <code>Option&lt;T&gt;</code> in einem privaten Feld namens <code>state</code> halten, um das Zustandsobjekt
 zu halten. Du wirst gleich sehen, warum die <code>Option&lt;T&gt;</code> notwendig ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct Post {
+<pre><code class="language-rust ignore">pub struct Post {
     state: Option&lt;Box&lt;dyn State&gt;&gt;,
     content: String,
 }
@@ -284,8 +282,7 @@ trait State {}
 
 struct Draft {}
 
-impl State for Draft {}
-<span class="boring">}</span></code></pre>
+impl State for Draft {}</code></pre>
 <p><span class="caption">Listing 18-12: Definition einer Struktur <code>Post</code> und
 einer Funktion <code>new</code>, die eine neue <code>Post</code>-Instanz, ein Trait <code>State</code> sowie eine
 Struktur <code>Draft</code> erzeugt</span></p>
@@ -312,9 +309,7 @@ Feldes <code>content</code> gelesen werden. Die Methode <code>add_text</code> is
 also lass uns die Implementierung in Listing 18-13 zum Block <code>impl Post</code>
 hinzufügen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -337,8 +332,7 @@ hinzufügen.</p>
 </span><span class="boring">
 </span><span class="boring">struct Draft {}
 </span><span class="boring">
-</span><span class="boring">impl State for Draft {}
-</span><span class="boring">}</span></code></pre>
+</span><span class="boring">impl State for Draft {}</span></code></pre>
 <p><span class="caption">Listing 18-13: Implementierung der Methode <code>add_text</code>
 zum Hinzufügen von Text zum <code>content</code> eines Beitrags</span></p>
 <p>Die Methode <code>add_text</code> nimmt eine veränderbare Referenz auf <code>self</code>, weil wir
@@ -360,9 +354,7 @@ Zustand eines Beitrags zu ändern, damit er veröffentlicht werden kann. Bislang
 können Beiträge nur im Entwurfszustand sein, daher sollte der Beitragsinhalt
 immer leer sein. Listing 18-14 zeigt diese Platzhalter-Implementierung.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -389,8 +381,7 @@ immer leer sein. Listing 18-14 zeigt diese Platzhalter-Implementierung.</p>
 </span><span class="boring">
 </span><span class="boring">struct Draft {}
 </span><span class="boring">
-</span><span class="boring">impl State for Draft {}
-</span><span class="boring">}</span></code></pre>
+</span><span class="boring">impl State for Draft {}</span></code></pre>
 <p><span class="caption">Listing 18-14: Hinzufügen einer
 Platzhalter-Implementierung für die Methode <code>content</code> auf <code>Post</code>, die immer
 einen leeren String Slice zurückgibt</span></p>
@@ -401,9 +392,7 @@ bis hin zum ersten <code>assert_eq!</code> wie beabsichtigt.</p>
 eines Beitrags zu beantragen, die seinen Zustand von <code>Draft</code> in <code>PendingReview</code>
 ändern soll. Listing 18-15 zeigt diesen Code.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -450,8 +439,7 @@ impl State for PendingReview {
     fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
         self
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-15: Implementierung der Methoden
 <code>request_review</code> für <code>Post</code> und des Traits <code>State</code></span></p>
 <p>Wir geben <code>Post</code> eine öffentliche Methode namens <code>request_review</code>, die eine
@@ -499,9 +487,7 @@ zweiten <code>assert_eq!</code>-Aufruf!</p>
 <code>state</code> auf den Wert, den der aktuelle Zustand nach der Genehmigung haben
 sollte, wie in Listing 18-16 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -577,8 +563,7 @@ impl State for Published {
     fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
         self
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-16: Implementieren der Methode <code>approve</code> auf
 <code>Post</code> und des Traits <code>State</code></span></p>
 <p>Wir fügen die Methode <code>approve</code> zum Trait <code>State</code> hinzu und fügen eine neue
@@ -595,9 +580,7 @@ dass der von <code>content</code> zurückgegebene Wert vom aktuellen Zustand von
 abhängt, also delegieren wir <code>Post</code> an eine Methode <code>content</code>, die auf seinen
 <code>state</code> definiert ist, wie in Listing 18-17 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -672,7 +655,6 @@ abhängt, also delegieren wir <code>Post</code> an eine Methode <code>content</c
 </span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
 </span><span class="boring">        self
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 18-17: Aktualisieren der Methode <code>content</code> auf
 <code>Post</code> zum Delegieren an eine Methode <code>content</code> auf <code>State</code></span></p>
@@ -702,9 +684,7 @@ implementiert. Das bedeutet, dass wir die Definition des Traits <code>State</cod
 welcher Inhalt je nach Zustand zurückgegeben wird, wie in Listing 18-18 zu
 sehen ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -789,8 +769,7 @@ impl State for Published {
 </span>    fn content&lt;'a&gt;(&amp;self, post: &amp;'a Post) -&gt; &amp;'a str {
         &amp;post.content
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-18: Hinzufügen der Methode <code>content</code> zum
 Trait <code>State</code></span></p>
 <p>Wir fügen eine Standard-Implementierung für die Methode <code>content</code> hinzu, die
@@ -914,9 +893,7 @@ Beitragsentwurfs in der Produktion anzuzeigen, weil sich dieser Code nicht
 einmal kompilieren lässt. Listing 18-19 zeigt die Definition einer Struktur
 <code>Post</code> und einer Struktur <code>DraftPost</code> sowie die Methoden dieser Strukturen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct Post {
+<pre><code class="language-rust ignore">pub struct Post {
     content: String,
 }
 
@@ -940,8 +917,7 @@ impl DraftPost {
     pub fn add_text(&amp;mut self, text: &amp;str) {
         self.content.push_str(text);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-19: Ein <code>Post</code> mit einer Methode <code>content</code>
 und ein <code>DraftPost</code> ohne Methode <code>content</code></span></p>
 <p>Die beiden Strukturen <code>Post</code> und <code>DraftPost</code> haben ein privates Feld <code>content</code>,
@@ -970,9 +946,7 @@ indem wir die Methode <code>request_review</code> auf <code>DraftPost</code> def
 <code>PendingReviewPost</code>, um einen <code>Post</code> zurückzugeben, wie in Listing 18-20
 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    content: String,
 </span><span class="boring">}
 </span><span class="boring">
@@ -1015,8 +989,7 @@ impl PendingReviewPost {
             content: self.content,
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-20: Ein <code>PendingReviewPost</code>, der durch
 Aufrufen von <code>request_review</code> auf <code>DraftPost</code> erzeugt wird, und eine Methode
 <code>approve</code>, die einen <code>PendingReviewPost</code> in einen veröffentlichten <code>Post</code>

@@ -304,9 +304,7 @@ senden oder etwas anderes machen. Die Bibliothek muss dieses Detail nicht
 kennen. Alles, was es braucht, ist Code, der ein von uns bereitgestelltes Trait
 namens <code>Messenger</code> implementiert. Listing 15-20 zeigt den Bibliothekscode.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Messenger {
+<pre><code class="language-rust ignore">pub trait Messenger {
     fn send(&amp;self, msg: &amp;str);
 }
 
@@ -343,8 +341,7 @@ where
                 .send("Warnung: Du hast über 75% deines Kontingents verbraucht!");
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 15-20: Eine Bibliothek um zu verfolgen, wie nahe
 ein Wert an einem Maximalwert liegt, und um zu warnen, wenn der Wert über
 bestimmten Schwellwerten liegt</span></p>
@@ -369,9 +366,7 @@ die erwarteten Nachrichten enthält. Listing 15-21 zeigt den Versuch, ein
 Mock-Objekt zu implementieren, um genau das zu tun, aber der Borrow Checker
 erlaubt dies nicht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Messenger {
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">pub trait Messenger {
 </span><span class="boring">    fn send(&amp;self, msg: &amp;str);
 </span><span class="boring">}
 </span><span class="boring">
@@ -441,8 +436,7 @@ mod tests {
 
         assert_eq!(mock_messenger.sent_messages.len(), 1);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 15-21: Der Versuch, einen <code>MockMessenger</code> zu
 implementieren, der vom Borrow Checker nicht erlaubt wird</span></p>
 <p>Dieser Testcode definiert eine Struktur <code>MockMessenger</code> mit einem Feld
@@ -611,9 +605,7 @@ Implementierung von <code>send</code> in Listing 15-22. Wir versuchen absichtlic
 veränderbare Borrows im selben Gültigkeitsbereich zu erstellen, um zu
 veranschaulichen, dass <code>RefCell&lt;T&gt;</code> uns daran hindert, dies zur Laufzeit zu tun.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust panics edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Messenger {
+<pre><code class="language-rust panics ignore"><span class="boring">pub trait Messenger {
 </span><span class="boring">    fn send(&amp;self, msg: &amp;str);
 </span><span class="boring">}
 </span><span class="boring">
@@ -688,7 +680,6 @@ veranschaulichen, dass <code>RefCell&lt;T&gt;</code> uns daran hindert, dies zur
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(mock_messenger.sent_messages.borrow().len(), 1);
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 15-23: Wir erstellen zwei veränderbare
 Referenzen im selben Gültigkeitsbereich, um zu sehen, dass <code>RefCell&lt;T&gt;</code>

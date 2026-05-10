@@ -190,9 +190,7 @@ Programmierschnittstelle (API) unserer Bibliotheks-Crate, daher markieren wir
 sie mit dem Schlüsselwort <code>pub</code>. Im Abschnitt <a href="#pfade-mit-dem-schlüsselwort-pub-öffentlich-machen">„Pfade mit dem Schlüsselwort
 <code>pub</code> öffentlich machen“</a> gehen wir näher auf <code>pub</code> ein.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod front_of_house {
+<pre><code class="language-rust does_not_compile ignore">mod front_of_house {
     mod hosting {
         fn add_to_waitlist() {}
     }
@@ -204,8 +202,7 @@ pub fn eat_at_restaurant() {
 
     // Relativer Pfad
     front_of_house::hosting::add_to_waitlist();
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 7-3: Aufruf der Funktion <code>add_to_waitlist</code>
 mittels absoluter und relativer Pfade</span></p>
 <p>Beim ersten Aufruf der Funktion <code>add_to_waitlist</code> in <code>eat_at_restaurant</code>
@@ -303,9 +300,7 @@ Schlüsselwort <code>pub</code> verwendest, um ein Element öffentlich zu machen
 untergeordneten Modul hat, also markieren wir das Modul <code>hosting</code> mit dem
 Schlüsselwort <code>pub</code>, wie in Listing 7-5 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod front_of_house {
+<pre><code class="language-rust does_not_compile ignore">mod front_of_house {
     pub mod hosting {
         fn add_to_waitlist() {}
     }
@@ -318,7 +313,6 @@ Schlüsselwort <code>pub</code>, wie in Listing 7-5 gezeigt.</p>
 </span><span class="boring">
 </span><span class="boring">    // Relativer Pfad
 </span><span class="boring">    front_of_house::hosting::add_to_waitlist();
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 7-5: Deklarieren des Moduls <code>hosting</code> als
 <code>pub</code>, um es von <code>eat_at_restaurant</code> aus zu benutzen</span></p>
@@ -453,9 +447,7 @@ Funktion <code>fix_incorrect_order</code>, die im Modul <code>back_of_house</cod
 ruft die im übergeordneten Modul definierte Funktion <code>deliver_order</code> auf, indem
 sie den Pfad zu <code>deliver_order</code> angibt, der mit <code>super</code> beginnt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn deliver_order() {}
+<pre><code class="language-rust ignore">fn deliver_order() {}
 
 mod back_of_house {
     fn fix_incorrect_order() {
@@ -464,8 +456,7 @@ mod back_of_house {
     }
 
     fn cook_order() {}
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 7-8: Aufrufen einer Funktion unter Verwendung
 eines relativen Pfades, der mit <code>super</code> beginnt</span></p>
 <p>Die Funktion <code>fix_incorrect_order</code> befindet sich im Modul <code>back_of_house</code>,
@@ -492,9 +483,7 @@ Mahlzeit begleiten, je nach Saison und Vorrat. Das verfügbare Obst ändert sich
 schnell, sodass die Kunden nicht wählen oder gar sehen können, welches Obst sie
 bekommen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod back_of_house {
+<pre><code class="language-rust ignore">mod back_of_house {
     pub struct Breakfast {
         pub toast: String,
         seasonal_fruit: String,
@@ -521,8 +510,7 @@ pub fn eat_at_restaurant() {
     // auskommentieren; wir dürfen die Früchte der Saison, die wir mit der
     // Mahlzeit bekommen, weder sehen noch verändern.
     // meal.seasonal_fruit = String::from("Heidelbeeren");
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 7-9: Eine Struktur mit öffentlichen und
 privaten Feldern</span></p>
 <p>Da das Feld <code>toast</code> in der Struktur <code>back_of_house::Breakfast</code> öffentlich ist,
@@ -542,9 +530,7 @@ keine solche Funktion hätte, könnten wir keine Instanz von <code>Breakfast</co
 Varianten öffentlich. Wir brauchen nur das Schlüsselwort <code>pub</code> vor dem
 Schlüsselwort <code>enum</code>, wie in Listing 7-10 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod back_of_house {
+<pre><code class="language-rust ignore">mod back_of_house {
     pub enum Appetizer {
         Soup,
         Salad,
@@ -554,8 +540,7 @@ Schlüsselwort <code>enum</code>, wie in Listing 7-10 gezeigt.</p>
 pub fn eat_at_restaurant() {
     let order1 = back_of_house::Appetizer::Soup;
     let order2 = back_of_house::Appetizer::Salad;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 7-10: Kennzeichnen einer Aufzählung als
 öffentlich macht alle ihre Varianten öffentlich</span></p>
 <p>Da wir die Aufzählung <code>Appetizer</code> öffentlich gemacht haben, können wir die

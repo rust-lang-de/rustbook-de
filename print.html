@@ -7273,9 +7273,7 @@ Programmierschnittstelle (API) unserer Bibliotheks-Crate, daher markieren wir
 sie mit dem Schlüsselwort <code>pub</code>. Im Abschnitt <a href="#pfade-mit-dem-schlüsselwort-pub-öffentlich-machen">„Pfade mit dem Schlüsselwort
 <code>pub</code> öffentlich machen“</a> gehen wir näher auf <code>pub</code> ein.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod front_of_house {
+<pre><code class="language-rust does_not_compile ignore">mod front_of_house {
     mod hosting {
         fn add_to_waitlist() {}
     }
@@ -7287,8 +7285,7 @@ pub fn eat_at_restaurant() {
 
     // Relativer Pfad
     front_of_house::hosting::add_to_waitlist();
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 7-3: Aufruf der Funktion <code>add_to_waitlist</code>
 mittels absoluter und relativer Pfade</span></p>
 <p>Beim ersten Aufruf der Funktion <code>add_to_waitlist</code> in <code>eat_at_restaurant</code>
@@ -7386,9 +7383,7 @@ Schlüsselwort <code>pub</code> verwendest, um ein Element öffentlich zu machen
 untergeordneten Modul hat, also markieren wir das Modul <code>hosting</code> mit dem
 Schlüsselwort <code>pub</code>, wie in Listing 7-5 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod front_of_house {
+<pre><code class="language-rust does_not_compile ignore">mod front_of_house {
     pub mod hosting {
         fn add_to_waitlist() {}
     }
@@ -7401,7 +7396,6 @@ Schlüsselwort <code>pub</code>, wie in Listing 7-5 gezeigt.</p>
 </span><span class="boring">
 </span><span class="boring">    // Relativer Pfad
 </span><span class="boring">    front_of_house::hosting::add_to_waitlist();
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 7-5: Deklarieren des Moduls <code>hosting</code> als
 <code>pub</code>, um es von <code>eat_at_restaurant</code> aus zu benutzen</span></p>
@@ -7536,9 +7530,7 @@ Funktion <code>fix_incorrect_order</code>, die im Modul <code>back_of_house</cod
 ruft die im übergeordneten Modul definierte Funktion <code>deliver_order</code> auf, indem
 sie den Pfad zu <code>deliver_order</code> angibt, der mit <code>super</code> beginnt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn deliver_order() {}
+<pre><code class="language-rust ignore">fn deliver_order() {}
 
 mod back_of_house {
     fn fix_incorrect_order() {
@@ -7547,8 +7539,7 @@ mod back_of_house {
     }
 
     fn cook_order() {}
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 7-8: Aufrufen einer Funktion unter Verwendung
 eines relativen Pfades, der mit <code>super</code> beginnt</span></p>
 <p>Die Funktion <code>fix_incorrect_order</code> befindet sich im Modul <code>back_of_house</code>,
@@ -7575,9 +7566,7 @@ Mahlzeit begleiten, je nach Saison und Vorrat. Das verfügbare Obst ändert sich
 schnell, sodass die Kunden nicht wählen oder gar sehen können, welches Obst sie
 bekommen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod back_of_house {
+<pre><code class="language-rust ignore">mod back_of_house {
     pub struct Breakfast {
         pub toast: String,
         seasonal_fruit: String,
@@ -7604,8 +7593,7 @@ pub fn eat_at_restaurant() {
     // auskommentieren; wir dürfen die Früchte der Saison, die wir mit der
     // Mahlzeit bekommen, weder sehen noch verändern.
     // meal.seasonal_fruit = String::from("Heidelbeeren");
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 7-9: Eine Struktur mit öffentlichen und
 privaten Feldern</span></p>
 <p>Da das Feld <code>toast</code> in der Struktur <code>back_of_house::Breakfast</code> öffentlich ist,
@@ -7625,9 +7613,7 @@ keine solche Funktion hätte, könnten wir keine Instanz von <code>Breakfast</co
 Varianten öffentlich. Wir brauchen nur das Schlüsselwort <code>pub</code> vor dem
 Schlüsselwort <code>enum</code>, wie in Listing 7-10 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod back_of_house {
+<pre><code class="language-rust ignore">mod back_of_house {
     pub enum Appetizer {
         Soup,
         Salad,
@@ -7637,8 +7623,7 @@ Schlüsselwort <code>enum</code>, wie in Listing 7-10 gezeigt.</p>
 pub fn eat_at_restaurant() {
     let order1 = back_of_house::Appetizer::Soup;
     let order2 = back_of_house::Appetizer::Salad;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 7-10: Kennzeichnen einer Aufzählung als
 öffentlich macht alle ihre Varianten öffentlich</span></p>
 <p>Da wir die Aufzählung <code>Appetizer</code> öffentlich gemacht haben, können wir die
@@ -7789,9 +7774,7 @@ Listing 7-15 wird gezeigt, wie zwei <code>Result</code>-Typen mit gleichem Namen
 unterschiedlichen Elternmodulen in den Gültigkeitsbereich gebracht werden und
 wie auf sie verwiesen werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::fmt;
+<pre><code class="language-rust ignore">use std::fmt;
 use std::io;
 
 fn function1() -&gt; fmt::Result {
@@ -7802,8 +7785,7 @@ fn function1() -&gt; fmt::Result {
 fn function2() -&gt; io::Result&lt;()&gt; {
     // --abschneiden--
 <span class="boring">    Ok(())
-</span>}
-<span class="boring">}</span></code></pre>
+</span>}</code></pre>
 <p><span class="caption">Listing 7-15: Um zwei Typen mit dem gleichen Namen in
 denselben Gültigkeitsbereich zu bringen, müssen ihre übergeordneten Module
 angegeben werden.</span></p>
@@ -7819,9 +7801,7 @@ Gültigkeitsbereich und Rust wüsste nicht, welchen wir beim Verwenden von
 7-16 zeigt eine weitere Möglichkeit, den Code in Listing 7-15 zu schreiben,
 indem einer der beiden <code>Result</code>-Typen mittels <code>as</code> umbenannt wird.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::fmt::Result;
+<pre><code class="language-rust ignore">use std::fmt::Result;
 use std::io::Result as IoResult;
 
 fn function1() -&gt; Result {
@@ -7832,8 +7812,7 @@ fn function1() -&gt; Result {
 fn function2() -&gt; IoResult&lt;()&gt; {
     // --abschneiden--
 <span class="boring">    Ok(())
-</span>}
-<span class="boring">}</span></code></pre>
+</span>}</code></pre>
 <p><span class="caption">Listing 7-16: Umbenennen eines Typs, wenn er mit dem
 Schlüsselwort <code>as</code> in den Gültigkeitsbereich gebracht wird</span></p>
 <p>In der zweiten <code>use</code>-Anweisung wählten wir den neuen Namen <code>IoResult</code> für den
@@ -7929,10 +7908,7 @@ ausgeliefert wird, brauchen wir <em>Cargo.toml</em> nicht zu ändern, um <code>s
 einzubinden. Aber wir müssen <code>use</code> verwenden, um Elemente von dort in den
 Gültigkeitsbereich unseres Pakets zu bringen. Zum Beispiel würden wir für
 <code>HashMap</code> diese Zeile verwenden:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::collections::HashMap;
-<span class="boring">}</span></code></pre>
+<pre><code class="language-rust ignore">use std::collections::HashMap;</code></pre>
 <p>Dies ist ein absoluter Pfad, der mit <code>std</code>, dem Namen der
 Standardbibliotheks-Crate, beginnt.</p>
 <h3 id="verschachtelte-pfade-verwenden-um-use-listen-zu-vereinfachen"><a class="header" href="#verschachtelte-pfade-verwenden-um-use-listen-zu-vereinfachen">Verschachtelte Pfade verwenden, um <code>use</code>-Listen zu vereinfachen</a></h3>
@@ -7942,25 +7918,19 @@ viel vertikalen Platz in unseren Dateien einnehmen. Zum Beispiel bringen diese
 beiden <code>use</code>-Anweisungen, die wir im Ratespiel in Listing 2-4 hatten, Elemente
 aus <code>std</code> in den Gültigkeitsbereich:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// --abschneiden--
+<pre><code class="language-rust ignore">// --abschneiden--
 use std::cmp::Ordering;
 use std::io;
-// --abschneiden--
-<span class="boring">}</span></code></pre>
+// --abschneiden--</code></pre>
 <p>Stattdessen können wir verschachtelte Pfade verwenden, um die gleichen Elemente
 in einer Zeile in den Gültigkeitsbereich zu bringen. Wir tun dies, indem wir den
 gemeinsamen Teil des Pfades angeben, gefolgt von zwei Doppelpunkten und dann
 geschweiften Klammern um die Liste der Pfadteile, die sich unterscheiden, wie in
 Listing 7-18 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// --abschneiden--
+<pre><code class="language-rust ignore">// --abschneiden--
 use std::{cmp::Ordering, io};
-// --abschneiden--
-<span class="boring">}</span></code></pre>
+// --abschneiden--</code></pre>
 <p><span class="caption">Listing 7-18: Angeben eines verschachtelten Pfades, um
 mehrere Elemente mit demselben Präfix in den Gültigkeitsbereich zu
 bringen</span></p>
@@ -7973,11 +7943,8 @@ Teilpfad teilen. Beispielsweise zeigt Listing 7-19 zwei <code>use</code>-Anweisu
 Eine, die <code>std::io</code> in den Gültigkeitsbereich bringt, und eine, die
 <code>std::io::Write</code> in den Gültigkeitsbereich bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::io;
-use std::io::Write;
-<span class="boring">}</span></code></pre>
+<pre><code class="language-rust ignore">use std::io;
+use std::io::Write;</code></pre>
 <p><span class="caption">Listing 7-19: Zwei <code>use</code>-Anweisungen, bei denen eine
 ein Teilpfad der anderen ist</span></p>
 <p>Der gemeinsame Teil dieser beiden Pfade ist <code>std::io</code> und das ist der
@@ -7985,10 +7952,7 @@ vollständige erste Pfad. Um diese beiden Pfade zu einer einzigen
 <code>use</code>-Anweisung zu verschmelzen, können wir <code>self</code> im verschachtelten Pfad
 verwenden, wie in Listing 7-20 gezeigt wird.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::io::{self, Write};
-<span class="boring">}</span></code></pre>
+<pre><code class="language-rust ignore">use std::io::{self, Write};</code></pre>
 <p><span class="caption">Listing 7-20: Zusammenfassen der Pfade aus Listing
 7-19 zu einer <code>use</code>-Anweisung</span></p>
 <p>Diese Zeile bringt <code>std::io</code> und <code>std::io::Write</code> in den Gültigkeitsbereich.</p>
@@ -7996,10 +7960,7 @@ verwenden, wie in Listing 7-20 gezeigt wird.</p>
 <p>Wenn wir <em>alle</em> öffentlichen Elemente, die in einem Pfad definiert sind, in den
 Gültigkeitsbereich bringen wollen, können wir diesen Pfad gefolgt vom
 Stern-Operator <code>*</code> angeben:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::collections::*;
-<span class="boring">}</span></code></pre>
+<pre><code class="language-rust ignore">use std::collections::*;</code></pre>
 <p>Diese <code>use</code>-Anweisung bringt alle öffentlichen Elemente, die in
 <code>std::collections</code> definiert sind, in den aktuellen Gültigkeitsbereich. Sei
 vorsichtig beim Verwenden des Stern-Operators! Er kann es schwieriger machen,
@@ -10762,12 +10723,9 @@ anfordern, indem wir eine Methode <code>summarize</code> auf einer Instanz aufru
 Listing 10-12 zeigt die Definition eines öffentlichen Traits <code>Summary</code>, die
 dieses Verhalten zum Ausdruck bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Summary {
+<pre><code class="language-rust ignore">pub trait Summary {
     fn summarize(&amp;self) -&gt; String;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 10-12: Ein Trait <code>Summary</code>, dessen Verhalten aus
 der Methode <code>summarize</code> besteht</span></p>
 <p>Hier deklarieren wir ein Trait mit dem Schlüsselwort <code>trait</code> und dann den Namen
@@ -10793,9 +10751,7 @@ verwendet, um den Rückgabewert von <code>summarize</code> zu erzeugen. Für die
 gesamten Text der Nachricht, wobei wir davon ausgehen, dass der Inhalt der
 Nachricht bereits auf 280 Zeichen begrenzt ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
@@ -10823,8 +10779,7 @@ impl Summary for SocialPost {
     fn summarize(&amp;self) -&gt; String {
         format!("{}: {}", self.username, self.content)
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 10-13: Implementierung des Traits <code>Summary</code>
 für die Typen <code>NewsArticle</code> und <code>SocialPost</code></span></p>
 <p>Die Implementierung eines Traits für einen Typ ist ähnlich zur Implementierung
@@ -10885,9 +10840,7 @@ können wir das Standardverhalten jeder Methode beibehalten oder überschreiben.
 Traits <code>Summary</code> an, anstatt nur die Methodensignatur zu definieren, wie wir es
 in Listing 10-12 getan haben.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Summary {
+<pre><code class="language-rust ignore">pub trait Summary {
     fn summarize(&amp;self) -&gt; String {
         String::from("(Lies mehr ...)")
     }
@@ -10913,7 +10866,6 @@ in Listing 10-12 getan haben.</p>
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
 </span><span class="boring">        format!("{}: {}", self.username, self.content)
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 10-14: Definieren eines Traits <code>Summary</code> mit
 einer Standard-Implementierung der Methode <code>summarize</code></span></p>
@@ -10952,9 +10904,7 @@ Beispiel könnten wir das Trait <code>Summary</code> so definieren, dass wir ein
 <code>summarize_author</code> haben, deren Implementierung erforderlich ist, und dann eine
 Methode <code>summarize</code> definieren, die eine Standard-Implementierung hat und die
 Methode <code>summarize_author</code> aufruft:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Summary {
+<pre><code class="language-rust ignore">pub trait Summary {
     fn summarize_author(&amp;self) -&gt; String;
 
     fn summarize(&amp;self) -&gt; String {
@@ -10973,13 +10923,10 @@ Methode <code>summarize_author</code> aufruft:</p>
 </span><span class="boring">    fn summarize_author(&amp;self) -&gt; String {
 </span><span class="boring">        format!("@{}", self.username)
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Um diese Version von <code>Summary</code> zu verwenden, müssen wir <code>summarize_author</code> nur
 dann definieren, wenn wir das Trait für einen Typ implementieren:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize_author(&amp;self) -&gt; String;
 </span><span class="boring">
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
@@ -10998,8 +10945,7 @@ dann definieren, wenn wir das Trait für einen Typ implementieren:</p>
     fn summarize_author(&amp;self) -&gt; String {
         format!("@{}", self.username)
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Nachdem wir <code>summarize_author</code> definiert haben, können wir <code>summarize</code> auf
 Instanzen der <code>SocialPost</code>-Struktur aufrufen, und die Standard-Implementierung
 von <code>summarize</code> wird die Definition von <code>summarize_author</code> aufrufen, die wir
@@ -11030,9 +10976,7 @@ um eine Funktion <code>notify</code> zu definieren, die die Methode <code>summar
 Parameter <code>item</code> aufruft, der von einem Typ ist, der das Trait <code>Summary</code>
 implementiert. Um dies zu tun, können wir die Syntax <code>impl Trait</code> verwenden,
 etwa so:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
@@ -11064,8 +11008,7 @@ etwa so:</p>
 </span><span class="boring">
 </span>pub fn notify(item: &amp;impl Summary) {
     println!("Eilmeldung! {}", item.summarize());
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Anstelle eines konkreten Typs für den Parameter <code>item</code> geben wir das
 Schlüsselwort <code>impl</code> und den Trait-Namen an. Dieser Parameter akzeptiert jeden
 Typ, der das angegebene Trait implementiert. Im Rumpf von <code>notify</code> können wir
@@ -11078,16 +11021,13 @@ Typen kein <code>Summary</code> implementieren.</p>
 <p>Die Syntax <code>impl Trait</code> funktioniert für einfache Fälle, ist aber eigentlich
 syntaktischer Zucker für eine längere Form, die <em>Trait Bound</em> genannt wird; sie
 sieht so aus:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
 </span>pub fn notify&lt;T: Summary&gt;(item: &amp;T) {
     println!("Eilmeldung! {}", item.summarize());
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Diese längere Form entspricht dem Beispiel im vorigen Abschnitt, ist aber
 wortreicher. Wir platzieren Trait Bounds in der Deklaration des generischen
 Typparameters nach einem Doppelpunkt und innerhalb spitzer Klammern.</p>
@@ -11138,9 +11078,7 @@ einer Funktion ohne viele Trait Bounds.</p>
 <h3 id="rückgabetypen-die-traits-implementieren"><a class="header" href="#rückgabetypen-die-traits-implementieren">Rückgabetypen, die Traits implementieren</a></h3>
 <p>Wir können die Syntax <code>impl Trait</code> auch für den Rückgabetyp verwenden, wie hier
 gezeigt:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
@@ -11177,8 +11115,7 @@ gezeigt:</p>
         reply: false,
         repost: false,
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Durch Verwenden von <code>impl Summary</code> für den Rückgabetyp legen wir fest, dass die
 Funktion <code>returns_summarizable</code> einen Typ zurückgibt, der das Trait <code>Summary</code>
 implementiert, ohne den konkreten Typ zu nennen. In diesem Fall gibt
@@ -11195,9 +11132,7 @@ langen Typ schreiben musst.</p>
 zurückgibst. Beispielsweise würde dieser Code, der entweder einen <code>NewsArticle</code>
 oder einen <code>SocialPost</code> mit dem Rückgabetyp <code>impl Summary</code> zurückgibt, nicht
 funktionieren:</p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
@@ -11248,8 +11183,7 @@ funktionieren:</p>
             repost: false,
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Die Rückgabe entweder eines <code>NewsArticle</code> oder eines <code>SocialPost</code> ist aufgrund
 von Einschränkungen hinsichtlich der Implementierung der Syntax <code>impl Trait</code> im
 Compiler nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
@@ -11267,9 +11201,7 @@ diesem Fall <code>Pair&lt;T&gt;</code> ist). Aber im nächsten <code>impl</code>
 <code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die den Vergleich bzw. eine Ausgabe
 ermöglichen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::fmt::Display;
+<pre><code class="language-rust ignore">use std::fmt::Display;
 
 struct Pair&lt;T&gt; {
     x: T,
@@ -11290,8 +11222,7 @@ impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt; {
             println!("Das größte Element ist y = {}", self.y);
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 10-15: Bedingte Implementierung von Methoden
 für einen generischen Typ in Abhängigkeit von Trait Bounds</span></p>
 <p>Wir können auch ein Trait für beliebige Typen bedingt implementieren, die ein
@@ -12177,9 +12108,7 @@ $ cd adder
 <p>Der Inhalt der Datei <em>src/lib.rs</em> in deiner Bibliothek <code>adder</code> sollte wie
 Listing 11-1 aussehen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add(left: usize, right: usize) -&gt; usize {
+<pre><code class="language-rust ignore">pub fn add(left: usize, right: usize) -&gt; usize {
     left + right
 }
 
@@ -12192,8 +12121,7 @@ mod tests {
         let result = add(2, 2);
         assert_eq!(result, 4);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-1: Das Testmodul und die Funktion, die
 automatisch von <code>cargo new</code> generiert werden</span></p>
 <p>Die Datei beginnt mit einer Beispielfunktion <code>add</code>, damit wir etwas zum Testen
@@ -12401,8 +12329,8 @@ schreiben wir einen Test, der die Methode <code>can_hold</code> überprüft, ind
 sicherstellen, dass sie eine weitere <code>Rectangle</code>-Instanz mit einer Breite von 5
 und einer Höhe von 1 enthalten kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">#[derive(Debug)]
-<span class="boring">struct Rectangle {
+<pre><code class="language-rust noplayground"><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Rectangle {
 </span><span class="boring">    width: u32,
 </span><span class="boring">    height: u32,
 </span><span class="boring">}
@@ -12625,9 +12553,7 @@ Werte auszugeben, die zum falschen Testergebnis geführt haben.</p>
 Parameter addiert, und dann testen wir diese Funktion mit dem Makro
 <code>assert_eq!</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_two(a: u64) -&gt; u64 {
+<pre><code class="language-rust ignore">pub fn add_two(a: u64) -&gt; u64 {
     a + 2
 }
 
@@ -12640,8 +12566,7 @@ mod tests {
         let result = add_two(2);
         assert_eq!(result, 4);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-7: Testen der Funktion <code>add_two</code> mit dem
 Makro <code>assert_eq!</code></span></p>
 <p>Lass uns prüfen, ob sie den Test besteht!</p>
@@ -12669,13 +12594,11 @@ bestanden wurde!</p>
 <p>Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie <code>assert_eq!</code>
 aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 <code>add_two</code>, sodass sie stattdessen <code>3</code> addiert:</p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_two(a: u64) -&gt; u64 {
+<pre><code class="language-rust not_desired_behavior ignore">pub fn add_two(a: u64) -&gt; u64 {
     a + 3
 }
-
-<span class="boring">#[cfg(test)]
+<span class="boring">
+</span><span class="boring">#[cfg(test)]
 </span><span class="boring">mod tests {
 </span><span class="boring">    use super::*;
 </span><span class="boring">
@@ -12684,7 +12607,6 @@ aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 </span><span class="boring">        let result = add_two(2);
 </span><span class="boring">        assert_eq!(result, 4);
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Führe die Tests erneut aus:</p>
 <pre><code class="language-console">$ cargo test
@@ -12763,9 +12685,7 @@ hast du eine bessere Vorstellung davon, wo das Problem im Code liegt.</p>
 begrüßt, und wir wollen testen, ob der Name, den wir an die Funktion übergeben,
 in der Ausgabe auftaucht:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn greeting(name: &amp;str) -&gt; String {
+<pre><code class="language-rust ignore">pub fn greeting(name: &amp;str) -&gt; String {
     format!("Hallo {name}!")
 }
 
@@ -12778,8 +12698,7 @@ mod tests {
         let result = greeting("Carol");
         assert!(result.contains("Carol"));
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Die Anforderungen für dieses Programm sind noch nicht abgestimmt worden und wir
 sind ziemlich sicher, dass sich der Text <code>Hallo</code> zu Beginn der Begrüßung ändern
 wird. Wir haben beschlossen, dass wir den Test nicht aktualisieren wollen, wenn
@@ -12789,9 +12708,7 @@ einfach sicher, dass die Ausgabe den Text des Eingabeparameters enthält.</p>
 <p>Lass uns nun einen Fehler in diesen Code einbringen, indem wir <code>greeting</code> so
 ändern, dass <code>name</code> nicht enthalten ist, um zu sehen, wie das
 Standard-Testversagen aussieht:</p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn greeting(name: &amp;str) -&gt; String {
+<pre><code class="language-rust not_desired_behavior ignore">pub fn greeting(name: &amp;str) -&gt; String {
     String::from("Hallo!")
 }
 <span class="boring">
@@ -12804,7 +12721,6 @@ Standard-Testversagen aussieht:</p>
 </span><span class="boring">        let result = greeting("Carol");
 </span><span class="boring">        assert!(result.contains("Carol"));
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Das Ausführen dieses Tests führt zu folgender Ausgabe:</p>
 <pre><code class="language-console">$ cargo test
@@ -12835,9 +12751,7 @@ welcher Zeile die Zusicherung steht. Eine nützlichere Fehlermeldung würde den
 Wert der Funktion <code>greeting</code> ausgeben. Fügen wir eine benutzerdefinierte
 Fehlermeldung hinzu, die aus einem Formatierungs-String mit einem Platzhalter
 besteht, der mit dem tatsächlichen Wert aus der Funktion <code>greeting</code> gefüllt ist:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub fn greeting(name: &amp;str) -&gt; String {
+<pre><code class="language-rust ignore"><span class="boring">pub fn greeting(name: &amp;str) -&gt; String {
 </span><span class="boring">    String::from("Hallo!")
 </span><span class="boring">}
 </span><span class="boring">
@@ -12853,8 +12767,7 @@ besteht, der mit dem tatsächlichen Wert aus der Funktion <code>greeting</code> 
             "Begrüßung enthielt nicht den Namen, Wert war `{result}`"
         );
     }
-<span class="boring">}
-</span><span class="boring">}</span></code></pre>
+<span class="boring">}</span></code></pre>
 <p>Wenn wir jetzt den Test ausführen, erhalten wir eine aussagekräftigere
 Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo test
@@ -12898,9 +12811,7 @@ abbricht.</p>
 <p>Listing 11-8 zeigt einen Test, der prüft, ob die Fehlerbedingungen von
 <code>Guess::new</code> eintreten, wenn wir dies erwarten.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct Guess {
+<pre><code class="language-rust ignore">pub struct Guess {
     value: i32,
 }
 
@@ -12923,8 +12834,7 @@ mod tests {
     fn greater_than_100() {
         Guess::new(200);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-8: Testet, dass eine Bedingung zum
 Programmabbruch führt</span></p>
 <p>Wir setzen das Attribut <code>#[should_panic]</code> hinter das Attribut <code>#[test]</code> und vor
@@ -12949,9 +12859,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p>Sieht gut aus! Lass uns nun einen Fehler in unseren Code einbringen, indem wir
 die Bedingung entfernen, bei der die Funktion <code>new</code> das Programm abbricht, wenn
 der Wert größer als 100 ist:</p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Guess {
+<pre><code class="language-rust not_desired_behavior ignore"><span class="boring">pub struct Guess {
 </span><span class="boring">    value: i32,
 </span><span class="boring">}
 </span><span class="boring">
@@ -12975,7 +12883,6 @@ impl Guess {
 </span><span class="boring">    fn greater_than_100() {
 </span><span class="boring">        Guess::new(200);
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Wenn wir den Test in Listing 11-8 ausführen, wird er fehlschlagen:</p>
 <pre><code class="language-console">$ cargo test
@@ -13012,9 +12919,7 @@ modifizierten Code für <code>Guess</code> in Listing 11-9, wo die Funktion <cod
 unterschiedlichen Meldungen das Programm abbricht, je nachdem, ob der Wert zu
 klein oder zu groß ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Guess {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Guess {
 </span><span class="boring">    value: i32,
 </span><span class="boring">}
 </span><span class="boring">
@@ -13040,8 +12945,7 @@ mod tests {
     fn greater_than_100() {
         Guess::new(200);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-9: Testen eines Programmabbruchs mit einem
 bestimmten Teil-String in der Meldung</span></p>
 <p>Dieser Test wird bestanden werden, weil der Wert, den wir beim Parameter
@@ -13057,9 +12961,7 @@ Fall <code>else if value &gt; 100</code> ausführt.</p>
 <code>expected</code>-Nachricht fehlschlägt, wollen wir wieder einen Fehler in unseren Code
 einbringen, indem wir die Zweige <code>if value &lt; 1</code> und <code>else if value &gt; 100</code>
 vertauschen:</p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Guess {
+<pre><code class="language-rust not_desired_behavior ignore"><span class="boring">pub struct Guess {
 </span><span class="boring">    value: i32,
 </span><span class="boring">}
 </span><span class="boring">
@@ -13084,7 +12986,6 @@ vertauschen:</p>
 </span><span class="boring">    fn greater_than_100() {
 </span><span class="boring">        Guess::new(200);
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Wenn wir diesmal den <code>should_panic</code>-Test ausführen, wird er fehlschlagen:</p>
 <pre><code class="language-console">$ cargo test
@@ -13122,9 +13023,7 @@ können wir anfangen herauszufinden, wo unser Fehler liegt!</p>
 Tests schreiben, die <code>Result&lt;T, E&gt;</code> verwenden! Hier ist der Test aus Listing
 11-1 so umgeschrieben, dass er <code>Result&lt;T, E&gt;</code> verwendet und <code>Err</code> zurückgibt,
 anstatt das Programm abzubrechen:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
+<pre><code class="language-rust ignore"><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
 </span><span class="boring">    left + right
 </span><span class="boring">}
 </span><span class="boring">
@@ -13142,8 +13041,7 @@ anstatt das Programm abzubrechen:</p>
             Err(String::from("zwei plus zwei ist nicht gleich vier"))
         }
     }
-<span class="boring">}
-</span><span class="boring">}</span></code></pre>
+<span class="boring">}</span></code></pre>
 <p>Die Funktion <code>it_works</code> hat jetzt den Rückgabetyp <code>Result&lt;(), String&gt;</code>. Anstatt
 das Makro <code>assert_eq!</code> aufzurufen, geben wir im Funktionsrumpf <code>Ok(())</code> zurück,
 wenn der Test bestanden ist, und ein <code>Err</code> mit einem <code>String</code> im Inneren, wenn
@@ -13217,9 +13115,7 @@ Standardausgabe ausgegeben wurde, mit dem Rest der Fehlermeldung.</p>
 Parameters ausgibt und 10 zurückgibt, sowie einen Test, der bestanden wird, und
 einen Test, der fehlschlägt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust panics edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn prints_and_returns_10(a: i32) -&gt; i32 {
+<pre><code class="language-rust panics ignore">fn prints_and_returns_10(a: i32) -&gt; i32 {
     println!("Ich habe den Wert {a} erhalten.");
     10
 }
@@ -13239,8 +13135,7 @@ mod tests {
         let value = prints_and_returns_10(8);
         assert_eq!(value, 5);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-10: Tests einer Funktion, die <code>println!</code>
 aufruft</span></p>
 <p>Wenn wir diese Tests mit <code>cargo test</code> ausführen, werden wir folgende Ausgabe
@@ -13330,9 +13225,7 @@ ausführen willst, als Argument übergibst.</p>
 zuerst drei Tests für unsere Funktion <code>add_two</code> erstellen, wie in Listing
 11-11 zu sehen ist, und auswählen, welche wir ausführen wollen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_two(a: u64) -&gt; u64 {
+<pre><code class="language-rust ignore">pub fn add_two(a: u64) -&gt; u64 {
     a + 2
 }
 
@@ -13357,8 +13250,7 @@ mod tests {
         let result = add_two(100);
         assert_eq!(result, 102);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-11: Drei Tests mit drei verschiedenen
 Namen</span></p>
 <p>Wenn wir die Tests ohne Argumente ausführen, wie vorhin gesehen, werden alle
@@ -13428,9 +13320,7 @@ solltest. Anstatt alle Tests, die du ausführen möchtest, als Argumente
 aufzulisten, kannst du die zeitaufwendigen Tests stattdessen mit dem Attribut
 <code>ignore</code> annotieren, um sie auszuschließen, wie hier gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
+<pre><code class="language-rust ignore"><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
 </span><span class="boring">    left + right
 </span><span class="boring">}
 </span><span class="boring">
@@ -13449,8 +13339,7 @@ mod tests {
     fn expensive_test() {
         // code that takes an hour to run
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Direkt unter <code>#[test]</code> fügen wir die Zeile <code>#[ignore]</code> beim Test ein, den wir
 ausschließen wollen. Wenn wir nun unsere Tests ausführen, läuft <code>it_works</code>,
 aber <code>expensive_test</code> nicht:</p>
@@ -13532,9 +13421,7 @@ nicht im kompilierten Ergebnis enthalten sein sollen.</p>
 <p>Erinnere dich daran, dass Cargo diesen Code für uns generiert hat, als wir das
 neue Projekt <code>adder</code> im ersten Abschnitt dieses Kapitels erstellt haben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add(left: u64, right: u64) -&gt; u64 {
+<pre><code class="language-rust ignore">pub fn add(left: u64, right: u64) -&gt; u64 {
     left + right
 }
 
@@ -13547,8 +13434,7 @@ mod tests {
         let result = add(2, 2);
         assert_eq!(result, 4);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Im automatisch generierten Modul <code>tests</code> steht das Attribut <code>cfg</code> für
 <em>Konfiguration</em> und teilt Rust mit, dass das folgende Element nur bei einer
 bestimmten Konfigurationsoption eingebunden werden soll. In diesem Fall ist die
@@ -13565,9 +13451,7 @@ Testideologie du festhältst, erlauben dir Rusts Sichtbarkeitsregeln, private
 Funktionen zu testen. Betrachte den Code in Listing 11-12 mit der privaten
 Funktion <code>internal_adder</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_two(a: u64) -&gt; u64 {
+<pre><code class="language-rust ignore">pub fn add_two(a: u64) -&gt; u64 {
     internal_adder(a, 2)
 }
 
@@ -13584,8 +13468,7 @@ mod tests {
         let result = internal_adder(2, 2);
         assert_eq!(result, 4);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-12: Testen einer privaten Funktion</span></p>
 <p>Beachte, dass die Funktion <code>internal_adder</code> nicht mit <code>pub</code> markiert ist. Tests
 sind einfach nur Rust-Code, und das Modul <code>tests</code> ist nur ein weiteres Modul.
@@ -13717,12 +13600,9 @@ Beispiel <em>tests/common.rs</em> erstellen und eine Funktion namens <code>setup
 platzieren, können wir zu <code>setup</code> etwas Code hinzufügen, den wir von mehreren
 Testfunktionen in mehreren Testdateien aufrufen wollen:</p>
 <p><span class="filename">Dateiname: tests/common.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn setup() {
+<pre><code class="language-rust ignore">pub fn setup() {
     // Vorbereitungscode speziell für die Tests deiner Bibliothek
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Wenn wir die Tests erneut ausführen, werden wir für die Datei <em>common.rs</em> einen
 neuen Abschnitt in der Testausgabe sehen, obwohl diese Datei keine
 Testfunktionen enthält und wir die Funktion <code>setup</code> nicht von irgendwo
@@ -14855,12 +14735,9 @@ in Listing 12-13 gezeigt, mit einem Rumpf, der das Makro <code>unimplemented!</c
 aufruft. Wir werden die Signatur genauer erklären, wenn wir die Implementierung
 ausfüllen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust does_not_compile ignore">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     unimplemented!();
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 12-13: Definieren der Funktion <code>search</code> in
 <em>src/lib.rs</em></span></p>
 <p>Wir haben das Schlüsselwort <code>pub</code> in der Funktionsdefinition verwendet, um
@@ -14982,9 +14859,7 @@ und den Text, in dem gesucht werden soll, entgegen und gibt nur die Zeilen aus
 dem Text zurück, die die Suchabfrage enthalten. Listing 12-15 zeigt diesen
 Test.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
 </span><span class="boring">    unimplemented!();
 </span><span class="boring">}
 </span><span class="boring">
@@ -15004,8 +14879,7 @@ Nimm drei.";
 
         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 12-15: Erstellen eines fehlschlagenden Tests
 für die Funktion <code>search</code>, die wir uns wünschen</span></p>
 <p>Dieser Test sucht nach dem String <code>"dukt"</code>. Der Text, den wir durchsuchen,
@@ -15023,9 +14897,7 @@ immer einen leeren Vektor zurückgibt, wie in Listing 12-16 gezeigt. Dann
 sollte der Test kompiliert werden können und fehlschlagen, weil ein leerer
 Vektor nicht mit einem Vektor übereinstimmt, der die Zeile <code>"sicher, schnell, produktiv."</code> enthält.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust ignore">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     vec![]
 }
 <span class="boring">
@@ -15043,7 +14915,6 @@ Vektor nicht mit einem Vektor übereinstimmt, der die Zeile <code>"sicher, schne
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 12-16: Definiere gerade genug von der Funktion
 <code>search</code>, damit unser Test kompiliert</span></p>
@@ -15107,9 +14978,7 @@ Zeilen.</p>
 bequemerweise <code>lines</code> genannt, die wie in Listing 12-17 gezeigt funktioniert.
 Beachte, dass dies noch nicht kompiliert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust does_not_compile ignore">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     for line in contents.lines() {
         // mache etwas mit line
     }
@@ -15129,7 +14998,6 @@ Beachte, dass dies noch nicht kompiliert.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 12-17: Iteriere über jede Zeile in
 <code>contents</code></span></p>
@@ -15145,9 +15013,7 @@ dies für uns erledigt! Füge einen Aufruf der Methode <code>contains</code> in 
 <code>search</code> hinzu, wie in Listing 12-18 gezeigt. Beachte, dass dies noch nicht
 kompiliert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust does_not_compile ignore">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     for line in contents.lines() {
         if line.contains(query) {
             // mache etwas mit line
@@ -15169,7 +15035,6 @@ kompiliert werden kann.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 12-18: Hinzufügen von Funktionalität, um zu sehen,
 ob die Zeile den String in <code>query</code> enthält</span></p>
@@ -15183,9 +15048,7 @@ einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die 
 <code>push</code> aufrufen, um eine <code>line</code> im Vektor zu speichern. Nach der <code>for</code>-Schleife
 geben wir den Vektor zurück, wie in Listing 12-19 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust ignore">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     let mut results = Vec::new();
 
     for line in contents.lines() {
@@ -15211,7 +15074,6 @@ geben wir den Vektor zurück, wie in Listing 12-19 gezeigt.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 12-19: Speichern der passenden Zeilen, damit
 wir sie zurückgeben können</span></p>
@@ -15302,9 +15164,7 @@ unseren alten Test von <code>one_result</code> in <code>case_sensitive</code> um
 Unterschiede zwischen den beiden Tests zu verdeutlichen, wie in Listing 12-20
 gezeigt wird.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
 </span><span class="boring">    let mut results = Vec::new();
 </span><span class="boring">
 </span><span class="boring">    for line in contents.lines() {
@@ -15346,8 +15206,7 @@ Trust me.";
             search_case_insensitive(query, contents)
         );
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 12-20: Hinzufügen eines neuen fehlschlagenden
 Tests für die Funktion <code>search_case_insensitive</code>, die wir gleich hinzufügen
 werden</span></p>
@@ -15377,9 +15236,7 @@ besteht darin, dass wir <code>query</code> und <code>line</code> in Kleinbuchsta
 sie unabhängig von der Groß-/Kleinschreibung der Eingabe-Argumente sind, wenn
 wir prüfen, ob die Zeile die Abfrage enthält.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust ignore"><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
 </span><span class="boring">    let mut results = Vec::new();
 </span><span class="boring">
 </span><span class="boring">    for line in contents.lines() {
@@ -15437,7 +15294,6 @@ wir prüfen, ob die Zeile die Abfrage enthält.</p>
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 12-21: Definieren der Funktion
 <code>search_case_insensitive</code>, um den Abfragetext und die Zeile vor dem Vergleich
@@ -15623,7 +15479,7 @@ Standardbibliothek, die bereits im Gültigkeitsbereich am Anfang von
 <em>src/main.rs</em> ist. Dann werden wir die Funktion <code>var</code> aus dem Modul <code>env</code>
 verwenden, um zu prüfen, ob eine Umgebungsvariable namens <code>IGNORE_CASE</code> einen
 Wert hat, wie in Listing 12-23 gezeigt.</p>
-<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
@@ -16557,16 +16413,13 @@ bewerkstelligen.</p>
 <p>Alle Iteratoren implementieren ein Trait namens <code>Iterator</code> das in der
 Standardbibliothek definiert ist. Die Definition dieses Traits sieht wie folgt
 aus:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Iterator {
+<pre><code class="language-rust ignore">pub trait Iterator {
     type Item;
 
     fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt;;
 
     // Methoden mit Standardimplementierung wurden elidiert
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Beachte, dass in der Definition eine neue Syntax verwendet wird: <code>type Item</code> und
 <code>Self::Item</code>, die einen zugeordneten Typ (associated type) mit diesem Trait
 definieren. Wir werden zugeordnete Typen im Kapitel 20 besprechen. Im Moment
@@ -17195,9 +17048,7 @@ wir kehren vorzeitig mit einem <code>Err</code> zurück. Dasselbe machen wir fü
 E/A-Projekts nutzen, die hier in Listing 13-21 wiedergegeben ist, wie im
 Listing 12-19.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust ignore">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     let mut results = Vec::new();
 
     for line in contents.lines() {
@@ -17223,7 +17074,6 @@ Listing 12-19.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 13-21: Implementierung der Funktion <code>search</code>
 aus Listing 12-19</span></p>
@@ -17236,9 +17086,7 @@ Verbesserungen ermöglichen, um die Suche parallel auszuführen, da wir uns nich
 um die Verwaltung des simultanen Zugriffs auf den Vektor <code>results</code> kümmern
 müssen. Listing 13-22 zeigt diese Änderung.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust ignore">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     contents
         .lines()
         .filter(|line| line.contains(query))
@@ -17291,7 +17139,6 @@ müssen. Listing 13-22 zeigt diese Änderung.</p>
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 13-22: Verwendung von Iteratoradapter-Methoden
 bei der Implementierung der Funktion <code>search</code></span></p>
@@ -18143,9 +17990,7 @@ Versionen wie möglich aufzulösen.</p>
 <p>Füge für eine weitere Verbesserung innerhalb der Crate <code>add_one</code> einen Test der
 Funktion <code>add_one::add_one</code> hinzu:</p>
 <p><span class="filename">Dateiname: add_one/src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_one(x: i32) -&gt; i32 {
+<pre><code class="language-rust ignore">pub fn add_one(x: i32) -&gt; i32 {
     x + 1
 }
 
@@ -18157,8 +18002,7 @@ mod tests {
     fn it_works() {
         assert_eq!(3, add_one(2));
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Führen wir nun <code>cargo test</code> in der obersten Ebene im Verzeichnis <em>add</em> aus. Die
 Ausführung von <code>cargo test</code> in einem Arbeitsbereich, der wie dieser strukturiert
 ist, führt die Tests für alle Crates im Arbeitsbereich aus:</p>
@@ -19522,9 +19366,7 @@ senden oder etwas anderes machen. Die Bibliothek muss dieses Detail nicht
 kennen. Alles, was es braucht, ist Code, der ein von uns bereitgestelltes Trait
 namens <code>Messenger</code> implementiert. Listing 15-20 zeigt den Bibliothekscode.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Messenger {
+<pre><code class="language-rust ignore">pub trait Messenger {
     fn send(&amp;self, msg: &amp;str);
 }
 
@@ -19561,8 +19403,7 @@ where
                 .send("Warnung: Du hast über 75% deines Kontingents verbraucht!");
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 15-20: Eine Bibliothek um zu verfolgen, wie nahe
 ein Wert an einem Maximalwert liegt, und um zu warnen, wenn der Wert über
 bestimmten Schwellwerten liegt</span></p>
@@ -19587,9 +19428,7 @@ die erwarteten Nachrichten enthält. Listing 15-21 zeigt den Versuch, ein
 Mock-Objekt zu implementieren, um genau das zu tun, aber der Borrow Checker
 erlaubt dies nicht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Messenger {
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">pub trait Messenger {
 </span><span class="boring">    fn send(&amp;self, msg: &amp;str);
 </span><span class="boring">}
 </span><span class="boring">
@@ -19659,8 +19498,7 @@ mod tests {
 
         assert_eq!(mock_messenger.sent_messages.len(), 1);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 15-21: Der Versuch, einen <code>MockMessenger</code> zu
 implementieren, der vom Borrow Checker nicht erlaubt wird</span></p>
 <p>Dieser Testcode definiert eine Struktur <code>MockMessenger</code> mit einem Feld
@@ -19829,9 +19667,7 @@ Implementierung von <code>send</code> in Listing 15-22. Wir versuchen absichtlic
 veränderbare Borrows im selben Gültigkeitsbereich zu erstellen, um zu
 veranschaulichen, dass <code>RefCell&lt;T&gt;</code> uns daran hindert, dies zur Laufzeit zu tun.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust panics edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Messenger {
+<pre><code class="language-rust panics ignore"><span class="boring">pub trait Messenger {
 </span><span class="boring">    fn send(&amp;self, msg: &amp;str);
 </span><span class="boring">}
 </span><span class="boring">
@@ -19906,7 +19742,6 @@ veranschaulichen, dass <code>RefCell&lt;T&gt;</code> uns daran hindert, dies zur
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(mock_messenger.sent_messages.borrow().len(), 1);
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 15-23: Wir erstellen zwei veränderbare
 Referenzen im selben Gültigkeitsbereich, um zu sehen, dass <code>RefCell&lt;T&gt;</code>
@@ -21978,9 +21813,7 @@ des anonymen Datentyps, den der Compiler für diesen asynchronen Block erstellt.
 Funktion, die ein <em>Future</em> des Rückgabetyps zurückgibt. Für den Compiler ist
 eine Funktionsdefinition wie <code>async fn page_title</code> in Listing 17-1 fast
 äquivalent zu einer nicht-asynchronen Funktion, die wie folgt definiert ist:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::future::Future;
+<pre><code class="language-rust ignore">use std::future::Future;
 use trpl::Html;
 
 fn page_title(url: &amp;str) -&gt; impl Future&lt;Output = Option&lt;String&gt;&gt; {
@@ -21990,8 +21823,7 @@ fn page_title(url: &amp;str) -&gt; impl Future&lt;Output = Option&lt;String&gt;&
             .select_first("title")
             .map(|title| title.inner_html())
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Gehen wir die einzelnen Teile der umgewandelten Version durch:</p>
 <ul>
 <li>Sie verwendet die Syntax <code>impl Trait</code>, die wir bereits in <a href="#traits-als-parameter-verwenden">„Traits als
@@ -22120,14 +21952,11 @@ eine andere Arbeit starten und dann zurückkommen kann, wenn der asynchrone Bloc
 bereit ist, seine Arbeit wieder fortzusetzen. Dies ist eine unsichtbare
 Zustandsmaschine, so als ob du eine Aufzählung auf diese Weise geschrieben
 hättest, um den aktuellen Zustand an jedem <code>await</code>-Punkt zu speichern:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enum PageTitleFuture&lt;'a&gt; {
+<pre><code class="language-rust ignore">enum PageTitleFuture&lt;'a&gt; {
     Initial { url: &amp;'a str },
     GetAwaitPoint { url: &amp;'a str },
     TextAwaitPoint { response: trpl::Response },
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Den Code für den Übergang zwischen den einzelnen Zuständen von Hand zu
 schreiben, wäre allerdings mühsam und fehleranfällig, vor allem, wenn dem Code
 später mehr Funktionalität und mehr Zustände hinzugefügt werden. Stattdessen
@@ -22215,13 +22044,10 @@ wir noch nicht gesehen haben: <code>trpl::Either</code>. Der Typ <code>Either</c
 unterscheidet <code>Either</code> jedoch nicht zwischen Erfolg und Misserfolg.
 Stattdessen werden <code>Left</code> und <code>Right</code> verwendet, um „das eine oder das andere“
 anzuzeigen.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enum Either&lt;A, B&gt; {
+<pre><code class="language-rust ignore">enum Either&lt;A, B&gt; {
     Left(A),
     Right(B),
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Die Funktion <code>select</code> gibt <code>Left</code> mit der Ausgabe des ersten Futures zurück, wenn
 das erste Argument zuerst fertig ist, und <code>Right</code> mit der Ausgabe des zweiten
 Futures, wenn dieses zuerst fertig ist. Dies entspricht der Reihenfolge, in der
@@ -23252,17 +23078,14 @@ Dokumentation.</p>
 <h3 id="das-trait-future"><a class="header" href="#das-trait-future">Das Trait <code>Future</code></a></h3>
 <p>Lass uns zunächst einen genaueren Blick darauf werfen, wie das Trait <code>Future</code>
 funktioniert. Rust definiert es wie folgt:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::pin::Pin;
+<pre><code class="language-rust ignore">use std::pin::Pin;
 use std::task::{Context, Poll};
 
 pub trait Future {
     type Output;
 
     fn poll(self: Pin&lt;&amp;mut Self&gt;, cx: &amp;mut Context&lt;'_&gt;) -&gt; Poll&lt;Self::Output&gt;;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Diese Trait-Definition enthält eine Reihe neuer Typen und auch eine Syntax, die
 wir bisher noch nicht gesehen haben. Gehen wir also die Definition Stück für
 Stück durch.</p>
@@ -23273,13 +23096,10 @@ zurückgibt. Dies ist analog zum Typ <code>Item</code> des Traits <code>Iterator
 entgegennimmt und <code>Poll&lt;Self::Output&gt;</code> zurückgibt. Wir werden gleich ein wenig
 mehr über <code>Pin</code> und <code>Context</code> sprechen. Für den Moment wollen wir uns auf das
 konzentrieren, was die Methode zurückgibt: Den Typ <code>Poll</code>:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub enum Poll&lt;T&gt; {
+<pre><code class="language-rust ignore">pub enum Poll&lt;T&gt; {
     Ready(T),
     Pending,
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Dieser Typ <code>Poll</code> ist <code>Option</code> recht ähnlich: Er hat eine Variante <code>Ready(T)</code>,
 die einen Wert hat, und eine Variante <code>Pending</code> ohne Wert. <code>Poll</code> bedeutet
 jedoch etwas ganz anderes als <code>Option</code>! Die Variante <code>Pending</code> zeigt an, dass
@@ -23457,9 +23277,7 @@ das Trait <code>Unpin</code> implementiert.</p>
 müssen wir ein wenig tiefer in die Funktionsweise des Traits <code>Future</code>
 eintauchen, insbesondere in Bezug auf das Anheften (pinning). Schau dir noch
 einmal die Definition des Traits <code>Future</code> an:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::pin::Pin;
+<pre><code class="language-rust ignore">use std::pin::Pin;
 use std::task::{Context, Poll};
 
 pub trait Future {
@@ -23467,8 +23285,7 @@ pub trait Future {
 
     // Erforderliche Methode
     fn poll(self: Pin&lt;&amp;mut Self&gt;, cx: &amp;mut Context&lt;'_&gt;) -&gt; Poll&lt;Self::Output&gt;;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Der Parameter <code>cx</code> und sein Typ <code>Context</code> sind der Schlüssel dazu, wie eine
 Laufzeitumgebung tatsächlich weiß, wann sie ein bestimmtes Future prüfen muss,
 während es immer noch faul ist. Die Details, wie das funktioniert, liegen
@@ -23718,9 +23535,7 @@ wir die Idee einer Sequenz: Seine Methode <code>next</code> liefert eine
 Bereitschaft: Seine Methode <code>poll</code> liefert ein <code>Poll&lt;Self::Output&gt;</code>. Um eine
 Sequenz von Elementen darzustellen, die im Laufe der Zeit bereit sein werden,
 definieren wir ein Trait <code>Stream</code>, das diese Funktionalitäten zusammenführt:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::pin::Pin;
+<pre><code class="language-rust ignore">use std::pin::Pin;
 use std::task::{Context, Poll};
 
 trait Stream {
@@ -23730,8 +23545,7 @@ trait Stream {
         self: Pin&lt;&amp;mut Self&gt;,
         cx: &amp;mut Context&lt;'_&gt;
     ) -&gt; Poll&lt;Option&lt;Self::Item&gt;&gt;;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Das Trait <code>Stream</code> definiert einen zugehörigen Typ namens <code>Item</code> für den Typ der
 vom Stream erzeugten Elemente. Dies ist ähnlich wie bei <code>Iterator</code>, wo es
 beliebig viele Elemente geben kann, anders als bei <code>Future</code>, wo es immer nur
@@ -23754,9 +23568,7 @@ arbeiten, indem wir unsere eigenen <code>Stream</code>-Zustandsautomaten schreib
 wie wir mit Futures direkt über deren Methode <code>poll</code> arbeiten <em>können</em>. Die
 Verwendung von <code>await</code> ist jedoch viel schöner, und das Trait <code>StreamExt</code> stellt
 die Methode <code>next</code> bereit, sodass wir Folgendes tun können:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::pin::Pin;
+<pre><code class="language-rust ignore"><span class="boring">use std::pin::Pin;
 </span><span class="boring">use std::task::{Context, Poll};
 </span><span class="boring">
 </span><span class="boring">trait Stream {
@@ -23773,8 +23585,7 @@ die Methode <code>next</code> bereit, sodass wir Folgendes tun können:</p>
         Self: Unpin;
 
     // andere Methoden ...
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <blockquote>
 <p>Anmerkung: Die tatsächliche Definition von <code>StreamExt</code> sieht etwas anders
 aus, da sie Versionen von Rust unterstützt, die noch keine Verwendung von
@@ -23983,13 +23794,10 @@ muss, wenn jemand ihn braucht. Mit anderen Worten: <code>AveragedCollection</cod
 errechneten Durchschnitt für uns zwischenspeichern. Listing 18-1 zeigt die
 Definition der Struktur <code>AveragedCollection</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct AveragedCollection {
+<pre><code class="language-rust ignore">pub struct AveragedCollection {
     list: Vec&lt;i32&gt;,
     average: f64,
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-1: Eine Struktur <code>AveragedCollection</code>, die
 eine Liste von ganzen Zahlen und deren Durchschnitt verwaltet</span></p>
 <p>Die Struktur wird als <code>pub</code> markiert, damit anderer Code sie verwenden kann,
@@ -23999,9 +23807,7 @@ hinzugefügt oder aus der Liste entfernt wird, auch der Durchschnitt
 aktualisiert wird. Wir tun dies, indem wir die Methoden <code>add</code>, <code>remove</code> und
 <code>average</code> auf der Struktur implementieren, wie in Listing 18-2 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct AveragedCollection {
+<pre><code class="language-rust ignore"><span class="boring">pub struct AveragedCollection {
 </span><span class="boring">    list: Vec&lt;i32&gt;,
 </span><span class="boring">    average: f64,
 </span><span class="boring">}
@@ -24031,8 +23837,7 @@ aktualisiert wird. Wir tun dies, indem wir die Methoden <code>add</code>, <code>
         let total: i32 = self.list.iter().sum();
         self.average = total as f64 / self.list.len() as f64;
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-2: Implementierungen der öffentlichen
 Methoden <code>add</code>, <code>remove</code> und <code>average</code> auf <code>AveragedCollection</code></span></p>
 <p>Die öffentlichen Methoden <code>add</code>, <code>remove</code> und <code>average</code> sind die einzigen
@@ -24186,12 +23991,9 @@ allgemeines Verhalten zu ermöglichen.</p>
 <p>In Listing 18-3 wird gezeigt, wie ein Trait <code>Draw</code> mit einer Methode <code>draw</code>
 definiert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Draw {
+<pre><code class="language-rust ignore">pub trait Draw {
     fn draw(&amp;self);
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-3: Definition des Traits <code>Draw</code></span></p>
 <p>Diese Syntax sollte uns aus unseren Diskussionen über die Definition von Traits
 in Kapitel 10 bekannt vorkommen. Als nächstes kommt eine neue Syntax: Listing
@@ -24200,16 +24002,13 @@ in Kapitel 10 bekannt vorkommen. Als nächstes kommt eine neue Syntax: Listing
 Trait-Objekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer <code>Box</code>,
 der das Trait <code>Draw</code> implementiert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Draw {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
 </span><span class="boring">}
 </span><span class="boring">
 </span>pub struct Screen {
     pub components: Vec&lt;Box&lt;dyn Draw&gt;&gt;,
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-4: Definition der Struktur <code>Screen</code> mit einem
 Feld <code>components</code>, das einen Vektor von Trait-Objekten enthält, die das Trait
 <code>Draw</code> implementieren</span></p>
@@ -24217,9 +24016,7 @@ Feld <code>components</code>, das einen Vektor von Trait-Objekten enthält, die 
 Methode <code>draw</code> auf jeder ihrer <code>components</code> aufruft, wie in Listing 18-5
 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Draw {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
 </span><span class="boring">}
 </span><span class="boring">
@@ -24233,8 +24030,7 @@ gezeigt.</p>
             component.draw();
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-5: Eine Methode <code>run</code> auf <code>Screen</code>, die die
 Methode <code>draw</code> jeder Komponente aufruft</span></p>
 <p>Dies funktioniert anders als die Definition einer Struktur, die einen
@@ -24245,9 +24041,7 @@ das Trait-Objekt einzusetzen. Beispielsweise hätten wir die Struktur <code>Scre
 mit einem generischen Typ und einer Trait Bound wie in Listing 18-6 definieren
 können.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Draw {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
 </span><span class="boring">}
 </span><span class="boring">
@@ -24264,8 +24058,7 @@ where
             component.draw();
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-6: Eine alternative Implementierung der
 Struktur <code>Screen</code> und ihrer Methode <code>run</code> unter Verwendung generischer Typen und
 Trait Bounds</span></p>
@@ -24287,9 +24080,7 @@ sich vorzustellen, wie die Implementierung aussehen könnte, könnte eine Strukt
 <code>Button</code> Felder für <code>width</code>, <code>height</code> und <code>label</code> haben, wie in Listing 18-7
 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Draw {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
 </span><span class="boring">}
 </span><span class="boring">
@@ -24315,8 +24106,7 @@ impl Draw for Button {
     fn draw(&amp;self) {
         // Code zum tatsächlichen Zeichnen einer Schaltfläche
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-7: Eine Struktur <code>Button</code>, die das Trait
 <code>Draw</code> implementiert</span></p>
 <p>Die Felder <code>width</code>, <code>height</code> und <code>label</code> in <code>Button</code> unterscheiden sich von den
@@ -24586,9 +24376,7 @@ definiert, das alle Zustandsobjekte für einen <code>Post</code> haben müssen.<
 <code>Option&lt;T&gt;</code> in einem privaten Feld namens <code>state</code> halten, um das Zustandsobjekt
 zu halten. Du wirst gleich sehen, warum die <code>Option&lt;T&gt;</code> notwendig ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct Post {
+<pre><code class="language-rust ignore">pub struct Post {
     state: Option&lt;Box&lt;dyn State&gt;&gt;,
     content: String,
 }
@@ -24606,8 +24394,7 @@ trait State {}
 
 struct Draft {}
 
-impl State for Draft {}
-<span class="boring">}</span></code></pre>
+impl State for Draft {}</code></pre>
 <p><span class="caption">Listing 18-12: Definition einer Struktur <code>Post</code> und
 einer Funktion <code>new</code>, die eine neue <code>Post</code>-Instanz, ein Trait <code>State</code> sowie eine
 Struktur <code>Draft</code> erzeugt</span></p>
@@ -24634,9 +24421,7 @@ Feldes <code>content</code> gelesen werden. Die Methode <code>add_text</code> is
 also lass uns die Implementierung in Listing 18-13 zum Block <code>impl Post</code>
 hinzufügen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -24659,8 +24444,7 @@ hinzufügen.</p>
 </span><span class="boring">
 </span><span class="boring">struct Draft {}
 </span><span class="boring">
-</span><span class="boring">impl State for Draft {}
-</span><span class="boring">}</span></code></pre>
+</span><span class="boring">impl State for Draft {}</span></code></pre>
 <p><span class="caption">Listing 18-13: Implementierung der Methode <code>add_text</code>
 zum Hinzufügen von Text zum <code>content</code> eines Beitrags</span></p>
 <p>Die Methode <code>add_text</code> nimmt eine veränderbare Referenz auf <code>self</code>, weil wir
@@ -24682,9 +24466,7 @@ Zustand eines Beitrags zu ändern, damit er veröffentlicht werden kann. Bislang
 können Beiträge nur im Entwurfszustand sein, daher sollte der Beitragsinhalt
 immer leer sein. Listing 18-14 zeigt diese Platzhalter-Implementierung.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -24711,8 +24493,7 @@ immer leer sein. Listing 18-14 zeigt diese Platzhalter-Implementierung.</p>
 </span><span class="boring">
 </span><span class="boring">struct Draft {}
 </span><span class="boring">
-</span><span class="boring">impl State for Draft {}
-</span><span class="boring">}</span></code></pre>
+</span><span class="boring">impl State for Draft {}</span></code></pre>
 <p><span class="caption">Listing 18-14: Hinzufügen einer
 Platzhalter-Implementierung für die Methode <code>content</code> auf <code>Post</code>, die immer
 einen leeren String Slice zurückgibt</span></p>
@@ -24723,9 +24504,7 @@ bis hin zum ersten <code>assert_eq!</code> wie beabsichtigt.</p>
 eines Beitrags zu beantragen, die seinen Zustand von <code>Draft</code> in <code>PendingReview</code>
 ändern soll. Listing 18-15 zeigt diesen Code.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -24772,8 +24551,7 @@ impl State for PendingReview {
     fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
         self
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-15: Implementierung der Methoden
 <code>request_review</code> für <code>Post</code> und des Traits <code>State</code></span></p>
 <p>Wir geben <code>Post</code> eine öffentliche Methode namens <code>request_review</code>, die eine
@@ -24821,9 +24599,7 @@ zweiten <code>assert_eq!</code>-Aufruf!</p>
 <code>state</code> auf den Wert, den der aktuelle Zustand nach der Genehmigung haben
 sollte, wie in Listing 18-16 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -24899,8 +24675,7 @@ impl State for Published {
     fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
         self
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-16: Implementieren der Methode <code>approve</code> auf
 <code>Post</code> und des Traits <code>State</code></span></p>
 <p>Wir fügen die Methode <code>approve</code> zum Trait <code>State</code> hinzu und fügen eine neue
@@ -24917,9 +24692,7 @@ dass der von <code>content</code> zurückgegebene Wert vom aktuellen Zustand von
 abhängt, also delegieren wir <code>Post</code> an eine Methode <code>content</code>, die auf seinen
 <code>state</code> definiert ist, wie in Listing 18-17 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -24994,7 +24767,6 @@ abhängt, also delegieren wir <code>Post</code> an eine Methode <code>content</c
 </span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
 </span><span class="boring">        self
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 18-17: Aktualisieren der Methode <code>content</code> auf
 <code>Post</code> zum Delegieren an eine Methode <code>content</code> auf <code>State</code></span></p>
@@ -25024,9 +24796,7 @@ implementiert. Das bedeutet, dass wir die Definition des Traits <code>State</cod
 welcher Inhalt je nach Zustand zurückgegeben wird, wie in Listing 18-18 zu
 sehen ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -25111,8 +24881,7 @@ impl State for Published {
 </span>    fn content&lt;'a&gt;(&amp;self, post: &amp;'a Post) -&gt; &amp;'a str {
         &amp;post.content
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-18: Hinzufügen der Methode <code>content</code> zum
 Trait <code>State</code></span></p>
 <p>Wir fügen eine Standard-Implementierung für die Methode <code>content</code> hinzu, die
@@ -25236,9 +25005,7 @@ Beitragsentwurfs in der Produktion anzuzeigen, weil sich dieser Code nicht
 einmal kompilieren lässt. Listing 18-19 zeigt die Definition einer Struktur
 <code>Post</code> und einer Struktur <code>DraftPost</code> sowie die Methoden dieser Strukturen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct Post {
+<pre><code class="language-rust ignore">pub struct Post {
     content: String,
 }
 
@@ -25262,8 +25029,7 @@ impl DraftPost {
     pub fn add_text(&amp;mut self, text: &amp;str) {
         self.content.push_str(text);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-19: Ein <code>Post</code> mit einer Methode <code>content</code>
 und ein <code>DraftPost</code> ohne Methode <code>content</code></span></p>
 <p>Die beiden Strukturen <code>Post</code> und <code>DraftPost</code> haben ein privates Feld <code>content</code>,
@@ -25292,9 +25058,7 @@ indem wir die Methode <code>request_review</code> auf <code>DraftPost</code> def
 <code>PendingReviewPost</code>, um einen <code>Post</code> zurückzugeben, wie in Listing 18-20
 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Post {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Post {
 </span><span class="boring">    content: String,
 </span><span class="boring">}
 </span><span class="boring">
@@ -25337,8 +25101,7 @@ impl PendingReviewPost {
             content: self.content,
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-20: Ein <code>PendingReviewPost</code>, der durch
 Aufrufen von <code>request_review</code> auf <code>DraftPost</code> erzeugt wird, und eine Methode
 <code>approve</code>, die einen <code>PendingReviewPost</code> in einen veröffentlichten <code>Post</code>
@@ -26741,14 +26504,11 @@ dieser Funktion gelesen haben und wir die Verantwortung für die Einhaltung der
 Verträge der Funktion übernehmen.</p>
 <p>Hier ist eine unsichere Funktion namens <code>dangerous</code>, die in ihrem Rumpf nichts
 tut:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>unsafe fn dangerous() {}
+<pre><code class="language-rust ignore">unsafe fn dangerous() {}
 
 unsafe {
     dangerous();
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Wir müssen die Funktion <code>dangerous</code> innerhalb eines separaten <code>unsafe</code>-Blocks
 aufrufen. Wenn wir versuchen, <code>dangerous</code> ohne den <code>unsafe</code>-Block aufzurufen,
 erhalten wir einen Fehler:</p>
@@ -26999,13 +26759,10 @@ gewählte Name ohne Namensveränderung sicher exportiert werden kann.</p>
 <p>Im folgenden Beispiel machen wir die Funktion <code>call_from_c</code> von C-Code aus
 zugänglich, nachdem sie in eine gemeinsame Bibliothek kompiliert und von C
 gelinkt wurde:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[unsafe(no_mangle)]
+<pre><code class="language-rust ignore">#[unsafe(no_mangle)]
 pub extern "C" fn call_from_c() {
     println!("Rust-Funktion von C aufgerufen!");
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Diese Verwendung von <code>extern</code> erfordert <code>unsafe</code> nur im Attribut, nicht im
 <code>extern</code>-Block.</p>
 <h3 id="zugreifen-oder-ändern-einer-veränderbaren-statischen-variable"><a class="header" href="#zugreifen-oder-ändern-einer-veränderbaren-statischen-variable">Zugreifen oder Ändern einer veränderbaren, statischen Variable</a></h3>
@@ -27237,14 +26994,11 @@ das die Standardbibliothek zur Verfügung stellt. Der assoziierte Typ wird <code
 genannt und steht für den Typ der Werte, über die der Typ, der das Trait
 <code>Iterator</code> implementiert, iteriert. Die Definition des Traits <code>Iterator</code> ist in
 Listing 20-13 zu sehen.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Iterator {
+<pre><code class="language-rust ignore">pub trait Iterator {
     type Item;
 
     fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt;;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-13: Definition des Traits <code>Iterator</code>, das
 einen assoziierten Typ <code>Item</code> hat</span></p>
 <p>Der Typ <code>Item</code> ist ein Platzhalter und die Definition der Methode <code>next</code> zeigt,
@@ -27258,9 +27012,7 @@ beiden Konzepten zu untersuchen, betrachten wir eine Implementierung des Traits
 <code>Iterator</code> für einen Typ namens <code>Counter</code>, der angibt, dass der <code>Item</code>-Typ <code>u32</code>
 ist:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">struct Counter {
+<pre><code class="language-rust ignore"><span class="boring">struct Counter {
 </span><span class="boring">    count: u32,
 </span><span class="boring">}
 </span><span class="boring">
@@ -27282,17 +27034,13 @@ ist:</p>
 </span><span class="boring">            None
 </span><span class="boring">        }
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Diese Syntax scheint mit der von generischen Datentypen vergleichbar zu sein.
 Warum also nicht einfach das Trait <code>Iterator</code> mit generischen Datentypen
 definieren, wie in Listing 20-14 gezeigt?</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Iterator&lt;T&gt; {
+<pre><code class="language-rust ignore">pub trait Iterator&lt;T&gt; {
     fn next(&amp;mut self) -&gt; Option&lt;T&gt;;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-14: Eine hypothetische Definition des Traits
 <code>Iterator</code> unter Verwendung eines generischen Datentyps</span></p>
 <p>Der Unterschied ist, dass wir beim Verwenden von generischen Datentypen, wie in
@@ -27364,14 +27112,11 @@ Trait <code>Add</code> hat einen assoziierten Typ namens <code>Output</code>, de
 <code>add</code> zurückgegebenen Typ bestimmt.</p>
 <p>Der generische Standardtyp in diesem Code befindet sich innerhalb des Traits
 <code>Add</code>. Hier ist seine Definition:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait Add&lt;Rhs=Self&gt; {
+<pre><code class="language-rust ignore">trait Add&lt;Rhs=Self&gt; {
     type Output;
 
     fn add(self, rhs: Rhs) -&gt; Self::Output;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Dieser Code sollte allgemein bekannt aussehen: Ein Trait mit einer Methode und
 einem assoziierten Typ. Der neue Teil ist <code>Rhs=Self</code>: Diese Syntax heißt
 <em>Standardtypparameter</em> (default type parameters). Der generische Typparameter
@@ -27393,9 +27138,7 @@ Implementierung von <code>Add</code> die Umrechnung korrekt durchführen lassen.
 <code>Add</code> für <code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code> implementieren, wie in Listing
 20-16 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::ops::Add;
+<pre><code class="language-rust ignore">use std::ops::Add;
 
 struct Millimeters(u32);
 struct Meters(u32);
@@ -27406,8 +27149,7 @@ impl Add&lt;Meters&gt; for Millimeters {
     fn add(self, other: Meters) -&gt; Millimeters {
         Millimeters(self.0 + (other.0 * 1000))
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-16: Implementieren des Traits <code>Add</code> auf
 <code>Millimeters</code>, um <code>Millimeters</code> zu <code>Meters</code> zu addieren</span></p>
 <p>Um <code>Millimeters</code> und <code>Meters</code> zu addieren, geben wir <code>impl Add&lt;Meters&gt;</code> an, um
@@ -28440,12 +28182,9 @@ seinem Gültigkeitsbereich erfasst.</p>
 in Kapitel 10 kennengelernt haben. Du kannst jeden Funktionstyp zurückgeben,
 indem du <code>Fn</code>, <code>FnOnce</code> und <code>FnMut</code> verwendest. Zum Beispiel wird der Code in
 Listing 20-32 problemlos funktionieren.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
+<pre><code class="language-rust ignore">fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
     |x| x + 1
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-32: Rückgeben eines Closures aus einer
 Funktion unter Verwendung der Syntax <code>impl Trait</code></span></p>
 <p>Wie wir jedoch im Abschnitt <a href="#herleiten-und-annotieren-von-closure-typen">„Herleiten und Annotieren von
@@ -28607,9 +28346,7 @@ wäre das nicht möglich, da weder die Anzahl noch der Typ der Werte im Voraus
 bekannt sind.</p>
 <p>Listing 20-35 zeigt eine leicht vereinfachte Definition des Makros <code>vec!</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[macro_export]
+<pre><code class="language-rust ignore">#[macro_export]
 macro_rules! vec {
     ( $( $x:expr ),* ) =&gt; {
         {
@@ -28620,8 +28357,7 @@ macro_rules! vec {
             temp_vec
         }
     };
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-35: Eine vereinfachte Version der
 Makrodefinition <code>vec!</code></span></p>
 <blockquote>
@@ -28748,12 +28484,9 @@ so:</p>
 <p>Als Nächstes definieren wir in Listing 20-38 das Trait <code>HelloMacro</code> und die
 damit assoziierte Funktion.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait HelloMacro {
+<pre><code class="language-rust ignore">pub trait HelloMacro {
     fn hello_macro();
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-38: Ein einfaches Trait, das wir mit dem
 Makro <code>derive</code> verwenden werden</span></p>
 <p>Wir haben ein Trait und seine Funktion. An diesem Punkt könnte unser
@@ -30025,16 +29758,13 @@ einen Parameter haben muss, der <code>4</code> als Argument akzeptieren kann und
 <code>ThreadPool</code>-Instanz zurückgeben sollte. Lass uns die einfachste Funktion <code>new</code>
 implementieren, die diese Eigenschaften haben wird:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct ThreadPool;
+<pre><code class="language-rust ignore">pub struct ThreadPool;
 
 impl ThreadPool {
     pub fn new(size: usize) -&gt; ThreadPool {
         ThreadPool
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Wir haben <code>usize</code> als Typ des Parameters <code>size</code> gewählt, weil wir wissen, dass
 eine negative Anzahl von Threads keinen Sinn macht. Wir wissen auch, dass wir
 diese <code>4</code> als die Anzahl der Elemente in einer Kollektion von Threads verwenden
@@ -30088,9 +29818,7 @@ wir nicht wissen, wie lange die Ausführung des Threads dauern wird. Lass uns
 eine Methode <code>execute</code> auf <code>ThreadPool</code> erstellen, die einen generischen
 Parameter vom Typ <code>F</code> mit diesen Abgrenzungen annimmt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct ThreadPool;
+<pre><code class="language-rust ignore"><span class="boring">pub struct ThreadPool;
 </span><span class="boring">
 </span>impl ThreadPool {
     // --abschneiden--
@@ -30103,8 +29831,7 @@ Parameter vom Typ <code>F</code> mit diesen Abgrenzungen annimmt:</p>
         F: FnOnce() + Send + 'static,
     {
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Wir verwenden immer noch <code>()</code> nach <code>FnOnce</code>, weil dieses <code>FnOnce</code> einen Closure
 darstellt, der keine Parameter benötigt und den Einheitstyp <code>()</code> zurückgibt.
 Genau wie bei Funktionsdefinitionen kann der Rückgabetyp in der Signatur
@@ -30143,9 +29870,7 @@ prüfen, ob <code>size</code> größer als null ist, bevor wir eine <code>Thread
 zurückgeben; wenn <code>size</code> null ist, brechen wir das Programm ab, indem wir das
 Makro <code>assert!</code> verwenden, wie in Listing 21-13 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct ThreadPool;
+<pre><code class="language-rust ignore"><span class="boring">pub struct ThreadPool;
 </span><span class="boring">
 </span>impl ThreadPool {
     /// Erzeuge einen neuen ThreadPool.
@@ -30168,8 +29893,7 @@ Makro <code>assert!</code> verwenden, wie in Listing 21-13 gezeigt.</p>
 </span><span class="boring">        F: FnOnce() + Send + 'static,
 </span><span class="boring">    {
 </span><span class="boring">    }
-</span>}
-<span class="boring">}</span></code></pre>
+</span>}</code></pre>
 <p><span class="caption">Listing 21-13: Die Implementierung von <code>ThreadPool::new</code>
 bricht ab, wenn <code>size</code> gleich Null ist</span></p>
 <p>Wir haben auch etwas Dokumentation für unseren <code>ThreadPool</code> mit
@@ -30210,9 +29934,7 @@ Kapazität <code>size</code> initialisiert, eine <code>for</code>-Schleife einge
 zum Erzeugen der Threads ausführt, und eine <code>ThreadPool</code>-Instanz zurückgibt, die
 diese enthält.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::thread;
+<pre><code class="language-rust not_desired_behavior ignore">use std::thread;
 
 pub struct ThreadPool {
     threads: Vec&lt;thread::JoinHandle&lt;()&gt;&gt;,
@@ -30245,8 +29967,7 @@ impl ThreadPool {
 </span><span class="boring">        F: FnOnce() + Send + 'static,
 </span><span class="boring">    {
 </span><span class="boring">    }
-</span>}
-<span class="boring">}</span></code></pre>
+</span>}</code></pre>
 <p><span class="caption">Listing 21-14: Erstellen eines Vektors für <code>ThreadPool</code>
 zum Aufnehmen der Threads</span></p>
 <p>Wir haben <code>std::thread</code> in der Bibliotheks-Crate in den Gültigkeitsbereich
@@ -30304,9 +30025,7 @@ zu implementieren, bevor du dir den Code in Listing 21-15 ansiehst.</p>
 <p>Bereit? Hier ist Listing 21-15 mit einer Möglichkeit, die vorhergehenden
 Änderungen vorzunehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::thread;
+<pre><code class="language-rust ignore">use std::thread;
 
 pub struct ThreadPool {
     workers: Vec&lt;Worker&gt;,
@@ -30352,8 +30071,7 @@ impl Worker {
 
         Worker { id, thread }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 21-15: Modifizieren von <code>ThreadPool</code>, um
 <code>Worker</code>-Instanzen zu halten, anstatt Threads direkt zu halten</span></p>
 <p>Wir haben den Namen des Feldes in <code>ThreadPool</code> von <code>threads</code> in <code>workers</code>
@@ -30412,9 +30130,7 @@ in der <code>ThreadPool</code>-Instanz zu halten, wie in Listing 21-16 gezeigt. 
 Struktur <code>Job</code> enthält vorerst nichts, sie wird aber der Element-Typ sein, den
 wir in den Kanal senden.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::{sync::mpsc, thread};
+<pre><code class="language-rust ignore">use std::{sync::mpsc, thread};
 
 pub struct ThreadPool {
     workers: Vec&lt;Worker&gt;,
@@ -30465,7 +30181,6 @@ impl ThreadPool {
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 21-16: Ändern von <code>ThreadPool</code>, um den Sender
 zu speichern, der <code>Job</code>-Instanzen übermittelt</span></p>
@@ -30477,9 +30192,7 @@ verwenden wollen, den die <code>Worker</code>-Instanzen erzeugen, also werden wi
 Parameter <code>receiver</code> im Closure referenzieren. Der Code in Listing 21-17 lässt
 sich noch nicht ganz kompilieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::{sync::mpsc, thread};
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">use std::{sync::mpsc, thread};
 </span><span class="boring">
 </span><span class="boring">pub struct ThreadPool {
 </span><span class="boring">    workers: Vec&lt;Worker&gt;,
@@ -30534,8 +30247,7 @@ sich noch nicht ganz kompilieren.</p>
 
         Worker { id, thread }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 21-17: Übergeben des Empfängers an jeden
 <code>Worker</code></span></p>
 <p>Wir haben einige kleine und unkomplizierte Änderungen vorgenommen: Wir geben den
@@ -30589,9 +30301,7 @@ besitzen, und <code>Mutex</code> stellt sicher, dass immer nur ein <code>Worker<
 Zeit einen Auftrag vom Empfänger erhält. Listing 21-18 zeigt die Änderungen, die
 wir vornehmen müssen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::{
+<pre><code class="language-rust ignore">use std::{
     sync::{Arc, Mutex, mpsc},
     thread,
 };
@@ -30654,8 +30364,7 @@ wir vornehmen müssen.</p>
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span>    }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 21-18: Den Empfänger unter den <code>Worker</code>
 teilen, die <code>Arc</code> und <code>Mutex</code> benutzen</span></p>
 <p>In <code>ThreadPool::new</code> setzen wir den Empfänger in einen <code>Arc</code> und einen <code>Mutex</code>.
@@ -30670,9 +30379,7 @@ werden auch <code>Job</code> von einer Struktur in einen Typ-Alias für ein Trai
 ermöglichen uns Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher
 nutzen zu können. Siehe Listing 21-19.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::{
+<pre><code class="language-rust ignore"><span class="boring">use std::{
 </span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
@@ -30736,7 +30443,6 @@ impl ThreadPool {
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 21-19: Erstellen eines Alias vom Typ <code>Job</code> für
 eine <code>Box</code>, die jeden Closure enthält, und danach Senden des Auftrags in den
@@ -30757,9 +30463,7 @@ Schleife laufen lassen, indem wir das empfangende Ende des Kanals um einen
 Auftrag bitten und den Auftrag ausführen, wenn er einen bekommt. Lass uns die in
 Listing 21-20 gezeigte Änderung in <code>Worker::new</code> vornehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::{
+<pre><code class="language-rust ignore"><span class="boring">use std::{
 </span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
@@ -30826,8 +30530,7 @@ impl Worker {
 
         Worker { id, thread }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 21-20: Empfangen und Ausführen der Aufträge im
 Thread des <code>Worker</code></span></p>
 <p>Hier rufen wir zuerst <code>lock</code> auf <code>receiver</code> auf, um den Mutex zu erwerben, und
@@ -30900,9 +30603,7 @@ nicht durch unseren Webserver verursacht.</p>
 hast, fragst du dich vielleicht, warum wir den Code für den <code>Worker</code>-Thread
 nicht geschrieben haben, wie in Listing 21-21 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::{
+<pre><code class="language-rust not_desired_behavior ignore"><span class="boring">use std::{
 </span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
@@ -30966,8 +30667,7 @@ impl Worker {
 
         Worker { id, thread }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 21-21: Eine alternative Implementierung von
 <code>Worker::new</code> unter Verwendung von <code>while let</code></span></p>
 <p>Dieser Code wird kompiliert und ausgeführt, führt aber nicht zum gewünschten
@@ -31012,9 +30712,7 @@ sicherzustellen, dass sie ihre Arbeit beenden. Listing 21-22 zeigt einen ersten
 Versuch einer <code>Drop</code>-Implementierung; dieser Code wird noch nicht ganz
 funktionieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::{
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">use std::{
 </span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
@@ -31089,7 +30787,6 @@ funktionieren.</p>
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 21-22: Warten auf das Ende der einzelnen
 Threads, wenn der Thread-Pool den Gültigkeitsbereich verlässt</span></p>
@@ -31244,9 +30941,7 @@ Listing 21-23 zeigt die Änderungen an <code>ThreadPool</code>, um den <code>sen
 aufzuräumen. Anders als beim Thread, <em>müssen</em> wir hier eine <code>Option</code> verwenden,
 um den <code>sender</code> mit <code>Option::take</code> aus dem <code>ThreadPool</code> herausnehmen zu können.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::{
+<pre><code class="language-rust ignore"><span class="boring">use std::{
 </span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
@@ -31327,7 +31022,6 @@ impl Drop for ThreadPool {
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 21-23: <code>sender</code> vor dem Warten auf die
 <code>Worker</code>-Threads explizit aufräumen</span></p>
@@ -31576,9 +31270,7 @@ fn handle_connection(mut stream: TcpStream) {
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::{
+<pre><code class="language-rust ignore">use std::{
     sync::{Arc, Mutex, mpsc},
     thread,
 };
@@ -31671,8 +31363,7 @@ impl Worker {
             thread: Some(thread),
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Wir könnten hier mehr tun! Wenn du dieses Projekt weiter verbessern willst,
 findest du hier einige Ideen:</p>
 <ul>

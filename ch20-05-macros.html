@@ -234,9 +234,7 @@ wäre das nicht möglich, da weder die Anzahl noch der Typ der Werte im Voraus
 bekannt sind.</p>
 <p>Listing 20-35 zeigt eine leicht vereinfachte Definition des Makros <code>vec!</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[macro_export]
+<pre><code class="language-rust ignore">#[macro_export]
 macro_rules! vec {
     ( $( $x:expr ),* ) =&gt; {
         {
@@ -247,8 +245,7 @@ macro_rules! vec {
             temp_vec
         }
     };
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-35: Eine vereinfachte Version der
 Makrodefinition <code>vec!</code></span></p>
 <blockquote>
@@ -375,12 +372,9 @@ so:</p>
 <p>Als Nächstes definieren wir in Listing 20-38 das Trait <code>HelloMacro</code> und die
 damit assoziierte Funktion.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait HelloMacro {
+<pre><code class="language-rust ignore">pub trait HelloMacro {
     fn hello_macro();
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-38: Ein einfaches Trait, das wir mit dem
 Makro <code>derive</code> verwenden werden</span></p>
 <p>Wir haben ein Trait und seine Funktion. An diesem Punkt könnte unser

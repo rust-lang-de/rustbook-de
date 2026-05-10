@@ -216,16 +216,13 @@ bewerkstelligen.</p>
 <p>Alle Iteratoren implementieren ein Trait namens <code>Iterator</code> das in der
 Standardbibliothek definiert ist. Die Definition dieses Traits sieht wie folgt
 aus:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Iterator {
+<pre><code class="language-rust ignore">pub trait Iterator {
     type Item;
 
     fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt;;
 
     // Methoden mit Standardimplementierung wurden elidiert
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Beachte, dass in der Definition eine neue Syntax verwendet wird: <code>type Item</code> und
 <code>Self::Item</code>, die einen zugeordneten Typ (associated type) mit diesem Trait
 definieren. Wir werden zugeordnete Typen im Kapitel 20 besprechen. Im Moment

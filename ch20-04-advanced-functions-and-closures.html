@@ -280,12 +280,9 @@ seinem Gültigkeitsbereich erfasst.</p>
 in Kapitel 10 kennengelernt haben. Du kannst jeden Funktionstyp zurückgeben,
 indem du <code>Fn</code>, <code>FnOnce</code> und <code>FnMut</code> verwendest. Zum Beispiel wird der Code in
 Listing 20-32 problemlos funktionieren.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
+<pre><code class="language-rust ignore">fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
     |x| x + 1
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 20-32: Rückgeben eines Closures aus einer
 Funktion unter Verwendung der Syntax <code>impl Trait</code></span></p>
 <p>Wie wir jedoch im Abschnitt <a href="ch13-01-closures.html#herleiten-und-annotieren-von-closure-typen">„Herleiten und Annotieren von

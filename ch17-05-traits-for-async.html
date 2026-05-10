@@ -174,17 +174,14 @@ Dokumentation.</p>
 <h3 id="das-trait-future"><a class="header" href="#das-trait-future">Das Trait <code>Future</code></a></h3>
 <p>Lass uns zunächst einen genaueren Blick darauf werfen, wie das Trait <code>Future</code>
 funktioniert. Rust definiert es wie folgt:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::pin::Pin;
+<pre><code class="language-rust ignore">use std::pin::Pin;
 use std::task::{Context, Poll};
 
 pub trait Future {
     type Output;
 
     fn poll(self: Pin&lt;&amp;mut Self&gt;, cx: &amp;mut Context&lt;'_&gt;) -&gt; Poll&lt;Self::Output&gt;;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Diese Trait-Definition enthält eine Reihe neuer Typen und auch eine Syntax, die
 wir bisher noch nicht gesehen haben. Gehen wir also die Definition Stück für
 Stück durch.</p>
@@ -195,13 +192,10 @@ zurückgibt. Dies ist analog zum Typ <code>Item</code> des Traits <code>Iterator
 entgegennimmt und <code>Poll&lt;Self::Output&gt;</code> zurückgibt. Wir werden gleich ein wenig
 mehr über <code>Pin</code> und <code>Context</code> sprechen. Für den Moment wollen wir uns auf das
 konzentrieren, was die Methode zurückgibt: Den Typ <code>Poll</code>:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub enum Poll&lt;T&gt; {
+<pre><code class="language-rust ignore">pub enum Poll&lt;T&gt; {
     Ready(T),
     Pending,
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Dieser Typ <code>Poll</code> ist <code>Option</code> recht ähnlich: Er hat eine Variante <code>Ready(T)</code>,
 die einen Wert hat, und eine Variante <code>Pending</code> ohne Wert. <code>Poll</code> bedeutet
 jedoch etwas ganz anderes als <code>Option</code>! Die Variante <code>Pending</code> zeigt an, dass
@@ -379,9 +373,7 @@ das Trait <code>Unpin</code> implementiert.</p>
 müssen wir ein wenig tiefer in die Funktionsweise des Traits <code>Future</code>
 eintauchen, insbesondere in Bezug auf das Anheften (pinning). Schau dir noch
 einmal die Definition des Traits <code>Future</code> an:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::pin::Pin;
+<pre><code class="language-rust ignore">use std::pin::Pin;
 use std::task::{Context, Poll};
 
 pub trait Future {
@@ -389,8 +381,7 @@ pub trait Future {
 
     // Erforderliche Methode
     fn poll(self: Pin&lt;&amp;mut Self&gt;, cx: &amp;mut Context&lt;'_&gt;) -&gt; Poll&lt;Self::Output&gt;;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Der Parameter <code>cx</code> und sein Typ <code>Context</code> sind der Schlüssel dazu, wie eine
 Laufzeitumgebung tatsächlich weiß, wann sie ein bestimmtes Future prüfen muss,
 während es immer noch faul ist. Die Details, wie das funktioniert, liegen
@@ -640,9 +631,7 @@ wir die Idee einer Sequenz: Seine Methode <code>next</code> liefert eine
 Bereitschaft: Seine Methode <code>poll</code> liefert ein <code>Poll&lt;Self::Output&gt;</code>. Um eine
 Sequenz von Elementen darzustellen, die im Laufe der Zeit bereit sein werden,
 definieren wir ein Trait <code>Stream</code>, das diese Funktionalitäten zusammenführt:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::pin::Pin;
+<pre><code class="language-rust ignore">use std::pin::Pin;
 use std::task::{Context, Poll};
 
 trait Stream {
@@ -652,8 +641,7 @@ trait Stream {
         self: Pin&lt;&amp;mut Self&gt;,
         cx: &amp;mut Context&lt;'_&gt;
     ) -&gt; Poll&lt;Option&lt;Self::Item&gt;&gt;;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Das Trait <code>Stream</code> definiert einen zugehörigen Typ namens <code>Item</code> für den Typ der
 vom Stream erzeugten Elemente. Dies ist ähnlich wie bei <code>Iterator</code>, wo es
 beliebig viele Elemente geben kann, anders als bei <code>Future</code>, wo es immer nur
@@ -676,9 +664,7 @@ arbeiten, indem wir unsere eigenen <code>Stream</code>-Zustandsautomaten schreib
 wie wir mit Futures direkt über deren Methode <code>poll</code> arbeiten <em>können</em>. Die
 Verwendung von <code>await</code> ist jedoch viel schöner, und das Trait <code>StreamExt</code> stellt
 die Methode <code>next</code> bereit, sodass wir Folgendes tun können:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::pin::Pin;
+<pre><code class="language-rust ignore"><span class="boring">use std::pin::Pin;
 </span><span class="boring">use std::task::{Context, Poll};
 </span><span class="boring">
 </span><span class="boring">trait Stream {
@@ -695,8 +681,7 @@ die Methode <code>next</code> bereit, sodass wir Folgendes tun können:</p>
         Self: Unpin;
 
     // andere Methoden ...
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <blockquote>
 <p>Anmerkung: Die tatsächliche Definition von <code>StreamExt</code> sieht etwas anders
 aus, da sie Versionen von Rust unterstützt, die noch keine Verwendung von

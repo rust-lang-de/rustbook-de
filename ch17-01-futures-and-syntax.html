@@ -332,9 +332,7 @@ des anonymen Datentyps, den der Compiler für diesen asynchronen Block erstellt.
 Funktion, die ein <em>Future</em> des Rückgabetyps zurückgibt. Für den Compiler ist
 eine Funktionsdefinition wie <code>async fn page_title</code> in Listing 17-1 fast
 äquivalent zu einer nicht-asynchronen Funktion, die wie folgt definiert ist:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::future::Future;
+<pre><code class="language-rust ignore">use std::future::Future;
 use trpl::Html;
 
 fn page_title(url: &amp;str) -&gt; impl Future&lt;Output = Option&lt;String&gt;&gt; {
@@ -344,8 +342,7 @@ fn page_title(url: &amp;str) -&gt; impl Future&lt;Output = Option&lt;String&gt;&
             .select_first("title")
             .map(|title| title.inner_html())
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Gehen wir die einzelnen Teile der umgewandelten Version durch:</p>
 <ul>
 <li>Sie verwendet die Syntax <code>impl Trait</code>, die wir bereits in <a href="ch10-02-traits.html#traits-als-parameter-verwenden">„Traits als
@@ -474,14 +471,11 @@ eine andere Arbeit starten und dann zurückkommen kann, wenn der asynchrone Bloc
 bereit ist, seine Arbeit wieder fortzusetzen. Dies ist eine unsichtbare
 Zustandsmaschine, so als ob du eine Aufzählung auf diese Weise geschrieben
 hättest, um den aktuellen Zustand an jedem <code>await</code>-Punkt zu speichern:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enum PageTitleFuture&lt;'a&gt; {
+<pre><code class="language-rust ignore">enum PageTitleFuture&lt;'a&gt; {
     Initial { url: &amp;'a str },
     GetAwaitPoint { url: &amp;'a str },
     TextAwaitPoint { response: trpl::Response },
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Den Code für den Übergang zwischen den einzelnen Zuständen von Hand zu
 schreiben, wäre allerdings mühsam und fehleranfällig, vor allem, wenn dem Code
 später mehr Funktionalität und mehr Zustände hinzugefügt werden. Stattdessen
@@ -569,13 +563,10 @@ wir noch nicht gesehen haben: <code>trpl::Either</code>. Der Typ <code>Either</c
 unterscheidet <code>Either</code> jedoch nicht zwischen Erfolg und Misserfolg.
 Stattdessen werden <code>Left</code> und <code>Right</code> verwendet, um „das eine oder das andere“
 anzuzeigen.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enum Either&lt;A, B&gt; {
+<pre><code class="language-rust ignore">enum Either&lt;A, B&gt; {
     Left(A),
     Right(B),
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Die Funktion <code>select</code> gibt <code>Left</code> mit der Ausgabe des ersten Futures zurück, wenn
 das erste Argument zuerst fertig ist, und <code>Right</code> mit der Ausgabe des zweiten
 Futures, wenn dieses zuerst fertig ist. Dies entspricht der Reihenfolge, in der

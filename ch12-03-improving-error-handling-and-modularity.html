@@ -918,12 +918,9 @@ in Listing 12-13 gezeigt, mit einem Rumpf, der das Makro <code>unimplemented!</c
 aufruft. Wir werden die Signatur genauer erklären, wenn wir die Implementierung
 ausfüllen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust does_not_compile ignore">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     unimplemented!();
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 12-13: Definieren der Funktion <code>search</code> in
 <em>src/lib.rs</em></span></p>
 <p>Wir haben das Schlüsselwort <code>pub</code> in der Funktionsdefinition verwendet, um

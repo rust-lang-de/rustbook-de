@@ -201,9 +201,7 @@ $ cd adder
 <p>Der Inhalt der Datei <em>src/lib.rs</em> in deiner Bibliothek <code>adder</code> sollte wie
 Listing 11-1 aussehen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add(left: usize, right: usize) -&gt; usize {
+<pre><code class="language-rust ignore">pub fn add(left: usize, right: usize) -&gt; usize {
     left + right
 }
 
@@ -216,8 +214,7 @@ mod tests {
         let result = add(2, 2);
         assert_eq!(result, 4);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-1: Das Testmodul und die Funktion, die
 automatisch von <code>cargo new</code> generiert werden</span></p>
 <p>Die Datei beginnt mit einer Beispielfunktion <code>add</code>, damit wir etwas zum Testen
@@ -425,8 +422,8 @@ schreiben wir einen Test, der die Methode <code>can_hold</code> überprüft, ind
 sicherstellen, dass sie eine weitere <code>Rectangle</code>-Instanz mit einer Breite von 5
 und einer Höhe von 1 enthalten kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">#[derive(Debug)]
-<span class="boring">struct Rectangle {
+<pre><code class="language-rust noplayground"><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Rectangle {
 </span><span class="boring">    width: u32,
 </span><span class="boring">    height: u32,
 </span><span class="boring">}
@@ -649,9 +646,7 @@ Werte auszugeben, die zum falschen Testergebnis geführt haben.</p>
 Parameter addiert, und dann testen wir diese Funktion mit dem Makro
 <code>assert_eq!</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_two(a: u64) -&gt; u64 {
+<pre><code class="language-rust ignore">pub fn add_two(a: u64) -&gt; u64 {
     a + 2
 }
 
@@ -664,8 +659,7 @@ mod tests {
         let result = add_two(2);
         assert_eq!(result, 4);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-7: Testen der Funktion <code>add_two</code> mit dem
 Makro <code>assert_eq!</code></span></p>
 <p>Lass uns prüfen, ob sie den Test besteht!</p>
@@ -693,13 +687,11 @@ bestanden wurde!</p>
 <p>Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie <code>assert_eq!</code>
 aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 <code>add_two</code>, sodass sie stattdessen <code>3</code> addiert:</p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_two(a: u64) -&gt; u64 {
+<pre><code class="language-rust not_desired_behavior ignore">pub fn add_two(a: u64) -&gt; u64 {
     a + 3
 }
-
-<span class="boring">#[cfg(test)]
+<span class="boring">
+</span><span class="boring">#[cfg(test)]
 </span><span class="boring">mod tests {
 </span><span class="boring">    use super::*;
 </span><span class="boring">
@@ -708,7 +700,6 @@ aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 </span><span class="boring">        let result = add_two(2);
 </span><span class="boring">        assert_eq!(result, 4);
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Führe die Tests erneut aus:</p>
 <pre><code class="language-console">$ cargo test
@@ -787,9 +778,7 @@ hast du eine bessere Vorstellung davon, wo das Problem im Code liegt.</p>
 begrüßt, und wir wollen testen, ob der Name, den wir an die Funktion übergeben,
 in der Ausgabe auftaucht:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn greeting(name: &amp;str) -&gt; String {
+<pre><code class="language-rust ignore">pub fn greeting(name: &amp;str) -&gt; String {
     format!("Hallo {name}!")
 }
 
@@ -802,8 +791,7 @@ mod tests {
         let result = greeting("Carol");
         assert!(result.contains("Carol"));
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Die Anforderungen für dieses Programm sind noch nicht abgestimmt worden und wir
 sind ziemlich sicher, dass sich der Text <code>Hallo</code> zu Beginn der Begrüßung ändern
 wird. Wir haben beschlossen, dass wir den Test nicht aktualisieren wollen, wenn
@@ -813,9 +801,7 @@ einfach sicher, dass die Ausgabe den Text des Eingabeparameters enthält.</p>
 <p>Lass uns nun einen Fehler in diesen Code einbringen, indem wir <code>greeting</code> so
 ändern, dass <code>name</code> nicht enthalten ist, um zu sehen, wie das
 Standard-Testversagen aussieht:</p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn greeting(name: &amp;str) -&gt; String {
+<pre><code class="language-rust not_desired_behavior ignore">pub fn greeting(name: &amp;str) -&gt; String {
     String::from("Hallo!")
 }
 <span class="boring">
@@ -828,7 +814,6 @@ Standard-Testversagen aussieht:</p>
 </span><span class="boring">        let result = greeting("Carol");
 </span><span class="boring">        assert!(result.contains("Carol"));
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Das Ausführen dieses Tests führt zu folgender Ausgabe:</p>
 <pre><code class="language-console">$ cargo test
@@ -859,9 +844,7 @@ welcher Zeile die Zusicherung steht. Eine nützlichere Fehlermeldung würde den
 Wert der Funktion <code>greeting</code> ausgeben. Fügen wir eine benutzerdefinierte
 Fehlermeldung hinzu, die aus einem Formatierungs-String mit einem Platzhalter
 besteht, der mit dem tatsächlichen Wert aus der Funktion <code>greeting</code> gefüllt ist:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub fn greeting(name: &amp;str) -&gt; String {
+<pre><code class="language-rust ignore"><span class="boring">pub fn greeting(name: &amp;str) -&gt; String {
 </span><span class="boring">    String::from("Hallo!")
 </span><span class="boring">}
 </span><span class="boring">
@@ -877,8 +860,7 @@ besteht, der mit dem tatsächlichen Wert aus der Funktion <code>greeting</code> 
             "Begrüßung enthielt nicht den Namen, Wert war `{result}`"
         );
     }
-<span class="boring">}
-</span><span class="boring">}</span></code></pre>
+<span class="boring">}</span></code></pre>
 <p>Wenn wir jetzt den Test ausführen, erhalten wir eine aussagekräftigere
 Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo test
@@ -922,9 +904,7 @@ abbricht.</p>
 <p>Listing 11-8 zeigt einen Test, der prüft, ob die Fehlerbedingungen von
 <code>Guess::new</code> eintreten, wenn wir dies erwarten.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct Guess {
+<pre><code class="language-rust ignore">pub struct Guess {
     value: i32,
 }
 
@@ -947,8 +927,7 @@ mod tests {
     fn greater_than_100() {
         Guess::new(200);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-8: Testet, dass eine Bedingung zum
 Programmabbruch führt</span></p>
 <p>Wir setzen das Attribut <code>#[should_panic]</code> hinter das Attribut <code>#[test]</code> und vor
@@ -973,9 +952,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p>Sieht gut aus! Lass uns nun einen Fehler in unseren Code einbringen, indem wir
 die Bedingung entfernen, bei der die Funktion <code>new</code> das Programm abbricht, wenn
 der Wert größer als 100 ist:</p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Guess {
+<pre><code class="language-rust not_desired_behavior ignore"><span class="boring">pub struct Guess {
 </span><span class="boring">    value: i32,
 </span><span class="boring">}
 </span><span class="boring">
@@ -999,7 +976,6 @@ impl Guess {
 </span><span class="boring">    fn greater_than_100() {
 </span><span class="boring">        Guess::new(200);
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Wenn wir den Test in Listing 11-8 ausführen, wird er fehlschlagen:</p>
 <pre><code class="language-console">$ cargo test
@@ -1036,9 +1012,7 @@ modifizierten Code für <code>Guess</code> in Listing 11-9, wo die Funktion <cod
 unterschiedlichen Meldungen das Programm abbricht, je nachdem, ob der Wert zu
 klein oder zu groß ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Guess {
+<pre><code class="language-rust ignore"><span class="boring">pub struct Guess {
 </span><span class="boring">    value: i32,
 </span><span class="boring">}
 </span><span class="boring">
@@ -1064,8 +1038,7 @@ mod tests {
     fn greater_than_100() {
         Guess::new(200);
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 11-9: Testen eines Programmabbruchs mit einem
 bestimmten Teil-String in der Meldung</span></p>
 <p>Dieser Test wird bestanden werden, weil der Wert, den wir beim Parameter
@@ -1081,9 +1054,7 @@ Fall <code>else if value &gt; 100</code> ausführt.</p>
 <code>expected</code>-Nachricht fehlschlägt, wollen wir wieder einen Fehler in unseren Code
 einbringen, indem wir die Zweige <code>if value &lt; 1</code> und <code>else if value &gt; 100</code>
 vertauschen:</p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct Guess {
+<pre><code class="language-rust not_desired_behavior ignore"><span class="boring">pub struct Guess {
 </span><span class="boring">    value: i32,
 </span><span class="boring">}
 </span><span class="boring">
@@ -1108,7 +1079,6 @@ vertauschen:</p>
 </span><span class="boring">    fn greater_than_100() {
 </span><span class="boring">        Guess::new(200);
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Wenn wir diesmal den <code>should_panic</code>-Test ausführen, wird er fehlschlagen:</p>
 <pre><code class="language-console">$ cargo test
@@ -1146,9 +1116,7 @@ können wir anfangen herauszufinden, wo unser Fehler liegt!</p>
 Tests schreiben, die <code>Result&lt;T, E&gt;</code> verwenden! Hier ist der Test aus Listing
 11-1 so umgeschrieben, dass er <code>Result&lt;T, E&gt;</code> verwendet und <code>Err</code> zurückgibt,
 anstatt das Programm abzubrechen:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
+<pre><code class="language-rust ignore"><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
 </span><span class="boring">    left + right
 </span><span class="boring">}
 </span><span class="boring">
@@ -1166,8 +1134,7 @@ anstatt das Programm abzubrechen:</p>
             Err(String::from("zwei plus zwei ist nicht gleich vier"))
         }
     }
-<span class="boring">}
-</span><span class="boring">}</span></code></pre>
+<span class="boring">}</span></code></pre>
 <p>Die Funktion <code>it_works</code> hat jetzt den Rückgabetyp <code>Result&lt;(), String&gt;</code>. Anstatt
 das Makro <code>assert_eq!</code> aufzurufen, geben wir im Funktionsrumpf <code>Ok(())</code> zurück,
 wenn der Test bestanden ist, und ein <code>Err</code> mit einem <code>String</code> im Inneren, wenn

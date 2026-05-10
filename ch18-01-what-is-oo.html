@@ -208,13 +208,10 @@ muss, wenn jemand ihn braucht. Mit anderen Worten: <code>AveragedCollection</cod
 errechneten Durchschnitt für uns zwischenspeichern. Listing 18-1 zeigt die
 Definition der Struktur <code>AveragedCollection</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct AveragedCollection {
+<pre><code class="language-rust ignore">pub struct AveragedCollection {
     list: Vec&lt;i32&gt;,
     average: f64,
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-1: Eine Struktur <code>AveragedCollection</code>, die
 eine Liste von ganzen Zahlen und deren Durchschnitt verwaltet</span></p>
 <p>Die Struktur wird als <code>pub</code> markiert, damit anderer Code sie verwenden kann,
@@ -224,9 +221,7 @@ hinzugefügt oder aus der Liste entfernt wird, auch der Durchschnitt
 aktualisiert wird. Wir tun dies, indem wir die Methoden <code>add</code>, <code>remove</code> und
 <code>average</code> auf der Struktur implementieren, wie in Listing 18-2 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct AveragedCollection {
+<pre><code class="language-rust ignore"><span class="boring">pub struct AveragedCollection {
 </span><span class="boring">    list: Vec&lt;i32&gt;,
 </span><span class="boring">    average: f64,
 </span><span class="boring">}
@@ -256,8 +251,7 @@ aktualisiert wird. Wir tun dies, indem wir die Methoden <code>add</code>, <code>
         let total: i32 = self.list.iter().sum();
         self.average = total as f64 / self.list.len() as f64;
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 18-2: Implementierungen der öffentlichen
 Methoden <code>add</code>, <code>remove</code> und <code>average</code> auf <code>AveragedCollection</code></span></p>
 <p>Die öffentlichen Methoden <code>add</code>, <code>remove</code> und <code>average</code> sind die einzigen

@@ -193,12 +193,9 @@ anfordern, indem wir eine Methode <code>summarize</code> auf einer Instanz aufru
 Listing 10-12 zeigt die Definition eines öffentlichen Traits <code>Summary</code>, die
 dieses Verhalten zum Ausdruck bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Summary {
+<pre><code class="language-rust ignore">pub trait Summary {
     fn summarize(&amp;self) -&gt; String;
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 10-12: Ein Trait <code>Summary</code>, dessen Verhalten aus
 der Methode <code>summarize</code> besteht</span></p>
 <p>Hier deklarieren wir ein Trait mit dem Schlüsselwort <code>trait</code> und dann den Namen
@@ -224,9 +221,7 @@ verwendet, um den Rückgabewert von <code>summarize</code> zu erzeugen. Für die
 gesamten Text der Nachricht, wobei wir davon ausgehen, dass der Inhalt der
 Nachricht bereits auf 280 Zeichen begrenzt ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
@@ -254,8 +249,7 @@ impl Summary for SocialPost {
     fn summarize(&amp;self) -&gt; String {
         format!("{}: {}", self.username, self.content)
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 10-13: Implementierung des Traits <code>Summary</code>
 für die Typen <code>NewsArticle</code> und <code>SocialPost</code></span></p>
 <p>Die Implementierung eines Traits für einen Typ ist ähnlich zur Implementierung
@@ -316,9 +310,7 @@ können wir das Standardverhalten jeder Methode beibehalten oder überschreiben.
 Traits <code>Summary</code> an, anstatt nur die Methodensignatur zu definieren, wie wir es
 in Listing 10-12 getan haben.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Summary {
+<pre><code class="language-rust ignore">pub trait Summary {
     fn summarize(&amp;self) -&gt; String {
         String::from("(Lies mehr ...)")
     }
@@ -344,7 +336,6 @@ in Listing 10-12 getan haben.</p>
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
 </span><span class="boring">        format!("{}: {}", self.username, self.content)
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 10-14: Definieren eines Traits <code>Summary</code> mit
 einer Standard-Implementierung der Methode <code>summarize</code></span></p>
@@ -383,9 +374,7 @@ Beispiel könnten wir das Trait <code>Summary</code> so definieren, dass wir ein
 <code>summarize_author</code> haben, deren Implementierung erforderlich ist, und dann eine
 Methode <code>summarize</code> definieren, die eine Standard-Implementierung hat und die
 Methode <code>summarize_author</code> aufruft:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Summary {
+<pre><code class="language-rust ignore">pub trait Summary {
     fn summarize_author(&amp;self) -&gt; String;
 
     fn summarize(&amp;self) -&gt; String {
@@ -404,13 +393,10 @@ Methode <code>summarize_author</code> aufruft:</p>
 </span><span class="boring">    fn summarize_author(&amp;self) -&gt; String {
 </span><span class="boring">        format!("@{}", self.username)
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Um diese Version von <code>Summary</code> zu verwenden, müssen wir <code>summarize_author</code> nur
 dann definieren, wenn wir das Trait für einen Typ implementieren:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize_author(&amp;self) -&gt; String;
 </span><span class="boring">
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
@@ -429,8 +415,7 @@ dann definieren, wenn wir das Trait für einen Typ implementieren:</p>
     fn summarize_author(&amp;self) -&gt; String {
         format!("@{}", self.username)
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Nachdem wir <code>summarize_author</code> definiert haben, können wir <code>summarize</code> auf
 Instanzen der <code>SocialPost</code>-Struktur aufrufen, und die Standard-Implementierung
 von <code>summarize</code> wird die Definition von <code>summarize_author</code> aufrufen, die wir
@@ -461,9 +446,7 @@ um eine Funktion <code>notify</code> zu definieren, die die Methode <code>summar
 Parameter <code>item</code> aufruft, der von einem Typ ist, der das Trait <code>Summary</code>
 implementiert. Um dies zu tun, können wir die Syntax <code>impl Trait</code> verwenden,
 etwa so:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
@@ -495,8 +478,7 @@ etwa so:</p>
 </span><span class="boring">
 </span>pub fn notify(item: &amp;impl Summary) {
     println!("Eilmeldung! {}", item.summarize());
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Anstelle eines konkreten Typs für den Parameter <code>item</code> geben wir das
 Schlüsselwort <code>impl</code> und den Trait-Namen an. Dieser Parameter akzeptiert jeden
 Typ, der das angegebene Trait implementiert. Im Rumpf von <code>notify</code> können wir
@@ -509,16 +491,13 @@ Typen kein <code>Summary</code> implementieren.</p>
 <p>Die Syntax <code>impl Trait</code> funktioniert für einfache Fälle, ist aber eigentlich
 syntaktischer Zucker für eine längere Form, die <em>Trait Bound</em> genannt wird; sie
 sieht so aus:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
 </span>pub fn notify&lt;T: Summary&gt;(item: &amp;T) {
     println!("Eilmeldung! {}", item.summarize());
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Diese längere Form entspricht dem Beispiel im vorigen Abschnitt, ist aber
 wortreicher. Wir platzieren Trait Bounds in der Deklaration des generischen
 Typparameters nach einem Doppelpunkt und innerhalb spitzer Klammern.</p>
@@ -569,9 +548,7 @@ einer Funktion ohne viele Trait Bounds.</p>
 <h3 id="rückgabetypen-die-traits-implementieren"><a class="header" href="#rückgabetypen-die-traits-implementieren">Rückgabetypen, die Traits implementieren</a></h3>
 <p>Wir können die Syntax <code>impl Trait</code> auch für den Rückgabetyp verwenden, wie hier
 gezeigt:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
@@ -608,8 +585,7 @@ gezeigt:</p>
         reply: false,
         repost: false,
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Durch Verwenden von <code>impl Summary</code> für den Rückgabetyp legen wir fest, dass die
 Funktion <code>returns_summarizable</code> einen Typ zurückgibt, der das Trait <code>Summary</code>
 implementiert, ohne den konkreten Typ zu nennen. In diesem Fall gibt
@@ -626,9 +602,7 @@ langen Typ schreiben musst.</p>
 zurückgibst. Beispielsweise würde dieser Code, der entweder einen <code>NewsArticle</code>
 oder einen <code>SocialPost</code> mit dem Rückgabetyp <code>impl Summary</code> zurückgibt, nicht
 funktionieren:</p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub trait Summary {
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
@@ -679,8 +653,7 @@ funktionieren:</p>
             repost: false,
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Die Rückgabe entweder eines <code>NewsArticle</code> oder eines <code>SocialPost</code> ist aufgrund
 von Einschränkungen hinsichtlich der Implementierung der Syntax <code>impl Trait</code> im
 Compiler nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
@@ -698,9 +671,7 @@ diesem Fall <code>Pair&lt;T&gt;</code> ist). Aber im nächsten <code>impl</code>
 <code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die den Vergleich bzw. eine Ausgabe
 ermöglichen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::fmt::Display;
+<pre><code class="language-rust ignore">use std::fmt::Display;
 
 struct Pair&lt;T&gt; {
     x: T,
@@ -721,8 +692,7 @@ impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt; {
             println!("Das größte Element ist y = {}", self.y);
         }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 10-15: Bedingte Implementierung von Methoden
 für einen generischen Typ in Abhängigkeit von Trait Bounds</span></p>
 <p>Wir können auch ein Trait für beliebige Typen bedingt implementieren, die ein

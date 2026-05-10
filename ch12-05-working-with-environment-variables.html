@@ -181,9 +181,7 @@ unseren alten Test von <code>one_result</code> in <code>case_sensitive</code> um
 Unterschiede zwischen den beiden Tests zu verdeutlichen, wie in Listing 12-20
 gezeigt wird.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
 </span><span class="boring">    let mut results = Vec::new();
 </span><span class="boring">
 </span><span class="boring">    for line in contents.lines() {
@@ -225,8 +223,7 @@ Trust me.";
             search_case_insensitive(query, contents)
         );
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 12-20: Hinzufügen eines neuen fehlschlagenden
 Tests für die Funktion <code>search_case_insensitive</code>, die wir gleich hinzufügen
 werden</span></p>
@@ -256,9 +253,7 @@ besteht darin, dass wir <code>query</code> und <code>line</code> in Kleinbuchsta
 sie unabhängig von der Groß-/Kleinschreibung der Eingabe-Argumente sind, wenn
 wir prüfen, ob die Zeile die Abfrage enthält.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<pre><code class="language-rust ignore"><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
 </span><span class="boring">    let mut results = Vec::new();
 </span><span class="boring">
 </span><span class="boring">    for line in contents.lines() {
@@ -316,7 +311,6 @@ wir prüfen, ob die Zeile die Abfrage enthält.</p>
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 12-21: Definieren der Funktion
 <code>search_case_insensitive</code>, um den Abfragetext und die Zeile vor dem Vergleich
@@ -502,7 +496,7 @@ Standardbibliothek, die bereits im Gültigkeitsbereich am Anfang von
 <em>src/main.rs</em> ist. Dann werden wir die Funktion <code>var</code> aus dem Modul <code>env</code>
 verwenden, um zu prüfen, ob eine Umgebungsvariable namens <code>IGNORE_CASE</code> einen
 Wert hat, wie in Listing 12-23 gezeigt.</p>
-<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;

@@ -505,16 +505,13 @@ einen Parameter haben muss, der <code>4</code> als Argument akzeptieren kann und
 <code>ThreadPool</code>-Instanz zurückgeben sollte. Lass uns die einfachste Funktion <code>new</code>
 implementieren, die diese Eigenschaften haben wird:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct ThreadPool;
+<pre><code class="language-rust ignore">pub struct ThreadPool;
 
 impl ThreadPool {
     pub fn new(size: usize) -&gt; ThreadPool {
         ThreadPool
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Wir haben <code>usize</code> als Typ des Parameters <code>size</code> gewählt, weil wir wissen, dass
 eine negative Anzahl von Threads keinen Sinn macht. Wir wissen auch, dass wir
 diese <code>4</code> als die Anzahl der Elemente in einer Kollektion von Threads verwenden
@@ -568,9 +565,7 @@ wir nicht wissen, wie lange die Ausführung des Threads dauern wird. Lass uns
 eine Methode <code>execute</code> auf <code>ThreadPool</code> erstellen, die einen generischen
 Parameter vom Typ <code>F</code> mit diesen Abgrenzungen annimmt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct ThreadPool;
+<pre><code class="language-rust ignore"><span class="boring">pub struct ThreadPool;
 </span><span class="boring">
 </span>impl ThreadPool {
     // --abschneiden--
@@ -583,8 +578,7 @@ Parameter vom Typ <code>F</code> mit diesen Abgrenzungen annimmt:</p>
         F: FnOnce() + Send + 'static,
     {
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Wir verwenden immer noch <code>()</code> nach <code>FnOnce</code>, weil dieses <code>FnOnce</code> einen Closure
 darstellt, der keine Parameter benötigt und den Einheitstyp <code>()</code> zurückgibt.
 Genau wie bei Funktionsdefinitionen kann der Rückgabetyp in der Signatur
@@ -623,9 +617,7 @@ prüfen, ob <code>size</code> größer als null ist, bevor wir eine <code>Thread
 zurückgeben; wenn <code>size</code> null ist, brechen wir das Programm ab, indem wir das
 Makro <code>assert!</code> verwenden, wie in Listing 21-13 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct ThreadPool;
+<pre><code class="language-rust ignore"><span class="boring">pub struct ThreadPool;
 </span><span class="boring">
 </span>impl ThreadPool {
     /// Erzeuge einen neuen ThreadPool.
@@ -648,8 +640,7 @@ Makro <code>assert!</code> verwenden, wie in Listing 21-13 gezeigt.</p>
 </span><span class="boring">        F: FnOnce() + Send + 'static,
 </span><span class="boring">    {
 </span><span class="boring">    }
-</span>}
-<span class="boring">}</span></code></pre>
+</span>}</code></pre>
 <p><span class="caption">Listing 21-13: Die Implementierung von <code>ThreadPool::new</code>
 bricht ab, wenn <code>size</code> gleich Null ist</span></p>
 <p>Wir haben auch etwas Dokumentation für unseren <code>ThreadPool</code> mit
@@ -690,9 +681,7 @@ Kapazität <code>size</code> initialisiert, eine <code>for</code>-Schleife einge
 zum Erzeugen der Threads ausführt, und eine <code>ThreadPool</code>-Instanz zurückgibt, die
 diese enthält.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::thread;
+<pre><code class="language-rust not_desired_behavior ignore">use std::thread;
 
 pub struct ThreadPool {
     threads: Vec&lt;thread::JoinHandle&lt;()&gt;&gt;,
@@ -725,8 +714,7 @@ impl ThreadPool {
 </span><span class="boring">        F: FnOnce() + Send + 'static,
 </span><span class="boring">    {
 </span><span class="boring">    }
-</span>}
-<span class="boring">}</span></code></pre>
+</span>}</code></pre>
 <p><span class="caption">Listing 21-14: Erstellen eines Vektors für <code>ThreadPool</code>
 zum Aufnehmen der Threads</span></p>
 <p>Wir haben <code>std::thread</code> in der Bibliotheks-Crate in den Gültigkeitsbereich
@@ -784,9 +772,7 @@ zu implementieren, bevor du dir den Code in Listing 21-15 ansiehst.</p>
 <p>Bereit? Hier ist Listing 21-15 mit einer Möglichkeit, die vorhergehenden
 Änderungen vorzunehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::thread;
+<pre><code class="language-rust ignore">use std::thread;
 
 pub struct ThreadPool {
     workers: Vec&lt;Worker&gt;,
@@ -832,8 +818,7 @@ impl Worker {
 
         Worker { id, thread }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 21-15: Modifizieren von <code>ThreadPool</code>, um
 <code>Worker</code>-Instanzen zu halten, anstatt Threads direkt zu halten</span></p>
 <p>Wir haben den Namen des Feldes in <code>ThreadPool</code> von <code>threads</code> in <code>workers</code>
@@ -892,9 +877,7 @@ in der <code>ThreadPool</code>-Instanz zu halten, wie in Listing 21-16 gezeigt. 
 Struktur <code>Job</code> enthält vorerst nichts, sie wird aber der Element-Typ sein, den
 wir in den Kanal senden.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::{sync::mpsc, thread};
+<pre><code class="language-rust ignore">use std::{sync::mpsc, thread};
 
 pub struct ThreadPool {
     workers: Vec&lt;Worker&gt;,
@@ -945,7 +928,6 @@ impl ThreadPool {
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 21-16: Ändern von <code>ThreadPool</code>, um den Sender
 zu speichern, der <code>Job</code>-Instanzen übermittelt</span></p>
@@ -957,9 +939,7 @@ verwenden wollen, den die <code>Worker</code>-Instanzen erzeugen, also werden wi
 Parameter <code>receiver</code> im Closure referenzieren. Der Code in Listing 21-17 lässt
 sich noch nicht ganz kompilieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::{sync::mpsc, thread};
+<pre><code class="language-rust does_not_compile ignore"><span class="boring">use std::{sync::mpsc, thread};
 </span><span class="boring">
 </span><span class="boring">pub struct ThreadPool {
 </span><span class="boring">    workers: Vec&lt;Worker&gt;,
@@ -1014,8 +994,7 @@ sich noch nicht ganz kompilieren.</p>
 
         Worker { id, thread }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 21-17: Übergeben des Empfängers an jeden
 <code>Worker</code></span></p>
 <p>Wir haben einige kleine und unkomplizierte Änderungen vorgenommen: Wir geben den
@@ -1069,9 +1048,7 @@ besitzen, und <code>Mutex</code> stellt sicher, dass immer nur ein <code>Worker<
 Zeit einen Auftrag vom Empfänger erhält. Listing 21-18 zeigt die Änderungen, die
 wir vornehmen müssen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::{
+<pre><code class="language-rust ignore">use std::{
     sync::{Arc, Mutex, mpsc},
     thread,
 };
@@ -1134,8 +1111,7 @@ wir vornehmen müssen.</p>
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span>    }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 21-18: Den Empfänger unter den <code>Worker</code>
 teilen, die <code>Arc</code> und <code>Mutex</code> benutzen</span></p>
 <p>In <code>ThreadPool::new</code> setzen wir den Empfänger in einen <code>Arc</code> und einen <code>Mutex</code>.
@@ -1150,9 +1126,7 @@ werden auch <code>Job</code> von einer Struktur in einen Typ-Alias für ein Trai
 ermöglichen uns Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher
 nutzen zu können. Siehe Listing 21-19.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::{
+<pre><code class="language-rust ignore"><span class="boring">use std::{
 </span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
@@ -1216,7 +1190,6 @@ impl ThreadPool {
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
-</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Listing 21-19: Erstellen eines Alias vom Typ <code>Job</code> für
 eine <code>Box</code>, die jeden Closure enthält, und danach Senden des Auftrags in den
@@ -1237,9 +1210,7 @@ Schleife laufen lassen, indem wir das empfangende Ende des Kanals um einen
 Auftrag bitten und den Auftrag ausführen, wenn er einen bekommt. Lass uns die in
 Listing 21-20 gezeigte Änderung in <code>Worker::new</code> vornehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::{
+<pre><code class="language-rust ignore"><span class="boring">use std::{
 </span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
@@ -1306,8 +1277,7 @@ impl Worker {
 
         Worker { id, thread }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 21-20: Empfangen und Ausführen der Aufträge im
 Thread des <code>Worker</code></span></p>
 <p>Hier rufen wir zuerst <code>lock</code> auf <code>receiver</code> auf, um den Mutex zu erwerben, und
@@ -1380,9 +1350,7 @@ nicht durch unseren Webserver verursacht.</p>
 hast, fragst du dich vielleicht, warum wir den Code für den <code>Worker</code>-Thread
 nicht geschrieben haben, wie in Listing 21-21 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::{
+<pre><code class="language-rust not_desired_behavior ignore"><span class="boring">use std::{
 </span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
@@ -1446,8 +1414,7 @@ impl Worker {
 
         Worker { id, thread }
     }
-}
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p><span class="caption">Listing 21-21: Eine alternative Implementierung von
 <code>Worker::new</code> unter Verwendung von <code>while let</code></span></p>
 <p>Dieser Code wird kompiliert und ausgeführt, führt aber nicht zum gewünschten
