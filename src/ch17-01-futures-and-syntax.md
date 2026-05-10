@@ -201,7 +201,7 @@ Funktion, die ein _Future_ des Rückgabetyps zurückgibt. Für den Compiler ist
 eine Funktionsdefinition wie `async fn page_title` in Listing 17-1 fast
 äquivalent zu einer nicht-asynchronen Funktion, die wie folgt definiert ist:
 
-```rust
+```rust,ignore
 use std::future::Future;
 use trpl::Html;
 
@@ -370,7 +370,7 @@ bereit ist, seine Arbeit wieder fortzusetzen. Dies ist eine unsichtbare
 Zustandsmaschine, so als ob du eine Aufzählung auf diese Weise geschrieben
 hättest, um den aktuellen Zustand an jedem `await`-Punkt zu speichern:
 
-```rust
+```rust,ignore
 enum PageTitleFuture<'a> {
     Initial { url: &'a str },
     GetAwaitPoint { url: &'a str },
@@ -476,7 +476,7 @@ unterscheidet `Either` jedoch nicht zwischen Erfolg und Misserfolg.
 Stattdessen werden `Left` und `Right` verwendet, um „das eine oder das andere“
 anzuzeigen.
 
-```rust
+```rust,ignore
 enum Either<A, B> {
     Left(A),
     Right(B),

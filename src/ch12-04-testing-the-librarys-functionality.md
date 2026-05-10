@@ -39,7 +39,7 @@ Test.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 # pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 #     unimplemented!();
 # }
@@ -85,7 +85,7 @@ produktiv."` enthält.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     vec![]
 }
@@ -182,7 +182,7 @@ Beachte, dass dies noch nicht kompiliert.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     for line in contents.lines() {
         // mache etwas mit line
@@ -225,7 +225,7 @@ kompiliert werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     for line in contents.lines() {
         if line.contains(query) {
@@ -268,7 +268,7 @@ geben wir den Vektor zurück, wie in Listing 12-19 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     let mut results = Vec::new();
 

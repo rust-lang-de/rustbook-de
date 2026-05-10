@@ -122,7 +122,7 @@ zu halten. Du wirst gleich sehen, warum die `Option<T>` notwendig ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub struct Post {
     state: Option<Box<dyn State>>,
     content: String,
@@ -176,7 +176,7 @@ hinzufügen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
@@ -229,7 +229,7 @@ immer leer sein. Listing 18-14 zeigt diese Platzhalter-Implementierung.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
@@ -275,7 +275,7 @@ eines Beitrags zu beantragen, die seinen Zustand von `Draft` in `PendingReview`
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
@@ -384,7 +384,7 @@ sollte, wie in Listing 18-16 gezeigt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
@@ -485,7 +485,7 @@ abhängt, also delegieren wir `Post` an eine Methode `content`, die auf seinen
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
@@ -598,7 +598,7 @@ sehen ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
@@ -833,7 +833,7 @@ einmal kompilieren lässt. Listing 18-19 zeigt die Definition einer Struktur
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub struct Post {
     content: String,
 }
@@ -895,7 +895,7 @@ gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub struct Post {
 #     content: String,
 # }

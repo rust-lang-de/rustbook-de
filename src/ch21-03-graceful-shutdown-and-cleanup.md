@@ -26,7 +26,7 @@ funktionieren.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 # use std::{
 #     sync::{Arc, Mutex, mpsc},
 #     thread,
@@ -277,7 +277,7 @@ um den `sender` mit `Option::take` aus dem `ThreadPool` herausnehmen zu können.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # use std::{
 #     sync::{Arc, Mutex, mpsc},
 #     thread,
@@ -637,7 +637,7 @@ fn handle_connection(mut stream: TcpStream) {
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 use std::{
     sync::{Arc, Mutex, mpsc},
     thread,

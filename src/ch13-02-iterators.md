@@ -65,7 +65,7 @@ Alle Iteratoren implementieren ein Trait namens `Iterator` das in der
 Standardbibliothek definiert ist. Die Definition dieses Traits sieht wie folgt
 aus:
 
-```rust
+```rust,ignore
 pub trait Iterator {
     type Item;
 

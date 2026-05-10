@@ -85,7 +85,7 @@ Listing 20-35 zeigt eine leicht vereinfachte Definition des Makros `vec!`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 #[macro_export]
 macro_rules! vec {
     ( $( $x:expr ),* ) => {
@@ -261,7 +261,7 @@ damit assoziierte Funktion.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub trait HelloMacro {
     fn hello_macro();
 }

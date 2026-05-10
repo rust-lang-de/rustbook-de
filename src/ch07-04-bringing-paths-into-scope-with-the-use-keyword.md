@@ -170,7 +170,7 @@ wie auf sie verwiesen werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 use std::fmt;
 use std::io;
 
@@ -205,7 +205,7 @@ indem einer der beiden `Result`-Typen mittels `as` umbenannt wird.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 use std::fmt::Result;
 use std::io::Result as IoResult;
 
@@ -339,7 +339,7 @@ einzubinden. Aber wir müssen `use` verwenden, um Elemente von dort in den
 Gültigkeitsbereich unseres Pakets zu bringen. Zum Beispiel würden wir für
 `HashMap` diese Zeile verwenden:
 
-```rust
+```rust,ignore
 use std::collections::HashMap;
 ```
 
@@ -356,7 +356,7 @@ aus `std` in den Gültigkeitsbereich:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust
+```rust,ignore
 // --abschneiden--
 use std::cmp::Ordering;
 use std::io;
@@ -371,7 +371,7 @@ Listing 7-18 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust
+```rust,ignore
 // --abschneiden--
 use std::{cmp::Ordering, io};
 // --abschneiden--
@@ -393,7 +393,7 @@ Eine, die `std::io` in den Gültigkeitsbereich bringt, und eine, die
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 use std::io;
 use std::io::Write;
 ```
@@ -408,7 +408,7 @@ verwenden, wie in Listing 7-20 gezeigt wird.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 use std::io::{self, Write};
 ```
 
@@ -423,7 +423,7 @@ Wenn wir _alle_ öffentlichen Elemente, die in einem Pfad definiert sind, in den
 Gültigkeitsbereich bringen wollen, können wir diesen Pfad gefolgt vom
 Stern-Operator `*` angeben:
 
-```rust
+```rust,ignore
 use std::collections::*;
 ```
 

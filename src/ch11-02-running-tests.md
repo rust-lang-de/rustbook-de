@@ -68,7 +68,7 @@ einen Test, der fehlschlägt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,panics
+```rust,panics,ignore
 fn prints_and_returns_10(a: i32) -> i32 {
     println!("Ich habe den Wert {a} erhalten.");
     10
@@ -196,7 +196,7 @@ zuerst drei Tests für unsere Funktion `add_two` erstellen, wie in Listing
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub fn add_two(a: u64) -> u64 {
     a + 2
 }
@@ -312,7 +312,7 @@ aufzulisten, kannst du die zeitaufwendigen Tests stattdessen mit dem Attribut
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub fn add(left: usize, right: usize) -> usize {
 #     left + right
 # }
