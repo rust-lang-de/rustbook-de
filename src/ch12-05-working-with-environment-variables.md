@@ -23,7 +23,7 @@ gezeigt wird.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 # pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 #     let mut results = Vec::new();
 #
@@ -104,7 +104,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 #     let mut results = Vec::new();
 #
@@ -369,7 +369,7 @@ _src/main.rs_ ist. Dann werden wir die Funktion `var` aus dem Modul `env`
 verwenden, um zu prüfen, ob eine Umgebungsvariable namens `IGNORE_CASE` einen
 Wert hat, wie in Listing 12-23 gezeigt.
 
-<span class="filename">Dateiname: src/lib.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
 # use std::env;

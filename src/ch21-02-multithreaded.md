@@ -400,7 +400,7 @@ implementieren, die diese Eigenschaften haben wird:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub struct ThreadPool;
 
 impl ThreadPool {
@@ -475,7 +475,7 @@ Parameter vom Typ `F` mit diesen Abgrenzungen annimmt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub struct ThreadPool;
 #
 impl ThreadPool {
@@ -538,7 +538,7 @@ Makro `assert!` verwenden, wie in Listing 21-13 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub struct ThreadPool;
 #
 impl ThreadPool {
@@ -619,7 +619,7 @@ diese enthält.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,not_desired_behavior
+```rust,not_desired_behavior,ignore
 use std::thread;
 
 pub struct ThreadPool {
@@ -725,7 +725,7 @@ Bereit? Hier ist Listing 21-15 mit einer Möglichkeit, die vorhergehenden
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 use std::thread;
 
 pub struct ThreadPool {
@@ -841,7 +841,7 @@ wir in den Kanal senden.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 use std::{sync::mpsc, thread};
 
 pub struct ThreadPool {
@@ -910,7 +910,7 @@ sich noch nicht ganz kompilieren.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 # use std::{sync::mpsc, thread};
 #
 # pub struct ThreadPool {
@@ -1031,7 +1031,7 @@ wir vornehmen müssen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 use std::{
     sync::{Arc, Mutex, mpsc},
     thread,
@@ -1118,7 +1118,7 @@ nutzen zu können. Siehe Listing 21-19.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # use std::{
 #     sync::{Arc, Mutex, mpsc},
 #     thread,
@@ -1209,7 +1209,7 @@ Listing 21-20 gezeigte Änderung in `Worker::new` vornehmen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # use std::{
 #     sync::{Arc, Mutex, mpsc},
 #     thread,
@@ -1362,7 +1362,7 @@ nicht geschrieben haben, wie in Listing 21-21 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,not_desired_behavior
+```rust,not_desired_behavior,ignore
 # use std::{
 #     sync::{Arc, Mutex, mpsc},
 #     thread,

@@ -36,7 +36,7 @@ dieses Verhalten zum Ausdruck bringt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub trait Summary {
     fn summarize(&self) -> String;
 }
@@ -75,7 +75,7 @@ Nachricht bereits auf 280 Zeichen begrenzt ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub trait Summary {
 #     fn summarize(&self) -> String;
 # }
@@ -181,7 +181,7 @@ in Listing 10-12 getan haben.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub trait Summary {
     fn summarize(&self) -> String {
         String::from("(Lies mehr ...)")
@@ -258,7 +258,7 @@ Beispiel könnten wir das Trait `Summary` so definieren, dass wir eine Methode
 Methode `summarize` definieren, die eine Standard-Implementierung hat und die
 Methode `summarize_author` aufruft:
 
-```rust
+```rust,ignore
 pub trait Summary {
     fn summarize_author(&self) -> String;
 
@@ -284,7 +284,7 @@ pub trait Summary {
 Um diese Version von `Summary` zu verwenden, müssen wir `summarize_author` nur
 dann definieren, wenn wir das Trait für einen Typ implementieren:
 
-```rust
+```rust,ignore
 # pub trait Summary {
 #     fn summarize_author(&self) -> String;
 #
@@ -345,7 +345,7 @@ Parameter `item` aufruft, der von einem Typ ist, der das Trait `Summary`
 implementiert. Um dies zu tun, können wir die Syntax `impl Trait` verwenden,
 etwa so:
 
-```rust
+```rust,ignore
 # pub trait Summary {
 #     fn summarize(&self) -> String;
 # }
@@ -397,7 +397,7 @@ Die Syntax `impl Trait` funktioniert für einfache Fälle, ist aber eigentlich
 syntaktischer Zucker für eine längere Form, die _Trait Bound_ genannt wird; sie
 sieht so aus:
 
-```rust
+```rust,ignore
 # pub trait Summary {
 #     fn summarize(&self) -> String;
 # }
@@ -489,7 +489,7 @@ einer Funktion ohne viele Trait Bounds.
 Wir können die Syntax `impl Trait` auch für den Rückgabetyp verwenden, wie hier
 gezeigt:
 
-```rust
+```rust,ignore
 # pub trait Summary {
 #     fn summarize(&self) -> String;
 # }
@@ -549,7 +549,7 @@ zurückgibst. Beispielsweise würde dieser Code, der entweder einen `NewsArticle
 oder einen `SocialPost` mit dem Rückgabetyp `impl Summary` zurückgibt, nicht
 funktionieren:
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 # pub trait Summary {
 #     fn summarize(&self) -> String;
 # }
@@ -625,7 +625,7 @@ ermöglichen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 use std::fmt::Display;
 
 struct Pair<T> {

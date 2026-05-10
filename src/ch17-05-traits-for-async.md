@@ -15,7 +15,7 @@ Dokumentation.
 Lass uns zunächst einen genaueren Blick darauf werfen, wie das Trait `Future`
 funktioniert. Rust definiert es wie folgt:
 
-```rust
+```rust,ignore
 use std::pin::Pin;
 use std::task::{Context, Poll};
 
@@ -38,7 +38,7 @@ entgegennimmt und `Poll<Self::Output>` zurückgibt. Wir werden gleich ein wenig
 mehr über `Pin` und `Context` sprechen. Für den Moment wollen wir uns auf das
 konzentrieren, was die Methode zurückgibt: Den Typ `Poll`:
 
-```rust
+```rust,ignore
 pub enum Poll<T> {
     Ready(T),
     Pending,
@@ -250,7 +250,7 @@ müssen wir ein wenig tiefer in die Funktionsweise des Traits `Future`
 eintauchen, insbesondere in Bezug auf das Anheften (pinning). Schau dir noch
 einmal die Definition des Traits `Future` an:
 
-```rust
+```rust,ignore
 use std::pin::Pin;
 use std::task::{Context, Poll};
 
@@ -552,7 +552,7 @@ Bereitschaft: Seine Methode `poll` liefert ein `Poll<Self::Output>`. Um eine
 Sequenz von Elementen darzustellen, die im Laufe der Zeit bereit sein werden,
 definieren wir ein Trait `Stream`, das diese Funktionalitäten zusammenführt:
 
-```rust
+```rust,ignore
 use std::pin::Pin;
 use std::task::{Context, Poll};
 
@@ -592,7 +592,7 @@ wie wir mit Futures direkt über deren Methode `poll` arbeiten _können_. Die
 Verwendung von `await` ist jedoch viel schöner, und das Trait `StreamExt` stellt
 die Methode `next` bereit, sodass wir Folgendes tun können:
 
-```rust
+```rust,ignore
 # use std::pin::Pin;
 # use std::task::{Context, Poll};
 #

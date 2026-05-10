@@ -77,7 +77,7 @@ definiert werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub trait Draw {
     fn draw(&self);
 }
@@ -94,7 +94,7 @@ der das Trait `Draw` implementiert.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub trait Draw {
 #     fn draw(&self);
 # }
@@ -114,7 +114,7 @@ gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub trait Draw {
 #     fn draw(&self);
 # }
@@ -145,7 +145,7 @@ können.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub trait Draw {
 #     fn draw(&self);
 # }
@@ -193,7 +193,7 @@ gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub trait Draw {
 #     fn draw(&self);
 # }

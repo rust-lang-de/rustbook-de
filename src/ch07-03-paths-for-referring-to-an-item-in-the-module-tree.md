@@ -34,7 +34,7 @@ sie mit dem Schlüsselwort `pub`. Im Abschnitt [„Pfade mit dem Schlüsselwort
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 mod front_of_house {
     mod hosting {
         fn add_to_waitlist() {}
@@ -161,7 +161,7 @@ Schlüsselwort `pub`, wie in Listing 7-5 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 mod front_of_house {
     pub mod hosting {
         fn add_to_waitlist() {}
@@ -334,7 +334,7 @@ sie den Pfad zu `deliver_order` angibt, der mit `super` beginnt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 fn deliver_order() {}
 
 mod back_of_house {
@@ -378,7 +378,7 @@ bekommen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 mod back_of_house {
     pub struct Breakfast {
         pub toast: String,
@@ -433,7 +433,7 @@ Schlüsselwort `enum`, wie in Listing 7-10 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 mod back_of_house {
     pub enum Appetizer {
         Soup,

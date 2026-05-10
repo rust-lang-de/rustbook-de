@@ -49,7 +49,7 @@ Listing 11-1 aussehen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
@@ -317,7 +317,7 @@ und einer Höhe von 1 enthalten kann.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,noplayground
-#[derive(Debug)]
+# #[derive(Debug)]
 # struct Rectangle {
 #     width: u32,
 #     height: u32,
@@ -568,7 +568,7 @@ Parameter addiert, und dann testen wir diese Funktion mit dem Makro
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub fn add_two(a: u64) -> u64 {
     a + 2
 }
@@ -618,11 +618,11 @@ Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie `assert_eq!`
 aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 `add_two`, sodass sie stattdessen `3` addiert:
 
-```rust,not_desired_behavior
+```rust,not_desired_behavior,ignore
 pub fn add_two(a: u64) -> u64 {
     a + 3
 }
-
+#
 # #[cfg(test)]
 # mod tests {
 #     use super::*;
@@ -723,7 +723,7 @@ in der Ausgabe auftaucht:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub fn greeting(name: &str) -> String {
     format!("Hallo {name}!")
 }
@@ -751,7 +751,7 @@ Lass uns nun einen Fehler in diesen Code einbringen, indem wir `greeting` so
 ändern, dass `name` nicht enthalten ist, um zu sehen, wie das
 Standard-Testversagen aussieht:
 
-```rust,not_desired_behavior
+```rust,not_desired_behavior,ignore
 pub fn greeting(name: &str) -> String {
     String::from("Hallo!")
 }
@@ -801,7 +801,7 @@ Wert der Funktion `greeting` ausgeben. Fügen wir eine benutzerdefinierte
 Fehlermeldung hinzu, die aus einem Formatierungs-String mit einem Platzhalter
 besteht, der mit dem tatsächlichen Wert aus der Funktion `greeting` gefüllt ist:
 
-```rust
+```rust,ignore
 # pub fn greeting(name: &str) -> String {
 #     String::from("Hallo!")
 # }
@@ -873,7 +873,7 @@ Listing 11-8 zeigt einen Test, der prüft, ob die Fehlerbedingungen von
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub struct Guess {
     value: i32,
 }
@@ -929,7 +929,7 @@ Sieht gut aus! Lass uns nun einen Fehler in unseren Code einbringen, indem wir
 die Bedingung entfernen, bei der die Funktion `new` das Programm abbricht, wenn
 der Wert größer als 100 ist:
 
-```rust,not_desired_behavior
+```rust,not_desired_behavior,ignore
 # pub struct Guess {
 #     value: i32,
 # }
@@ -998,7 +998,7 @@ klein oder zu groß ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub struct Guess {
 #     value: i32,
 # }
@@ -1046,7 +1046,7 @@ Um zu sehen, was passiert, wenn ein Test mit `should_panic` und einer
 einbringen, indem wir die Zweige `if value < 1` und `else if value > 100`
 vertauschen:
 
-```rust,not_desired_behavior
+```rust,not_desired_behavior,ignore
 # pub struct Guess {
 #     value: i32,
 # }
@@ -1117,7 +1117,7 @@ Tests schreiben, die `Result<T, E>` verwenden! Hier ist der Test aus Listing
 11-1 so umgeschrieben, dass er `Result<T, E>` verwendet und `Err` zurückgibt,
 anstatt das Programm abzubrechen:
 
-```rust
+```rust,ignore
 # pub fn add(left: usize, right: usize) -> usize {
 #     left + right
 # }

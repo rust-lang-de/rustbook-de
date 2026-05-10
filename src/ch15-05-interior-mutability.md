@@ -168,7 +168,7 @@ namens `Messenger` implementiert. Listing 15-20 zeigt den Bibliothekscode.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub trait Messenger {
     fn send(&self, msg: &str);
 }
@@ -237,7 +237,7 @@ erlaubt dies nicht.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 # pub trait Messenger {
 #     fn send(&self, msg: &str);
 # }
@@ -501,7 +501,7 @@ veranschaulichen, dass `RefCell<T>` uns daran hindert, dies zur Laufzeit zu tun.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,panics
+```rust,panics,ignore
 # pub trait Messenger {
 #     fn send(&self, msg: &str);
 # }

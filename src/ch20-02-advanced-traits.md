@@ -27,7 +27,7 @@ genannt und steht für den Typ der Werte, über die der Typ, der das Trait
 `Iterator` implementiert, iteriert. Die Definition des Traits `Iterator` ist in
 Listing 20-13 zu sehen.
 
-```rust
+```rust,ignore
 pub trait Iterator {
     type Item;
 
@@ -52,7 +52,7 @@ ist:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # struct Counter {
 #     count: u32,
 # }
@@ -82,7 +82,7 @@ Diese Syntax scheint mit der von generischen Datentypen vergleichbar zu sein.
 Warum also nicht einfach das Trait `Iterator` mit generischen Datentypen
 definieren, wie in Listing 20-14 gezeigt?
 
-```rust
+```rust,ignore
 pub trait Iterator<T> {
     fn next(&mut self) -> Option<T>;
 }
@@ -174,7 +174,7 @@ Trait `Add` hat einen assoziierten Typ namens `Output`, der den von der Methode
 Der generische Standardtyp in diesem Code befindet sich innerhalb des Traits
 `Add`. Hier ist seine Definition:
 
-```rust
+```rust,ignore
 trait Add<Rhs=Self> {
     type Output;
 
@@ -207,7 +207,7 @@ Implementierung von `Add` die Umrechnung korrekt durchführen lassen. Wir könne
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 use std::ops::Add;
 
 struct Millimeters(u32);

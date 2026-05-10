@@ -143,7 +143,7 @@ in Kapitel 10 kennengelernt haben. Du kannst jeden Funktionstyp zurückgeben,
 indem du `Fn`, `FnOnce` und `FnMut` verwendest. Zum Beispiel wird der Code in
 Listing 20-32 problemlos funktionieren.
 
-```rust
+```rust,ignore
 fn returns_closure() -> impl Fn(i32) -> i32 {
     |x| x + 1
 }

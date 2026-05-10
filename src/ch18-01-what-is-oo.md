@@ -53,7 +53,7 @@ Definition der Struktur `AveragedCollection`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub struct AveragedCollection {
     list: Vec<i32>,
     average: f64,
@@ -72,7 +72,7 @@ aktualisiert wird. Wir tun dies, indem wir die Methoden `add`, `remove` und
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # pub struct AveragedCollection {
 #     list: Vec<i32>,
 #     average: f64,

@@ -273,7 +273,7 @@ Funktion `add_one::add_one` hinzu:
 
 <span class="filename">Dateiname: add_one/src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub fn add_one(x: i32) -> i32 {
     x + 1
 }

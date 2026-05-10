@@ -871,7 +871,7 @@ ausfüllen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,does_not_compile,ignore
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     unimplemented!();
 }

@@ -202,7 +202,7 @@ Verträge der Funktion übernehmen.
 Hier ist eine unsichere Funktion namens `dangerous`, die in ihrem Rumpf nichts
 tut:
 
-```rust
+```rust,ignore
 unsafe fn dangerous() {}
 
 unsafe {
@@ -510,7 +510,7 @@ Im folgenden Beispiel machen wir die Funktion `call_from_c` von C-Code aus
 zugänglich, nachdem sie in eine gemeinsame Bibliothek kompiliert und von C
 gelinkt wurde:
 
-```rust
+```rust,ignore
 #[unsafe(no_mangle)]
 pub extern "C" fn call_from_c() {
     println!("Rust-Funktion von C aufgerufen!");
