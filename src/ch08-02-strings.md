@@ -233,7 +233,7 @@ let s = s1 + "-" + &s2 + "-" + &s3;
 
 An diesem Punkt wird `s` den Wert `tic-tac-toe` haben. Bei all den Zeichen `+`
 und `"` ist es schwer zu erkennen, was vor sich geht. Um Strings auf
-kompliziertere Weise zu kombinieren, können wir stattdessen das Makro `format!`
+unkompliziertere Weise zu kombinieren, können wir stattdessen das Makro `format!`
 verwenden:
 
 ```rust
