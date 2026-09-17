@@ -28,8 +28,7 @@ beispielsweise in der Binärdatei des Programms gespeichert und sind daher Strin
 Slices.
 
 Der Typ `String`, der von Rusts Standardbibliothek bereitgestellt wird und nicht
-in die Kernsprache eingebaut ist, ist ein in der Größe veränderbarer,
-veränderbarer, besitzender (owned), UTF-8-kodierter String-Typ. Wenn
+in die Kernsprache eingebaut ist, ist ein in der Größe veränderbarer, besitzender (owned), UTF-8-kodierter String-Typ. Wenn
 Rust-Entwickler von Strings in Rust sprechen, meinen sie normalerweise den Typ
 `String` sowie den String Slice `&str`, nicht nur einen dieser Typen. Obwohl es
 in diesem Abschnitt überwiegend um `String` geht, werden beide Typen in Rusts
@@ -233,7 +232,7 @@ let s = s1 + "-" + &s2 + "-" + &s3;
 
 An diesem Punkt wird `s` den Wert `tic-tac-toe` haben. Bei all den Zeichen `+`
 und `"` ist es schwer zu erkennen, was vor sich geht. Um Strings auf
-kompliziertere Weise zu kombinieren, können wir stattdessen das Makro `format!`
+unkompliziertere Weise zu kombinieren, können wir stattdessen das Makro `format!`
 verwenden:
 
 ```rust
