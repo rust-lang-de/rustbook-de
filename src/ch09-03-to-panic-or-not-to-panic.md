@@ -1,6 +1,6 @@
 ## Wann `panic!` aufrufen und wann nicht?
 
-Wie entscheidest du also, wann du `panic!` aufrufen und wann `Result`
+Wie entscheidest du also, wann du `panic!` aufrufen und wann du `Result`
 zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit, sich vom
 Fehler zu erholen. Du könntest `panic!` in jeder Fehlersituation aufrufen,
 unabhängig davon, ob es eine Möglichkeit zur Fehlerbehebung gibt oder nicht,
