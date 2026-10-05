@@ -9142,7 +9142,7 @@ panic = 'abort'
      Running `target/debug/panic`
 
 thread 'main' panicked at src/main.rs:2:5:
-crash and burn
+abbrechen und verbrennen
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Der Aufruf von <code>panic!</code> verursacht die in den letzten beiden Zeilen enthaltene
@@ -9812,7 +9812,7 @@ entscheiden können, was in welchen Fällen geeignet ist.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="wann-panic-aufrufen-und-wann-nicht-1"><a href="#wann-panic-aufrufen-und-wann-nicht-1" class="header">Wann panic! aufrufen und wann nicht?</a></h1>
 <h2 id="wann-panic-aufrufen-und-wann-nicht"><a class="header" href="#wann-panic-aufrufen-und-wann-nicht">Wann <code>panic!</code> aufrufen und wann nicht?</a></h2>
-<p>Wie entscheidest du also, wann du <code>panic!</code> aufrufen und wann <code>Result</code>
+<p>Wie entscheidest du also, wann du <code>panic!</code> aufrufen und wann du <code>Result</code>
 zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit, sich vom
 Fehler zu erholen. Du könntest <code>panic!</code> in jeder Fehlersituation aufrufen,
 unabhängig davon, ob es eine Möglichkeit zur Fehlerbehebung gibt oder nicht,
