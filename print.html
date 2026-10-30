@@ -1433,12 +1433,13 @@ Projekte zu schreiben, die aus einer Reihe von Paketen zusammengestellt werden.<
 Schritt ist <em>src/main.rs</em> zu ändern, wie in Listing 2-3 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use std::io;
-use rand::Rng;
+
+use rand::prelude::*;
 
 fn main() {
     println!("Rate die Zahl!");
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let secret_number = rand::rng().random_range(1..=100);
 
     println!("Die Geheimzahl ist: {secret_number}");
 
@@ -1508,15 +1509,16 @@ und 100 sein. Großartige Arbeit!</p>
 vergleichen. Dieser Schritt ist in Listing 2-4 dargestellt. Beachte, dass
 sich dieser Code noch nicht ganz kompilieren lässt, wie wir erklären werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile">use rand::Rng;
-use std::cmp::Ordering;
+<pre><code class="language-rust ignore does_not_compile">use std::cmp::Ordering;
 use std::io;
+
+use rand::prelude::*;
 
 fn main() {
     // --abschneiden--
 <span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1..=100);
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
 </span><span class="boring">
 </span><span class="boring">    println!("Die Geheimzahl ist: {secret_number}");
 </span><span class="boring">
@@ -1619,14 +1621,15 @@ einen Zahlentyp umwandeln, damit wir ihn numerisch mit der Geheimzahl
 vergleichen können. Das tun wir, indem wir Folgendes zum <code>main</code>-Funktionsrumpf
 hinzufügen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore"><span class="boring">use rand::Rng;
-</span><span class="boring">use std::cmp::Ordering;
+<pre><code class="language-rust ignore"><span class="boring">use std::cmp::Ordering;
 </span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1..=100);
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
 </span><span class="boring">
 </span><span class="boring">    println!("Die Geheimzahl ist: {secret_number}");
 </span><span class="boring">
@@ -1719,14 +1722,15 @@ Schätzung anstellen. Ändern wir das, indem wir eine Schleife hinzufügen!</p>
 <p>Das Schlüsselwort <code>loop</code> erzeugt eine Endlosschleife. Wir fügen jetzt eine
 Schleife hinzu, um den Benutzern mehr Chancen zu geben, die Zahl zu erraten:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore"><span class="boring">use rand::Rng;
-</span><span class="boring">use std::cmp::Ordering;
+<pre><code class="language-rust ignore"><span class="boring">use std::cmp::Ordering;
 </span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1..=100);
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
 </span><span class="boring">
 </span>    // --abschneiden--
 
@@ -1801,14 +1805,15 @@ richtige Zahl erraten wird.</p>
 <p>Programmieren wir das Spiel so, dass es beendet wird, wenn der Benutzer gewinnt,
 indem wir eine <code>break</code>-Anweisung hinzufügen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore"><span class="boring">use rand::Rng;
-</span><span class="boring">use std::cmp::Ordering;
+<pre><code class="language-rust ignore"><span class="boring">use std::cmp::Ordering;
 </span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1..=100);
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
 </span><span class="boring">
 </span><span class="boring">    println!("Die Geheimzahl ist: {secret_number}");
 </span><span class="boring">
@@ -1848,14 +1853,15 @@ dass das Spiel ungültige Zahlen ignoriert, damit der Benutzer weiter raten kann
 Das können wir erreichen, indem wir die Zeile ändern, in der <code>guess</code> von
 <code>String</code> in <code>u32</code> umgewandelt wird, wie in Listing 2-5 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore"><span class="boring">use rand::Rng;
-</span><span class="boring">use std::cmp::Ordering;
+<pre><code class="language-rust ignore"><span class="boring">use std::cmp::Ordering;
 </span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1..=100);
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
 </span><span class="boring">
 </span><span class="boring">    println!("Die Geheimzahl ist: {secret_number}");
 </span><span class="boring">
@@ -1940,14 +1946,15 @@ Denke daran, dass das Programm immer noch die Geheimzahl ausgibt. Das hat beim
 Testen gut funktioniert, aber es ruiniert das Spiel. Löschen wir das
 <code>println!</code>, das die Geheimzahl ausgibt. Listing 2-6 zeigt den finalen Code.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore">use rand::Rng;
-use std::cmp::Ordering;
+<pre><code class="language-rust ignore">use std::cmp::Ordering;
 use std::io;
+
+use rand::prelude::*;
 
 fn main() {
     println!("Rate die Zahl!");
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let secret_number = rand::rng().random_range(1..=100);
 
     loop {
         println!("Bitte gib deine Schätzung ein.");
