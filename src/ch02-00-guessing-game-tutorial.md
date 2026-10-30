@@ -648,12 +648,13 @@ Schritt ist _src/main.rs_ zu ändern, wie in Listing 2-3 gezeigt.
 
 ```rust,ignore
 use std::io;
-use rand::Rng;
+
+use rand::prelude::*;
 
 fn main() {
     println!("Rate die Zahl!");
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let secret_number = rand::rng().random_range(1..=100);
 
     println!("Die Geheimzahl ist: {secret_number}");
 
@@ -738,15 +739,16 @@ sich dieser Code noch nicht ganz kompilieren lässt, wie wir erklären werden.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
+
+use rand::prelude::*;
 
 fn main() {
     // --abschneiden--
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1..=100);
+#     let secret_number = rand::rng().random_range(1..=100);
 #
 #     println!("Die Geheimzahl ist: {secret_number}");
 #
@@ -864,14 +866,15 @@ hinzufügen:
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
-# use rand::Rng;
 # use std::cmp::Ordering;
 # use std::io;
+#
+# use rand::prelude::*;
 #
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1..=100);
+#     let secret_number = rand::rng().random_range(1..=100);
 #
 #     println!("Die Geheimzahl ist: {secret_number}");
 #
@@ -988,14 +991,15 @@ Schleife hinzu, um den Benutzern mehr Chancen zu geben, die Zahl zu erraten:
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
-# use rand::Rng;
 # use std::cmp::Ordering;
 # use std::io;
+#
+# use rand::prelude::*;
 #
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1..=100);
+#     let secret_number = rand::rng().random_range(1..=100);
 #
     // --abschneiden--
 
@@ -1081,14 +1085,15 @@ indem wir eine `break`-Anweisung hinzufügen:
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
-# use rand::Rng;
 # use std::cmp::Ordering;
 # use std::io;
+#
+# use rand::prelude::*;
 #
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1..=100);
+#     let secret_number = rand::rng().random_range(1..=100);
 #
 #     println!("Die Geheimzahl ist: {secret_number}");
 #
@@ -1135,14 +1140,15 @@ Das können wir erreichen, indem wir die Zeile ändern, in der `guess` von
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
-# use rand::Rng;
 # use std::cmp::Ordering;
 # use std::io;
+#
+# use rand::prelude::*;
 #
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1..=100);
+#     let secret_number = rand::rng().random_range(1..=100);
 #
 #     println!("Die Geheimzahl ist: {secret_number}");
 #
@@ -1239,14 +1245,15 @@ Testen gut funktioniert, aber es ruiniert das Spiel. Löschen wir das
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
-use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
+
+use rand::prelude::*;
 
 fn main() {
     println!("Rate die Zahl!");
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let secret_number = rand::rng().random_range(1..=100);
 
     loop {
         println!("Bitte gib deine Schätzung ein.");
