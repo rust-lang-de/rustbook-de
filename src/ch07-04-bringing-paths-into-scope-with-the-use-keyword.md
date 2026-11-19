@@ -289,7 +289,7 @@ Projekt zu verwenden, fügten wir diese Zeile zu _Cargo.toml_ hinzu:
 <span class="filename">Dateiname: Cargo.toml</span>
 
 ```toml
-rand = "0.8.5"
+rand = "0.10.1"
 ```
 
 Das Hinzufügen von `rand` als Abhängigkeit in _Cargo.toml_ weist Cargo an, das
@@ -300,17 +300,18 @@ Um dann Definitionen von `rand` in den Gültigkeitsbereich unseres Pakets
 aufzunehmen, haben wir eine Zeile mit `use` hinzugefügt, die mit dem Crate-Namen
 `rand` beginnt und die Elemente auflistet, die wir in den Gültigkeitsbereich
 bringen wollten. Erinnere dich, dass wir in [„Generieren einer
-Geheimzahl“][rand] in Kapitel 2 das Trait `Rng` in den Gültigkeitsbereich
-gebracht und die Funktion `rand::thread_rng` aufgerufen haben:
+Geheimzahl“][rand] in Kapitel 2 Teile des Moduls `rand::prelude` in den
+Gültigkeitsbereich gebracht und die Funktion `rand::rng` aufgerufen haben:
 
 ```rust
 # use std::io;
-use rand::Rng;
+
+use rand::prelude::*;
 
 fn main() {
 #     println!("Rate die Zahl!");
 #
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let secret_number = rand::rng().random_range(1..=100);
 #
 #     println!("Die geheime Zahl ist: {secret_number}");
 #

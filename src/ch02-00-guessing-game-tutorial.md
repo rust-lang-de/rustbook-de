@@ -490,7 +490,7 @@ nicht.
 
 ```toml
 [dependencies]
-rand = "0.8.5"
+rand = "0.10.1"
 ```
 
 In der Datei _Cargo.toml_ ist alles, was nach einer Überschrift folgt, Teil
@@ -498,41 +498,36 @@ dieses Abschnitts, der so lange andauert, bis ein anderer Abschnitt beginnt. Im
 Abschnitt `[dependencies]` teilst du Cargo mit, von welchen externen Crates dein
 Projekt abhängt und welche Versionen dieser Crates du benötigst. In diesem Fall
 spezifizieren wir die Crate `rand` mit dem semantischen Versionsspezifikator
-`0.8.5`. Cargo versteht [semantische Versionierung][semver] (manchmal auch
+`0.10.1`. Cargo versteht [semantische Versionierung][semver] (manchmal auch
 _SemVer_ genannt), was ein Standard zum Schreiben von Versionsnummern ist. Die
-Angabe `0.8.5` ist eigentlich die Abkürzung für `^0.8.5`, was für alle Versionen
-ab `0.8.5` und kleiner als `0.9.0` steht.
+Angabe `0.10.1` ist eigentlich die Abkürzung für `^0.10.1`, was für alle
+Versionen ab 0.10.1 und kleiner als 0.11.0 steht.
 
 Cargo geht davon aus, dass die öffentliche API dieser Versionen kompatibel zur
-Version 0.8.5 ist und diese Angabe stellt sicher, dass du die neueste
+Version 0.10.1 ist und diese Angabe stellt sicher, dass du die neueste
 Patch-Version erhältst, die noch mit dem Code in diesem Kapitel kompiliert
-werden kann. Ab Version `0.9.0` ist nicht garantiert, dass die API mit der in
-den folgenden Beispielen verwendeten übereinstimmt.
+werden kann. Ab Version 0.11.0 ist nicht garantiert, dass die API mit der in den
+folgenden Beispielen verwendeten übereinstimmt.
 
 Lass uns nun, ohne den Code zu ändern, das Projekt bauen, wie in Listing 2-2
 gezeigt.
 
 ```console
 $ cargo build
-  Updating crates.io index
-   Locking 15 packages to latest Rust 1.85.0 compatible versions
-    Adding rand v0.8.5 (available: v0.9.0)
- Compiling proc-macro2 v1.0.93
- Compiling unicode-ident v1.0.17
- Compiling libc v0.2.170
- Compiling cfg-if v1.0.0
- Compiling byteorder v1.5.0
- Compiling getrandom v0.2.15
- Compiling rand_core v0.6.4
- Compiling quote v1.0.38
- Compiling syn v2.0.98
- Compiling zerocopy-derive v0.7.35
- Compiling zerocopy v0.7.35
- Compiling ppv-lite86 v0.2.20
- Compiling rand_chacha v0.3.1
- Compiling rand v0.8.5
- Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-  Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.48s
+    Updating crates.io index
+     Locking 8 packages to latest Rust 1.96.0 compatible versions
+  Downloaded rand_core v0.10.1
+  Downloaded chacha20 v0.10.1
+  Downloaded rand v0.10.1
+  Downloaded 3 crates (162.9KiB) in 0.59s
+   Compiling libc v0.2.186
+   Compiling rand_core v0.10.1
+   Compiling getrandom v0.4.3
+   Compiling cfg-if v1.0.4
+   Compiling chacha20 v0.10.1
+   Compiling rand v0.10.1
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.03s
 ```
 
 <span class="caption">Listing 2-2: Die Ausgabe beim Ausführen von `cargo
@@ -583,7 +578,7 @@ Cargo verfügt über einen Mechanismus, der sicherstellt, dass du jedes Mal, wen
 du oder jemand anderes deinen Code baut, dasselbe Artefakt neu erstellen kannst:
 Cargo wird nur die Versionen der von dir angegebenen Abhängigkeiten verwenden,
 bis du etwas anderes angibst. Nehmen wir beispielsweise an, dass nächste Woche
-Version 0.8.6 der Crate `rand` herauskommt und eine wichtige Fehlerkorrektur
+Version 0.10.2 der Crate `rand` herauskommt und eine wichtige Fehlerkorrektur
 enthält, aber auch eine Regression, die deinen Code bricht. Um dies zu
 handhaben, erstellt Rust die Datei _Cargo.lock_ beim ersten Mal, wenn du `cargo
 build` ausführst, die nun im _guessing_game_-Verzeichnis liegt.
@@ -594,7 +589,7 @@ Datei _Cargo.lock_. Wenn du dein Projekt in der Zukunft baust, wird Cargo
 sehen, dass die Datei _Cargo.lock_ existiert und die dort angegebenen Versionen
 verwenden, anstatt die ganze Arbeit der Versionsfindung erneut zu machen. Auf
 diese Weise erhältst du automatisch einen reproduzierbaren Build. Mit anderen
-Worten, dein Projekt bleibt dank der Datei _Cargo.lock_ auf 0.8.5, bis du
+Worten, dein Projekt bleibt dank der Datei _Cargo.lock_ auf 0.10.1, bis du
 explizit die Versionsnummer erhöhst. Da die Datei _Cargo.lock_ für das
 reproduzierbare Bauen wichtig ist, wird sie oft zusammen mit dem restlichen
 Code deines Projekts in die Versionskontrolle eingecheckt.
@@ -605,24 +600,24 @@ Wenn du eine Crate _aktualisieren_ willst, bietet Cargo den Befehl `update` an,
 der die Datei _Cargo.lock_ ignoriert und alle neuesten Versionen, die deinen
 Spezifikationen entsprechen, in _Cargo.toml_ herausfindet. Cargo schreibt diese
 Versionen dann in die Datei _Cargo.lock_. Andernfalls wird Cargo standardmäßig
-nur nach Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die Crate
-`rand` zwei neue Versionen 0.8.6 und 0.999.0 veröffentlicht hat, würdest du
-folgendes sehen, wenn du `cargo update` ausführst:
+nur nach Versionen größer als 0.10.1 und kleiner als 0.11.0 suchen. Wenn die
+Crate `rand` zwei neue Versionen 0.10.2 und 0.999.0 veröffentlicht hat, würdest
+du folgendes sehen, wenn du `cargo update` ausführst:
 
 ```console
 $ cargo update
     Updating crates.io index
-     Locking 1 package to latest Rust 1.85.0 compatible version
-    Updating rand v0.8.5 -> v0.8.6 (available: v0.999.0)
+     Locking 1 package to latest Rust 1.96.0 compatible version
+    Updating rand v0.10.1 -> v0.10.2 (available: v0.999.0)
 ```
 
 Cargo ignoriert die Version 0.999.0. An diesem Punkt würdest du auch eine
 Änderung in deiner Datei _Cargo.lock_ bemerken, die feststellt, dass die Version
-der Crate `rand`, die du jetzt benutzt, 0.8.6 ist. Um die `rand`-Version 0.999.0
-oder irgendeine Version aus der 0.999._x_-Serie zu verwenden, müsstest du
-stattdessen die Datei _Cargo.toml_ anpassen, damit sie wie folgt aussieht.
+der Crate `rand`, die du jetzt benutzt, 0.10.2 ist. Um die `rand`-Version
+0.999.0 oder irgendeine Version aus der 0.999._x_-Serie zu verwenden, müsstest
+du stattdessen die Datei _Cargo.toml_ anpassen, damit sie wie folgt aussieht.
 (Führe diese Änderung nicht durch, da die folgenden Beispiele davon ausgehen,
-dass du `rand` 0.8 verwendest.)
+dass du `rand` 0.10 verwendest.)
 
 ```toml
 [dependencies]
@@ -673,31 +668,30 @@ fn main() {
 <span class="caption">Listing 2-3: Hinzufügen von Code zum Generieren einer
 Zufallszahl</span>
 
-Zuerst fügen wir die Zeile `use rand::Rng;` hinzu. Das Trait (Merkmal) `Rng`
-definiert Methoden, die Zufallszahlengeneratoren implementieren, und dieses
-Trait muss im Gültigkeitsbereich sein, damit wir diese Methoden verwenden
-können. In Kapitel 10 werden Traits im Detail behandelt.
+Zunächst fügen wir die Zeile `use rand::prelude::*;` ein. Das Modul `prelude`
+enthält die am häufigsten verwendeten Teile der Crate `rand`, und mit `use`
+werden diese Elemente im Gültigkeitsbereich unseres Programms verfügbar gemacht.
 
-Als nächstes fügen wir zwei Zeilen in der Mitte hinzu. In der ersten Zeile rufen
-wir die Funktion `rand::thread_rng` auf, die uns den speziellen
-Zufallszahlengenerator zurückgibt, den wir verwenden werden: Einen, der lokal
-zum aktuellen Thread ist und vom Betriebssystem initialisiert (seeded) wird.
-Dann rufen wir die Methode `gen_range` des Zufallszahlengenerators auf. Diese
-Methode wird durch das Trait `Rng` definiert, das wir mit der Anweisung `use
-rand::Rng;` in den Gültigkeitsbereich gebracht haben. Die Methode `gen_range`
-nimmt einen Bereichsausdruck als Argument und generiert eine Zufallszahl in
-diesem Bereich. Ein Bereichsausdruck hat die Form `start..=end` und er
-beinhaltet die Untergrenze und die Obergrenze, sodass wir `1..=100` angeben
-müssen, um eine Zahl zwischen 1 und 100 zu erhalten.
+Danach fügen wir zwei Zeilen in der Mitte hinzu. In der ersten Zeile rufen
+wir die Funktion `rand::rng` auf, die uns den speziellen Zufallszahlengenerator
+zurückgibt, den wir verwenden werden: Einen, der lokal zum aktuellen Thread ist
+und vom Betriebssystem initialisiert (seeded) wird. Dann rufen wir die Methode
+`random_range` des Zufallszahlengenerators auf. Diese Methode wird durch das
+Trait `RngExt` definiert, das Teil des Moduls `rand::prelude` ist, das wir mit
+der Anweisung `use rand::prelude::*;` in den Gültigkeitsbereich gebracht haben.
+Die Methode `random_range` nimmt einen Bereichsausdruck als Argument und
+generiert eine Zufallszahl in diesem Bereich. Ein Bereichsausdruck hat die Form
+`start..=end` und er beinhaltet die Untergrenze und die Obergrenze, sodass wir
+`1..=100` angeben müssen, um eine Zahl zwischen 1 und 100 zu erhalten.
 
-> Hinweis: Du wirst nicht immer wissen, welche Traits du verwenden sollst und
-> welche Methoden und Funktionen einer Crate du aufrufen musst, daher hat jede
-> Crate eine Dokumentation mit einer Anleitung zur Verwendung der Crate. Eine
-> weitere nette Funktionalität von Cargo ist, dass das Ausführen des Kommandos
-> `cargo doc --open` die von all deinen Abhängigkeiten bereitgestellte
+> Hinweis: Du wirst nicht immer wissen, was du in den Gültigkeitsbereich bringen
+> sollst und welche Methoden und Funktionen einer Crate du aufrufen sollst,
+> daher hat jede Crate eine Dokumentation mit einer Anleitung zur Verwendung der
+> Crate. Eine weitere nette Funktionalität von Cargo ist, dass das Ausführen des
+> Kommandos `cargo doc --open` die von all deinen Abhängigkeiten bereitgestellte
 > Dokumentation lokal zusammenstellt und in deinem Browser öffnet. Wenn du an
-> anderen Funktionen der Crate `rand` interessiert bist, führe zum Beispiel `cargo
-> doc --open` aus und klicke auf `rand` in der Seitenleiste links.
+> anderen Funktionen der Crate `rand` interessiert bist, führe zum Beispiel
+> `cargo doc --open` aus und klicke auf `rand` in der Seitenleiste links.
 
 Die zweite neue Zeile gibt die Geheimzahl aus. Das ist hilfreich während wir
 das Programm entwickeln, um es testen zu können, aber wir werden es aus der
@@ -728,7 +722,11 @@ Du hast geschätzt: 5
 ```
 
 Du solltest verschiedene Zufallszahlen erhalten und sie sollten alle zwischen 1
-und 100 sein. Großartige Arbeit!
+und 100 sein. Sollten Warnungen angezeigt werden, kannst du diese getrost
+ignorieren. Sollten Fehler auftreten, überprüfe bitte, ob in deiner *Cargo.toml*
+der Eintrag `rand = "0.10.1"` vorhanden ist, da zukünftige Versionen von `rand`
+möglicherweise eine andere API haben. Jede Version der `0.10`-Reihe sollte
+jedoch mit dem Code in diesem Kapitel funktionieren.
 
 ## Vergleichen der Schätzung mit der Geheimzahl
 
