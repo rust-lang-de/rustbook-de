@@ -162,7 +162,7 @@ was jeder dieser Befehle tut.)
 ```console
 $ cargo new get-dependencies
 $ cd get-dependencies
-$ cargo add rand@0.8.5 trpl@0.2.0
+$ cargo add rand@0.10.1 trpl@0.2.0
 ```
 
 Dadurch werden die Downloads für diese Pakete zwischengespeichert, sodass du

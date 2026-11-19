@@ -168,14 +168,15 @@ Bereichsprüfung der Zahl zu ergänzen, etwa so:
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
-# use rand::Rng;
 # use std::cmp::Ordering;
 # use std::io;
+#
+# use rand::prelude::*;
 #
 # fn main() {
 #     println!("Rate eine Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1, 101);
+#     let secret_number = rand::rng().random_range(1..=100);
 #
     loop {
         // --abschneiden--

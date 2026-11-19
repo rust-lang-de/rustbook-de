@@ -221,12 +221,12 @@ Teil davon hier in Listing 20-27 wiedergegeben.
 # use std::cmp::Ordering;
 # use std::io;
 #
-# use rand::Rng;
+# use rand::prelude::*;
 #
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1..=100);
+#     let secret_number = rand::rng().random_range(1..=100);
 #
 #     println!("Die Geheimzahl ist: {secret_number}");
 #

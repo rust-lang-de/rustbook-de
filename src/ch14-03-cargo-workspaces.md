@@ -205,7 +205,7 @@ verwenden können:
 
 ```toml
 [dependencies]
-rand = "0.8.5"
+rand = "0.10.1"
 ```
 
 Wir können nun `use rand;` zur Datei _add_one/src/lib.rs_ hinzufügen, und wenn
@@ -217,9 +217,9 @@ Gültigkeitsbereich gebracht haben:
 ```console
 $ cargo build
     Updating crates.io index
-  Downloaded rand v0.8.5
+  Downloaded rand v0.10.1
    --abschneiden--
-   Compiling rand v0.8.5
+   Compiling rand v0.10.1
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
 warning: unused import: `rand`
  --> add_one/src/lib.rs:1:5
