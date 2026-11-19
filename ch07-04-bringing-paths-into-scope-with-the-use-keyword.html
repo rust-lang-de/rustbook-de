@@ -387,7 +387,7 @@ betrachten.</p>
 namens <code>rand</code> benutzte, um Zufallszahlen zu generieren. Um <code>rand</code> in unserem
 Projekt zu verwenden, fügten wir diese Zeile zu <em>Cargo.toml</em> hinzu:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
-<pre><code class="language-toml">rand = "0.8.5"
+<pre><code class="language-toml">rand = "0.10.1"
 </code></pre>
 <p>Das Hinzufügen von <code>rand</code> als Abhängigkeit in <em>Cargo.toml</em> weist Cargo an, das
 Paket <code>rand</code> und alle Abhängigkeiten von <a href="https://crates.io/">crates.io</a>
@@ -396,15 +396,16 @@ herunterzuladen und <code>rand</code> für unser Projekt verfügbar zu machen.</
 aufzunehmen, haben wir eine Zeile mit <code>use</code> hinzugefügt, die mit dem Crate-Namen
 <code>rand</code> beginnt und die Elemente auflistet, die wir in den Gültigkeitsbereich
 bringen wollten. Erinnere dich, dass wir in <a href="ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl">„Generieren einer
-Geheimzahl“</a> in Kapitel 2 das Trait <code>Rng</code> in den Gültigkeitsbereich
-gebracht und die Funktion <code>rand::thread_rng</code> aufgerufen haben:</p>
+Geheimzahl“</a> in Kapitel 2 Teile des Moduls <code>rand::prelude</code> in den
+Gültigkeitsbereich gebracht und die Funktion <code>rand::rng</code> aufgerufen haben:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::io;
-</span>use rand::Rng;
+</span>
+use rand::prelude::*;
 
 fn main() {
 <span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span>    let secret_number = rand::thread_rng().gen_range(1..=100);
+</span>    let secret_number = rand::rng().random_range(1..=100);
 <span class="boring">
 </span><span class="boring">    println!("Die geheime Zahl ist: {secret_number}");
 </span><span class="boring">

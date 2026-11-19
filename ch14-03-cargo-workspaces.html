@@ -309,7 +309,7 @@ die Crate <code>rand</code> in der Datei <em>add_one/Cargo.toml</em> zum Abschni
 verwenden können:</p>
 <p><span class="filename">Dateiname: add_one/Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
-rand = "0.8.5"
+rand = "0.10.1"
 </code></pre>
 <p>Wir können nun <code>use rand;</code> zur Datei <em>add_one/src/lib.rs</em> hinzufügen, und wenn
 du den gesamten Arbeitsbereich durch Ausführen von <code>cargo build</code> im Verzeichnis
@@ -318,9 +318,9 @@ eine Warnung, weil wir nicht auf <code>rand</code> referenzieren, das wir in den
 Gültigkeitsbereich gebracht haben:</p>
 <pre><code class="language-console">$ cargo build
     Updating crates.io index
-  Downloaded rand v0.8.5
+  Downloaded rand v0.10.1
    --abschneiden--
-   Compiling rand v0.8.5
+   Compiling rand v0.10.1
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
 warning: unused import: `rand`
  --&gt; add_one/src/lib.rs:1:5

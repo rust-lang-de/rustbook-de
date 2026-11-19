@@ -311,14 +311,15 @@ z.B. Buchstaben eingibt.</p>
 zu parsen, um potenziell negative Zahlen zuzulassen, und dann eine
 Bereichsprüfung der Zahl zu ergänzen, etwa so:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore"><span class="boring">use rand::Rng;
-</span><span class="boring">use std::cmp::Ordering;
+<pre><code class="language-rust ignore"><span class="boring">use std::cmp::Ordering;
 </span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    println!("Rate eine Zahl!");
 </span><span class="boring">
-</span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1, 101);
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
 </span><span class="boring">
 </span>    loop {
         // --abschneiden--
